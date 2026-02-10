@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMS Equipment Cleaning Behaviors — Initiative Proposal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bms-purple: #8B298A;
+            --bms-purple-deep: #5C1A5B;
+            --bms-purple-dark: #3D1140;
+            --bms-purple-light: #A94DA8;
+            --bms-purple-pale: #F3E8F3;
+            --bms-gray: #6D6E71;
+            --bms-gray-dark: #4A4A4D;
+            --bms-accent: #D4812F;
+            --bms-green: #2D8B55;
+            --bms-red: #C0392B;
+            --bms-teal: #2A8A8A;
+            --white: #ffffff;
+            --off-white: #F8F7FA;
+            --light-gray: #ECEAEF;
+            --mid-gray: #D1CDD6;
+            --text-dark: #2A2035;
+            --text-body: #4A4455;
+            --text-muted: #7A7585;
+            --basic-color: #2D8B55;
+            --inter-color: #D4812F;
+            --adv-color: #C0392B;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--off-white);
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        /* ─── NAV ─── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 12px rgba(91,26,91,0.06);
+            z-index: 1000;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 16px;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo svg { height: 28px; }
+        .nav-divider { width: 1px; height: 24px; background: var(--mid-gray); }
+        .nav-title-text {
+            font-size: 0.82rem; color: var(--text-muted);
+            font-weight: 500;
+        }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-link {
+            padding: 7px 13px; border-radius: 20px;
+            text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); transition: all 0.25s; cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-link:hover { background: var(--light-gray); color: var(--bms-purple); }
+        .nav-link.active { background: var(--bms-purple); color: var(--white); }
+
+        /* ─── SECTIONS ─── */
+        section {
+            min-height: 100vh;
+            padding: 110px 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+        /* ─── HERO ─── */
+        .hero {
+            background: linear-gradient(160deg, var(--bms-purple-dark) 0%, var(--bms-purple-deep) 35%, var(--bms-purple) 100%);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%; right: -15%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(169,77,168,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(212,129,47,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-logo { margin-bottom: 40px; }
+        .hero-logo svg { max-width: 380px; height: auto; }
+        .hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.6rem; font-weight: 800;
+            letter-spacing: -1px; margin-bottom: 20px;
+            line-height: 1.15;
+        }
+        .hero h1 span { color: var(--bms-accent); }
+        .hero-desc {
+            font-size: 1.05rem; max-width: 740px;
+            margin: 0 auto 36px; opacity: 0.88;
+            line-height: 1.7;
+        }
+        .hero-audience-pill {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600; font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            background: rgba(255,255,255,0.12);
+            border: 1.5px solid rgba(255,255,255,0.3);
+            color: var(--white);
+        }
+        .hero-meta {
+            margin-top: 40px; display: flex; justify-content: center; gap: 40px;
+            opacity: 0.7; font-size: 0.85rem;
+        }
+        .hero-patient-note {
+            margin-top: 32px;
+            font-size: 0.95rem;
+            font-style: italic;
+            opacity: 0.75;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── SECTION HEADERS ─── */
+        .section-header { margin-bottom: 36px; }
+        .section-label {
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--bms-purple); margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem; font-weight: 800;
+            color: var(--bms-purple-deep); letter-spacing: -0.5px;
+        }
+        .section-subtitle {
+            font-size: 0.95rem; color: var(--text-muted);
+            margin-top: 8px; max-width: 700px;
+        }
+
+        /* ─── TABS ─── */
+        .tab-bar {
+            display: flex; gap: 4px;
+            background: var(--light-gray);
+            padding: 5px; border-radius: 12px;
+            width: fit-content; margin-bottom: 28px;
+        }
+        .tab-btn {
+            padding: 10px 22px; border: none;
+            background: transparent; color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; border-radius: 8px;
+            transition: all 0.25s;
+        }
+        .tab-btn:hover { color: var(--text-dark); background: rgba(255,255,255,0.5); }
+        .tab-btn.active { background: var(--white); color: var(--bms-purple-deep); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-bottom: 3px solid var(--bms-purple); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ─── OVERVIEW ─── */
+        .overview-section { background: var(--white); }
+        .problem-card {
+            background: linear-gradient(135deg, #FDF6F0 0%, #FFF9F5 100%);
+            border: 1px solid rgba(212,129,47,0.2);
+            border-left: 4px solid var(--bms-accent);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .problem-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--bms-accent); margin-bottom: 10px;
+        }
+        .problem-card p {
+            font-size: 0.9rem; color: var(--text-body); line-height: 1.7;
+        }
+        .audience-profile {
+            background: var(--off-white);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+            border-left: 4px solid var(--bms-purple);
+        }
+        .audience-profile h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--bms-purple-deep); margin-bottom: 12px;
+        }
+        .profile-factors {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px;
+        }
+        .profile-factor {
+            font-size: 0.85rem; color: var(--text-body);
+            display: flex; align-items: start; gap: 8px;
+        }
+        .profile-factor .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            margin-top: 7px; flex-shrink: 0;
+            background: var(--bms-purple);
+        }
+        .practice-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .practice-card:hover { box-shadow: 0 4px 20px rgba(91,26,91,0.06); }
+        .practice-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            color: var(--bms-purple-deep); margin-bottom: 8px;
+        }
+        .practice-card .practice-num {
+            display: inline-block; font-size: 0.7rem;
+            font-weight: 700; padding: 3px 10px;
+            border-radius: 20px; margin-bottom: 10px;
+            background: var(--bms-purple-pale); color: var(--bms-purple);
+        }
+        .practice-card p {
+            font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
+        }
+
+        /* ─── PRACTICES & MILESTONES ─── */
+        .practices-section { background: var(--off-white); }
+        .milestone-row {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .milestone-level {
+            width: 120px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            border-radius: 10px; color: var(--white);
+            padding: 14px 10px;
+        }
+        .milestone-level.basic { background: var(--basic-color); }
+        .milestone-level.intermediate { background: var(--inter-color); }
+        .milestone-level.advanced { background: var(--adv-color); }
+        .milestone-statement {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .milestone-activity-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            border: 2px solid var(--bms-purple);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--bms-purple);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .milestone-activity-btn:hover {
+            background: var(--bms-purple);
+            color: var(--white);
+        }
+        .milestone-activity-btn .arrow { font-size: 0.9rem; }
+
+        /* ─── ACTIVITY SECTIONS ─── */
+        .activity-section { background: var(--white); }
+        .activity-section.alt-bg { background: var(--off-white); }
+        .activity-display {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .activity-block {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .activity-block:last-child { border-bottom: none; }
+        .activity-block-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px;
+        }
+        .activity-block-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .activity-block-icon.objective { background: rgba(139,41,138,0.08); }
+        .activity-block-icon.instructions { background: rgba(212,129,47,0.1); }
+        .activity-block-icon.outcomes { background: rgba(45,139,85,0.1); }
+        .activity-block-label {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+        .activity-name-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--bms-purple-deep); margin-bottom: 10px;
+        }
+        .activity-difficulty {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            padding: 3px 12px; border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .activity-difficulty.basic { background: rgba(45,139,85,0.1); color: var(--basic-color); }
+        .activity-difficulty.intermediate { background: rgba(212,129,47,0.1); color: var(--inter-color); }
+        .activity-difficulty.advanced { background: rgba(192,57,43,0.1); color: var(--adv-color); }
+        .activity-objective-text {
+            font-size: 1rem; color: var(--bms-purple-deep);
+            background: rgba(139,41,138,0.04);
+            padding: 14px 18px; border-radius: 10px;
+            border-left: 4px solid var(--bms-purple);
+        }
+        .instructions-content { color: var(--text-body); font-size: 0.92rem; }
+        .instructions-content p { margin-bottom: 14px; }
+        .instructions-content ol { margin-left: 20px; margin-bottom: 16px; }
+        .instructions-content li { margin-bottom: 10px; }
+        .instructions-content strong { color: var(--text-dark); }
+        .instructions-content .example-good {
+            color: var(--basic-color); font-size: 0.88rem;
+            background: rgba(45,139,85,0.05); padding: 8px 14px;
+            border-radius: 8px; margin: 8px 0;
+        }
+        .instructions-content .example-bad {
+            color: var(--bms-red); font-size: 0.88rem;
+            background: rgba(192,57,43,0.05); padding: 8px 14px;
+            border-radius: 8px; margin: 8px 0;
+        }
+        .outcomes-list { display: flex; flex-direction: column; gap: 12px; }
+        .outcome-item {
+            display: flex; align-items: start; gap: 12px;
+            font-size: 0.88rem;
+            padding: 12px 16px; border-radius: 10px;
+        }
+        .outcome-item.success { background: rgba(45,139,85,0.06); }
+        .outcome-item.mixed { background: rgba(212,129,47,0.06); }
+        .outcome-item.struggle { background: rgba(192,57,43,0.06); }
+        .outcome-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            margin-top: 5px; flex-shrink: 0;
+        }
+        .outcome-dot.success { background: var(--basic-color); }
+        .outcome-dot.mixed { background: var(--inter-color); }
+        .outcome-dot.struggle { background: var(--adv-color); }
+
+        /* ─── ROUTING OVERVIEW ─── */
+        .routing-section { background: var(--off-white); }
+        .routing-visual {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .routing-diagram {
+            display: flex; gap: 20px; justify-content: center;
+            flex-wrap: wrap; margin-bottom: 28px;
+        }
+        .routing-lane {
+            flex: 1; min-width: 220px; max-width: 300px;
+            background: var(--off-white);
+            border-radius: 12px; padding: 20px;
+            text-align: center;
+        }
+        .routing-lane h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            color: var(--bms-purple-deep); margin-bottom: 16px;
+        }
+        .routing-node {
+            padding: 10px 16px; border-radius: 8px;
+            font-size: 0.78rem; font-weight: 600;
+            margin-bottom: 8px; color: var(--white);
+        }
+        .routing-node.basic { background: var(--basic-color); }
+        .routing-node.intermediate { background: var(--inter-color); }
+        .routing-node.advanced { background: var(--adv-color); }
+        .routing-arrow {
+            font-size: 1.2rem; color: var(--mid-gray);
+            margin-bottom: 8px;
+        }
+        .routing-cross {
+            text-align: center; font-size: 0.82rem;
+            color: var(--bms-purple); font-weight: 600;
+            padding: 12px; background: var(--bms-purple-pale);
+            border-radius: 10px;
+        }
+        .routing-legend {
+            display: flex; gap: 24px; justify-content: center;
+            flex-wrap: wrap;
+            padding-top: 20px; border-top: 1px solid var(--light-gray);
+        }
+        .routing-legend-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.82rem; color: var(--text-muted);
+        }
+        .routing-legend-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+
+        /* ─── MODAL ─── */
+        .modal-overlay {
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(42,32,53,0.5);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--white); border-radius: 20px;
+            width: 90%; max-width: 680px; max-height: 85vh;
+            overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 28px;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky; top: 0; background: var(--white);
+            border-radius: 20px 20px 0 0; z-index: 1;
+        }
+        .modal-header h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.15rem; font-weight: 700;
+            color: var(--bms-purple-deep);
+        }
+        .modal-close {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: none; background: var(--light-gray);
+            font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: var(--bms-red); color: var(--white); }
+        .modal-body { padding: 24px 28px 28px; }
+        .modal-body .modal-section { margin-bottom: 20px; }
+        .modal-body .modal-section-label {
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 8px;
+        }
+        .modal-objective {
+            background: rgba(139,41,138,0.04);
+            padding: 12px 16px; border-radius: 8px;
+            border-left: 4px solid var(--bms-purple);
+            font-size: 0.95rem; color: var(--bms-purple-deep);
+        }
+
+        /* ─── COMMENTS ─── */
+        .comment-toggle {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--bms-purple), var(--bms-purple-deep));
+            color: var(--white); border: none;
+            font-size: 1.4rem; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139,41,138,0.4);
+            z-index: 1001; transition: all 0.3s;
+        }
+        .comment-toggle:hover { transform: scale(1.08); }
+        .comment-toggle.active { background: var(--bms-green); }
+        .comment-panel {
+            position: fixed; right: -400px; top: 60px; bottom: 0;
+            width: 380px; background: var(--white);
+            box-shadow: -2px 0 20px rgba(0,0,0,0.1);
+            z-index: 1000; transition: right 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .comment-panel.open { right: 0; }
+        .comment-panel-header {
+            background: var(--bms-purple-deep); color: var(--white);
+            padding: 18px 20px; font-size: 1rem; font-weight: 600;
+        }
+        .comment-panel-content {
+            flex: 1; overflow-y: auto; padding: 16px;
+        }
+        .no-comments { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 0.9rem; }
+        .comment-form {
+            border-top: 2px solid var(--light-gray);
+            padding: 16px; background: var(--off-white);
+        }
+        .export-comments-btn {
+            width: 100%; padding: 8px;
+            background: var(--light-gray); border: none;
+            border-radius: 6px; font-size: 0.82rem;
+            font-weight: 600; cursor: pointer;
+            margin-bottom: 12px; transition: all 0.2s;
+        }
+        .export-comments-btn:hover { background: var(--mid-gray); }
+        .comment-form-group { margin-bottom: 12px; }
+        .comment-form label {
+            display: block; font-size: 0.78rem; font-weight: 600;
+            color: var(--bms-purple-deep); margin-bottom: 4px;
+        }
+        .comment-form input,
+        .comment-form textarea,
+        .comment-form select {
+            width: 100%; padding: 9px; border: 1px solid var(--light-gray);
+            border-radius: 6px; font-size: 0.85rem; font-family: inherit;
+        }
+        .comment-form textarea { min-height: 70px; resize: vertical; }
+        .comment-form-actions { display: flex; gap: 8px; }
+        .comment-btn {
+            flex: 1; padding: 9px; border: none;
+            border-radius: 6px; font-weight: 600;
+            cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .comment-btn-primary { background: var(--bms-purple); color: var(--white); }
+        .comment-btn-primary:hover { background: var(--bms-purple-deep); }
+        .comment-btn-secondary { background: var(--light-gray); color: var(--text-dark); }
+        .comment-btn-secondary:hover { background: var(--mid-gray); }
+        .comment-item {
+            background: var(--off-white);
+            border-left: 4px solid var(--bms-purple);
+            padding: 14px; margin-bottom: 12px; border-radius: 6px;
+        }
+        .comment-header {
+            display: flex; justify-content: space-between; align-items: start;
+            margin-bottom: 8px;
+        }
+        .comment-author { font-weight: 600; color: var(--bms-purple-deep); font-size: 0.85rem; }
+        .comment-section-tag {
+            font-size: 0.68rem; color: var(--white);
+            background: var(--bms-purple); padding: 2px 8px;
+            border-radius: 10px; margin-top: 3px; display: inline-block;
+        }
+        .comment-time { font-size: 0.72rem; color: var(--text-muted); }
+        .comment-text { color: var(--text-body); font-size: 0.85rem; line-height: 1.5; margin-bottom: 6px; }
+        .comment-delete {
+            background: none; border: none; color: var(--text-muted);
+            cursor: pointer; font-size: 0.75rem; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .comment-delete:hover { background: rgba(192,57,43,0.1); color: var(--bms-red); }
+        .comment-count {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--bms-green); color: var(--white);
+            border-radius: 50%; width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 700;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .nav { padding: 10px 16px; flex-direction: column; gap: 8px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            section { padding: 90px 20px 60px; }
+            .hero h1 { font-size: 1.8rem; }
+            .milestone-row { flex-direction: column; gap: 8px; }
+            .milestone-level { width: 100%; }
+            .profile-factors { grid-template-columns: 1fr; }
+            .tab-bar { flex-wrap: wrap; }
+            .routing-diagram { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav class="nav">
+    <div class="nav-brand">
+        <div class="nav-logo">
+            <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; font-weight:700; color:var(--bms-purple-deep);">Bristol Myers Squibb</span>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-title-text">Initiative Proposal</div>
+    </div>
+    <div class="nav-links">
+        <a class="nav-link active" href="#intro" onclick="scrollToSection(event,'intro')">Intro</a>
+        <a class="nav-link" href="#overview" onclick="scrollToSection(event,'overview')">Overview</a>
+        <a class="nav-link" href="#practices" onclick="scrollToSection(event,'practices')">Practices & Milestones</a>
+        <a class="nav-link" href="#act-p1" onclick="scrollToSection(event,'act-p1')">Activities: P1</a>
+        <a class="nav-link" href="#act-p2" onclick="scrollToSection(event,'act-p2')">Activities: P2</a>
+
+    </div>
+</nav>
+
+<!-- ═══════ INTRO ═══════ -->
+<section id="intro" class="hero">
+    <div class="hero-content container">
+        <div class="hero-logo" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:2rem; font-weight:600; letter-spacing:-0.3px; opacity:0.92;">Bristol Myers Squibb</div>
+        <h1>Equipment Cleaning Behaviors <span>Pilot Initiative</span></h1>
+        <p class="hero-desc">Close behavioral gaps in cleanroom equipment cleaning — targeting shortcuts, skipped steps, and sequence breakdowns that occur under production pressure — among Manufacturing Associates in Cell Therapy Operations.</p>
+        <div class="hero-audience-pill">🧪 Manufacturing Associates</div>
+
+        <div class="hero-patient-note">One lot equals one patient.</div>
+    </div>
+</section>
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview" class="overview-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Overview</div>
+            <div class="section-title">Initiative Structure</div>
+            <div class="section-subtitle">Two practices targeting the behavioral gaps between knowing the cleaning steps and executing them consistently under real production conditions.</div>
+        </div>
+
+        <div class="problem-card">
+            <h4>⚠️ The Problem</h4>
+            <p>Manufacturing Associates know the cleaning steps but exhibit behavioral gaps — taking shortcuts, not fully understanding impact on patient safety, and bypassing steps under time pressure. These aren't knowledge gaps; they're execution gaps that require practice-based behavioral change.</p>
+        </div>
+
+        <div class="audience-profile">
+            <h4>🧪 Manufacturing Associate Profile</h4>
+            <div class="profile-factors">
+                <div class="profile-factor"><div class="dot"></div>Works in ISO 5–8 classified cleanroom environments</div>
+                <div class="profile-factor"><div class="dot"></div>Trained on cleaning SOPs (Breyanzi/S12) and gowning procedures</div>
+                <div class="profile-factor"><div class="dot"></div>Handles equipment decontamination and material transfers daily</div>
+                <div class="profile-factor"><div class="dot"></div>Faces time pressure during high-volume processing periods</div>
+                <div class="profile-factor"><div class="dot"></div>Uses Vesta-Syde, Spor-Klenz, and Septihol Sterile 70% IPA</div>
+                <div class="profile-factor"><div class="dot"></div>Executes single stroke technique (SST) for all surface wiping</div>
+                <div class="profile-factor"><div class="dot"></div>Transfers materials through passthroughs between ISO grade areas</div>
+                <div class="profile-factor"><div class="dot"></div>Works in CAR T-cell manufacturing — one lot equals one patient</div>
+            </div>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-num">Practice 1</div>
+            <h4>Following the Cleaning Sequence Completely</h4>
+            <p>Executing all required cleaning steps — disinfectant application, 10-minute contact time, SST wipe, IPA application — without skipping or shortcutting under time or workload pressure.</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 2</div>
+            <h4>Handling Materials at Grade Transitions</h4>
+            <p>Cleaning and managing plastic bags and singular items correctly when entering higher ISO classifications — complete surface coverage, physical segregation of cleaned and uncleaned items, and organized material flow during batch processing.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ PRACTICES & MILESTONES ═══════ -->
+<section id="practices" class="practices-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Practices & Milestones</div>
+            <div class="section-title">Milestone Progression</div>
+            <div class="section-subtitle">Each practice progresses through three milestone levels. Click an activity name to preview its objective, instructions, and outcomes.</div>
+        </div>
+
+        <div class="tab-bar" id="pracTabs">
+            <button class="tab-btn active" onclick="switchTab('pracTabs','pracContent','prac1')">Following the Cleaning Sequence</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac2')">Handling Materials at Grade Transitions</button>
+        </div>
+
+        <div id="pracContent">
+            <!-- PRACTICE 1 -->
+            <div class="tab-content active" id="prac1">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Apply disinfectant to all item surfaces using correct spray distance and coverage before IPA</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-2')">Complete the Full Decontamination Sequence <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Verify full 10-minute contact time using a timing device before wiping</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-5')">Confirm Contact Time with a Timing Device <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Stagger cleaning tasks across multiple items to sustain full sequence during high-volume periods</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-8')">Stagger Cleaning Tasks During High-Volume <span class="arrow">→</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 2 -->
+            <div class="tab-content" id="prac2">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Wipe all surfaces of bagged materials using single stroke technique before grade transition</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-2')">Wipe All Surfaces of Bagged Materials <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Segregate cleaned materials from uncleaned items at the staging area</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-5')">Separate Cleaned and Uncleaned Materials <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Organize clean-side and dirty-side material flow when processing multiple items through a grade transition</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-8')">Manage Material Flow During Batch Processing <span class="arrow">→</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ CORE ACTIVITIES: P1 ═══════ -->
+<section id="act-p1" class="activity-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Core Activities</div>
+            <div class="section-title">Practice 1 — Following the Cleaning Sequence</div>
+            <div class="section-subtitle">Three core activities progressing from basic sequence execution to advanced workflow management under volume pressure.</div>
+        </div>
+        <div class="tab-bar" id="actP1Tabs">
+            <button class="tab-btn active" onclick="switchTab('actP1Tabs','actP1Content','a-p1-2')">P1.2: Full Decontamination Sequence</button>
+            <button class="tab-btn" onclick="switchTab('actP1Tabs','actP1Content','a-p1-5')">P1.5: Confirm Contact Time</button>
+            <button class="tab-btn" onclick="switchTab('actP1Tabs','actP1Content','a-p1-8')">P1.8: Stagger Cleaning Tasks</button>
+        </div>
+        <div id="actP1Content"></div>
+    </div>
+</section>
+
+<!-- ═══════ CORE ACTIVITIES: P2 ═══════ -->
+<section id="act-p2" class="activity-section alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Core Activities</div>
+            <div class="section-title">Practice 2 — Handling Materials at Grade Transitions</div>
+            <div class="section-subtitle">Three core activities progressing from individual item technique to full batch flow management across grade transitions.</div>
+        </div>
+        <div class="tab-bar" id="actP2Tabs">
+            <button class="tab-btn active" onclick="switchTab('actP2Tabs','actP2Content','a-p2-2')">P2.2: Wipe All Surfaces</button>
+            <button class="tab-btn" onclick="switchTab('actP2Tabs','actP2Content','a-p2-5')">P2.5: Separate Clean & Uncleaned</button>
+            <button class="tab-btn" onclick="switchTab('actP2Tabs','actP2Content','a-p2-8')">P2.8: Manage Batch Flow</button>
+        </div>
+        <div id="actP2Content"></div>
+    </div>
+</section>
+
+
+
+<!-- ═══════ MODAL ═══════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="modal-close" onclick="closeModalDirect()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ═══════ COMMENTS ═══════ -->
+<button class="comment-toggle" id="commentToggle" title="Comments" style="position:relative">
+    💬
+    <span class="comment-count" id="commentCount" style="display:none">0</span>
+</button>
+<div class="comment-panel" id="commentPanel">
+    <div class="comment-panel-header">Comments &amp; Feedback</div>
+    <div class="comment-panel-content" id="commentsList">
+        <div class="no-comments">No comments yet. Add the first one!</div>
+    </div>
+    <div class="comment-form">
+        <button class="export-comments-btn" id="exportComments">📥 Export Comments</button>
+        <form id="commentForm">
+            <div class="comment-form-group">
+                <label for="commentAuthor">Your Name</label>
+                <input type="text" id="commentAuthor" required placeholder="Enter your name">
+            </div>
+            <div class="comment-form-group">
+                <label for="commentSection">Section</label>
+                <select id="commentSection" required>
+                    <option value="">Select a section…</option>
+                    <option value="intro">Intro</option>
+                    <option value="overview">Overview</option>
+                    <option value="practices">Practices & Milestones</option>
+                    <option value="act-p1">Activities: Practice 1</option>
+                    <option value="act-p2">Activities: Practice 2</option>
+                    <option value="general">General Feedback</option>
+                </select>
+            </div>
+            <div class="comment-form-group">
+                <label for="commentText">Comment</label>
+                <textarea id="commentText" required placeholder="Share your feedback or suggestions…"></textarea>
+            </div>
+            <div class="comment-form-actions">
+                <button type="button" class="comment-btn comment-btn-secondary" id="cancelComment">Cancel</button>
+                <button type="submit" class="comment-btn comment-btn-primary">Add Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// ═══════ ACTIVITY DATA ═══════
+const activities = {
+'p1-2': {
+    name: 'Complete the Full Decontamination Sequence',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Execute the complete disinfectant-then-IPA decontamination sequence on equipment, applying disinfectant to all surfaces with proper spray distance and coverage.',
+    instructions: `<p>Every step in the decontamination sequence exists for a reason — skipping or rushing one doesn't save time, it creates risk. One lot equals one patient.</p>
+<p>For your next 2–3 equipment cleaning tasks, focus on completing the full decontamination sequence in order:</p>
+<ol>
+<li><strong>Spray disinfectant (Vesta-Syde or Spor-Klenz) to all surfaces of the item</strong> — hold the spray bottle 6–8 inches from the surface and work systematically around the item so every side gets full, even coverage. Pay attention to the underside, edges, and any recessed areas.
+<div class="example-good">✅ Rotating the item and spraying each face deliberately, including the bottom and hard-to-reach spots</div>
+<div class="example-bad">❌ Quick spray from one angle and moving on — leaves uncovered surfaces</div>
+</li>
+<li><strong>Allow the full 10-minute wet contact time.</strong> Don't wipe early.</li>
+<li><strong>Wipe using single stroke technique (SST)</strong> — fold the wipe, use one clean face per stroke, work from cleanest to dirtiest surface.</li>
+<li><strong>Apply Septihol Sterile 70% IPA to all surfaces</strong> and allow to air dry before use or transfer.</li>
+</ol>
+<p>⚠️ If you're unsure whether you've covered all surfaces, go back and re-spray rather than proceeding with gaps.</p>`,
+    outcomes: [
+        { type: 'success', text: 'I completed all four steps in order on every item and covered all surfaces including hard-to-reach areas' },
+        { type: 'mixed', text: 'I completed the sequence but realized I missed some surfaces or rushed coverage on at least one item' },
+        { type: 'struggle', text: 'I shortened or skipped steps on one or more items due to pace or pressure' }
+    ],
+    questions: [
+        'Describe the surfaces that were hardest to cover completely and how you handled them',
+        'If you shortened or adjusted any step, describe what prompted that decision'
+    ]
+},
+'p1-5': {
+    name: 'Confirm Contact Time with a Timing Device',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Use a wall clock or timer to verify the full 10-minute wet contact time on every item before wiping, rather than estimating.',
+    instructions: `<p>Estimating contact time is one of the most common shortcuts — it feels like 10 minutes, but under production pressure, estimates drift shorter. The SOP requires you to measure contact time with a calibrated timing device.</p>
+<p>For your next 2–3 equipment decontamination tasks, focus specifically on how you track the 10-minute contact time:</p>
+<ol>
+<li><strong>After applying disinfectant, immediately note the start time</strong> using a wall clock or timer. Say it to yourself or note it mentally — "disinfectant on at 10:14."
+<div class="example-good">✅ Checking the wall clock right after spraying and registering the start time</div>
+<div class="example-bad">❌ Spraying and moving on to other tasks without marking a start time — you'll lose track</div>
+</li>
+<li><strong>Before wiping, check the clock again to confirm 10 full minutes have passed.</strong> If you're not sure when you started, wait longer rather than wiping early.
+<div class="example-good">✅ "Started at 10:14, it's 10:24 — contact time is met, wiping now"</div>
+<div class="example-bad">❌ "It's been a while, probably long enough" — this is estimating, not confirming</div>
+</li>
+<li><strong>Complete the remaining steps</strong> — wipe with SST, apply IPA, allow to air dry.</li>
+</ol>
+<p>If you're cleaning multiple items, stagger your start times so you can verify each one individually rather than grouping them into a rough estimate.</p>`,
+    outcomes: [
+        { type: 'success', text: 'I checked a clock or timer at both the start and end of contact time for every item' },
+        { type: 'mixed', text: 'I used a clock for some items but estimated on others, especially when busy' },
+        { type: 'struggle', text: 'I mostly estimated contact time without checking a clock or timer' }
+    ],
+    questions: [
+        'Describe how you tracked the start time — what method did you use and did anything make it difficult?',
+        'When you did estimate instead of checking, describe what was happening at that moment'
+    ]
+},
+'p1-8': {
+    name: 'Stagger Cleaning Tasks During High-Volume Periods',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Organize your cleaning workflow across multiple items so that contact times, wipe steps, and IPA applications overlap without any step getting shortened or skipped.',
+    instructions: `<p>During high-volume cleaning periods, the pressure to move faster is real. The technique isn't to speed up individual steps — it's to organize your workflow so you're always doing productive work while contact time runs on another item.</p>
+<p>For your next high-volume cleaning session (3+ items), deliberately plan your sequence:</p>
+<ol>
+<li><strong>Before starting, look at all the items you need to clean and plan a stagger.</strong> Decide which item you'll start with and how you'll overlap.
+<div class="example-good">✅ "I have five items. I'll spray the first two, then start wiping the first while the second sits. By the time I finish wiping the first and IPA it, the second is ready."</div>
+<div class="example-bad">❌ Spraying everything at once and trying to remember when each one started — you'll lose track and end up estimating</div>
+</li>
+<li><strong>Start the stagger: apply disinfectant to your first item, note the time, then move to the next item</strong> rather than standing idle during contact time.</li>
+<li><strong>Return to each item at its verified 10-minute mark</strong> — check the clock, confirm time is met, then wipe with SST and apply IPA. Don't batch-wipe multiple items at once unless you've confirmed each one's contact time individually.</li>
+<li><strong>If you fall behind or lose track of timing on any item, re-spray and restart that item's contact time</strong> rather than proceeding with uncertain timing.</li>
+</ol>`,
+    outcomes: [
+        { type: 'success', text: 'I planned and maintained a stagger across all items, verified each contact time individually, and completed every step' },
+        { type: 'mixed', text: 'I started staggering but lost track of timing or sequence on some items as volume picked up' },
+        { type: 'struggle', text: "I didn't stagger — I either did items one at a time or rushed through them without a plan" }
+    ],
+    questions: [
+        'Describe how you organized your stagger — how many items, what sequence, and how you tracked timing across them',
+        'Describe what made it hardest to maintain the full sequence during this session'
+    ]
+},
+'p2-2': {
+    name: 'Wipe All Surfaces of Bagged Materials',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Use single stroke technique to wipe all surfaces of bagged materials completely before moving them into a higher ISO classification area.',
+    instructions: `<p>Bagged materials have to be fully wiped before they move to a higher grade area. The common shortcut is wiping only the top and sides — the bottom, seams, and folds get missed.</p>
+<p>For your next 2–3 material transfers into a higher grade area, focus on wiping every surface:</p>
+<ol>
+<li><strong>Pick up the bagged item and wipe all six faces</strong> — top, bottom, front, back, and both sides. Use SST: fold the wipe, one clean face per stroke, unidirectional strokes from clean to dirty.
+<div class="example-good">✅ Lifting the bag off the surface, flipping or rotating it, and wiping each face with a fresh side of the wipe</div>
+<div class="example-bad">❌ Wiping the top and sides while the bag sits on the table — the bottom and contact surface never get cleaned</div>
+</li>
+<li><strong>Pay attention to seams, folds, and gathered areas</strong> where the bag bunches. Smooth these out and wipe through them.
+<div class="example-good">✅ Pulling the bag taut at folds so the wipe contacts the full surface</div>
+<div class="example-bad">❌ Wiping over bunched plastic — the wipe rides over the folds without contacting the surface underneath</div>
+</li>
+<li><strong>Use a new wipe for each item</strong> — don't reuse wipes between different bagged materials.</li>
+</ol>`,
+    outcomes: [
+        { type: 'success', text: 'I wiped all surfaces of every bagged item including the bottom, seams, and folds, using a new wipe each time' },
+        { type: 'mixed', text: 'I wiped most surfaces but realized I missed the bottom or folds on at least one item' },
+        { type: 'struggle', text: 'I wiped quickly without checking for full coverage — some items were only partially wiped' }
+    ],
+    questions: [
+        'Describe which surfaces were hardest to cover completely and what made them difficult',
+        'If you reused a wipe between items or skipped any surface, describe what was happening at that moment'
+    ]
+},
+'p2-5': {
+    name: 'Separate Cleaned and Uncleaned Materials at Staging',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Maintain clear physical separation between cleaned and uncleaned materials at your staging area, so cleaned items never contact uncleaned surfaces.',
+    instructions: `<p>Cross-contamination at the staging area is one of the easiest mistakes to make — you clean an item, then set it down right where uncleaned items have been sitting. The SOP is clear: the sanitized side of material must not be placed on the same surface where the unsanitized side was resting.</p>
+<p>For your next 2–3 material transfer sessions, focus on how you organize your staging area:</p>
+<ol>
+<li><strong>Before you begin, designate a "clean side" and a "dirty side"</strong> of your work surface. If possible, use a physical marker — a wipe laid flat, tape, or separate table sections.
+<div class="example-good">✅ "Left side is uncleaned materials waiting to be wiped. Right side is cleaned materials ready to transfer. Nothing crosses."</div>
+<div class="example-bad">❌ Cleaning items and placing them back in the same pile or on the same surface where uncleaned items were sitting</div>
+</li>
+<li><strong>After wiping each item, place it on the clean side only.</strong> Don't set it down temporarily on the dirty side while you reach for the next item.</li>
+<li><strong>If your clean surface becomes crowded, transfer cleaned items through</strong> rather than stacking them near uncleaned materials. Don't let volume pressure collapse your separation.
+<div class="example-good">✅ Moving cleaned items into the passthrough when the clean zone fills up, keeping the separation intact</div>
+<div class="example-bad">❌ Piling cleaned and uncleaned items together because "I'll remember which ones are done"</div>
+</li>
+</ol>`,
+    outcomes: [
+        { type: 'success', text: 'I maintained clear separation between cleaned and uncleaned materials throughout every transfer session' },
+        { type: 'mixed', text: 'I set up separation but it broke down at some point — cleaned items contacted uncleaned surfaces or I lost track' },
+        { type: 'struggle', text: "I didn't set up a clean/dirty separation — I cleaned and placed items without a system" }
+    ],
+    questions: [
+        'Describe how you set up your clean and dirty sides — what did your staging area look like?',
+        'If separation broke down, describe what was happening when it did'
+    ]
+},
+'p2-8': {
+    name: 'Manage Material Flow During Batch Processing',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Organize a clean-side/dirty-side material flow system when processing multiple items through a grade transition, keeping cleaned and uncleaned materials segregated throughout the entire batch.',
+    instructions: `<p>When you're processing a large batch of materials through a grade transition, individual item technique isn't enough — you need a flow system that keeps the whole batch organized. The risk multiplies with volume: more items means more chances for a cleaned item to contact an uncleaned surface.</p>
+<p>For your next batch processing session (4+ items through a grade transition), plan your flow before you start:</p>
+<ol>
+<li><strong>Set up a one-directional flow: dirty staging → cleaning station → clean staging → passthrough.</strong> Materials should only move forward in this sequence, never backwards.
+<div class="example-good">✅ "Uncleaned items start on the left cart. I wipe at the table in the center. Cleaned items go on the right cart, then into the passthrough."</div>
+<div class="example-bad">❌ Pulling from a mixed pile, cleaning, and placing back near the same pile — items move in all directions</div>
+</li>
+<li><strong>Process items one at a time through the flow.</strong> Pick up from the dirty side, wipe completely (all surfaces, SST, new wipe per item), place on the clean side. Don't stage partially-wiped items.</li>
+<li><strong>Keep the clean staging area clear by transferring cleaned items through the passthrough regularly</strong> rather than letting them accumulate.
+<div class="example-good">✅ Transferring every 3–4 cleaned items through the passthrough, keeping the clean zone manageable</div>
+<div class="example-bad">❌ Cleaning the entire batch first then transferring all at once — the clean area overflows and clean items risk contacting dirty surfaces</div>
+</li>
+<li><strong>If you're interrupted mid-batch, clearly mark where you stopped</strong> in the flow so you (or someone else) can see which items are cleaned and which aren't.</li>
+</ol>`,
+    outcomes: [
+        { type: 'success', text: 'I set up a one-directional flow, maintained segregation throughout the batch, and transferred cleaned items regularly' },
+        { type: 'mixed', text: 'I set up a flow but segregation broke down mid-batch — items moved backward or clean/dirty zones blurred' },
+        { type: 'struggle', text: "I processed items without a planned flow — I cleaned and placed them without a consistent system" }
+    ],
+    questions: [
+        'Describe your flow setup — where were your dirty, cleaning, and clean zones, and how many items did you process?',
+        'Describe what made it hardest to maintain the flow, or what caused it to break down'
+    ]
+}
+};
+
+// ═══════ RENDER ACTIVITY CARDS ═══════
+function renderActivityCard(key) {
+    const a = activities[key];
+    if (!a) return '<p>Activity not found.</p>';
+    return `<div class="activity-display">
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon objective">🎯</div>
+                <div class="activity-block-label">Objective</div>
+            </div>
+            <div class="activity-name-display">${a.name}</div>
+            <div class="activity-difficulty ${a.diffClass}">${a.difficulty}</div>
+            <div class="activity-objective-text">${a.objective}</div>
+        </div>
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon instructions">📋</div>
+                <div class="activity-block-label">Instructions</div>
+            </div>
+            <div class="instructions-content">${a.instructions}</div>
+        </div>
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon outcomes">📊</div>
+                <div class="activity-block-label">Report the Outcome</div>
+            </div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item ${o.type}">
+                        <div class="outcome-dot ${o.type}"></div>
+                        <div>${o.text}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon questions">❓</div>
+                <div class="activity-block-label">Freeform Questions</div>
+            </div>
+            <div class="instructions-content">
+                <ol style="margin: 0; padding-left: 24px;">
+                    ${a.questions.map(q => `<li style="margin-bottom: 12px;">${q}</li>`).join('')}
+                </ol>
+            </div>
+        </div>
+    </div>`;
+}
+
+// Populate activity tab containers
+const activitySections = {
+    'actP1Content': [['a-p1-2','p1-2'],['a-p1-5','p1-5'],['a-p1-8','p1-8']],
+    'actP2Content': [['a-p2-2','p2-2'],['a-p2-5','p2-5'],['a-p2-8','p2-8']]
+};
+
+Object.entries(activitySections).forEach(([containerId, tabs]) => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = tabs.map((t, i) =>
+        `<div class="tab-content${i === 0 ? ' active' : ''}" id="${t[0]}">${renderActivityCard(t[1])}</div>`
+    ).join('');
+});
+
+// ═══════ TAB SWITCHING ═══════
+function switchTab(tabBarId, contentId, activeTabId) {
+    const bar = document.getElementById(tabBarId);
+    const contentContainer = document.getElementById(contentId);
+    bar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(activeTabId).classList.add('active');
+}
+
+// ═══════ MODAL ═══════
+function openModal(key) {
+    const a = activities[key];
+    if (!a) return;
+    document.getElementById('modalTitle').textContent = a.name;
+    document.getElementById('modalBody').innerHTML = `
+        <div class="modal-section">
+            <div class="modal-section-label">Objective</div>
+            <div class="modal-objective">🎯 ${a.objective}</div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-label">Instructions</div>
+            <div class="instructions-content">${a.instructions}</div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-label">Report the Outcome</div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item ${o.type}">
+                        <div class="outcome-dot ${o.type}"></div>
+                        <div>${o.text}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-label">Freeform Questions</div>
+            <ol style="margin: 0; padding-left: 24px; color: var(--text-body);">
+                ${a.questions.map(q => `<li style="margin-bottom: 12px;">${q}</li>`).join('')}
+            </ol>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// ═══════ NAVIGATION ═══════
+function scrollToSection(e, id) {
+    e.preventDefault();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+function updateActiveNav() {
+    let current = '';
+    sections.forEach(s => { if (window.pageYOffset >= s.offsetTop - 180) current = s.id; });
+    navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === `#${current}`) l.classList.add('active');
+    });
+}
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
+
+// ═══════ COMMENTS SYSTEM ═══════
+const commentToggle = document.getElementById('commentToggle');
+const commentPanel = document.getElementById('commentPanel');
+const commentForm = document.getElementById('commentForm');
+const commentsList = document.getElementById('commentsList');
+const commentCount = document.getElementById('commentCount');
+const cancelComment = document.getElementById('cancelComment');
+const exportBtn = document.getElementById('exportComments');
+const STORAGE_KEY = 'bms_initiative_comments';
+
+function loadComments() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+function saveComments(c) { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); }
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+function formatDate(ts) {
+    const d = new Date(ts), n = new Date(), m = Math.floor((n - d) / 60000);
+    if (m < 1) return 'Just now';
+    if (m < 60) return m + ' min ago';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ago';
+    const dy = Math.floor(h / 24);
+    if (dy < 7) return dy + 'd ago';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+const sectionLabels = {
+    'intro':'Intro','overview':'Overview','practices':'Practices & Milestones',
+    'act-p1':'Activities: Practice 1','act-p2':'Activities: Practice 2',
+    'general':'General Feedback'
+};
+function renderComments() {
+    const comments = loadComments();
+    if (!comments.length) {
+        commentsList.innerHTML = '<div class="no-comments">No comments yet. Add the first one!</div>';
+        commentCount.style.display = 'none';
+    } else {
+        commentCount.style.display = 'flex';
+        commentCount.textContent = comments.length;
+        commentsList.innerHTML = comments.map((c, i) => `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div>
+                        <div class="comment-author">${escapeHtml(c.author)}</div>
+                        <span class="comment-section-tag">${sectionLabels[c.section] || c.section}</span>
+                    </div>
+                    <button class="comment-delete" onclick="deleteComment(${i})">🗑️</button>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+                <div class="comment-time">${formatDate(c.timestamp)}</div>
+            </div>
+        `).join('');
+    }
+}
+commentToggle.addEventListener('click', () => {
+    commentPanel.classList.toggle('open');
+    commentToggle.classList.toggle('active');
+});
+cancelComment.addEventListener('click', () => {
+    commentForm.reset();
+    commentPanel.classList.remove('open');
+    commentToggle.classList.remove('active');
+});
+commentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const a = document.getElementById('commentAuthor').value.trim();
+    const s = document.getElementById('commentSection').value;
+    const t = document.getElementById('commentText').value.trim();
+    if (!a || !s || !t) return;
+    const c = loadComments();
+    c.unshift({ author: a, section: s, text: t, timestamp: Date.now() });
+    saveComments(c); renderComments(); commentForm.reset();
+    const btn = commentForm.querySelector('button[type="submit"]');
+    const orig = btn.textContent; btn.textContent = '✓ Added!'; btn.style.background = 'var(--bms-green)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+});
+window.deleteComment = function(i) {
+    if (!confirm('Delete this comment?')) return;
+    const c = loadComments(); c.splice(i, 1); saveComments(c); renderComments();
+};
+exportBtn.addEventListener('click', () => {
+    const comments = loadComments();
+    if (!comments.length) { alert('No comments to export.'); return; }
+    let txt = 'BMS EQUIPMENT CLEANING BEHAVIORS PILOT INITIATIVE\nComments & Feedback Export\n' + '='.repeat(50) + '\n';
+    txt += `Generated: ${new Date().toLocaleString()}\nTotal: ${comments.length}\n` + '='.repeat(50) + '\n\n';
+    comments.forEach((c, i) => {
+        txt += `#${i+1} | ${c.author} | ${sectionLabels[c.section]||c.section} | ${new Date(c.timestamp).toLocaleString()}\n${c.text}\n` + '-'.repeat(50) + '\n\n';
+    });
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `BMS_Initiative_Comments_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    const orig = exportBtn.textContent; exportBtn.textContent = '✓ Exported!'; exportBtn.style.background = 'var(--bms-green)';
+    setTimeout(() => { exportBtn.textContent = orig; exportBtn.style.background = ''; }, 2000);
+});
+renderComments();
+</script>
+</body>
+</html>
