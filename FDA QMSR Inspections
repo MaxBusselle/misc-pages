@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDA Inspection of Medical Device Manufacturers - CP 7382.850</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        h1 { color: #003366; border-bottom: 2px solid #003366; }
+        h2 { color: #005588; margin-top: 30px; border-bottom: 1px solid #ccc; }
+        h3 { color: #0077aa; }
+        .summary-box { background-color: #f4f4f4; padding: 15px; border-left: 5px solid #003366; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #003366; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .footer { margin-top: 50px; font-size: 0.8em; color: #666; border-top: 1px solid #ccc; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Inspection of Medical Device Manufacturers</h1>
+        <p><strong>Compliance Program 7382.850</strong></p>
+        <p><em>Implementation Date: February 2, 2026</em></p>
+    </header>
+
+    <div class="summary-box">
+        <strong>Program Scope:</strong> This program provides instruction for FDA staff regarding inspections and enforcement activities related to the Quality Management System Regulation (QMSR), Medical Device Reporting (MDR), and other statutory requirements[cite: 26, 29, 31].
+    </div>
+
+    <h2>1. Risk-Based Inspection Strategy</h2>
+    <p>FDA inspections focus on <strong>Patients and Users</strong> at the center of the risk management framework[cite: 361]. The risk-based process organizes requirements into six QMS Areas and four Other Applicable FDA Requirements (OAFRs)[cite: 342].</p>
+
+    <h3>Primary Inspection Models</h3>
+    <ul>
+        <li><strong>Model 1:</strong> Used for non-baseline surveillance, compliance follow-ups, and for-cause inspections. Requires evaluation of at least one element in each QMS Area and OAFR[cite: 368, 514].</li>
+        <li><strong>Model 2:</strong> Used for baseline surveillance and PMA preapproval inspections. Requires evaluation of specific, comprehensive elements in each QMS Area[cite: 368, 514].</li>
+    </ul>
+
+    <h2>2. Inspection Classification Codes (PACs)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Inspection Type</th>
+                <th>Product/Assignment Code (PAC)</th>
+                <th>Model Used</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Non-baseline Surveillance</td>
+                <td>82850A / 42850A</td>
+                <td>Model 1</td>
+            </tr>
+            <tr>
+                <td>Baseline Surveillance</td>
+                <td>82850B / 42850B</td>
+                <td>Model 2</td>
+            </tr>
+            <tr>
+                <td>Compliance Follow-up</td>
+                <td>82850C / 42850C</td>
+                <td>Model 1</td>
+            </tr>
+            <tr>
+                <td>For-Cause Inspections</td>
+                <td>82850G</td>
+                <td>Model 1</td>
+            </tr>
+            <tr>
+                <td>PMA Preapproval</td>
+                <td>83850</td>
+                <td>Model 2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Regulatory and Administrative Strategy</h2>
+    <p>The FDA’s primary goal is to obtain prompt voluntary correction of violations to reduce risks to public health[cite: 1044]. However, when significant violations are found, the following classifications apply:</p>
+    <ul>
+        <li><strong>No Action Indicated (NAI):</strong> No objectionable conditions were observed[cite: 1130].</li>
+        <li><strong>Voluntary Action Indicated (VAI):</strong> Objectionable conditions were documented but do not meet the threshold for regulatory action[cite: 1131].</li>
+        <li><strong>Official Action Indicated (OAI):</strong> Serious violations were found, and advisory, administrative, or judicial action is recommended[cite: 1132].</li>
+    </ul>
+
+    <h3>Corrective Action Timelines</h3>
+    <p>Manufacturers should submit written corrective action plans within <strong>15 business days</strong> after the inspection closes[cite: 1136].</p>
+
+    <h2>4. Special Considerations</h2>
+    <h3>Cybersecurity</h3>
+    <p>Manufacturers of "cyber devices" must comply with specific requirements under section 524B of the FD&C Act to ensure device security and functionality[cite: 196, 826].</p>
+
+    <h3>PMA Preapproval</h3>
+    <p>Approval of a Premarket Approval (PMA) application can be denied if a manufacturer does not conform to the requirements of the Quality Management System Regulation[cite: 120].</p>
+
+    <div class="footer">
+        <p>Source: FOOD AND DRUG ADMINISTRATION COMPLIANCE PROGRAM MANUAL 7382.850 [cite: 1, 2, 6]</p>
+        <p>This document is for informational purposes for web publication based on official FDA guidance issued Feb 2, 2026[cite: 8].</p>
+    </div>
+
+</body>
+</html>
