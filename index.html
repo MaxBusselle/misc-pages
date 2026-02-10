@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QMSR Material Additions Beyond ISO 13485</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --slate-blue: #4A6D8C;
+            --slate-blue-dark: #3A5A75;
+            --orange: #E8923A;
+            --orange-light: #F5A54D;
+            --white: #ffffff;
+            --off-white: #F8F9FA;
+            --light-gray: #E9ECEF;
+            --text-dark: #2C3E50;
+            --text-muted: #6C757D;
+            --red: #DC3545;
+            --green: #28A745;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--slate-blue);
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .intro-box {
+            background: rgba(74, 109, 140, 0.1);
+            border-left: 4px solid var(--slate-blue);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .intro-box p {
+            margin: 0;
+            font-size: 1.05rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--slate-blue);
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-number {
+            background: var(--orange);
+            color: var(--white);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            color: var(--slate-blue);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .quote-box {
+            background: rgba(232, 146, 58, 0.1);
+            border-left: 4px solid var(--orange);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+        
+        .source {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: 500;
+        }
+        
+        .requirement-box {
+            background: var(--off-white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .requirement-box h4 {
+            color: var(--slate-blue);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .requirement-label {
+            background: var(--slate-blue);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        strong {
+            color: var(--slate-blue);
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background: rgba(232, 146, 58, 0.15);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, var(--slate-blue) 0%, var(--slate-blue-dark) 100%);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        
+        .summary-box h3 {
+            color: var(--white);
+            margin-top: 0;
+        }
+        
+        .summary-box strong {
+            color: var(--orange);
+        }
+        
+        .summary-box ul {
+            margin-top: 15px;
+        }
+        
+        .summary-box li {
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--light-gray);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        a {
+            color: var(--slate-blue);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QMSR Material Additions Beyond ISO 13485</h1>
+        <p class="subtitle">The Two Areas Where QMSR Adds Requirements to the ISO Standard</p>
+        
+        <div class="intro-box">
+            <p>While QMSR incorporates ISO 13485:2016 by reference, there are only <strong>two areas</strong> where FDA adds material requirements beyond what ISO 13485 already requires: <strong>Control of Records (§ 820.35)</strong> and <strong>Controls for Device Labeling and Packaging (§ 820.45)</strong>.</p>
+        </div>
+
+        <h2><span class="section-number">1</span>§ 820.35 - Control of Records</h2>
+        
+        <div class="quote-box">
+            <p><strong>From the QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024, Comment 52 (pages 7513-7514):</strong></p>
+            <p style="margin-top: 15px;">"FDA considers the additional requirements specified in § 820.35 (i.e., requirements that are not specified in ISO 13485) regarding control of records to be necessary to implement a QMSR that is consistent with applicable statutory and regulatory requirements."</p>
+        </div>
+
+        <p>Section 820.35 adds requirements <em>in addition to</em> ISO 13485 Clause 4.2.5 (Control of Records). These additions tie ISO 13485 record requirements to specific FDA regulations.</p>
+
+        <h3>What's Added</h3>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.35(a)</span> Complaint Records</h4>
+            <p>Must capture information required by <strong>21 CFR Part 803 (Medical Device Reporting)</strong> on complaint records.</p>
+            <ul>
+                <li>Specific data points for reportable events</li>
+                <li>Name and contact information of complainant</li>
+                <li>Investigation records and justification if not investigated</li>
+                <li>Any correction or corrective action taken</li>
+            </ul>
+        </div>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.35(b)</span> Servicing Records</h4>
+            <p>Must capture <strong>Part 803 information</strong> on servicing activity records.</p>
+            <ul>
+                <li>Date of service</li>
+                <li>Individual performing service</li>
+                <li>Service report contents</li>
+                <li>Test and inspection data conducted during servicing</li>
+            </ul>
+        </div>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.35(c)</span> UDI Documentation</h4>
+            <p>Must document the <strong>Unique Device Identifier (UDI)</strong> for each medical device or batch in accordance with <strong>21 CFR Part 830</strong>.</p>
+            <ul>
+                <li>UDI recorded in device history record or equivalent</li>
+                <li>Compliance with Part 830 labeling requirements</li>
+            </ul>
+        </div>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.35 (general)</span> Confidentiality</h4>
+            <p>Retains clarification from old § 820.180 about how FDA protects records under <strong>21 CFR Part 20</strong>.</p>
+            <p style="margin-top: 10px; font-size: 0.95rem; color: var(--text-muted);">This explains how FDA handles confidential commercial information obtained during inspections.</p>
+        </div>
+
+        <h3>Why This Matters</h3>
+        <p>ISO 13485 requires record control but doesn't specify these FDA-specific data elements. Section 820.35 ensures that quality system records capture the information needed to comply with other FDA regulations (MDR, UDI, confidentiality).</p>
+
+        <h2><span class="section-number">2</span>§ 820.45 - Controls for Device Labeling and Packaging</h2>
+
+        <div class="quote-box">
+            <p><strong>From the QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024, Comment 60 (page 7515):</strong></p>
+            <p style="margin-top: 15px;">"FDA agrees that ISO 13485 does not specifically address the inspection of labeling by the manufacturer, which is why FDA is retaining in this rule requirements from the QS regulation that strengthen controls for labeling and packaging operations."</p>
+        </div>
+
+        <p>Section 820.45 adds requirements <em>in addition to</em> ISO 13485 Clause 7.5.1 (Control of Production and Service Provision). FDA notes that "many device recalls are related to labeling and packaging" and wants explicit inspection requirements.</p>
+
+        <h3>What's Added</h3>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.45(a)</span> Labeling Inspection Requirements</h4>
+            <p>Manufacturers must <strong>inspect</strong> labeling and packaging for accuracy prior to release or storage, including verification of:</p>
+            <ol>
+                <li><strong>Label integrity and accuracy</strong> - correct label applied to correct device</li>
+                <li><strong>Expiration date</strong> - properly displayed and accurate</li>
+                <li><strong>Storage instructions</strong> - complete and correct</li>
+                <li><strong>Handling instructions</strong> - complete and correct</li>
+                <li><strong>Additional processing instructions</strong> - any other required information (see 21 CFR Part 801)</li>
+            </ol>
+        </div>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.45(b)</span> Release Documentation</h4>
+            <p>Release of labeling for use must be <strong>documented</strong> in accordance with ISO 13485 Clause 4.2.5 (Control of Records).</p>
+        </div>
+
+        <div class="requirement-box">
+            <h4><span class="requirement-label">§ 820.45(c)</span> Inspection Documentation</h4>
+            <p>Results of the labeling inspection must be <strong>documented</strong> in accordance with ISO 13485 Clause 4.2.5.</p>
+            <p style="margin-top: 10px; font-size: 0.95rem; color: var(--text-muted);">This ensures there is a record that inspection occurred and what the results were.</p>
+        </div>
+
+        <h3>Why This Matters</h3>
+        <p>ISO 13485 Clause 7.5.1(e) states that "defined operations for labelling and packaging shall be implemented" but doesn't mandate specific inspection activities. The FDA requirement explicitly requires:</p>
+        <ul>
+            <li><strong>Physical inspection</strong> of labels before use</li>
+            <li><strong>Verification</strong> of specific elements (expiration, storage, handling)</li>
+            <li><strong>Documentation</strong> that inspection occurred and passed</li>
+        </ul>
+
+        <p style="margin-top: 20px;">FDA noted in the preamble that automated readers alone are insufficient - there must be human oversight to verify specifics like control numbers and expiration dates that may not be checked by automated systems.</p>
+
+        <div class="summary-box">
+            <h3>Summary</h3>
+            <p><strong>These are the only two sections where QMSR materially adds requirements beyond ISO 13485.</strong></p>
+            
+            <p style="margin-top: 20px;"><strong>Records (§ 820.35):</strong> Ties ISO 13485 record requirements to specific FDA regulations:</p>
+            <ul>
+                <li>Part 803 (Medical Device Reporting)</li>
+                <li>Part 830 (Unique Device Identification)</li>
+                <li>Part 20 (Public Information)</li>
+            </ul>
+            
+            <p style="margin-top: 20px;"><strong>Labeling (§ 820.45):</strong> Adds explicit inspection and documentation requirements that ISO 13485 Clause 7.5.1 doesn't specifically mandate:</p>
+            <ul>
+                <li>Required inspection of labels before release</li>
+                <li>Specific elements to verify (expiration, storage, handling instructions)</li>
+                <li>Documentation of inspection and release</li>
+            </ul>
+
+            <p style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">Everything else in QMSR is either:</p>
+            <ul>
+                <li>Direct incorporation of ISO 13485 by reference</li>
+                <li>Clarification of concepts (not new requirements)</li>
+                <li>Removal of old QSR sections</li>
+                <li>Conforming edits to align terminology</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><strong>Sources:</strong></p>
+            <ul style="margin-top: 10px;">
+                <li>QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024, Comments 52 and 60</li>
+                <li><a href="https://www.federalregister.gov/documents/2024/02/02/2024-01709/medical-devices-quality-system-regulation-amendments" target="_blank">Full QMSR Final Rule (Federal Register)</a></li>
+            </ul>
+            <p style="margin-top: 20px;">Effective Date: February 2, 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
