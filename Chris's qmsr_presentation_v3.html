@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QMSR in Action</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --slate-blue: #4A6D8C;
+            --slate-blue-dark: #3A5A75;
+            --orange: #E8923A;
+            --orange-light: #F5A54D;
+            --white: #ffffff;
+            --off-white: #F8F9FA;
+            --light-gray: #E9ECEF;
+            --text-dark: #2C3E50;
+            --text-muted: #6C757D;
+            --red: #DC3545;
+            --green: #28A745;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: baseline;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-logo .qmsr { color: var(--slate-blue); }
+        .nav-logo .in { color: var(--orange); font-style: italic; font-weight: 400; margin: 0 2px; }
+        .nav-logo .action { color: var(--slate-blue); }
+        
+        .nav-links { display: flex; gap: 6px; }
+        
+        .nav-link {
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover { background: var(--light-gray); color: var(--slate-blue); }
+        .nav-link.active { background: var(--slate-blue); color: var(--white); }
+        
+        section {
+            min-height: 100vh;
+            padding: 100px 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--slate-blue) 0%, var(--slate-blue-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border: 3px solid rgba(232, 146, 58, 0.3);
+            border-radius: 50%;
+            transform: rotate(-15deg);
+        }
+        
+        .logo { margin-bottom: 30px; position: relative; }
+        
+        .logo-text {
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .logo-text .qmsr { color: var(--white); }
+        .logo-text .in { color: var(--orange); font-style: italic; font-weight: 400; font-size: 3.5rem; margin: 0 5px; }
+        .logo-text .action { color: var(--white); }
+        
+        .logo-swoosh {
+            position: absolute;
+            top: -15px;
+            right: -30px;
+            width: 200px;
+            height: 80px;
+            border: 4px solid var(--orange);
+            border-radius: 50%;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            transform: rotate(-25deg);
+        }
+        
+        .tagline { font-size: 1.4rem; font-weight: 300; opacity: 0.9; margin-bottom: 50px; font-style: italic; }
+        
+        .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 40px; }
+        .hero-stat { text-align: center; }
+        .hero-stat-number { font-size: 3rem; font-weight: 700; color: var(--orange); }
+        .hero-stat-label { font-size: 0.9rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Section Headers */
+        .section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+        
+        .section-number {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 700;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        
+        .section-number.problem { background: linear-gradient(135deg, var(--red), #C82333); }
+        .section-number.solution { background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark)); }
+        .section-number.proof { background: linear-gradient(135deg, var(--green), #1E7E34); }
+        
+        .section-title { font-size: 2.2rem; font-weight: 300; }
+        .section-title.problem { color: var(--red); }
+        .section-title.solution { color: var(--slate-blue); }
+        .section-title.proof { color: var(--green); }
+        
+        /* Problem Section */
+        .problem-section { background: var(--white); }
+        .problem-flow { display: flex; flex-direction: column; gap: 30px; }
+        
+        .problem-step {
+            display: flex; align-items: flex-start; gap: 30px;
+            padding: 30px;
+            background: var(--off-white);
+            border-radius: 16px;
+            border-left: 5px solid var(--red);
+        }
+        
+        .problem-icon {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(220,53,69,0.15), rgba(220,53,69,0.05));
+            border: 2px solid rgba(220,53,69,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .problem-content h3 { color: var(--red); font-size: 1.3rem; margin-bottom: 10px; }
+        .problem-content p { color: var(--text-muted); margin-bottom: 15px; }
+        .problem-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+        
+        .chip {
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .chip.problem { background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: var(--red); }
+        .chip.solution { background: rgba(74,109,140,0.1); border: 1px solid rgba(74,109,140,0.3); color: var(--slate-blue); }
+        .chip.proof { background: rgba(40,167,69,0.1); border: 1px solid rgba(40,167,69,0.3); color: var(--green); }
+        
+        .problem-callout {
+            margin-top: 30px;
+            padding: 25px 30px;
+            background: linear-gradient(135deg, rgba(220,53,69,0.08), rgba(220,53,69,0.03));
+            border-radius: 12px;
+            border-left: 4px solid var(--red);
+        }
+        
+        .problem-callout h4 { color: var(--red); font-size: 1.1rem; margin-bottom: 8px; }
+        .problem-callout p { color: var(--text-dark); font-style: italic; }
+        
+        /* Solution Section */
+        .solution-section { background: var(--off-white); }
+        .solution-flow { display: flex; flex-direction: column; gap: 25px; }
+        
+        .solution-step {
+            display: flex; align-items: flex-start; gap: 30px;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .solution-step::before {
+            content: '';
+            position: absolute;
+            left: 64px; top: 100%;
+            width: 3px; height: 25px;
+            background: linear-gradient(to bottom, var(--slate-blue), transparent);
+        }
+        
+        .solution-step:last-child::before { display: none; }
+        
+        .solution-icon {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(74,109,140,0.15), rgba(74,109,140,0.05));
+            border: 2px solid var(--slate-blue);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .solution-content h3 { color: var(--slate-blue); font-size: 1.3rem; margin-bottom: 10px; }
+        .solution-content p { color: var(--text-muted); margin-bottom: 15px; }
+        .solution-detail { display: flex; gap: 10px; flex-wrap: wrap; }
+        
+        .detail-chip {
+            background: rgba(74,109,140,0.08);
+            border: 1px solid rgba(74,109,140,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--slate-blue);
+        }
+        
+        /* Proof Section */
+        .proof-section { background: var(--white); }
+        .proof-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start; }
+        .evidence-stream { display: flex; flex-direction: column; gap: 15px; }
+        
+        .evidence-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, rgba(40,167,69,0.08), rgba(40,167,69,0.02));
+            border: 1px solid rgba(40,167,69,0.2);
+            border-radius: 12px;
+        }
+        
+        .evidence-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--green), #1E7E34);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .evidence-text { flex: 1; }
+        .evidence-name { color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+        .evidence-role { color: var(--text-muted); font-size: 0.8rem; font-style: italic; margin-bottom: 5px; }
+        .evidence-action { color: var(--text-dark); font-size: 0.9rem; font-weight: 500; }
+        .evidence-clause { color: var(--text-muted); font-size: 0.75rem; margin-top: 3px; }
+        .evidence-timestamp { color: var(--text-muted); font-size: 0.75rem; white-space: nowrap; }
+        
+        .proof-summary {
+            background: linear-gradient(135deg, var(--green), #1E7E34);
+            border-radius: 20px;
+            padding: 40px;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .proof-checkmark {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 25px;
+        }
+        
+        .proof-summary h3 { font-size: 1.6rem; margin-bottom: 10px; }
+        .proof-summary h4 { font-size: 1.1rem; font-weight: 400; opacity: 0.9; margin-bottom: 20px; }
+        .proof-summary p { opacity: 0.9; line-height: 1.7; }
+        .proof-summary strong { color: var(--orange); }
+        
+        .coverage-stats { margin-top: 50px; text-align: center; }
+        .coverage-stats h2 { color: var(--slate-blue); font-size: 1.8rem; font-weight: 600; margin-bottom: 25px; }
+        .coverage-chips { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .coverage-chip { background: var(--slate-blue); color: var(--white); padding: 18px 30px; border-radius: 30px; font-size: 1rem; font-weight: 500; }
+
+        /* Regulatory Section */
+        .regulatory-section {
+            background: linear-gradient(135deg, #1B2838 0%, #2C3E50 100%);
+            color: var(--white);
+        }
+        
+        .reg-header { text-align: center; margin-bottom: 50px; }
+        .reg-header h2 { font-size: 2.4rem; font-weight: 300; margin-bottom: 10px; }
+        .reg-header p { font-size: 1.1rem; opacity: 0.8; }
+        
+        .reg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        
+        .reg-column {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .reg-column-header {
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .reg-column-header .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .badge.iso { background: rgba(74,109,140,0.3); color: #8BB8D9; }
+        .badge.fda { background: rgba(232,146,58,0.3); color: var(--orange-light); }
+        
+        .reg-column-header h3 { font-size: 1.3rem; font-weight: 500; }
+        .reg-column-header .count { margin-left: auto; font-size: 2rem; font-weight: 700; color: var(--orange); }
+        
+        .reg-section-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        .reg-section-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid var(--slate-blue);
+        }
+        
+        .reg-section-item.fda-item {
+            border-left-color: var(--orange);
+            background: rgba(232,146,58,0.08);
+        }
+        
+        .reg-section-item .name { font-size: 0.9rem; }
+        .reg-section-item .clauses { font-size: 0.85rem; color: var(--orange); font-weight: 600; }
+        
+        .fda-highlight {
+            background: linear-gradient(135deg, rgba(232,146,58,0.2), rgba(232,146,58,0.1));
+            border: 1px solid rgba(232,146,58,0.3);
+            border-radius: 16px;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        
+        .fda-highlight h4 { color: var(--orange); font-size: 1.2rem; margin-bottom: 10px; }
+        .fda-highlight p { opacity: 0.9; font-size: 0.95rem; }
+        
+        .reg-total {
+            display: flex; justify-content: center; gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .reg-total-item { text-align: center; }
+        .reg-total-item .number { font-size: 3.5rem; font-weight: 700; color: var(--orange); }
+        .reg-total-item .label { font-size: 0.9rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Connection Section */
+        .connection-section { background: var(--white); }
+        
+        .connection-flow {
+            display: flex; align-items: center; justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .connection-node {
+            text-align: center;
+            padding: 25px 20px;
+            background: var(--off-white);
+            border-radius: 16px;
+            min-width: 140px;
+            border: 2px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .connection-node:hover { border-color: var(--slate-blue); transform: translateY(-5px); }
+        .connection-node .number { font-size: 2.5rem; font-weight: 700; color: var(--slate-blue); }
+        .connection-node .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
+        .connection-node.highlight { background: var(--slate-blue); border-color: var(--slate-blue); }
+        .connection-node.highlight .number, .connection-node.highlight .label { color: var(--white); }
+        .connection-node.orange-fill { background: var(--orange); border-color: var(--orange); }
+        .connection-node.orange-fill .number, .connection-node.orange-fill .label { color: var(--white); }
+        .connection-arrow { font-size: 2rem; color: var(--slate-blue); }
+        
+        .company-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark));
+            border-radius: 20px;
+            padding: 40px;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .company-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .company-card p { opacity: 0.9; margin-bottom: 25px; }
+        .company-roles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .company-role { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; }
+
+        /* Samuel Section */
+        .samuel-section { background: var(--off-white); }
+        
+        .samuel-intro {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 50px;
+        }
+        
+        .samuel-avatar {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(74,109,140,0.3);
+        }
+        
+        .samuel-info h2 { font-size: 2rem; color: var(--slate-blue); margin-bottom: 5px; }
+        .samuel-info .role { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 15px; }
+        .samuel-info p { color: var(--text-dark); max-width: 500px; }
+        
+        .sorting-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        
+        .sorting-step {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .sorting-step-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        
+        .sorting-step-number {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--slate-blue);
+            color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+        }
+        
+        .sorting-step-header h3 { font-size: 1.1rem; color: var(--slate-blue); }
+        
+        .role-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: var(--off-white);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .role-option.selected {
+            background: rgba(74,109,140,0.1);
+            border-color: var(--slate-blue);
+            color: var(--slate-blue);
+            font-weight: 600;
+        }
+        
+        .function-questions { display: flex; flex-direction: column; gap: 10px; }
+        
+        .function-question {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px;
+            background: var(--off-white);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+        
+        .function-question .checkbox {
+            width: 22px; height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--light-gray);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .function-question.checked .checkbox {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+        
+        .samuel-result {
+            margin-top: 40px;
+            background: linear-gradient(135deg, var(--green), #1E7E34);
+            border-radius: 20px;
+            padding: 30px 40px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .result-text h3 { font-size: 1.4rem; margin-bottom: 5px; }
+        .result-text p { opacity: 0.9; }
+        .result-stats { display: flex; gap: 30px; }
+        .result-stat { text-align: center; }
+        .result-stat .number { font-size: 2.2rem; font-weight: 700; }
+        .result-stat .label { font-size: 0.8rem; opacity: 0.8; }
+        .result-stat.critical .number { color: #FF6B6B; }
+        .result-stat.core .number { color: var(--orange); }
+        .result-stat.complete .number { color: #A8E6CF; }
+
+        /* Journey Section */
+        .journey-section { background: var(--white); padding-bottom: 80px; }
+        
+        .journey-header { text-align: center; margin-bottom: 50px; }
+        .journey-header h2 { font-size: 2rem; color: var(--slate-blue); margin-bottom: 10px; }
+        .journey-header p { color: var(--text-muted); font-size: 1.1rem; }
+        
+        .calendar-view { margin-bottom: 60px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; margin-bottom: 20px; }
+        
+        .calendar-month {
+            padding: 15px 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            position: relative;
+        }
+        
+        .calendar-month .month-label { font-weight: 600; margin-bottom: 5px; color: var(--text-muted); }
+        .calendar-month .practice-name { font-size: 0.7rem; line-height: 1.3; }
+        .calendar-month.active { background: var(--slate-blue); color: var(--white); }
+        .calendar-month.active .month-label { color: var(--white); opacity: 0.8; }
+        .calendar-month.critical { background: linear-gradient(135deg, #DC3545, #C82333); color: var(--white); }
+        .calendar-month.critical .month-label { color: var(--white); opacity: 0.8; }
+        .calendar-month.core { background: linear-gradient(135deg, var(--orange), #D4812F); color: var(--white); }
+        .calendar-month.core .month-label { color: var(--white); opacity: 0.8; }
+        .calendar-month.complete-tier { background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark)); color: var(--white); }
+        .calendar-month.complete-tier .month-label { color: var(--white); opacity: 0.8; }
+        .calendar-month.off { background: var(--light-gray); color: var(--text-muted); }
+        .calendar-month.off .practice-name { font-style: italic; }
+        
+        .year-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--slate-blue);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--slate-blue);
+            margin-bottom: 10px;
+        }
+        
+        .calendar-legend { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
+        .legend-color { width: 16px; height: 16px; border-radius: 4px; }
+        .legend-color.critical { background: linear-gradient(135deg, #DC3545, #C82333); }
+        .legend-color.core { background: linear-gradient(135deg, var(--orange), #D4812F); }
+        .legend-color.complete-tier { background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark)); }
+        .legend-color.off { background: var(--light-gray); }
+        
+        .journey-sequence { max-width: 900px; margin: 0 auto; }
+        .journey-phase { margin-bottom: 40px; }
+        
+        .phase-header {
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .phase-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .phase-badge.critical { background: rgba(220,53,69,0.15); color: var(--red); }
+        .phase-badge.core { background: rgba(232,146,58,0.15); color: var(--orange); }
+        .phase-badge.complete-tier { background: rgba(74,109,140,0.15); color: var(--slate-blue); }
+        .phase-header h3 { font-size: 1.2rem; color: var(--text-dark); }
+        
+        .practice-card {
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--slate-blue);
+        }
+        
+        .practice-card.critical { border-left-color: var(--red); }
+        .practice-card.core { border-left-color: var(--orange); }
+        .practice-card.complete-tier { border-left-color: var(--slate-blue); }
+        
+        .practice-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
+        .practice-title { font-size: 1.1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 5px; }
+        .practice-clause { font-size: 0.85rem; color: var(--text-muted); }
+        .practice-month { font-size: 0.8rem; color: var(--text-muted); background: var(--white); padding: 6px 12px; border-radius: 15px; }
+        .practice-functions { display: flex; gap: 8px; margin-bottom: 15px; }
+        .function-tag { font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; background: rgba(74,109,140,0.1); color: var(--slate-blue); }
+        
+        .activity-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        .activity-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 15px;
+            align-items: start;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 10px;
+        }
+        
+        .activity-date { font-size: 0.75rem; color: var(--text-muted); min-width: 70px; }
+        .activity-content { flex: 1; }
+        .activity-objective { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 5px; }
+        .activity-feedback { font-size: 0.8rem; color: var(--green); font-style: italic; }
+        
+        .activity-status {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: var(--green);
+            color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .calendar-grid { grid-template-columns: repeat(6, 1fr); }
+            .reg-grid { grid-template-columns: 1fr; }
+            .sorting-flow { grid-template-columns: 1fr; }
+            .samuel-intro { grid-template-columns: 1fr; text-align: center; }
+            .samuel-avatar { margin: 0 auto; }
+            .samuel-result { flex-direction: column; text-align: center; gap: 20px; }
+        }
+        
+        @media (max-width: 768px) {
+            .proof-container { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 30px; }
+            .nav-links { display: none; }
+            .connection-flow { flex-direction: column; }
+            .connection-arrow { transform: rotate(90deg); }
+            .calendar-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">
+            <span class="qmsr">QMSR</span><span class="in">in</span><span class="action">Action</span>
+        </div>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link active">Intro</a>
+            <a href="#problem" class="nav-link">Problem</a>
+            <a href="#solution" class="nav-link">Solution</a>
+            <a href="#proof" class="nav-link">Proof</a>
+            <a href="#regulatory" class="nav-link">Regulations</a>
+            <a href="#connection" class="nav-link">Coverage</a>
+            <a href="#samuel" class="nav-link">Samuel</a>
+            <a href="#journey" class="nav-link">Journey</a>
+            <a href="#demo" class="nav-link" style="background: var(--orange); color: white;">Demo</a>
+            <a href="#examples" class="nav-link">Examples</a>
+            <a href="#reporting" class="nav-link">Reporting</a>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-text">
+                    <span class="qmsr">QMSR</span><span class="in">in</span><span class="action">Action</span>
+                    <div class="logo-swoosh"></div>
+                </div>
+            </div>
+            <p class="tagline">On-the-Job Compliance Coaching<br>Real-Time Documented Competence</p>
+            
+        </div>
+    </section>
+
+    <!-- SECTION 1: PROBLEM -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number problem">1</div>
+                <h2 class="section-title problem">The Problem</h2>
+            </div>
+            <div class="problem-flow">
+                <div class="problem-step">
+                    <div class="problem-icon">📜</div>
+                    <div class="problem-content">
+                        <h3>82 Regulatory Clauses</h3>
+                        <p>QMSR harmonizes FDA requirements with ISO 13485, creating a comprehensive but complex regulatory landscape that every medical device manufacturer must navigate.</p>
+                        <div class="problem-chips">
+                            <span class="chip problem">74 ISO 13485 Clauses</span>
+                            <span class="chip problem">8 FDA Supplements</span>
+                            <span class="chip problem">5 Major Sections</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-step">
+                    <div class="problem-icon">👥</div>
+                    <div class="problem-content">
+                        <h3>Every Employee is Affected</h3>
+                        <p>From executives setting quality policy to operators on the production floor, QMSR requirements touch every role in the organization—each with different responsibilities.</p>
+                        <div class="problem-chips">
+                            <span class="chip problem">8 Role Categories</span>
+                            <span class="chip problem">27 Distinct Functions</span>
+                            <span class="chip problem">Varies by Company Size</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-step">
+                    <div class="problem-icon">📋</div>
+                    <div class="problem-content">
+                        <h3>Documented Performance Required</h3>
+                        <p>QMSR doesn't just require procedures—it requires evidence that personnel are <em>competent</em> and that training was <em>effective</em>. This is a fundamental shift from the old regulation.</p>
+                        <div class="problem-chips">
+                            <span class="chip problem">155 Function-Specific Practices</span>
+                            <span class="chip problem">Evidence of Effectiveness</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="problem-step">
+                    <div class="problem-icon">⚠️</div>
+                    <div class="problem-content">
+                        <h3>The Knowing-Doing Gap</h3>
+                        <p>Traditional training proves attendance, not competence. A training certificate shows someone showed up—it doesn't prove the training changed how they actually work.</p>
+                        <div class="problem-chips">
+                            <span class="chip problem">ISO 13485 Clause 6.2</span>
+                            <span class="chip problem">"Evaluate effectiveness of actions taken"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="problem-callout">
+                <h4>The Core Question</h4>
+                <p>Traditional training answers: "Did you tell them what to do?"<br>
+                QMSR asks: "Did you change how they actually work?" — and demands proof.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: SOLUTION -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number solution">2</div>
+                <h2 class="section-title solution">The Solution</h2>
+            </div>
+            <div class="solution-flow">
+                <div class="solution-step">
+                    <div class="solution-icon">👤</div>
+                    <div class="solution-content">
+                        <h3>Employee Identifies Their Role</h3>
+                        <p>Simple selection from 8 standard industry roles—works for any company size, from 10-person shops to 500+ employee organizations.</p>
+                        <div class="solution-detail">
+                            <span class="detail-chip">Executive</span>
+                            <span class="detail-chip">Manager</span>
+                            <span class="detail-chip">Supervisor</span>
+                            <span class="detail-chip">Engineer</span>
+                            <span class="detail-chip">Operator</span>
+                            <span class="detail-chip">Purchasing</span>
+                            <span class="detail-chip">Customer Service</span>
+                            <span class="detail-chip">Quality Specialist</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-step">
+                    <div class="solution-icon">✓</div>
+                    <div class="solution-content">
+                        <h3>Workflow Questions Reveal Job Functions</h3>
+                        <p>We ask about what they <em>actually do</em>—observable work activities that map to specific regulatory responsibilities across 27 different job functions.</p>
+                        <div class="solution-detail">
+                            <span class="detail-chip">"Do you identify product that doesn't meet requirements?"</span>
+                            <span class="detail-chip">"Do you maintain traceability records?"</span>
+                            <span class="detail-chip">"Do you investigate complaints?"</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-step">
+                    <div class="solution-icon">📋</div>
+                    <div class="solution-content">
+                        <h3>Personalized Practice Sequence</h3>
+                        <p>Based on functions identified, employees receive practices in priority order—<strong>Critical</strong> practices first (highest audit risk), then <strong>Core</strong>, then <strong>Complete</strong>.</p>
+                        <div class="solution-detail">
+                            <span class="detail-chip" style="background: rgba(220,53,69,0.15); border-color: rgba(220,53,69,0.3); color: #DC3545;">Critical — Highest Risk</span>
+                            <span class="detail-chip" style="background: rgba(232,146,58,0.15); border-color: rgba(232,146,58,0.3); color: #E8923A;">Core — Full Competence</span>
+                            <span class="detail-chip">Complete — Full Coverage</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-step">
+                    <div class="solution-icon">⚡</div>
+                    <div class="solution-content">
+                        <h3>Activities in the Flow of Work</h3>
+                        <p>Short, focused activities completed during real work—not in a conference room. Each practice takes one month, with ~9 activities building the skill progressively.</p>
+                        <div class="solution-detail">
+                            <span class="detail-chip">~2 activities per week</span>
+                            <span class="detail-chip">Real workplace application</span>
+                            <span class="detail-chip">3 months on, 1 month off</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: PROOF -->
+    <section id="proof" class="proof-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number proof">3</div>
+                <h2 class="section-title proof">The Proof</h2>
+            </div>
+            <div class="proof-container">
+                <div class="evidence-stream">
+                    <div class="evidence-item">
+                        <div class="evidence-icon">✓</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name">Samuel Torres</div>
+                            <div class="evidence-role">Production Supervisor</div>
+                            <div class="evidence-action">Documented risk-based rationale for batch disposition</div>
+                            <div class="evidence-clause">Clause 8.3.2 • Dispositioning Nonconforming Product</div>
+                        </div>
+                        <div class="evidence-timestamp">Today, 2:34 PM</div>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">✓</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name">Maria Chen</div>
+                            <div class="evidence-role">Production Operator</div>
+                            <div class="evidence-action">Identified dimensional variance and initiated NCR</div>
+                            <div class="evidence-clause">Clause 8.3.1 • Identifying Nonconforming Product</div>
+                        </div>
+                        <div class="evidence-timestamp">Today, 11:15 AM</div>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">✓</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name">James Wilson</div>
+                            <div class="evidence-role">Incoming Inspector</div>
+                            <div class="evidence-action">Verified supplier cert against PO requirements</div>
+                            <div class="evidence-clause">Clause 7.4.3 • Verifying Purchased Product</div>
+                        </div>
+                        <div class="evidence-timestamp">Yesterday, 3:22 PM</div>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">✓</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name">Rebecca Park</div>
+                            <div class="evidence-role">Quality Supervisor</div>
+                            <div class="evidence-action">Authorized concession with documented justification</div>
+                            <div class="evidence-clause">Clause 8.3.2 • Authorizing Concessions</div>
+                        </div>
+                        <div class="evidence-timestamp">Yesterday, 10:45 AM</div>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">✓</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name">David Kowalski</div>
+                            <div class="evidence-role">CAPA Coordinator</div>
+                            <div class="evidence-action">Completed root cause analysis using 5-Why method</div>
+                            <div class="evidence-clause">Clause 8.5.2 • Investigating Corrective Actions</div>
+                        </div>
+                        <div class="evidence-timestamp">Mar 15, 9:30 AM</div>
+                    </div>
+                </div>
+                <div class="proof-summary">
+                    <div class="proof-checkmark">✓</div>
+                    <h3>Real-Time Documentation</h3>
+                    <h4>of Compliance & Competence</h4>
+                    <p>Not just training completion—<strong>evidence of behavior change</strong> tied directly to specific regulatory clauses.</p>
+                    <p style="margin-top: 15px;">Every activity creates an audit trail showing <em>who</em> did <em>what</em>, <em>when</em>, and <em>which clause</em> it addresses.</p>
+                </div>
+            </div>
+            <div class="coverage-stats">
+                <h2>Complete Regulatory Coverage</h2>
+                <div class="coverage-chips">
+                    <span class="coverage-chip">82 ISO & FDA Clauses</span>
+                    <span class="coverage-chip">155 Targeted Practices</span>
+                    <span class="coverage-chip">Ongoing Evidence from the Frontline</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: REGULATORY LANDSCAPE -->
+    <section id="regulatory" class="regulatory-section">
+        <div class="container">
+            <div class="reg-header">
+                <h2>The Regulatory Landscape</h2>
+                <p>82 requirements your team must demonstrate competence in</p>
+            </div>
+            <div class="reg-grid">
+                <div class="reg-column">
+                    <div class="reg-column-header">
+                        <span class="badge iso">ISO 13485</span>
+                        <h3>Quality Management System</h3>
+                        <span class="count">74</span>
+                    </div>
+                    <div class="reg-section-list">
+                        <div class="reg-section-item">
+                            <span class="name">Section 4: Quality Management System</span>
+                            <span class="clauses">11 clauses</span>
+                        </div>
+                        <div class="reg-section-item">
+                            <span class="name">Section 5: Management Responsibility</span>
+                            <span class="clauses">12 clauses</span>
+                        </div>
+                        <div class="reg-section-item">
+                            <span class="name">Section 6: Resource Management</span>
+                            <span class="clauses">5 clauses</span>
+                        </div>
+                        <div class="reg-section-item">
+                            <span class="name">Section 7: Product Realization</span>
+                            <span class="clauses">30 clauses</span>
+                        </div>
+                        <div class="reg-section-item">
+                            <span class="name">Section 8: Measurement, Analysis, Improvement</span>
+                            <span class="clauses">16 clauses</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reg-column">
+                    <div class="reg-column-header">
+                        <span class="badge fda">FDA QMSR</span>
+                        <h3>Supplements & Additions</h3>
+                        <span class="count">8</span>
+                    </div>
+                    <div class="reg-section-list">
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(b)(1) — UDI Requirements</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(b)(2) — Traceability</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(b)(3) — MDR Reporting</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(b)(4) — Advisory Notices</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(c) — Design Controls (Class II/III)</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.10(d) — Life-Sustaining Traceability</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.35 — Record Requirements</span>
+                            <span class="clauses">4 parts</span>
+                        </div>
+                        <div class="reg-section-item fda-item">
+                            <span class="name">§820.45 — Labeling & Packaging</span>
+                            <span class="clauses">NEW</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fda-highlight">
+                <h4>🇺🇸 Effective February 2026</h4>
+                <p>FDA's QMSR harmonizes with ISO 13485 while adding U.S.-specific requirements.<br>
+                These supplements are what make QMSR different from ISO alone—and they're mandatory for U.S. market access.</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- SECTION 2.2: CONNECTION -->
+    <section id="connection" class="connection-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number solution">→</div>
+                <h2 class="section-title solution">From Regulations to People</h2>
+            </div>
+            <div class="connection-flow">
+                <div class="connection-node orange-fill">
+                    <div class="number">82</div>
+                    <div class="label">Regulatory Clauses</div>
+                </div>
+                <div class="connection-arrow">→</div>
+                <div class="connection-node orange-fill">
+                    <div class="number">155</div>
+                    <div class="label">Workplace Responsibilities Affected</div>
+                </div>
+                <div class="connection-arrow">→</div>
+                <div class="connection-node">
+                    <div class="number">27</div>
+                    <div class="label">Kinds of Employees</div>
+                </div>
+                <div class="connection-arrow">→</div>
+                <div class="connection-node">
+                    <div class="number">8</div>
+                    <div class="label">Roles</div>
+                </div>
+                <div class="connection-arrow">→</div>
+                <div class="connection-node highlight">
+                    <div class="number">🏢</div>
+                    <div class="label">Your Company</div>
+                </div>
+            </div>
+            <div class="company-card">
+                <h3>MedTechCorp</h3>
+                <p>45 employees • Class II Medical Devices • ISO 13485 Certified</p>
+                <div class="company-roles">
+                    <span class="company-role">2 Executives</span>
+                    <span class="company-role">4 Managers</span>
+                    <span class="company-role">6 Supervisors</span>
+                    <span class="company-role">8 Engineers</span>
+                    <span class="company-role">15 Operators</span>
+                    <span class="company-role">3 Purchasing</span>
+                    <span class="company-role">2 Customer Service</span>
+                    <span class="company-role">5 Quality Specialists</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2.3: SAMUEL ENTERS -->
+    <section id="samuel" class="samuel-section">
+        <div class="container">
+            <div class="samuel-intro">
+                <div class="samuel-avatar">👤</div>
+                <div class="samuel-info">
+                    <h2>Meet Samuel Torres</h2>
+                    <div class="role">Production Floor Lead at MedTechCorp</div>
+                    <p>Samuel supervises production and also handles quality decisions on the floor. At a 45-person company, that means he wears two hats—and QMSR requires competence in both.</p>
+                </div>
+            </div>
+            <div class="sorting-flow">
+                <div class="sorting-step">
+                    <div class="sorting-step-header">
+                        <div class="sorting-step-number">1</div>
+                        <h3>Select Primary Role</h3>
+                    </div>
+                    <div class="role-options">
+                        <div class="role-option">Executive</div>
+                        <div class="role-option">Manager</div>
+                        <div class="role-option selected">Supervisor ✓</div>
+                        <div class="role-option">Engineer</div>
+                        <div class="role-option">Operator</div>
+                        <div class="role-option">Purchasing</div>
+                        <div class="role-option">Customer Service</div>
+                        <div class="role-option">Quality Specialist</div>
+                    </div>
+                </div>
+                <div class="sorting-step">
+                    <div class="sorting-step-header">
+                        <div class="sorting-step-number">2</div>
+                        <h3>Answer Function Questions</h3>
+                    </div>
+                    <div class="function-questions">
+                        <div class="function-question checked">
+                            <div class="checkbox">✓</div>
+                            <span>Do you direct daily production activities?</span>
+                        </div>
+                        <div class="function-question checked">
+                            <div class="checkbox">✓</div>
+                            <span>Do you maintain or verify traceability records?</span>
+                        </div>
+                        <div class="function-question checked">
+                            <div class="checkbox">✓</div>
+                            <span>Do you identify or segregate nonconforming product?</span>
+                        </div>
+                        <div class="function-question checked">
+                            <div class="checkbox">✓</div>
+                            <span>Do you make disposition decisions (use-as-is, rework, scrap)?</span>
+                        </div>
+                        <div class="function-question checked">
+                            <div class="checkbox">✓</div>
+                            <span>Do you oversee product inspections?</span>
+                        </div>
+                        <div class="function-question">
+                            <div class="checkbox"></div>
+                            <span>Do you manage the calibration program?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="samuel-result">
+                <div class="result-text">
+                    <h3>Samuel's Functions Identified</h3>
+                    <p>Production Supervisor + Quality Supervisor → 16 practices assigned</p>
+                </div>
+                <div class="result-stats">
+                    <div class="result-stat critical">
+                        <div class="number">5</div>
+                        <div class="label">Critical</div>
+                    </div>
+                    <div class="result-stat core">
+                        <div class="number">8</div>
+                        <div class="label">Core</div>
+                    </div>
+                    <div class="result-stat complete">
+                        <div class="number">3</div>
+                        <div class="label">Complete</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2.4: SAMUEL'S JOURNEY -->
+    <section id="journey" class="journey-section">
+        <div class="container">
+            <div class="journey-header">
+                <h2>Samuel's Learning Journey</h2>
+                <p>16 practices over 21 months • 3 months on, 1 month off • Critical → Core → Complete</p>
+            </div>
+            
+            <!-- Calendar View -->
+            <div class="calendar-view">
+                <div class="year-label">Year 1</div>
+                <div class="calendar-grid">
+                    <div class="calendar-month critical"><div class="month-label">Jan</div><div class="practice-name">Identifying NC Product</div></div>
+                    <div class="calendar-month critical"><div class="month-label">Feb</div><div class="practice-name">Overseeing Inspection</div></div>
+                    <div class="calendar-month critical"><div class="month-label">Mar</div><div class="practice-name">Traceability Records</div></div>
+                    <div class="calendar-month off"><div class="month-label">Apr</div><div class="practice-name">— Off —</div></div>
+                    <div class="calendar-month critical"><div class="month-label">May</div><div class="practice-name">Production Control</div></div>
+                    <div class="calendar-month critical"><div class="month-label">Jun</div><div class="practice-name">Dispositioning NC</div></div>
+                    <div class="calendar-month core"><div class="month-label">Jul</div><div class="practice-name">Product Status ID</div></div>
+                    <div class="calendar-month off"><div class="month-label">Aug</div><div class="practice-name">— Off —</div></div>
+                    <div class="calendar-month core"><div class="month-label">Sep</div><div class="practice-name">Personnel Competence</div></div>
+                    <div class="calendar-month core"><div class="month-label">Oct</div><div class="practice-name">Work Environment</div></div>
+                    <div class="calendar-month core"><div class="month-label">Nov</div><div class="practice-name">Authorizing Concessions</div></div>
+                    <div class="calendar-month off"><div class="month-label">Dec</div><div class="practice-name">— Off —</div></div>
+                </div>
+                
+                <div class="year-label">Year 2</div>
+                <div class="calendar-grid">
+                    <div class="calendar-month core"><div class="month-label">Jan</div><div class="practice-name">Contamination Control</div></div>
+                    <div class="calendar-month core"><div class="month-label">Feb</div><div class="practice-name">Product Cleanliness</div></div>
+                    <div class="calendar-month core"><div class="month-label">Mar</div><div class="practice-name">Product Integrity</div></div>
+                    <div class="calendar-month off"><div class="month-label">Apr</div><div class="practice-name">— Off —</div></div>
+                    <div class="calendar-month core"><div class="month-label">May</div><div class="practice-name">Overseeing Rework</div></div>
+                    <div class="calendar-month complete-tier"><div class="month-label">Jun</div><div class="practice-name">UDI Assignment</div></div>
+                    <div class="calendar-month complete-tier"><div class="month-label">Jul</div><div class="practice-name">CAPA Implementation</div></div>
+                    <div class="calendar-month off"><div class="month-label">Aug</div><div class="practice-name">— Off —</div></div>
+                    <div class="calendar-month complete-tier"><div class="month-label">Sep</div><div class="practice-name">Labeling & Packaging</div></div>
+                    <div class="calendar-month" style="background: var(--green); color: white;"><div class="month-label" style="color: white; opacity: 0.8;">Oct</div><div class="practice-name">✓ Complete</div></div>
+                    <div class="calendar-month" style="background: var(--light-gray);"><div class="month-label">Nov</div><div class="practice-name"></div></div>
+                    <div class="calendar-month" style="background: var(--light-gray);"><div class="month-label">Dec</div><div class="practice-name"></div></div>
+                </div>
+                
+                <div class="calendar-legend">
+                    <div class="legend-item"><div class="legend-color critical"></div><span>Critical (Highest Risk)</span></div>
+                    <div class="legend-item"><div class="legend-color core"></div><span>Core (Full Competence)</span></div>
+                    <div class="legend-item"><div class="legend-color complete-tier"></div><span>Complete (Full Coverage)</span></div>
+                    <div class="legend-item"><div class="legend-color off"></div><span>Off Month</span></div>
+                </div>
+            </div>
+            
+            <!-- Journey Sequence -->
+            <div class="journey-sequence">
+                <div class="journey-phase">
+                    <div class="phase-header">
+                        <span class="phase-badge critical">Critical</span>
+                        <h3>Highest Audit Risk — Completed First</h3>
+                    </div>
+                    
+                    <!-- Practice 1 -->
+                    <div class="practice-card critical">
+                        <div class="practice-header">
+                            <div>
+                                <div class="practice-title">Identifying Nonconforming Product</div>
+                                <div class="practice-clause">Clause 8.3.1 • Both functions</div>
+                            </div>
+                            <div class="practice-month">Month 1 (Jan Y1)</div>
+                        </div>
+                        <div class="practice-functions">
+                            <span class="function-tag">Production Supervisor</span>
+                            <span class="function-tag">Quality Supervisor</span>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 3</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Review NC identification criteria in your area's work instructions</div>
+                                    <div class="activity-feedback">"Found 3 criteria I wasn't checking consistently."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 6</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Identify and tag one nonconforming unit using proper segregation</div>
+                                    <div class="activity-feedback">"Caught surface defect on Lot 2847, documented with photos."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 10</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Coach a team member on proper NC identification procedure</div>
+                                    <div class="activity-feedback">"Walked Maria through visual inspection standard."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 13</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Review last month's NCRs for patterns your team should watch for</div>
+                                    <div class="activity-feedback">"Dimensional issues trending on Part 4420—added to daily check."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 17</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Practice stopping the line for a suspected NC condition</div>
+                                    <div class="activity-feedback">"Stopped for tooling wear—prevented 12 suspect units."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 18</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Document an NC identification with complete traceability information</div>
+                                    <div class="activity-feedback">"Lot, operator, time, equipment ID all captured."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 22</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Verify your segregation area meets identification requirements</div>
+                                    <div class="activity-feedback">"Added red floor tape and 'HOLD' sign—much clearer."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 25</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Explain the patient safety connection to a team member</div>
+                                    <div class="activity-feedback">"Explained how missed defects reach patients—team gets it."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-date">Jan 29</div>
+                                <div class="activity-content">
+                                    <div class="activity-objective">Conduct end-of-month review: what NC patterns did you catch?</div>
+                                    <div class="activity-feedback">"Caught 7 NCs, 2 were new failure modes—reported to QE."</div>
+                                </div>
+                                <div class="activity-status">✓</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p style="text-align: center; color: var(--text-muted); font-style: italic; margin: 30px 0;">
+                        + 4 more Critical practices: Overseeing Inspection (Feb), Traceability Records (Mar), Production Control (May), Dispositioning NC (Jun)
+                    </p>
+                </div>
+                
+                <div class="journey-phase">
+                    <div class="phase-header">
+                        <span class="phase-badge core">Core</span>
+                        <h3>Building Full Competence — 8 Practices</h3>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        After Critical practices, Samuel moves to Core starting Month 6. These build deeper competence.
+                    </p>
+                    <div class="practice-card core" style="opacity: 0.85;">
+                        <div class="practice-header">
+                            <div>
+                                <div class="practice-title">Identifying Product Status</div>
+                                <div class="practice-clause">Clause 7.5.8, §820.35(c) • Both functions</div>
+                            </div>
+                            <div class="practice-month">Month 6 (Jul Y1)</div>
+                        </div>
+                        <div class="practice-functions">
+                            <span class="function-tag">Production Supervisor</span>
+                            <span class="function-tag">Quality Supervisor</span>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 15px;">
+                            9 activities covering status identification methods, visual management systems, preventing mixed status conditions...
+                        </p>
+                    </div>
+                    <p style="text-align: center; color: var(--text-muted); font-style: italic; margin: 20px 0;">
+                        + 7 more Core practices through Year 2...
+                    </p>
+                </div>
+                
+                <div class="journey-phase">
+                    <div class="phase-header">
+                        <span class="phase-badge complete-tier">Complete</span>
+                        <h3>Full Regulatory Coverage — 3 Practices</h3>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Final practices complete Samuel's regulatory coverage for his functions.
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div class="practice-card complete-tier" style="opacity: 0.8; padding: 20px;">
+                            <div class="practice-title" style="font-size: 1rem;">UDI Assignment</div>
+                            <div class="practice-clause">§820.10(b)(1)</div>
+                            <div class="practice-month" style="margin-top: 10px;">Jun Y2</div>
+                        </div>
+                        <div class="practice-card complete-tier" style="opacity: 0.8; padding: 20px;">
+                            <div class="practice-title" style="font-size: 1rem;">CAPA Implementation</div>
+                            <div class="practice-clause">Clause 8.5.2</div>
+                            <div class="practice-month" style="margin-top: 10px;">Jul Y2</div>
+                        </div>
+                        <div class="practice-card complete-tier" style="opacity: 0.8; padding: 20px;">
+                            <div class="practice-title" style="font-size: 1rem;">Labeling & Packaging</div>
+                            <div class="practice-clause">§820.45</div>
+                            <div class="practice-month" style="margin-top: 10px;">Sep Y2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: DEMO PLACEHOLDER -->
+    <section id="demo" style="background: linear-gradient(135deg, var(--orange) 0%, #D4782E 100%); min-height: 60vh;">
+        <div class="container" style="text-align: center; color: white;">
+            <div style="font-size: 5rem; margin-bottom: 30px;">🎯</div>
+            <h2 style="font-size: 3rem; font-weight: 300; margin-bottom: 20px;">Live Demo</h2>
+            <p style="font-size: 1.3rem; opacity: 0.9; max-width: 600px; margin: 0 auto 30px;">
+                Experience Samuel's journey in the actual product—see how activities arrive, how he completes them, and how evidence is captured in real-time.
+            </p>
+            <div style="display: inline-block; padding: 15px 40px; border: 2px solid white; border-radius: 30px; font-size: 1.1rem;">
+                Switch to Product Demo →
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ADDITIONAL EXAMPLES -->
+    <section id="examples" style="background: var(--white);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number solution">5</div>
+                <h2 class="section-title solution">More Audiences, Same System</h2>
+            </div>
+            <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; max-width: 800px;">
+                Samuel is just one of 27 function types. Here's how five other roles experience QMSR in Action—each with their own personalized practice sequences, activities, and documented evidence.
+            </p>
+            
+            <!-- Example 1: Design Engineer -->
+            <div class="example-audience" style="background: var(--off-white); border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark)); display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔧</div>
+                    <div>
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 5px;">Rachel Kim — Design Engineer</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Engineer Role • 14 Practices • 4 Critical, 7 Core, 3 Complete</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Documenting Design Inputs</div>
+                        <div class="practice-clause">Clause 7.3.3, §820.10(c)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Captured 12 design inputs from user needs study—traceability matrix now complete."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Creating Design Outputs</div>
+                        <div class="practice-clause">Clause 7.3.4, §820.10(c)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Reviewed output package against inputs—found 2 requirements missing verification criteria."</p>
+                    </div>
+                    <div class="practice-card core" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Performing Design Validation</div>
+                        <div class="practice-clause">Clause 7.3.7, §820.10(c)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Completed validation protocol review—all acceptance criteria trace to intended use."</p>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">+ 11 more practices including Design Reviews, Design Transfer, Design Change Control...</p>
+            </div>
+
+            <!-- Example 2: Production Operator -->
+            <div class="example-audience" style="background: var(--off-white); border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #6C757D, #495057); display: flex; align-items: center; justify-content: center; font-size: 2rem;">⚙️</div>
+                    <div>
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 5px;">Marcus Johnson — Production Operator</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Operator Role • 10 Practices • 3 Critical, 5 Core, 2 Complete</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Following Production Procedures</div>
+                        <div class="practice-clause">Clause 7.5.1</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Verified work instruction rev before starting—caught outdated version at station 3."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Maintaining Traceability Records</div>
+                        <div class="practice-clause">Clause 7.5.9.1, §820.10(b)(2)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Logged lot numbers for all 6 components—traced back to incoming inspection."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Identifying Nonconforming Product</div>
+                        <div class="practice-clause">Clause 8.3.1</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Found cosmetic defect on Part 5501—red-tagged and moved to quarantine."</p>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">+ 7 more practices including Product Status ID, Product Cleanliness, Calibrated Equipment Use...</p>
+            </div>
+
+            <!-- Example 3: Quality Manager -->
+            <div class="example-audience" style="background: var(--off-white); border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #1E7E34); display: flex; align-items: center; justify-content: center; font-size: 2rem;">✓</div>
+                    <div>
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 5px;">Dr. James Okonkwo — Quality Manager</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Manager Role • 17 Practices • 4 Critical, 10 Core, 3 Complete</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Overseeing CAPA System</div>
+                        <div class="practice-clause">Clause 8.5.2, 8.5.3</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Reviewed 3 open CAPAs—one needs escalation, root cause analysis incomplete."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Determining Regulatory Reportability</div>
+                        <div class="practice-clause">Clause 8.2.3, §820.10(b)(3)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Evaluated complaint for MDR criteria—documented decision rationale for audit trail."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Dispositioning NC Product</div>
+                        <div class="practice-clause">Clause 8.3.2, 8.3.3</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Authorized use-as-is for cosmetic issue—documented risk assessment and approval."</p>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">+ 14 more practices including Management Review, Internal Audit Oversight, Data Analysis...</p>
+            </div>
+
+            <!-- Example 4: Complaint Specialist -->
+            <div class="example-audience" style="background: var(--off-white); border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #9C27B0, #7B1FA2); display: flex; align-items: center; justify-content: center; font-size: 2rem;">📞</div>
+                    <div>
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 5px;">Lisa Fernandez — Complaint Specialist</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Customer Service Role • 5 Practices • 3 Critical, 2 Core</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Investigating Complaints</div>
+                        <div class="practice-clause">Clause 8.2.2, §820.35(a)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Traced complaint to Lot 4421—pulled production records, found process deviation."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Determining Regulatory Reportability</div>
+                        <div class="practice-clause">Clause 8.2.3, §820.10(b)(3)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Assessed against MDR criteria—no patient harm, documented non-reportable decision."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Submitting MDRs</div>
+                        <div class="practice-clause">Clause 8.2.3, §820.10(b)(3)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Submitted MDR within 30-day window—included root cause and corrective actions."</p>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">+ 2 more practices: Customer Feedback Gathering, Handling NC After Delivery</p>
+            </div>
+
+            <!-- Example 5: Buyer -->
+            <div class="example-audience" style="background: var(--off-white); border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #FF9800, #F57C00); display: flex; align-items: center; justify-content: center; font-size: 2rem;">📦</div>
+                    <div>
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 5px;">David Chen — Buyer</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Purchasing Role • 2 Practices • 2 Critical</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Evaluating and Selecting Suppliers</div>
+                        <div class="practice-clause">Clause 7.4.1</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Completed supplier assessment for new vendor—documented risk-based approval rationale."</p>
+                    </div>
+                    <div class="practice-card critical" style="margin: 0; padding: 20px;">
+                        <div class="practice-title" style="font-size: 1rem;">Specifying Purchasing Requirements</div>
+                        <div class="practice-clause">Clause 7.4.2</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-style: italic;">"Verified PO includes spec revision, CoC requirement, and change notification clause."</p>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">Focused role with high-impact practices—every PO affects product quality</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, var(--slate-blue), var(--slate-blue-dark)); border-radius: 20px; padding: 40px; text-align: center; color: white;">
+                <h3 style="font-size: 1.6rem; margin-bottom: 15px;">27 Functions. 155 Practices. One System.</h3>
+                <p style="opacity: 0.9; max-width: 700px; margin: 0 auto;">Every employee gets exactly the practices they need—no more, no less. The system adapts to your organization's structure, whether one person wears five hats or five people share one function.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: REPORTING -->
+    <section id="reporting" style="background: linear-gradient(135deg, #1B2838 0%, #2C3E50 100%); color: white;">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 30px;">
+                <div class="section-number proof">6</div>
+                <h2 class="section-title" style="color: var(--green);">Real-Time Compliance Dashboard</h2>
+            </div>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-bottom: 40px; max-width: 800px;">
+                Every activity completion flows into a live compliance matrix. At any moment, see exactly where your organization stands—by regulation, by role, by employee. Ready for export, ready for audit, ready for management review.
+            </p>
+
+            <!-- Dashboard Preview Header -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 16px 16px 0 0; padding: 20px 25px; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 5px;">MedTechCorp Compliance Matrix</h4>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">82 Regulations × 27 Functions × 47 Employees</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <span style="padding: 8px 16px; background: rgba(40,167,69,0.2); border: 1px solid rgba(40,167,69,0.4); border-radius: 20px; font-size: 0.8rem;">87% Complete</span>
+                    <span style="padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; font-size: 0.8rem;">↓ Export</span>
+                </div>
+            </div>
+
+            <!-- Simplified Grid Representation -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 16px 16px; padding: 25px; overflow-x: auto;">
+                
+                <!-- Column Headers (Roles) -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 12px 10px; font-size: 0.75rem; color: rgba(255,255,255,0.5);">SECTION / ROLE →</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">EXECUTIVE</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">MANAGER</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">SUPERVISOR</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">ENGINEER</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">OPERATOR</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">PURCHASING</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">CUST. SVC</div>
+                    <div style="padding: 12px 10px; background: rgba(74,109,140,0.2); text-align: center; font-size: 0.7rem; font-weight: 600; border-radius: 8px 8px 0 0;">QUALITY</div>
+                </div>
+
+                <!-- Section 4: QMS -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 15px 10px; background: rgba(74,109,140,0.15); font-size: 0.8rem; font-weight: 500;">§4 QMS (12 clauses)</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 4/4</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 3/3</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 5/6</div>
+                </div>
+
+                <!-- Section 5: Management -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 15px 10px; background: rgba(74,109,140,0.15); font-size: 0.8rem; font-weight: 500;">§5 Management (9 clauses)</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 8/8</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 5/7</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 2/2</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 4/4</div>
+                </div>
+
+                <!-- Section 6: Resources -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 15px 10px; background: rgba(74,109,140,0.15); font-size: 0.8rem; font-weight: 500;">§6 Resources (7 clauses)</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 1/1</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 5/5</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 4/4</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 2/3</div>
+                </div>
+
+                <!-- Section 7: Product Realization -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 15px 10px; background: rgba(74,109,140,0.15); font-size: 0.8rem; font-weight: 500;">§7 Product Realization (38 clauses)</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 8/12</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 11/13</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 18/25</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 9/10</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 6/6</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 5/5</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 8/8</div>
+                </div>
+
+                <!-- Section 8: Measurement & Improvement -->
+                <div style="display: grid; grid-template-columns: 180px repeat(8, 1fr); gap: 2px; margin-bottom: 2px;">
+                    <div style="padding: 15px 10px; background: rgba(74,109,140,0.15); font-size: 0.8rem; font-weight: 500;">§8 Measurement (16 clauses)</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 1/1</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 10/10</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 4/6</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 3/3</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 4/4</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.15); padding: 10px; text-align: center; font-size: 0.7rem;">—</div>
+                    <div class="grid-cell" style="background: rgba(40,167,69,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">✓ 5/5</div>
+                    <div class="grid-cell" style="background: rgba(232,146,58,0.3); padding: 10px; text-align: center; font-size: 0.7rem;">⏳ 12/15</div>
+                </div>
+
+                <!-- Expand indicator -->
+                <div style="text-align: center; padding: 15px; border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 10px;">
+                    <span style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">↓ Expand to see all 82 clauses × 27 functions ↓</span>
+                </div>
+            </div>
+
+            <!-- Sample Drill-Down Cell -->
+            <div style="margin-top: 40px;">
+                <h4 style="font-size: 1rem; margin-bottom: 20px; opacity: 0.8;">Sample Cell Expansion: §7 Product Realization × Supervisor</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                    <div class="evidence-item" style="background: rgba(40,167,69,0.1); border: 1px solid rgba(40,167,69,0.3);">
+                        <div class="evidence-icon" style="background: linear-gradient(135deg, var(--green), #1E7E34);">ST</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name" style="color: var(--green);">Samuel Torres</div>
+                            <div class="evidence-role">Production Supervisor</div>
+                            <div class="evidence-action" style="color: white;">Controlling Production Operations</div>
+                            <div class="evidence-clause">Clause 7.5.1 • "Verified daily setup against work instruction."</div>
+                        </div>
+                        <div class="evidence-timestamp">Jan 22</div>
+                    </div>
+                    <div class="evidence-item" style="background: rgba(40,167,69,0.1); border: 1px solid rgba(40,167,69,0.3);">
+                        <div class="evidence-icon" style="background: linear-gradient(135deg, var(--green), #1E7E34);">ST</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name" style="color: var(--green);">Samuel Torres</div>
+                            <div class="evidence-role">Production Supervisor</div>
+                            <div class="evidence-action" style="color: white;">Maintaining Traceability Records</div>
+                            <div class="evidence-clause">Clause 7.5.9.1 • "Traced lot to incoming receipt—all 6 components verified."</div>
+                        </div>
+                        <div class="evidence-timestamp">Jan 25</div>
+                    </div>
+                    <div class="evidence-item" style="background: rgba(232,146,58,0.1); border: 1px solid rgba(232,146,58,0.3);">
+                        <div class="evidence-icon" style="background: linear-gradient(135deg, var(--orange), #D4782E);">ST</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name" style="color: var(--orange);">Samuel Torres</div>
+                            <div class="evidence-role">Production Supervisor</div>
+                            <div class="evidence-action" style="color: white;">Identifying Product Status</div>
+                            <div class="evidence-clause">Clause 7.5.8 • In Progress (Month 6)</div>
+                        </div>
+                        <div class="evidence-timestamp">Current</div>
+                    </div>
+                    <div class="evidence-item" style="background: rgba(40,167,69,0.1); border: 1px solid rgba(40,167,69,0.3);">
+                        <div class="evidence-icon" style="background: linear-gradient(135deg, var(--green), #1E7E34);">AM</div>
+                        <div class="evidence-text">
+                            <div class="evidence-name" style="color: var(--green);">Ana Martinez</div>
+                            <div class="evidence-role">Quality Supervisor</div>
+                            <div class="evidence-action" style="color: white;">Overseeing Product Inspection</div>
+                            <div class="evidence-clause">Clause 8.2.6 • "Reviewed inspector findings—0 escapes this week."</div>
+                        </div>
+                        <div class="evidence-timestamp">Jan 24</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Stats -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 50px;">
+                <div style="background: rgba(40,167,69,0.15); border: 1px solid rgba(40,167,69,0.3); border-radius: 16px; padding: 25px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--green);">2,847</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Activities Completed</div>
+                </div>
+                <div style="background: rgba(74,109,140,0.15); border: 1px solid rgba(74,109,140,0.3); border-radius: 16px; padding: 25px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--slate-blue);">82/82</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Clauses With Evidence</div>
+                </div>
+                <div style="background: rgba(232,146,58,0.15); border: 1px solid rgba(232,146,58,0.3); border-radius: 16px; padding: 25px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--orange);">47/47</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Employees Active</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 25px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: white;">Live</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Updated in Real-Time</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p style="font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto;">"Here's what you can have on demand at any moment—ready for export, ready for review, ready for your next FDA investigation."</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
