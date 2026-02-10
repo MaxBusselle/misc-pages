@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QMSR Context Change for ISO 13485 Certified Companies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --slate-blue: #4A6D8C;
+            --slate-blue-dark: #3A5A75;
+            --orange: #E8923A;
+            --orange-light: #F5A54D;
+            --white: #ffffff;
+            --off-white: #F8F9FA;
+            --light-gray: #E9ECEF;
+            --text-dark: #2C3E50;
+            --text-muted: #6C757D;
+            --red: #DC3545;
+            --green: #28A745;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: baseline;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--slate-blue);
+        }
+        
+        .nav-links { display: flex; gap: 6px; }
+        
+        .nav-link {
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover { background: var(--light-gray); color: var(--slate-blue); }
+        .nav-link.active { background: var(--slate-blue); color: var(--white); }
+        
+        section {
+            min-height: 100vh;
+            padding: 100px 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--slate-blue) 0%, var(--slate-blue-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border: 3px solid rgba(232, 146, 58, 0.3);
+            border-radius: 50%;
+            transform: rotate(-15deg);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .hero-intro {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .section-number {
+            background: var(--orange);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--slate-blue);
+            letter-spacing: -0.5px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--slate-blue);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--slate-blue);
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .highlight-box {
+            background: rgba(232, 146, 58, 0.1);
+            border-left: 4px solid var(--orange);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .quote-box {
+            background: rgba(74, 109, 140, 0.1);
+            border-left: 4px solid var(--slate-blue);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+        
+        .source {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            font-style: normal;
+        }
+        
+        .evidence-box {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .evidence-box h4 {
+            color: var(--green);
+            margin-top: 0;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+        
+        th {
+            background: var(--slate-blue);
+            color: var(--white);
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 0.95rem;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.5);
+        }
+        
+        .comparison-table th:first-child {
+            background: var(--green);
+        }
+        
+        .comparison-table th:last-child {
+            background: var(--red);
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        strong {
+            color: var(--slate-blue);
+            font-weight: 600;
+        }
+        
+        /* Special Sections */
+        .transition-section {
+            background: linear-gradient(135deg, var(--slate-blue) 0%, var(--slate-blue-dark) 100%);
+            color: var(--white);
+        }
+        
+        .transition-section h2,
+        .transition-section h3 {
+            color: var(--white);
+        }
+        
+        .transition-section .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .solution-box {
+            background: rgba(232, 146, 58, 0.15);
+            border: 2px solid var(--orange);
+            border-radius: 16px;
+            padding: 35px;
+            margin-top: 40px;
+        }
+        
+        .key-takeaways {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .key-takeaways ol {
+            counter-reset: takeaway-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .key-takeaways ol li {
+            counter-increment: takeaway-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 25px;
+        }
+        
+        .key-takeaways ol li::before {
+            content: counter(takeaway-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--orange);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background: var(--slate-blue);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        footer a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media print {
+            body { background: white; }
+            section { min-height: auto; page-break-inside: avoid; }
+            .nav { position: relative; }
+        }
+        
+        @media (max-width: 768px) {
+            .nav { padding: 10px 20px; flex-direction: column; gap: 10px; }
+            section { padding: 80px 20px 40px; }
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 1.5rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">QMSR Context Change for ISO 13485 Companies</div>
+        <div class="nav-links">
+            <a href="#intro" class="nav-link active">Overview</a>
+            <a href="#pillar1" class="nav-link">Investigation</a>
+            <a href="#pillar2" class="nav-link">Culture</a>
+            <a href="#pillar3" class="nav-link">Records</a>
+            <a href="#transition" class="nav-link">Transition</a>
+            <a href="#takeaways" class="nav-link">Takeaways</a>
+        </div>
+    </nav>
+
+    <section id="intro" class="hero">
+        <div class="container">
+            <h1>Understanding QMSR for ISO 13485 Certified Companies</h1>
+            <p class="subtitle">Why the shift from certification to regulatory enforcement changes everything</p>
+            
+            <div class="hero-intro">
+                <p style="margin-bottom: 25px;"><strong style="color: var(--orange);">The Core Thesis:</strong> QMSR represents a fundamental shift in <em>context</em> - from certification audit to regulatory enforcement - even when the underlying requirements are similar. This context shift changes how you must prepare, what evidence you need, and what's at stake when gaps are found.</p>
+                
+                <p><strong style="color: var(--orange);">For ISO 13485 certified companies, three critical changes create new exposure:</strong></p>
+                <ol style="text-align: left; display: inline-block; margin-top: 15px; max-width: 700px;">
+                    <li>Investigation mechanics: Enforcement-focused, high-pressure examination vs. collaborative improvement audit</li>
+                    <li>Culture of quality scrutiny: FDA now examines leadership engagement through accessible management review records</li>
+                    <li>Internal records exposure: Protected records now available to FDA and public via Freedom of Information requests</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="pillar1">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h1 class="section-title">Investigation Mechanics Have Fundamentally Changed</h1>
+            </div>
+            
+            <div class="card">
+                <p style="font-size: 1.1rem;">The examination environment has shifted from collaborative certification to enforcement investigation. While ISO 13485 certification demonstrates your documented quality system, FDA QMSR investigations test how that system performs under regulatory enforcement conditions.</p>
+            </div>
+
+            <h2>The Critical Contrast</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">ISO 13485 Certification Audit</th>
+                        <th style="width: 50%;">FDA QMSR Investigation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Scheduled</strong> - advance notice, time to prepare</td>
+                        <td><strong>Can be unannounced</strong> - must perform in real-time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collaborative</strong> - auditor helps clarify requirements</td>
+                        <td><strong>Enforcement-focused</strong> - investigator looking for noncompliance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Confidential</strong> - findings stay between company and certification body</td>
+                        <td><strong>Public record</strong> - FOI requests, competitors can access</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fixed scope</strong> - audit to standard clauses</td>
+                        <td><strong>Expanding scope</strong> - issues trigger deeper sampling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Improvement goal</strong> - corrective action, re-audit</td>
+                        <td><strong>Compliance goal</strong> - 483s, Warning Letters, consent decrees</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="evidence-box">
+                <h4>Sources</h4>
+                <ul style="margin-bottom: 0;">
+                    <li>QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024</li>
+                    <li>FDA.gov public database (verifiable FOI access)</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4 style="color: var(--orange);">Why This Matters</h4>
+                <p>Your team may execute well under scheduled audit conditions but struggle under unannounced, real-time pressure. The gap between "audit-ready" and "investigation-ready" is behavioral, not procedural.</p>
+                
+                <p style="margin-top: 15px;"><strong>ISO certification proves:</strong> Your documentation is compliant and your system design meets the standard.</p>
+                
+                <p><strong>FDA investigation requires:</strong> Your people can perform under questioning, your practices match documentation, you can produce records quickly, and your team uses consistent language - all without preparation time.</p>
+            </div>
+
+            <h3>The Pressure Test Reality</h3>
+            
+            <div class="card">
+                <p>During FDA investigations, three clocks run simultaneously:</p>
+                
+                <ol style="margin-top: 15px;">
+                    <li><strong>Retrieval:</strong> Can you produce records quickly from controlled sources?</li>
+                    <li><strong>Consistency:</strong> Do different people describe the same process the same way?</li>
+                    <li><strong>Evidence:</strong> Can you show "event → decision → documented → follow-through" without reconstructing it?</li>
+                </ol>
+                
+                <p style="margin-top: 20px;">When investigators sense drift (slow retrieval, inconsistent answers, mismatched records), the sampling pattern changes from "show me one example" to "show me three" and then "show me more." The scope expands when the system appears uncontrolled.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pillar2" style="background: var(--off-white);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h1 class="section-title">Culture of Quality Is Now Under Direct FDA Scrutiny</h1>
+            </div>
+            
+            <div class="card">
+                <p style="font-size: 1.1rem;">FDA has explicitly stated expectations for demonstrating "culture of quality" and now has access to the records that evidence this. This represents a significant shift in what management review records must demonstrate and who can examine them.</p>
+            </div>
+
+            <h2>What Changed</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Under QSR (Old Regulation)</th>
+                        <th style="width: 50%;">Under QMSR (New Regulation)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Management review required (§820.20)</td>
+                        <td>Management review still required (ISO 13485 Clause 5.6)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>§ 820.180(c) protected</strong> internal audit and management review records from routine FDA inspection</td>
+                        <td><strong>Protection removed</strong> - FDA can now review these records</td>
+                    </tr>
+                    <tr>
+                        <td>Internal improvement tools</td>
+                        <td>Evidence of leadership engagement</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="quote-box">
+                <p><strong>From the QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024, Comment 27 (pages 7506-7507):</strong></p>
+                
+                <p style="margin-top: 20px;">"FDA expects medical device manufacturers, led by individuals with executive responsibilities, to embrace a culture of quality as a key component in ensuring the manufacture of safe and effective medical devices that otherwise comply with the FD&C Act. A culture of quality meets regulatory requirements through a set of behaviors, attitudes, activities, and processes."</p>
+            </div>
+
+            <h3>What This Means for ISO 13485 Certified Companies</h3>
+            
+            <div class="highlight-box">
+                <h4 style="color: var(--orange);">Important Distinctions</h4>
+                
+                <ol style="margin-top: 10px;">
+                    <li>ISO 13485 always required management responsibility and quality culture</li>
+                    <li>QSR required management review but <strong>protected those records</strong> from FDA inspection</li>
+                    <li><strong>QMSR removes that protection</strong> - FDA can now review management review records</li>
+                    <li>FDA has publicly stated what it expects to see: evidence of "behaviors, attitudes, activities, and processes" - not just documentation</li>
+                </ol>
+            </div>
+
+            <h3>What Management Review Records Must Now Demonstrate</h3>
+            
+            <div class="card">
+                <p>Your management review records are no longer purely internal documents. They now serve as investigation evidence of leadership engagement. FDA expects to see:</p>
+                
+                <ul style="margin-top: 15px;">
+                    <li><strong>Clear inputs:</strong> Quality data, CAPA/complaint signals, supplier performance, audit results</li>
+                    <li><strong>Clear decisions:</strong> Explicit priorities, resource assignments, risk trade-offs with rationale</li>
+                    <li><strong>Clear follow-through:</strong> Assigned owners, due dates, evidence of completion and effectiveness</li>
+                </ul>
+
+                <p style="margin-top: 20px;">Records should not be:</p>
+                <ul>
+                    <li><strong>Vague headlines:</strong> "Discussed quality issues" or "Reviewed performance"</li>
+                    <li><strong>Just summaries:</strong> Data presented without decisions or actions</li>
+                    <li><strong>Checklist completion:</strong> Topics covered without demonstrated leadership control</li>
+                </ul>
+            </div>
+
+            <div class="evidence-box">
+                <h4>The Shift in Scrutiny</h4>
+                <p><strong>ISO auditors verified:</strong> Management review happened and included required elements</p>
+                <p><strong>FDA investigators can now examine:</strong> Whether management review demonstrates leadership actively driving quality and making data-driven decisions</p>
+                <p style="margin-top: 15px;">What you write in these records is now investigation evidence that can be accessed by FDA and, through FOI requests, by competitors, customers, and the public.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pillar3">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h1 class="section-title">Internal Records Are Now Investigation Evidence</h1>
+            </div>
+            
+            <div class="card">
+                <p style="font-size: 1.1rem;">Records that were explicitly protected under QSR are now accessible to FDA under QMSR. This change affects how you document internal improvement activities and creates new exposure through public disclosure.</p>
+            </div>
+
+            <h2>The Specific Change</h2>
+            
+            <div class="quote-box">
+                <p><strong>From the QMSR Final Rule Preamble, Federal Register Vol. 89, No. 23, February 2, 2024, Comment 55 (pages 7513-7515):</strong></p>
+                
+                <p style="margin-top: 20px;"><strong>Under QSR with QSIT Guide:</strong></p>
+                <ul style="font-style: normal; margin-top: 10px;">
+                    <li>FDA policy: <strong>Do not routinely request</strong> internal audit records or management review records</li>
+                    <li>These were internal improvement tools</li>
+                    <li>Protected from routine inspection via § 820.180(c)</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Under QMSR:</strong></p>
+                <ul style="font-style: normal; margin-top: 10px;">
+                    <li><strong>QSIT Guide explicitly retired</strong></li>
+                    <li>Internal audits: Fair game for routine investigations</li>
+                    <li>Management reviews: Now reviewable by FDA</li>
+                    <li>FDA stated: "FDA disagrees that it should maintain the exceptions set forth at § 820.180(c)"</li>
+                </ul>
+            </div>
+
+            <h3>The Exposure</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">What You Write Internally</th>
+                        <th style="width: 50%;">Who Can See It</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Management review minutes</li>
+                                <li>Internal audit findings</li>
+                                <li>Gap assessments</li>
+                                <li>Improvement plans</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>FDA investigators (during inspections)</li>
+                                <li>Public (via FOI requests)</li>
+                                <li>Competitors (searchable databases)</li>
+                                <li>Customers and investors (due diligence)</li>
+                                <li>Media (Warning Letter tracking)</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>The FOI Reality</h3>
+            
+            <div class="highlight-box">
+                <p><strong>From Darren Reeves, "QMSR Investigation-Ready":</strong></p>
+                
+                <p style="margin-top: 15px; font-style: italic;">"Do you know how easy it is to go into the FDA recall or warning letter database, put in a three-letter product code, and find all of the challenges your competitors have had over the last however many years with the FDA? I can do that in 10 minutes, and so can you."</p>
+                
+                <p style="margin-top: 20px;">This is not theoretical. Sales representatives actively use FDA investigation findings against competitors. Investment analysts review Warning Letters as part of due diligence. Customers check FDA databases before vendor qualification.</p>
+            </div>
+
+            <h3>ISO vs. FDA: Confidentiality Comparison</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>ISO Auditors</th>
+                        <th>FDA Investigators</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bound by confidentiality agreements with certification bodies</td>
+                        <td>Federal investigators creating public records</td>
+                    </tr>
+                    <tr>
+                        <td>Cannot disclose findings to third parties</td>
+                        <td>Findings subject to Freedom of Information Act</td>
+                    </tr>
+                    <tr>
+                        <td>Audit reports remain between company and certification body</td>
+                        <td>483 Observations and Warning Letters publicly searchable</td>
+                    </tr>
+                    <tr>
+                        <td>Corrective actions private</td>
+                        <td>Responses and follow-up actions can become public record</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Strategic Implications</h3>
+            
+            <div class="card">
+                <p>The removal of protection for internal records means:</p>
+                
+                <ul style="margin-top: 15px;">
+                    <li><strong>Documentation style matters:</strong> You likely wrote records assuming confidentiality. Those assumptions no longer hold.</li>
+                    <li><strong>Internal findings can expand scope:</strong> What you identify internally can trigger deeper FDA investigation of those areas.</li>
+                    <li><strong>Competitive intelligence is real:</strong> Your documented gaps and challenges may become visible to competitors.</li>
+                    <li><strong>Reputational risk increased:</strong> Public access to investigation findings creates stakeholder visibility you didn't have before.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="transition" class="transition-section">
+        <div class="container">
+            <h2 style="color: var(--white); margin-bottom: 30px;">Making the Transition: From Certification to Investigation Readiness</h2>
+            
+            <div class="card">
+                <h3 style="margin-top: 0;">The Challenge</h3>
+                <p>QMSR creates a fundamentally different examination environment:</p>
+                <ol style="margin-top: 10px;">
+                    <li>Enforcement-focused, high-pressure, public consequences</li>
+                    <li>Internal records now evidence of system control</li>
+                    <li>Behavior consistency tested across people and shifts</li>
+                    <li>Culture of quality scrutinized through management review</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">The Gap</h3>
+                <p>Traditional training approaches address the <em>what</em> (procedures, requirements) but not the <em>how</em> (consistent execution under pressure).</p>
+                
+                <p style="margin-top: 15px;">ISO 13485 certification demonstrates your documented quality system. FDA QMSR investigations test whether that system works consistently in practice, under real-time examination, across all personnel.</p>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">What Investigation Readiness Requires</h3>
+                
+                <ul style="margin-top: 10px;">
+                    <li><strong>Real-time performance:</strong> No preparation time to organize or align</li>
+                    <li><strong>Behavioral consistency:</strong> Same answers from different people, different shifts</li>
+                    <li><strong>Immediate retrieval:</strong> Records accessible quickly from controlled sources</li>
+                    <li><strong>Pressure competence:</strong> Team performs under investigator questioning</li>
+                    <li><strong>Evidence trails:</strong> Documented decisions show systematic control</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution" style="background: var(--off-white);">
+        <div class="container">
+            <div class="solution-box">
+                <h2 style="color: var(--slate-blue);">Building Investigation Readiness</h2>
+                
+                <p style="margin-top: 20px;">To bridge the gap between certification and investigation readiness, companies need an approach that:</p>
+                
+                <ol style="margin-top: 20px;">
+                    <li><strong>Tests procedures in actual work:</strong> Not classroom training, but real-world application</li>
+                    <li><strong>Creates behavioral evidence:</strong> Documented practice that shows consistent execution</li>
+                    <li><strong>Builds cross-shift consistency:</strong> Everyone following the same processes</li>
+                    <li><strong>Demonstrates continuous improvement:</strong> Evidence of systematic gap identification and correction</li>
+                </ol>
+
+                <h3 style="color: var(--slate-blue); margin-top: 30px;">The Strategic Response</h3>
+                
+                <p>Companies preparing for the QMSR transition are implementing behavior-based compliance programs that:</p>
+                
+                <ul style="margin-top: 15px;">
+                    <li>Deliver activities in the flow of work (not separate from daily operations)</li>
+                    <li>Require documented application of procedures (creating evidence trails)</li>
+                    <li>Measure behavioral change over time (the "delta" that shows improvement)</li>
+                    <li>Provide audit-ready evidence of systematic enforcement and validation</li>
+                </ul>
+
+                <p style="margin-top: 25px;">This approach addresses all three pillars:</p>
+                
+                <ul style="margin-top: 10px;">
+                    <li><strong>Pillar 1:</strong> Prepares teams for high-pressure, real-time performance</li>
+                    <li><strong>Pillar 2:</strong> Creates evidence of active quality culture through documented practice</li>
+                    <li><strong>Pillar 3:</strong> Builds investigation-ready documentation that demonstrates control</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="takeaways">
+        <div class="container">
+            <div class="key-takeaways">
+                <h2 style="margin-top: 0;">Key Takeaways</h2>
+                
+                <ol>
+                    <li><strong>Context matters as much as requirements:</strong> The shift from certification to enforcement fundamentally changes how compliance is tested.</li>
+                    
+                    <li><strong>ISO 13485 certification is necessary but not sufficient:</strong> You meet the requirements, but you may not be prepared for how FDA will examine them.</li>
+                    
+                    <li><strong>Your documentation strategy must change:</strong> Records written for internal improvement now serve as investigation evidence.</li>
+                    
+                    <li><strong>Behavioral readiness is the gap:</strong> Traditional training proves attendance; investigation readiness requires proven performance under pressure.</li>
+                    
+                    <li><strong>The stakes are higher:</strong> Public disclosure, competitive intelligence, and reputational risk create new consequences for gaps.</li>
+                </ol>
+            </div>
+
+            <div class="card" style="margin-top: 40px;">
+                <h3 style="margin-top: 0;">Additional Resources</h3>
+                <ul>
+                    <li><a href="https://www.federalregister.gov/documents/2024/02/02/2024-01709/medical-devices-quality-system-regulation-amendments" target="_blank">QMSR Final Rule (Federal Register)</a></li>
+                    <li><a href="https://www.fda.gov/medical-devices/quality-systems-medical-devices/quality-management-system-regulation" target="_blank">FDA QMSR Information Page</a></li>
+                    <li>Darren Reeves, "QMSR Investigation-Ready" (2024)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>This document provides educational information about the QMSR transition for ISO 13485 certified companies.</p>
+            <p style="margin-top: 10px;">All regulatory citations are sourced from publicly available FDA documents.</p>
+            <p style="margin-top: 20px; font-weight: 600;">Effective Date: QMSR becomes effective February 2, 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
