@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manufacturing Excellence Triad</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --navy-mid: #111E33;
+    --teal: #00A896;
+    --teal-glow: #00D4AA;
+    --amber: #F4A261;
+    --amber-warm: #E8913A;
+    --coral: #E76F51;
+    --off-white: #F0EDE8;
+    --text-light: #E8E4DD;
+    --text-dim: #8A9BB5;
+    --text-mid: #A8B8CE;
+    --card-bg: rgba(255,255,255,0.025);
+    --card-border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,168,150,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, rgba(244,162,97,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* === HEADER === */
+  .header {
+    text-align: center;
+    padding: 48px 24px 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-label {
+    font-size: 14px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 5.5vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--off-white);
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .header h1 em { color: var(--teal-glow); font-style: italic; }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.65;
+  }
+
+  /* === MAIN === */
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === TRIANGLE === */
+  .tri-wrap {
+    position: relative;
+    width: 480px;
+    height: 440px;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+  }
+
+  .tri-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    pointer-events: none;
+  }
+
+  .tri-poly {
+    fill: rgba(255,255,255,0.015);
+    stroke: rgba(255,255,255,0.07);
+    stroke-width: 1.5;
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .tri-support-line {
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    opacity: 0;
+    transition: all 0.7s ease;
+  }
+
+  .tri-support-line.visible { opacity: 0.35; }
+
+  /* Vertex nodes */
+  .vtx {
+    position: absolute;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+  }
+
+  .vtx-circle {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 2px solid transparent;
+  }
+
+  .vtx:hover .vtx-circle { transform: scale(1.1); }
+
+  .vtx-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.5s ease;
+    color: var(--text-dim);
+  }
+
+  .vtx[data-id="quality"] .vtx-circle {
+    background: linear-gradient(135deg, var(--teal), #008B7A);
+    box-shadow: 0 4px 24px rgba(0,168,150,0.35);
+  }
+  .vtx[data-id="standard"] .vtx-circle {
+    background: linear-gradient(135deg, var(--amber), var(--amber-warm));
+    box-shadow: 0 4px 24px rgba(244,162,97,0.35);
+  }
+  .vtx[data-id="compliance"] .vtx-circle {
+    background: linear-gradient(135deg, var(--coral), #CC5A3E);
+    box-shadow: 0 4px 24px rgba(231,111,81,0.35);
+  }
+
+  .vtx.active .vtx-circle {
+    transform: scale(1.3);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .vtx.active .vtx-label {
+    color: var(--off-white);
+    font-size: 12px;
+    letter-spacing: 2.5px;
+  }
+
+  .vtx.active .vtx-circle::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    opacity: 0;
+    animation: pulse 2.5s ease-out infinite;
+  }
+
+  .vtx[data-id="quality"].active .vtx-circle::after { color: var(--teal); }
+  .vtx[data-id="standard"].active .vtx-circle::after { color: var(--amber); }
+  .vtx[data-id="compliance"].active .vtx-circle::after { color: var(--coral); }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* === INNER TAGS === */
+  .inner-tags {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .tag-group {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all 0.5s ease 0.15s;
+    pointer-events: none;
+    /* centered in the triangle interior */
+    left: 50%;
+    width: 280px;
+    margin-left: -140px;
+    top: 48%;
+  }
+
+  .tag-group.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .itag {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    border: 1px solid;
+  }
+
+  /* Quality tags */
+  .tag-group[data-for="quality"] .itag {
+    background: rgba(0,168,150,0.08);
+    border-color: rgba(0,168,150,0.2);
+    color: var(--teal-glow);
+  }
+
+  /* Standard work tags */
+  .tag-group[data-for="standard"] .itag {
+    background: rgba(244,162,97,0.08);
+    border-color: rgba(244,162,97,0.2);
+    color: var(--amber);
+  }
+
+  /* Compliance tags */
+  .tag-group[data-for="compliance"] .itag {
+    background: rgba(231,111,81,0.08);
+    border-color: rgba(231,111,81,0.2);
+    color: var(--coral);
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    opacity: 0.6;
+  }
+
+  .hint kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 11px;
+    margin: 0 1px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* === CONTENT PANEL === */
+  .content-panel {
+    width: 100%;
+    max-width: 780px;
+  }
+
+  .panel-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.6s ease;
+  }
+
+  .panel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    transition: background 0.6s ease;
+  }
+
+  [data-active="quality"] .panel-card { border-color: rgba(0,168,150,0.15); }
+  [data-active="quality"] .panel-card::before { background: linear-gradient(90deg, var(--teal), transparent); }
+  [data-active="standard"] .panel-card { border-color: rgba(244,162,97,0.15); }
+  [data-active="standard"] .panel-card::before { background: linear-gradient(90deg, var(--amber), transparent); }
+  [data-active="compliance"] .panel-card { border-color: rgba(231,111,81,0.15); }
+  [data-active="compliance"] .panel-card::before { background: linear-gradient(90deg, var(--coral), transparent); }
+
+  .cv { display: none; }
+  .cv.active { display: block; animation: fadeUp 0.5s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cv-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  [data-active="quality"] .cv-eyebrow { color: var(--teal); }
+  [data-active="standard"] .cv-eyebrow { color: var(--amber); }
+  [data-active="compliance"] .cv-eyebrow { color: var(--coral); }
+
+  .cv-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3.5vw, 29px);
+    font-weight: 400;
+    color: var(--off-white);
+    margin-bottom: 20px;
+    line-height: 1.25;
+  }
+
+  .cv-intro {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    margin-bottom: 22px;
+  }
+
+  .bullet-section { margin-bottom: 22px; }
+
+  .bullet-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .bullet-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-dim);
+  }
+
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transition: background 0.5s ease;
+  }
+
+  [data-active="quality"] .bullet-list li::before { background: var(--teal); }
+  [data-active="standard"] .bullet-list li::before { background: var(--amber); }
+  [data-active="compliance"] .bullet-list li::before { background: var(--coral); }
+
+  .bullet-list li strong {
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .citation {
+    margin-top: 22px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  [data-active="quality"] .citation { border-color: var(--teal); }
+  [data-active="standard"] .citation { border-color: var(--amber); }
+  [data-active="compliance"] .citation { border-color: var(--coral); }
+
+  .citation-src {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .supports {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .sup-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sup-tag:hover { background: rgba(255,255,255,0.08); color: var(--text-light); }
+
+  .sup-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sup-dot.d-q { background: var(--teal); }
+  .sup-dot.d-s { background: var(--amber); }
+  .sup-dot.d-c { background: var(--coral); }
+
+  /* === SOLUTION SECTION === */
+  .solution-section {
+    width: 100%;
+    max-width: 780px;
+    margin-top: 40px;
+  }
+
+  .sol-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .sol-header .sol-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .sol-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 400;
+    color: var(--off-white);
+    line-height: 1.3;
+  }
+
+  .sol-header h2 em { color: var(--teal-glow); font-style: italic; }
+
+  .sol-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Activity Cycle */
+  .cycle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .cycle-step {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 22px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cycle-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .cycle-step:nth-child(1)::before { background: var(--teal); }
+  .cycle-step:nth-child(2)::before { background: var(--amber); }
+  .cycle-step:nth-child(3)::before { background: var(--coral); }
+
+  .cycle-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .cycle-step:nth-child(1) .cycle-num { color: var(--teal); }
+  .cycle-step:nth-child(2) .cycle-num { color: var(--amber); }
+  .cycle-step:nth-child(3) .cycle-num { color: var(--coral); }
+
+  .cycle-icon { font-size: 28px; margin-bottom: 8px; }
+
+  .cycle-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--off-white);
+    margin-bottom: 8px;
+  }
+
+  .cycle-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+
+  .cycle-row .cycle-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: rgba(255,255,255,0.15);
+    z-index: 2;
+  }
+
+  /* Value cards */
+  .sol-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .sol-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 22px 22px 20px;
+  }
+
+  .sol-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sol-card:nth-child(1) .sol-card-title { color: var(--teal); }
+  .sol-card:nth-child(2) .sol-card-title { color: var(--amber); }
+  .sol-card:nth-child(3) .sol-card-title { color: var(--coral); }
+  .sol-card:nth-child(4) .sol-card-title { color: var(--teal-glow); }
+
+  .sol-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sol-bullets li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .sol-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-dim);
+  }
+
+  .sol-card:nth-child(1) .sol-bullets li::before { background: var(--teal); }
+  .sol-card:nth-child(2) .sol-bullets li::before { background: var(--amber); }
+  .sol-card:nth-child(3) .sol-bullets li::before { background: var(--coral); }
+  .sol-card:nth-child(4) .sol-bullets li::before { background: var(--teal-glow); }
+
+  .sol-bullets li strong { color: var(--text-light); font-weight: 500; }
+
+  /* Bottom CTA */
+  .sol-bottom {
+    margin-top: 28px;
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(0,168,150,0.08), rgba(244,162,97,0.05));
+    border: 1px solid rgba(0,168,150,0.12);
+    border-radius: 12px;
+  }
+
+  .sol-bottom p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .sol-bottom p strong { color: var(--off-white); font-weight: 500; }
+
+  .sol-tagline {
+    margin-top: 14px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--off-white);
+  }
+
+  .sol-tagline em { color: var(--teal-glow); font-style: italic; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 640px) {
+    .tri-wrap { width: 340px; height: 340px; }
+    .vtx-circle { width: 46px; height: 46px; font-size: 19px; }
+    .vtx-label { font-size: 9px; }
+    .itag { font-size: 10px; padding: 4px 9px; }
+    .tag-group { width: 220px; margin-left: -110px; }
+    .panel-card { padding: 24px 20px; }
+    .supports { flex-direction: column; }
+    .cycle-row { grid-template-columns: 1fr; }
+    .cycle-row .cycle-step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -14px; transform: translateX(-50%); }
+    .sol-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">The Manufacturing Excellence Triad</div>
+  <h1>You Can't Have One<br><em>Without the Other Two.</em></h1>
+  <p class="header-sub">Different roles prioritize different areas — but all three rise and fall together.</p>
+</div>
+
+<div class="main" id="app" data-active="quality">
+
+  <!-- TRIANGLE -->
+  <div class="tri-wrap" id="triWrap">
+    <svg class="tri-svg" viewBox="0 0 480 440" preserveAspectRatio="xMidYMid meet">
+      <polygon id="triPoly" class="tri-poly" points="240,50 60,380 420,380" />
+      <line id="supportLine" class="tri-support-line" x1="60" y1="380" x2="420" y2="380" />
+    </svg>
+
+    <!-- Vertices -->
+    <div class="vtx active" data-id="quality" onclick="activate('quality')">
+      <div class="vtx-circle">✦</div>
+      <div class="vtx-label">Culture of Quality</div>
+    </div>
+
+    <div class="vtx" data-id="standard" onclick="activate('standard')">
+      <div class="vtx-circle">⚙</div>
+      <div class="vtx-label">Standard Work</div>
+    </div>
+
+    <div class="vtx" data-id="compliance" onclick="activate('compliance')">
+      <div class="vtx-circle">◈</div>
+      <div class="vtx-label">Compliance</div>
+    </div>
+
+    <!-- Floating inner tags -->
+    <div class="inner-tags">
+      <div class="tag-group active" data-for="quality">
+        <span class="itag">Behaviors &amp; Attitudes</span>
+        <span class="itag">Management Oversight</span>
+        <span class="itag">Quality Objectives</span>
+        <span class="itag">Proactive Visibility</span>
+        <span class="itag">Continuous Improvement</span>
+      </div>
+      <div class="tag-group" data-for="standard">
+        <span class="itag">Following Updated SOPs</span>
+        <span class="itag">Post-Training Follow-Up</span>
+        <span class="itag">Root Cause Analysis</span>
+        <span class="itag">Cross-Shift Consistency</span>
+        <span class="itag">Leading by Example</span>
+      </div>
+      <div class="tag-group" data-for="compliance">
+        <span class="itag">ISO 13485:2016</span>
+        <span class="itag">FDA QMSR</span>
+        <span class="itag">Verification of Effectiveness</span>
+        <span class="itag">Investigation Readiness</span>
+        <span class="itag">Contemporaneous Evidence</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint">Click a vertex to rotate &nbsp;·&nbsp; <kbd>←</kbd> <kbd>→</kbd> arrow keys</div>
+
+  <!-- CONTENT PANEL -->
+  <div class="content-panel">
+    <div class="panel-card">
+
+      <!-- ===== CULTURE OF QUALITY ===== -->
+      <div class="cv active" id="cv-quality">
+        <div class="cv-eyebrow">When culture of quality is your lens</div>
+        <div class="cv-title">A culture of quality isn't a slogan — it's visible, measurable behavior across the entire organization.</div>
+        <div class="cv-intro">FDA defined "culture of quality" in the QMSR Preamble as meeting regulatory requirements through "behaviors, attitudes, activities, and processes." The new inspection framework (CP 7382.850) embeds this language directly, making Management Oversight a core evaluation area. If you're claiming a culture of quality, you need proof — not just intentions.</div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">What a real culture of quality requires</div>
+          <ul class="bullet-list">
+            <li><strong>Scalable visibility</strong> into what's actually happening on the floor — not just what's in the procedures binder</li>
+            <li><strong>Confidence that employees are following procedures consistently,</strong> not just that they were told to during a one-time training event</li>
+            <li><strong>Evidence you can show an auditor</strong> — documented behavior, not just documented intent</li>
+            <li><strong>Proactive gap identification:</strong> you're finding and fixing problems before an inspector does, not reacting every two years</li>
+            <li><strong>Connection between daily work and quality objectives</strong> at every level of the organization, from operators to executives</li>
+          </ul>
+        </div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">Why this can't stand alone</div>
+          <ul class="bullet-list">
+            <li>A culture of quality without <strong>consistent standard work enforcement</strong> is aspiration without execution — people may value quality but not know the current procedures</li>
+            <li>A culture of quality without <strong>regulatory compliance</strong> is a contradiction — if you're not operating within the regulations, you don't have a culture of quality regardless of what's on the wall</li>
+            <li>Culture of quality is demonstrated through behavior, not declared through policy. The only way to demonstrate it is through <strong>documented activities completed in real work</strong></li>
+          </ul>
+        </div>
+
+        <div class="citation">
+          "FDA expects medical device manufacturers, led by individuals with executive responsibilities, to embrace a culture of quality as a key component in ensuring the manufacture of safe and effective medical devices. A culture of quality meets regulatory requirements through a set of behaviors, attitudes, activities, and processes."
+          <span class="citation-src">QMSR Preamble, Comment 27 (pp. 7506–7507) · CP 7382.850 Footnote 10 (p. 20)</span>
+        </div>
+
+        <div class="supports">
+          <div class="sup-tag" onclick="activate('standard')"><span class="sup-dot d-s"></span> Supported by Standard Work</div>
+          <div class="sup-tag" onclick="activate('compliance')"><span class="sup-dot d-c"></span> Supported by Compliance</div>
+        </div>
+      </div>
+
+      <!-- ===== STANDARD WORK ===== -->
+      <div class="cv" id="cv-standard">
+        <div class="cv-eyebrow">When standard work is your lens</div>
+        <div class="cv-title">Consistently following standard procedures affects everything — and the ramifications are hard to overstate.</div>
+        <div class="cv-intro">Safety, profitability, efficiency, growth, revenue, cost — every operational metric traces back to whether people are following standard procedures. Every deviation is a risk event. Every inconsistency is a crack in the system. If you're not actively enforcing standard work at scale, everything else is built on sand.</div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">What driving standard work really means</div>
+          <ul class="bullet-list">
+            <li><strong>Not just documenting procedures, but actively enforcing them:</strong> reiterating, checking, supporting people's ability to learn and follow them, leading by example</li>
+            <li><strong>Building cross-shift consistency:</strong> different people describing the same process the same way, every time, without preparation</li>
+            <li><strong>Using up-to-date expectations:</strong> ensuring current revision procedures are what people actually follow, not the version they memorized two years ago</li>
+            <li><strong>Visibility into where adherence is strong and where it's not:</strong> you can't fix what you can't see, and you can't report on what you don't measure</li>
+            <li><strong>Real-world practice, not just awareness:</strong> getting people to do the steps correctly in their actual work environment, not just acknowledge them in a training module</li>
+          </ul>
+        </div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">Why this can't stand alone</div>
+          <ul class="bullet-list">
+            <li>Standard work without <strong>compliance alignment</strong> means you might be driving consistency — but toward the wrong standard or with incomplete regulatory requirements</li>
+            <li>Standard work without <strong>a culture of quality</strong> means there's no organizational commitment behind the enforcement — people see it as a chore, not a priority</li>
+            <li>The good news: if you truly drive standard work at scale, compliance and culture of quality <strong>automatically follow.</strong> This may be the simplest way to look at the whole problem</li>
+          </ul>
+        </div>
+
+        <div class="citation">
+          "ISO 13485 Clause 6.2 requires organizations to evaluate the effectiveness of the actions taken — a training certificate just proves someone showed up. It doesn't prove the training was effective. You need actual evidence that the training changed how people work."
+          <span class="citation-src">ISO 13485:2016, Clause 6.2(c) — Human Resources</span>
+        </div>
+
+        <div class="supports">
+          <div class="sup-tag" onclick="activate('quality')"><span class="sup-dot d-q"></span> Supported by Culture of Quality</div>
+          <div class="sup-tag" onclick="activate('compliance')"><span class="sup-dot d-c"></span> Supported by Compliance</div>
+        </div>
+      </div>
+
+      <!-- ===== COMPLIANCE ===== -->
+      <div class="cv" id="cv-compliance">
+        <div class="cv-eyebrow">When compliance is your lens</div>
+        <div class="cv-title">You can't confidently say you're in compliance if you don't actually have visibility into what's happening.</div>
+        <div class="cv-intro">Medical device manufacturing is regulated by the FDA, and compliance is non-negotiable. But here's the uncomfortable truth: if your only visibility comes from an inspector showing up every two years and giving you corrective actions, that's not compliance — that's reactive firefighting. The new QMSR inspection framework evaluates whether your QMS "actually functions as an integrated, risk-driven whole" rather than whether it merely exists on paper.</div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">What real compliance demands</div>
+          <ul class="bullet-list">
+            <li><strong>Contemporaneous evidence</strong> — generated at the time work is performed, not documentation created in preparation for an inspection</li>
+            <li><strong>Demonstrable competence:</strong> investigators will look for evidence that people performing work can demonstrate the applicable requirements, not just that they were "trained"</li>
+            <li><strong>Proactive identification and response:</strong> even findings of competence gaps, when documented with corrective actions, demonstrate the system is working — which is what FDA wants to see</li>
+            <li><strong>Fast, consistent record retrieval:</strong> when investigators sense drift — slow retrieval, inconsistent answers, mismatched records — sampling expands from "show me one" to "show me more"</li>
+            <li><strong>Investigation readiness, not just audit readiness:</strong> CP 7382.850 evaluates manufacturer commitments including allocation of adequate resources to ensure the QMS is operating in a state of control</li>
+          </ul>
+        </div>
+
+        <div class="bullet-section">
+          <div class="bullet-section-title">Why this can't stand alone</div>
+          <ul class="bullet-list">
+            <li>Compliance without <strong>standard work enforcement</strong> means things fall through the cracks — you'll get errors, mistakes, and findings on audits because procedures aren't being followed in practice</li>
+            <li>Compliance without <strong>a culture of quality</strong> means you're chasing minimum requirements rather than building the organizational habits that prevent problems in the first place</li>
+            <li>Being proactive is a fundamentally better way to drive compliance than reacting to inspector findings every two years. Proactive requires the other two pillars</li>
+          </ul>
+        </div>
+
+        <div class="citation">
+          "CP 7382.850 Part V.1.B evaluates the manufacturer's commitments including commitment from top management and allocation of adequate resources to ensure the firm's quality management system is operating in a state of control."
+          <span class="citation-src">FDA CP 7382.850, Part V.1.B (p. 53) · Management Oversight QMS Area</span>
+        </div>
+
+        <div class="supports">
+          <div class="sup-tag" onclick="activate('quality')"><span class="sup-dot d-q"></span> Supported by Culture of Quality</div>
+          <div class="sup-tag" onclick="activate('standard')"><span class="sup-dot d-s"></span> Supported by Standard Work</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SOLUTION SECTION (STATIC) ===== -->
+  <div class="solution-section">
+    <div class="sol-header">
+      <div class="sol-label">The Single Solution to All Three</div>
+      <h2>On-the-Job Activities That <em>Build Real Habits</em></h2>
+      <p class="sol-sub">All three rise and fall together — and the mechanism that drives all three simultaneously is the same: scalable, behavior-based activities completed in the flow of real work, with the visibility to prove it.</p>
+    </div>
+
+    <!-- Activity Cycle -->
+    <div class="cycle-row">
+      <div class="cycle-step">
+        <div class="cycle-num">Step 1</div>
+        <div class="cycle-icon">📋</div>
+        <div class="cycle-name">Assign</div>
+        <div class="cycle-desc">A small, targeted activity is assigned to the employee in their workflow — via email, Teams, or text. It's specific to their role and tied to a real regulatory requirement.</div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">Step 2</div>
+        <div class="cycle-icon">🔧</div>
+        <div class="cycle-name">Do</div>
+        <div class="cycle-desc">The employee completes the activity as part of their actual job. Not a simulation, not a hypothetical — a real task in their real work environment, applying the correct procedure.</div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">Step 3</div>
+        <div class="cycle-icon">💬</div>
+        <div class="cycle-name">Reflect</div>
+        <div class="cycle-desc">The employee answers a few structured questions about what happened — capturing their decisions, challenges, and outcomes. This creates the auditable evidence trail.</div>
+      </div>
+    </div>
+
+    <!-- Value cards -->
+    <div class="sol-grid">
+      <div class="sol-card">
+        <div class="sol-card-title">🏛️ For the Organization</div>
+        <ul class="sol-bullets">
+          <li><strong>Documented evidence chain</strong> demonstrating sincere compliance effort — activity completion, learner feedback, trend data, and observed behavior change</li>
+          <li>Visibility into what's working and where attention is needed — across roles, departments, and shifts</li>
+          <li>Hundreds or thousands of activity completions building a picture of organizational compliance health</li>
+        </ul>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-title">🔍 For Regulators &amp; Auditors</div>
+        <ul class="sol-bullets">
+          <li><strong>Proof the organization invested in changing how people actually work,</strong> not just updating procedures on a shelf</li>
+          <li>Contemporaneous records generated at the time of work — not retroactive documentation created before an inspection</li>
+          <li>Even documented struggles represent positive validation: systematic gap identification and response</li>
+        </ul>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-title">👤 For Employees</div>
+        <ul class="sol-bullets">
+          <li><strong>Practical guidance on exactly what QMSR requires of them</strong> in their specific role, delivered in the context of their actual work</li>
+          <li>Bite-sized activities that fit into the flow of work — not separate training events that pull them off the floor</li>
+          <li>Guided real-world practice: not a quiz, but a structured walkthrough of what they need to do and why</li>
+        </ul>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-title">📊 For Measuring Behavior Change</div>
+        <ul class="sol-bullets">
+          <li><strong>Pre and post assessments</strong> — managers rate employee behaviors on specific observable criteria before and after the program</li>
+          <li>The "delta" — objective, measurable change in how a person works, not just self-reported improvement</li>
+          <li>Trend data over time showing whether compliance habits are building, stalling, or regressing across the workforce</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="sol-bottom">
+      <p>This does not replace formal training — formal training is non-negotiable. This is about taking all that essential knowledge and <strong>making sure it actually sticks.</strong> Making sure it translates to what people do long after they've left the classroom.</p>
+      <div class="sol-tagline">Proof of practice, <em>not just proof of attendance.</em></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // === POSITIONS & LAYOUTS ===
+  const POS = {
+    top:   { x: 240, y: 50  },
+    left:  { x: 60,  y: 380 },
+    right: { x: 420, y: 380 },
+  };
+
+  const LAYOUTS = {
+    quality:    { quality: 'top', standard: 'left',  compliance: 'right' },
+    standard:   { standard: 'top', compliance: 'left', quality: 'right'  },
+    compliance: { compliance: 'top', quality: 'left',  standard: 'right' },
+  };
+
+  const SUPPORT_COLORS = {
+    quality: '#00A896',
+    standard: '#F4A261',
+    compliance: '#E76F51',
+  };
+
+  const vtxEls = {
+    quality:    document.querySelector('.vtx[data-id="quality"]'),
+    standard:   document.querySelector('.vtx[data-id="standard"]'),
+    compliance: document.querySelector('.vtx[data-id="compliance"]'),
+  };
+
+  const triPoly = document.getElementById('triPoly');
+  const supportLine = document.getElementById('supportLine');
+
+  function activate(id) {
+    const app = document.getElementById('app');
+    app.setAttribute('data-active', id);
+
+    const layout = LAYOUTS[id];
+
+    // Move vertices
+    Object.entries(layout).forEach(([vtxId, posKey]) => {
+      const el = vtxEls[vtxId];
+      const pos = POS[posKey];
+      el.style.left = pos.x + 'px';
+      el.style.top = pos.y + 'px';
+      el.style.transform = 'translate(-50%, -50%)';
+      el.classList.toggle('active', vtxId === id);
+    });
+
+    // Update SVG triangle
+    const pts = ['quality', 'standard', 'compliance'].map(vid => {
+      const pk = layout[vid];
+      const p = POS[pk];
+      return `${p.x},${p.y}`;
+    }).join(' ');
+    triPoly.setAttribute('points', pts);
+
+    // Support line between bottom two
+    const bottomPairs = Object.entries(layout).filter(([_, p]) => p !== 'top');
+    const [b1, b2] = bottomPairs.map(([vid]) => POS[layout[vid]]);
+    supportLine.setAttribute('x1', b1.x);
+    supportLine.setAttribute('y1', b1.y);
+    supportLine.setAttribute('x2', b2.x);
+    supportLine.setAttribute('y2', b2.y);
+    supportLine.setAttribute('stroke', SUPPORT_COLORS[id]);
+    supportLine.classList.add('visible');
+
+    // Inner tags
+    document.querySelectorAll('.tag-group').forEach(tg => {
+      tg.classList.toggle('active', tg.dataset.for === id);
+    });
+
+    // Content panels
+    document.querySelectorAll('.cv').forEach(c => c.classList.remove('active'));
+    const target = document.getElementById('cv-' + id);
+    if (target) requestAnimationFrame(() => target.classList.add('active'));
+  }
+
+  // Init
+  activate('quality');
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    const order = ['quality', 'standard', 'compliance'];
+    const cur = document.getElementById('app').getAttribute('data-active');
+    const idx = order.indexOf(cur);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      activate(order[(idx + 1) % 3]);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      activate(order[(idx + 2) % 3]);
+    }
+  });
+</script>
+
+</body>
+</html>
