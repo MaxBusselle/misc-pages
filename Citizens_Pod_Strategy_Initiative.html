@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizens REO — Pod Strategy Initiative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ctz-green: #1A7D37;
+            --ctz-green-deep: #14612B;
+            --ctz-green-dark: #0E4A20;
+            --ctz-green-light: #2A9D4A;
+            --ctz-green-pale: #EDF7F0;
+            --ctz-black: #1A1A1A;
+            --ctz-charcoal: #2D2D2D;
+            --ctz-gray: #6D6E71;
+            --ctz-gray-dark: #4A4A4D;
+            --ctz-accent: #1A7D37;
+            --white: #ffffff;
+            --off-white: #F8F8F7;
+            --light-gray: #ECEAEB;
+            --mid-gray: #D1CDD0;
+            --text-dark: #1A1A1A;
+            --text-body: #3D3D3D;
+            --text-muted: #7A7578;
+            --basic-color: #2D8B55;
+            --inter-color: #D4812F;
+            --adv-color: #B8342E;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--off-white);
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        /* ——— NAV ——— */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 12px rgba(26,26,26,0.06);
+            z-index: 1000;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 16px;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px;
+            background: var(--ctz-green); border-radius: 6px;
+            color: var(--white); font-weight: 800; font-size: 0.7rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.5px;
+        }
+        .nav-divider { width: 1px; height: 24px; background: var(--mid-gray); }
+        .nav-title-text {
+            font-size: 0.82rem; color: var(--text-muted);
+            font-weight: 500;
+        }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-link {
+            padding: 7px 13px; border-radius: 20px;
+            text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); transition: all 0.25s; cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-link:hover { background: var(--light-gray); color: var(--ctz-green); }
+        .nav-link.active { background: var(--ctz-black); color: var(--white); }
+
+        /* ——— SECTIONS ——— */
+        section {
+            min-height: 100vh;
+            padding: 110px 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+        /* ——— INTRO ——— */
+        .intro {
+            background: var(--ctz-black);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: -30%; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(26,125,55,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .intro::after {
+            content: '';
+            position: absolute;
+            bottom: -25%; left: -8%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(26,125,55,0.10) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .intro-content { position: relative; z-index: 2; }
+        .intro-client-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            opacity: 0.5; margin-bottom: 32px;
+        }
+        .intro h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.6rem; font-weight: 800;
+            letter-spacing: -1px; margin-bottom: 24px;
+            line-height: 1.15;
+        }
+        .intro h1 span { color: var(--ctz-green-light); }
+        .intro-desc {
+            font-size: 1.05rem; max-width: 740px;
+            margin: 0 auto 36px; opacity: 0.78;
+            line-height: 1.7;
+        }
+        .intro-audience-pill {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600; font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            background: rgba(26,125,55,0.15);
+            border: 1.5px solid rgba(26,125,55,0.4);
+            color: var(--ctz-green-light);
+        }
+        .intro-meta {
+            margin-top: 40px; display: flex; justify-content: center; gap: 40px;
+            opacity: 0.45; font-size: 0.85rem;
+        }
+
+        /* ——— SECTION HEADERS ——— */
+        .section-header { margin-bottom: 36px; }
+        .section-label {
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--ctz-green); margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem; font-weight: 800;
+            color: var(--ctz-black); letter-spacing: -0.5px;
+        }
+        .section-subtitle {
+            font-size: 0.95rem; color: var(--text-muted);
+            margin-top: 8px; max-width: 700px;
+        }
+
+        /* ——— TABS ——— */
+        .tab-bar {
+            display: flex; gap: 4px;
+            background: var(--light-gray);
+            padding: 5px; border-radius: 12px;
+            width: fit-content; margin-bottom: 28px;
+        }
+        .tab-btn {
+            padding: 10px 22px; border: none;
+            background: transparent; color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; border-radius: 8px;
+            transition: all 0.25s;
+        }
+        .tab-btn:hover { color: var(--text-dark); background: rgba(255,255,255,0.5); }
+        .tab-btn.active { background: var(--white); color: var(--ctz-black); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-bottom: 3px solid var(--ctz-green); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ——— OVERVIEW ——— */
+        .overview-section { background: var(--white); }
+        .problem-card {
+            background: linear-gradient(135deg, #FDF6F0 0%, #FFF9F5 100%);
+            border: 1px solid rgba(212,129,47,0.2);
+            border-left: 4px solid var(--inter-color);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .problem-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--inter-color); margin-bottom: 10px;
+        }
+        .problem-card p {
+            font-size: 0.9rem; color: var(--text-body); line-height: 1.7;
+        }
+        .audience-profile {
+            background: var(--off-white);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+            border-left: 4px solid var(--ctz-green);
+        }
+        .audience-profile h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--ctz-black); margin-bottom: 12px;
+        }
+        .profile-factors {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px;
+        }
+        .profile-factor {
+            font-size: 0.85rem; color: var(--text-body);
+            display: flex; align-items: start; gap: 8px;
+        }
+        .profile-factor .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            margin-top: 7px; flex-shrink: 0;
+            background: var(--ctz-green);
+        }
+        .practice-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .practice-card:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.06); }
+        .practice-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            color: var(--ctz-black); margin-bottom: 8px;
+        }
+        .practice-card .practice-num {
+            display: inline-block; font-size: 0.7rem;
+            font-weight: 700; padding: 3px 10px;
+            border-radius: 20px; margin-bottom: 10px;
+            background: var(--ctz-green-pale); color: var(--ctz-green);
+        }
+        .practice-card p {
+            font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
+        }
+
+        /* ——— PRACTICES & MILESTONES ——— */
+        .practices-section { background: var(--off-white); }
+        .milestone-row {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .milestone-level {
+            width: 120px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            border-radius: 10px; color: var(--white);
+            padding: 14px 10px;
+        }
+        .milestone-level.basic { background: var(--basic-color); }
+        .milestone-level.intermediate { background: var(--inter-color); }
+        .milestone-level.advanced { background: var(--adv-color); }
+        .milestone-statement {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .milestone-activity-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            border: 2px solid var(--ctz-green);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--ctz-green);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .milestone-activity-btn:hover {
+            background: var(--ctz-green);
+            color: var(--white);
+        }
+        .milestone-activity-btn .arrow { font-size: 0.9rem; }
+
+        /* ——— ACTIVITY SECTIONS ——— */
+        .activity-section { background: var(--white); }
+        .activity-section.alt-bg { background: var(--off-white); }
+        .activity-display {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .activity-block {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .activity-block:last-child { border-bottom: none; }
+        .activity-block-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px;
+        }
+        .activity-block-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .activity-block-icon.objective { background: rgba(26,125,55,0.08); }
+        .activity-block-icon.outcomes { background: rgba(45,139,85,0.1); }
+        .activity-block-label {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+        .activity-name-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--ctz-black); margin-bottom: 10px;
+        }
+        .activity-difficulty {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            padding: 3px 12px; border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .activity-difficulty.basic { background: rgba(45,139,85,0.1); color: var(--basic-color); }
+        .activity-difficulty.intermediate { background: rgba(212,129,47,0.1); color: var(--inter-color); }
+        .activity-difficulty.advanced { background: rgba(184,52,46,0.1); color: var(--adv-color); }
+        .activity-objective-text {
+            font-size: 1rem; color: var(--ctz-black);
+            background: rgba(26,125,55,0.04);
+            padding: 14px 18px; border-radius: 10px;
+            border-left: 4px solid var(--ctz-green);
+            line-height: 1.65;
+        }
+        .outcomes-list { display: flex; flex-direction: column; gap: 10px; }
+        .outcome-item {
+            display: flex; align-items: start; gap: 12px;
+            font-size: 0.88rem;
+            padding: 10px 16px; border-radius: 10px;
+            background: rgba(45,139,85,0.05);
+        }
+        .outcome-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            margin-top: 6px; flex-shrink: 0;
+            background: var(--basic-color);
+        }
+
+        /* ——— PERSONALIZED ——— */
+        .personalized-section { background: var(--off-white); }
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .dept-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 22px 24px;
+            transition: box-shadow 0.2s;
+        }
+        .dept-card:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.06); }
+        .dept-card-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 14px;
+        }
+        .dept-icon {
+            width: 36px; height: 36px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            background: var(--ctz-green-pale);
+        }
+        .dept-card h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            color: var(--ctz-black);
+        }
+        .dept-card-subtitle {
+            font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
+        }
+        .dept-ppe-list {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .dept-ppe-item {
+            font-size: 0.82rem; color: var(--text-body);
+            display: flex; align-items: start; gap: 8px;
+            line-height: 1.5;
+        }
+        .dept-ppe-item .ppe-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            margin-top: 7px; flex-shrink: 0;
+            background: var(--ctz-green);
+        }
+        .dept-monitor-label {
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--inter-color); margin: 12px 0 6px;
+        }
+        .dept-monitor-item {
+            font-size: 0.8rem; color: var(--text-muted);
+            font-style: italic; line-height: 1.5;
+            padding-left: 13px;
+            position: relative;
+        }
+        .dept-monitor-item::before {
+            content: '⚠';
+            position: absolute; left: 0; top: 0;
+            font-size: 0.7rem; font-style: normal;
+        }
+
+        /* ——— MODAL ——— */
+        .modal-overlay {
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(26,26,26,0.5);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--white); border-radius: 20px;
+            width: 90%; max-width: 680px; max-height: 85vh;
+            overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 28px;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky; top: 0; background: var(--white);
+            border-radius: 20px 20px 0 0; z-index: 1;
+        }
+        .modal-header h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.15rem; font-weight: 700;
+            color: var(--ctz-black);
+        }
+        .modal-close {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: none; background: var(--light-gray);
+            font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: var(--ctz-green); color: var(--white); }
+        .modal-body { padding: 24px 28px 28px; }
+        .modal-body .modal-section { margin-bottom: 20px; }
+        .modal-body .modal-section-label {
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 8px;
+        }
+        .modal-objective {
+            background: rgba(26,125,55,0.04);
+            padding: 12px 16px; border-radius: 8px;
+            border-left: 4px solid var(--ctz-green);
+            font-size: 0.95rem; color: var(--ctz-black);
+        }
+
+        /* ——— COMMENTS ——— */
+        .comment-toggle {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--ctz-green), var(--ctz-green-deep));
+            color: var(--white); border: none;
+            font-size: 1.4rem; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(26,125,55,0.4);
+            z-index: 1001; transition: all 0.3s;
+        }
+        .comment-toggle:hover { transform: scale(1.08); }
+        .comment-toggle.active { background: var(--basic-color); }
+        .comment-panel {
+            position: fixed; right: -400px; top: 60px; bottom: 0;
+            width: 380px; background: var(--white);
+            box-shadow: -2px 0 20px rgba(0,0,0,0.1);
+            z-index: 1000; transition: right 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .comment-panel.open { right: 0; }
+        .comment-panel-header {
+            background: var(--ctz-black); color: var(--white);
+            padding: 18px 20px; font-size: 1rem; font-weight: 600;
+        }
+        .comment-panel-content {
+            flex: 1; overflow-y: auto; padding: 16px;
+        }
+        .no-comments { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 0.9rem; }
+        .comment-form {
+            border-top: 2px solid var(--light-gray);
+            padding: 16px; background: var(--off-white);
+        }
+        .export-comments-btn {
+            width: 100%; padding: 8px;
+            background: var(--light-gray); border: none;
+            border-radius: 6px; font-size: 0.82rem;
+            font-weight: 600; cursor: pointer;
+            margin-bottom: 12px; transition: all 0.2s;
+        }
+        .export-comments-btn:hover { background: var(--mid-gray); }
+        .comment-form-group { margin-bottom: 12px; }
+        .comment-form label {
+            display: block; font-size: 0.78rem; font-weight: 600;
+            color: var(--ctz-black); margin-bottom: 4px;
+        }
+        .comment-form input,
+        .comment-form textarea,
+        .comment-form select {
+            width: 100%; padding: 9px; border: 1px solid var(--light-gray);
+            border-radius: 6px; font-size: 0.85rem; font-family: inherit;
+        }
+        .comment-form textarea { min-height: 70px; resize: vertical; }
+        .comment-form-actions { display: flex; gap: 8px; }
+        .comment-btn {
+            flex: 1; padding: 9px; border: none;
+            border-radius: 6px; font-weight: 600;
+            cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .comment-btn-primary { background: var(--ctz-green); color: var(--white); }
+        .comment-btn-primary:hover { background: var(--ctz-green-deep); }
+        .comment-btn-secondary { background: var(--light-gray); color: var(--text-dark); }
+        .comment-btn-secondary:hover { background: var(--mid-gray); }
+        .comment-item {
+            background: var(--off-white);
+            border-left: 4px solid var(--ctz-green);
+            padding: 14px; margin-bottom: 12px; border-radius: 6px;
+        }
+        .comment-header {
+            display: flex; justify-content: space-between; align-items: start;
+            margin-bottom: 8px;
+        }
+        .comment-author { font-weight: 600; color: var(--ctz-black); font-size: 0.85rem; }
+        .comment-section-tag {
+            font-size: 0.68rem; color: var(--white);
+            background: var(--ctz-green); padding: 2px 8px;
+            border-radius: 10px; margin-top: 3px; display: inline-block;
+        }
+        .comment-time { font-size: 0.72rem; color: var(--text-muted); }
+        .comment-text { color: var(--text-body); font-size: 0.85rem; line-height: 1.5; margin-bottom: 6px; }
+        .comment-delete {
+            background: none; border: none; color: var(--text-muted);
+            cursor: pointer; font-size: 0.75rem; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .comment-delete:hover { background: rgba(26,125,55,0.1); color: var(--ctz-green); }
+        .comment-count {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--basic-color); color: var(--white);
+            border-radius: 50%; width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 700;
+        }
+
+        /* ——— RESPONSIVE ——— */
+        @media (max-width: 768px) {
+            .nav { padding: 10px 16px; flex-direction: column; gap: 8px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            section { padding: 90px 20px 60px; }
+            .intro h1 { font-size: 1.8rem; }
+            .milestone-row { flex-direction: column; gap: 8px; }
+            .milestone-level { width: 100%; }
+            .profile-factors { grid-template-columns: 1fr; }
+            .tab-bar { flex-wrap: wrap; }
+            .dept-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav class="nav">
+    <div class="nav-brand">
+        <div class="nav-logo">
+            <div class="nav-logo-icon">✦</div>
+            <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; font-weight:700; color:var(--ctz-black);">Citizens</span>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-title-text">Pod Strategy Initiative Proposal</div>
+    </div>
+    <div class="nav-links">
+        <a class="nav-link active" href="#intro" onclick="scrollToSection(event,'intro')">Intro</a>
+        <a class="nav-link" href="#overview" onclick="scrollToSection(event,'overview')">Overview</a>
+        <a class="nav-link" href="#practices" onclick="scrollToSection(event,'practices')">Practices & Milestones</a>
+        <a class="nav-link" href="#activities" onclick="scrollToSection(event,'activities')">Activities</a>
+        <a class="nav-link" href="#personalized" onclick="scrollToSection(event,'personalized')">Role-Specific</a>
+    </div>
+</nav>
+
+<!-- ═══════ INTRO ═══════ -->
+<section id="intro" class="intro">
+    <div class="intro-content container">
+        <div class="intro-client-name">Citizens — Real Estate Operations</div>
+        <h1>Executing the Pod Strategy <span>as a Team</span></h1>
+        <p class="intro-desc">Develop each pod member's ability to execute their role within the new pod structure, collaborate effectively across disciplines, and continuously improve how pods deliver REO projects — transitioning from siloed legacy processes to a team-based, outcome-driven way of working.</p>
+        <div class="intro-audience-pill">🏗️ All Pod Members — Senior PM, Junior PM, Property Analyst, Retail Designer, Environmental Designer, Leasing Partner</div>
+        <div class="intro-meta">
+            <span>5 Pods · 6 Roles per Pod</span>
+            <span>12-week program</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview" class="overview-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Overview</div>
+            <div class="section-title">Initiative Structure</div>
+            <div class="section-subtitle">Three practices targeting the behavioral shift from siloed, individual execution to integrated pod-based collaboration across REO projects.</div>
+        </div>
+
+        <div class="problem-card">
+            <h4>⚠️ The Business Challenge</h4>
+            <p>REO projects are critically important — often complex, high-stakes, and significant financial investments. Historically, timeline delays and project cost overruns have been recurring problems. Communication breaks down and inefficiencies emerge as a result of siloed work environments and postures. Team members default to legacy habits: working independently, handing off rather than collaborating, and raising issues late rather than early. The new pod strategy is designed to change all of that — but moving from "knowing the new structure" to "actually working differently every day" requires deliberate practice, not just a rollout announcement.</p>
+        </div>
+
+        <div class="audience-profile">
+            <h4>🏗️ Pod Member Profile</h4>
+            <div class="profile-factors">
+                <div class="profile-factor"><div class="dot"></div>Works within a cross-functional pod of 6 roles: Senior PM, Junior PM, Property Analyst, Retail Designer, Environmental Designer, and Leasing Partner</div>
+                <div class="profile-factor"><div class="dot"></div>Manages a portfolio of REO projects including ATM, Exterior, Relocate, Refresh, Reformat, ADA, and Denovo project types</div>
+                <div class="profile-factor"><div class="dot"></div>Coordinates with internal stakeholders outside the pod (Retail Leadership, Facilities, Compliance) and external vendors/contractors</div>
+                <div class="profile-factor"><div class="dot"></div>Responsible for maintaining Lucernex updates, document storage, budget tracking, design documentation, and lease negotiations depending on role</div>
+                <div class="profile-factor"><div class="dot"></div>Transitioning from legacy siloed workflows to integrated pod-based collaboration</div>
+                <div class="profile-factor"><div class="dot"></div>Must balance dedicated pod responsibilities with non-dedicated assignments (Senior PMs serve multiple pods)</div>
+                <div class="profile-factor"><div class="dot"></div>Operates under timeline and budget pressure where collaboration competes with individual throughput</div>
+                <div class="profile-factor"><div class="dot"></div>Works across regions (UMA/MDW/OHO/MIC, PHL, TSM, NEN, NES) with varying project complexity and volume</div>
+            </div>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-num">Practice 1</div>
+            <h4>Owning Your Role Within the Pod</h4>
+            <p>Executing on your specific role expectations consistently — delivering your outputs on time, proactively updating pod members on your progress, and flagging blockers early rather than waiting until deadlines slip. Moving from "my tasks" to "my contribution to the pod."</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 2</div>
+            <h4>Collaborating Across Roles</h4>
+            <p>Working with pod teammates across disciplines — pulling in the right people at the right time, sharing information before being asked, and making decisions together instead of passing work over the wall. Breaking down the silos that carried over from the legacy model.</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 3</div>
+            <h4>Driving Continuous Improvement</h4>
+            <p>Identifying what's working and what's not within the pod, sharing effective techniques and best practices across pods, and providing honest feedback to strengthen the pod system — turning everyday project execution into learning opportunities for the team.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ PRACTICES & MILESTONES ═══════ -->
+<section id="practices" class="practices-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Practices & Milestones</div>
+            <div class="section-title">Milestone Progression</div>
+            <div class="section-subtitle">Each practice progresses through three milestone levels. Click an activity name to preview its objective and expected report-back outcomes.</div>
+        </div>
+
+        <div class="tab-bar" id="pracTabs">
+            <button class="tab-btn active" onclick="switchTab('pracTabs','pracContent','prac1')">Owning Your Role</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac2')">Collaborating Across Roles</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac3')">Continuous Improvement</button>
+        </div>
+
+        <div id="pracContent">
+            <!-- PRACTICE 1 -->
+            <div class="tab-content active" id="prac1">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Proactively share a status update with your pod before a deadline or checkpoint</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-2')">Proactive Status Update <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Flag a blocker or risk to your pod early enough for the team to act on it</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-5')">Early Risk Flagging <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Identify a gap in your role execution, take corrective action, and report what you changed</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-8')">Self-Correct and Report <span class="arrow">→</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 2 -->
+            <div class="tab-content" id="prac2">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Pull in a pod teammate from another discipline before making a decision that affects their work</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-2')">Cross-Role Check-In <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Share information with a pod teammate proactively — before they ask for it</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-5')">Proactive Information Sharing <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Facilitate a joint decision with two or more pod roles that previously would have been made in a silo</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-8')">Joint Pod Decision <span class="arrow">→</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 3 -->
+            <div class="tab-content" id="prac3">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Identify one thing that's working well in your pod and share it with the team</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-2')">Name What's Working <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Identify a process friction point and propose a specific adjustment to your pod</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-5')">Propose a Process Fix <span class="arrow">→</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Share a best practice from your pod with another pod and help them adapt it</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-8')">Cross-Pod Knowledge Share <span class="arrow">→</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ ACTIVITIES ═══════ -->
+<section id="activities" class="activity-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Activities</div>
+            <div class="section-title">Activity Overview</div>
+            <div class="section-subtitle">Each activity tells pod members what to do and what to report back. Three activities per practice, progressing from basic execution to advanced pod leadership.</div>
+        </div>
+        <div class="tab-bar" id="actTabs">
+            <button class="tab-btn active" onclick="switchTab('actTabs','actContent','act-p1')">Owning Your Role</button>
+            <button class="tab-btn" onclick="switchTab('actTabs','actContent','act-p2')">Collaborating Across Roles</button>
+            <button class="tab-btn" onclick="switchTab('actTabs','actContent','act-p3')">Continuous Improvement</button>
+        </div>
+        <div id="actContent"></div>
+    </div>
+</section>
+
+<!-- ═══════ PERSONALIZED ═══════ -->
+<section id="personalized" class="personalized-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Role-Specific</div>
+            <div class="section-title">Role-Specific Context</div>
+            <div class="section-subtitle">Activities are written for any pod member, but the situations each role encounters vary significantly. Here's the landscape across pod roles — this context shapes how activities get tailored for each person.</div>
+        </div>
+
+        <div class="dept-grid">
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">📋</div>
+                    <div>
+                        <h5>Senior Project Manager</h5>
+                        <div class="dept-card-subtitle">Non-dedicated · End-to-End Execution</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Owns end-to-end project execution across the pod</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Coordinates with vendors, contractors, and internal stakeholders to meet deadlines and budget</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Manages risk assessment, permitting, and compliance</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Serves multiple pods (non-dedicated), requiring clear prioritization</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Defaulting to solo decision-making instead of pulling in pod members</div>
+                <div class="dept-monitor-item">Managing across pods without consistent communication to each</div>
+                <div class="dept-monitor-item">Escalating issues too late because of competing priorities</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">📊</div>
+                    <div>
+                        <h5>Junior Project Manager</h5>
+                        <div class="dept-card-subtitle">Dedicated · Coordination & Tracking</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Supports Senior PM, manages day-to-day coordination</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Tracks schedules, budget, and documentation</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Owns communication and issue resolution within the pod</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Waiting for Senior PM direction instead of proactively managing coordination</div>
+                <div class="dept-monitor-item">Tracking status without surfacing risks or patterns to the pod</div>
+                <div class="dept-monitor-item">Handling issue resolution alone rather than leveraging pod expertise</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">📈</div>
+                    <div>
+                        <h5>Property Analyst</h5>
+                        <div class="dept-card-subtitle">Dedicated · Data, Compliance & Insights</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Key owner of Lucernex updates and document storage</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Analyzes data to identify trends, risks, and opportunities — offering insights to PM to mitigate issues</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Ensures internal governance compliance and approval of workflows</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Updating systems without sharing insights with the pod</div>
+                <div class="dept-monitor-item">Flagging compliance issues only to PM instead of relevant pod members</div>
+                <div class="dept-monitor-item">Treating data entry as a task instead of a source of strategic input</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">✏️</div>
+                    <div>
+                        <h5>Retail Designer</h5>
+                        <div class="dept-card-subtitle">Dedicated · Layout & Operational Flow</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Creates customer-centric branch layouts reflecting brand identity and optimizing operational flow</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Liaisons with Retail Leadership to validate program and layout</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Manages design documentation aligned to codes and standards</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Collaborates with architects, PMs, and vendors to ensure design intent is executed accurately</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Finalizing layouts without confirming leasing or construction constraints with pod</div>
+                <div class="dept-monitor-item">Validating designs with Retail Leadership without looping in the PM or Analyst</div>
+                <div class="dept-monitor-item">Design changes communicated late in the project lifecycle</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">🎨</div>
+                    <div>
+                        <h5>Environmental Designer</h5>
+                        <div class="dept-card-subtitle">Dedicated · Brand Standards & Finishes</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Develops and maintains brand standards — interior finishes, furniture, fixtures, signage</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Collaborates with design and construction teams to integrate branding into architectural elements</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Creates branded materials and environmental graphics that enhance the in-branch customer experience</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Brand standard updates not communicated to pod members working on active projects</div>
+                <div class="dept-monitor-item">Branding decisions made independently of Retail Designer's layout work</div>
+                <div class="dept-monitor-item">Finish or fixture specifications that conflict with budget or timeline constraints</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">🔑</div>
+                    <div>
+                        <h5>Leasing Partner</h5>
+                        <div class="dept-card-subtitle">Dedicated · Site Selection & Negotiations</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Drives site selection and execution strategy</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Partners with branding, design, construction, and facilities teams on due diligence</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Negotiates new leases, lease renewals, and purchase agreements for all retail locations</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Collaborates with associated teams to ensure shared knowledge of site, strategy, and deliverable timelines</div>
+                </div>
+                <div class="dept-monitor-label">Key situations to watch for</div>
+                <div class="dept-monitor-item">Lease terms negotiated without confirming design or construction feasibility with pod</div>
+                <div class="dept-monitor-item">Site selection due diligence completed in isolation from PM and Design roles</div>
+                <div class="dept-monitor-item">Deliverable timelines in lease agreements that conflict with pod project schedules</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════ MODAL ═══════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="modal-close" onclick="closeModalDirect()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ═══════ COMMENTS ═══════ -->
+<button class="comment-toggle" id="commentToggle" title="Comments" style="position:relative">
+    💬
+    <span class="comment-count" id="commentCount" style="display:none">0</span>
+</button>
+<div class="comment-panel" id="commentPanel">
+    <div class="comment-panel-header">Comments &amp; Feedback</div>
+    <div class="comment-panel-content" id="commentsList">
+        <div class="no-comments">No comments yet. Add the first one!</div>
+    </div>
+    <div class="comment-form">
+        <button class="export-comments-btn" id="exportComments">📥 Export Comments</button>
+        <form id="commentForm">
+            <div class="comment-form-group">
+                <label for="commentAuthor">Your Name</label>
+                <input type="text" id="commentAuthor" required placeholder="Enter your name">
+            </div>
+            <div class="comment-form-group">
+                <label for="commentSection">Section</label>
+                <select id="commentSection" required>
+                    <option value="">Select a section…</option>
+                    <option value="intro">Intro</option>
+                    <option value="overview">Overview</option>
+                    <option value="practices">Practices & Milestones</option>
+                    <option value="activities">Activities</option>
+                    <option value="personalized">Role-Specific</option>
+                    <option value="general">General Feedback</option>
+                </select>
+            </div>
+            <div class="comment-form-group">
+                <label for="commentText">Comment</label>
+                <textarea id="commentText" required placeholder="Share your feedback or suggestions…"></textarea>
+            </div>
+            <div class="comment-form-actions">
+                <button type="button" class="comment-btn comment-btn-secondary" id="cancelComment">Cancel</button>
+                <button type="submit" class="comment-btn comment-btn-primary">Add Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// ═══════ ACTIVITY DATA ═══════
+const activities = {
+// PRACTICE 1 — Owning Your Role Within the Pod
+'p1-2': {
+    name: 'Proactive Status Update',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Before your next project checkpoint or pod sync, send a status update to your pod that covers: what you\'ve completed since the last update, what you\'re working on now, and any items that are at risk of slipping. Don\'t wait to be asked. Share this in whatever channel your pod uses — Teams message, email, or during the sync itself. The update should be role-specific: if you\'re the Property Analyst, cover Lucernex status and compliance items; if you\'re the Retail Designer, cover where design documentation stands; if you\'re the Leasing Partner, cover site selection or negotiation progress. The key is: your pod should never have to chase you for a status.',
+    outcomes: [
+        'Sent the update before the checkpoint or sync — not during or after',
+        'Covered completed work, current work, and at-risk items specific to your role',
+        'Named at least one specific item, not a generic "everything is on track"',
+        'Shared it in a way visible to your full pod, not just the Senior PM'
+    ]
+},
+'p1-5': {
+    name: 'Early Risk Flagging',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Identify a risk, blocker, or potential delay in your current project work and flag it to your pod early — before it impacts the timeline or another team member\'s work. Be specific: name the risk, explain the potential impact on the pod, identify which roles are affected, and propose at least one option for how to address it. This isn\'t about reporting problems after they happen. It\'s about catching them early enough that the pod can respond. If you\'re a Junior PM and a vendor is trending late, flag it before the due date. If you\'re the Environmental Designer and a finish specification might conflict with budget, raise it before procurement starts.',
+    outcomes: [
+        'Named a specific risk or blocker — not a vague concern',
+        'Flagged it early enough that the pod had time to act (before deadline impact)',
+        'Identified which pod roles were affected by the risk',
+        'Proposed at least one option for how the pod could address it'
+    ]
+},
+'p1-8': {
+    name: 'Self-Correct and Report',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Look back at your recent project work and identify one area where your role execution fell short — a missed update, a late deliverable, a gap in documentation, a coordination step you skipped. Don\'t wait for someone to point it out. Name the gap, explain what impact it had (or could have had) on the pod, describe what you did to correct it, and share what you\'ll do differently going forward. Then share this with your pod openly. This builds the kind of accountability and transparency that makes pods work. The goal isn\'t perfection — it\'s demonstrating that you own your role and can course-correct without external pressure.',
+    outcomes: [
+        'Named a specific gap in your own role execution — not someone else\'s',
+        'Explained the actual or potential impact on the pod',
+        'Described the corrective action you took',
+        'Shared what you\'ll do differently, and communicated it to your pod'
+    ]
+},
+// PRACTICE 2 — Collaborating Across Roles
+'p2-2': {
+    name: 'Cross-Role Check-In',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Before making a decision or taking an action on a project that will affect another role in your pod, pause and check in with that person first. This could be the Retail Designer checking with the Leasing Partner before finalizing a layout that depends on site constraints, or the Junior PM confirming with the Property Analyst before committing to a timeline that depends on compliance approvals. Reach out directly, explain what you\'re about to do, ask if there\'s anything you should know, and adjust based on their input. The old way was to decide first and inform later. The pod way is to check first.',
+    outcomes: [
+        'Named the decision or action you were about to take',
+        'Identified the specific pod role you needed to check in with and why',
+        'Reached out before finalizing — not after',
+        'Adjusted your approach based on their input (or confirmed no adjustment was needed)'
+    ]
+},
+'p2-5': {
+    name: 'Proactive Information Sharing',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Identify a piece of information, update, or insight from your role that another pod member needs — and share it with them before they have to ask. This is about anticipating what your teammates need. If you\'re the Property Analyst and you spot a trend in project data that affects the PM\'s risk assessment, share it. If you\'re the Leasing Partner and a lease negotiation outcome changes the project timeline, push that to the Designer and PM immediately. If you\'re the Retail Designer and a layout change affects branding, tell the Environmental Designer. Think: "Who needs to know this, and when do they need to know it?"',
+    outcomes: [
+        'Identified a specific piece of information relevant to another pod member\'s work',
+        'Shared it before they asked or before a meeting forced the update',
+        'Named who you shared it with and why it mattered for their role',
+        'The information was timely enough to be useful — not after the decision was already made'
+    ]
+},
+'p2-8': {
+    name: 'Joint Pod Decision',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Identify an upcoming decision on a project that involves two or more pod roles and facilitate making it together — as a pod — rather than having one role decide and hand it down. This could be a scope decision, a timeline trade-off, a design direction, or a vendor selection. Pull the relevant roles together (in person, on a call, or in a thread), frame the decision clearly, present the options and trade-offs from each role\'s perspective, and reach a shared decision that everyone can execute on. Document the decision and who was involved. In the legacy model, this decision would have been made by one person in a silo. In the pod model, it\'s made together.',
+    outcomes: [
+        'Named the specific decision and which pod roles were involved',
+        'Framed the options and trade-offs from multiple role perspectives',
+        'Reached a shared decision — not a single-role directive',
+        'Documented the decision and who participated'
+    ]
+},
+// PRACTICE 3 — Driving Continuous Improvement
+'p3-2': {
+    name: 'Name What\'s Working',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'During your next pod sync, team meeting, or project debrief, call out one specific thing your pod is doing well in the new pod structure. Be precise — don\'t say "communication is good." Say "when Devon flagged the permitting risk last Tuesday, the whole pod adjusted the timeline within 24 hours — that\'s what good early flagging looks like." Name the behavior, name the person or people involved, and explain why it matters for the pod. Making effective behaviors visible reinforces them and gives other pod members a model to follow.',
+    outcomes: [
+        'Named a specific behavior or practice — not a generic positive statement',
+        'Identified who demonstrated it and in what context',
+        'Explained why it mattered for the pod\'s effectiveness',
+        'Shared it in a setting where the full pod could hear it'
+    ]
+},
+'p3-5': {
+    name: 'Propose a Process Fix',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Identify a friction point, inefficiency, or recurring problem in how your pod is currently working — something that slows projects down, creates confusion, or causes rework. Then propose a specific adjustment. Don\'t just name the problem; bring a solution. If handoffs between the Designer and PM keep creating gaps, propose a standing 15-minute check-in. If Lucernex updates are always lagging, propose a specific cadence. Present this to your pod: name the problem, show the impact, propose the fix, and ask for feedback. The goal is to make your pod\'s process better — not just to complain about what\'s broken.',
+    outcomes: [
+        'Named a specific friction point or inefficiency in the pod\'s current workflow',
+        'Described the impact — delays, rework, confusion, or missed handoffs',
+        'Proposed a specific, actionable adjustment (not a vague "we should communicate better")',
+        'Presented it to the pod and incorporated their feedback'
+    ]
+},
+'p3-8': {
+    name: 'Cross-Pod Knowledge Share',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Identify a best practice, technique, or process improvement that your pod has developed — something that makes your pod more effective — and share it with at least one other pod. This could be a handoff process between roles, a meeting cadence that works, a documentation template, a communication norm, or a risk-flagging approach. Coordinate with the other pod to present it, explain the context and why it works, and help them adapt it to their own situation. The goal is consistency of quality work and standards across all 5 pods — leveraging what one team learns for the benefit of all teams.',
+    outcomes: [
+        'Named a specific best practice your pod developed or refined',
+        'Shared it with at least one other pod (not just mentioned it in passing)',
+        'Explained the context — what problem it solves and why it works',
+        'Helped the other pod adapt it to their situation, not just copy it'
+    ]
+}
+};
+
+// ═══════ RENDER ACTIVITY CARDS ═══════
+function renderActivityCard(key) {
+    const a = activities[key];
+    if (!a) return '<p>Activity not found.</p>';
+    return `<div class="activity-display">
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon objective">🎯</div>
+                <div class="activity-block-label">Objective</div>
+            </div>
+            <div class="activity-name-display">${a.name}</div>
+            <div class="activity-difficulty ${a.diffClass}">${a.difficulty}</div>
+            <div class="activity-objective-text">${a.objective}</div>
+        </div>
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon outcomes">📊</div>
+                <div class="activity-block-label">What We're Looking For in Your Report-Back</div>
+            </div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item">
+                        <div class="outcome-dot"></div>
+                        <div>${o}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    </div>`;
+}
+
+// Populate activity tab containers
+const container = document.getElementById('actContent');
+if (container) {
+    const practices = [
+        { id: 'act-p1', keys: ['p1-2','p1-5','p1-8'], label: 'Owning Your Role' },
+        { id: 'act-p2', keys: ['p2-2','p2-5','p2-8'], label: 'Collaborating Across Roles' },
+        { id: 'act-p3', keys: ['p3-2','p3-5','p3-8'], label: 'Continuous Improvement' }
+    ];
+    container.innerHTML = practices.map((p, pi) => {
+        const cards = p.keys.map(k => renderActivityCard(k)).join('<div style="height:24px"></div>');
+        return `<div class="tab-content${pi === 0 ? ' active' : ''}" id="${p.id}">${cards}</div>`;
+    }).join('');
+}
+
+// ═══════ TAB SWITCHING ═══════
+function switchTab(tabBarId, contentId, activeTabId) {
+    const bar = document.getElementById(tabBarId);
+    const contentContainer = document.getElementById(contentId);
+    bar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(activeTabId).classList.add('active');
+}
+
+// ═══════ MODAL ═══════
+function openModal(key) {
+    const a = activities[key];
+    if (!a) return;
+    document.getElementById('modalTitle').textContent = a.name;
+    document.getElementById('modalBody').innerHTML = `
+        <div class="modal-section">
+            <div class="modal-section-label">Objective</div>
+            <div class="modal-objective">🎯 ${a.objective}</div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-label">What We're Looking For in Your Report-Back</div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item">
+                        <div class="outcome-dot"></div>
+                        <div>${o}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// ═══════ NAVIGATION ═══════
+function scrollToSection(e, id) {
+    e.preventDefault();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+function updateActiveNav() {
+    let current = '';
+    sections.forEach(s => { if (window.pageYOffset >= s.offsetTop - 180) current = s.id; });
+    navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === `#${current}`) l.classList.add('active');
+    });
+}
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
+
+// ═══════ COMMENTS SYSTEM ═══════
+const commentToggle = document.getElementById('commentToggle');
+const commentPanel = document.getElementById('commentPanel');
+const commentForm = document.getElementById('commentForm');
+const commentsList = document.getElementById('commentsList');
+const commentCount = document.getElementById('commentCount');
+const cancelComment = document.getElementById('cancelComment');
+const exportBtn = document.getElementById('exportComments');
+const STORAGE_KEY = 'citizens_pod_initiative_comments';
+
+function loadComments() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+function saveComments(c) { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); }
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+function formatDate(ts) {
+    const d = new Date(ts), n = new Date(), m = Math.floor((n - d) / 60000);
+    if (m < 1) return 'Just now';
+    if (m < 60) return m + ' min ago';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ago';
+    const dy = Math.floor(h / 24);
+    if (dy < 7) return dy + 'd ago';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+const sectionLabels = {
+    'intro':'Intro','overview':'Overview','practices':'Practices & Milestones',
+    'activities':'Activities','personalized':'Role-Specific',
+    'general':'General Feedback'
+};
+function renderComments() {
+    const comments = loadComments();
+    if (!comments.length) {
+        commentsList.innerHTML = '<div class="no-comments">No comments yet. Add the first one!</div>';
+        commentCount.style.display = 'none';
+    } else {
+        commentCount.style.display = 'flex';
+        commentCount.textContent = comments.length;
+        commentsList.innerHTML = comments.map((c, i) => `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div>
+                        <div class="comment-author">${escapeHtml(c.author)}</div>
+                        <span class="comment-section-tag">${sectionLabels[c.section] || c.section}</span>
+                    </div>
+                    <button class="comment-delete" onclick="deleteComment(${i})">🗑️</button>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+                <div class="comment-time">${formatDate(c.timestamp)}</div>
+            </div>
+        `).join('');
+    }
+}
+commentToggle.addEventListener('click', () => {
+    commentPanel.classList.toggle('open');
+    commentToggle.classList.toggle('active');
+});
+cancelComment.addEventListener('click', () => {
+    commentForm.reset();
+    commentPanel.classList.remove('open');
+    commentToggle.classList.remove('active');
+});
+commentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const a = document.getElementById('commentAuthor').value.trim();
+    const s = document.getElementById('commentSection').value;
+    const t = document.getElementById('commentText').value.trim();
+    if (!a || !s || !t) return;
+    const c = loadComments();
+    c.unshift({ author: a, section: s, text: t, timestamp: Date.now() });
+    saveComments(c); renderComments(); commentForm.reset();
+    const btn = commentForm.querySelector('button[type="submit"]');
+    const orig = btn.textContent; btn.textContent = '✓ Added!'; btn.style.background = 'var(--basic-color)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+});
+window.deleteComment = function(i) {
+    if (!confirm('Delete this comment?')) return;
+    const c = loadComments(); c.splice(i, 1); saveComments(c); renderComments();
+};
+exportBtn.addEventListener('click', () => {
+    const comments = loadComments();
+    if (!comments.length) { alert('No comments to export.'); return; }
+    let txt = 'CITIZENS REO — POD STRATEGY INITIATIVE\nComments & Feedback Export\n' + '='.repeat(50) + '\n';
+    txt += `Generated: ${new Date().toLocaleString()}\nTotal: ${comments.length}\n` + '='.repeat(50) + '\n\n';
+    comments.forEach((c, i) => {
+        txt += `#${i+1} | ${c.author} | ${sectionLabels[c.section]||c.section} | ${new Date(c.timestamp).toLocaleString()}\n${c.text}\n` + '-'.repeat(50) + '\n\n';
+    });
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `Citizens_Pod_Initiative_Comments_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    const orig = exportBtn.textContent; exportBtn.textContent = '✓ Exported!'; exportBtn.style.background = 'var(--basic-color)';
+    setTimeout(() => { exportBtn.textContent = orig; exportBtn.style.background = ''; }, 2000);
+});
+renderComments();
+</script>
+</body>
+</html>
