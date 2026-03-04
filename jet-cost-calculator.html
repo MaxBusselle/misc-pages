@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Jet Trip Cost Estimator</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a; color: #e2e8f0; min-height: 100vh;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.025em; }
+  .subtitle { color: #94a3b8; font-size: 14px; margin-top: 4px; }
+  .panel {
+    background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+    padding: 16px; margin: 20px 0;
+  }
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tab {
+    padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    border: none; cursor: pointer;
+  }
+  .tab.active { background: #059669; color: #fff; }
+  .tab.inactive { background: #334155; color: #cbd5e1; }
+  .tab.inactive:hover { background: #475569; }
+  label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+  select, input[type="text"], input[type="number"] {
+    width: 100%; background: #334155; border: 1px solid #475569; border-radius: 6px;
+    padding: 6px 10px; font-size: 14px; color: #fff; outline: none;
+  }
+  select:focus, input:focus { border-color: #059669; }
+  input[type="number"] { -moz-appearance: textfield; }
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .route-info { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  input[type="range"] { width: 100%; accent-color: #10b981; margin: 4px 0; }
+  .slider-labels { display: flex; justify-content: space-between; font-size: 12px; color: #64748b; }
+  .fuel-value { color: #34d399; font-weight: 600; }
+  .divider { border-top: 1px solid #334155; padding-top: 12px; margin-top: 12px; }
+  .toggle-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .toggle-label { font-size: 12px; color: #94a3b8; margin-right: 8px; }
+  .toggle-btn {
+    padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    border: 1px solid #475569; background: #334155; color: #64748b; cursor: pointer;
+  }
+  .toggle-btn.on { background: rgba(16,185,129,0.15); color: #34d399; border-color: #10b981; }
+  .results { display: grid; gap: 16px; margin-top: 8px; }
+  .results.cols-1 { grid-template-columns: 1fr; max-width: 420px; }
+  .results.cols-2 { grid-template-columns: 1fr 1fr; }
+  .results.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; }
+  .card.out-of-range { opacity: 0.45; }
+  .card-header { padding: 12px 16px; border-bottom: 1px solid #334155; background: #162032; }
+  .card-header h3 { font-size: 16px; font-weight: 700; color: #fff; }
+  .card-header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .card-header .specs { font-size: 11px; color: #64748b; margin-top: 4px; }
+  .card-body { padding: 16px; }
+  .card-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 14px; padding: 4px 0;
+  }
+  .card-row .label { color: #cbd5e1; }
+  .card-row .label.dim { color: #64748b; }
+  .card-row .label.plain { color: #94a3b8; }
+  .card-row .value { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; color: #e2e8f0; }
+  .card-row .value.dim { color: #64748b; }
+  .card-row .value.plain { color: #94a3b8; }
+  .card-row .value.bold { color: #fff; font-weight: 600; }
+  .card-row.subtotal { border-top: 1px solid #475569; margin-top: 8px; padding-top: 8px; }
+  .card-total {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 18px; font-weight: 700; color: #34d399;
+    border-top: 2px solid rgba(16,185,129,0.4); margin-top: 12px; padding-top: 12px;
+  }
+  .card-total .value { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; }
+  .card-empty {
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    min-height: 280px; color: #64748b; font-size: 14px; text-align: center; padding: 16px;
+  }
+  .card-empty .oor-label { color: #f87171; font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+  .input-with-suffix { display: flex; align-items: center; gap: 4px; }
+  .input-with-suffix input { flex: 1; }
+  .input-suffix { font-size: 12px; color: #94a3b8; white-space: nowrap; }
+  .note-box {
+    background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25);
+    border-radius: 8px; padding: 10px 14px; margin-top: 16px; font-size: 13px; color: #fbbf24;
+    line-height: 1.5;
+  }
+  .note-box strong { color: #fcd34d; }
+  .estimate-badge {
+    display: inline-block; background: rgba(251,191,36,0.15); color: #fbbf24;
+    font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px;
+    margin-left: 6px; vertical-align: middle; text-transform: uppercase;
+  }
+  .footer { text-align: center; font-size: 12px; color: #64748b; margin-top: 24px; line-height: 1.6; }
+
+  /* About this aircraft section */
+  .about-toggle {
+    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+    background: #162032; border-top: 1px solid #334155;
+    cursor: pointer; font-size: 12px; color: #94a3b8; user-select: none;
+  }
+  .about-toggle:hover { background: #1a2740; color: #cbd5e1; }
+  .about-toggle .arrow { transition: transform 0.2s; font-size: 10px; }
+  .about-toggle .arrow.open { transform: rotate(90deg); }
+  .about-section {
+    display: none; padding: 14px 16px; background: #162032;
+    border-top: 1px solid #334155; font-size: 13px; line-height: 1.6;
+  }
+  .about-section.open { display: block; }
+  .about-section .about-grid {
+    display: grid; grid-template-columns: auto 1fr; gap: 4px 12px;
+  }
+  .about-section .about-label { color: #64748b; white-space: nowrap; }
+  .about-section .about-value { color: #cbd5e1; }
+  .about-section .about-note {
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155;
+    color: #94a3b8; font-size: 12px; font-style: italic;
+  }
+
+  @media (max-width: 800px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .results.cols-3, .results.cols-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Private Jet Trip Cost Estimator</h1>
+  <p class="subtitle">Compare costs across aircraft for any route</p>
+
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab active" id="tab-saved" onclick="setMode('saved')">Saved Routes</button>
+      <button class="tab inactive" id="tab-distance" onclick="setMode('distance')">Estimate by Distance</button>
+    </div>
+
+    <div id="saved-section">
+      <label>Select Route</label>
+      <select id="route-select" onchange="render()"></select>
+      <p class="route-info" id="route-distance"></p>
+    </div>
+
+    <div id="distance-section" style="display:none;">
+      <div class="grid-2">
+        <div>
+          <label>Departure</label>
+          <input type="text" id="est-departure" placeholder="e.g. Van Nuys">
+        </div>
+        <div>
+          <label>Arrival</label>
+          <input type="text" id="est-arrival" placeholder="e.g. Aspen">
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <label>Distance (nautical miles)</label>
+        <div class="input-with-suffix">
+          <input type="number" id="est-distance" placeholder="Enter distance" min="0" oninput="render()">
+          <span class="input-suffix">nm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="grid-3">
+        <div>
+          <label>Fuel price: <span class="fuel-value" id="fuel-display">$6.00/gal</span></label>
+          <input type="range" id="fuel-slider" min="4" max="8" step="0.25" value="6" oninput="onFuelChange()">
+          <div class="slider-labels"><span>$4.00</span><span>$8.00</span></div>
+        </div>
+        <div>
+          <label>Pilot days</label>
+          <div class="input-with-suffix">
+            <input type="number" id="pilot-days" value="1" min="1" max="30" onchange="render()">
+            <span class="input-suffix">days</span>
+          </div>
+        </div>
+        <div>
+          <label>Contingency %</label>
+          <div class="input-with-suffix">
+            <input type="number" id="contingency" value="10" min="0" max="50" onchange="render()">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="toggle-row">
+        <span class="toggle-label">Compare:</span>
+        <button class="toggle-btn on" id="toggle-mustang" onclick="toggleAircraft('mustang')">Citation Mustang</button>
+        <button class="toggle-btn on" id="toggle-phenom300" onclick="toggleAircraft('phenom300')">Phenom 300</button>
+        <button class="toggle-btn on" id="toggle-citationXPlus" onclick="toggleAircraft('citationXPlus')">Citation X+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results cols-3" id="results"></div>
+
+  <div class="note-box">
+    <strong>Note:</strong> Flight times and fuel burns assume zero wind. Headwinds or tailwinds may significantly increase or decrease actual flight time and fuel consumption. The contingency percentage helps account for this plus pilot expenses, landing fees, deicing, and other variables.
+  </div>
+
+  <p class="footer">
+    Aircraft time = flight time (rounded up to nearest 5 min) + 15 min for startup &amp; taxi.<br>
+    Fuel converted from pounds at 6.7 lbs/gallon.
+  </p>
+</div>
+
+<script>
+var AIRCRAFT = {
+  mustang: {
+    name: "Citation Mustang",
+    hourlyRate: 1500,
+    pilots: 1,
+    pilotDayRate: 1500,
+    fuelDivisor: 6.7,
+    rangeNM: 1000,
+    maxFlightMin: 195,
+    cruiseKnots: 310,
+    burnPerHourLbs: 640,
+    specs: "Range ~1,000 nm \u00B7 Max ~3h 15m \u00B7 No lavatory",
+    about: {
+      category: "Very Light Jet (VLJ)",
+      passengers: "4 in club configuration",
+      seating: "2 rear-facing + 2 forward-facing",
+      cabin: '9.8 ft long \u00D7 4.6 ft wide \u00D7 4.5 ft tall',
+      baggage: '57 cu ft external + 6 cu ft internal',
+      lavatory: 'Emergency only \u2014 privacy curtain, not enclosed',
+      engines: '2x Pratt & Whitney Canada PW615F turbofans',
+      maxCruise: '~340 knots',
+      ceiling: '41,000 ft',
+      pilotReq: 'Single-pilot certified',
+      notes: 'Rear luggage compartment has a specially designed ski tube that fits skis, snowboards, golf clubs, and surfboards. Cabin feel has been compared to a high-end sedan. 479 built from 2006\u20132017; production replaced by the larger Citation M2. One of the most economical jets to operate.'
+    }
+  },
+  phenom300: {
+    name: "Phenom 300",
+    hourlyRate: 3000,
+    pilots: 1,
+    pilotDayRate: 1500,
+    fuelDivisor: 6.7,
+    rangeNM: 2000,
+    maxFlightMin: 255,
+    cruiseKnots: 400,
+    burnPerHourLbs: 1050,
+    specs: "Range ~2,000 nm \u00B7 Max ~4h 15m \u00B7 Lavatory",
+    about: {
+      category: "Light Jet",
+      passengers: "7 typical, up to 9 max",
+      seating: "4 club seats + 2 forward-facing aft; optional divan or single seat forward",
+      cabin: '17.2 ft long \u00D7 5.1 ft wide \u00D7 4.9 ft tall',
+      baggage: '76 cu ft \u2014 nearly double most jets in its class',
+      lavatory: 'Fully enclosed private rear lavatory',
+      engines: '2x Pratt & Whitney Canada PW535E turbofans',
+      maxCruise: '~453 knots',
+      ceiling: '45,000 ft',
+      pilotReq: 'Single-pilot certified',
+      notes: 'Interior designed by BMW DesignWorksUSA. Best-selling light jet for over a decade with 500+ delivered across 30+ countries. Lowest cabin altitude in its class (6,600 ft at cruise) means less fatigue on arrival. Baggage hold fits 4 golf bags, 2 suitcases plus carry-ons. Can access shorter runways including London City and Telluride.'
+    }
+  },
+  citationXPlus: {
+    name: "Citation X+",
+    hourlyRate: 4200,
+    pilots: 2,
+    pilotDayRate: 1500,
+    fuelDivisor: 6.7,
+    rangeNM: 3400,
+    maxFlightMin: 330,
+    cruiseKnots: 490,
+    burnPerHourLbs: 2100,
+    specs: "Range ~3,400 nm \u00B7 Max ~5h 30m \u00B7 Lavatory",
+    about: {
+      category: "Super-Midsize Jet",
+      passengers: "8 typical, up to 12 max",
+      seating: "Double-club: two groups of 4 facing leather seats; optional 3-seat divan",
+      cabin: '24 ft long \u00D7 5.5 ft wide \u00D7 5.7 ft tall (with trenched aisle)',
+      baggage: '72\u201382 cu ft \u2014 heated and pressurized',
+      lavatory: 'Full enclosed lavatory, large enough to use as dressing room',
+      engines: '2x Rolls-Royce AE3007C2 turbofans',
+      maxCruise: 'Mach 0.935 (~490 knots) \u2014 one of the fastest civilian aircraft ever built',
+      ceiling: '51,000 ft',
+      pilotReq: 'Two pilots required',
+      notes: 'Won the prestigious Collier Trophy upon debut. Full refreshment center/galley, LED mood lighting, high-speed Wi-Fi, Garmin G5000 avionics. LA to New York in under 4 hours. The X+ added a 15-inch cabin stretch, upgraded engines, and elliptical winglets over the original Citation X. 338 delivered from 1996\u20132018. Requires two pilots, which adds to operating cost.'
+    }
+  }
+};
+
+function calcBilledMinutes(flightMinutes) {
+  return Math.ceil(flightMinutes / 5) * 5 + 15;
+}
+
+var SAVED_ROUTES = [
+  {
+    id: "vny-bfi", name: "Van Nuys (VNY) \u2192 Boeing Field, Seattle (BFI)", distance: 817,
+    aircraft: {
+      mustang: { flightTime: 154, fuelBurn: 1585 },
+      phenom300: { flightTime: 120, fuelBurn: 2100 },
+      citationXPlus: { flightTime: 100, fuelBurn: 4500 }
+    }
+  },
+  {
+    id: "vny-teb", name: "Van Nuys (VNY) \u2192 Teterboro (TEB)", distance: null,
+    aircraft: {
+      mustang: null,
+      phenom300: null,
+      citationXPlus: { flightTime: 255, fuelBurn: 9000 }
+    }
+  },
+  {
+    id: "vny-dal", name: "Van Nuys (VNY) \u2192 Dallas (DAL)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 190, fuelBurn: 2100 },
+      phenom300: { flightTime: 160, fuelBurn: 2700 },
+      citationXPlus: { flightTime: 130, fuelBurn: 4900 }
+    }
+  },
+  {
+    id: "vny-ase", name: "Van Nuys (VNY) \u2192 Aspen (ASE)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 120, fuelBurn: 1300 },
+      phenom300: { flightTime: 90, fuelBurn: 1900 },
+      citationXPlus: { flightTime: 80, fuelBurn: 2700 }
+    }
+  },
+  {
+    id: "vny-jac", name: "Van Nuys (VNY) \u2192 Jackson Hole (JAC)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 120, fuelBurn: 1300 },
+      phenom300: { flightTime: 100, fuelBurn: 1900 },
+      citationXPlus: { flightTime: 85, fuelBurn: 3000 }
+    }
+  },
+  {
+    id: "vny-apc", name: "Van Nuys (VNY) \u2192 Napa (APC)", distance: 302,
+    aircraft: {
+      mustang: { flightTime: 48, fuelBurn: 1000 },
+      phenom300: { flightTime: 45, fuelBurn: 788, estimated: true },
+      citationXPlus: { flightTime: 37, fuelBurn: 1295, estimated: true }
+    }
+  },
+  {
+    id: "vny-las", name: "Van Nuys (VNY) \u2192 Las Vegas (LAS)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 40, fuelBurn: 800 },
+      phenom300: null,
+      citationXPlus: null
+    }
+  },
+  {
+    id: "vny-sjd", name: "Van Nuys (VNY) \u2192 Cabo San Lucas (SJD)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 150, fuelBurn: 1600 },
+      phenom300: null,
+      citationXPlus: null
+    }
+  },
+  {
+    id: "dal-jax", name: "Dallas (DAL) \u2192 Jacksonville (JAX)", distance: null,
+    aircraft: {
+      mustang: { flightTime: 150, fuelBurn: 1600 },
+      phenom300: null,
+      citationXPlus: null
+    }
+  }
+];
+
+var state = {
+  mode: "saved",
+  fuelPrice: 6.0,
+  aircraftOn: { mustang: true, phenom300: true, citationXPlus: true },
+  aboutOpen: {}
+};
+
+function formatTime(minutes) {
+  if (!minutes) return "\u2014";
+  return Math.floor(minutes / 60) + "h " + String(minutes % 60).padStart(2, "0") + "m";
+}
+
+function formatDollars(n) {
+  if (n === null || isNaN(n)) return "\u2014";
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  document.getElementById("tab-saved").className = mode === "saved" ? "tab active" : "tab inactive";
+  document.getElementById("tab-distance").className = mode === "distance" ? "tab active" : "tab inactive";
+  document.getElementById("saved-section").style.display = mode === "saved" ? "block" : "none";
+  document.getElementById("distance-section").style.display = mode === "distance" ? "block" : "none";
+  render();
+}
+
+function onFuelChange() {
+  state.fuelPrice = parseFloat(document.getElementById("fuel-slider").value);
+  document.getElementById("fuel-display").textContent = "$" + state.fuelPrice.toFixed(2) + "/gal";
+  render();
+}
+
+function toggleAircraft(key) {
+  state.aircraftOn[key] = !state.aircraftOn[key];
+  document.getElementById("toggle-" + key).className = state.aircraftOn[key] ? "toggle-btn on" : "toggle-btn";
+  render();
+}
+
+function toggleAbout(acKey) {
+  state.aboutOpen[acKey] = !state.aboutOpen[acKey];
+  var section = document.getElementById("about-" + acKey);
+  var arrow = document.getElementById("arrow-" + acKey);
+  if (section) {
+    section.className = state.aboutOpen[acKey] ? "about-section open" : "about-section";
+    arrow.className = state.aboutOpen[acKey] ? "arrow open" : "arrow";
+  }
+}
+
+function getActiveAircraft() {
+  return Object.keys(AIRCRAFT).filter(function(k) { return state.aircraftOn[k]; });
+}
+
+function estimateFromDistance(acKey, distanceNM) {
+  var ac = AIRCRAFT[acKey];
+  if (!distanceNM || distanceNM <= 0) return null;
+  if (distanceNM > ac.rangeNM) return { outOfRange: true };
+  var flightTimeMin = Math.round((distanceNM / ac.cruiseKnots) * 60);
+  var fuelBurn = Math.round((flightTimeMin / 60) * ac.burnPerHourLbs);
+  return { flightTime: flightTimeMin, fuelBurn: fuelBurn, estimated: true };
+}
+
+function getSavedRouteData(acKey) {
+  var sel = document.getElementById("route-select");
+  var route = SAVED_ROUTES.find(function(r) { return r.id === sel.value; });
+  if (!route) return null;
+  var acData = route.aircraft[acKey];
+  if (!acData) return { outOfRange: true };
+  return acData;
+}
+
+function renderAboutSection(acKey) {
+  var ac = AIRCRAFT[acKey];
+  var a = ac.about;
+  var isOpen = state.aboutOpen[acKey];
+
+  var rows = [
+    ["Category", a.category],
+    ["Passengers", a.passengers],
+    ["Seating", a.seating],
+    ["Cabin", a.cabin],
+    ["Baggage", a.baggage],
+    ["Lavatory", a.lavatory],
+    ["Engines", a.engines],
+    ["Max Cruise", a.maxCruise],
+    ["Ceiling", a.ceiling],
+    ["Pilots", a.pilotReq]
+  ];
+
+  var gridHtml = '<div class="about-grid">';
+  for (var i = 0; i < rows.length; i++) {
+    gridHtml += '<span class="about-label">' + rows[i][0] + '</span>';
+    gridHtml += '<span class="about-value">' + rows[i][1] + '</span>';
+  }
+  gridHtml += '</div>';
+
+  return '<div class="about-toggle" onclick="toggleAbout(\'' + acKey + '\')">' +
+    '<span class="' + (isOpen ? 'arrow open' : 'arrow') + '" id="arrow-' + acKey + '">\u25B6</span>' +
+    '<span>About this aircraft</span>' +
+  '</div>' +
+  '<div class="' + (isOpen ? 'about-section open' : 'about-section') + '" id="about-' + acKey + '">' +
+    gridHtml +
+    '<div class="about-note">' + a.notes + '</div>' +
+  '</div>';
+}
+
+function renderCard(acKey, data, isEstimate) {
+  var ac = AIRCRAFT[acKey];
+
+  if (!data || data.outOfRange) {
+    return '<div class="card out-of-range"><div class="card-empty">' +
+      '<div class="oor-label">Out of Range</div>' +
+      '<div>' + ac.name + ' max range is ~' + ac.rangeNM.toLocaleString() + ' nm</div>' +
+      '</div>' + renderAboutSection(acKey) + '</div>';
+  }
+
+  if (!data.flightTime || !data.fuelBurn) {
+    return '<div class="card"><div class="card-empty">Enter a distance to see estimates</div>' +
+      renderAboutSection(acKey) + '</div>';
+  }
+
+  var pilotDays = parseInt(document.getElementById("pilot-days").value) || 1;
+  var contingency = parseFloat(document.getElementById("contingency").value) || 0;
+
+  var isEst = isEstimate || data.estimated;
+  var billedMin = calcBilledMinutes(data.flightTime);
+  var billedHours = billedMin / 60;
+  var aircraftCost = billedHours * ac.hourlyRate;
+  var pilotFees = ac.pilots * ac.pilotDayRate * pilotDays;
+  var fuelGallons = data.fuelBurn / ac.fuelDivisor;
+  var fuelCost = fuelGallons * state.fuelPrice;
+  var subtotal = aircraftCost + pilotFees + fuelCost;
+  var contingencyAmt = subtotal * (contingency / 100);
+  var total = subtotal + contingencyAmt;
+
+  var badge = isEst ? '<span class="estimate-badge">Estimated</span>' : '';
+
+  return '<div class="card">' +
+    '<div class="card-header">' +
+      '<h3>' + ac.name + badge + '</h3>' +
+      '<p>' + ac.pilots + ' pilot' + (ac.pilots > 1 ? 's' : '') + ' \u00B7 ' + formatDollars(ac.hourlyRate) + '/hr</p>' +
+      '<div class="specs">' + ac.specs + '</div>' +
+    '</div>' +
+    '<div class="card-body">' +
+      '<div class="card-row"><span class="label plain">Flight time (zero wind)</span><span class="value plain">' + formatTime(data.flightTime) + '</span></div>' +
+      '<div class="card-row"><span class="label plain">Aircraft time billed</span><span class="value plain">' + formatTime(billedMin) + '</span></div>' +
+      '<div class="card-row"><span class="label">Aircraft @ ' + formatDollars(ac.hourlyRate) + '/hr</span><span class="value">' + formatDollars(aircraftCost) + '</span></div>' +
+      '<div class="card-row"><span class="label">Pilot' + (ac.pilots > 1 ? 's' : '') + ' (' + ac.pilots + ') \u00D7 ' + pilotDays + ' day' + (pilotDays > 1 ? 's' : '') + '</span><span class="value">' + formatDollars(pilotFees) + '</span></div>' +
+      '<div class="card-row"><span class="label">Fuel: ' + fuelGallons.toFixed(1) + ' gal @ $' + state.fuelPrice.toFixed(2) + '</span><span class="value">' + formatDollars(fuelCost) + '</span></div>' +
+      '<div class="card-row subtotal"><span class="label" style="font-weight:600;color:#fff">Subtotal</span><span class="value bold">' + formatDollars(subtotal) + '</span></div>' +
+      '<div class="card-row"><span class="label dim">Contingency (' + contingency + '%)</span><span class="value dim">' + formatDollars(contingencyAmt) + '</span></div>' +
+      '<div class="card-total"><span>Estimated Total</span><span class="value">' + formatDollars(total) + '</span></div>' +
+    '</div>' +
+    renderAboutSection(acKey) +
+  '</div>';
+}
+
+function render() {
+  var active = getActiveAircraft();
+  var resultsDiv = document.getElementById("results");
+  var count = Math.max(active.length, 1);
+  resultsDiv.className = "results cols-" + Math.min(count, 3);
+
+  if (state.mode === "saved") {
+    var sel = document.getElementById("route-select");
+    var route = SAVED_ROUTES.find(function(r) { return r.id === sel.value; });
+    var distEl = document.getElementById("route-distance");
+    distEl.textContent = route && route.distance ? route.distance + " nautical miles" : "";
+  }
+
+  var html = "";
+
+  if (active.length === 0) {
+    html = '<div style="text-align:center;color:#64748b;padding:40px;">Select at least one aircraft to compare.</div>';
+    resultsDiv.innerHTML = html;
+    return;
+  }
+
+  active.forEach(function(acKey) {
+    if (state.mode === "saved") {
+      var data = getSavedRouteData(acKey);
+      html += renderCard(acKey, data, false);
+    } else {
+      var dist = parseFloat(document.getElementById("est-distance").value) || 0;
+      var estData = estimateFromDistance(acKey, dist);
+      html += renderCard(acKey, estData, estData && !estData.outOfRange);
+    }
+  });
+
+  resultsDiv.innerHTML = html;
+}
+
+function buildRouteSelect() {
+  var sel = document.getElementById("route-select");
+  sel.innerHTML = "";
+  SAVED_ROUTES.forEach(function(r) {
+    var opt = document.createElement("option");
+    opt.value = r.id;
+    opt.textContent = r.name;
+    sel.appendChild(opt);
+  });
+}
+
+buildRouteSelect();
+render();
+</script>
+</body>
+</html>
