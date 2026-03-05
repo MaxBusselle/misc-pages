@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group — PPE Initiative Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rev-red: #C8102E;
+    --rev-red-dark: #9B0B22;
+    --rev-red-light: #E8294A;
+    --steel: #1A1F2E;
+    --steel-mid: #2A3142;
+    --steel-light: #3D4660;
+    --slate: #6B7594;
+    --off-white: #F4F2EE;
+    --warm-white: #FAF8F5;
+    --gold: #E8A020;
+    --teal: #1A8A7A;
+    --teal-light: #22B5A0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--warm-white);
+    color: var(--steel);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* ─── HEADER ─────────────────────────────── */
+  header {
+    background: var(--steel);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--rev-red);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .rev-wordmark {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .rev-wordmark span {
+    color: var(--rev-red);
+  }
+
+  .header-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--steel-light);
+  }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--slate);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  nav a:hover, nav a.active {
+    color: #fff;
+    background: var(--steel-light);
+  }
+
+  nav a.active {
+    color: var(--rev-red);
+    background: rgba(200,16,46,0.12);
+  }
+
+  /* ─── HERO ─────────────────────────────── */
+  .hero {
+    background: var(--steel);
+    padding: 56px 32px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rev-red), var(--rev-red-light), transparent);
+  }
+
+  .hero::after {
+    content: 'PPE';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 220px;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -10px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rev-red);
+    margin-bottom: 12px;
+  }
+
+  .hero-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 1.0;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .hero-headline em {
+    font-style: normal;
+    color: var(--rev-red);
+  }
+
+  .hero-sub {
+    color: var(--slate);
+    font-size: 16px;
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .stat-box {
+    background: var(--steel-mid);
+    padding: 20px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .stat-box:first-child { border-radius: 4px 0 0 4px; }
+  .stat-box:last-child { border-radius: 0 4px 4px 0; }
+
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 24px; height: 2px;
+    background: var(--rev-red);
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 42px;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .stat-label {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-top: 6px;
+  }
+
+  /* ─── SECTION SHELL ─────────────────────── */
+  .section {
+    padding: 72px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section + .section {
+    padding-top: 0;
+  }
+
+  .section-rule {
+    height: 1px;
+    background: linear-gradient(90deg, var(--rev-red), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ─── SECTION HEADER ───────────────────── */
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+
+  .section-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 0.85;
+    color: var(--off-white);
+    letter-spacing: -3px;
+    margin-top: -4px;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rev-red);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 1.05;
+    color: var(--steel);
+    letter-spacing: -0.3px;
+  }
+
+  .section-desc {
+    margin-top: 8px;
+    color: var(--slate);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  /* ─── CHARTS ────────────────────────────── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .chart-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .chart-card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 28px 28px 24px;
+    border: 1px solid #E8E4DF;
+    box-shadow: 0 2px 12px rgba(26,31,46,0.06);
+  }
+
+  .chart-card.accent-left {
+    border-left: 3px solid var(--rev-red);
+  }
+
+  .chart-card.accent-teal {
+    border-left: 3px solid var(--teal);
+  }
+
+  .chart-card.accent-gold {
+    border-left: 3px solid var(--gold);
+  }
+
+  .chart-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 20px;
+  }
+
+  /* Bar charts */
+  .bar-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 36px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .bar-row:last-child { margin-bottom: 0; }
+
+  .bar-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--steel);
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  .bar-track {
+    height: 24px;
+    background: var(--off-white);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--rev-red);
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+
+  .bar-fill.teal { background: var(--teal); }
+  .bar-fill.gold { background: var(--gold); }
+  .bar-fill.slate { background: var(--slate); }
+  .bar-fill.steel-light { background: var(--steel-light); }
+  .bar-fill.light-red { background: #E87080; }
+
+  .bar-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--steel);
+    text-align: left;
+  }
+
+  /* Donut chart (CSS-based) */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .donut {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+  }
+
+  .donut-legend {
+    flex: 1;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--steel);
+    line-height: 1.3;
+  }
+
+  .legend-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--steel);
+    display: block;
+    line-height: 1;
+  }
+
+  /* ─── STORY CARDS ────────────────────────── */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .story-card {
+    background: var(--steel);
+    border-radius: 6px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 72px;
+    color: var(--rev-red);
+    opacity: 0.4;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .story-card.teal-accent::before { color: var(--teal-light); }
+  .story-card.gold-accent::before { color: var(--gold); }
+
+  .story-quote {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.65;
+    font-style: italic;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .story-tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: rgba(200,16,46,0.25);
+    color: #FF8095;
+    margin-bottom: 4px;
+  }
+
+  .story-card.teal-accent .story-tag {
+    background: rgba(26,138,122,0.3);
+    color: var(--teal-light);
+  }
+
+  .story-card.gold-accent .story-tag {
+    background: rgba(232,160,32,0.25);
+    color: var(--gold);
+  }
+
+  .story-author {
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--slate);
+    text-transform: uppercase;
+  }
+
+  /* ─── INSIGHT CALLOUTS ───────────────────── */
+  .insight-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .insight-pill {
+    background: #fff;
+    border: 1px solid #E8E4DF;
+    border-radius: 6px;
+    padding: 20px 20px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .insight-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .insight-text strong {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--steel);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .insight-text span {
+    font-size: 16px;
+    color: var(--slate);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ─── HUMAN SIDE SECTION ─────────────────── */
+  .human-section {
+    background: var(--steel);
+    padding: 72px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .human-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .human-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .human-inner .section-num { color: rgba(255,255,255,0.06); }
+  .human-inner .section-title { color: #fff; }
+  .human-inner .section-desc { color: var(--slate); }
+  .human-inner .section-label { color: var(--gold); }
+  .human-inner .chart-title { color: #fff; }
+
+  .human-chart-card {
+    background: var(--steel-mid);
+    border-radius: 6px;
+    padding: 28px;
+    border: 1px solid var(--steel-light);
+  }
+
+  .human-chart-card .bar-label { color: rgba(255,255,255,0.75); }
+  .human-chart-card .bar-track { background: var(--steel-light); }
+  .human-chart-card .bar-count { color: rgba(255,255,255,0.9); }
+
+  .big-number-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .big-num-card {
+    background: var(--steel-mid);
+    border-radius: 6px;
+    padding: 24px 20px;
+    text-align: center;
+    border: 1px solid var(--steel-light);
+    position: relative;
+  }
+
+  .big-num-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 32px; height: 2px;
+    background: var(--gold);
+  }
+
+  .big-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--gold);
+    letter-spacing: -2px;
+  }
+
+  .big-num-label {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--slate);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* ─── FOOTER ─────────────────────────────── */
+  footer {
+    background: var(--steel);
+    border-top: 1px solid var(--steel-mid);
+    padding: 24px 32px;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--slate);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .footer-meta {
+    font-size: 16px;
+    color: var(--steel-light);
+  }
+
+  /* ─── ANIMATIONS ─────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* ─── FULL-WIDTH BAND ─────────────────────── */
+  .band {
+    background: var(--off-white);
+    padding: 72px 32px;
+  }
+
+  .band-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* responsive bar widths via inline style handled in HTML */
+
+  .spacer { height: 48px; }
+  .spacer-sm { height: 24px; }
+
+  /* highlight text */
+  .hl { color: var(--rev-red); font-weight: 600; }
+  .hl-teal { color: var(--teal); font-weight: 600; }
+  .hl-gold { color: var(--gold); font-weight: 600; }
+
+  /* Dividing label */
+  .divider-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    margin-top: 8px;
+  }
+
+  .divider-label span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  .divider-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E8E4DF;
+  }
+
+  /* Compact info table */
+  .finding-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .finding-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid #EEE;
+    font-size: 16px;
+    vertical-align: top;
+  }
+
+  .finding-table td:first-child {
+    color: var(--slate);
+    font-weight: 500;
+    width: 200px;
+    padding-right: 20px;
+  }
+
+  .finding-table td:last-child {
+    color: var(--steel);
+    font-weight: 400;
+  }
+
+  .finding-table tr:last-child td {
+    border-bottom: none;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="rev-wordmark"><span>REV</span> GROUP</div>
+      <div class="header-divider"></div>
+      <div class="header-title">PPE Initiative · Field Insights</div>
+    </div>
+    <nav>
+      <a href="#overview" class="active">Overview</a>
+      <a href="#eyewear">Eye Protection</a>
+      <a href="#hearing">Hearing</a>
+      <a href="#equipment">Equipment</a>
+      <a href="#culture">Culture</a>
+      <a href="rev-culture-deepdive.html" style="color:var(--gold);border:1px solid rgba(232,160,32,0.3);border-radius:3px;">Deep Dive ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── HERO ───────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="fade-up">
+      <div class="hero-label">Front-Line Manager PPE Initiative · Active</div>
+      <h1 class="hero-headline">
+        What the<br><em>field data</em><br>is telling us
+      </h1>
+      <p class="hero-sub">
+        179 completed activities across 60 front-line managers. Three clear themes are emerging from the floor. Here's what the data says.
+      </p>
+    </div>
+    <div class="hero-stats fade-up delay-2">
+      <div class="stat-box">
+        <div class="stat-num">179</div>
+        <div class="stat-label">Activities<br>Completed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">60</div>
+        <div class="stat-label">Managers<br>Participating</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Practice<br>Domains</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── OVERVIEW STRIP ─────────────────────────── -->
+<div id="overview" style="background:#fff; padding:32px; border-bottom:1px solid #EEE;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="insight-row">
+      <div class="insight-pill">
+        <div class="insight-icon">👁</div>
+        <div class="insight-text">
+          <strong>Eye Protection</strong>
+          <span>Present on the floor, but routinely worn incorrectly or abandoned at transitions</span>
+        </div>
+      </div>
+      <div class="insight-pill">
+        <div class="insight-icon">👂</div>
+        <div class="insight-text">
+          <strong>Hearing Protection</strong>
+          <span>Almost never defiant refusal — almost always post-break forgetting</span>
+        </div>
+      </div>
+      <div class="insight-pill">
+        <div class="insight-icon">🧤</div>
+        <div class="insight-text">
+          <strong>Equipment Condition</strong>
+          <span>Workers wearing degraded PPE that has lost protective value, often by preference</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:0;">
+      <div style="background:var(--off-white); border-radius:6px; padding:16px 20px; border-left:3px solid var(--rev-red);">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size: 16px; letter-spacing:2px; text-transform:uppercase; color:var(--slate); margin-bottom:6px;">Activities by Practice Domain</div>
+        <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:8px;">
+          <div style="font-size: 16px; font-weight:500; color:var(--steel); width:200px;">Setting Clear Expectations</div>
+          <div class="bar-track"><div class="bar-fill" style="width:63%;"></div></div>
+          <div class="bar-count" style="font-size: 16px;">63</div>
+        </div>
+        <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:8px;">
+          <div style="font-size: 16px; font-weight:500; color:var(--steel); width:200px;">Modeling Proper PPE Habits</div>
+          <div class="bar-track"><div class="bar-fill" style="width:60%; background:var(--teal);"></div></div>
+          <div class="bar-count" style="font-size: 16px;">60</div>
+        </div>
+        <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px;">
+          <div style="font-size: 16px; font-weight:500; color:var(--steel); width:200px;">Monitoring During Shifts</div>
+          <div class="bar-track"><div class="bar-fill" style="width:57%; background:var(--gold);"></div></div>
+          <div class="bar-count" style="font-size: 16px;">58</div>
+        </div>
+      </div>
+      <div style="background:var(--off-white); border-radius:6px; padding:16px 20px; border-left:3px solid var(--teal); grid-column: span 2;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size: 16px; letter-spacing:2px; text-transform:uppercase; color:var(--slate); margin-bottom:12px;">Top 5 Activities by Completion Volume</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 32px;">
+          <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:0;">
+            <div style="font-size: 16px; font-weight:500; color:var(--steel); width:180px;">Call Out PPE at Break Transitions</div>
+            <div class="bar-track" style="height:18px;"><div class="bar-fill" style="width:100%;"></div></div>
+            <div class="bar-count" style="font-size: 16px;">26</div>
+          </div>
+          <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:0;">
+            <div style="font-size: 16px; font-weight:500; color:var(--steel); width:180px;">Check Team PPE at End of Shift</div>
+            <div class="bar-track" style="height:18px;"><div class="bar-fill" style="width:96%; background:var(--teal);"></div></div>
+            <div class="bar-count" style="font-size: 16px;">25</div>
+          </div>
+          <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:0;">
+            <div style="font-size: 16px; font-weight:500; color:var(--steel); width:180px;">Use Team Member to Model at Huddle</div>
+            <div class="bar-track" style="height:18px;"><div class="bar-fill" style="width:92%; background:var(--gold);"></div></div>
+            <div class="bar-count" style="font-size: 16px;">24</div>
+          </div>
+          <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:0;">
+            <div style="font-size: 16px; font-weight:500; color:var(--steel); width:180px;">Publicly Acknowledge Compliance</div>
+            <div class="bar-track" style="height:18px;"><div class="bar-fill" style="width:62%; background:var(--slate);"></div></div>
+            <div class="bar-count" style="font-size: 16px;">16</div>
+          </div>
+          <div class="bar-row" style="grid-template-columns:auto 1fr 28px; gap:10px; margin-bottom:0;">
+            <div style="font-size: 16px; font-weight:500; color:var(--steel); width:180px;">Correct Violations During Operations</div>
+            <div class="bar-track" style="height:18px;"><div class="bar-fill" style="width:58%; background:var(--steel-light);"></div></div>
+            <div class="bar-count" style="font-size: 16px;">15</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SECTION 1: EYE PROTECTION ─────────────── -->
+<div id="eyewear" class="section fade-up">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-label">Finding #1</div>
+      <h2 class="section-title">Eye Protection —<br>The Compliance Illusion</h2>
+      <p class="section-desc">Safety glasses are the most frequently worn but most incorrectly used PPE on the floor. The equipment is present. The behavior is the gap.</p>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card accent-left">
+      <div class="chart-title">Violation Sub-Types — Eye Protection (35 entries)</div>
+      <div class="bar-row">
+        <div class="bar-label">Not wearing / removed</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div>
+        <div class="bar-count">20</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Removed at break / transition</div>
+        <div class="bar-track"><div class="bar-fill light-red" style="width:50%;"></div></div>
+        <div class="bar-count">10</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">On forehead / hat brim</div>
+        <div class="bar-track"><div class="bar-fill" style="width:30%; background:#E87080;"></div></div>
+        <div class="bar-count">6</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Wrong type for the task</div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%; background:var(--slate);"></div></div>
+        <div class="bar-count">4</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Rx glasses / no side shields</div>
+        <div class="bar-track"><div class="bar-fill" style="width:10%; background:var(--slate);"></div></div>
+        <div class="bar-count">2</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Scratched / damaged lenses</div>
+        <div class="bar-track"><div class="bar-fill" style="width:10%; background:var(--slate);"></div></div>
+        <div class="bar-count">2</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Key Observations</div>
+      <table class="finding-table">
+        <tr>
+          <td>Highest Risk Moment</td>
+          <td><span class="hl">Break &amp; lunch transitions</span> — glasses left in break room, not reset before returning to the floor</td>
+        </tr>
+        <tr>
+          <td>Hardest Violation to Catch</td>
+          <td>Glasses on the forehead — worker <em>appears</em> compliant but eyes are unprotected</td>
+        </tr>
+        <tr>
+          <td>Systemic Gap Found</td>
+          <td>Prescription glasses without safety side-shields; employees unaware of the company's Rx eyewear program</td>
+        </tr>
+        <tr>
+          <td>Task-Specific Risk</td>
+          <td>Gasketed glasses required when working under vehicles or near metal shavings — standard glasses being worn instead</td>
+        </tr>
+        <tr>
+          <td>Degradation Finding</td>
+          <td>Heavily scratched lenses reducing visibility — still being used because employees didn't flag the damage</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider-label"><span>How Managers Are Handling It — Field Stories</span></div>
+  <div class="story-grid">
+    <div class="story-card">
+      <div class="story-tag">Creative Intervention</div>
+      <div class="story-quote">"As I walked by I would say 'what beautiful eyes you have.' And they would look at me and go what? And I stated — 'what are you missing for the day to protect your vision?' They would go 'oh shoot' and remove their glasses from their head to their face. Now it is a standing item daily — they tell me how beautiful their eyes are."</div>
+      <div class="story-author">Julie Phillips — Floor Manager</div>
+    </div>
+    <div class="story-card">
+      <div class="story-tag">Non-Verbal Coaching</div>
+      <div class="story-quote">"After the 9:00 break I observed the employee returning without safety glasses. I provided a non-verbal reminder by pointing to my own safety glasses. The employee immediately responded with 'Oh, whoops,' and corrected the issue. The follow-up reinforced the expectation without escalating the situation."</div>
+      <div class="story-author">Adam Earnest — Floor Manager</div>
+    </div>
+    <div class="story-card">
+      <div class="story-tag">Systemic Discovery</div>
+      <div class="story-quote">"Christian was starting the day and had on his prescription glasses that were not safety glasses. When I asked, he said safety glasses are needed — then realized he wasn't wearing them. He was provided side shields and reminded of our safety prescription eyeglass program."</div>
+      <div class="story-author">Sarah Ennis — Floor Manager</div>
+    </div>
+    <div class="story-card">
+      <div class="story-tag">Improvement Arc</div>
+      <div class="story-quote">"I acknowledged Dacota for demonstrating improved compliance with safety glasses requirements. In the past, Dacota had occasionally needed reminders. Recently, he has shown noticeable improvement. The group smiled at him."</div>
+      <div class="story-author">Adam Earnest — Floor Manager</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-rule"></div>
+
+<!-- ─── SECTION 2: HEARING ─────────────────────── -->
+<div id="hearing" class="band">
+  <div class="band-inner">
+    <div class="section-header">
+      <div class="section-num" style="color:rgba(26,31,46,0.07);">02</div>
+      <div>
+        <div class="section-label" style="color:var(--teal);">Finding #2</div>
+        <h2 class="section-title">Hearing Protection —<br>The Forgotten Reset</h2>
+        <p class="section-desc">Unlike other PPE violations, hearing protection failures are almost never defiant. They're habitual — and the gap almost always opens at the same predictable moment: after a break.</p>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card accent-teal">
+        <div class="chart-title">When &amp; Why Violations Occur (23 entries)</div>
+        <div class="bar-row">
+          <div class="bar-label">After break / lunch (not reset)</div>
+          <div class="bar-track"><div class="bar-fill teal" style="width:100%;"></div></div>
+          <div class="bar-count">7</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">One ear plug missing, unnoticed</div>
+          <div class="bar-track"><div class="bar-fill teal" style="width:57%;"></div></div>
+          <div class="bar-count">4</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">"In my pocket" — had them, didn't wear</div>
+          <div class="bar-track"><div class="bar-fill" style="width:43%; background:var(--teal-light);"></div></div>
+          <div class="bar-count">3</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Manager modeling own gap</div>
+          <div class="bar-track"><div class="bar-fill" style="width:43%; background:var(--slate);"></div></div>
+          <div class="bar-count">3</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Removed for comfort / to hear</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14%; background:var(--slate);"></div></div>
+          <div class="bar-count">1</div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="border-left:3px solid var(--teal);">
+        <div class="chart-title">The Behavioral Profile of Hearing Violations</div>
+        <table class="finding-table">
+          <tr>
+            <td>Pattern</td>
+            <td>Not refusal — habitual forgetting. Workers know the rule, have the equipment, and comply when reminded.</td>
+          </tr>
+          <tr>
+            <td>Critical Window</td>
+            <td><span class="hl-teal">Post-break transitions</span> account for the single largest cluster of violations across all entries</td>
+          </tr>
+          <tr>
+            <td>Hidden Risk</td>
+            <td>Partially worn — one plug in, one missing. Not visible at a glance; caught only by close proximity during a huddle (Jimbo Thompson)</td>
+          </tr>
+          <tr>
+            <td>Manager Self-Disclosure</td>
+            <td>One manager openly admitted removing his own ear plugs during video training to hear better — and reflected that he should find a private area instead</td>
+          </tr>
+          <tr>
+            <td>Most Effective Motivator</td>
+            <td>Connecting to <em>permanent hearing loss</em> — multiple managers independently found future consequence framing created the most immediate behavior change</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="divider-label"><span>From the Floor</span></div>
+    <div class="story-grid">
+      <div class="story-card teal-accent">
+        <div class="story-tag">Consequence Framing</div>
+        <div class="story-quote">"Ear plugs and the negative consequences of hearing loss in years to come without wearing them. She acknowledged me being right and put them in after the discussion."</div>
+        <div class="story-author">Ashley Hart — Floor Manager</div>
+      </div>
+      <div class="story-card teal-accent">
+        <div class="story-tag">The Invisible Violation</div>
+        <div class="story-quote">"All had on their PPE except one individual had glasses on but I did not see an ear plug in one ear. When I told each employee thank you for coming prepared, the fourth indicated he did have his PPE — when he turned, I noticed he had one ear plug in and the other must have fallen out without him noticing. The other team members were surprised."</div>
+        <div class="story-author">Jimbo Thompson — Floor Manager</div>
+      </div>
+      <div class="story-card teal-accent">
+        <div class="story-tag">Honest Self-Reflection</div>
+        <div class="story-quote">"Sitting at my desk I catch myself flipping my glasses on my head when working at the computer. When doing video training I take my ear plugs out to hear — I should go to a private area to do the training."</div>
+        <div class="story-author">Randall Barnette — Floor Manager</div>
+      </div>
+      <div class="story-card teal-accent">
+        <div class="story-tag">Follow-Through Confirmed</div>
+        <div class="story-quote">"I stopped a team member who didn't have hearing protection in. Emphasized the importance. I checked after lunch and he had hearing protection in."</div>
+        <div class="story-author">Dusty Elliott — Floor Manager</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-rule"></div>
+
+<!-- ─── SECTION 3: EQUIPMENT CONDITION ────────── -->
+<div id="equipment" class="section fade-up">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-label" style="color:var(--gold);">Finding #3</div>
+      <h2 class="section-title">Equipment Condition —<br>The Gap Nobody Was Watching</h2>
+      <p class="section-desc">Before this initiative, there was no structured mechanism to inspect PPE condition during shifts. Now there is. What managers are finding is significant.</p>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card accent-gold">
+      <div class="chart-title">Condition Issues Found (71 entries flagging damage)</div>
+      <div class="bar-row">
+        <div class="bar-label">Worn / holed gloves still in use</div>
+        <div class="bar-track"><div class="bar-fill gold" style="width:100%;"></div></div>
+        <div class="bar-count">9</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Workers prefer worn equipment</div>
+        <div class="bar-track"><div class="bar-fill gold" style="width:33%;"></div></div>
+        <div class="bar-count">3</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Chemically degraded (Loctite 243)</div>
+        <div class="bar-track"><div class="bar-fill gold" style="width:33%;"></div></div>
+        <div class="bar-count">3</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Masks — dry rot / cracked rubber</div>
+        <div class="bar-track"><div class="bar-fill" style="width:11%; background:var(--slate);"></div></div>
+        <div class="bar-count">1</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Scratched lenses / poor visibility</div>
+        <div class="bar-track"><div class="bar-fill" style="width:22%; background:var(--slate);"></div></div>
+        <div class="bar-count">2</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Replaced on the spot by manager</div>
+        <div class="bar-track"><div class="bar-fill" style="width:44%; background:var(--teal);"></div></div>
+        <div class="bar-count">4</div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="border-left:3px solid var(--gold);">
+      <div class="chart-title">What This Data Means Operationally</div>
+      <table class="finding-table">
+        <tr>
+          <td>Behavior Insight</td>
+          <td>Workers <em>prefer</em> broken-in gloves. They don't know worn gloves have lost protective value — this is a knowledge gap, not defiance.</td>
+        </tr>
+        <tr>
+          <td>Chemical Finding</td>
+          <td><span class="hl-gold">Loctite 243</span>, used heavily in one department, accelerates glove degradation. Replacement frequency needs to be adjusted — a procurement and scheduling implication.</td>
+        </tr>
+        <tr>
+          <td>Respiratory Risk</td>
+          <td>3 respirator masks found with dry rot and cracked rubber seals — actively in use before being flagged during an end-of-shift check</td>
+        </tr>
+        <tr>
+          <td>Visibility Hazard</td>
+          <td>Heavily scratched safety lenses found protecting eyes — but creating poor visibility, and therefore a secondary hazard</td>
+        </tr>
+        <tr>
+          <td>Manager Response</td>
+          <td>4 documented cases of immediate on-the-spot replacement — managers are not just identifying issues, they're resolving them</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider-label"><span>The Stories Behind the Data</span></div>
+  <div class="story-grid">
+    <div class="story-card gold-accent">
+      <div class="story-tag">Procurement Implication</div>
+      <div class="story-quote">"I noticed that Loctite 243 will cause the protective side of the gloves to deteriorate and fall apart. My department uses Loctite 243 quite frequently — which means gloves will have to be replaced more frequently."</div>
+      <div class="story-author">Donny Baxter — Floor Manager</div>
+    </div>
+    <div class="story-card gold-accent">
+      <div class="story-tag">Knowledge Gap Revealed</div>
+      <div class="story-quote">"Gloves were found to be worn in. Employees preferred them that way — but I educated them that they lost their protective qualities."</div>
+      <div class="story-author">Tashan St. Victor — Floor Manager</div>
+    </div>
+    <div class="story-card gold-accent">
+      <div class="story-tag">Respiratory Risk Found</div>
+      <div class="story-quote">"What stood out most was that 3 team members' masks were cracked and the rubber was dry rot."</div>
+      <div class="story-author">Sheridan Ernest — Floor Manager</div>
+    </div>
+    <div class="story-card gold-accent">
+      <div class="story-tag">Live Demonstration</div>
+      <div class="story-quote">"In the example with the blade, we tried cutting the glove with a new knife so everyone could see that the glove protected them from the cut — but not from the impact. That's why we should always do things with caution."</div>
+      <div class="story-author">Peter Lebron — Floor Manager</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-rule"></div>
+
+<!-- ─── SECTION 4: CULTURE & HUMAN SIDE ───────── -->
+<div id="culture" class="human-section">
+  <div class="human-inner">
+    <div class="section-header">
+      <div class="section-num" style="color:rgba(255,255,255,0.04); font-size:80px;">04</div>
+      <div>
+        <div class="section-label" style="color:var(--gold);">The Human Side</div>
+        <h2 class="section-title" style="color:#fff;">Culture Change<br>in Real Time</h2>
+        <p class="section-desc" style="color:var(--slate);">Beyond violations and equipment, the data reveals something harder to measure: managers developing new habits, new honesty, and new voice as safety leaders.</p>
+      </div>
+    </div>
+
+    <div class="big-number-row">
+      <a href="rev-culture-deepdive.html#responses" style="text-decoration:none;">
+      <div class="big-num-card" style="cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=''">
+        <div class="big-num">28</div>
+        <div class="big-num-label">Immediate self-corrections recorded — worker fixed the issue on the spot</div>
+        <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size: 16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:0.7;">View all entries →</div>
+      </div></a>
+      <a href="rev-culture-deepdive.html#responses" style="text-decoration:none;">
+      <div class="big-num-card" style="cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=''">
+        <div class="big-num">26</div>
+        <div class="big-num-label">Peer ripple moments — others nearby self-adjusted without being told</div>
+        <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size: 16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:0.7;">View all entries →</div>
+      </div></a>
+      <a href="rev-culture-deepdive.html#responses" style="text-decoration:none;">
+      <div class="big-num-card" style="cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=''">
+        <div class="big-num">22</div>
+        <div class="big-num-label">Honest partial completions — managers reporting when they didn't fully execute</div>
+        <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size: 16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:0.7;">View all entries →</div>
+      </div></a>
+      <a href="rev-culture-deepdive.html#responses" style="text-decoration:none;">
+      <div class="big-num-card" style="cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=''">
+        <div class="big-num">10</div>
+        <div class="big-num-label">Resistance signals recorded out of all team response entries</div>
+        <div style="margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size: 16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);opacity:0.7;">View all entries →</div>
+      </div></a>
+    </div>
+
+    <div class="chart-grid" style="margin-bottom:32px;">
+      <div class="human-chart-card">
+        <div class="chart-title">Team Response to Manager Interventions</div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Immediate self-correction</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill" style="width:100%;"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">28</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Peer ripple (others self-adjusted)</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill teal" style="width:93%;"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">26</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Nodding / general agreement</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill" style="width:43%; background:var(--slate);"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">12</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Surprise / genuine engagement</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill" style="width:43%; background:var(--gold);"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">12</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Visible celebration (clapping, smiling)</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill" style="width:14%; background:var(--teal-light);"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">4</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="color:rgba(255,255,255,0.75);">Resistance / indifference</div>
+          <div class="bar-track" style="background:var(--steel-light);"><div class="bar-fill" style="width:36%; background:#555;"></div></div>
+          <div class="bar-count" style="color:rgba(255,255,255,0.9);">10</div>
+        </div>
+      </div>
+
+      <div class="human-chart-card">
+        <div class="chart-title">Grassroots Manager Behaviors Emerging Independently</div>
+        <div style="display:flex; flex-direction:column; gap:14px; margin-top:4px;">
+          <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px; border-bottom:1px solid var(--steel-light);">
+            <div style="font-size:20px;">🎰</div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size: 16px; color:#fff; margin-bottom:4px;">Tangible Recognition Tokens</div>
+              <div style="font-size: 16px; color:var(--slate); line-height:1.5;">At least 3 managers independently began using poker chips, coins, and tokens to reward PPE compliance — no instruction given.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:14px; border-bottom:1px solid var(--steel-light);">
+            <div style="font-size:20px;">🧪</div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size: 16px; color:#fff; margin-bottom:4px;">Live Equipment Demonstrations</div>
+              <div style="font-size: 16px; color:var(--slate); line-height:1.5;">One manager cut a glove with a knife in front of the team to show the difference between cut protection and impact protection.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <div style="font-size:20px;">💬</div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size: 16px; color:#fff; margin-bottom:4px;">Personal Signature Phrases</div>
+              <div style="font-size: 16px; color:var(--slate); line-height:1.5;">"What beautiful eyes you have" became a daily floor ritual — a single manager's creative approach is now a standing team interaction.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Culture Story Cards -->
+    <div class="divider-label" style="border-color: var(--steel-light);">
+      <span style="color:rgba(255,255,255,0.3);">Voices from the Initiative</span>
+      <div style="flex:1; height:1px; background:var(--steel-light); margin-left:16px;"></div>
+    </div>
+    <div class="story-grid">
+      <div class="story-card gold-accent">
+        <div class="story-tag">A Habit Being Built</div>
+        <div class="story-quote">"I have not done PPE recognition, but I have with birthdays and anniversaries — it makes them feel good, I can tell. I will get in the habit of doing that."</div>
+        <div class="story-author">Lemorne Piner — Floor Manager</div>
+      </div>
+      <div class="story-card gold-accent">
+        <div class="story-tag">Recognition That Landed</div>
+        <div class="story-quote">"I identified a team member and had them stand in front of everyone and said 'this is an example of what PPE is needed when you come in the building' and rewarded him with a poker chip. The team's response was — they started looking for their PPE and put theirs on."</div>
+        <div class="story-author">Darrin Stevens — Floor Manager</div>
+      </div>
+      <div class="story-card gold-accent">
+        <div class="story-tag">The New Member Effect</div>
+        <div class="story-quote">"Orbie is a new team member. I chose him as the example because as a new member, it should inspire the veteran associates to be more mindful of their PPE. The team seemed surprised — but engaged."</div>
+        <div class="story-author">Cornelius Moore — Floor Manager</div>
+      </div>
+      <div class="story-card gold-accent">
+        <div class="story-tag">Honest Partial Completion</div>
+        <div class="story-quote">"I didn't publicly acknowledge anyone during my shift. I will get better at this going forward. In my huddles I always talk about safety — but I never call anybody out."</div>
+        <div class="story-author">Lemorne Piner — Floor Manager</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">REV Group — PPE Initiative · Field Insights Report</div>
+    <div class="footer-meta">179 activities · 60 managers · Data current through March 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Animate bars on scroll into view
+  const barFills = document.querySelectorAll('.bar-fill');
+  const savedWidths = [];
+  barFills.forEach((bar, i) => {
+    savedWidths[i] = bar.style.width;
+    bar.style.width = '0';
+  });
+
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll('.bar-fill');
+        bars.forEach(bar => {
+          const idx = Array.from(barFills).indexOf(bar);
+          setTimeout(() => {
+            bar.style.width = savedWidths[idx];
+          }, 150);
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.chart-card, .human-chart-card').forEach(card => {
+    barObserver.observe(card);
+  });
+</script>
+
+</body>
+</html>
