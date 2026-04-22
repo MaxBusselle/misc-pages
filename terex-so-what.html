@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREX — Making Sense of the Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #18181B;
+    --ink-mid: #3F3F46;
+    --ink-light: #71717A;
+    --ink-faint: #A1A1AA;
+    --rule: #E4E4E7;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-2: #F4F4F5;
+    --surface-3: #F0F0F1;
+
+    --blue: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #BFDBFE;
+    --blue-dark: #1E3A8A;
+
+    --amber: #B45309;
+    --amber-light: #FFFBEB;
+    --amber-mid: #FDE68A;
+
+    --green: #15803D;
+    --green-light: #F0FDF4;
+    --green-mid: #BBF7D0;
+
+    --slate: #475569;
+    --slate-light: #F1F5F9;
+    --slate-mid: #CBD5E1;
+
+    --thinking: #7C3AED;
+    --thinking-light: #F5F3FF;
+    --thinking-mid: #DDD6FE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left { display: flex; align-items: center; gap: 20px; }
+
+  .doc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .topbar-divider { width: 1px; height: 18px; background: var(--rule); }
+
+  .doc-title-small { font-size: 13px; font-weight: 500; color: var(--ink-mid); }
+
+  .phase-pill {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--thinking-light);
+    color: var(--thinking);
+    border: 1px solid var(--thinking-mid);
+  }
+
+  nav { display: flex; gap: 2px; }
+
+  nav a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+
+  nav a:hover { background: var(--surface-2); color: var(--ink); }
+  nav a.active { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+
+  /* ─── HERO ─── */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 72px 48px 56px;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--thinking);
+  }
+
+  .eyebrow-line {
+    width: 32px;
+    height: 1px;
+    background: var(--thinking-mid);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--thinking); }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    max-width: 620px;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+
+  /* ─── HOW TO USE THIS DOC BOX ─── */
+  .how-to-use {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+
+  .how-to-use-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+
+  .how-to-use-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+  }
+
+  .how-item { display: flex; gap: 12px; align-items: flex-start; }
+
+  .how-item-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--ink-faint);
+    line-height: 1.2;
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  .how-item-text {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+
+  .how-item-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ─── AGENDA STRIP ─── */
+  .agenda-strip {
+    display: flex;
+    gap: 2px;
+    background: var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 56px;
+  }
+
+  .agenda-block {
+    flex: 1;
+    background: var(--surface);
+    padding: 16px 18px;
+    position: relative;
+  }
+
+  .agenda-block:first-child { border-radius: 10px 0 0 10px; }
+  .agenda-block:last-child { border-radius: 0 10px 10px 0; }
+
+  .agenda-time {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+
+  .agenda-topic {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .agenda-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+
+  .agenda-block.active-block { background: var(--thinking-light); }
+  .agenda-block.active-block .agenda-time { color: var(--thinking); }
+
+  /* ─── PAGE BODY ─── */
+  .page-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px 96px;
+  }
+
+  /* ─── GAP SECTION WRAPPER ─── */
+  .gap-section {
+    padding: 52px 0 0;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+
+  .gap-section:first-child { border-top: none; padding-top: 0; }
+
+  /* ─── GAP HEADER ─── */
+  .gap-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .gap-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 0.9;
+    color: var(--rule);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .gap-header-content {}
+
+  .gap-type-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .gap-type-label.blue { color: var(--blue); }
+  .gap-type-label.amber { color: var(--amber); }
+  .gap-type-label.green { color: var(--green); }
+
+  .gap-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+    margin-bottom: 10px;
+  }
+
+  .gap-subtitle {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 640px;
+  }
+
+  /* ─── WHAT WE OBSERVED ─── */
+  .observed-block {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 24px 0;
+  }
+
+  .observed-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+
+  .observed-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .observed-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .observed-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .obs-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .obs-dot.blue { background: var(--blue); }
+  .obs-dot.amber { background: #F59E0B; }
+  .obs-dot.green { background: var(--green); }
+  .obs-dot.slate { background: var(--slate); }
+
+  /* ─── THINKING AHEAD SECTION ─── */
+  .thinking-section {
+    background: var(--thinking-light);
+    border: 1px solid var(--thinking-mid);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin: 28px 0;
+  }
+
+  .thinking-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .thinking-icon { font-size: 18px; line-height: 1; }
+
+  .thinking-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--thinking);
+  }
+
+  .thinking-intro {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .thinking-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .thinking-q {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--thinking-mid);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .thinking-q:last-child { border-bottom: none; padding-bottom: 0; }
+  .thinking-q:first-child { padding-top: 0; }
+
+  .thinking-q-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--thinking-mid);
+    flex-shrink: 0;
+    line-height: 1.4;
+    width: 20px;
+  }
+
+  .thinking-q-text {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .thinking-q-text em {
+    font-style: normal;
+    color: var(--thinking);
+    font-weight: 500;
+  }
+
+  /* ─── WHAT WE DON'T KNOW YET ─── */
+  .unknown-block {
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .unknown-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .unknown-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .unknown-list li {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .unknown-list li::before {
+    content: '?';
+    font-weight: 700;
+    color: var(--ink-faint);
+    flex-shrink: 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider { height: 1px; background: var(--rule); margin: 40px 0; }
+
+  /* ─── TRANSITION CALLOUT ─── */
+  .transition-box {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin: 32px 0;
+  }
+
+  .transition-box-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .transition-box p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+  }
+
+  .transition-box p strong { color: var(--ink); }
+
+  /* ─── SESSION PREP CHECKLIST ─── */
+  .prep-section {
+    padding: 52px 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .prep-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .prep-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+
+  .prep-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+
+  .prep-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+
+  .prep-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .prep-item:first-child { padding-top: 0; }
+
+  .prep-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    background: var(--surface);
+  }
+
+  /* ─── SHARED COMMITMENTS SECTION ─── */
+  .commit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 28px;
+  }
+
+  .commit-cell {
+    background: var(--surface);
+    padding: 22px 26px;
+  }
+
+  .commit-cell-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+
+  .commit-item {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 10px;
+  }
+
+  .commit-item:last-child { border-bottom: none; }
+  .commit-item::before { content: '→'; color: var(--ink-faint); flex-shrink: 0; font-weight: 600; }
+
+  /* ─── PULL QUOTE ─── */
+  .pull-quote {
+    border-left: 3px solid var(--rule);
+    padding: 16px 22px;
+    margin: 20px 0;
+    background: var(--surface);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .pull-quote p {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  .pull-quote-source {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* ─── SECTION LABEL / HEADLINE ─── */
+  .section-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+
+  .section-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+    margin-bottom: 14px;
+  }
+
+  .section-lead {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 660px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── TOP BAR ─── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="doc-label">TEREX · PPE Initiative</span>
+    <div class="topbar-divider"></div>
+    <span class="doc-title-small">Phase 1 Analysis — The So What</span>
+  </div>
+  <nav>
+    <a href="#intro" class="active">Overview</a>
+    <a href="#habit">Habit Gaps</a>
+    <a href="#knowledge">Knowledge Gaps</a>
+    <a href="#system">System Gaps</a>
+    <a href="#session">Session Prep</a>
+  </nav>
+</div>
+
+<!-- ─── HERO ─── -->
+<div id="intro" class="hero">
+  <div class="hero-eyebrow">
+    <span class="eyebrow-tag">So What? · Pre-Reading</span>
+    <div class="eyebrow-line"></div>
+  </div>
+  <h1>The data raises<br>questions only <em>you</em><br>can answer</h1>
+  <p class="hero-desc">
+    The analysis document covered what the field data contains. This document is designed to get your thinking in motion before the session — because the most important interpretations of this data aren't ours to make.
+  </p>
+
+  <div class="how-to-use">
+    <div class="how-to-use-label">How to Use This Document</div>
+    <div class="how-to-use-grid">
+      <div class="how-item">
+        <div class="how-item-num">1</div>
+        <div class="how-item-text"><strong>Read before the session.</strong> Pre-reading only — designed to prompt thinking, not provide answers.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-num">2</div>
+        <div class="how-item-text"><strong>Note what surprises you.</strong> Where does the data match your experience? Where doesn't it?</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-num">3</div>
+        <div class="how-item-text"><strong>Sit with the open questions.</strong> Each section ends with questions we can't answer without your input.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-num">4</div>
+        <div class="how-item-text"><strong>Bring what the data can't show.</strong> Your knowledge of this organization's history and floor culture is the point of the session.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agenda -->
+  <div class="section-kicker" style="margin-bottom:14px;">Session Agenda — 60 Minutes</div>
+  <div class="agenda-strip">
+    <div class="agenda-block">
+      <div class="agenda-time">0 – 10 min</div>
+      <div class="agenda-topic">Opening &amp; Alignment</div>
+      <div class="agenda-desc">What we're here to do and how the session works</div>
+    </div>
+    <div class="agenda-block active-block">
+      <div class="agenda-time">10 – 25 min</div>
+      <div class="agenda-topic">Habit Gaps</div>
+      <div class="agenda-desc">What the data shows, what it might mean, your read</div>
+    </div>
+    <div class="agenda-block active-block">
+      <div class="agenda-time">25 – 40 min</div>
+      <div class="agenda-topic">Knowledge &amp; System Gaps</div>
+      <div class="agenda-desc">Where training and environment are the real issue</div>
+    </div>
+    <div class="agenda-block active-block">
+      <div class="agenda-time">40 – 55 min</div>
+      <div class="agenda-topic">Making Meaning Together</div>
+      <div class="agenda-desc">Synthesis — what does this add up to for Phase 2?</div>
+    </div>
+    <div class="agenda-block">
+      <div class="agenda-time">55 – 60 min</div>
+      <div class="agenda-topic">Next Steps</div>
+      <div class="agenda-desc">What we'll each bring to the Phase 2 planning session</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PAGE BODY ─── -->
+<div class="page-body">
+
+  <!-- ─── A NOTE ON THE FRAMEWORK ─── -->
+  <div style="background:var(--surface); border:1px solid var(--rule); border-radius:12px; padding:26px 30px; margin-bottom:52px;">
+    <div class="section-kicker" style="margin-bottom:10px;">A Note on Structure</div>
+    <p style="font-size:15px; color:var(--ink-mid); line-height:1.75; font-weight:300; max-width:680px;">
+      The field data revealed three distinct compliance gap types. The session is organized around them because <strong style="color:var(--ink); font-weight:600;">each type points to a different kind of solution</strong> — and correctly identifying which type you're dealing with is the most consequential analytical step in designing Phase 2.
+    </p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border-radius:8px; overflow:hidden; margin-top:20px;">
+      <div style="background:var(--blue-light); padding:16px 18px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:6px;">Habit Gap</div>
+        <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;">Worker knows the rule, has the equipment, forgets or doesn't yet act automatically. <em>Solved by repetition, cues, and reinforcement.</em></div>
+      </div>
+      <div style="background:var(--amber-light); padding:16px 18px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--amber); margin-bottom:6px;">Knowledge Gap</div>
+        <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;">Worker is missing a piece of information — about which PPE applies, or what the real risk is. <em>Solved by education, not correction.</em></div>
+      </div>
+      <div style="background:var(--green-light); padding:16px 18px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--green); margin-bottom:6px;">System Gap</div>
+        <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;">The environment is creating barriers — wrong fit, no replacement cue, accelerated degradation. <em>Solved by design, not coaching.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GAP 1: HABIT ═══ -->
+  <div id="habit" class="gap-section">
+    <div class="gap-header">
+      <div class="gap-num">01</div>
+      <div class="gap-header-content">
+        <div class="gap-type-label blue">Habit Gap</div>
+        <h2 class="gap-title">Workers know the rules.<br>The automatic behavior isn't there yet.</h2>
+        <p class="gap-subtitle">The most prevalent gap in the data is habitual forgetting at moments of transition. Workers remove PPE appropriately during breaks; the re-equipping step on return isn't yet automatic.</p>
+      </div>
+    </div>
+
+    <div class="observed-block">
+      <div class="observed-label">What the Data Shows</div>
+      <ul class="observed-list">
+        <li><div class="obs-dot blue"></div><div>Break and lunch transitions are the most cited violation context across all PPE types — eye protection, hearing protection, and gloves all spike at floor re-entry</div></li>
+        <li><div class="obs-dot blue"></div><div>Self-correction is nearly universal when managers prompt — workers fix the issue immediately without argument. This is the behavioral signature of a habit gap, not a resistance problem</div></li>
+        <li><div class="obs-dot blue"></div><div>Several managers report workers now self-correct when they see a manager approaching, before anything is said — the manager's presence has become a cue, but the internal habit hasn't formed independently</div></li>
+        <li><div class="obs-dot blue"></div><div>The "quick task" pattern mirrors the transition pattern: workers judge that task duration doesn't warrant re-equipping, and the automatic behavior of staying equipped doesn't yet override that judgment</div></li>
+        <li><div class="obs-dot blue"></div><div>Of 52 documented follow-up checks, more than 63% confirmed corrections were still holding later in the shift</div></li>
+      </ul>
+    </div>
+
+    <div class="thinking-section">
+      <div class="thinking-header">
+        <div class="thinking-icon">💭</div>
+        <div class="thinking-label">Things to Be Thinking About</div>
+      </div>
+      <p class="thinking-intro">Questions the data raises that require your organizational context to answer.</p>
+      <div class="thinking-questions">
+        <div class="thinking-q">
+          <div class="thinking-q-num">1</div>
+          <div class="thinking-q-text">Corrections hold when a manager is present, but the habit hasn't formed independently yet. <em>What does compliance look like on shifts or in areas with lower manager visibility?</em> Is this data representative of the full floor, or the more actively supervised portion of it?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">2</div>
+          <div class="thinking-q-text">Break transitions are the highest-risk moment. <em>Is there something about how breaks are structured or how workers re-enter the floor that creates unnecessary friction?</em> This may be partly an environmental problem, not just a behavioral one.</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">3</div>
+          <div class="thinking-q-text">The "quick task" logic appears across gloves, face shields, and hearing protection. <em>Is this a pre-existing cultural pattern at TEREX?</em> If so, has it been formally addressed before, and what happened?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">4</div>
+          <div class="thinking-q-text">Habits form through repetition and environmental cues, not reminders alone. <em>What physical prompts currently exist at floor re-entry points?</em> Is there a reason existing signage or PPE stations aren't functioning as cues?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unknown-block">
+      <div class="unknown-label">What We Don't Know From This Data</div>
+      <ul class="unknown-list">
+        <li>Whether high-activity managers are working in high- or low-compliance areas — volume doesn't tell us where the problem is most severe</li>
+        <li>Whether compliance differs meaningfully on days without active manager monitoring</li>
+        <li>Whether any business units have already addressed the transition problem, and how</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ GAP 2: KNOWLEDGE ═══ -->
+  <div id="knowledge" class="gap-section" style="padding-top:52px; border-top:1px solid var(--rule);">
+    <div class="gap-header">
+      <div class="gap-num">02</div>
+      <div class="gap-header-content">
+        <div class="gap-type-label amber">Knowledge Gap</div>
+        <h2 class="gap-title">Some workers are acting on<br>incomplete information.</h2>
+        <p class="gap-subtitle">Not every compliance gap is a habit failure. Some workers are making incorrect but logical decisions — about which PPE a task requires, what worn equipment has actually lost, or what the real consequence of non-compliance is over time.</p>
+      </div>
+    </div>
+
+    <div class="observed-block">
+      <div class="observed-label">What the Data Shows</div>
+      <ul class="observed-list">
+        <li><div class="obs-dot amber"></div><div>Task-specific PPE gaps are prevalent — workers in standard safety glasses don't know goggles or face shields are also required for overhead, under-vehicle, or grinding work</div></li>
+        <li><div class="obs-dot amber"></div><div>Workers prefer worn-in gloves and don't know that comfort and cut resistance are decoupled — a glove can feel fine while having lost protective value</div></li>
+        <li><div class="obs-dot amber"></div><div>Workers wearing prescription glasses as their only eye protection may not know that a safety side-shield program exists or that Rx glasses alone don't meet PPE requirements</div></li>
+        <li><div class="obs-dot amber"></div><div>Chemical compatibility gaps are appearing — workers using cut-resistant gloves for solvent or chemical work, unaware that material handling gloves don't protect against chemical exposure</div></li>
+        <li><div class="obs-dot amber"></div><div>When managers connect a PPE requirement to a specific consequence — not just the rule — behavior changes faster and holds longer</div></li>
+      </ul>
+    </div>
+
+    <div class="pull-quote">
+      <p>"I asked if she knew what consequences could come about if proper PPE was not utilized during operation of that tool. She noted that a possible amputation and or binding of material could result if not fed through the saw blade evenly."</p>
+      <div class="pull-quote-source">Floor manager — worker articulating the risk without being told what it was</div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-mid); line-height:1.75; margin:0 0 24px;">The worker already knew the consequence — she just hadn't been asked to surface it. This pattern appeared repeatedly: consequence awareness was often present but dormant. Managers who asked the question rather than stating the answer saw more durable behavior change.</p>
+
+    <div class="thinking-section">
+      <div class="thinking-header">
+        <div class="thinking-icon">💭</div>
+        <div class="thinking-label">Things to Be Thinking About</div>
+      </div>
+      <p class="thinking-intro">Knowledge gaps require different interventions than habit gaps. Your read on which specific knowledge is missing — and why — matters here.</p>
+      <div class="thinking-questions">
+        <div class="thinking-q">
+          <div class="thinking-q-num">1</div>
+          <div class="thinking-q-text">Task-specific PPE gaps appear across multiple categories. <em>Is this a training coverage issue, a communication issue, or something else?</em> When workers start a new task type or rotate areas, what's the current process for communicating task-specific PPE requirements?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">2</div>
+          <div class="thinking-q-text">Multiple managers independently found that consequence framing is more effective than restating the rule. <em>Has consequence-based communication been formally encouraged before, or is this something managers are discovering on their own?</em></div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">3</div>
+          <div class="thinking-q-text">Workers prefer worn gloves because they're more comfortable and don't understand that degradation is invisible. <em>Is cut resistance degradation covered in onboarding or safety training, or is it assumed knowledge?</em></div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">4</div>
+          <div class="thinking-q-text">Several knowledge gaps have straightforward fixes — the Rx eyewear program, the chemical glove compatibility issue. <em>Are there organizational reasons these haven't been addressed, or have they simply not been visible enough to prioritize until now?</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unknown-block">
+      <div class="unknown-label">What We Don't Know From This Data</div>
+      <ul class="unknown-list">
+        <li>How consistent task-specific PPE knowledge is across business units — E-ONE and AEV have different task contexts, and relevant gaps may differ by site</li>
+        <li>Whether JHA processes cover task-specific PPE and aren't being consulted, or whether the gap is in the JHAs themselves</li>
+        <li>Whether current onboarding and safety training content covers the specific gaps appearing in the field data</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ GAP 3: SYSTEM ═══ -->
+  <div id="system" class="gap-section" style="padding-top:52px; border-top:1px solid var(--rule);">
+    <div class="gap-header">
+      <div class="gap-num">03</div>
+      <div class="gap-header-content">
+        <div class="gap-type-label green">System Gap</div>
+        <h2 class="gap-title">Some of what we're seeing<br>can't be solved by coaching alone.</h2>
+        <p class="gap-subtitle">A portion of the compliance gap is environmental — wrong equipment available, replacement cycles misaligned with actual degradation, or physical spaces that create compliance friction. Manager reinforcement doesn't fix a system problem.</p>
+      </div>
+    </div>
+
+    <div class="observed-block">
+      <div class="observed-label">What the Data Shows</div>
+      <ul class="observed-list">
+        <li><div class="obs-dot green"></div><div>Loctite 243, in heavy use in at least one department, accelerates glove degradation faster than standard replacement schedules account for</div></li>
+        <li><div class="obs-dot green"></div><div>End-of-shift checks found 38 worn or holed gloves, 20 scratched face shields and safety glasses, and 3 respiratory masks with cracked seals — all in active use, all previously undetected because no structured inspection mechanism existed</div></li>
+        <li><div class="obs-dot green"></div><div>Bump cap fit is a documented issue at one site — workers with poor-fitting equipment are less likely to wear it consistently. The fix was available through EHS once the problem was surfaced</div></li>
+        <li><div class="obs-dot green"></div><div>Correct glove sizes have been found out of stock at certain stations, forcing workers to use the wrong size or go without</div></li>
+        <li><div class="obs-dot green"></div><div>Workers are independently creating environmental fixes — glove clips on belts, PPE stored with equipment — suggesting they recognize the friction and are working around it within their control</div></li>
+      </ul>
+    </div>
+
+    <div class="thinking-section">
+      <div class="thinking-header">
+        <div class="thinking-icon">💭</div>
+        <div class="thinking-label">Things to Be Thinking About</div>
+      </div>
+      <p class="thinking-intro">System gaps require decisions beyond what managers can control. Your perspective on operational feasibility and organizational appetite for structural change is essential.</p>
+      <div class="thinking-questions">
+        <div class="thinking-q">
+          <div class="thinking-q-num">1</div>
+          <div class="thinking-q-text">The equipment condition findings were only visible because managers looked. <em>Before this program, what was the mechanism for PPE condition inspection?</em> Was there one, and where did it break down?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">2</div>
+          <div class="thinking-q-text">The Loctite 243 finding has a clear procurement implication. <em>Is there a process for field observations like this to reach procurement?</em> Or does that information typically stay on the floor?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">3</div>
+          <div class="thinking-q-text">Workers are inventing their own fixes — glove clips, co-locating PPE with tools. <em>Are there mechanisms to scale good ideas that emerge from the floor?</em> Have similar solutions been tried company-wide before?</div>
+        </div>
+        <div class="thinking-q">
+          <div class="thinking-q-num">4</div>
+          <div class="thinking-q-text">The transition gap is partly behavioral and partly environmental. <em>What does the physical layout at floor re-entry points look like across sites?</em> Have PPE dispensers, mirrors, or reminder signage been tried — and if so, what was the outcome?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unknown-block">
+      <div class="unknown-label">What We Don't Know From This Data</div>
+      <ul class="unknown-list">
+        <li>Whether equipment condition issues are concentrated in specific business units or distributed evenly across sites</li>
+        <li>Whether current procurement and replacement cadences have been reviewed in light of what the end-of-shift checks are finding</li>
+        <li>Whether the EHS team's picture of field conditions matches what managers found, or whether this data is new to them</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="session" class="prep-section">
+    <div class="section-kicker">Before You Arrive</div>
+    <h2 class="section-headline">Coming prepared to the session</h2>
+    <p class="section-lead">Some of the questions in this document have answers you already know. Others may be worth looking into before we meet.</p>
+
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="prep-card-label">Worth Reflecting On</div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>Which gap type is driving the most significant compliance risk at TEREX right now — and does the data match your read?</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>Are there sites, shifts, or departments that are clear outliers — better or worse — that might complicate what the data shows?</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>Have the specific issues in this data — the transition gap, worn gloves, task-specific PPE — been formally addressed before? What happened?</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>What does EHS know about the equipment condition findings — new information, or confirmation of something already on the radar?</div>
+        </div>
+      </div>
+      <div class="prep-card">
+        <div class="prep-card-label">Worth Looking Into</div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>Current glove replacement schedules for departments with heavy Loctite 243 use — do they reflect the accelerated degradation the data suggests?</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>What current safety training says about task-specific PPE — is the knowledge gap in the training content, or in how it's applied on the floor?</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>Whether the safety Rx eyewear program is being actively communicated — and to whom</div>
+        </div>
+        <div class="prep-item">
+          <div class="prep-check"></div>
+          <div>What floor re-entry points look like across sites — whether variation in physical environment might explain some of the compliance patterns</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="transition-box" style="margin-top:40px;">
+      <div class="transition-box-label">What This Session Leads To</div>
+      <p>This session bridges the data and the design of Phase 2. The goal is a shared understanding of what the findings mean in the context of your organization. <strong>The output is alignment on a single question: given what we now understand, what should Phase 2 be designed to address?</strong></p>
+    </div>
+
+    <div class="section-kicker" style="margin-top:44px; margin-bottom:14px;">What Each Side Is Bringing</div>
+    <div class="commit-grid">
+      <div class="commit-cell">
+        <div class="commit-cell-label">We're bringing</div>
+        <div class="commit-item">Field data organized by gap type and PPE category</div>
+        <div class="commit-item">Observations on which manager behaviors are working and why</div>
+        <div class="commit-item">A framework for Phase 2 design options</div>
+        <div class="commit-item">Questions we can't answer without your organizational context</div>
+      </div>
+      <div class="commit-cell">
+        <div class="commit-cell-label">You're bringing</div>
+        <div class="commit-item">Knowledge of what's been tried before and what the history looks like</div>
+        <div class="commit-item">A read on which findings match your experience and which don't</div>
+        <div class="commit-item">Site-specific and organizational context not visible in the data</div>
+        <div class="commit-item">A sense of what's operationally feasible and where the real leverage is</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-body -->
+
+<!-- ─── FOOTER ─── -->
+<div style="background:var(--surface); border-top:1px solid var(--rule); padding:24px 48px; margin-top:56px;">
+  <div style="max-width:860px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:12px; color:var(--ink-faint); font-weight:500; letter-spacing:0.5px; text-transform:uppercase;">TEREX · PPE Initiative · The So What — Pre-Reading</div>
+    <div style="font-size:12px; color:var(--ink-faint);">For the Phase 1 Meaning-Making Session</div>
+  </div>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

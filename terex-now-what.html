@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREX — Phase 2 Planning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #18181B;
+    --ink-mid: #3F3F46;
+    --ink-light: #71717A;
+    --ink-faint: #A1A1AA;
+    --rule: #E4E4E7;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-2: #F4F4F5;
+
+    --blue: #1D4ED8;
+    --blue-light: #EFF6FF;
+    --blue-mid: #BFDBFE;
+
+    --amber: #B45309;
+    --amber-light: #FFFBEB;
+    --amber-mid: #FDE68A;
+
+    --green: #15803D;
+    --green-light: #F0FDF4;
+    --green-mid: #BBF7D0;
+
+    --flint: #0F766E;
+    --flint-light: #F0FDFA;
+    --flint-mid: #99F6E4;
+
+    --org: #6D28D9;
+    --org-light: #F5F3FF;
+    --org-mid: #DDD6FE;
+
+    --open: #D1D5DB;
+    --open-light: #F9FAFB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left { display: flex; align-items: center; gap: 20px; }
+  .doc-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint); }
+  .topbar-divider { width: 1px; height: 18px; background: var(--rule); }
+  .doc-title-small { font-size: 13px; font-weight: 500; color: var(--ink-mid); }
+
+  nav { display: flex; gap: 2px; }
+  nav a { font-size: 12px; font-weight: 500; color: var(--ink-light); text-decoration: none; padding: 5px 12px; border-radius: 6px; transition: all 0.15s; }
+  nav a:hover { background: var(--surface-2); color: var(--ink); }
+  nav a.active { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+
+  /* ─── HERO ─── */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 48px 48px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    max-width: 620px;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  /* ─── LEGEND ─── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-mid);
+    font-weight: 500;
+  }
+
+  .legend-chip {
+    height: 18px;
+    padding: 0 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+  }
+
+  .chip-flint { background: var(--flint-light); color: var(--flint); border: 1px solid var(--flint-mid); }
+  .chip-org { background: var(--org-light); color: var(--org); border: 1px solid var(--org-mid); }
+  .chip-open { background: var(--open-light); color: var(--ink-faint); border: 1px solid var(--open); }
+  .chip-blue { background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-mid); }
+  .chip-amber { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-mid); }
+  .chip-green { background: var(--green-light); color: var(--green); border: 1px solid var(--green-mid); }
+
+  /* ─── PAGE BODY ─── */
+  .page-body {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px 96px;
+  }
+
+  /* ─── GAP BLOCK ─── */
+  .gap-block {
+    padding: 48px 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .gap-block:first-child { border-top: none; padding-top: 0; }
+
+  .gap-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .gap-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    line-height: 0.9;
+    color: var(--rule);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .gap-type {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .gap-type.blue { color: var(--blue); }
+  .gap-type.amber { color: var(--amber); }
+  .gap-type.green { color: var(--green); }
+
+  .gap-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .gap-sub {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  /* ─── SUMMARY ROW ─── */
+  .summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .summary-cell {
+    background: var(--surface);
+    padding: 14px 18px;
+  }
+
+  .summary-cell-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .summary-cell-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  /* ─── ACTION TABLE ─── */
+  .action-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+
+  .action-table thead th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 12px 10px 0;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .action-table thead th:last-child { padding-right: 0; }
+
+  .action-table tbody tr { border-bottom: 1px solid var(--rule); }
+  .action-table tbody tr:last-child { border-bottom: none; }
+
+  .action-table tbody td {
+    padding: 13px 12px 13px 0;
+    vertical-align: top;
+    font-size: 13px;
+  }
+
+  .action-table tbody td:last-child { padding-right: 0; }
+
+  /* Col widths */
+  .col-type { width: 100px; }
+  .col-action { width: auto; }
+  .col-rationale { width: 260px; }
+  .col-decision { width: 130px; }
+
+  .action-label {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+
+  .action-detail {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .rationale-text {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  /* Decision field */
+  .decision-field {
+    background: var(--open-light);
+    border: 1px dashed var(--open);
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+    line-height: 1.4;
+    min-height: 34px;
+  }
+
+  .decision-field.filled {
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    color: var(--ink-mid);
+    font-style: normal;
+  }
+
+  /* ─── OPEN QUESTIONS ROW ─── */
+  .open-q-block {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+  }
+
+  .open-q-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .open-q-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .open-q-list li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .open-q-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .open-q-list li::before {
+    content: '→';
+    color: var(--ink-faint);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-weight: 600;
+  }
+
+  /* ─── OUTPUTS SECTION ─── */
+  .outputs-section {
+    padding: 48px 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .outputs-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+
+  .outputs-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .outputs-desc {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.65;
+    max-width: 580px;
+    margin-bottom: 28px;
+  }
+
+  .output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .output-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .output-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+
+  .output-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  .output-line:last-child { border-bottom: none; }
+
+  .output-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── TOP BAR ─── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="doc-label">TEREX · PPE Initiative</span>
+    <div class="topbar-divider"></div>
+    <span class="doc-title-small">Phase 2 Planning — The Now What</span>
+  </div>
+  <nav>
+    <a href="#intro" class="active">Overview</a>
+    <a href="#habit">Habit Gaps</a>
+    <a href="#knowledge">Knowledge Gaps</a>
+    <a href="#system">System Gaps</a>
+    <a href="#outputs">Session Outputs</a>
+  </nav>
+</div>
+
+<!-- ─── HERO ─── -->
+<div id="intro" class="hero">
+  <div class="eyebrow">Phase 2 Planning · Working Session</div>
+  <h1>What do we do<br>with what we know?</h1>
+  <p class="hero-desc">
+    This document is the working surface for our Phase 2 planning session. Each gap type from the analysis is presented with pre-filled action options based on the data, alongside open decisions to be made together. The goal is to leave this session with a clear, agreed-upon set of actions — some inside the Flint program, some outside it.
+  </p>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-chip chip-flint">Flint</div>
+      New or modified Flint activity — addressed through the coaching program
+    </div>
+    <div class="legend-item">
+      <div class="legend-chip chip-org">Org Action</div>
+      Organizational action — outside Flint, requires internal decision or resourcing
+    </div>
+    <div class="legend-item">
+      <div class="legend-chip chip-blue">Habit Gap</div>
+      <div class="legend-chip chip-amber">Knowledge Gap</div>
+      <div class="legend-chip chip-green">System Gap</div>
+      Gap type the action addresses
+    </div>
+    <div class="legend-item">
+      <div class="legend-chip chip-open">Open</div>
+      Decision not yet made — to be determined in session
+    </div>
+  </div>
+
+  <!-- How to use -->
+  <div style="background:var(--surface); border:1px solid var(--rule); border-radius:8px; padding:18px 22px;">
+    <div class="section-label" style="margin-bottom:10px;">How to Use This Document</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px 32px;">
+      <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;"><strong style="color:var(--ink);">Pre-filled rows</strong> are actions the data clearly supports. Review, challenge, and modify them as needed.</div>
+      <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;"><strong style="color:var(--ink);">Open decision fields</strong> are where we need your input. The dashed border means the decision is yours to make.</div>
+      <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;"><strong style="color:var(--ink);">Session outputs</strong> at the end capture the decisions and owners before we close.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PAGE BODY ─── -->
+<div class="page-body">
+
+  <!-- ═══ GAP 1: HABIT ═══ -->
+  <div id="habit" class="gap-block">
+    <div class="gap-header">
+      <div class="gap-num">01</div>
+      <div>
+        <div class="gap-type blue">Habit Gap</div>
+        <div class="gap-title">Building the behaviors that run automatically</div>
+        <div class="gap-sub">Workers know the rules and comply when prompted. The goal for Phase 2 is to close the gap between prompted compliance and automatic behavior — particularly at break transitions and during quick tasks.</div>
+      </div>
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-cell">
+        <div class="summary-cell-label">Primary Pattern</div>
+        <div class="summary-cell-text">PPE removed at breaks and not re-equipped on return; skipped during tasks judged as "quick"</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">What's Working</div>
+        <div class="summary-cell-text">Corrections hold in 63%+ of follow-up checks; manager presence is becoming a behavioral cue</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Phase 2 Goal</div>
+        <div class="summary-cell-text">Shift from manager-prompted compliance to self-sustaining habit independent of manager presence</div>
+      </div>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th class="col-type">Type</th>
+          <th class="col-action">Action</th>
+          <th class="col-rationale">Rationale from Data</th>
+          <th class="col-decision">Decision / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — Break Transition Check</div>
+            <div class="action-detail">A targeted activity where the manager positions themselves at the floor re-entry point after a specific break, observing and coaching the re-equipping moment directly. Currently no Phase 1 activity targets this moment specifically.</div>
+          </td>
+          <td class="rationale-text">Break transitions are the #1 violation context across all PPE types. "Call Out PPE at Break Transitions" is the highest-volume activity in Phase 1 but addresses violations after the fact. A dedicated transition observation activity would target the habit formation window itself.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — Quick Task PPE Commitment</div>
+            <div class="action-detail">Manager selects a team member who regularly performs quick-task work (grinding, tacking, brief material handling) and works alongside them for a defined window, observing whether PPE stays on during short tasks and coaching the specific moment where the habit breaks.</div>
+          </td>
+          <td class="rationale-text">"Stay Protected During Quick Tasks" exists but focuses on the manager staying protected. A peer-coaching version focused on observing a team member's quick-task behavior would directly address the "I'll only be a second" pattern documented across gloves, face shields, and hearing protection.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">Modify — Verify PPE Corrections Held</div>
+            <div class="action-detail">Extend the existing activity to include a second follow-up check on a different day — not just later in the same shift. This would begin to measure whether corrections are forming into persistent habits versus resetting each shift.</div>
+          </td>
+          <td class="rationale-text">Current data shows 63%+ same-shift durability, but we have no data on multi-day durability. This modification would generate that signal and increase the reinforcement frequency that habit formation requires.</td>
+          <td><div class="decision-field">Modify existing, or keep as-is?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — Peer Accountability Pair</div>
+            <div class="action-detail">Manager designates two team members as PPE accountability partners for a defined period. Each is responsible for prompting the other at transitions. Manager checks in at end of week on whether the peer relationship is functioning.</div>
+          </td>
+          <td class="rationale-text">The "peer ripple" pattern in Phase 1 — where recognizing one worker caused others nearby to self-correct — suggests peer influence is already operating. A structured version would extend the manager's reach and begin building the peer culture component that's currently emerging informally.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Audit physical cues at floor re-entry points</div>
+            <div class="action-detail">Review what signage, PPE dispensers, or visual cues currently exist at break room exits and floor entry points across sites. Identify whether environmental prompts are absent, insufficient, or present but ineffective.</div>
+          </td>
+          <td class="rationale-text">Habit formation is supported by environmental cues, not just reminders. The transition gap may be partly structural — if re-entry points don't prompt re-equipping behavior, manager coaching is working against an environmental headwind.</td>
+          <td><div class="decision-field">Owner? Timeline?</div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="open-q-block">
+      <div class="open-q-label">Open Questions for This Section</div>
+      <ul class="open-q-list">
+        <li>Are there specific business units or shifts where the transition problem is most acute, and should Phase 2 activity prioritization reflect that?</li>
+        <li>Is a peer accountability structure culturally viable on the floor — or would workers experience it as surveillance rather than mutual support?</li>
+        <li>What would "the habit has formed" look like in practice? How would we know Phase 2 is working on habit gaps?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ GAP 2: KNOWLEDGE ═══ -->
+  <div id="knowledge" class="gap-block">
+    <div class="gap-header">
+      <div class="gap-num">02</div>
+      <div>
+        <div class="gap-type amber">Knowledge Gap</div>
+        <div class="gap-title">Filling the specific information workers are missing</div>
+        <div class="gap-sub">Some workers are making incorrect decisions based on incomplete information. Phase 2 responses here are about getting the right knowledge to the right people — through Flint activities, training, and direct communication.</div>
+      </div>
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-cell">
+        <div class="summary-cell-label">Primary Pattern</div>
+        <div class="summary-cell-text">Task-specific PPE gaps; worn gloves misunderstood as still protective; consequence awareness present but not surfaced</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">What's Working</div>
+        <div class="summary-cell-text">Consequence framing is producing faster and more durable behavior change than rule-restatement; workers often already know the risk when asked</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Phase 2 Goal</div>
+        <div class="summary-cell-text">Close specific knowledge gaps through targeted activities and organizational communication; make consequence framing a consistent manager practice</div>
+      </div>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th class="col-type">Type</th>
+          <th class="col-action">Action</th>
+          <th class="col-rationale">Rationale from Data</th>
+          <th class="col-decision">Decision / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — Task-Specific PPE Audit</div>
+            <div class="action-detail">Manager selects one task type in their area that requires PPE beyond the baseline standard (overhead work, grinding, under-vehicle, chemical handling). They verify their team's understanding of what's required — and why — before the task begins, not after a violation occurs.</div>
+          </td>
+          <td class="rationale-text">Task-specific PPE gaps appear across all four PPE categories. Existing activities address violations in the moment but don't build pre-task knowledge. An anticipatory activity — before work begins — targets the knowledge gap rather than its downstream consequence.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">Modify — Connect PPE Requirements to Safety Consequences</div>
+            <div class="action-detail">This activity already exists and is the 7th highest-volume in Phase 1. For Phase 2, add a version where the manager asks the worker to state the consequence themselves — rather than the manager providing it — to activate dormant consequence awareness rather than simply delivering information.</div>
+          </td>
+          <td class="rationale-text">Multiple Phase 1 entries show workers could articulate the consequence accurately when asked. Managers who asked the question rather than stating the answer saw more durable behavior change. The activity should be reoriented from "tell" to "draw out."</td>
+          <td><div class="decision-field">Modify existing, or add as a variant?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — PPE Equipment Knowledge Check</div>
+            <div class="action-detail">Manager selects a team member and, using a worn or near-end-of-life piece of PPE as a prop, asks them to assess whether it's still protective. The goal is to teach workers to recognize degradation themselves — not to rely on a manager to catch it.</div>
+          </td>
+          <td class="rationale-text">Workers prefer worn gloves and don't know degradation is invisible. Teaching workers to self-assess equipment condition builds the knowledge that prevents the system gap from recurring, rather than requiring end-of-shift manager checks indefinitely.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Communicate the safety Rx eyewear program</div>
+            <div class="action-detail">Targeted communication to workers wearing prescription glasses that a safety Rx program exists and that standard Rx glasses without side-shields are not compliant PPE.</div>
+          </td>
+          <td class="rationale-text">Multiple Phase 1 entries show workers with prescription glasses unaware the program exists. This is a communication gap with a known fix that doesn't require new training — just direct, clear communication to the right audience.</td>
+          <td><div class="decision-field filled">EHS / Safety team to own. Confirm scope and timeline.</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Review task-specific PPE coverage in safety training</div>
+            <div class="action-detail">Audit current onboarding and safety training content to determine whether task-specific PPE requirements (overhead work, grinding, chemical handling, under-vehicle) are covered — and whether coverage is sufficient for workers who rotate tasks or areas.</div>
+          </td>
+          <td class="rationale-text">The task-specific PPE gap appears broadly across sites and departments. Whether this is a training content gap or an application gap (trained but not applied on the floor) determines the correct response. The audit is the necessary first step.</td>
+          <td><div class="decision-field">Owner? Does this sit with EHS, L&D, or operations?</div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="open-q-block">
+      <div class="open-q-label">Open Questions for This Section</div>
+      <ul class="open-q-list">
+        <li>Is consequence-based communication currently a formal part of manager training at TEREX, or is it emerging informally through this program?</li>
+        <li>Are JHAs (Job Hazard Analyses) accessible to workers at the task level, or do they live primarily with supervisors and EHS? This affects how task-specific knowledge reaches the floor.</li>
+        <li>Are there specific task types or departments where the knowledge gap is most urgent and should be prioritized first?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ GAP 3: SYSTEM ═══ -->
+  <div id="system" class="gap-block">
+    <div class="gap-header">
+      <div class="gap-num">03</div>
+      <div>
+        <div class="gap-type green">System Gap</div>
+        <div class="gap-title">Fixing what coaching can't reach</div>
+        <div class="gap-sub">Some compliance failures are caused by the environment, not the worker. These actions require organizational decisions — on procurement, equipment standards, and inspection structures. Most of them sit outside the Flint program.</div>
+      </div>
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-cell">
+        <div class="summary-cell-label">Primary Pattern</div>
+        <div class="summary-cell-text">Degraded equipment in active use; chemical-accelerated glove wear; fit issues; no worker-facing inspection mechanism</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">What's Working</div>
+        <div class="summary-cell-text">End-of-shift checks are finding issues that were previously invisible; managers are replacing equipment on the spot when they find it</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Phase 2 Goal</div>
+        <div class="summary-cell-text">Build inspection and replacement into routine operations; address procurement gaps surfaced by the data; reduce environmental friction at transition points</div>
+      </div>
+    </div>
+
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th class="col-type">Type</th>
+          <th class="col-action">Action</th>
+          <th class="col-rationale">Rationale from Data</th>
+          <th class="col-decision">Decision / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">Modify — Document PPE Damage Found During Shift</div>
+            <div class="action-detail">This activity exists but is low-volume (14 completions in Phase 1). For Phase 2, increase emphasis and add a documentation step — manager records what was found, what was replaced, and flags any pattern (e.g., recurring damage in a specific area or with a specific material).</div>
+          </td>
+          <td class="rationale-text">End-of-shift checks found significant degraded equipment in active use. Making documentation a structured output — not just a correction — creates a data trail that can inform procurement and EHS decisions over time.</td>
+          <td><div class="decision-field">Prioritize in Phase 2? Where does the documentation go?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-flint">Flint</span></td>
+          <td>
+            <div class="action-label">New Activity — Worker-Led PPE Self-Inspection</div>
+            <div class="action-detail">Manager guides a team member through a structured self-inspection of their own PPE — checking gloves for integrity, lenses for visibility, respirator seals for cracking. The goal is to build the habit of self-inspection, not manager-only inspection.</div>
+          </td>
+          <td class="rationale-text">Current inspection structure relies entirely on managers. Workers who can self-identify degraded equipment reduce the load on the manager as the sole detection mechanism — and close the gap on days or shifts where manager checks don't happen.</td>
+          <td><div class="decision-field">Include in Phase 2?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Review glove replacement frequency in Loctite 243 departments</div>
+            <div class="action-detail">Assess whether current replacement schedules for cut-resistant gloves account for chemical-accelerated degradation in departments with regular Loctite 243 use. Adjust procurement and replacement cadence accordingly.</div>
+          </td>
+          <td class="rationale-text">At least one department is cycling through glove protection faster than procurement anticipates due to Loctite 243. Workers in that department are at higher risk regardless of habit or knowledge, because the equipment is degrading faster than it's being replaced.</td>
+          <td><div class="decision-field filled">Procurement / EHS to own. Identify affected departments first.</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Establish a worker-facing PPE replacement request process</div>
+            <div class="action-detail">Ensure workers have a clear, low-friction path to request PPE replacement — and know they're expected to use it when equipment degrades. Address any barriers (stocking issues, approval friction) that make requesting a replacement more effortful than continuing to use worn gear.</div>
+          </td>
+          <td class="rationale-text">Workers continue using degraded equipment partly because requesting replacement is unclear or cumbersome. Multiple entries show managers replacing items on the spot — meaning the equipment was available, but workers didn't have a self-service mechanism to access it.</td>
+          <td><div class="decision-field">Does a process currently exist? If so, is the issue awareness or access?</div></td>
+        </tr>
+        <tr>
+          <td><span class="legend-chip chip-org">Org Action</span></td>
+          <td>
+            <div class="action-label">Address glove sizing stocking gaps</div>
+            <div class="action-detail">Review cut-resistant glove inventory across sites to ensure correct sizes are consistently stocked. At least one documented case of a worker unable to get the correct size — a system gap that no amount of manager coaching can solve.</div>
+          </td>
+          <td class="rationale-text">A worker using a wrong-sized glove has reduced dexterity and potentially reduced protection. This is a procurement and inventory management issue with a straightforward fix once the scope of the problem is understood.</td>
+          <td><div class="decision-field filled">Procurement to review. Flag any sites with recurring stocking issues.</div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="open-q-block">
+      <div class="open-q-label">Open Questions for This Section</div>
+      <ul class="open-q-list">
+        <li>Is there currently a structured pathway for field observations — like the Loctite finding — to reach procurement and generate an action? If not, what would that pathway look like?</li>
+        <li>Are the equipment condition issues concentrated in specific sites, or distributed? The answer affects whether this is a company-wide policy change or a targeted site-level fix.</li>
+        <li>What is the current EHS inspection cadence for PPE condition, independent of this program? Is the end-of-shift check something that should be formalized as a permanent practice?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ SESSION OUTPUTS ═══ -->
+  <div id="outputs" class="outputs-section">
+    <div class="outputs-label">Session Outputs</div>
+    <div class="outputs-title">Decisions and next steps before we close</div>
+    <div class="outputs-desc">By the end of this session, we should have a shared answer for each of the following. Capture decisions and owners here.</div>
+
+    <div class="output-grid">
+      <div class="output-card">
+        <div class="output-card-label">Flint Phase 2 — Agreed Activity Priorities</div>
+        <div class="output-line"><div class="output-check"></div>New: Break Transition Observation activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>New: Quick Task PPE Coaching activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>New: Task-Specific PPE Audit activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>New: PPE Equipment Knowledge Check activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>New: Worker-Led PPE Self-Inspection activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>New: Peer Accountability Pair activity — In / Out</div>
+        <div class="output-line"><div class="output-check"></div>Modify: Verify PPE Corrections Held (multi-day) — Modify / Keep</div>
+        <div class="output-line"><div class="output-check"></div>Modify: Connect PPE to Consequences (ask vs. tell) — Modify / Keep</div>
+        <div class="output-line"><div class="output-check"></div>Modify: Document PPE Damage (add data trail) — Modify / Keep</div>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">Organizational Actions — Owner and Timeline</div>
+        <div class="output-line"><div class="output-check"></div>Rx eyewear program communication — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>Task-specific PPE training audit — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>Floor re-entry point environmental audit — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>Loctite 243 glove replacement review — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>Worker PPE replacement request process — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>Glove sizing stocking review — Owner: _____ By: _____</div>
+        <div class="output-line"><div class="output-check"></div>EHS inspection cadence decision — Owner: _____ By: _____</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--rule); border-radius:8px; padding:18px 22px; margin-top:20px;">
+      <div class="section-label" style="margin-bottom:10px;">After This Session</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px 32px;">
+        <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;"><strong style="color:var(--ink);">Flint side:</strong> Agreed activities will be designed and built into the Phase 2 program. We'll confirm the activity list, sequencing, and launch timeline.</div>
+        <div style="font-size:13px; color:var(--ink-mid); line-height:1.55;"><strong style="color:var(--ink);">Org side:</strong> Each action item leaves here with a named owner and a target date. Follow-up on open items at the next touchpoint.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-body -->
+
+<!-- ─── FOOTER ─── -->
+<div style="background:var(--surface); border-top:1px solid var(--rule); padding:24px 48px; margin-top:56px;">
+  <div style="max-width:900px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:12px; color:var(--ink-faint); font-weight:500; letter-spacing:0.5px; text-transform:uppercase;">TEREX · PPE Initiative · Phase 2 Planning</div>
+    <div style="font-size:12px; color:var(--ink-faint);">Working Document · Session Use Only</div>
+  </div>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

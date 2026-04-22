@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREX — PPE Challenge Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #18181B;
+    --ink-mid: #3F3F46;
+    --ink-light: #71717A;
+    --ink-faint: #A1A1AA;
+    --rule: #E4E4E7;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-2: #F4F4F5;
+    --accent: #1D4ED8;
+    --accent-light: #EFF6FF;
+    --accent-mid: #BFDBFE;
+    --amber: #B45309;
+    --amber-light: #FFFBEB;
+    --amber-mid: #FDE68A;
+    --red: #B91C1C;
+    --red-light: #FEF2F2;
+    --red-mid: #FECACA;
+    --green: #15803D;
+    --green-light: #F0FDF4;
+    --green-mid: #BBF7D0;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .doc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .topbar-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--rule);
+  }
+
+  .doc-title-small {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mid);
+  }
+
+  .phase-pill {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid var(--accent-mid);
+  }
+
+  nav {
+    display: flex;
+    gap: 2px;
+  }
+
+  nav a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    letter-spacing: 0.2px;
+  }
+
+  nav a:hover { background: var(--surface-2); color: var(--ink); }
+  nav a.active { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+
+  /* ─── HERO ─── */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 72px 48px 56px;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .eyebrow-line {
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--accent-mid);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    max-width: 640px;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .hero-meta-strip {
+    display: flex;
+    gap: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .meta-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mid);
+  }
+
+  /* ─── SECTION CONTAINER ─── */
+  .page-body {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px 96px;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-intro {
+    padding: 56px 0 40px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-intro:first-child { border-top: none; }
+
+  .section-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+
+  .section-kicker.blue { color: var(--accent); }
+  .section-kicker.amber { color: var(--amber); }
+  .section-kicker.red { color: var(--red); }
+  .section-kicker.purple { color: var(--purple); }
+
+  .section-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+    margin-bottom: 14px;
+  }
+
+  .section-lead {
+    font-size: 16px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    max-width: 680px;
+    font-weight: 300;
+  }
+
+  /* ─── FINDING SUMMARY BAR ─── */
+  .finding-bar {
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 28px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border: 1px solid;
+  }
+
+  .finding-bar.blue { background: var(--accent-light); border-color: var(--accent-mid); }
+  .finding-bar.amber { background: var(--amber-light); border-color: var(--amber-mid); }
+  .finding-bar.red { background: var(--red-light); border-color: var(--red-mid); }
+  .finding-bar.purple { background: var(--purple-light); border-color: #DDD6FE; }
+
+  .finding-bar-icon { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+
+  .finding-bar-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .finding-bar-text p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  /* ─── DATA TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+
+  .data-table thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 16px 10px 0;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .data-table thead th:last-child { text-align: right; padding-right: 0; }
+
+  .data-table tbody tr { border-bottom: 1px solid var(--rule); }
+  .data-table tbody tr:last-child { border-bottom: none; }
+
+  .data-table tbody td {
+    padding: 12px 16px 12px 0;
+    color: var(--ink-mid);
+    vertical-align: top;
+  }
+
+  .data-table tbody td:first-child { color: var(--ink); font-weight: 500; width: 220px; }
+  .data-table tbody td:last-child { text-align: right; padding-right: 0; }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .tag.high { background: var(--red-light); color: var(--red); }
+  .tag.medium { background: var(--amber-light); color: var(--amber); }
+  .tag.low { background: var(--green-light); color: var(--green); }
+  .tag.knowledge { background: var(--accent-light); color: var(--accent); }
+  .tag.habit { background: var(--purple-light); color: var(--purple); }
+  .tag.system { background: #F0FDF4; color: var(--green); }
+
+  /* ─── HORIZONTAL BAR CHART ─── */
+  .chart-block {
+    margin: 28px 0;
+  }
+
+  .chart-label-row {
+    display: grid;
+    grid-template-columns: 220px 1fr 60px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .chart-label-row:last-child { margin-bottom: 0; }
+
+  .chart-item-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  .chart-track {
+    height: 10px;
+    background: var(--surface-2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .chart-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .chart-fill.blue { background: var(--accent); }
+  .chart-fill.amber { background: #F59E0B; }
+  .chart-fill.red { background: var(--red); }
+  .chart-fill.purple { background: var(--purple); }
+  .chart-fill.slate { background: #94A3B8; }
+  .chart-fill.green { background: var(--green); }
+
+  .chart-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: left;
+  }
+
+  /* ─── BEHAVIORAL FRAMEWORK BOX ─── */
+  .framework-box {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 28px 0;
+  }
+
+  .framework-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+  }
+
+  .framework-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .framework-cell {
+    background: var(--surface);
+    padding: 18px 20px;
+  }
+
+  .framework-cell-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .framework-cell-heading {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .framework-cell-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.55;
+  }
+
+  /* ─── PULL QUOTE ─── */
+  .pull-quote {
+    margin: 32px 0;
+    padding: 24px 32px;
+    border-left: 3px solid var(--rule);
+    background: var(--surface);
+  }
+
+  .pull-quote.blue { border-color: var(--accent); background: var(--accent-light); }
+  .pull-quote.amber { border-color: #F59E0B; background: var(--amber-light); }
+  .pull-quote.red { border-color: var(--red); background: var(--red-light); }
+
+  .pull-quote p {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .pull-quote-source {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* ─── CALLOUT BOX ─── */
+  .callout {
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .callout-icon { font-size: 18px; line-height: 1.4; }
+
+  .callout-text { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+
+  .callout-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ─── TWO-COL LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 28px 0;
+  }
+
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+
+  .col-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .col-card-list {
+    list-style: none;
+  }
+
+  .col-card-list li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .col-card-list li:last-child { border-bottom: none; }
+
+  .li-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .li-dot.blue { background: var(--accent); }
+  .li-dot.amber { background: #F59E0B; }
+  .li-dot.red { background: var(--red); }
+
+  /* ─── SUMMARY SCORECARD ─── */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+
+  .score-cell {
+    background: var(--surface);
+    padding: 20px 18px;
+    text-align: center;
+  }
+
+  .score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .score-label {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ─── CATEGORY HEADER BAND ─── */
+  .cat-band {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  .cat-band.blue { background: var(--accent-light); border: 1px solid var(--accent-mid); }
+  .cat-band.amber { background: var(--amber-light); border: 1px solid var(--amber-mid); }
+  .cat-band.red { background: var(--red-light); border: 1px solid var(--red-mid); }
+  .cat-band.purple { background: var(--purple-light); border: 1px solid #DDD6FE; }
+
+  .cat-band-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+
+  .cat-band-vdivider { width: 1px; height: 32px; background: var(--rule); flex-shrink: 0; }
+
+  .cat-band-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .cat-band-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  .cat-band-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 40px 0;
+  }
+
+  /* ─── INLINE METRIC ─── */
+  .inline-metric {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .inline-metric .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .inline-metric .denom {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  /* ─── BEHAVIOR TYPE LEGEND ─── */
+  .legend-row {
+    display: flex;
+    gap: 20px;
+    margin: 16px 0 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--ink-mid);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── TOP BAR ─── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="doc-label">TEREX · PPE Initiative</span>
+    <div class="topbar-divider"></div>
+    <span class="doc-title-small">Phase 1 Analysis — The What</span>
+  </div>
+  <nav>
+    <a href="#overview" class="active">Overview</a>
+    <a href="#eyewear">Eye Protection</a>
+    <a href="#gloves">Gloves</a>
+    <a href="#hearing">Hearing</a>
+    <a href="#shield">Face Shield</a>
+    <a href="#patterns">Cross-Cutting</a>
+  </nav>
+</div>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span class="eyebrow-tag">Phase 1 Analysis Report</span>
+    <div class="eyebrow-line"></div>
+  </div>
+  <h1>What the data<br>actually shows about<br><em>PPE compliance</em></h1>
+  <p class="hero-desc">
+    689 completed activities. 81 front-line managers across 10 business units. This document goes beneath the surface of that activity data to examine the specific nature, context, and behavioral drivers of PPE challenges at TEREX — organized by PPE category and grounded in what managers observed and reported in the field.
+  </p>
+  <div class="hero-meta-strip">
+    <div class="meta-item">
+      <span class="meta-label">Data Source</span>
+      <span class="meta-value">FLiNT AI Walkthrough Exports</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Time Period</span>
+      <span class="meta-value">February – April 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Activities Analyzed</span>
+      <span class="meta-value">689 across 27 activity types</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Document Type</span>
+      <span class="meta-value">The What — Deep Analysis</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PAGE BODY ─── -->
+<div class="page-body">
+
+  <!-- ─── OVERVIEW ─── -->
+  <div id="overview" class="section-intro" style="border-top:none; padding-top:0;">
+    <div class="section-kicker">How to Read This Report</div>
+    <h2 class="section-headline">A framework for understanding what we found</h2>
+    <p class="section-lead">Before diving into each PPE category, it helps to understand the lens we're using. Not all compliance gaps look the same — and the distinction matters enormously for what should happen next.</p>
+
+    <div class="framework-box">
+      <div class="framework-title">Three Types of PPE Compliance Gaps</div>
+      <div class="framework-grid">
+        <div class="framework-cell">
+          <div class="framework-cell-label">Type 1</div>
+          <div class="framework-cell-heading">Habit Gap</div>
+          <div class="framework-cell-desc">The worker knows the rule, has the equipment, and complies when reminded — but the behavior hasn't become automatic. Forgetting is the mechanism, not resistance. Most common at break transitions.</div>
+        </div>
+        <div class="framework-cell">
+          <div class="framework-cell-label">Type 2</div>
+          <div class="framework-cell-heading">Knowledge Gap</div>
+          <div class="framework-cell-desc">The worker is missing a specific piece of information — about which PPE is required for a task, what worn equipment has lost its protective value, or what the actual risk of exposure is. Requires education, not just correction.</div>
+        </div>
+        <div class="framework-cell">
+          <div class="framework-cell-label">Type 3</div>
+          <div class="framework-cell-heading">System Gap</div>
+          <div class="framework-cell-desc">The environment is creating barriers — PPE doesn't fit correctly, the right type isn't stocked, equipment degrades faster than replacement schedules account for. Cannot be solved by manager coaching alone.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-lead" style="margin-bottom:24px;">The data across all four PPE categories reveals a mix of all three types. Understanding which type is driving a given violation is the starting point for designing an effective response.</p>
+
+    <!-- Category ranking overview -->
+    <div class="framework-box" style="margin-top:0;">
+      <div class="framework-title">PPE Category — Mention Volume Across All Field Entries</div>
+      <div style="margin-bottom:6px; font-size:12px; color:var(--ink-faint);">Combined across violation reports, correction entries, consequence coaching entries, and damage check entries</div>
+      <div class="chart-block" style="margin-top:20px;">
+        <div class="chart-label-row">
+          <div class="chart-item-label">Eye / Safety Glasses</div>
+          <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="100%"></div></div>
+          <div class="chart-count">169 mentions</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Gloves / Hand Protection</div>
+          <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="79%"></div></div>
+          <div class="chart-count">134 mentions</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Hearing Protection</div>
+          <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="43%"></div></div>
+          <div class="chart-count">73 mentions</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Face Shield / Bump Cap</div>
+          <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="38%"></div></div>
+          <div class="chart-count">64 mentions</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Respiratory Protection</div>
+          <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="5%"></div></div>
+          <div class="chart-count">8 mentions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scorecard">
+      <div class="score-cell">
+        <div class="score-num">689</div>
+        <div class="score-label">Completed activities across<br>all 27 activity types</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num">81</div>
+        <div class="score-label">Front-line managers<br>participating</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num">52</div>
+        <div class="score-label">Consequence coaching<br>conversations documented</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num">64</div>
+        <div class="score-label">End-of-shift PPE condition<br>check entries analyzed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── EYE PROTECTION ─── -->
+  <div id="eyewear" class="section-intro">
+    <div class="cat-band blue">
+      <div class="cat-band-num">01</div>
+      <div class="cat-band-vdivider"></div>
+      <div>
+        <div class="cat-band-title">Eye Protection / Safety Glasses</div>
+        <div class="cat-band-sub">Highest mention volume across all field entries — 169 total across violation, correction, and coaching data</div>
+      </div>
+      <div class="cat-band-badge"><span class="tag high">Highest Frequency</span></div>
+    </div>
+
+    <p class="section-lead">Eye protection is the most consistently present but most inconsistently worn PPE category in the data. The equipment is almost always available. The behavioral failure is in how and when it's used.</p>
+
+    <div class="finding-bar blue">
+      <div class="finding-bar-icon">🔍</div>
+      <div class="finding-bar-text">
+        <strong>The core finding: glasses are present but not protecting</strong>
+        <p>The dominant pattern is not workers without glasses — it's workers whose glasses are lifted onto their forehead, pushed up on their hat brim, or temporarily removed during tasks. To a passing observer, the worker looks compliant. From a safety standpoint, the eyes are unprotected.</p>
+      </div>
+    </div>
+
+    <div class="section-kicker blue" style="margin-top:32px;">Violation Sub-Types — Eye Protection</div>
+    <div class="chart-block" style="margin-top:16px;">
+      <div class="chart-label-row">
+        <div class="chart-item-label">Not wearing / fully removed</div>
+        <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="100%"></div></div>
+        <div class="chart-count">7 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Glasses on forehead / hat brim</div>
+        <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="86%"></div></div>
+        <div class="chart-count">6 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Wrong type for task (goggles vs. standard glasses)</div>
+        <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="86%"></div></div>
+        <div class="chart-count">6 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Prescription glasses worn without safety side-shields</div>
+        <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="29%"></div></div>
+        <div class="chart-count">2 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Scratched / damaged lenses still in use</div>
+        <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="14%"></div></div>
+        <div class="chart-count">1 entry</div>
+      </div>
+    </div>
+
+    <div class="legend-row">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent);"></div> Habit gap</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F59E0B;"></div> Knowledge gap</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div> System gap</div>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-label">Behavior Drivers by Sub-Type</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot blue"></div><div>Forehead/hat: <strong>habit gap</strong> — glasses are lifted briefly for clarity and not replaced. Automatic behavior that bypasses conscious decision-making.</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Wrong type: <strong>knowledge gap</strong> — worker doesn't know standard glasses are insufficient for overhead work, grinding, or under-vehicle tasks</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Prescription gap: <strong>knowledge gap</strong> — workers may not know side-shield programs exist or that their Rx glasses don't qualify as safety eyewear</div></li>
+          <li><div class="li-dot" style="background:var(--green);"></div><div>Scratched lenses: <strong>system gap</strong> — no self-reporting mechanism; workers wear degraded equipment because replacement isn't prompted</div></li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-label">Highest-Risk Contexts</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot blue"></div><div>Returning from break or lunch — glasses left in break room, not re-equipped before floor re-entry</div></li>
+          <li><div class="li-dot blue"></div><div>Quick tasks — glasses lifted to see detail on a small component and not reset before continuing adjacent work</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Overhead and under-vehicle work — standard glasses inadequate; goggles or gasketed glasses required but not worn</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Morning start-up gatherings — some managers note glasses are removed during huddles even when on an active production floor</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-kicker blue" style="margin-top:8px;">What Consequence Framing Looks Like for Eye Protection</div>
+    <p style="font-size:14px; color:var(--ink-mid); margin:12px 0 16px; line-height:1.7;">The most effective manager-reported approaches connect the removal of glasses to a concrete, imaginable outcome rather than restating the rule. Several approaches from the field:</p>
+
+    <div class="pull-quote blue">
+      <p>"I shared an experience from years prior when I witnessed a worker remove his safety glasses while troubleshooting an air system on one of the fire trucks. At that moment, the air system suddenly blew out a blockage — mud dauber debris had built up inside. The force of the release covered his face with debris and bug remains, and he narrowly avoided serious eye injury."</p>
+      <div class="pull-quote-source">Floor Manager — on consequence framing for eye protection</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-icon">📌</div>
+      <div class="callout-text">
+        <strong>Key operational note:</strong> The prescription glasses gap is a systemic issue with a known fix — a safety Rx eyewear program. The data suggests workers are unaware the program exists. This is a communication and access problem, not a compliance problem.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── GLOVES ─── -->
+  <div id="gloves" class="section-intro">
+    <div class="cat-band amber">
+      <div class="cat-band-num">02</div>
+      <div class="cat-band-vdivider"></div>
+      <div>
+        <div class="cat-band-title">Gloves / Hand Protection</div>
+        <div class="cat-band-sub">134 mentions across all field entries — second highest volume, and the #1 category in equipment condition findings</div>
+      </div>
+      <div class="cat-band-badge"><span class="tag medium">High Frequency</span></div>
+    </div>
+
+    <p class="section-lead">Glove violations present across two distinct contexts: active use failures (not wearing gloves during tasks that require them) and equipment condition failures (wearing gloves that have degraded past their protective value). Both are prevalent, and they have different root causes.</p>
+
+    <div class="finding-bar amber">
+      <div class="finding-bar-icon">⚠️</div>
+      <div class="finding-bar-text">
+        <strong>The core finding: two separate problems masquerading as one</strong>
+        <p>The "not wearing gloves" problem is primarily a habit gap at transition moments. The "worn-out gloves" problem is a knowledge and system gap — workers prefer broken-in gloves and don't know degraded cut resistance is invisible. These require different interventions.</p>
+      </div>
+    </div>
+
+    <div class="section-kicker amber" style="margin-top:32px;">Violation and Condition Sub-Types — Gloves</div>
+    <div class="chart-block" style="margin-top:16px;">
+      <div class="chart-label-row">
+        <div class="chart-item-label">Worn / holed gloves still in active use</div>
+        <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="100%"></div></div>
+        <div class="chart-count">38 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Not wearing gloves during task requiring them</div>
+        <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="34%"></div></div>
+        <div class="chart-count">13 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Wrong glove type for the chemical / task</div>
+        <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="11%"></div></div>
+        <div class="chart-count">4 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Chemically degraded by Loctite 243</div>
+        <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="13%"></div></div>
+        <div class="chart-count">5 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Removed for quick task — not replaced</div>
+        <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="8%"></div></div>
+        <div class="chart-count">3 entries</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-label">The Worn Gloves Problem in Detail</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Workers <em>prefer</em> broken-in gloves — they feel more comfortable and fit better. This is not defiance; it's a logical preference based on an incomplete understanding of how cut resistance degrades</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Degradation is invisible — a glove can look merely "worn" while having lost significant protective value. Workers have no mechanism to recognize the threshold</div></li>
+          <li><div class="li-dot" style="background:var(--green);"></div><div>Loctite 243 is an accelerant — departments using this chemical have a shorter effective glove lifespan that existing procurement schedules may not account for</div></li>
+          <li><div class="li-dot" style="background:var(--green);"></div><div>Replacement is available on demand — multiple managers report replacing gloves on the spot, but workers aren't self-initiating replacement because they don't recognize the need</div></li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-label">The Active Use Problem in Detail</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot blue"></div><div>"Just a quick grab" — the most cited context for not wearing gloves is a brief material handling moment where putting gloves on feels disproportionate to the duration of the task</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>Wrong type for the chemical — cut-resistant gloves used during solvent or chemical work; chemical-resistant gloves needed but not recognized as a distinct requirement</div></li>
+          <li><div class="li-dot blue"></div><div>After restroom or break — gloves set down, not re-equipped before returning to material handling tasks. Mirrors the eye protection pattern exactly</div></li>
+          <li><div class="li-dot blue"></div><div>Gloves hanging from belt — workers have gloves but aren't wearing them. Access is not the issue; the habit of wearing them during all material contact is.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pull-quote amber">
+      <p>"I noticed that Loctite 243 will cause the protective side of the gloves to deteriorate and fall apart. My department uses Loctite 243 quite frequently — which means gloves will have to be replaced more frequently."</p>
+      <div class="pull-quote-source">Floor Manager — identifying a procurement-level implication from field observation</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-icon">📌</div>
+      <div class="callout-text">
+        <strong>A notable manager behavior:</strong> Multiple managers independently distributed glove clips — a physical holder that keeps gloves on the belt — as a solution to the "set down and forgot" pattern. This is a creative system-level fix invented at the floor level, not instructed. It signals that the habit gap has a potential environmental design solution.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── HEARING ─── -->
+  <div id="hearing" class="section-intro">
+    <div class="cat-band red">
+      <div class="cat-band-num">03</div>
+      <div class="cat-band-vdivider"></div>
+      <div>
+        <div class="cat-band-title">Hearing Protection</div>
+        <div class="cat-band-sub">73 mentions — third-ranked category, with a strongly concentrated failure pattern</div>
+      </div>
+      <div class="cat-band-badge"><span class="tag medium">Medium Frequency</span></div>
+    </div>
+
+    <p class="section-lead">Hearing protection violations are less frequent than eye or glove failures, but they carry a distinct behavioral profile: unlike other PPE categories, hearing violations are almost never about defiance or comfort preference. They are almost entirely about forgetting.</p>
+
+    <div class="finding-bar red">
+      <div class="finding-bar-icon">👂</div>
+      <div class="finding-bar-text">
+        <strong>The core finding: a pure habit gap, concentrated at one moment</strong>
+        <p>The data does not show workers who refuse to wear ear protection, who find it too uncomfortable, or who argue against the requirement. It shows workers who remove ear protection during breaks and lunches — a natural and expected behavior — and fail to re-insert before returning to noise-exposure areas. The failure is entirely at the re-entry point.</p>
+      </div>
+    </div>
+
+    <div class="section-kicker red" style="margin-top:32px;">When Hearing Violations Occur</div>
+    <div class="chart-block" style="margin-top:16px;">
+      <div class="chart-label-row">
+        <div class="chart-item-label">After break / lunch — not re-inserted</div>
+        <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="100%"></div></div>
+        <div class="chart-count">6 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Not wearing at start of shift</div>
+        <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="50%"></div></div>
+        <div class="chart-count">3 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">One plug in, one missing (unnoticed)</div>
+        <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="33%"></div></div>
+        <div class="chart-count">2 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Not wearing during sanding / loud operation</div>
+        <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="33%"></div></div>
+        <div class="chart-count">2 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Worn-out ear muffs / band broken</div>
+        <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="17%"></div></div>
+        <div class="chart-count">1 entry</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-icon">🔎</div>
+      <div class="callout-text">
+        <strong>The hidden violation:</strong> One manager, during a morning huddle, noticed a team member who appeared fully compliant — but had only one ear plug in. The other had fallen out without the worker noticing. This violation is categorically invisible unless a manager is within arm's length. It may be more prevalent than the data captures.
+      </div>
+    </div>
+
+    <div class="section-kicker red" style="margin-top:28px;">Why Consequence Framing Is Especially Effective Here</div>
+    <p style="font-size:14px; color:var(--ink-mid); margin:12px 0 16px; line-height:1.7;">Hearing loss is uniquely suited to future-consequence framing because it is permanent, irreversible, cumulative, and entirely silent until it's too late. Several managers independently discovered that framing ear protection as a decision about their hearing decades from now — not about today's rule — produced the most durable behavior change they observed.</p>
+
+    <div class="pull-quote red">
+      <p>"Ear plugs and the negative consequences of hearing loss in years to come without wearing them. She acknowledged me being right and put them in after the discussion."</p>
+      <div class="pull-quote-source">Floor Manager — on consequence framing for hearing protection</div>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-label">What Makes Hearing Different</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot red"></div><div>No immediate pain or visible signal — unlike a cut or a bump, there is no sensory feedback from noise exposure in the moment</div></li>
+          <li><div class="li-dot red"></div><div>Damage is cumulative — missing ear protection for a single shift feels inconsequential; the risk calculus is spread over years</div></li>
+          <li><div class="li-dot red"></div><div>Workers know they should but don't feel an urgency — connecting "today's break" to "lifelong hearing loss" is the critical bridge managers need to build</div></li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-label">Manager Self-Disclosure Pattern</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>At least one manager explicitly reported removing his own ear plugs during video training to hear better — then reflected that he should find a private area instead</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>This is a meaningful data point: managers are holding themselves to the same standard they're applying to their teams, and disclosing when they fall short</div></li>
+          <li><div class="li-dot" style="background:var(--green);"></div><div>Manager credibility on hearing protection depends partly on their own visible compliance in hearing-protection zones</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FACE SHIELD / BUMP CAP ─── -->
+  <div id="shield" class="section-intro">
+    <div class="cat-band purple">
+      <div class="cat-band-num">04</div>
+      <div class="cat-band-vdivider"></div>
+      <div>
+        <div class="cat-band-title">Face Shield &amp; Bump Cap</div>
+        <div class="cat-band-sub">64 mentions — the most task-specific PPE category; violations are concentrated in two specific work contexts</div>
+      </div>
+      <div class="cat-band-badge"><span class="tag medium">Emerging Focus</span></div>
+    </div>
+
+    <p class="section-lead">Face shields and bump caps are unlike the other categories: violations are not spread across all work contexts. They cluster with striking consistency in two specific situations — under-vehicle work and grinding operations. The violation is not forgetting; it's judgment that standard PPE is sufficient for what's perceived as a "quick" task.</p>
+
+    <div class="finding-bar" style="background:var(--purple-light); border:1px solid #DDD6FE;">
+      <div class="finding-bar-icon">🪖</div>
+      <div class="finding-bar-text">
+        <strong>The core finding: a task-specific knowledge gap, not a general habit failure</strong>
+        <p>Workers wearing their standard safety glasses and general PPE are often unaware that overhead, under-vehicle, or grinding work requires additional protection. The logic is intuitive but incomplete: "I have my safety glasses on — why do I need a face shield too?" The answer requires connecting task-specific hazards to task-specific PPE requirements.</p>
+      </div>
+    </div>
+
+    <div class="section-kicker purple" style="margin-top:32px;">Where Violations Occur</div>
+    <div class="chart-block" style="margin-top:16px;">
+      <div class="chart-label-row">
+        <div class="chart-item-label">Under-vehicle / overhead — bump cap missing</div>
+        <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="100%"></div></div>
+        <div class="chart-count">7 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Grinding — face shield not worn</div>
+        <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="86%"></div></div>
+        <div class="chart-count">6 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Sanding / DA operations — face shield omitted</div>
+        <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="57%"></div></div>
+        <div class="chart-count">4 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Welding — tacking without full weld PPE</div>
+        <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="43%"></div></div>
+        <div class="chart-count">3 entries</div>
+      </div>
+      <div class="chart-label-row">
+        <div class="chart-item-label">Face shields / bump caps — scratched / cracked</div>
+        <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="43%"></div></div>
+        <div class="chart-count">3 entries</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-label">The "Quick Task" Logic Gap</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot" style="background:var(--purple);"></div><div>Workers frequently justify skipping a face shield or bump cap by assessing task duration — "just a quick tack," "I'll only be under there a second"</div></li>
+          <li><div class="li-dot" style="background:var(--purple);"></div><div>This logic is a misunderstanding of how hazards work — arc flash exposure, debris from grinding, and head impacts do not correlate with task duration</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>One manager's response to this: "He said he was only trying to save time. It was explained to him that his safety is more valuable than the few seconds it takes to put his hood on."</div></li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-card-label">Equipment Condition — Face Shields Specifically</div>
+        <ul class="col-card-list">
+          <li><div class="li-dot" style="background:var(--green);"></div><div>Face shields found heavily scratched and scuffed — reducing visibility significantly while technically still in use as PPE</div></li>
+          <li><div class="li-dot" style="background:var(--green);"></div><div>This creates a secondary hazard: the worker's field of vision is impaired, increasing risk of other incidents</div></li>
+          <li><div class="li-dot" style="background:#F59E0B;"></div><div>One manager's note: "The face shield designated for grinding operations was found to be extremely scuffed and worn, reducing visibility through the shield"</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="border-color:var(--purple); background:var(--purple-light);">
+      <p>"I told him that saving a few seconds by skipping the face shield isn't worth a permanent eye injury. Even if it's just a quick grind on the chassis, it only takes one stray spark to change everything."</p>
+      <div class="pull-quote-source">Floor Manager — on the quick-task logic trap</div>
+    </div>
+  </div>
+
+  <!-- ─── CROSS-CUTTING PATTERNS ─── -->
+  <div id="patterns" class="section-intro">
+    <div class="section-kicker">Cross-Cutting Analysis</div>
+    <h2 class="section-headline">Three patterns that run across every category</h2>
+    <p class="section-lead">Stepping back from the four PPE categories, three structural patterns appear in the data that cut across all of them. These are not category-specific findings — they are behavioral and systemic patterns that any effective Phase 2 response will need to account for.</p>
+
+    <div class="divider"></div>
+
+    <!-- Pattern 1 -->
+    <div class="section-kicker" style="margin-bottom:10px;">Pattern 1</div>
+    <h3 style="font-size:20px; font-weight:600; color:var(--ink); margin-bottom:12px; line-height:1.3;">The break transition is the single highest-risk moment across all PPE categories</h3>
+    <p style="font-size:14px; color:var(--ink-mid); line-height:1.7; margin-bottom:16px;">Eye protection, hearing protection, and gloves all show the same spike: the transition from break room to production floor is the moment where PPE compliance drops most reliably. Workers remove equipment for breaks — a natural, appropriate behavior — and the re-equipping step is not yet habituated. This is not unique to any one type of PPE; it is a structural gap in the transition routine itself.</p>
+
+    <div class="callout">
+      <div class="callout-icon">💡</div>
+      <div class="callout-text">
+        <strong>The implication:</strong> Solving this pattern requires targeting the transition moment itself — not individual PPE types in isolation. A threshold-to-threshold reinforcement approach, or a physical cue built into the transition space, would address all three categories simultaneously.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Pattern 2 -->
+    <div class="section-kicker" style="margin-bottom:10px;">Pattern 2</div>
+    <h3 style="font-size:20px; font-weight:600; color:var(--ink); margin-bottom:12px; line-height:1.3;">Corrections hold — the behavioral change that happens after a manager intervenes tends to last</h3>
+    <p style="font-size:14px; color:var(--ink-mid); line-height:1.7; margin-bottom:16px;">Of 52 documented follow-up checks, 33 confirmed that the corrected behavior was still in place later in the shift — and in many cases into subsequent shifts. This is a meaningful finding: the manager intervention is working. Workers are not reverting as soon as the manager turns away. This suggests the challenge is not stubbornness or resistance — it is the initial habit gap that needs addressing, and managers are successfully addressing it one interaction at a time.</p>
+
+    <div class="scorecard" style="grid-template-columns:repeat(3,1fr);">
+      <div class="score-cell">
+        <div class="score-num">52</div>
+        <div class="score-label">Documented follow-up<br>check entries</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num">33+</div>
+        <div class="score-label">Confirmed corrections<br>still held later in shift</div>
+      </div>
+      <div class="score-cell">
+        <div class="score-num">&gt;63%</div>
+        <div class="score-label">Documented correction<br>durability rate</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Pattern 3 -->
+    <div class="section-kicker" style="margin-bottom:10px;">Pattern 3</div>
+    <h3 style="font-size:20px; font-weight:600; color:var(--ink); margin-bottom:12px; line-height:1.3;">Equipment condition is a system problem, not a compliance problem — and it's currently invisible without a check structure</h3>
+    <p style="font-size:14px; color:var(--ink-mid); line-height:1.7; margin-bottom:16px;">Across gloves, face shields, safety glasses, and respiratory masks, the data shows damaged or degraded PPE in active use — not because workers are ignoring the issue, but because there is no routine mechanism for workers to identify when their equipment has crossed the protective threshold. End-of-shift checks initiated through this program are the only reason these findings exist. Before the initiative created that check structure, this gap was entirely hidden.</p>
+
+    <div class="framework-box">
+      <div class="framework-title">Equipment Condition Issues Found — Only Through Structured Checks</div>
+      <div class="chart-block" style="margin-top:4px;">
+        <div class="chart-label-row">
+          <div class="chart-item-label">Worn / holed gloves still in use</div>
+          <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="100%"></div></div>
+          <div class="chart-count">38 entries</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Scratched safety glasses / face shields</div>
+          <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="53%"></div></div>
+          <div class="chart-count">20 entries</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Improper fit — wrong size / style</div>
+          <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="24%"></div></div>
+          <div class="chart-count">9 entries</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Chemically degraded gloves (Loctite 243)</div>
+          <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="13%"></div></div>
+          <div class="chart-count">5 entries</div>
+        </div>
+        <div class="chart-label-row">
+          <div class="chart-item-label">Respiratory masks — cracked seals / dry rot</div>
+          <div class="chart-track"><div class="chart-fill red" style="width:0%" data-w="8%"></div></div>
+          <div class="chart-count">3 entries</div>
+        </div>
+      </div>
+      <p style="font-size:13px; color:var(--ink-faint); margin-top:16px; line-height:1.5;">All of the above were found by managers during structured end-of-shift checks introduced through this initiative. Without those checks, this equipment would remain in service with no intervention trigger.</p>
+    </div>
+  </div>
+
+</div><!-- end page-body -->
+
+<!-- ─── FOOTER ─── -->
+<div style="background:var(--surface); border-top:1px solid var(--rule); padding:24px 48px;">
+  <div style="max-width:900px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:12px; color:var(--ink-faint); font-weight:500; letter-spacing:0.5px; text-transform:uppercase;">TEREX · PPE Initiative · Phase 1 Analysis — The What</div>
+    <div style="font-size:12px; color:var(--ink-faint);">689 activities · 81 managers · Data through April 2026</div>
+  </div>
+</div>
+
+<script>
+  // Animate bars on scroll
+  const fills = document.querySelectorAll('.chart-fill[data-w]');
+  const saved = [];
+  fills.forEach((f, i) => { saved[i] = f.getAttribute('data-w'); });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll('.chart-fill[data-w]');
+        bars.forEach(bar => {
+          const idx = Array.from(fills).indexOf(bar);
+          setTimeout(() => { bar.style.width = saved[idx]; }, 120);
+        });
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.chart-block, .framework-box').forEach(el => obs.observe(el));
+
+  // Nav active state
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => navObs.observe(s));
+</script>
+</body>
+</html>
