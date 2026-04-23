@@ -119,11 +119,12 @@
   <h1>Sam's Update</h1>
   <p>Lionel · Woodland Pond</p>
   <span class="date-badge" id="dateBadge"></span>
+  <p style="color:rgba(255,255,255,0.65);font-size:0.75rem;margin-top:6px;font-weight:300;">Fill out whenever — no need to do this every day</p>
 </header>
 
 <main>
 <div class="form-area" id="formArea">
-<form id="updateForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+<form id="updateForm" action="https://formspree.io/f/xvzddwje" method="POST">
 
   <input type="hidden" name="_subject" id="emailSubject" value="Sam Update from Lionel">
 
@@ -140,6 +141,17 @@
       <input type="checkbox" name="urgent" id="urgentToggle" value="YES — needs attention today">
       <span class="toggle-slider"></span>
     </label>
+  </div>
+
+  <!-- PERIOD COVERED -->
+  <div class="section">
+    <div class="section-title">This update covers</div>
+    <div class="pill-row" style="margin-bottom:6px;">
+      <div class="pill-option"><input type="radio" name="period" id="p1" value="Today"><label for="p1">Today</label></div>
+      <div class="pill-option"><input type="radio" name="period" id="p2" value="Last 2 days"><label for="p2">Last 2 days</label></div>
+      <div class="pill-option"><input type="radio" name="period" id="p3" value="Last 3–4 days"><label for="p3">Last 3–4 days</label></div>
+      <div class="pill-option"><input type="radio" name="period" id="p4" value="Last week"><label for="p4">Last week</label></div>
+    </div>
   </div>
 
   <!-- FOOD / INSTACART -->
@@ -338,8 +350,8 @@
 <script>
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-  document.getElementById('dateBadge').textContent = dateStr;
-  document.getElementById('emailSubject').value = 'Sam Update from Lionel \u2014 ' + dateStr;
+  document.getElementById('dateBadge').textContent = 'Submitted ' + dateStr;
+  document.getElementById('emailSubject').value = 'Sam Update from Lionel \u2014 submitted ' + dateStr;
 
   function toggleCat(row) {
     const cb = row.querySelector('input.cat-cb');
