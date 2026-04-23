@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sam's Update</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+  :root {
+    --bg: #F7F4EF;
+    --card: #FFFFFF;
+    --ink: #1C1917;
+    --muted: #78716C;
+    --accent: #2D6A4F;
+    --accent-light: #D8EDDF;
+    --urgent: #B91C1C;
+    --urgent-light: #FEE2E2;
+    --border: #E5E0D8;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  header {
+    background: var(--accent);
+    padding: 24px 20px 20px;
+  }
+  header h1 { font-family: 'DM Serif Display', serif; font-size: 1.55rem; color: #fff; line-height: 1.2; }
+  header p { color: rgba(255,255,255,0.72); font-size: 0.8rem; margin-top: 3px; font-weight: 300; }
+  .date-badge { display: inline-block; background: rgba(255,255,255,0.18); color: #fff; font-size: 0.73rem; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-top: 8px; letter-spacing: 0.03em; }
+
+  main { padding: 16px 14px; max-width: 500px; margin: 0 auto; }
+
+  .section { background: var(--card); border-radius: 16px; padding: 18px 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .section-title { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 14px; }
+
+  /* URGENT */
+  .urgent-section { background: var(--urgent-light); border: 1.5px solid #FECACA; border-radius: 16px; padding: 16px 18px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .urgent-label { display: flex; align-items: center; gap: 10px; flex: 1; }
+  .urgent-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .urgent-text strong { display: block; font-size: 0.95rem; font-weight: 600; color: var(--urgent); }
+  .urgent-text span { font-size: 0.75rem; color: #991B1B; font-weight: 300; }
+  .toggle-switch { position: relative; width: 52px; height: 30px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #D1D5DB; border-radius: 30px; cursor: pointer; transition: background 0.2s; }
+  .toggle-slider:before { content: ''; position: absolute; width: 24px; height: 24px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .toggle-switch input:checked + .toggle-slider { background: var(--urgent); }
+  .toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
+
+  /* CATEGORY ROWS */
+  .cat-item { border-bottom: 1px solid var(--border); }
+  .cat-item:last-child { border-bottom: none; }
+  .cat-row { display: flex; align-items: center; gap: 12px; padding: 13px 2px; cursor: pointer; }
+  .cat-item input[type="checkbox"].cat-cb { display: none; }
+  .check-box { width: 26px; height: 26px; border: 2px solid var(--border); border-radius: 7px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; background: #fff; }
+  .cat-item input.cat-cb:checked ~ .check-box { background: var(--accent); border-color: var(--accent); }
+  .cat-item input.cat-cb:checked ~ .check-box::after { content: ''; width: 6px; height: 10px; border: 2.5px solid white; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); display: block; }
+  .cat-label { font-size: 1rem; font-weight: 400; color: var(--ink); flex: 1; line-height: 1.3; }
+  .cat-item input.cat-cb:checked ~ .cat-label { color: var(--accent); font-weight: 600; }
+
+  .detail-field { display: none; padding: 0 2px 12px 38px; }
+  .detail-field.visible { display: block; }
+  .detail-field textarea, .detail-field input[type="text"] { width: 100%; border: 1.5px solid var(--border); border-radius: 9px; padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); resize: none; outline: none; background: #FAFAF9; line-height: 1.5; transition: border-color 0.15s; -webkit-appearance: none; }
+  .detail-field textarea:focus, .detail-field input[type="text"]:focus { border-color: var(--accent); }
+  .detail-field textarea::placeholder, .detail-field input[type="text"]::placeholder { color: #C4BDB5; }
+
+  /* PILLS */
+  .status-group { margin-bottom: 16px; }
+  .status-group:last-child { margin-bottom: 0; }
+  .status-group-label { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 9px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
+  .pill-option { position: relative; }
+  .pill-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .pill-option label { display: block; padding: 9px 15px; border: 1.5px solid var(--border); border-radius: 50px; font-size: 0.88rem; font-weight: 400; color: var(--muted); cursor: pointer; transition: all 0.15s; background: #fff; white-space: nowrap; }
+  .pill-option input:checked + label { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .add-comment-btn { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--muted); cursor: pointer; padding: 2px 0 4px 0; display: block; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
+  .inline-comment { display: none; margin-top: 6px; margin-bottom: 4px; }
+  .inline-comment.visible { display: block; }
+  .inline-comment textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 9px; padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--ink); resize: none; outline: none; background: #FAFAF9; line-height: 1.5; transition: border-color 0.15s; -webkit-appearance: none; min-height: 68px; }
+  .inline-comment textarea:focus { border-color: var(--accent); }
+  .inline-comment textarea::placeholder { color: #C4BDB5; }
+
+  .status-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+  /* NOTES */
+  .notes-field { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--ink); resize: none; min-height: 90px; outline: none; background: #fff; line-height: 1.5; transition: border-color 0.15s; -webkit-appearance: none; }
+  .notes-field:focus { border-color: var(--accent); }
+  .notes-field::placeholder { color: #C4BDB5; }
+
+  /* SUBMIT */
+  .submit-btn { display: block; width: 100%; padding: 18px; background: var(--accent); color: #fff; border: none; border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: opacity 0.15s, transform 0.1s; margin-top: 4px; }
+  .submit-btn:active { opacity: 0.85; transform: scale(0.98); }
+  .submit-btn.urgent-active { background: var(--urgent); }
+
+  /* SUCCESS */
+  .success-screen { display: none; text-align: center; padding: 60px 24px; }
+  .success-screen.visible { display: block; }
+  .success-icon { font-size: 3.5rem; margin-bottom: 16px; }
+  .success-screen h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-bottom: 8px; }
+  .success-screen p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .another-btn { margin-top: 28px; display: inline-block; padding: 13px 28px; background: var(--accent); color: #fff; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; }
+
+  .form-area.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sam's Update</h1>
+  <p>Lionel · Woodland Pond</p>
+  <span class="date-badge" id="dateBadge"></span>
+</header>
+
+<main>
+<div class="form-area" id="formArea">
+<form id="updateForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+
+  <input type="hidden" name="_subject" id="emailSubject" value="Sam Update from Lionel">
+
+  <!-- URGENT -->
+  <div class="urgent-section">
+    <div class="urgent-label">
+      <span class="urgent-icon">🚨</span>
+      <div class="urgent-text">
+        <strong>Needs Attention Today</strong>
+        <span>Flag something urgent for Max</span>
+      </div>
+    </div>
+    <label class="toggle-switch">
+      <input type="checkbox" name="urgent" id="urgentToggle" value="YES — needs attention today">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <!-- FOOD / INSTACART -->
+  <div class="section">
+    <div class="section-title">Food &amp; Groceries</div>
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_food" value="Food / Instacart order needed">
+        <div class="check-box"></div>
+        <span class="cat-label">🛒 &nbsp;Need to order food / Instacart</span>
+      </div>
+      <div class="detail-field">
+        <textarea name="needs_food_detail" placeholder="What does Sam need? (e.g. yogurt, bananas, soup…)" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPLIES -->
+  <div class="section">
+    <div class="section-title">Supplies Needed</div>
+
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_toiletries" value="Toiletries needed">
+        <div class="check-box"></div>
+        <span class="cat-label">🧴 &nbsp;Toiletries</span>
+      </div>
+      <div class="detail-field">
+        <input type="text" name="needs_toiletries_detail" placeholder="What specifically? (e.g. shampoo, wipes…)">
+      </div>
+    </div>
+
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_cleaning" value="Cleaning supplies needed">
+        <div class="check-box"></div>
+        <span class="cat-label">🧹 &nbsp;Cleaning supplies</span>
+      </div>
+      <div class="detail-field">
+        <input type="text" name="needs_cleaning_detail" placeholder="What specifically?">
+      </div>
+    </div>
+
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_drinks" value="Ensure / specialty drinks needed">
+        <div class="check-box"></div>
+        <span class="cat-label">🥤 &nbsp;Ensure / specialty drinks</span>
+      </div>
+      <div class="detail-field">
+        <input type="text" name="needs_drinks_detail" placeholder="Which ones, how many?">
+      </div>
+    </div>
+
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_clothing" value="Clothing or linens needed">
+        <div class="check-box"></div>
+        <span class="cat-label">👕 &nbsp;Clothing / linens</span>
+      </div>
+      <div class="detail-field">
+        <input type="text" name="needs_clothing_detail" placeholder="What's needed?">
+      </div>
+    </div>
+
+    <div class="cat-item">
+      <div class="cat-row" onclick="toggleCat(this)">
+        <input type="checkbox" class="cat-cb" name="needs_medications" value="Medications needed">
+        <div class="check-box"></div>
+        <span class="cat-label">💊 &nbsp;Medications</span>
+      </div>
+      <div class="detail-field">
+        <input type="text" name="needs_medications_detail" placeholder="Which medications?">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW IS SAM DOING -->
+  <div class="section">
+    <div class="section-title">How is Sam doing?</div>
+
+    <!-- MOOD -->
+    <div class="status-group">
+      <div class="status-group-label">Mood</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="radio" name="mood" id="m1" value="Good spirits"><label for="m1">😊 Good spirits</label></div>
+        <div class="pill-option"><input type="radio" name="mood" id="m2" value="Calm"><label for="m2">😌 Calm</label></div>
+        <div class="pill-option"><input type="radio" name="mood" id="m3" value="Sleepy"><label for="m3">😴 Sleepy</label></div>
+        <div class="pill-option"><input type="radio" name="mood" id="m4" value="Confused"><label for="m4">😕 Confused</label></div>
+        <div class="pill-option"><input type="radio" name="mood" id="m5" value="Agitated"><label for="m5">😤 Agitated</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="mood_comment" placeholder="Anything to add about Sam's mood…" rows="2"></textarea></div>
+    </div>
+
+    <div class="status-divider"></div>
+
+    <!-- MEALS -->
+    <div class="status-group">
+      <div class="status-group-label">Meals &amp; Appetite</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="radio" name="appetite" id="a1" value="Ate well"><label for="a1">✅ Ate well</label></div>
+        <div class="pill-option"><input type="radio" name="appetite" id="a2" value="Ate a little"><label for="a2">🍽 Ate a little</label></div>
+        <div class="pill-option"><input type="radio" name="appetite" id="a3" value="Refused food"><label for="a3">❌ Refused food</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="appetite_comment" placeholder="What did Sam eat? How much? Any issues swallowing?…" rows="2"></textarea></div>
+    </div>
+
+    <div class="status-divider"></div>
+
+    <!-- HYDRATION -->
+    <div class="status-group">
+      <div class="status-group-label">Hydration</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="radio" name="hydration" id="h1" value="Drinking well"><label for="h1">💧 Drinking well</label></div>
+        <div class="pill-option"><input type="radio" name="hydration" id="h2" value="A little"><label for="h2">🫗 A little</label></div>
+        <div class="pill-option"><input type="radio" name="hydration" id="h3" value="Not drinking much"><label for="h3">⚠️ Not much</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="hydration_comment" placeholder="What is Sam drinking? About how much today?…" rows="2"></textarea></div>
+    </div>
+
+    <div class="status-divider"></div>
+
+    <!-- BOWEL -->
+    <div class="status-group">
+      <div class="status-group-label">Bowel Movements</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="radio" name="bm" id="b1" value="Yes — normal"><label for="b1">✅ Yes, normal</label></div>
+        <div class="pill-option"><input type="radio" name="bm" id="b2" value="Yes — loose/diarrhea"><label for="b2">⚠️ Loose / diarrhea</label></div>
+        <div class="pill-option"><input type="radio" name="bm" id="b3" value="None today"><label for="b3">❌ None today</label></div>
+        <div class="pill-option"><input type="radio" name="bm" id="b4" value="Not sure"><label for="b4">🤷 Not sure</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="bm_comment" placeholder="Any details worth noting…" rows="2"></textarea></div>
+    </div>
+
+    <div class="status-divider"></div>
+
+    <!-- EXERCISE -->
+    <div class="status-group">
+      <div class="status-group-label">Exercise &amp; Movement</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="radio" name="exercise" id="e1" value="Walked around"><label for="e1">🚶 Walked around</label></div>
+        <div class="pill-option"><input type="radio" name="exercise" id="e2" value="Mostly sitting / in bed"><label for="e2">🪑 Mostly sitting</label></div>
+        <div class="pill-option"><input type="radio" name="exercise" id="e3" value="PT / exercise session"><label for="e3">💪 PT / exercise</label></div>
+        <div class="pill-option"><input type="radio" name="exercise" id="e4" value="Fall or near-fall — see notes"><label for="e4">⚠️ Fall / near-fall</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="exercise_comment" placeholder="Any details about movement, a fall, or PT…" rows="2"></textarea></div>
+    </div>
+
+    <div class="status-divider"></div>
+
+    <!-- SOCIAL -->
+    <div class="status-group">
+      <div class="status-group-label">Social &amp; Activities</div>
+      <div class="pill-row">
+        <div class="pill-option"><input type="checkbox" name="social" id="s1" value="Pondeliers singing group"><label for="s1">🎵 Pondeliers</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s2" value="Concert or performance"><label for="s2">🎼 Concert</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s3" value="Movie or film"><label for="s3">🎬 Movie</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s4" value="Talk or presentation"><label for="s4">🎤 Talk</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s5" value="Time at the Pub"><label for="s5">🍺 The Pub</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s6" value="Visitors"><label for="s6">👋 Visitors</label></div>
+        <div class="pill-option"><input type="checkbox" name="social" id="s7" value="Stayed in — no activities"><label for="s7">🏠 Stayed in</label></div>
+      </div>
+      <button type="button" class="add-comment-btn" onclick="toggleComment(this)">+ add comment</button>
+      <div class="inline-comment"><textarea name="social_comment" placeholder="How did it go? Did Sam seem to enjoy it?…" rows="2"></textarea></div>
+    </div>
+
+  </div>
+
+  <!-- OPEN NOTES -->
+  <div class="section">
+    <div class="section-title">Anything Else</div>
+    <textarea class="notes-field" name="notes" placeholder="Other observations, symptoms, or anything you want Max to know…" rows="4"></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn" id="submitBtn">Send Update</button>
+
+</form>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">✅</div>
+  <h2>Update sent</h2>
+  <p>Max will receive this shortly.<br>Thanks for looking after Sam.</p>
+  <button class="another-btn" onclick="resetForm()">Send Another</button>
+</div>
+
+</main>
+
+<script>
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  document.getElementById('dateBadge').textContent = dateStr;
+  document.getElementById('emailSubject').value = 'Sam Update from Lionel \u2014 ' + dateStr;
+
+  function toggleCat(row) {
+    const cb = row.querySelector('input.cat-cb');
+    cb.checked = !cb.checked;
+    const detail = row.closest('.cat-item').querySelector('.detail-field');
+    if (detail) {
+      detail.classList.toggle('visible', cb.checked);
+      if (cb.checked) {
+        const input = detail.querySelector('input, textarea');
+        if (input) setTimeout(function(){ input.focus(); }, 80);
+      }
+    }
+  }
+
+  function toggleComment(btn) {
+    const box = btn.nextElementSibling;
+    const isVisible = box.classList.toggle('visible');
+    btn.textContent = isVisible ? '\u2212 hide comment' : '+ add comment';
+    if (isVisible) {
+      const ta = box.querySelector('textarea');
+      if (ta) setTimeout(function(){ ta.focus(); }, 80);
+    }
+  }
+
+  document.getElementById('urgentToggle').addEventListener('change', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.classList.toggle('urgent-active', this.checked);
+    btn.textContent = this.checked ? '\uD83D\uDEA8 Send Urgent Update' : 'Send Update';
+  });
+
+  document.getElementById('updateForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending\u2026';
+    btn.disabled = true;
+    try {
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        document.getElementById('formArea').classList.add('hidden');
+        document.getElementById('successScreen').classList.add('visible');
+        window.scrollTo(0, 0);
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again.');
+      }
+    } catch(err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+      alert('No internet connection. Please try again.');
+    }
+  });
+
+  function resetForm() {
+    document.getElementById('updateForm').reset();
+    document.querySelectorAll('.detail-field').forEach(function(d){ d.classList.remove('visible'); });
+    document.querySelectorAll('.inline-comment').forEach(function(c){ c.classList.remove('visible'); });
+    document.querySelectorAll('.add-comment-btn').forEach(function(b){ b.textContent = '+ add comment'; });
+    var btn = document.getElementById('submitBtn');
+    btn.textContent = 'Send Update';
+    btn.classList.remove('urgent-active');
+    btn.disabled = false;
+    document.getElementById('successScreen').classList.remove('visible');
+    document.getElementById('formArea').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
