@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flint — Use Case Finder</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2f45;
+    --navy-light: #243b55;
+    --gold: #c9954c;
+    --gold-light: #e8b97a;
+    --cream: #f7f4ef;
+    --cream-dark: #ede8e0;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-muted: #888;
+    --border: rgba(0,0,0,0.10);
+    --white: #ffffff;
+    --success: #2d6a4f;
+    --success-bg: #e8f5ee;
+    --tag-safety: #1b3a4b;
+    --tag-sales: #3d1a45;
+    --tag-sop: #1a3a1a;
+    --tag-leadership: #3a2800;
+    --tag-onboarding: #1a1a3a;
+    --tag-ai: #2a1a1a;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--navy-light);
+  }
+  .header-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  .header-logo span { color: var(--gold); }
+  .header-subtitle {
+    font-size: 12px;
+    color: rgba(247,244,239,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* ── LAYOUT ── */
+  .app { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 48px;
+  }
+  .step-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-dot.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--cream);
+  }
+  .step-dot.done {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+  .step-dot.done::after {
+    content: '';
+    display: block;
+    width: 10px; height: 6px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .step-dot.done span { display: none; }
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--cream-dark);
+    transition: background 0.3s ease;
+  }
+  .step-line.done { background: var(--gold); }
+
+  /* ── WIZARD CARD ── */
+  .wizard-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 44px;
+    box-shadow: 0 2px 24px rgba(13,27,42,0.06);
+  }
+
+  .step-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .step-question {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .step-hint {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  /* ── OPTION GRID ── */
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .option-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s ease;
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .option-btn:hover {
+    border-color: var(--navy-light);
+    background: var(--white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13,27,42,0.08);
+  }
+  .option-btn.selected {
+    border-color: var(--navy);
+    background: var(--navy);
+  }
+  .option-btn.selected .opt-label { color: var(--cream); }
+  .option-btn.selected .opt-desc { color: rgba(247,244,239,0.6); }
+  .option-btn.selected .opt-icon { background: rgba(255,255,255,0.15); color: var(--cream); }
+
+  .opt-icon {
+    width: 32px; height: 32px;
+    background: var(--white);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+  }
+  .opt-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+  .opt-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── NAV ── */
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 28px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .btn-back {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 0;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.15s;
+  }
+  .btn-back:hover { color: var(--text); }
+  .btn-back:disabled { opacity: 0.3; cursor: default; }
+
+  .btn-next {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+  }
+  .btn-next:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.35; cursor: default; transform: none; }
+  .btn-next.cta {
+    background: var(--gold);
+    color: var(--white);
+    padding: 13px 32px;
+    font-size: 15px;
+  }
+  .btn-next.cta:hover { background: var(--gold-light); }
+
+  /* ── RESULTS ── */
+  .results-header {
+    margin-bottom: 32px;
+  }
+  .results-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .results-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .results-summary {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+
+  .results-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 36px 0 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .results-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cream-dark);
+  }
+
+  .case-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 14px;
+    transition: box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--navy);
+    border-radius: 4px 0 0 4px;
+  }
+  .case-card.tier2::before { background: var(--gold); }
+  .case-card:hover { box-shadow: 0 4px 20px rgba(13,27,42,0.10); }
+
+  .case-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+  .case-identity {}
+  .case-customer {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .case-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .match-badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .match-strong {
+    background: #e8f3e8;
+    color: #1a4a1a;
+  }
+  .match-good {
+    background: #fef3e2;
+    color: #5a3800;
+  }
+
+  .fit-reason {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    background: var(--cream);
+    border-radius: 8px;
+    border-left: 3px solid var(--cream-dark);
+  }
+
+  .case-details {
+    display: none;
+  }
+  .case-details.open { display: block; }
+
+  .detail-section { margin-bottom: 14px; }
+  .detail-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .detail-text {
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  .case-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cream-dark);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 5px;
+    letter-spacing: 0.04em;
+  }
+  .tag-safety   { background: #dce8f0; color: #0d2d40; }
+  .tag-sales    { background: #ede0f5; color: #3a1048; }
+  .tag-sop      { background: #ddf0dd; color: #103410; }
+  .tag-leadership { background: #fef0d8; color: #3a2000; }
+  .tag-onboarding { background: #dde0f5; color: #10103a; }
+  .tag-ai       { background: #f0dddd; color: #3a1010; }
+
+  .case-links { display: flex; gap: 10px; align-items: center; }
+  .case-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--navy);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .case-link:hover { border-color: var(--navy); background: var(--navy); color: var(--white); }
+
+  .expand-btn {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 0;
+    display: flex; align-items: center; gap: 4px;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.15s;
+  }
+  .expand-btn:hover { color: var(--gold-light); }
+
+  .restart-bar {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .restart-text { font-size: 14px; color: var(--text-muted); }
+  .btn-restart {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--white);
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn-restart:hover { background: var(--navy); color: var(--white); }
+
+  .no-results {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-muted);
+  }
+  .no-results-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .selection-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .sel-chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 20px;
+  }
+  .sel-chip-label {
+    opacity: 0.55;
+    margin-right: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .app { padding: 28px 16px 60px; }
+    .wizard-card { padding: 28px 20px; }
+    .step-question { font-size: 22px; }
+    .option-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">flint<span>.</span></div>
+  <div class="header-subtitle">Use Case Finder — Internal Sales Tool</div>
+</div>
+
+<div class="app">
+  <div id="wizard"></div>
+</div>
+
+<script>
+const STEPS = [
+  {
+    id: 'industry',
+    eyebrow: 'Step 1 of 5',
+    question: 'What industry is your prospect in?',
+    hint: 'This helps surface the most contextually relevant examples — customers in the same space will resonate most.',
+    multi: false,
+    options: [
+      { value: 'manufacturing', label: 'Manufacturing', desc: 'Automotive, industrial, heavy industry', icon: '⚙' },
+      { value: 'aviation', label: 'Aviation & Ground Services', desc: 'Airlines, airports, ground ops', icon: '✈' },
+      { value: 'healthcare', label: 'Healthcare & Pharma', desc: 'Hospital systems, pharmaceutical, biotech', icon: '⚕' },
+      { value: 'financial', label: 'Financial Services', desc: 'Banking, lending, insurance, collections', icon: '◈' },
+      { value: 'hospitality', label: 'Hospitality & Travel', desc: 'Hotels, resorts, travel brands', icon: '◇' },
+      { value: 'media', label: 'Media & Technology', desc: 'Publishing, news, tech companies', icon: '◉' },
+      { value: 'funeral', label: 'Funeral Services', desc: 'Funeral homes, memorial services', icon: '◎' },
+      { value: 'mining', label: 'Mining & Extraction', desc: 'Underground mining, smelting, processing', icon: '◆' },
+      { value: 'retail', label: 'Retail', desc: 'Home improvement, consumer goods', icon: '◫' },
+      { value: 'logistics', label: 'Logistics & Courier', desc: 'Distribution, courier, supply chain', icon: '◻' },
+      { value: 'construction', label: 'Construction & Engineering', desc: 'Infrastructure, project management', icon: '◧' },
+      { value: 'other', label: 'Other / Not sure yet', desc: 'Show me the broadest options', icon: '◌' },
+    ]
+  },
+  {
+    id: 'problem',
+    eyebrow: 'Step 2 of 5',
+    question: 'What is the core problem they\'re trying to solve?',
+    hint: 'Focus on what\'s actually broken in their business — not the training they think they need.',
+    multi: true,
+    options: [
+      { value: 'safety', label: 'Safety incidents & compliance', desc: 'Injuries, near-misses, PPE violations, ramp incidents', icon: '⬡' },
+      { value: 'sop', label: 'SOP & standard work deviation', desc: 'Skipped steps, process shortcuts, quality gaps', icon: '⬢' },
+      { value: 'sales', label: 'Inconsistent sales performance', desc: 'Deal size, account penetration, forecasting', icon: '⬟' },
+      { value: 'leadership', label: 'Weak first-line leadership', desc: 'Managers avoiding hard conversations, poor coaching', icon: '⬠' },
+      { value: 'onboarding', label: 'New hire ramp-up time', desc: 'Slow time-to-proficiency, onboarding drop-off', icon: '⬣' },
+      { value: 'adoption', label: 'Software or process adoption', desc: 'New tools not being used consistently after launch', icon: '⬤' },
+    ]
+  },
+  {
+    id: 'audience',
+    eyebrow: 'Step 3 of 5',
+    question: 'Who is the primary learning audience?',
+    hint: 'The person doing the activities — not necessarily the person buying.',
+    multi: false,
+    options: [
+      { value: 'frontline', label: 'Frontline workers', desc: 'Hourly, field, ramp, production floor', icon: '◈' },
+      { value: 'supervisors', label: 'Supervisors & team leads', desc: 'First-line managers of hourly workers', icon: '◉' },
+      { value: 'managers', label: 'Mid-level managers', desc: 'Department heads, operations managers', icon: '◎' },
+      { value: 'sales_reps', label: 'Sales representatives', desc: 'Individual contributors in sales or BD', icon: '◌' },
+      { value: 'mixed', label: 'Multiple levels', desc: 'Crew + supervisors + managers together', icon: '◆' },
+    ]
+  },
+  {
+    id: 'size',
+    eyebrow: 'Step 4 of 5',
+    question: 'How big is the audience they\'re thinking about?',
+    hint: 'Rough estimate is fine — this helps match to pilots vs. broader programs.',
+    multi: false,
+    options: [
+      { value: 'small', label: 'Under 50 people', desc: 'Tight pilot, proof-of-concept group', icon: '◌' },
+      { value: 'mid', label: '50–200 people', desc: 'Department or divisional rollout', icon: '◉' },
+      { value: 'large', label: '200–1,000 people', desc: 'Multi-site or regional program', icon: '◎' },
+      { value: 'enterprise', label: '1,000+ people', desc: 'Enterprise-wide deployment', icon: '◆' },
+      { value: 'unknown', label: 'Not determined yet', desc: 'Still in early discovery', icon: '◈' },
+    ]
+  },
+  {
+    id: 'stage',
+    eyebrow: 'Step 5 of 5',
+    question: 'Where are they in their decision process?',
+    hint: 'This shapes which type of example will land best — early-stage prospects need credibility, later-stage need proof.',
+    multi: false,
+    options: [
+      { value: 'awareness', label: 'Early — building the case', desc: 'They\'re trying to understand if this is the right approach', icon: '◌' },
+      { value: 'pilot', label: 'Mid — evaluating a pilot', desc: 'They want to see how a pilot would work in their world', icon: '◉' },
+      { value: 'proof', label: 'Late — need proof of results', desc: 'They need evidence of outcomes before committing', icon: '◎' },
+    ]
+  }
+];
+
+const CASES = [
+  {
+    customer: 'Bristol Myers Squibb',
+    initiative: 'Cleaning & Sanitization',
+    industry: ['healthcare'],
+    problem: ['sop'],
+    audience: ['frontline'],
+    size: ['small','mid'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'BMS Performance Coach',
+    audienceDesc: 'Manufacturing Associates (MSS)',
+    audienceSize: '~80',
+    purpose: 'Manufacturing Associates know the cleaning steps but exhibit behavioral gaps — taking shortcuts, not fully understanding impact on patient safety, and bypassing steps under time pressure. These aren\'t knowledge gaps; they\'re execution gaps that require practice-based behavioral change.',
+    outcomes: 'Primary: Measurable behavior change in Following the Cleaning Sequence; consistent engagement averaging under 10 min/week; adoption rates confirm relevance for MSS population; associate feedback surfaces unclear process steps. Secondary: Reduction in cleaning-related deviations; increased associate confidence; frontline feedback foundation for data-driven process updates.',
+    roi: 'Deviations delay life-saving medicine to patients. Reduction in deviations directly reduces CAPA investigations, lot holds, and release delays — each with significant cost and patient impact.',
+    types: ['SOP Compliance','Safety'],
+    status: 'Launched',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1cCUB9BTCaPhzHg3GzE-u8dr_x8-5HxzTTP2iPzCMPuw/edit',
+    htmlLinks: [{ label: 'BMS Pilot Report', url: 'https://drive.google.com/file/d/1vNz9m0Dv16amcr7Q6SLTh7tg32xWCdH9/view' }]
+  },
+  {
+    customer: 'REV Group',
+    initiative: 'PPE Fundamentals',
+    industry: ['manufacturing'],
+    problem: ['safety','sop'],
+    audience: ['supervisors'],
+    size: ['small','mid'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'REV Safety Coach',
+    audienceDesc: 'Manufacturing Supervisors',
+    audienceSize: '~45',
+    purpose: 'Develop supervisors\' ability to consistently set clear PPE standards, model proper safety habits, and actively monitor compliance during operations to strengthen safety culture and reduce incidents.',
+    outcomes: 'Supervisors consistently set PPE standards at transition points, model correct usage, and actively monitor and coach compliance. Reduction in PPE-related safety incidents. Improved regulatory compliance and reduced exposure from PPE violations.',
+    roi: 'PPE-related incidents drive workers\' comp claims, OSHA fines, and production stoppages. Fewer incidents directly reduce insurance exposure and regulatory risk.',
+    types: ['Safety','SOP Compliance'],
+    status: 'Launched',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1Ce829poOzH6eh6QVopKYS5PA-92LZZQ6JeHTgj21gQo/edit',
+    htmlLinks: [
+      { label: 'PPE Insights', url: 'https://drive.google.com/file/d/19pytBpGV6z3_0u970Msba9tkCWW9i_Uq/view' },
+      { label: 'PPE Progress', url: 'https://drive.google.com/file/d/1HK6bYTT-y3GKxTK4A7PmTgt_NiAZ5Ieb/view' },
+      { label: 'Culture Deep Dive', url: 'https://drive.google.com/file/d/1GEZqghe5Zq0Y9LlFqSH6rKarLPgm3i18/view' },
+      { label: 'Proposal', url: 'https://drive.google.com/file/d/1gnQ71WeYr0kdglKEIY4QPpj16Op-8RqV/view' },
+    ]
+  },
+  {
+    customer: 'SCI — Cremation with a Service',
+    initiative: 'Cremation with a Service',
+    industry: ['funeral'],
+    problem: ['sales','onboarding'],
+    audience: ['frontline','managers'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'SCI On-the-Job',
+    audienceDesc: 'Funeral Directors & Location Managers',
+    audienceSize: '237 learners (~45 managers)',
+    purpose: 'Provide funeral directors with effective strategies to reduce direct cremation rates by focusing on celebrating the life of a lost loved one — through effective discovery, venue framing, and connection to services.',
+    outcomes: 'Decreased direct cremation rates; uptick in additional services (catering, venue usage, etc.).',
+    roi: 'Direct cremation is the lowest-revenue service. Shifting even a small percentage to full-service arrangements drives significant revenue per arrangement across a large national network.',
+    types: ['Sales','Onboarding'],
+    status: 'Completed',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1uUEc1OUBTVLxsyvKCw4pKs6m4gMT30hHQPaYLFyQQ0Y/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'Home Depot',
+    initiative: 'Pro DS Coaching',
+    industry: ['retail'],
+    problem: ['sales','leadership'],
+    audience: ['sales_reps','managers'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot'],
+    tool: 'Pro DS Performance Coach',
+    audienceDesc: 'Pro Desk Sales Associates and their coaches',
+    audienceSize: 'TBD',
+    purpose: 'Build Pro DS coaching capabilities to develop PASAs who select growth-potential accounts, prepare strategically, conduct consultative discovery conversations, and document interactions.',
+    outcomes: 'Increased incremental and predictable spending per account annually.',
+    roi: 'Pro accounts represent high-lifetime-value customers. Improved consultative selling and account planning drives incremental spend per account — measurable against existing account data.',
+    types: ['Sales','Leadership'],
+    status: 'Launched',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1427uIgz0JzZ54mX7JmgKMlusxpk2mB5cUnjn9b40JTc/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'Heico',
+    initiative: 'Strategic Account Management',
+    industry: ['aviation'],
+    problem: ['sales'],
+    audience: ['sales_reps'],
+    size: ['small','mid'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'Heico Sales Coach',
+    audienceDesc: 'Sales Representatives',
+    audienceSize: 'TBD',
+    purpose: 'Train sales reps in behaviors that help them proactively understand their customers\' needs, effectively forecast, and create strategic client plans.',
+    outcomes: 'Sales reps demonstrate a strategic approach to their accounts: asking strategic questions, using data to anticipate needs, and developing client plans.',
+    roi: 'Strategic account planning improves forecast accuracy and increases wallet share with existing customers — reducing churn and growing revenue without new customer acquisition cost.',
+    types: ['Sales'],
+    status: 'Plan',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1ifwzDC797CQf_clti94Ytn4G8UyQ9PDNwrzOwfb2OwA/edit',
+    htmlLinks: [
+      { label: 'Mid-Pilot Report', url: 'https://drive.google.com/file/d/1FTc6GxsPN7p_FaUhTANyAdY3px2QabEY/view' },
+      { label: 'Apr 20 Report', url: 'https://drive.google.com/file/d/1OyoBdC6AoOtiorvfT4ZkBT3yxltMCt7e/view' },
+    ]
+  },
+  {
+    customer: 'gategroup',
+    initiative: 'Ramp Safety',
+    industry: ['aviation'],
+    problem: ['safety','sop'],
+    audience: ['supervisors','mixed'],
+    size: ['small','mid'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'gategroup Safety Coach',
+    audienceDesc: 'Supervisors & Safety Specialists',
+    audienceSize: 'TBD',
+    purpose: 'Build systematic follow-through on ramp safety violations through coordinated action between Supervisors and Safety Specialists.',
+    outcomes: 'Reduce repeat safety violations (same driver/behavior within 30 days); drive consistent behavior change through focused observation and progressive discipline; create visible enforcement that demonstrates safety expectations are real.',
+    roi: 'Repeat safety violations on the ramp drive incident costs, liability exposure, and airline contract risk. Reducing repeat violations within 30 days is a direct, measurable outcome.',
+    types: ['Safety','SOP Compliance'],
+    status: 'Launched',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1m6Bbz98WX5y0fAlTALtbaVEFv3ZNn9aQxJp9tp5CLBw/edit',
+    htmlLinks: [{ label: 'Midpoint Report', url: 'https://drive.google.com/file/d/1ghN5kLiDxviBRbwIb_Tes5GdKc4A4rSZ/view' }]
+  },
+  {
+    customer: 'PrimeFlight',
+    initiative: 'Wheelchair Safety',
+    industry: ['aviation'],
+    problem: ['safety'],
+    audience: ['frontline','supervisors','mixed'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'PrimeAcademy Wheelchair Coach',
+    audienceDesc: 'Supervisors & Agents',
+    audienceSize: 'TBD',
+    purpose: 'Eliminate preventable injuries to attendants and passengers and equipment damage by mastering equipment preparation, airport navigation, and overall situational awareness.',
+    outcomes: 'Reduce incident reports tied to wheelchairs.',
+    roi: 'Wheelchair-related incidents are the highest-volume incident category for PrimeFlight. Reduction directly lowers workers\' comp costs and liability exposure.',
+    types: ['Safety','SOP Compliance'],
+    status: 'Launched',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1wro8COE6GvjlMSVfu-ZHkgQmE1RwcUJBV8754XdYKyg/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'PrimeFlight',
+    initiative: 'Vehicle Safety',
+    industry: ['aviation'],
+    problem: ['safety','sop'],
+    audience: ['frontline'],
+    size: ['enterprise'],
+    stage: ['awareness','proof'],
+    tool: 'PrimeAcademy Vehicle Safety Coach',
+    audienceDesc: 'Ramp Workers Who Operate Vehicles',
+    audienceSize: '4,024',
+    purpose: 'Reduce inappropriate vehicle operation on the ramp — speeding, no seatbelt, failure to scan for hazards, tailgating, distracted driving — to protect personnel and equipment.',
+    outcomes: 'Behavior change evidence showing improved vehicle operation habits; reduced equipment and aircraft damage incidents.',
+    roi: 'Personnel and equipment damage from inappropriate vehicle operation is a major cost. At 4,024 participants, even small per-incident cost reductions compound significantly.',
+    types: ['Safety','SOP Compliance'],
+    status: 'Completed',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1qwI4CodTwYf42BTNO8EoK1Ow7EXNA_H2X8p21p9jl_o/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'JTEKT',
+    initiative: 'Leading Standard Work Excellence',
+    industry: ['manufacturing'],
+    problem: ['sop','leadership'],
+    audience: ['supervisors'],
+    size: ['mid'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'JTEKT Quality Coach',
+    audienceDesc: 'Team Leads & Supervisors across 4 plants',
+    audienceSize: '85 (55 TLs + 30 Supervisors)',
+    purpose: 'Enable team leads and supervisors to identify standard work deviations, provide direct feedback, and hold hourly workers accountable to quality procedures — turning quality conversations into a consistent leadership habit.',
+    outcomes: 'Behavior change evidence showing leaders more consistently address standard work gaps; improved quality meeting effectiveness; progression toward measurable reduction in quality deviations over time.',
+    roi: 'Quality deviations due to standard work non-compliance are the core business challenge. Behavior change evidence will lead to KPI identification for long-term ROI measurement.',
+    types: ['SOP Compliance','Leadership'],
+    status: 'Completed',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1fslyRy8y1b9kYv-B-WmLW9Nui7J7glGU-lS63W_pOnE/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'Gannett / USA Today',
+    initiative: 'Copilot for Everyday HR Tasks',
+    industry: ['media'],
+    problem: ['adoption'],
+    audience: ['managers'],
+    size: ['small'],
+    stage: ['awareness','proof'],
+    tool: 'Gannett HR Copilot Coach',
+    audienceDesc: 'HR Staff (Benefits, Compensation, Business Partners)',
+    audienceSize: '36',
+    purpose: 'Help HR staff adopt Microsoft Copilot for daily tasks — analyzing HR data, creating visuals, organizing workflows, communicating clearly, and automating routine tasks — to free up time for strategic work.',
+    outcomes: '20% increase in Copilot usage over program duration; 40% real workplace application; productivity improvement equivalent to ~1,200 hours across the cohort.',
+    roi: 'Fully utilizing Copilot can improve worker performance by up to 40% (MIT Sloan). 36 workers using Copilot 20% more over 12 weeks = ~1,210 hours of recaptured productivity.',
+    types: ['AI Adoption'],
+    status: 'Completed',
+    completeness: 'Rich',
+    charterUrl: 'https://docs.google.com/document/d/1hSmAumQAb-OaIBBVx8IUXbBHlj450S1_c_LVV2h1ldk/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'Citizens Bank',
+    initiative: 'Fresh Eyes — Facilities Excellence',
+    industry: ['financial'],
+    problem: ['sop','leadership'],
+    audience: ['managers'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot'],
+    tool: 'Citizens Facilities Coach',
+    audienceDesc: 'Facility Managers',
+    audienceSize: 'TBD',
+    purpose: 'Combat \'repeat blindness\' — the tendency of facility managers to stop seeing recurring issues because their attention is consumed by reactive work orders and their eye has habituated to the baseline condition.',
+    outcomes: 'FMs proactively identify and report recurring environmental issues before customers or executives notice them; shift from reactive to proactive facility management habits.',
+    roi: 'Unaddressed facility issues surface during customer or executive visits — creating reputational risk and reactive remediation costs.',
+    types: ['SOP Compliance','Safety'],
+    status: 'Plan',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1yzLleIEWROHA1KPJYpDCY1l8aAELjb5rAqhku4LCrR8/edit',
+    htmlLinks: [
+      { label: 'Meeting Agenda', url: 'https://drive.google.com/file/d/1dneJwDBZjL0de3xa8Mu_trV9k4khZz3w/view' },
+      { label: 'Facilities Excellence', url: 'https://drive.google.com/file/d/1lOsbf-JNTyqE-Z8BRh9Vo3h3JbSM3ozH/view' },
+      { label: 'Program Proposal', url: 'https://drive.google.com/file/d/121VChQqtnLggVG3zCwQEN0PgiayP2OhY/view' },
+    ]
+  },
+  {
+    customer: 'Sandals Resorts',
+    initiative: 'Performance Management',
+    industry: ['hospitality'],
+    problem: ['leadership','sop'],
+    audience: ['managers'],
+    size: ['large'],
+    stage: ['awareness','proof'],
+    tool: 'Sandals Leadership Coach',
+    audienceDesc: 'Managers Across All Sandals Resorts',
+    audienceSize: '200',
+    purpose: 'Build consistent performance management habits across Sandals managers — from goal-setting and development planning through coaching, feedback, and formal evaluation.',
+    outcomes: 'Managers consistently set goals, coach in between review cycles, and conduct effective evaluations; behavior change evidence via surveys; improvement in staff development outcomes.',
+    roi: 'Inconsistent performance management leads to underdeveloped staff and poor evaluations — which drives turnover, service quality issues, and brand risk across a large resort network.',
+    types: ['Leadership','SOP Compliance'],
+    status: 'Launched',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1Svc7m4JTf1y5jIfHt4_1avRJ27EoMm15vEgcdPWCmEA/edit',
+    htmlLinks: [{ label: 'PM Findings Report', url: 'https://drive.google.com/file/d/1Ez-QJWF-FBF5OYc4Ssc1iW4njhZ-pHBP/view' }]
+  },
+  {
+    customer: 'goeasy',
+    initiative: 'Leadership in Motion — Manager Essentials',
+    industry: ['financial'],
+    problem: ['leadership','onboarding'],
+    audience: ['managers'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot'],
+    tool: 'goeasy Leadership Coach',
+    audienceDesc: 'New Entry-Level Managers',
+    audienceSize: 'Evergreen',
+    purpose: 'Build the essential management skills new entry-level managers need to lead effectively — addressing performance issues, reinforcing expectations, transitioning from doing to coaching, and using metrics to drive operations.',
+    outcomes: 'New managers demonstrate consistent application of core leadership behaviors; accelerated time to proficiency vs. classroom-only approach.',
+    roi: 'Entry-level managers who struggle to lead effectively create team performance issues, turnover, and inconsistent customer experience.',
+    types: ['Leadership','Onboarding'],
+    status: 'Launched',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1VHpbxomp4rUpJIoH6YVUNh1cZBt5f0yMrR1fVMVvgP8/edit',
+    htmlLinks: [{ label: 'ASPIRE Proposal', url: 'https://drive.google.com/file/d/1vLTATOjxdglK7SqVsWAfSoQJI_hBEF9K/view' }]
+  },
+  {
+    customer: 'goeasy',
+    initiative: 'Collections Fundamentals',
+    industry: ['financial'],
+    problem: ['sales','sop'],
+    audience: ['frontline'],
+    size: ['small'],
+    stage: ['awareness','proof'],
+    tool: 'goeasy Collections Coach',
+    audienceDesc: 'Collections Teams (lower-performing cohorts)',
+    audienceSize: '17',
+    purpose: 'Improve collectors\' ability to secure same-call payment commitments (PTPs) by building skills in securing payments, qualifying promises, and managing customer conversations.',
+    outcomes: 'Improved PTP rate among participating collectors; behavior change evidence via surveys.',
+    roi: 'The PTP rate directly influences goeasy\'s stock price. Even modest improvement in lower-performing teams\' PTP rates has a direct financial impact.',
+    types: ['Sales','SOP Compliance'],
+    status: 'Completed',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1xv-NTwYnn8mcrmHKFgEagBoXxlpmeq8EjqzedLsdeE8/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'SCI — Funeral Arranger Onboarding',
+    initiative: 'Funeral Arranger Onboarding',
+    industry: ['funeral'],
+    problem: ['onboarding','sales'],
+    audience: ['frontline','managers'],
+    size: ['mid','large'],
+    stage: ['awareness','pilot'],
+    tool: 'SCI Arranger Coach',
+    audienceDesc: 'Funeral Arrangers (post in-class onboarding) and Location Managers',
+    audienceSize: '100 (first cohort), ~25/month rolling',
+    purpose: 'Reinforce in-class onboarding by building consistent on-the-job habits around facility tours, explaining family choices, connecting services to family needs — while building a coaching culture among Location Managers.',
+    outcomes: 'Location Managers shift to regular observations and coaching; Arrangers more consistently apply discovery and connection behaviors; longer-term improvement in retention.',
+    roi: 'Inconsistent arranger behaviors result in missed service opportunities and lower average arrangement value. A coaching culture change multiplies the impact across a nationwide network.',
+    types: ['Onboarding','Sales'],
+    status: 'Completed',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1CG9dXj1PHiyRLSSDfIn9Lgclk9O2EyTvkyYWjOubn0w/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'PTFI (Freeport McMoRan)',
+    initiative: 'Accountability Conversations',
+    industry: ['mining'],
+    problem: ['leadership','sop','safety'],
+    audience: ['managers','supervisors','mixed'],
+    size: ['large','enterprise'],
+    stage: ['awareness','pilot','proof'],
+    tool: 'PTFI Accountability Coach',
+    audienceDesc: 'Operational and Non-Operational Leaders',
+    audienceSize: 'Open / Evergreen',
+    purpose: 'Help leaders identify and address housekeeping, safety, and standard work issues using structured accountability conversations — building this as a consistent leadership habit rather than a one-time training.',
+    outcomes: 'Leaders more consistently use structured accountability conversations to address issues; behavior change evidence via before/after surveys.',
+    roi: 'Unaddressed housekeeping, safety, and standard work gaps compound over time into incidents, compliance failures, and operational inefficiency.',
+    types: ['Leadership','SOP Compliance','Safety'],
+    status: 'Launched',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1W0U8Ai15HT9Jx-0zQsMzaoGMJmJYmpErXeDVjnYLlxE/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'PTFI (Freeport McMoRan)',
+    initiative: 'Underground Vehicle Safety',
+    industry: ['mining'],
+    problem: ['safety','sop'],
+    audience: ['frontline','supervisors'],
+    size: ['mid'],
+    stage: ['awareness','pilot'],
+    tool: 'PTFI Safety Coach',
+    audienceDesc: 'DMLZ Underground Mining Team',
+    audienceSize: 'TBD',
+    purpose: 'Ensure proper vehicle operation and safety for underground mining vehicles. Improve inspection protocols and safety practices for mucking, blasting, and lifting operations.',
+    outcomes: 'Consistent application of crew positioning, access control, and two-way communication protocols; reduction in personnel hazards and equipment damage.',
+    roi: 'Inconsistent safety practices in underground mining create serious injury risk and operational disruption. Behavior change evidence will be tied to incident reduction metrics.',
+    types: ['Safety','SOP Compliance'],
+    status: 'Launched',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1SNIkZOtwxBPV5nrmX6vJyInKBGLmdmSngjRNxDdKDYg/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'Trane Technologies',
+    initiative: 'ServiceNow Adoption',
+    industry: ['manufacturing','other'],
+    problem: ['adoption','sop'],
+    audience: ['managers','mixed'],
+    size: ['small'],
+    stage: ['awareness','proof'],
+    tool: 'Trane SNOW Coach',
+    audienceDesc: 'Business Operations & India Operations Center Teams',
+    audienceSize: '32',
+    purpose: 'Drive widespread and consistent adoption of ServiceNow for work authorization, ticket management, and multi-team handoffs — moving beyond what classroom training can achieve.',
+    outcomes: 'Consistent SNow usage across teams; behavior change evidence via surveys; improved ability to report time and effort allocation to leadership.',
+    roi: 'Without consistent SNow adoption, business ops time/effort is difficult to report — making it hard to argue for resources. Adoption enables data-driven resource management.',
+    types: ['AI Adoption','SOP Compliance'],
+    status: 'Completed',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1vemnuiyDDUze6OteR6pywB8IDiKar0OnWYBVZ0p7nck/edit',
+    htmlLinks: []
+  },
+  {
+    customer: 'FMI',
+    initiative: 'Cost Management Mindset',
+    industry: ['construction'],
+    problem: ['leadership','sop'],
+    audience: ['managers'],
+    size: ['mid'],
+    stage: ['awareness','pilot'],
+    tool: 'FMI Operations Coach',
+    audienceDesc: 'Managers and Superintendents',
+    audienceSize: '43 (3 groups)',
+    purpose: 'Drive a mindset shift that costs are an operational responsibility, not an accounting function — building managers\' ability to forecast, track, and own their cost performance.',
+    outcomes: 'Managers demonstrate improved cost forecasting habits and ownership of operational cost outcomes; behavior change evidence via surveys.',
+    roi: 'Managers currently lack training and process for cost forecasting. Building this as a behavioral habit rather than a one-time course is the key to lasting change.',
+    types: ['Leadership','SOP Compliance'],
+    status: 'Plan',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1RcB7npLjJ229Lmr-ll3x01p4hyhr_wyaphqvIXSb1VM/edit',
+    htmlLinks: [
+      { label: 'Cost Management Proposal', url: 'https://drive.google.com/file/d/11rdvfQHnod6H8Yo5hhf9Ehnt5ZTCuH4B/view' },
+      { label: 'Forecasting Proposal', url: 'https://drive.google.com/file/d/1ILNYQYiCRE1zGR3AEb0rwIU3-e-zeOJo/view' },
+    ]
+  },
+  {
+    customer: 'REV Group',
+    initiative: 'Performance Reviews',
+    industry: ['manufacturing'],
+    problem: ['leadership'],
+    audience: ['managers'],
+    size: ['small','mid'],
+    stage: ['awareness','pilot'],
+    tool: 'REV Leadership Coach',
+    audienceDesc: 'Manufacturing Managers',
+    audienceSize: 'TBD',
+    purpose: 'Give managers the on-the-job preparation and practice they need to have productive difficult conversations with underperformers during review cycles.',
+    outcomes: 'Manager preparedness and confidence going into performance reviews; reduced avoidance of difficult conversations with underperformers.',
+    roi: 'Avoided difficult conversations with underperformers compound into performance management failures, legal risk, and a culture where poor performance is tolerated.',
+    types: ['Leadership'],
+    status: 'Launched',
+    completeness: 'Moderate',
+    charterUrl: 'https://docs.google.com/document/d/1C5Wsd_dtY_NBc1dHp82Oj-v3gqKCst94sXiLKjs8LPE/edit',
+    htmlLinks: [
+      { label: 'PPE Behavior Intelligence', url: 'https://drive.google.com/file/d/18SpD6Ub5OZldsB-ML_6z8pzjAXHPO849/view' },
+    ]
+  },
+];
+
+const TAG_CLASSES = {
+  'Safety': 'tag-safety',
+  'Sales': 'tag-sales',
+  'SOP Compliance': 'tag-sop',
+  'Leadership': 'tag-leadership',
+  'Onboarding': 'tag-onboarding',
+  'AI Adoption': 'tag-ai',
+};
+
+let answers = {};
+let currentStep = 0;
+let expandedCards = new Set();
+
+function scoreCase(c) {
+  let score = 0;
+  let reasons = [];
+
+  const ind = answers.industry;
+  const probs = answers.problem || [];
+  const aud = answers.audience;
+  const sz = answers.size;
+  const stg = answers.stage;
+
+  const industryMatch = c.industry.includes(ind) || ind === 'other';
+  const probMatches = probs.filter(p => c.problem.includes(p));
+  const audMatch = c.audience.includes(aud);
+  const sizeMatch = c.size.includes(sz) || sz === 'unknown';
+  const stageMatch = c.stage.includes(stg);
+
+  if (industryMatch) {
+    score += c.industry.includes(ind) ? 3 : 1;
+    if (c.industry.includes(ind) && ind !== 'other') reasons.push(`same-industry example (${getLabel('industry', ind)})`);
+  }
+
+  if (probMatches.length > 0) {
+    score += probMatches.length * 4;
+    const problemLabels = probMatches.map(p => getLabel('problem', p)).join(' and ');
+    reasons.push(`directly addresses the core problem: ${problemLabels}`);
+  }
+
+  if (audMatch) { score += 2; reasons.push(`same audience type (${getLabel('audience', aud)})`); }
+  if (sizeMatch && sz !== 'unknown') { score += 1; }
+  if (stageMatch) { score += 1; }
+  if (c.completeness === 'Rich') { score += 1; }
+  if (c.status === 'Completed') { score += 0.5; reasons.push('completed initiative with documented outcomes'); }
+  if (c.htmlLinks && c.htmlLinks.length > 0) { score += 0.5; reasons.push('presentation materials available'); }
+
+  return { score, reasons };
+}
+
+function getLabel(stepId, value) {
+  const step = STEPS.find(s => s.id === stepId);
+  if (!step) return value;
+  const opt = step.options.find(o => o.value === value);
+  return opt ? opt.label : value;
+}
+
+function generateFitReason(c, reasons, score) {
+  const ind = answers.industry;
+  const probs = answers.problem || [];
+  const stg = answers.stage;
+
+  let text = '';
+
+  const industryMatch = c.industry.includes(ind) && ind !== 'other';
+  const probMatches = probs.filter(p => c.problem.includes(p));
+
+  if (industryMatch) {
+    text += `${c.customer} is operating in the same space — `;
+  } else {
+    text += `While the industry differs, ${c.customer} is a strong analog — `;
+  }
+
+  if (probMatches.length > 0) {
+    const labels = probMatches.map(p => getLabel('problem', p));
+    if (labels.length === 1) text += `they faced the same core challenge of ${labels[0].toLowerCase()}`;
+    else text += `they faced both ${labels.slice(0,-1).join(', ')} and ${labels[labels.length-1].toLowerCase()}`;
+    text += '. ';
+  }
+
+  if (c.status === 'Completed') {
+    text += 'This initiative has concluded and results were documented, making it useful for outcome-oriented conversations. ';
+  } else if (c.status === 'Launched') {
+    text += 'This initiative is currently active, which means the use case is current and the story is still being built. ';
+  }
+
+  if (stg === 'proof' && c.completeness === 'Rich') {
+    text += 'The charter is complete with well-defined outcomes and ROI framing — useful for a late-stage proof conversation.';
+  } else if (stg === 'pilot' && c.htmlLinks && c.htmlLinks.length > 0) {
+    text += 'Presentation materials are available — use these to show a prospect what a Flint engagement looks like in context.';
+  } else if (stg === 'awareness') {
+    text += 'Use this to help the prospect see how a comparable organization framed the problem and justified the investment.';
+  }
+
+  return text;
+}
+
+function renderStep(stepIndex) {
+  const step = STEPS[stepIndex];
+  const isLast = stepIndex === STEPS.length - 1;
+
+  const progressDots = STEPS.map((s, i) => {
+    let cls = '';
+    if (i < stepIndex) cls = 'done';
+    else if (i === stepIndex) cls = 'active';
+    return `<div class="step-dot ${cls}"><span>${i+1}</span></div>${i < STEPS.length - 1 ? `<div class="step-line ${i < stepIndex ? 'done' : ''}"></div>` : ''}`;
+  }).join('');
+
+  const currentVal = answers[step.id];
+  const optionsHtml = step.options.map(opt => {
+    const isSelected = step.multi
+      ? (Array.isArray(currentVal) && currentVal.includes(opt.value))
+      : currentVal === opt.value;
+    return `<button class="option-btn ${isSelected ? 'selected' : ''}" data-value="${opt.value}" onclick="selectOption('${step.id}', '${opt.value}', ${step.multi})">
+      <div class="opt-icon">${opt.icon}</div>
+      <div class="opt-label">${opt.label}</div>
+      <div class="opt-desc">${opt.desc}</div>
+    </button>`;
+  }).join('');
+
+  const hasSelection = step.multi
+    ? (Array.isArray(currentVal) && currentVal.length > 0)
+    : !!currentVal;
+
+  document.getElementById('wizard').innerHTML = `
+    <div class="progress-bar">${progressDots}</div>
+    <div class="wizard-card">
+      <div class="step-eyebrow">${step.eyebrow}</div>
+      <div class="step-question">${step.question}</div>
+      <div class="step-hint">${step.hint}${step.multi ? ' <strong>Select all that apply.</strong>' : ''}</div>
+      <div class="option-grid">${optionsHtml}</div>
+      <div class="wizard-nav">
+        <button class="btn-back" onclick="goBack()" ${stepIndex === 0 ? 'disabled' : ''}>← Back</button>
+        <button class="btn-next ${isLast ? 'cta' : ''}" onclick="goNext()" ${!hasSelection ? 'disabled' : ''}>
+          ${isLast ? 'Find matching use cases →' : 'Continue →'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function selectOption(stepId, value, multi) {
+  if (multi) {
+    if (!Array.isArray(answers[stepId])) answers[stepId] = [];
+    const idx = answers[stepId].indexOf(value);
+    if (idx === -1) answers[stepId].push(value);
+    else answers[stepId].splice(idx, 1);
+  } else {
+    answers[stepId] = value;
+  }
+  renderStep(currentStep);
+}
+
+function goNext() {
+  const step = STEPS[currentStep];
+  const val = answers[step.id];
+  const hasSelection = step.multi ? (Array.isArray(val) && val.length > 0) : !!val;
+  if (!hasSelection) return;
+
+  if (currentStep < STEPS.length - 1) {
+    currentStep++;
+    renderStep(currentStep);
+  } else {
+    renderResults();
+  }
+}
+
+function goBack() {
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep(currentStep);
+  }
+}
+
+function renderResults() {
+  const scored = CASES.map(c => {
+    const { score, reasons } = scoreCase(c);
+    return { ...c, score, reasons };
+  }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
+
+  const strong = scored.filter(c => c.score >= 7);
+  const good = scored.filter(c => c.score >= 3 && c.score < 7);
+
+  const industryLabel = getLabel('industry', answers.industry);
+  const probLabels = (answers.problem || []).map(p => getLabel('problem', p));
+  const audLabel = getLabel('audience', answers.audience);
+
+  const selChips = [
+    `<span class="sel-chip"><span class="sel-chip-label">industry</span>${industryLabel}</span>`,
+    ...probLabels.map(l => `<span class="sel-chip"><span class="sel-chip-label">problem</span>${l}</span>`),
+    `<span class="sel-chip"><span class="sel-chip-label">audience</span>${audLabel}</span>`,
+  ].join('');
+
+  function renderCard(c, tier) {
+    const fit = generateFitReason(c, c.reasons, c.score);
+    const isExpanded = expandedCards.has(c.customer + c.initiative);
+
+    const tagHtml = c.types.map(t => `<span class="tag ${TAG_CLASSES[t] || ''}">${t}</span>`).join('');
+    const linksHtml = [
+      c.charterUrl ? `<a class="case-link" href="${c.charterUrl}" target="_blank">Charter</a>` : '',
+      ...(c.htmlLinks || []).map(l => `<a class="case-link" href="${l.url}" target="_blank">${l.label}</a>`)
+    ].filter(Boolean).join('');
+
+    const statusColor = c.status === 'Completed' ? '#2d6a4f' : c.status === 'Launched' ? '#185fa5' : '#7a5500';
+    const statusDot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${statusColor};margin-right:5px;vertical-align:middle;"></span>`;
+
+    return `<div class="case-card ${tier === 'good' ? 'tier2' : ''}">
+      <div class="case-top">
+        <div class="case-identity">
+          <div class="case-customer">${c.customer}</div>
+          <div class="case-meta">${c.initiative} · ${c.audienceDesc} · ${c.audienceSize} people · ${statusDot}${c.status}</div>
+        </div>
+        <span class="match-badge ${tier === 'strong' ? 'match-strong' : 'match-good'}">${tier === 'strong' ? 'Strong match' : 'Good match'}</span>
+      </div>
+      <div class="fit-reason">${fit}</div>
+      <div class="case-details ${isExpanded ? 'open' : ''}" id="details-${c.customer.replace(/\s+/g,'-')}-${c.initiative.replace(/\s+/g,'-')}">
+        <div class="detail-section">
+          <div class="detail-label">Purpose</div>
+          <div class="detail-text">${c.purpose}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Desired outcomes</div>
+          <div class="detail-text">${c.outcomes}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">ROI framing</div>
+          <div class="detail-text">${c.roi}</div>
+        </div>
+      </div>
+      <div class="case-footer">
+        <div class="tags">${tagHtml}</div>
+        <div class="case-links">
+          ${linksHtml}
+          <button class="expand-btn" onclick="toggleExpand('${c.customer}', '${c.initiative}', this)">
+            ${isExpanded ? '↑ Less detail' : '↓ Full detail'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const strongHtml = strong.length > 0
+    ? `<div class="results-section-label">Strong matches — ${strong.length} found</div>${strong.map(c => renderCard(c, 'strong')).join('')}`
+    : '';
+
+  const goodHtml = good.length > 0
+    ? `<div class="results-section-label">Good matches — ${good.length} found</div>${good.map(c => renderCard(c, 'good')).join('')}`
+    : '';
+
+  const emptyHtml = strong.length === 0 && good.length === 0
+    ? `<div class="no-results"><div class="no-results-title">No strong matches found</div><p>The current criteria didn't match any use cases closely. Try broadening your selections — especially the industry or problem type.</p></div>`
+    : '';
+
+  document.getElementById('wizard').innerHTML = `
+    <div class="results-header">
+      <div class="results-eyebrow">Use case recommendations</div>
+      <div class="results-title">${strong.length + good.length} relevant examples found</div>
+      <div class="results-summary">Based on your selections, here are the Flint initiatives most likely to resonate with your prospect. Strong matches share the same core problem and audience type.</div>
+      <div class="selection-summary">${selChips}</div>
+    </div>
+    ${strongHtml}
+    ${goodHtml}
+    ${emptyHtml}
+    <div class="restart-bar">
+      <span class="restart-text">Looking for something different?</span>
+      <button class="btn-restart" onclick="restart()">← Start over</button>
+    </div>
+  `;
+}
+
+function toggleExpand(customer, initiative, btn) {
+  const key = customer + initiative;
+  const id = `details-${customer.replace(/\s+/g,'-')}-${initiative.replace(/\s+/g,'-')}`;
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (expandedCards.has(key)) {
+    expandedCards.delete(key);
+    el.classList.remove('open');
+    btn.textContent = '↓ Full detail';
+  } else {
+    expandedCards.add(key);
+    el.classList.add('open');
+    btn.textContent = '↑ Less detail';
+  }
+}
+
+function restart() {
+  answers = {};
+  currentStep = 0;
+  expandedCards = new Set();
+  renderStep(0);
+}
+
+renderStep(0);
+</script>
+</body>
+</html>
