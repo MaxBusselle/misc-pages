@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boyd Gaming — See the Hazard, Own the Standard Initiative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --boyd-navy: #1B2A4A;
+            --boyd-navy-deep: #12203B;
+            --boyd-navy-dark: #0C1628;
+            --boyd-red: #C8102E;
+            --boyd-red-deep: #A50D25;
+            --boyd-red-light: #E8384F;
+            --boyd-gold: #D4A843;
+            --boyd-gold-pale: #FDF8EE;
+            --boyd-gold-light: #E8C76A;
+            --boyd-navy-pale: #EEF1F6;
+            --white: #ffffff;
+            --off-white: #F7F6F4;
+            --light-gray: #ECEAEB;
+            --mid-gray: #D1CDD0;
+            --text-dark: #1A1A1A;
+            --text-body: #3D3D3D;
+            --text-muted: #7A7578;
+            --basic-color: #2D8B55;
+            --inter-color: #D4812F;
+            --adv-color: #B8342E;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--off-white);
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        /* ——— NAV ——— */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 12px rgba(26,26,26,0.06);
+            z-index: 1000;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 16px;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px;
+            background: var(--boyd-navy); border-radius: 6px;
+            color: var(--boyd-gold); font-weight: 800; font-size: 0.65rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.5px;
+        }
+        .nav-divider { width: 1px; height: 24px; background: var(--mid-gray); }
+        .nav-title-text {
+            font-size: 0.82rem; color: var(--text-muted);
+            font-weight: 500;
+        }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-link {
+            padding: 7px 13px; border-radius: 20px;
+            text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); transition: all 0.25s; cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-link:hover { background: var(--light-gray); color: var(--boyd-navy); }
+        .nav-link.active { background: var(--boyd-navy); color: var(--white); }
+
+        /* ——— SECTIONS ——— */
+        section {
+            min-height: 100vh;
+            padding: 110px 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+        /* ——— INTRO ——— */
+        .intro {
+            background: var(--boyd-navy-dark);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: -30%; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(200,16,46,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .intro::after {
+            content: '';
+            position: absolute;
+            bottom: -25%; left: -8%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(212,168,67,0.10) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .intro-content { position: relative; z-index: 2; }
+        .intro-client-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            opacity: 0.5; margin-bottom: 32px;
+        }
+        .intro h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.6rem; font-weight: 800;
+            letter-spacing: -1px; margin-bottom: 24px;
+            line-height: 1.15;
+        }
+        .intro h1 span { color: var(--boyd-gold); }
+        .intro-desc {
+            font-size: 1.05rem; max-width: 740px;
+            margin: 0 auto 36px; opacity: 0.78;
+            line-height: 1.7;
+        }
+        .intro-audience-pill {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600; font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            background: rgba(200,16,46,0.15);
+            border: 1.5px solid rgba(200,16,46,0.4);
+            color: var(--boyd-red-light);
+        }
+        .intro-meta {
+            margin-top: 40px; display: flex; justify-content: center; gap: 40px;
+            opacity: 0.45; font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        /* ——— SECTION HEADERS ——— */
+        .section-header { margin-bottom: 36px; }
+        .section-label {
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--boyd-red); margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem; font-weight: 800;
+            color: var(--boyd-navy); letter-spacing: -0.5px;
+        }
+        .section-subtitle {
+            font-size: 0.95rem; color: var(--text-muted);
+            margin-top: 8px; max-width: 700px;
+        }
+
+        /* ——— TABS ——— */
+        .tab-bar {
+            display: flex; gap: 4px;
+            background: var(--light-gray);
+            padding: 5px; border-radius: 12px;
+            width: fit-content; margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 18px; border: none;
+            background: transparent; color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; border-radius: 8px;
+            transition: all 0.25s;
+        }
+        .tab-btn:hover { color: var(--text-dark); background: rgba(255,255,255,0.5); }
+        .tab-btn.active { background: var(--white); color: var(--boyd-navy); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-bottom: 3px solid var(--boyd-red); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ——— OVERVIEW ——— */
+        .overview-section { background: var(--white); }
+        .problem-card {
+            background: linear-gradient(135deg, #FDF6F0 0%, #FFF9F5 100%);
+            border: 1px solid rgba(212,129,47,0.2);
+            border-left: 4px solid var(--inter-color);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .problem-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--inter-color); margin-bottom: 10px;
+        }
+        .problem-card p {
+            font-size: 0.9rem; color: var(--text-body); line-height: 1.7;
+        }
+
+        /* VPP CALLOUT */
+        .vpp-card {
+            background: linear-gradient(135deg, var(--boyd-navy-dark) 0%, var(--boyd-navy) 100%);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+            color: var(--white);
+        }
+        .vpp-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--boyd-gold); margin-bottom: 10px;
+        }
+        .vpp-card p {
+            font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.7;
+        }
+        .vpp-pillars {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            margin-top: 16px;
+        }
+        .vpp-pillar {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(212,168,67,0.25);
+            border-radius: 10px; padding: 12px 16px;
+            font-size: 0.82rem; color: rgba(255,255,255,0.9);
+            display: flex; align-items: start; gap: 8px;
+        }
+        .vpp-pillar .vpp-num {
+            background: var(--boyd-gold);
+            color: var(--boyd-navy-dark);
+            font-weight: 800; font-size: 0.65rem;
+            width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 1px;
+        }
+
+        .audience-profile {
+            background: var(--off-white);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+            border-left: 4px solid var(--boyd-navy);
+        }
+        .audience-profile h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--boyd-navy); margin-bottom: 12px;
+        }
+        .profile-factors {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px;
+        }
+        .profile-factor {
+            font-size: 0.85rem; color: var(--text-body);
+            display: flex; align-items: start; gap: 8px;
+        }
+        .profile-factor .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            margin-top: 7px; flex-shrink: 0;
+            background: var(--boyd-red);
+        }
+
+        /* DOCUMENTATION GAP CARD */
+        .doc-gap-card {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF9F7 100%);
+            border: 1px solid rgba(200,16,46,0.15);
+            border-left: 4px solid var(--boyd-red);
+            border-radius: 14px; padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .doc-gap-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--boyd-red); margin-bottom: 10px;
+        }
+        .doc-gap-card p {
+            font-size: 0.9rem; color: var(--text-body); line-height: 1.7;
+        }
+        .gap-examples {
+            margin-top: 14px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .gap-example {
+            display: flex; align-items: start; gap: 10px;
+            font-size: 0.84rem; color: var(--text-body);
+            background: rgba(200,16,46,0.04);
+            padding: 10px 14px; border-radius: 8px;
+        }
+        .gap-example .gap-icon {
+            flex-shrink: 0; font-size: 0.85rem; margin-top: 1px;
+        }
+
+        .practice-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .practice-card:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.06); }
+        .practice-card h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            color: var(--boyd-navy); margin-bottom: 8px;
+        }
+        .practice-card .practice-num {
+            display: inline-block; font-size: 0.7rem;
+            font-weight: 700; padding: 3px 10px;
+            border-radius: 20px; margin-bottom: 10px;
+            background: var(--boyd-navy-pale); color: var(--boyd-navy);
+        }
+        .practice-card p {
+            font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
+        }
+
+        /* ——— PRACTICES & MILESTONES ——— */
+        .practices-section { background: var(--off-white); }
+        .milestone-row {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .milestone-level {
+            width: 120px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            border-radius: 10px; color: var(--white);
+            padding: 14px 10px;
+        }
+        .milestone-level.basic { background: var(--basic-color); }
+        .milestone-level.intermediate { background: var(--inter-color); }
+        .milestone-level.advanced { background: var(--adv-color); }
+        .milestone-statement {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .milestone-activity-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            border: 2px solid var(--boyd-navy);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--boyd-navy);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .milestone-activity-btn:hover {
+            background: var(--boyd-navy);
+            color: var(--white);
+        }
+        .milestone-activity-btn .arrow { font-size: 0.9rem; }
+
+        /* ——— ACTIVITY SECTIONS ——— */
+        .activity-section { background: var(--white); }
+        .activity-section.alt-bg { background: var(--off-white); }
+        .activity-display {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .activity-block {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .activity-block:last-child { border-bottom: none; }
+        .activity-block-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px;
+        }
+        .activity-block-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .activity-block-icon.objective { background: rgba(27,42,74,0.08); }
+        .activity-block-icon.outcomes { background: rgba(200,16,46,0.08); }
+        .activity-block-icon.documentation { background: rgba(212,168,67,0.12); }
+        .activity-block-label {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+        .activity-name-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--boyd-navy); margin-bottom: 10px;
+        }
+        .activity-difficulty {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            padding: 3px 12px; border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .activity-difficulty.basic { background: rgba(45,139,85,0.1); color: var(--basic-color); }
+        .activity-difficulty.intermediate { background: rgba(212,129,47,0.1); color: var(--inter-color); }
+        .activity-difficulty.advanced { background: rgba(184,52,46,0.1); color: var(--adv-color); }
+        .activity-objective-text {
+            font-size: 1rem; color: var(--boyd-navy);
+            background: rgba(27,42,74,0.04);
+            padding: 14px 18px; border-radius: 10px;
+            border-left: 4px solid var(--boyd-navy);
+            line-height: 1.65;
+        }
+        .outcomes-list { display: flex; flex-direction: column; gap: 10px; }
+        .outcome-item {
+            display: flex; align-items: start; gap: 12px;
+            font-size: 0.88rem;
+            padding: 10px 16px; border-radius: 10px;
+            background: rgba(200,16,46,0.04);
+        }
+        .outcome-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            margin-top: 6px; flex-shrink: 0;
+            background: var(--boyd-red);
+        }
+        .doc-list { display: flex; flex-direction: column; gap: 10px; }
+        .doc-item {
+            display: flex; align-items: start; gap: 12px;
+            font-size: 0.88rem;
+            padding: 10px 16px; border-radius: 10px;
+            background: rgba(212,168,67,0.06);
+        }
+        .doc-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            margin-top: 6px; flex-shrink: 0;
+            background: var(--boyd-gold);
+        }
+
+        /* ——— PERSONALIZED ——— */
+        .personalized-section { background: var(--off-white); }
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .dept-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 22px 24px;
+            transition: box-shadow 0.2s;
+        }
+        .dept-card:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.06); }
+        .dept-card-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 14px;
+        }
+        .dept-icon {
+            width: 36px; height: 36px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            background: var(--boyd-navy-pale);
+        }
+        .dept-card h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            color: var(--boyd-navy);
+        }
+        .dept-card-subtitle {
+            font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
+        }
+        .dept-ppe-list {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .dept-ppe-item {
+            font-size: 0.82rem; color: var(--text-body);
+            display: flex; align-items: start; gap: 8px;
+            line-height: 1.5;
+        }
+        .dept-ppe-item .ppe-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            margin-top: 7px; flex-shrink: 0;
+            background: var(--boyd-red);
+        }
+        .dept-monitor-label {
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--inter-color); margin: 12px 0 6px;
+        }
+        .dept-monitor-item {
+            font-size: 0.8rem; color: var(--text-muted);
+            font-style: italic; line-height: 1.5;
+            padding-left: 13px;
+            position: relative;
+        }
+        .dept-monitor-item::before {
+            content: '\26A0';
+            position: absolute; left: 0; top: 0;
+            font-size: 0.7rem; font-style: normal;
+        }
+
+        /* ——— MODAL ——— */
+        .modal-overlay {
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(26,26,26,0.5);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--white); border-radius: 20px;
+            width: 90%; max-width: 680px; max-height: 85vh;
+            overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 28px;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky; top: 0; background: var(--white);
+            border-radius: 20px 20px 0 0; z-index: 1;
+        }
+        .modal-header h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--boyd-navy);
+        }
+        .modal-close {
+            width: 32px; height: 32px; border-radius: 8px;
+            border: none; background: var(--light-gray);
+            cursor: pointer; font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: var(--mid-gray); }
+        .modal-body { padding: 24px 28px; }
+        .modal-section { margin-bottom: 24px; }
+        .modal-section-label {
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 10px;
+        }
+        .modal-objective {
+            font-size: 0.92rem; line-height: 1.7;
+            background: rgba(27,42,74,0.04);
+            padding: 14px 18px; border-radius: 10px;
+            border-left: 4px solid var(--boyd-navy);
+        }
+
+        /* ——— COMMENT SYSTEM ——— */
+        .comment-toggle {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 52px; height: 52px; border-radius: 50%;
+            background: var(--boyd-navy); color: var(--white);
+            border: none; font-size: 1.3rem; cursor: pointer;
+            box-shadow: 0 4px 16px rgba(27,42,74,0.3);
+            z-index: 1500; transition: all 0.25s;
+        }
+        .comment-toggle:hover { transform: scale(1.08); }
+        .comment-toggle.active { background: var(--boyd-red); }
+        .comment-count {
+            position: absolute; top: -4px; right: -4px;
+            min-width: 20px; height: 20px; border-radius: 10px;
+            background: var(--boyd-red); color: var(--white);
+            font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 5px;
+        }
+        .comment-panel {
+            position: fixed; bottom: 92px; right: 28px;
+            width: 380px; max-height: 70vh;
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+            z-index: 1500;
+            display: flex; flex-direction: column;
+            transform: translateY(20px); opacity: 0;
+            pointer-events: none; transition: all 0.3s;
+        }
+        .comment-panel.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+        .comment-panel-header {
+            padding: 16px 20px; font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border-bottom: 1px solid var(--light-gray);
+            color: var(--boyd-navy);
+        }
+        .comment-panel-content {
+            flex: 1; overflow-y: auto; padding: 12px 16px;
+            max-height: 260px;
+        }
+        .no-comments { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
+        .comment-item {
+            padding: 12px 14px; border-radius: 10px;
+            background: var(--off-white); margin-bottom: 8px;
+        }
+        .comment-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px; }
+        .comment-author { font-weight: 600; font-size: 0.82rem; color: var(--boyd-navy); }
+        .comment-section-tag {
+            font-size: 0.65rem; font-weight: 600;
+            background: var(--boyd-navy-pale); color: var(--boyd-navy);
+            padding: 2px 8px; border-radius: 10px;
+        }
+        .comment-delete {
+            border: none; background: none; cursor: pointer; font-size: 0.8rem; opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .comment-delete:hover { opacity: 1; }
+        .comment-text { font-size: 0.82rem; color: var(--text-body); line-height: 1.55; }
+        .comment-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; }
+        .comment-form {
+            border-top: 1px solid var(--light-gray); padding: 14px 16px;
+        }
+        .comment-form-group { margin-bottom: 10px; }
+        .comment-form-group label {
+            display: block; font-size: 0.72rem; font-weight: 600;
+            color: var(--text-muted); margin-bottom: 4px;
+        }
+        .comment-form-group input,
+        .comment-form-group select,
+        .comment-form-group textarea {
+            width: 100%; padding: 8px 12px; border: 1px solid var(--light-gray);
+            border-radius: 8px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem; transition: border-color 0.2s;
+        }
+        .comment-form-group input:focus,
+        .comment-form-group select:focus,
+        .comment-form-group textarea:focus {
+            outline: none; border-color: var(--boyd-navy);
+        }
+        .comment-form-group textarea { min-height: 70px; resize: vertical; }
+        .comment-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+        .comment-btn {
+            padding: 8px 18px; border-radius: 8px; border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .comment-btn-primary { background: var(--boyd-navy); color: var(--white); }
+        .comment-btn-primary:hover { background: var(--boyd-navy-deep); }
+        .comment-btn-secondary { background: var(--light-gray); color: var(--text-muted); }
+        .export-comments-btn {
+            width: 100%; padding: 8px; border: 1px dashed var(--mid-gray);
+            border-radius: 8px; background: transparent;
+            color: var(--text-muted); font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; margin-bottom: 12px; transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .export-comments-btn:hover { border-color: var(--boyd-navy); color: var(--boyd-navy); }
+
+        /* ——— RESPONSIVE ——— */
+        @media (max-width: 768px) {
+            section { padding: 100px 20px 60px; }
+            .nav { padding: 10px 16px; }
+            .nav-links { display: none; }
+            .intro h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.5rem; }
+            .profile-factors { grid-template-columns: 1fr; }
+            .vpp-pillars { grid-template-columns: 1fr; }
+            .milestone-row { flex-direction: column; }
+            .milestone-level { width: 100%; }
+            .tab-bar { width: 100%; }
+            .tab-btn { font-size: 0.72rem; padding: 8px 12px; }
+            .dept-grid { grid-template-columns: 1fr; }
+            .comment-panel { width: calc(100vw - 32px); right: 16px; }
+            .intro-meta { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav class="nav">
+    <div class="nav-brand">
+        <div class="nav-logo">
+            <div class="nav-logo-icon">BG</div>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-title-text">Risk &amp; Safety Initiative</div>
+    </div>
+    <div class="nav-links">
+        <a class="nav-link active" href="#intro" onclick="scrollToSection(event,'intro')">Intro</a>
+        <a class="nav-link" href="#overview" onclick="scrollToSection(event,'overview')">Overview</a>
+        <a class="nav-link" href="#practices" onclick="scrollToSection(event,'practices')">Practices &amp; Milestones</a>
+        <a class="nav-link" href="#activities" onclick="scrollToSection(event,'activities')">Activities</a>
+        <a class="nav-link" href="#personalized" onclick="scrollToSection(event,'personalized')">Operational Context</a>
+    </div>
+</nav>
+
+<!-- ═══════ INTRO ═══════ -->
+<section id="intro" class="intro">
+    <div class="intro-content container">
+        <div class="intro-client-name">Boyd Gaming &mdash; Risk &amp; Safety</div>
+        <h1>See the Hazard, <span>Own the Standard</span></h1>
+        <p class="intro-desc">Equip Boyd Gaming's managers, supervisors, and department leads to actively teach, coach, and document safety in their day-to-day operations &mdash; building the leadership behaviors and verifiable evidence that close the gap between annual training and on-the-floor practice, and lay the foundation for VPP certification across every property.</p>
+        <div class="intro-audience-pill">&#128736; Managers, Supervisors &amp; Department Leads</div>
+        <div class="intro-meta">
+            <span>4 OSHA Priority Areas</span>
+            <span>12-week program</span>
+            <span>SHARP &rarr; VPP Pathway</span>
+            <span>Documented Evidence at Every Step</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ OVERVIEW ═══════ -->
+<section id="overview" class="overview-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Overview</div>
+            <div class="section-title">Initiative Structure</div>
+            <div class="section-subtitle">Four practices targeting the behavioral shift from managers who take safety training to managers who teach, coach, document, and own safety across their teams &mdash; with evidence that proves it.</div>
+        </div>
+
+        <div class="problem-card">
+            <h4>&#9888;&#65039; The Business Challenge</h4>
+            <p>Boyd Gaming operates properties across Nevada and nationwide &mdash; ranging from fewer than 50 team members to over 1,300 &mdash; each with gaming floors, back-of-house operations, food &amp; beverage facilities, and large-scale mechanical infrastructure. The safety risks are real and the injury costs are measurable: slips, trips, and falls drive workers' compensation claims, ergonomic strains account for significant lost time, and needlestick exposures create both medical costs and regulatory scrutiny. Boyd tracks Total Recordable Case rates by NAICS code, monitors monthly statistics against national industry benchmarks, and leadership watches every dollar spent on workers' comp, clinics, and physical therapy. The challenge isn't that managers haven't completed their annual training &mdash; they have. It's what happens after. LOTO audits come back as "I did it" with no documentation. Pre-shift forklift checklists aren't being completed. Department inspections show "no issues" month after month while real hazards &mdash; broken floor drains, missing ground pins, unlabeled chemicals &mdash; persist. Managers know the rules but aren't actively teaching, coaching, or holding their teams accountable on the floor. When safety issues arise, they come back asking <em>how</em> to have the conversation instead of handling it themselves. This isn't a training gap &mdash; it's a leadership practice gap. And closing it is the difference between checking the compliance box and building the kind of safety culture that earns VPP certification.</p>
+        </div>
+
+        <div class="vpp-card">
+            <h4>&#127942; The Strategic North Star: VPP Certification</h4>
+            <p>Boyd Gaming's goal is to become the first hotel-casino to achieve OSHA VPP (Voluntary Protection Programs) status &mdash; building on current SHARP certification in Nevada. VPP doesn't just require that employees are trained. It requires that managers and supervisors actively lead, coach, and reinforce safety in daily operations. Every activity in this initiative is designed to build the specific leadership behaviors VPP demands &mdash; and produce the documented evidence that proves those behaviors are happening.</p>
+            <div class="vpp-pillars">
+                <div class="vpp-pillar"><div class="vpp-num">1</div><div><strong>Management Leadership &amp; Employee Involvement</strong> &mdash; Managers must set clear safety responsibilities, hold themselves and teams accountable, and include safety in performance evaluations</div></div>
+                <div class="vpp-pillar"><div class="vpp-num">2</div><div><strong>Worksite Analysis</strong> &mdash; Supervisors must conduct regular inspections and observations, investigate incidents and near-misses, and ensure corrective actions are sustained</div></div>
+                <div class="vpp-pillar"><div class="vpp-num">3</div><div><strong>Hazard Prevention &amp; Control</strong> &mdash; Leaders must coach employees on safe methods, correct unsafe behaviors in real time, and reinforce procedures consistently</div></div>
+                <div class="vpp-pillar"><div class="vpp-num">4</div><div><strong>Safety &amp; Health Training</strong> &mdash; All employees including managers receive role-specific training; supervisors must know enough to instruct and guide employees on safe work practices</div></div>
+            </div>
+        </div>
+
+        <div class="doc-gap-card">
+            <h4>&#128203; The Documentation Gap</h4>
+            <p>The single biggest obstacle Boyd faces isn't lack of knowledge &mdash; it's lack of proof. Properties say they follow safety procedures, but when asked to show evidence, there's nothing there. This initiative addresses that directly: every activity produces documented, verifiable evidence that a manager taught, coached, audited, or corrected a safety practice. No more "I did it" without proof.</p>
+            <div class="gap-examples">
+                <div class="gap-example"><div class="gap-icon">&#10060;</div><div><strong>LOTO audits requested &rarr;</strong> "I did it" returned with no supporting documentation, photos, or records</div></div>
+                <div class="gap-example"><div class="gap-icon">&#10060;</div><div><strong>Pre-shift forklift checklists &rarr;</strong> Not being completed, or completed retroactively at the end of the shift</div></div>
+                <div class="gap-example"><div class="gap-icon">&#10060;</div><div><strong>Department inspections &rarr;</strong> "No issues found" month after month while broken floor drains, missing ground pins, and unlabeled chemicals persist</div></div>
+                <div class="gap-example"><div class="gap-icon">&#10060;</div><div><strong>Equipment inspections &rarr;</strong> Microwaves, ground plugs, electrical cords not inspected or documented despite SOP requirements</div></div>
+            </div>
+        </div>
+
+        <div class="audience-profile">
+            <h4>&#128736; Manager &amp; Supervisor Profile</h4>
+            <div class="profile-factors">
+                <div class="profile-factor"><div class="dot"></div>Managers, supervisors, and department leads across all Boyd properties &mdash; from 2-manager properties to sites with dozens of leaders</div>
+                <div class="profile-factor"><div class="dot"></div>Dual role in this initiative: personally demonstrating correct safety procedures AND teaching their teams to do the same</div>
+                <div class="profile-factor"><div class="dot"></div>Responsible for departments with highest safety exposure: Housekeeping (BBP), Facilities (PIT, LOTO, confined spaces), F&amp;B (LOTO, BBP), Warehouse (PIT)</div>
+                <div class="profile-factor"><div class="dot"></div>Currently complete annual OSHA compliance training but lack the practice of actively coaching safety on the floor</div>
+                <div class="profile-factor"><div class="dot"></div>Tendency to defer difficult safety conversations &mdash; coming back to corporate Risk &amp; Safety asking "how do I address this?" instead of handling it directly</div>
+                <div class="profile-factor"><div class="dot"></div>Operate in a 24/7 environment where production pressure (keeping machines running, serving guests, short-staffed shifts) competes with safety compliance</div>
+                <div class="profile-factor"><div class="dot"></div>Some properties have dedicated safety managers; others have dual-role security/safety personnel &mdash; leadership depth varies significantly</div>
+                <div class="profile-factor"><div class="dot"></div>SHARP/VPP requirements expect these leaders to go above and beyond annual training &mdash; to actively lead, instruct, and guide employees on safe work practices daily</div>
+            </div>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-num">Practice 1</div>
+            <h4>Lock Out / Tag Out (LOTO)</h4>
+            <p>Moving managers from "my team knows LOTO" to "I can prove my team does LOTO correctly, every time, and here's the documentation." This practice builds the ability to conduct and document LOTO audits, identify and map all energy sources on property-specific equipment, and coach team members through correct procedures with verifiable evidence &mdash; closing the gap between claimed compliance and proven compliance.</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 2</div>
+            <h4>Bloodborne Pathogens (BBP)</h4>
+            <p>Boyd's highest-exposure departments &mdash; Housekeeping, Security, Gaming Floor &mdash; encounter blood and bodily fluids regularly, and needlestick injuries remain a top cost driver. This practice equips managers to run documented response drills, verify team readiness (PPE stock, kit locations, team knowledge), coach proper exposure response, and produce the evidence that their team can respond correctly &mdash; not just that they attended a class.</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 3</div>
+            <h4>Powered Industrial Trucks (PIT)</h4>
+            <p>Pre-shift forklift checklists not being completed is one of Traci's most cited documentation failures. This practice tackles it head-on: managers will conduct documented pre-operation inspections, evaluate operators under real working conditions, and coach team members with specific, evidence-backed feedback &mdash; building the daily discipline that turns a certification card into genuine operational competence.</p>
+        </div>
+        <div class="practice-card">
+            <div class="practice-num">Practice 4</div>
+            <h4>Confined Spaces</h4>
+            <p>From grease traps and utility vaults to elevator pits and mechanical rooms, Boyd properties contain permit-required confined spaces that are entered regularly. This practice builds the ability to correctly complete entry permits (not as paperwork, but as life-safety plans), operate atmospheric monitoring equipment with confidence, and lead entry drills with full role rotation &mdash; documented at every step for SHARP/VPP evidence.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ PRACTICES & MILESTONES ═══════ -->
+<section id="practices" class="practices-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Practices &amp; Milestones</div>
+            <div class="section-title">Milestone Progression</div>
+            <div class="section-subtitle">Each practice progresses through three milestone levels &mdash; from personal execution to team coaching to documented leadership. Click an activity name to preview its objective, expected report-back outcomes, and the documentation it produces.</div>
+        </div>
+
+        <div class="tab-bar" id="pracTabs">
+            <button class="tab-btn active" onclick="switchTab('pracTabs','pracContent','prac1')">LOTO</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac2')">Bloodborne Pathogens</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac3')">Powered Industrial Trucks</button>
+            <button class="tab-btn" onclick="switchTab('pracTabs','pracContent','prac4')">Confined Spaces</button>
+        </div>
+
+        <div id="pracContent">
+            <!-- PRACTICE 1 — LOTO -->
+            <div class="tab-content active" id="prac1">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Demonstrate the full LOTO sequence on property-specific equipment with documented photo evidence at each isolation point</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-2')">Prove the Sequence <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Create a documented, machine-specific LOTO procedure that any team member could follow &mdash; with all energy sources mapped</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-5')">Map the Energy <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Conduct a LOTO compliance audit of your area, coach a team member through the correct procedure, and document both</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p1-8')">Coach &amp; Audit <span class="arrow">&rarr;</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 2 — BBP -->
+            <div class="tab-content" id="prac2">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Run a documented BBP spill response drill with your team using correct PPE, cleanup, and disposal procedures</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-2')">Spill Response Drill <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Coach a team member through the full exposure incident reporting chain &mdash; from first aid through post-exposure follow-up</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-5')">Exposure Walkthrough <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Audit your department's BBP readiness &mdash; kit stock, PPE supply, team knowledge &mdash; close the gaps and document everything</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p2-8')">Readiness Audit <span class="arrow">&rarr;</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 3 — PIT -->
+            <div class="tab-content" id="prac3">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Conduct a documented pre-operation inspection on your department's PIT and identify a planted defect</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-2')">Inspection Challenge <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Evaluate an operator under real working conditions and deliver specific, documented coaching feedback</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-5')">Operator Evaluation <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Build and implement a pre-shift inspection accountability system for your department and track compliance for two weeks</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p3-8')">Inspection Accountability <span class="arrow">&rarr;</span></button>
+                </div>
+            </div>
+            <!-- PRACTICE 4 — Confined Spaces -->
+            <div class="tab-content" id="prac4">
+                <div class="milestone-row">
+                    <div class="milestone-level basic">Basic</div>
+                    <div class="milestone-statement">Correctly operate a 4-gas monitor, take documented atmospheric readings, and interpret results against safe entry thresholds</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p4-2')">Monitor &amp; Measure <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level intermediate">Inter.</div>
+                    <div class="milestone-statement">Complete a permit for a real confined space at your property &mdash; identifying all hazards, controls, and rescue procedures</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p4-5')">Permit Deep-Dive <span class="arrow">&rarr;</span></button>
+                </div>
+                <div class="milestone-row">
+                    <div class="milestone-level advanced">Advanced</div>
+                    <div class="milestone-statement">Lead a documented confined space entry drill with full role rotation and rescue plan execution</div>
+                    <button class="milestone-activity-btn" onclick="openModal('p4-8')">Entry Drill &amp; Rescue <span class="arrow">&rarr;</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ ACTIVITIES ═══════ -->
+<section id="activities" class="activity-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Activities</div>
+            <div class="section-title">Activity Overview</div>
+            <div class="section-subtitle">Each activity tells managers what to do, what to report back, and what documentation it produces for SHARP/VPP evidence. Three activities per practice, progressing from personal execution to team coaching to sustained leadership.</div>
+        </div>
+        <div class="tab-bar" id="actTabs">
+            <button class="tab-btn active" onclick="switchTab('actTabs','actContent','act-p1')">LOTO</button>
+            <button class="tab-btn" onclick="switchTab('actTabs','actContent','act-p2')">Bloodborne Pathogens</button>
+            <button class="tab-btn" onclick="switchTab('actTabs','actContent','act-p3')">Powered Industrial Trucks</button>
+            <button class="tab-btn" onclick="switchTab('actTabs','actContent','act-p4')">Confined Spaces</button>
+        </div>
+        <div id="actContent"></div>
+    </div>
+</section>
+
+<!-- ═══════ PERSONALIZED ═══════ -->
+<section id="personalized" class="personalized-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Operational Context</div>
+            <div class="section-title">Where These Practices Come to Life</div>
+            <div class="section-subtitle">Activities are written for any Boyd manager, but the safety situations and documentation gaps vary by department. Here are the key operational areas where these practices &mdash; and the evidence they produce &mdash; matter most.</div>
+        </div>
+
+        <div class="dept-grid">
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#127920;</div>
+                    <div>
+                        <h5>Gaming Floor &amp; Slot Operations</h5>
+                        <div class="dept-card-subtitle">Slot Supervisors, Technician Leads</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>LOTO on slot machines, bill validators, ticket printers &mdash; multiple energy sources per machine, high volume of daily entries</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>BBP exposure from guest injuries at gaming stations &mdash; nosebleeds, cuts, medical emergencies on a crowded 24/7 floor</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>OASIS card and MEAL book procedures intersect with LOTO compliance &mdash; machine access documentation already required</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Shift handoffs must communicate LOTO status clearly &mdash; who locked out what, and when it's safe to re-energize</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Technicians skipping LOTO verification on "quick fixes" &mdash; no evidence the procedure was followed</div>
+                <div class="dept-monitor-item">BBP cleanup happening without proper PPE or documentation because the spill kit is in the back</div>
+                <div class="dept-monitor-item">Supervisors claiming LOTO audits are done but unable to produce any records when asked</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#128295;</div>
+                    <div>
+                        <h5>Facilities &amp; Engineering</h5>
+                        <div class="dept-card-subtitle">Maintenance Supervisors, Engineering Leads</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>LOTO on HVAC systems, electrical panels, elevators, escalators, boilers &mdash; complex multi-energy isolation required</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Confined space entry into utility vaults, elevator pits, mechanical rooms, cooling towers &mdash; permit-required and high-consequence</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>PIT operations for equipment transport, renovation support, and materials handling throughout the property</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Equipment inspections (ground plugs, electrical cords, power tools) required by SOP but inconsistently documented</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Confined space permits treated as paperwork to file, not safety plans to follow &mdash; boxes checked without genuine hazard assessment</div>
+                <div class="dept-monitor-item">Atmospheric monitoring skipped because "we've entered this space before and it was fine"</div>
+                <div class="dept-monitor-item">Equipment inspection logs showing "no issues" for months while real hazards persist unaddressed</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#127860;</div>
+                    <div>
+                        <h5>Food &amp; Beverage Operations</h5>
+                        <div class="dept-card-subtitle">Kitchen Supervisors, F&amp;B Managers</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>LOTO on commercial kitchen equipment: mixers, slicers, dishwashers, fryers, walk-in compressors &mdash; time pressure is the biggest shortcut driver</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>BBP exposure from knife cuts, broken glass, burns &mdash; fast-paced environment where injuries are frequent and cleanup is improvised</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Confined space awareness for grease traps, walk-in cooler/freezer mechanical areas, and exhaust hood ductwork</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>PIT use in receiving areas where food deliveries intersect with warehouse operations</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Reaching into jammed equipment without de-energizing because "service is in 10 minutes" &mdash; no documentation trail</div>
+                <div class="dept-monitor-item">Blood cleanup with a wet rag instead of the BBP spill kit &mdash; incident never documented</div>
+                <div class="dept-monitor-item">Grease trap cleanouts without atmospheric monitoring or permit documentation</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#128230;</div>
+                    <div>
+                        <h5>Warehouse &amp; Receiving</h5>
+                        <div class="dept-card-subtitle">Warehouse Leads, Receiving Supervisors</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>PIT operations are daily and high-frequency &mdash; forklifts, pallet jacks, reach trucks in tight spaces with pedestrian traffic</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>LOTO on conveyor systems, compactors, balers, and dock levelers &mdash; often cleared without proper isolation</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Mixed traffic zones where delivery drivers, warehouse staff, and property team members share space daily</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Loading dock hazards: dock leveler gaps, trailer creep, unsecured loads, and variable lighting conditions</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Pre-shift forklift checklists not completed, completed retroactively, or pencil-whipped with identical entries daily</div>
+                <div class="dept-monitor-item">Operators driving without seatbelts or horn use &mdash; no one observing and no coaching documented</div>
+                <div class="dept-monitor-item">Baler/compactor jams cleared without LOTO because "it takes too long" &mdash; near-misses unreported</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#128703;</div>
+                    <div>
+                        <h5>Housekeeping &amp; EVS</h5>
+                        <div class="dept-card-subtitle">Housekeeping Supervisors, EVS Leads</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>BBP is the primary and highest-frequency exposure risk &mdash; blood and bodily fluids in guest rooms, restrooms, gaming areas, public spaces</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Sharps hazards: needles and razors found in trash, between cushions, in laundry &mdash; needlestick injuries are a top cost driver for Boyd</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>First-responder role: housekeeping is often the first team to discover a BBP situation and must respond immediately</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Chemical handling intersects with BBP cleanup &mdash; correct disinfectant selection and contact time are critical</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Needlestick or exposure incidents not reported because team members fear discipline or believe "it didn't break the skin"</div>
+                <div class="dept-monitor-item">Sharps picked up by hand instead of with tongs or a sharps container &mdash; no training documentation to show proper method was taught</div>
+                <div class="dept-monitor-item">Wrong cleaning products used for BBP situations &mdash; supervisors unable to demonstrate their team was trained on correct products</div>
+            </div>
+
+            <div class="dept-card">
+                <div class="dept-card-header">
+                    <div class="dept-icon">&#128721;</div>
+                    <div>
+                        <h5>Security &amp; Emergency Response</h5>
+                        <div class="dept-card-subtitle">Security Supervisors, ERT Leads</div>
+                    </div>
+                </div>
+                <div class="dept-ppe-list">
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>BBP first-responder situations: medical emergencies, altercations, guest injuries anywhere on property &mdash; often high-stress, time-critical</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Scene management that protects the injured person, other team members, and guests from secondary exposure</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Coordination with EMS and communication with Surveillance during safety incidents &mdash; documented handoff required</div>
+                    <div class="dept-ppe-item"><div class="ppe-dot"></div>Confined space rescue team membership &mdash; trained, equipped, and drilled, not just assigned on paper</div>
+                </div>
+                <div class="dept-monitor-label">Where the documentation gap shows up</div>
+                <div class="dept-monitor-item">Responding to medical emergencies without gloves because "there wasn't time" &mdash; exposure goes undocumented</div>
+                <div class="dept-monitor-item">Incident reports that capture the event but omit whether BBP protocols were followed during response</div>
+                <div class="dept-monitor-item">Confined space rescue team members assigned but never drilled &mdash; no evidence of readiness</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════ MODAL ═══════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="modal-close" onclick="closeModalDirect()">&#10005;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ═══════ COMMENTS ═══════ -->
+<button class="comment-toggle" id="commentToggle" title="Comments" style="position:relative">
+    &#128172;
+    <span class="comment-count" id="commentCount" style="display:none">0</span>
+</button>
+<div class="comment-panel" id="commentPanel">
+    <div class="comment-panel-header">Comments &amp; Feedback</div>
+    <div class="comment-panel-content" id="commentsList">
+        <div class="no-comments">No comments yet. Add the first one!</div>
+    </div>
+    <div class="comment-form">
+        <button class="export-comments-btn" id="exportComments">&#128229; Export Comments</button>
+        <form id="commentForm">
+            <div class="comment-form-group">
+                <label for="commentAuthor">Your Name</label>
+                <input type="text" id="commentAuthor" required placeholder="Enter your name">
+            </div>
+            <div class="comment-form-group">
+                <label for="commentSection">Section</label>
+                <select id="commentSection" required>
+                    <option value="">Select a section&hellip;</option>
+                    <option value="intro">Intro</option>
+                    <option value="overview">Overview</option>
+                    <option value="practices">Practices & Milestones</option>
+                    <option value="activities">Activities</option>
+                    <option value="personalized">Operational Context</option>
+                    <option value="general">General Feedback</option>
+                </select>
+            </div>
+            <div class="comment-form-group">
+                <label for="commentText">Comment</label>
+                <textarea id="commentText" required placeholder="Share your feedback or suggestions&hellip;"></textarea>
+            </div>
+            <div class="comment-form-actions">
+                <button type="button" class="comment-btn comment-btn-secondary" id="cancelComment">Cancel</button>
+                <button type="submit" class="comment-btn comment-btn-primary">Add Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// ═══════ ACTIVITY DATA ═══════
+const activities = {
+// PRACTICE 1 — Lock Out / Tag Out
+'p1-2': {
+    name: 'Prove the Sequence',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Pick a piece of equipment your team services regularly \u2014 a slot machine, a commercial mixer, a dishwasher, an HVAC unit, a conveyor belt \u2014 and personally demonstrate the complete LOTO sequence from start to finish. No shortcuts, no steps from memory, no "I usually just..." Walk through every step: notify affected team members, shut down the equipment using the normal stopping procedure, isolate all energy sources (electrical, hydraulic, pneumatic, mechanical, thermal), apply your personal lock and tag to each isolation point, and verify zero energy state by attempting to restart the equipment. Then reverse the process: remove your lock and tag, restore energy, verify the equipment operates normally, and notify affected team members that the equipment is back in service. Have another manager or your direct supervisor observe and verify each step. Document the sequence with photos at each isolation point. This matters because when Traci asks for LOTO audit evidence, this is what "I did it" actually looks like. Every manager should be able to produce documentation like this on demand.',
+    outcomes: [
+        'Named the specific piece of equipment and its location on property',
+        'Demonstrated the full LOTO sequence with an observer present \u2014 no steps skipped',
+        'Documented each energy isolation point with a photo showing the lock and tag in place',
+        'Verified zero energy state by attempting to restart before beginning work'
+    ],
+    documentation: [
+        'Timestamped photos of each isolation point with lock and tag applied',
+        'Written record naming the equipment, location, date, time, and observer',
+        'Observer signature or verification confirming all steps were completed correctly',
+        'Zero-energy verification documented (attempted restart with result)'
+    ]
+},
+'p1-5': {
+    name: 'Map the Energy',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Select a piece of complex equipment at your property \u2014 something with multiple energy sources that your team might not fully account for. This could be a slot machine with both electrical supply and a backup battery, a commercial kitchen fryer with electrical heating and a gas line, an elevator with electrical, hydraulic, and stored mechanical energy, or an HVAC unit with electrical, refrigerant pressure, and thermal energy. Map every energy source on that equipment: what type of energy, where it enters the equipment, where the isolation point is, what device is used to isolate it, and how you verify it\u2019s at zero energy. Create a written machine-specific LOTO procedure that any team member in your department could follow \u2014 not just the people who "know" the equipment. Then walk one of your team members through the procedure and ask them to identify anything you missed. The goal is to build the habit of thinking about energy sources comprehensively and to produce a documented procedure that lives with the equipment. When an OSHA inspector or VPP evaluator asks "show me your LOTO procedures for this equipment," this is the answer.',
+    outcomes: [
+        'Named the equipment and listed every energy source (electrical, mechanical, hydraulic, pneumatic, thermal, stored)',
+        'Created a written machine-specific LOTO procedure with isolation points and verification methods for each energy source',
+        'Walked a team member through the procedure and documented their feedback',
+        'Identified at least one energy source that is commonly overlooked or underestimated on this equipment'
+    ],
+    documentation: [
+        'Written machine-specific LOTO procedure \u2014 formatted to be posted at or near the equipment',
+        'Energy source map listing every energy type, entry point, isolation device, and verification method',
+        'Record of team member walkthrough including questions raised and corrections made',
+        'Signed and dated by the creating manager and the team member who reviewed it'
+    ]
+},
+'p1-8': {
+    name: 'Coach & Audit',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Conduct a LOTO compliance audit of your work area. Walk through and check every piece of equipment that is currently locked out: Is the lock properly applied? Is the tag filled out completely and legibly? Is the isolation point correct? Has zero energy been verified? Are affected team members aware? Document the status of each \u2014 compliant or not, and what specifically is wrong. Then find a team member who regularly performs LOTO and observe them executing the procedure on a piece of equipment. Don\u2019t interrupt \u2014 watch the full sequence. Afterward, have a direct coaching conversation: what did they do correctly? What did they miss or shortcut? Be specific \u2014 "You isolated the electrical but didn\u2019t check for stored energy in the capacitor" is coaching. "Be more careful" is not. This is the activity that builds the leadership behavior VPP evaluators are looking for: managers who don\u2019t just know LOTO \u2014 they actively audit, coach, and correct it in their areas, and they can prove it. No more "I did it" without evidence. Document the audit findings, the coaching conversation, and set a follow-up date. Check back within one week to verify the coached behavior changed.',
+    outcomes: [
+        'Audited all currently locked-out equipment in your area and documented compliance status for each',
+        'Observed a team member performing LOTO and documented what they did correctly and what they missed',
+        'Delivered specific coaching \u2014 named the exact steps that were missed or shortcut and explained why they matter',
+        'Set a follow-up date and verified within one week that the coached behavior changed'
+    ],
+    documentation: [
+        'Completed LOTO audit checklist for every locked-out piece of equipment in the area',
+        'Written observation record of the team member\u2019s LOTO performance \u2014 steps correct and steps missed',
+        'Coaching conversation record: what was discussed, what the team member committed to, follow-up date',
+        'Follow-up verification record confirming behavior change (or escalation if not)'
+    ]
+},
+
+// PRACTICE 2 \u2014 Bloodborne Pathogens
+'p2-2': {
+    name: 'Spill Response Drill',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'As a manager, run a BBP spill response drill with your team \u2014 don\u2019t just participate, lead it. Stage a realistic scenario relevant to your department: a simulated guest nosebleed at a gaming station, a mock needlestick discovery in a restroom, fake blood on a restaurant table, or a simulated injury in the kitchen. Before the drill, verify that the nearest BBP spill kit is stocked and accessible. Then walk your team through the response: locate and retrieve the kit, don the correct PPE (gloves at minimum, plus face shield and gown if splashing is likely), contain and clean the spill using the approved disinfectant and correct contact time, dispose of contaminated materials in the biohazard container, remove PPE in the correct doffing sequence, and wash hands. Observe your team members during the drill \u2014 who did it correctly and who improvised or skipped steps? Coach in real time. Document the drill: who participated, what scenario was used, what went well, what needs work. This is the kind of documented drill evidence that SHARP and VPP evaluators look for \u2014 proof that managers are actively training their teams, not just relying on annual classes.',
+    outcomes: [
+        'Described the scenario you staged and identified your department and property',
+        'Verified kit stock and accessibility before the drill \u2014 documented kit location and contents',
+        'Observed your team\u2019s performance and gave specific coaching on what was correct and what was missed',
+        'Documented the drill: participant names, date, scenario, observations, coaching points, and follow-up items'
+    ],
+    documentation: [
+        'Drill record with date, location, scenario description, and participant sign-in sheet',
+        'Kit inspection log: location, contents verified, expiration dates checked, restocking needs identified',
+        'Manager observation notes: who performed correctly, who needs additional coaching, specific gaps noted',
+        'Photo evidence of drill setup and team participation (where appropriate)'
+    ]
+},
+'p2-5': {
+    name: 'Exposure Walkthrough',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'As a manager, coach a team member through the complete exposure incident reporting chain as if they had just experienced a real BBP exposure \u2014 a needlestick, a splash to the eyes, contact with an open wound. This matters because needlestick injuries are one of Boyd\u2019s top cost drivers, and the reporting chain is where things break down: team members don\u2019t report because they\u2019re scared, don\u2019t know who to call, or convince themselves "it didn\u2019t break the skin." Start with immediate first aid: wash the wound with soap and water, flush eyes if splashed, don\u2019t squeeze or milk a needlestick wound. Then walk through the reporting steps: notify your supervisor immediately, document the incident (what happened, when, where, what body fluids were involved, what PPE was in use), identify the source individual if known, and get to post-exposure medical evaluation within the required timeframe. Make sure your team member can name who to call, where to go, and what the timeline is \u2014 at your specific property. The goal is to make the reporting chain feel familiar before someone is scared and in pain. You should be able to handle this conversation yourself without calling Traci to ask "what do I do?"',
+    outcomes: [
+        'Named the team member you coached and the exposure scenario you walked through',
+        'Covered immediate first aid steps appropriate to the exposure type',
+        'Walked through the full reporting chain: supervisor notification, incident documentation, source identification, medical evaluation',
+        'Confirmed the team member could name who to call and where to go for post-exposure evaluation at your specific property'
+    ],
+    documentation: [
+        'Coaching record: team member name, date, scenario used, steps covered',
+        'Team member\u2019s demonstrated knowledge: documented their answers to "who do you call?" and "where do you go?"',
+        'Property-specific reporting chain reference card created or reviewed during the session',
+        'Follow-up plan: when this team member will be assessed again or will coach another team member'
+    ]
+},
+'p2-8': {
+    name: 'Readiness Audit',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Audit the BBP readiness of your entire department \u2014 not just whether kits exist, but whether your team could actually respond correctly right now if a real exposure happened. Check every BBP spill kit in your area: Is it stocked? Is the disinfectant within its expiration date? Are there enough gloves in the right sizes? Is the biohazard disposal container accessible and not overflowing? Then test your team: Ask at least three team members where the nearest spill kit is \u2014 can they find it without searching? Ask them to describe the correct PPE for a blood cleanup. Ask them who they would call and what they would do if they had a needlestick. Document every gap you find \u2014 expired supplies, missing equipment, team members who hesitate or give wrong answers \u2014 and fix them. Restock kits, replace expired materials, brief your team on what you found. This is the audit that proves your department is ready, not just trained. When department inspections claim "no issues," this is what actually checking looks like. Follow up in two weeks to verify the fixes held and the knowledge stuck.',
+    outcomes: [
+        'Audited every BBP spill kit in your department: location, stock level, expiration dates, accessibility',
+        'Tested at least three team members on kit locations, correct PPE, and exposure reporting \u2014 documented each response',
+        'Listed every gap found (expired supplies, missing equipment, knowledge deficits) and the corrective action taken for each',
+        'Followed up within two weeks to verify kits remained stocked and team members retained the knowledge'
+    ],
+    documentation: [
+        'Complete kit inventory for every BBP spill kit in the department \u2014 location, contents, condition, expiration dates',
+        'Team knowledge assessment: names, questions asked, answers given, pass/fail for each',
+        'Corrective action log: gap identified, action taken, date completed, responsible person',
+        'Two-week follow-up record confirming sustained readiness (or identifying new gaps)'
+    ]
+},
+
+// PRACTICE 3 \u2014 Powered Industrial Trucks
+'p3-2': {
+    name: 'Inspection Challenge',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'As a manager, personally conduct a thorough, documented pre-operation inspection on one of your department\u2019s powered industrial trucks \u2014 using the actual inspection checklist, not from memory. Check every item: tires/wheels, forks/load backrest, hydraulic system (leaks, hose condition), mast and chains, brakes (service and parking), steering, horn, lights, gauges, seatbelt, overhead guard, battery/fuel level, and general condition. Before you begin, have a trainer or safety lead plant one defect on the equipment (disconnected horn wire, low hydraulic fluid, worn fork tip, etc.). Your job is to find it through your normal inspection process \u2014 not by looking for what\u2019s "wrong," but by being thorough enough that abnormal conditions can\u2019t hide. This matters because pre-shift forklift checklists are one of the most frequently pencil-whipped documents across Boyd properties. When you expect your operators to do this every shift, you need to be able to do it yourself \u2014 correctly, thoroughly, and documented. Prove you can before you coach your team.',
+    outcomes: [
+        'Named the specific PIT and completed the full inspection checklist \u2014 every item checked, not just signed',
+        'Found the planted defect through normal inspection process and described what was wrong',
+        'Correctly determined whether the defect made the equipment unsafe to operate',
+        'Documented the inspection and defect finding with the correct response (repair, tag out, report to supervisor)'
+    ],
+    documentation: [
+        'Completed pre-operation inspection checklist with every item individually addressed \u2014 no blanket "OK"',
+        'Defect report: what was found, where, severity assessment, and corrective action taken or requested',
+        'Signed and dated by the inspecting manager with the specific PIT identified (unit number, type, location)',
+        'Photo of the identified defect (where applicable)'
+    ]
+},
+'p3-5': {
+    name: 'Operator Evaluation',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Evaluate one of your PIT operators during actual working conditions \u2014 not a drill, not a skills test, a real shift. Observe them for at least 30 minutes during normal operations: Are they completing the pre-operation inspection before use \u2014 actually checking items, or just signing the form? Are they using the horn at blind corners? Maintaining safe speed? Keeping forks low during travel? Wearing their seatbelt? Checking for pedestrians before backing? Stacking loads correctly? Are they operating through areas with pedestrian traffic safely \u2014 making eye contact, yielding right-of-way, maintaining safe distances? Document what you observe \u2014 specific safe behaviors and specific unsafe behaviors, not generalizations. Then have a direct coaching conversation: name the behaviors you saw, explain the real consequences (not "it\u2019s the rule" but "if you don\u2019t horn at that corner, someone coming out of the break room will walk into your path"), and agree on one thing they will do differently starting now. This is what Boyd needs from managers: not just signing off on PIT certifications, but actively observing, coaching, and documenting operator performance in real conditions.',
+    outcomes: [
+        'Named the operator and observed them for at least 30 minutes during live operations',
+        'Documented specific safe and unsafe behaviors observed \u2014 actual actions, not generalizations',
+        'Delivered a coaching conversation naming specific behaviors and explaining real consequences',
+        'Agreed on one specific behavior change and set a follow-up date within one week'
+    ],
+    documentation: [
+        'Operator evaluation form: operator name, date, time, duration, PIT unit, work area',
+        'Behavioral observation log: safe behaviors observed, unsafe behaviors observed, with specific details',
+        'Coaching conversation record: what was discussed, operator\u2019s response, commitment made, follow-up date',
+        'Follow-up record confirming behavior change within one week (or documenting escalation)'
+    ]
+},
+'p3-8': {
+    name: 'Inspection Accountability',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Build and implement a pre-shift inspection accountability system for your department that makes pencil-whipping impossible and genuine compliance the default. Start by reviewing the last two weeks of pre-operation inspection checklists for every PIT in your area. Look for the signs of fake compliance: identical entries every day, forms completed at the end of the shift instead of the beginning, the same "all OK" with no defects ever noted, forms missing for certain shifts or operators. Document what you find. Then design a simple accountability system: How will you verify inspections are actually happening before operation? Consider spot-checks where you verify the inspection against the equipment\u2019s actual condition, requiring operators to note the odometer/hour-meter reading to prove they checked at the right time, rotating who reviews the forms, or building a 5-minute inspection review into shift handoffs. Implement the system for two weeks and track the results: Did completion rates improve? Did operators start finding and reporting real defects? Did anyone push back, and how did you handle that conversation? This is the leadership behavior that closes the documentation gap Traci is dealing with \u2014 not just telling people to complete the form, but building a system that makes compliance the easier path.',
+    outcomes: [
+        'Reviewed two weeks of historical inspection checklists and documented the signs of pencil-whipping found',
+        'Designed a specific accountability system and described why it addresses the gaps you found',
+        'Implemented the system for two full weeks and tracked daily compliance data',
+        'Documented the results: completion rates before vs. after, defects reported, pushback encountered and how it was handled'
+    ],
+    documentation: [
+        'Baseline audit of historical inspection records \u2014 documented gaps, patterns, and compliance percentage',
+        'Written accountability system: what changed, how it works, who is responsible for verification',
+        'Two-week compliance tracking log: daily completion rates, defects reported, spot-check results',
+        'Before/after comparison showing measurable improvement (or honest assessment of what didn\u2019t work and why)'
+    ]
+},
+
+// PRACTICE 4 \u2014 Confined Spaces
+'p4-2': {
+    name: 'Monitor & Measure',
+    difficulty: 'Basic (Difficulty 2)',
+    diffClass: 'basic',
+    objective: 'Get hands-on with a 4-gas atmospheric monitor \u2014 the actual unit used at your Boyd property. Start by identifying the four gases it measures: oxygen (O\u2082), lower explosive limit (LEL/combustible gases), hydrogen sulfide (H\u2082S), and carbon monoxide (CO). Then practice: turn the unit on, verify it completes its startup self-test, confirm the calibration is current (check the calibration sticker or log), take a reading in ambient air and verify the baseline values are normal, and then take readings at or near a confined space on your property (a grease trap hatch, a utility vault opening, an elevator pit access point). Know the alarm set points for each gas and what each alarm means for entry decisions: what oxygen level is too low? Too high? What LEL reading means you don\u2019t enter? What H\u2082S or CO reading triggers evacuation? Document your readings, the space you measured, and what the readings would mean for an entry decision. As a manager, you need to be able to verify that your team is using this equipment correctly \u2014 and you can\u2019t do that if you\u2019ve never operated it yourself.',
+    outcomes: [
+        'Identified the 4-gas monitor model used at your property and the four gases it measures',
+        'Verified calibration status and completed a startup sequence correctly',
+        'Took readings at a real confined space location on property and documented the results',
+        'Correctly stated the alarm set points for each gas and what each reading means for entry decisions'
+    ],
+    documentation: [
+        'Monitor identification: model, serial number, calibration date, calibration due date',
+        'Atmospheric reading log: space identified, date, time, O\u2082/LEL/H\u2082S/CO readings, ambient comparison',
+        'Entry decision analysis: based on the readings, would entry be permitted? Why or why not?',
+        'Signed and dated by the manager with the specific confined space identified'
+    ]
+},
+'p4-5': {
+    name: 'Permit Deep-Dive',
+    difficulty: 'Intermediate (Difficulty 5)',
+    diffClass: 'intermediate',
+    objective: 'Select a real confined space at your Boyd property \u2014 a grease trap, utility vault, elevator pit, water treatment area, or mechanical room that qualifies as permit-required \u2014 and complete a confined space entry permit as if you were preparing for an actual entry. This is not a form-filling exercise. For each section of the permit, think through what it actually means for this specific space: What are the hazards (atmospheric, engulfment, entrapment, electrical, thermal, mechanical)? What atmospheric testing is required and what are the acceptable readings? What PPE is needed and why? What ventilation is required? Who is the authorized entrant, the attendant, and the entry supervisor? What is the communication method? What is the rescue plan \u2014 who is called, where is the rescue equipment staged, how does the entrant get out if conditions change? Walk the completed permit by the actual space and verify that everything on paper matches reality. Have your property\u2019s safety manager or another qualified person review the permit with you. This is the difference between a permit that\u2019s a compliance checkbox and a permit that\u2019s a life-safety plan. VPP evaluators will look at your permits and ask your managers to explain them \u2014 can yours?',
+    outcomes: [
+        'Named the specific confined space and completed the entry permit with all sections addressed',
+        'Identified every hazard specific to that space \u2014 not generic hazards, the actual ones present',
+        'Defined the rescue plan: who, how, where the equipment is staged, and the communication protocol',
+        'Had the permit reviewed by a qualified person and documented feedback or corrections received'
+    ],
+    documentation: [
+        'Completed confined space entry permit for the specific space \u2014 every section filled, no blanks',
+        'Hazard assessment specific to this space with controls identified for each hazard',
+        'Rescue plan documentation: rescue method, equipment location, responsible personnel, communication protocol',
+        'Reviewer comments and corrections documented \u2014 signed by both the manager and the reviewer'
+    ]
+},
+'p4-8': {
+    name: 'Entry Drill & Rescue',
+    difficulty: 'Advanced (Difficulty 8)',
+    diffClass: 'advanced',
+    objective: 'Lead a confined space entry drill at your Boyd property with full role rotation. Assemble a team of at least three people and assign roles: authorized entrant, attendant, and entry supervisor. Complete the full pre-entry process: atmospheric monitoring, permit completion, PPE verification, communication check, and rescue equipment staging. Then execute the entry drill. The entrant enters the space (or simulates entry at the access point if actual entry isn\u2019t safe for a drill). The attendant maintains communication, monitors conditions, and maintains the entry log. The entry supervisor oversees the operation and verifies compliance. Midway through, introduce a simulated emergency \u2014 the monitor alarms, the entrant reports feeling dizzy, communication is lost \u2014 and execute the rescue plan. After the drill, rotate roles so everyone experiences each position. Debrief as a team: What went smoothly? Where did communication break down? Was the rescue equipment accessible and functional? What would you change? This is the kind of drill that VPP evaluators want to see documented \u2014 not just that you have a rescue plan, but that your team has practiced it, found the gaps, and improved. Document everything.',
+    outcomes: [
+        'Led the drill with at least three participants and rotated all three roles (entrant, attendant, supervisor)',
+        'Completed the full pre-entry process including atmospheric monitoring, permit, PPE, communication, and rescue staging',
+        'Executed a simulated emergency scenario and evaluated the team\u2019s rescue response',
+        'Debriefed with the team and documented what worked, what broke down, and what changes will be made'
+    ],
+    documentation: [
+        'Drill record: date, location, participants (with roles at each rotation), scenario description',
+        'Completed entry permit used during the drill \u2014 treated as a live document',
+        'Emergency response evaluation: what the simulated emergency was, how the team responded, time to rescue initiation',
+        'Debrief notes: strengths, gaps, corrective actions, and timeline for next drill \u2014 signed by all participants'
+    ]
+}
+};
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550 RENDER ACTIVITY CARDS \u2550\u2550\u2550\u2550\u2550\u2550\u2550
+function renderActivityCard(key) {
+    const a = activities[key];
+    if (!a) return '<p>Activity not found.</p>';
+    let docSection = '';
+    if (a.documentation && a.documentation.length > 0) {
+        docSection = `<div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon documentation">&#128203;</div>
+                <div class="activity-block-label">Documentation Produced (SHARP/VPP Evidence)</div>
+            </div>
+            <div class="doc-list">
+                ${a.documentation.map(d => `
+                    <div class="doc-item">
+                        <div class="doc-dot"></div>
+                        <div>${d}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+    return `<div class="activity-display">
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon objective">&#127919;</div>
+                <div class="activity-block-label">Objective</div>
+            </div>
+            <div class="activity-name-display">${a.name}</div>
+            <div class="activity-difficulty ${a.diffClass}">${a.difficulty}</div>
+            <div class="activity-objective-text">${a.objective}</div>
+        </div>
+        <div class="activity-block">
+            <div class="activity-block-header">
+                <div class="activity-block-icon outcomes">&#128202;</div>
+                <div class="activity-block-label">What We're Looking For in Your Report-Back</div>
+            </div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item">
+                        <div class="outcome-dot"></div>
+                        <div>${o}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ${docSection}
+    </div>`;
+}
+
+// Populate activity tab containers
+const container = document.getElementById('actContent');
+if (container) {
+    const practices = [
+        { id: 'act-p1', keys: ['p1-2','p1-5','p1-8'], label: 'LOTO' },
+        { id: 'act-p2', keys: ['p2-2','p2-5','p2-8'], label: 'Bloodborne Pathogens' },
+        { id: 'act-p3', keys: ['p3-2','p3-5','p3-8'], label: 'Powered Industrial Trucks' },
+        { id: 'act-p4', keys: ['p4-2','p4-5','p4-8'], label: 'Confined Spaces' }
+    ];
+    container.innerHTML = practices.map((p, pi) => {
+        const cards = p.keys.map(k => renderActivityCard(k)).join('<div style="height:24px"></div>');
+        return `<div class="tab-content${pi === 0 ? ' active' : ''}" id="${p.id}">${cards}</div>`;
+    }).join('');
+}
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550 TAB SWITCHING \u2550\u2550\u2550\u2550\u2550\u2550\u2550
+function switchTab(tabBarId, contentId, activeTabId) {
+    const bar = document.getElementById(tabBarId);
+    const contentContainer = document.getElementById(contentId);
+    bar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    contentContainer.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(activeTabId).classList.add('active');
+}
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550 MODAL \u2550\u2550\u2550\u2550\u2550\u2550\u2550
+function openModal(key) {
+    const a = activities[key];
+    if (!a) return;
+    let docModal = '';
+    if (a.documentation && a.documentation.length > 0) {
+        docModal = `<div class="modal-section">
+            <div class="modal-section-label">Documentation Produced (SHARP/VPP Evidence)</div>
+            <div class="doc-list">
+                ${a.documentation.map(d => `
+                    <div class="doc-item">
+                        <div class="doc-dot"></div>
+                        <div>${d}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+    document.getElementById('modalTitle').textContent = a.name;
+    document.getElementById('modalBody').innerHTML = `
+        <div class="modal-section">
+            <div class="modal-section-label">Objective</div>
+            <div class="modal-objective">&#127919; ${a.objective}</div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-label">What We're Looking For in Your Report-Back</div>
+            <div class="outcomes-list">
+                ${a.outcomes.map(o => `
+                    <div class="outcome-item">
+                        <div class="outcome-dot"></div>
+                        <div>${o}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ${docModal}
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550 NAVIGATION \u2550\u2550\u2550\u2550\u2550\u2550\u2550
+function scrollToSection(e, id) {
+    e.preventDefault();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+function updateActiveNav() {
+    let current = '';
+    sections.forEach(s => { if (window.pageYOffset >= s.offsetTop - 180) current = s.id; });
+    navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === `#${current}`) l.classList.add('active');
+    });
+}
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
+
+// \u2550\u2550\u2550\u2550\u2550\u2550\u2550 COMMENTS SYSTEM \u2550\u2550\u2550\u2550\u2550\u2550\u2550
+const commentToggle = document.getElementById('commentToggle');
+const commentPanel = document.getElementById('commentPanel');
+const commentForm = document.getElementById('commentForm');
+const commentsList = document.getElementById('commentsList');
+const commentCount = document.getElementById('commentCount');
+const cancelComment = document.getElementById('cancelComment');
+const exportBtn = document.getElementById('exportComments');
+const STORAGE_KEY = 'boyd_safety_initiative_comments';
+
+function loadComments() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+function saveComments(c) { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); }
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+function formatDate(ts) {
+    const d = new Date(ts), n = new Date(), m = Math.floor((n - d) / 60000);
+    if (m < 1) return 'Just now';
+    if (m < 60) return m + ' min ago';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ago';
+    const dy = Math.floor(h / 24);
+    if (dy < 7) return dy + 'd ago';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+const sectionLabels = {
+    'intro':'Intro','overview':'Overview','practices':'Practices & Milestones',
+    'activities':'Activities','personalized':'Operational Context',
+    'general':'General Feedback'
+};
+function renderComments() {
+    const comments = loadComments();
+    if (!comments.length) {
+        commentsList.innerHTML = '<div class="no-comments">No comments yet. Add the first one!</div>';
+        commentCount.style.display = 'none';
+    } else {
+        commentCount.style.display = 'flex';
+        commentCount.textContent = comments.length;
+        commentsList.innerHTML = comments.map((c, i) => `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div>
+                        <div class="comment-author">${escapeHtml(c.author)}</div>
+                        <span class="comment-section-tag">${sectionLabels[c.section] || c.section}</span>
+                    </div>
+                    <button class="comment-delete" onclick="deleteComment(${i})">&#128465;</button>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+                <div class="comment-time">${formatDate(c.timestamp)}</div>
+            </div>
+        `).join('');
+    }
+}
+commentToggle.addEventListener('click', () => {
+    commentPanel.classList.toggle('open');
+    commentToggle.classList.toggle('active');
+});
+cancelComment.addEventListener('click', () => {
+    commentForm.reset();
+    commentPanel.classList.remove('open');
+    commentToggle.classList.remove('active');
+});
+commentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const a = document.getElementById('commentAuthor').value.trim();
+    const s = document.getElementById('commentSection').value;
+    const t = document.getElementById('commentText').value.trim();
+    if (!a || !s || !t) return;
+    const c = loadComments();
+    c.unshift({ author: a, section: s, text: t, timestamp: Date.now() });
+    saveComments(c); renderComments(); commentForm.reset();
+    const btn = commentForm.querySelector('button[type="submit"]');
+    const orig = btn.textContent; btn.textContent = '\u2713 Added!'; btn.style.background = 'var(--basic-color)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+});
+window.deleteComment = function(i) {
+    if (!confirm('Delete this comment?')) return;
+    const c = loadComments(); c.splice(i, 1); saveComments(c); renderComments();
+};
+exportBtn.addEventListener('click', () => {
+    const comments = loadComments();
+    if (!comments.length) { alert('No comments to export.'); return; }
+    let txt = 'BOYD GAMING \u2014 SEE THE HAZARD, OWN THE STANDARD\nComments & Feedback Export\n' + '='.repeat(50) + '\n';
+    txt += `Generated: ${new Date().toLocaleString()}\nTotal: ${comments.length}\n` + '='.repeat(50) + '\n\n';
+    comments.forEach((c, i) => {
+        txt += `#${i+1} | ${c.author} | ${sectionLabels[c.section]||c.section} | ${new Date(c.timestamp).toLocaleString()}\n${c.text}\n` + '-'.repeat(50) + '\n\n';
+    });
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `Boyd_Safety_Initiative_Comments_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    const orig = exportBtn.textContent; exportBtn.textContent = '\u2713 Exported!'; exportBtn.style.background = 'var(--basic-color)';
+    setTimeout(() => { exportBtn.textContent = orig; exportBtn.style.background = ''; }, 2000);
+});
+renderComments();
+</script>
+</body>
+</html>
