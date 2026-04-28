@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GWATS Practice Exam — 60 Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --surface2: #1e1e1e;
+  --border: #2a2a2a;
+  --border-light: #333;
+  --text: #e8e4dc;
+  --text-dim: #888;
+  --text-muted: #555;
+  --gold: #c9a84c;
+  --gold-dim: #8a6b2a;
+  --green: #4a9e6b;
+  --green-dim: #1f4a30;
+  --red: #b54a4a;
+  --red-dim: #4a1f1f;
+  --blue: #4a7eb5;
+  --accent: #c9a84c;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── COVER PAGE ── */
+#cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+#cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 70%, rgba(74,126,181,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-rule {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  margin-bottom: 32px;
+}
+.cover-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.cover-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 8px;
+  max-width: 700px;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.cover-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cover-meta-item {
+  text-align: center;
+}
+.cover-meta-item .num {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+.cover-meta-item .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.cover-sep {
+  width: 1px;
+  height: 50px;
+  background: var(--border);
+  align-self: center;
+}
+.start-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  background: var(--gold);
+  color: #0e0e0e;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  position: relative;
+}
+.start-btn:hover {
+  background: #e0bf6a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(201,168,76,0.25);
+}
+.cover-instructions {
+  max-width: 480px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-top: 20px;
+  line-height: 1.7;
+}
+
+/* ── EXAM LAYOUT ── */
+#exam { display: none; }
+
+.exam-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0 24px;
+}
+.exam-header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  gap: 16px;
+}
+.exam-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.progress-bar-wrap {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.4s ease;
+  border-radius: 2px;
+}
+.exam-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* ── QUESTIONS ── */
+.questions-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 24px 120px;
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 24px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.section-divider:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.question-block {
+  margin-bottom: 32px;
+  padding: 24px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.question-block.answered { border-color: var(--border-light); }
+.question-block.correct { border-color: var(--green); }
+.question-block.incorrect { border-color: var(--red); }
+
+.q-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.q-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.q-text {
+  font-family: 'Lora', serif;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.q-text .scenario {
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-left: 2px solid var(--border-light);
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+  position: relative;
+  user-select: none;
+}
+.option:hover:not(.locked) {
+  border-color: var(--gold-dim);
+  background: #1f1c14;
+}
+.option.selected { border-color: var(--gold); background: #1f1c14; }
+.option.correct-ans { border-color: var(--green) !important; background: var(--green-dim) !important; }
+.option.wrong-ans { border-color: var(--red) !important; background: var(--red-dim) !important; }
+.option.locked { cursor: default; }
+
+.opt-letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  min-width: 18px;
+  padding-top: 1px;
+  transition: color 0.15s;
+}
+.option.selected .opt-letter { color: var(--gold); }
+.option.correct-ans .opt-letter { color: var(--green); }
+.option.wrong-ans .opt-letter { color: var(--red); }
+
+.opt-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.feedback {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 2px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct-fb { background: var(--green-dim); border-left: 3px solid var(--green); color: #a8e6c0; }
+.feedback.wrong-fb { background: var(--red-dim); border-left: 3px solid var(--red); color: #e6a8a8; }
+.feedback strong { font-weight: 600; }
+
+/* ── SUBMIT BAR ── */
+.submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  display: none;
+  z-index: 50;
+}
+.submit-bar-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.submit-info {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+.submit-info span { color: var(--gold); font-weight: 600; }
+.submit-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 11px 28px;
+  background: var(--gold);
+  color: #0e0e0e;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.submit-btn:hover { background: #e0bf6a; }
+.submit-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+
+/* ── RESULTS ── */
+#results { display: none; }
+.results-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.results-score-ring {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid var(--gold);
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--surface);
+}
+.score-num {
+  font-family: 'Lora', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.score-denom {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+.score-grade {
+  font-family: 'Lora', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.score-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.results-breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.rb-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px;
+  text-align: center;
+  border-radius: 2px;
+}
+.rb-num {
+  font-family: 'Lora', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: block;
+}
+.rb-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 4px;
+  display: block;
+}
+.rb-correct .rb-num { color: var(--green); }
+.rb-wrong .rb-num { color: var(--red); }
+.rb-skipped .rb-num { color: var(--text-dim); }
+.rb-pct .rb-num { color: var(--gold); }
+.retry-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 32px;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+.retry-btn:hover { background: var(--gold); color: #0e0e0e; }
+.review-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 32px;
+  background: var(--gold);
+  color: #0e0e0e;
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  margin-left: 12px;
+}
+.review-btn:hover { background: #e0bf6a; }
+.results-actions { text-align: center; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ COVER ═══════ -->
+<div id="cover">
+  <div class="cover-rule"></div>
+  <div class="cover-eyebrow">Law School Exam Prep</div>
+  <h1 class="cover-title">Gifts, Wills, Trusts <em>&</em> Estates</h1>
+  <div class="cover-subtitle">Sample Multiple Choice Examination · California Emphasis</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="num">60</span>
+      <span class="lbl">Questions</span>
+    </div>
+    <div class="cover-sep"></div>
+    <div class="cover-meta-item">
+      <span class="num">3</span>
+      <span class="lbl">Choices Each</span>
+    </div>
+    <div class="cover-sep"></div>
+    <div class="cover-meta-item">
+      <span class="num">A+B+C</span>
+      <span class="lbl">Format</span>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startExam()">Begin Examination →</button>
+  <p class="cover-instructions">Select the single best answer for each question. Some questions involve math problems — no calculator required. California law distinctions are tested throughout.</p>
+</div>
+
+<!-- ═══════ EXAM ═══════ -->
+<div id="exam">
+  <div class="exam-header">
+    <div class="exam-header-inner">
+      <div class="exam-brand">GWATS Exam</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="exam-counter" id="examCounter">0 / 60 answered</div>
+    </div>
+  </div>
+
+  <div class="questions-wrap" id="questionsWrap"></div>
+
+  <div class="submit-bar" id="submitBar">
+    <div class="submit-bar-inner">
+      <div class="submit-info">Answered: <span id="answeredCount">0</span> of 60</div>
+      <button class="submit-btn" id="submitBtn" onclick="submitExam()">Submit Exam</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ RESULTS ═══════ -->
+<div id="results">
+  <div class="results-wrap">
+    <div class="results-score-ring">
+      <div class="score-circle">
+        <div class="score-num" id="scoreNum">—</div>
+        <div class="score-denom">out of 60</div>
+      </div>
+      <div class="score-grade" id="scoreGrade"></div>
+      <div class="score-pct" id="scorePct"></div>
+    </div>
+    <div class="results-breakdown">
+      <div class="rb-card rb-correct"><span class="rb-num" id="rCorrect">0</span><span class="rb-label">Correct</span></div>
+      <div class="rb-card rb-wrong"><span class="rb-num" id="rWrong">0</span><span class="rb-label">Incorrect</span></div>
+      <div class="rb-card rb-skipped"><span class="rb-num" id="rSkipped">0</span><span class="rb-label">Skipped</span></div>
+      <div class="rb-card rb-pct"><span class="rb-num" id="rPct">0%</span><span class="rb-label">Score</span></div>
+    </div>
+    <div class="results-actions">
+      <button class="retry-btn" onclick="retryExam()">Retake Exam</button>
+      <button class="review-btn" onclick="reviewExam()">Review Answers</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  // ── SECTION 1: PROBATE & NON-PROBATE PROPERTY ──
+  {
+    section: "Probate & Non-Probate Property",
+    q: "Henry dies owning the following assets. Which of the following is a PROBATE asset?",
+    scenario: "Henry held a life insurance policy naming his son as beneficiary; a bank account in joint tenancy with right of survivorship with his daughter; and a vacation home titled solely in Henry's name.",
+    opts: [
+      "The life insurance policy naming his son as beneficiary",
+      "The bank account held in joint tenancy with right of survivorship",
+      "The vacation home titled solely in Henry's name"
+    ],
+    ans: 2,
+    explain: "Property titled solely in the decedent's name (with no automatic transfer mechanism) is probate property requiring court involvement. Life insurance with a named beneficiary and joint tenancy property both pass automatically outside of probate."
+  },
+  {
+    section: null,
+    q: "Which of the following is NOT available as a non-probate transfer mechanism in California?",
+    opts: [
+      "A revocable living trust holding title to real property",
+      "Tenancy by the Entirety between spouses",
+      "A pay-on-death (POD) bank account designating a beneficiary"
+    ],
+    ans: 1,
+    explain: "Tenancy by the Entirety is NOT available in California. It is only available for spouses and is recognized in many other states, but California does not recognize it as a form of ownership."
+  },
+  {
+    section: null,
+    q: "Maria dies intestate. She had a retirement account naming her predeceased daughter Tammy as beneficiary. No alternate beneficiary was designated. What is most likely true?",
+    opts: [
+      "The IRA automatically becomes part of Maria's probate estate",
+      "The IRA passes to Tammy's children by operation of the anti-lapse statute",
+      "Whether the IRA passes automatically depends on the terms of the agreement with the institution, which may provide for automatic alternate beneficiaries"
+    ],
+    ans: 2,
+    explain: "Whether an IRA with a predeceased beneficiary passes automatically depends on the agreement with the financial institution — the institution's contract may provide for automatic alternate beneficiaries. This is why the answer is 'maybe,' not a definitive automatic pass or automatic probate result."
+  },
+
+  // ── SECTION 2: WILLS — BASICS ──
+  {
+    section: "Wills — Formation & Vocabulary",
+    q: "A person who receives property under a will is most precisely called a:",
+    opts: [
+      "Testator",
+      "Legatee or Beneficiary",
+      "Administrator"
+    ],
+    ans: 1,
+    explain: "The recipient of a devise under a Will is called a Legatee or Beneficiary. The Testator is the creator of the Will. An Administrator is the personal representative when there is no Will or when the executor is not named in the Will."
+  },
+  {
+    section: null,
+    q: "Under California Probate Code § 6110, which of the following correctly states the witness requirement for a valid Will?",
+    opts: [
+      "Two witnesses must sign the Will, but they may do so after the testator's death if done within a reasonable time",
+      "Two witnesses must sign the Will during the testator's lifetime, and both must be present at the same time when the testator signs or acknowledges the Will",
+      "One notary public may substitute for two witnesses if the testator is physically unable to obtain witnesses"
+    ],
+    ans: 1,
+    explain: "Under CA Prob. Code § 6110, two witnesses must sign DURING the testator's lifetime, with both present at the same time when the testator signed or acknowledged the Will. Post-death witnessing is NOT allowed in California (unlike the UPC). Notarization is not a substitute under California law."
+  },
+  {
+    section: null,
+    q: "Under the UPC, which of the following is NOT a required formality for a valid attested Will?",
+    opts: [
+      "Signed by the testator",
+      "Two witnesses who sign within a reasonable time, even after the testator's death",
+      "Publication — a declaration by the testator that 'this is my Will'"
+    ],
+    ans: 2,
+    explain: "Under the UPC, 'Publication and Request' (declaring 'This is my Will') is NOT required. The UPC requires signing by the testator and either two witnesses (who may sign even after testator's death) or notarization. The UPC dropped the publication requirement."
+  },
+  {
+    section: null,
+    q: "Harry signed his Will while alone. His friend Marco witnessed and acknowledged Harry's signature. Then Marco went to the basement; Harry's friend Linda came upstairs, and Harry had Linda witness the same Will. In a strict compliance/majority jurisdiction, is this Will valid?",
+    opts: [
+      "Yes, because each witness individually saw the testator acknowledge his signature",
+      "No, because the witnesses did not sign in each other's presence and neither saw Harry sign the Will originally",
+      "Yes, because the testator signed the Will and two witnesses ultimately signed it"
+    ],
+    ans: 1,
+    explain: "Under the strict compliance/majority rule, the witnesses must see the testator sign (or acknowledge) AND sign in the presence of each other. Here, Marco and Linda never signed in each other's presence — they signed at different times. The Will is invalid."
+  },
+  {
+    section: null,
+    q: "Under the California purging statute (Prob. Code § 6112), if a Will is witnessed by only two people — one of whom is a beneficiary under the Will — what is the effect?",
+    opts: [
+      "The entire Will is void because one witness is interested",
+      "The Will is valid, but a rebuttable presumption arises that the interested witness procured the devise by fraud or undue influence; the interested witness may take no more than their intestate share if the presumption is not rebutted",
+      "The interested witness's gift is automatically void, but the Will otherwise stands"
+    ],
+    ans: 1,
+    explain: "Under CA Prob. Code § 6112, the Will is NOT automatically void. However, when fewer than 2 other subscribing witnesses are disinterested, a rebuttable presumption of undue influence arises. If not rebutted, the interested witness takes only up to their intestate share."
+  },
+
+  // ── SECTION 3: TESTATOR CAPACITY & VALIDITY ──
+  {
+    section: "Testator Capacity & Will Validity",
+    q: "What is the standard for testamentary capacity?",
+    opts: [
+      "Higher than contractual capacity — testator must be fully competent to manage business affairs",
+      "Lower than contractual capacity — testator must understand the nature of the act, the extent of property, the natural objects of bounty, and the disposition being made, and relate these to one another",
+      "Equivalent to contractual capacity — testator must understand the legal consequences of the document"
+    ],
+    ans: 1,
+    explain: "Testamentary capacity has a LOW standard — lower than the capacity to contract (which is itself only slightly higher than the capacity to marry). The Restatement Third states the testator must understand (1) nature of the testamentary act, (2) extent of property, (3) natural objects of bounty, and (4) the disposition, and relate them to form an orderly desire."
+  },
+  {
+    section: null,
+    q: "A testator was diagnosed with moderate-to-severe Alzheimer's disease. She signed a Will leaving her estate to her 16 grandchildren and 2 children. The drafting attorney gave an opinion of competence. Three neighbors who chatted with her the day she signed all reported she was perfectly normal and discussed her family. This Will is most likely:",
+    opts: [
+      "Invalid because an Alzheimer's diagnosis automatically strips someone of testamentary capacity",
+      "Valid because the relevant question is whether she had capacity at the time of signing, and the evidence from that day supports capacity",
+      "Invalid because expert medical testimony should control over lay witness observations"
+    ],
+    ans: 1,
+    explain: "Per Wilson v. Lane, an Alzheimer's diagnosis does NOT automatically render someone incapacitated. Capacity is measured AT THE TIME OF SIGNING. Testimony from witnesses present on the day of signing is highly probative. Lay witnesses who observed her behavior that day are more relevant than a doctor's general opinion about her condition."
+  },
+  {
+    section: null,
+    q: "What is an 'insane delusion' and what is its effect on a Will?",
+    opts: [
+      "Any mental illness that renders the testator incompetent, voiding the entire Will",
+      "A false belief against all evidence and reason that is a product of mental illness and that caused a specific disposition the testator would not otherwise have made; only the affected portion of the Will is void",
+      "Eccentric beliefs or unusual preferences that make it unlikely the Will reflects the testator's true wishes, voiding the affected gifts"
+    ],
+    ans: 1,
+    explain: "An insane delusion must be (1) a belief of facts with no real existence, (2) a product of mental illness, (3) unsupported by any evidence, and (4) the cause of a disposition the testator would not otherwise have made. Unlike lack of capacity (which voids the ENTIRE Will), insane delusion only voids the AFFECTED PORTION. The balance of the Will remains valid."
+  },
+  {
+    section: null,
+    q: "Darlene, the primary caregiver for her elderly father Andrew, told Andrew she would only drive him to pick up life-saving medications if he signed a new Will leaving most of his estate to her. Andrew signed. Which grounds could Darlene's siblings use to invalidate the Will?",
+    opts: [
+      "Lack of testamentary capacity only, because Andrew was clearly not of sound mind",
+      "Fraud in the execution only, because Darlene deceived Andrew into signing the Will",
+      "Duress, coercion, and undue influence"
+    ],
+    ans: 2,
+    explain: "Withholding life-saving medication unless a Will is signed is a textbook example of duress/coercion and undue influence. Darlene had a confidential relationship (caregiver) and the opportunity, and she exerted wrongful threats that overcame Andrew's free will. All three grounds — duress, coercion, and undue influence — apply."
+  },
+  {
+    section: null,
+    q: "Alex told his aunt Barbara that her dog had bitten Alex's son, causing $250,000 in medical bills. The story was entirely false. Barbara signed a new Will adding a $250,000 gift to Alex. What type of fraud occurred, and what is the consequence?",
+    opts: [
+      "Fraud in the execution; the entire Will is void because Barbara didn't intend to sign a testamentary document",
+      "Fraud in the inducement; only the $250,000 gift to Alex is void, and the rest of Barbara's Will remains valid",
+      "Fraud in the execution; a constructive trust is imposed over all assets"
+    ],
+    ans: 1,
+    explain: "This is fraud in the INDUCEMENT — Alex misrepresented a material fact to induce Barbara to add a specific gift. Barbara did intend to sign a Will; she was deceived about the reason for the gift. Consequence: only the fraudulently induced gift (to Alex) is void. The rest of the Will is valid. Fraud in the execution would mean she didn't know she was signing a Will at all."
+  },
+
+  // ── SECTION 4: HOLOGRAPHIC WILLS & OTHER FORMS ──
+  {
+    section: "Special Will Forms & Revocation",
+    q: "Which of the following best describes the California rule for holographic wills?",
+    opts: [
+      "The entire Will must be in the testator's handwriting; any preprinted portions invalidate it",
+      "The signature and material provisions (gifts and beneficiaries) must be in the testator's handwriting; preprinted portions are allowed and may be used to show testamentary intent",
+      "The Will must be signed and dated in the testator's handwriting; witnesses are also required"
+    ],
+    ans: 1,
+    explain: "Under California law, a holographic Will requires only that the signature and the material provisions (the gifts made and the beneficiaries' names) be in the testator's own handwriting. Preprinted forms are allowed and can help establish testamentary intent. Witnesses are NOT required for a holographic Will. Dating is not required but encouraged."
+  },
+  {
+    section: null,
+    q: "Tom's Will states: 'I am going on a trip to the Nile River. If I don't come back, I leave my estate to Pierre Renault.' Tom returned safely and died 3 months later from an unrelated illness. Should the Will be probated?",
+    opts: [
+      "No, the condition was not met — Tom came back from the Nile, so the Will is null and void",
+      "Yes, there is no evidence Tom intended the Will to be effective only if he died on the Nile trip",
+      "No, conditional Wills are not recognized in California"
+    ],
+    ans: 1,
+    explain: "California recognizes conditional Wills. A Will is only null and void if it clearly states the testator intended it to be carried out ONLY if death occurred as stated. Here, there is no such clear intent — the Nile language reads more as the occasion for making the Will rather than a strict condition. Courts will probate it."
+  },
+  {
+    section: null,
+    q: "Nancy signed a Will in 2012 leaving her warehouse to her boyfriend Max. In 2015, she signed a new Will leaving her warehouse to her new boyfriend Stefan. The 2015 Will says nothing about any prior Wills. Which Will controls as to the warehouse?",
+    opts: [
+      "The 2012 Will controls because the 2015 Will did not expressly revoke it",
+      "The 2015 Will controls as to the warehouse because it is directly inconsistent with the 2012 Will on that specific gift; the 2012 Will controls all other gifts not addressed in the 2015 Will",
+      "The 2012 Will controls because revoking a prior Will requires an express revocation clause"
+    ],
+    ans: 1,
+    explain: "A later Will revokes an earlier Will to the extent they are inconsistent. The 2015 Will directly conflicts with the 2012 Will on the warehouse — Stefan takes it. However, because the 2015 Will doesn't dispose of the entire estate, the 2012 Will survives as to provisions not addressed in the 2015 Will (gifts to Terrell, Sadie, etc.). The two Wills are read together."
+  },
+  {
+    section: null,
+    q: "Mildred's 1963 Will was found with diagonal pencil marks crossed over the property disposition provisions. A separate 1978 handwritten instrument (not signed or witnessed) was found with it purporting to revoke the 1963 Will and make new gifts. Under Dependent Relative Revocation (DRR), which Will is given effect?",
+    opts: [
+      "The 1978 instrument controls because it reflects Mildred's most recent intent",
+      "The 1963 Will is given effect because the revocation was dependent on the 1978 Will being valid, and since the 1978 Will fails for lack of execution formalities, the revocation is disregarded",
+      "Neither Will is given effect; the estate passes by intestacy"
+    ],
+    ans: 1,
+    explain: "Under DRR (Carter v. First United Methodist Church of Albany), when a testator revokes a Will intending to replace it with a new Will that fails for some reason, the revocation is not effective. The 1978 document failed for lack of execution (unsigned, unwitnessed). The revocation of the 1963 Will was conditional on the 1978 Will working — since it didn't, the 1963 Will is reinstated."
+  },
+
+  // ── SECTION 5: PROBATE PROCESS & JURISDICTION ──
+  {
+    section: "Probate Process, Jurisdiction & Venue",
+    q: "Mary is domiciled in Los Angeles but dies while visiting her Nevada vacation home. In what state is venue for probate, and in which county?",
+    opts: [
+      "Nevada, because that is where Mary died",
+      "California, Los Angeles County, because venue is where the decedent was domiciled at time of death",
+      "California, but venue could be either Los Angeles or the county nearest to Nevada"
+    ],
+    ans: 1,
+    explain: "In California, jurisdiction is based on the decedent's domicile, and venue is the county where the decedent was domiciled at the time of death. Mary was domiciled in Los Angeles, so venue is Los Angeles County — regardless of where she died."
+  },
+  {
+    section: null,
+    q: "Mary's Will names Northern Trust Bank as Executor. Mary's husband Richard is alive but receives nothing under the Will. Who may file the Petition for Probate?",
+    opts: [
+      "Only the named Executor, Northern Trust Bank",
+      "Only heirs and named beneficiaries who have a financial interest in the estate",
+      "Anyone — any person may file the Petition for Probate"
+    ],
+    ans: 2,
+    explain: "Anyone can file a Petition for Probate. There is no restriction on who may initiate the probate process. Northern Trust may also file, and heirs or beneficiaries may file, but any person is legally permitted to lodge the Will and file the petition."
+  },
+  {
+    section: null,
+    q: "A creditor learns of a California decedent's death and receives notice when Letters Testamentary are issued. How long does the creditor have to file and serve their claim?",
+    opts: [
+      "60 days from the date the creditor received actual notice",
+      "4 months from the date Letters were issued, or 60 days after the creditor was served with notice, whichever is later",
+      "1 year from the date of death, as the statute of limitations controls"
+    ],
+    ans: 1,
+    explain: "In California, a creditor must file and serve their claim within 4 months from the date Letters are issued, OR within 60 days after the creditor is served with notice — whichever is LATER. A separate 1-year SOL applies independently. If the claim is denied, the creditor has 3 months to file suit."
+  },
+  {
+    section: null,
+    q: "In California, an heir's interest in an estate VESTS at what moment?",
+    opts: [
+      "When the probate court enters its final order distributing assets",
+      "At the testator's death",
+      "When the personal representative files the petition to close probate"
+    ],
+    ans: 1,
+    explain: "An heir's interest vests at the TESTATOR'S DEATH. However, title cannot be documented until probate concludes. If an heir dies after the decedent but before probate concludes, the heir's estate takes their share. A bona fide purchaser from probate takes against a later-discovered Will."
+  },
+
+  // ── SECTION 6: INTESTACY ──
+  {
+    section: "Intestacy — California Rules",
+    q: "Wanda dies intestate leaving a wife (Wendy) and one living child (Dennis). They have $500,000 in community property and Wanda has $300,000 of separate property. Under California law, how much does Wendy receive in total?",
+    opts: [
+      "$500,000 (all community property only)",
+      "$400,000 ($250,000 from community property + $150,000 from separate property)",
+      "$650,000 ($500,000 community property + $150,000 from separate property)"
+    ],
+    ans: 2,
+    explain: "All community property ($500,000) goes to Wendy — she already owned half and inherits Wanda's half. For the $300,000 separate property with one child: spouse gets 50% ($150,000) and child gets 50% ($150,000). Total to Wendy: $250,000 (her half of CP) + $250,000 (Wanda's half of CP) + $150,000 (half of SP) = $650,000. Dennis gets $150,000."
+  },
+  {
+    section: null,
+    q: "Gary dies intestate leaving spouse Anita, one living child Fred, and one deceased child Annette (who left two living children, Amber and Indigo). Gary has $1.2 million in separate property and no community property. Under California law, how much does Anita receive?",
+    opts: [
+      "$600,000 (one-half of the estate)",
+      "$400,000 (one-third of the separate property)",
+      "$300,000 (one-quarter of the estate shared with three grandchildren)"
+    ],
+    ans: 1,
+    explain: "With 2+ issue (either living or deceased with living issue), the spouse gets ⅓ of the separate property = $400,000. The remaining ⅔ ($800,000) goes to issue: Fred gets one equal share of the children's portion ($400,000). Annette's ⅓ share ($400,000) passes to her children Amber and Indigo equally ($200,000 each)."
+  },
+  {
+    section: null,
+    q: "Eric dies intestate in California survived only by a wife and one grandmother. Under California law, who inherits?",
+    opts: [
+      "The wife and grandmother split the estate 50/50",
+      "The grandmother inherits everything because she is a blood relative",
+      "The wife inherits the entire estate"
+    ],
+    ans: 2,
+    explain: "Under California's intestacy priority, the spouse comes first. There are no issue (children), no parents, and no siblings of Eric. With no closer relatives surviving, everything goes to the wife. The grandmother (as issue of grandparents) is much lower in priority and takes nothing when a spouse survives."
+  },
+  {
+    section: null,
+    q: "Under the Revised UPC, what is the elective share based on?",
+    opts: [
+      "One-third of the probate estate if there are children, one-half if no children",
+      "A percentage of the augmented estate (combining both probate and non-probate assets) based on the number of years of marriage",
+      "One-half of all assets acquired during the marriage, similar to community property states"
+    ],
+    ans: 1,
+    explain: "Under the Revised UPC, the elective share is based on the AUGMENTED ESTATE, which combines non-probate assets (POD accounts, life insurance, revocable trusts, joint tenancy property, gifts >$15,000 within 2 years of death) with the probate estate. The percentage ranges from 3% for less than 1 year of marriage to 100% for 15+ years. California, as a community property state, does NOT have an elective share."
+  },
+  {
+    section: null,
+    q: "Under the California 120-Hour Rule, if it cannot be determined who died first between spouses, what is the result?",
+    opts: [
+      "The older spouse is presumed to have died first",
+      "Each spouse's property passes as if that spouse survived the other",
+      "All property passes to the state by escheat until the order of death is determined"
+    ],
+    ans: 1,
+    explain: "Under the 120-Hour Rule, any heir must survive the decedent by 120 hours (5 days). If survival cannot be established by clear and convincing evidence, each spouse's property passes as if that spouse survived the other. This means each spouse's half of community property passes to their own heirs, preventing a windfall to one side."
+  },
+
+  // ── SECTION 7: ANTI-LAPSE & LAPSE ──
+  {
+    section: "Lapse, Anti-Lapse & Class Gifts",
+    q: "T devises Blackacre 'to my son Sidney if he survives me,' residue to his wife Wilma. Sidney dies before T, leaving a daughter Debbie. Under the MAJORITY RULE, who takes Blackacre?",
+    opts: [
+      "Debbie, because she is Sidney's descendant and the anti-lapse statute substitutes her for her deceased father",
+      "Wilma, because the words 'if he survives me' evidence an intention that Sidney's descendants should not be substituted",
+      "Debbie and Wilma split Blackacre because the anti-lapse statute applies to half"
+    ],
+    ans: 1,
+    explain: "Under the MAJORITY RULE, an express condition of survivorship ('if he survives me') evidences an intention that the anti-lapse statute should NOT substitute the deceased beneficiary's descendants. Therefore, Sidney's gift lapses and Wilma takes Blackacre as residuary beneficiary. NOTE: Under the UPC, 'if he survives me' is NOT sufficient contrary intent and the anti-lapse statute WOULD apply, giving Blackacre to Debbie."
+  },
+  {
+    section: null,
+    q: "T gives Blackacre 'to my children.' T has 3 children: A, B, and C. C dies before T leaving two children D and E. Under the UPC and California anti-lapse rule, how does Blackacre pass?",
+    opts: [
+      "A and B each get one-half; D and E get nothing because class gifts exclude descendants of predeceased members",
+      "A gets ⅓, B gets ⅓, D gets ⅙, and E gets ⅙ — D and E take their deceased parent's share equally",
+      "A, B, D, and E each get one-quarter because all four are counted as class members"
+    ],
+    ans: 1,
+    explain: "Under the UPC and California, a class gift to 'my children' with a predeceased child triggers the anti-lapse statute. C's ⅓ share passes to C's children D and E equally (⅙ each). A and B each take their ⅓ shares. This is classic 'by right of representation' in a class gift context."
+  },
+  {
+    section: null,
+    q: "A legatee receives a $100,000 gift under a Will but has significant credit card debts. The legatee would like to pass the gift directly to her children without it passing through her estate first. What should she do?",
+    opts: [
+      "She should accept the gift and immediately gift the money to her children",
+      "She should disclaim the gift within 9 months of the decedent's death (if for tax purposes), causing it to pass as if she predeceased the testator",
+      "She should request that the executor re-direct the gift to her children before distribution"
+    ],
+    ans: 1,
+    explain: "A disclaimer (saying 'no thank you') causes the gift to pass as if the disclaiming legatee predeceased — potentially triggering anti-lapse if the legatee is a relative, or going to other beneficiaries/residue. The disclaimer must be written or declared. For tax purposes, it must be disclaimed within 9 months of the decedent's death. The disclaimant has no control over who gets the gift next."
+  },
+
+  // ── SECTION 8: TYPES OF GIFTS & ABATEMENT ──
+  {
+    section: "Types of Gifts, Abatement & Ademption",
+    q: "T's Will leaves: a diamond ring to Daughter #1, diamond earrings to Daughter #2, $10,000 cash to Daughter #1 (to equalize the value difference), $20,000 to Son, and the residue to all three children equally. At T's death, T owns the ring, earrings, and only $30,000 cash. The executor needs $6,000 for expenses. Under the abatement statute, whose gift(s) abate first?",
+    opts: [
+      "The specific gifts (ring and earrings) abate first because they are the least liquid",
+      "The general cash gifts to Daughter #1 ($10,000) and Son ($20,000) abate proportionately before the specific gifts",
+      "The residue abates first, then the cash gifts, then the specific gifts"
+    ],
+    ans: 1,
+    explain: "Under the abatement order, residue abates first, then general devises, then specific devises (in that order). Here there is no residue (the $30,000 is entirely consumed by the general cash gifts: $10,000 + $20,000 = $30,000). The general cash gifts abate proportionately — Son's $20,000 is reduced by $4,000 and Daughter #1's $10,000 is reduced by $2,000. The specific gifts (jewelry) do NOT abate."
+  },
+  {
+    section: null,
+    q: "Under the majority Identity Rule for Ademption, T's Will leaves 'my 100 shares of XYZ stock to my niece.' Before T's death, XYZ Corporation undergoes a 4-for-1 stock split. T dies owning 400 shares of XYZ. How many shares does the niece receive?",
+    opts: [
+      "100 shares, because the gift was specific and the number has not changed",
+      "400 shares, because a stock split is a 'mere change in form' and all resulting shares pass with the specific gift",
+      "0 shares, because XYZ stock was adeemed when it split"
+    ],
+    ans: 1,
+    explain: "A stock split is a 'mere change in form' of the original asset — courts recognize an exception to the Identity Rule for this. The niece receives all 400 shares because the stock split did not change the fundamental nature of the gift. NOTE: If the Will said 'I give 100 shares of XYZ stock' (without 'my'), it would NOT be a specific devise and this analysis wouldn't apply."
+  },
+  {
+    section: null,
+    q: "T's Will gives '$50,000 from my Chase Bank account No. 12345 to Brad.' At death, the Chase account has only $25,000. Under a Demonstrative Devise analysis, what does Brad receive?",
+    opts: [
+      "$25,000 only, because the gift adeems to the extent the account is depleted",
+      "$50,000 — $25,000 from the Chase account (as a specific gift) and $25,000 from general estate assets (as a general gift)",
+      "$0, because the entire gift was adeemed when the account was partially depleted"
+    ],
+    ans: 1,
+    explain: "A demonstrative devise is primarily payable from a stated source but secondarily from general assets. The $25,000 in the Chase account is treated as a specific gift (paid first). The remaining $25,000 unpaid portion becomes a general gift payable from other estate assets. Brad ultimately receives the full $50,000 if there are sufficient estate assets."
+  },
+
+  // ── SECTION 9: CURATIVE DOCTRINES ──
+  {
+    section: "Curative Doctrines",
+    q: "Husband and wife accidentally signed each other's Wills. Under the Matter of Snide rule, what is the most likely outcome?",
+    opts: [
+      "Both Wills are void because strict execution formalities were not met",
+      "The court will reform the Wills to correct the obvious clerical error, because it was harmless and there was no fraud",
+      "The Wills are invalid but may be admitted to probate as holographic Wills"
+    ],
+    ans: 1,
+    explain: "In Matter of Snide, the court held that where husband and wife accidentally signed each other's Wills, reformation stands — it was harmless and there was no fraud. The court admitted the Wills after correcting the clerical error. This is the leading case on reformation of a Will due to mutual mistake."
+  },
+  {
+    section: null,
+    q: "In a jurisdiction that has adopted the UPC Harmless Error Rule (§ 2-503), but does not recognize holographic Wills, a testator handwrote 'This is my Will' and terms disposing of her estate, signed it, but never had it notarized or witnessed. Can this Will be probated?",
+    opts: [
+      "Yes, if the court concludes there is clear and convincing evidence that the testator intended the document to be her Will",
+      "No, because the jurisdiction does not recognize holographic Wills and the Harmless Error Rule cannot override that",
+      "No, because the Harmless Error Rule only applies to documents that substantially comply with execution formalities, and an unwitnessed, unnotarized Will does not"
+    ],
+    ans: 0,
+    explain: "Under the UPC Harmless Error Rule, a court may excuse noncompliance with execution formalities if there is clear and convincing evidence that the decedent intended the document to be their Will. The rule focuses on the testator's subjective intent. Importantly, the Harmless Error Rule can allow an unattested holographic Will to be probated even in a jurisdiction that doesn't otherwise recognize holographic Wills."
+  },
+
+  // ── SECTION 10: GIFTS ──
+  {
+    section: "Inter Vivos Gifts",
+    q: "Mother says to her daughter: 'The next time I am at my safe deposit box at the bank I will get my diamond bracelet out and give it to you.' Mother dies in a car accident on the way to the bank. Is this a valid completed gift?",
+    opts: [
+      "Yes, because the mother clearly expressed her donative intent",
+      "No, because there was no delivery — only a statement of intent to make a gift in the future",
+      "Yes, under the Mailbox Rule, the gift was complete when the mother stated her intent"
+    ],
+    ans: 1,
+    explain: "A gift requires donative intent AND delivery AND acceptance. Here, there was donative intent but NO delivery — only a promise to deliver in the future. A gift is not complete until delivery occurs. The Mailbox Rule applies to deeds mailed to a donee, not to verbal promises. The bracelet passes through the estate."
+  },
+  {
+    section: null,
+    q: "Mother tells her daughter: 'I have put your name on my safe deposit box as a joint owner, and here is a key to the box. I am giving you all of the jewelry in that box.' What type of delivery has occurred?",
+    opts: [
+      "Manual delivery, because the mother physically handed over a key",
+      "Constructive delivery, because the key delivers what is needed to control the items",
+      "Symbolic delivery, because the key is a symbol of the jewelry rather than the jewelry itself"
+    ],
+    ans: 1,
+    explain: "This is CONSTRUCTIVE DELIVERY — giving the key delivers what is needed to control (access) the items in the safe deposit box. Constructive delivery is used when it is difficult or impractical to make physical delivery of the items themselves. The gift is valid."
+  },
+  {
+    section: null,
+    q: "Victor, who is terminally ill, hands his car keys to Emily and says 'If I don't make it, I want you to have my car.' Emily drives the car home that day. Victor dies one week later. Emily dies the following week. Is the car in Emily's estate?",
+    opts: [
+      "No, it is in Victor's estate because gifts causa mortis fail if the donor predeceases the donee",
+      "Yes, it is in Emily's estate because the gift was completed by delivery before Victor died",
+      "No, because gifts causa mortis cannot be made of vehicles"
+    ],
+    ans: 1,
+    explain: "A gift causa mortis fails if the DONEE predeceases the DONOR. Here, Victor (the donor) died FIRST, followed by Emily (the donee). Since the donee did not predecease the donor, the gift causa mortis is valid and became irrevocable upon Victor's death. The car is therefore in Emily's estate. NOTE: if Emily had died before Victor, the car would have reverted to Victor."
+  },
+  {
+    section: null,
+    q: "Dana transfers her car to Fred with donative intent and title is transferred. The next day, Dana's creditor repossesses the car to satisfy a pre-existing debt Dana owes. Can Dana's creditor take the car?",
+    opts: [
+      "Yes, because the gift was made to defeat creditors and is a voidable fraudulent transfer",
+      "No, because Dana no longer owns the car — her creditors cannot reach property she no longer owns",
+      "Yes, because creditors always have a priority claim over gratuitous transfers"
+    ],
+    ans: 1,
+    explain: "Once a gift is completed (donative intent + delivery + acceptance), the donor has no further interest in the property. Dana's creditors can only reach Dana's own property. Since the car now belongs to Fred, Dana's creditors cannot take it. Fred's own creditors could potentially reach his property, but not Dana's creditors."
+  },
+
+  // ── SECTION 11: TRUSTS — CREATION ──
+  {
+    section: "Trusts — Creation & Types",
+    q: "Tami has her lawyer write up a revocable trust for her benefit, intending it to be a Will substitute. She is the only one to benefit during her lifetime and wants total control. While she is living, what position(s) does Tami hold under the trust?",
+    opts: [
+      "Only Settlor — she created the trust",
+      "Only Trustee and Beneficiary — she holds both legal and equitable title",
+      "Settlor, Trustee, AND Beneficiary — all three roles simultaneously"
+    ],
+    ans: 2,
+    explain: "It is entirely possible — and very common — for one person to hold all three positions in a revocable living trust. Tami created it (Settlor), manages it (Trustee), and benefits from it (Beneficiary). This arrangement is valid and is the standard structure of most revocable living trusts used as Will substitutes."
+  },
+  {
+    section: null,
+    q: "Emily's Will says: 'I leave to my friend David $100,000 on the condition that he uses the money to help my cousin Terry.' What does this create?",
+    opts: [
+      "A valid discretionary trust, with David as trustee and Terry as beneficiary",
+      "An equitable charge — David owns the money outright but Terry is a creditor entitled to payment",
+      "A precatory trust — non-binding and unenforceable"
+    ],
+    ans: 1,
+    explain: "This creates an EQUITABLE CHARGE, not a trust. David receives the money outright (legal title), but Terry is a creditor entitled to the $100,000 as a security interest against David's receipt. This differs from a trust (which would give David fiduciary duties) and from precatory language (which would be non-binding). The sum certain amount is the key indicator of an equitable charge."
+  },
+  {
+    section: null,
+    q: "A trust provides that all income is to be paid to X for life, plus as much of the principal as may be needed for X's health, support, and education. What type of trust is this?",
+    opts: [
+      "A purely discretionary trust, because the trustee has full discretion over all distributions",
+      "A purely mandatory trust, because all income must be distributed",
+      "A hybrid trust — mandatory as to income, discretionary as to principal"
+    ],
+    ans: 2,
+    explain: "This is a HYBRID trust. It is mandatory as to income (trustee MUST distribute all income to X) but discretionary as to principal (trustee has discretion, subject to a standard, to distribute principal for health, support, and education). These two aspects follow different rules for creditor access and trustee duties."
+  },
+  {
+    section: null,
+    q: "Under a spendthrift trust with a valid spendthrift clause, which creditor CAN reach the trust distributions in California?",
+    opts: [
+      "A tort creditor who obtained a $500,000 judgment against the beneficiary",
+      "A creditor owed child support by the beneficiary",
+      "A credit card company to which the beneficiary owes $50,000"
+    ],
+    ans: 1,
+    explain: "In CALIFORNIA, the exceptions to spendthrift protection are limited. Only CHILD SUPPORT creditors can reach spendthrift trust distributions in California (not spousal support, unlike the UPC). Tort creditors and general creditors (credit cards) cannot compel distributions from a validly established spendthrift trust."
+  },
+
+  // ── SECTION 12: TRUSTEE DUTIES ──
+  {
+    section: "Trustee Duties & Fiduciary Obligations",
+    q: "A trustee is considering whether to sell family farm land held in a trust where the stated purpose is to support the family and maintain the farm operation. The trustee's investment advisor recommends selling the farm and diversifying into stocks and bonds. Should the trustee sell?",
+    opts: [
+      "Yes, because diversification is explicitly required as a duty under the Prudent Investor Act",
+      "Not necessarily — a trustee is not required to diversify if the purposes of the trust are better served by retaining the asset, as a family farm may represent a special circumstance",
+      "Yes, because the farm is producing insufficient income to support the beneficiaries"
+    ],
+    ans: 1,
+    explain: "While diversification is generally required under the Prudent Investor Act, there is an exception when the purposes of the trust are better served by retaining the asset. A family farm with sentimental and operational significance may qualify as a 'special relationship or value' to the trust's purpose. The trustee must weigh the trust's purpose, not just maximize investment return."
+  },
+  {
+    section: null,
+    q: "Trustee Tina deposited $50,000 of trust funds into her personal brokerage account that already holds $100,000 of her own investments. The account value drops 40% to $90,000, and then Tina's personal creditor seizes the entire $90,000. Under MODERN law, for what amount is Tina liable to the trust?",
+    opts: [
+      "Nothing — she is not liable for market losses and the creditor action was unforeseeable",
+      "$50,000 — she is strictly liable for all loss because she failed to earmark the account",
+      "$30,000 — the trust's proportional share of the remaining $90,000 (one-third), but she is also liable for the creditor seizing the trust's $30,000 remaining share"
+    ],
+    ans: 2,
+    explain: "Under MODERN law, a trustee is liable only to the extent the loss was caused by the failure to earmark. The market drop: trust lost 40% of $50,000 = $20,000 in market losses. Under modern law, Tina is NOT liable for the market decline. However, the creditor took the trust's remaining $30,000 — that loss was DIRECTLY caused by Tina's failure to earmark. Tina is liable for $30,000."
+  },
+  {
+    section: null,
+    q: "A trustee sells trust real property to her spouse for $50,000 below fair market value. The trust document contains a clause allowing the trustee to engage in self-dealing. Can a beneficiary void the sale?",
+    opts: [
+      "No, because the trust document specifically authorized self-dealing transactions",
+      "Yes, because even where self-dealing is authorized, the trustee must still act fairly and in good faith; a sale below fair value is neither fair nor in good faith",
+      "No, because self-dealing with a spouse is not the same as self-dealing with oneself"
+    ],
+    ans: 1,
+    explain: "Even where a trust document authorizes self-dealing, the trustee must still act FAIRLY AND IN GOOD FAITH. A sale below fair market value is not fair and constitutes bad faith. Furthermore, under the No Further Inquiry Rule, a sale to a relative (including spouse) of the trustee is treated the same as a sale to the trustee personally. The transaction is voidable."
+  },
+  {
+    section: null,
+    q: "In re Rothko: executor Reis was a director and officer of the gallery (MNY) to which the estate's 700 paintings were consigned at a 50% commission. What damages rule applied to Reis?",
+    opts: [
+      "He was liable only for the difference between the contract price and fair market value at the time of the contracts",
+      "He was liable for appreciation damages — the value at the time of trial, because there was misfeasance (more than mere negligence)",
+      "He was not liable because the paintings eventually sold and the estate received proceeds"
+    ],
+    ans: 1,
+    explain: "In In re Rothko, because there was MISFEASANCE (active wrongdoing — a self-dealing conflict of interest) rather than mere negligence, the court applied APPRECIATION DAMAGES — measured at the time of trial, not the time of the transaction. This is intended to return the estate to the position it would have been in but for the breach, not to punish. These damages are not punitive."
+  },
+
+  // ── SECTION 13: CHARITABLE TRUSTS ──
+  {
+    section: "Charitable Trusts & Cy Pres",
+    q: "Which of the following is a valid CHARITABLE purpose?",
+    opts: [
+      "A trust to buy Christmas gifts for all children in a specific neighborhood, regardless of need",
+      "A trust to provide food and shelter to homeless individuals in Los Angeles",
+      "A trust to give $500 to every person who attends a specific university's graduation ceremony"
+    ],
+    ans: 1,
+    explain: "A valid charitable trust must benefit the PUBLIC AT LARGE and cause amelioration of the donees' condition. A trust for the homeless providing food and shelter serves a charitable purpose (relief of poverty). Gifts to all children regardless of need or gifts to all graduation attendees are considered 'merely benevolent' — they benefit individuals without serving the social interest of the community as such."
+  },
+  {
+    section: null,
+    q: "The cy pres doctrine allows a court to modify a charitable trust. Which condition must be met?",
+    opts: [
+      "The trustee concludes the trust would be more efficiently administered if modified",
+      "The original purpose is impossible, impractical, or illegal AND the donor had a GENERAL (not specific) charitable intent",
+      "All current beneficiaries consent to the modification"
+    ],
+    ans: 1,
+    explain: "Cy pres requires (1) a valid charitable trust, (2) that it is impossible or impractical to carry out the SPECIFIC purpose, AND (3) the donor had GENERAL charitable intent. A donor with SPECIFIC charitable intent (e.g., build a church on a specific parcel) cannot have their trust modified by cy pres — it would fail entirely. Buck Estate confirmed that inefficient philanthropy alone is NOT impracticability."
+  },
+
+  // ── SECTION 14: POWERS OF APPOINTMENT ──
+  {
+    section: "Powers of Appointment",
+    q: "What makes a power of appointment a 'general' power rather than a 'special' (non-general) power?",
+    opts: [
+      "It can be exercised during the powerholder's lifetime, rather than only by Will",
+      "It may be exercised in favor of at least one of: the powerholder, her creditors, her estate, or the creditors of her estate",
+      "It was created by the powerholder herself rather than by another person"
+    ],
+    ans: 1,
+    explain: "A general power of appointment is one that may be exercised in favor of at least one of: (1) the powerholder, (2) her creditors, (3) her estate, or (4) the creditors of her estate. This broad reach is what causes it to be included in the powerholder's taxable estate. A special power does NOT allow appointment to any of these — the powerholder can only appoint among other identified permissible appointees."
+  },
+  {
+    section: null,
+    q: "A donor's trust gives a beneficiary a power of appointment exercisable at death in favor of 'any of the donor's issue.' The beneficiary exercises the power by leaving the property to a friend who is not issue of the donor. What is the result?",
+    opts: [
+      "The exercise is valid because the beneficiary has the power to appoint to anyone",
+      "The exercise failed because the appointee is not a permissible appointee; the property passes to the takers in default",
+      "The exercise is partially valid — the friend takes a reasonable share and the remainder goes to takers in default"
+    ],
+    ans: 1,
+    explain: "Exercise to an impermissible appointee is no exercise at all. Since the friend is not among the donor's issue (the permissible appointees), the exercise of the power is ineffective. The property then passes to the TAKERS IN DEFAULT as specified in the creating document."
+  },
+
+  // ── SECTION 15: FUTURE INTERESTS & RAP ──
+  {
+    section: "Future Interests & Rule Against Perpetuities",
+    q: "O conveys Blackacre 'to A for life, then to B.' Is B's interest subject to the Rule Against Perpetuities?",
+    opts: [
+      "Yes, because B might die before A, making the interest contingent",
+      "No, because B's remainder is indefeasibly vested — it is not subject to any condition precedent",
+      "Yes, because the interest was created before B might be 'in being'"
+    ],
+    ans: 1,
+    explain: "B has an INDEFEASIBLY VESTED REMAINDER — given to a presently ascertained person (B) with no condition precedent. Vested interests are NOT subject to the RAP. If B dies before A, B's heirs or devisees will take possession. The interest can be transferred (during life or at death) even before A dies."
+  },
+  {
+    section: null,
+    q: "T creates a trust to 'continue until 21 years after the death of the last of my grandchildren.' Does this violate the RAP?",
+    opts: [
+      "No, because grandchildren are measuring lives in being at T's death",
+      "Yes, because some grandchildren may be born AFTER T's death and thus are not lives in being; 21 years after THEIR deaths could extend beyond the RAP period",
+      "No, because the 21-year period automatically satisfies the RAP"
+    ],
+    ans: 1,
+    explain: "This violates the RAP. Measuring lives must be in being at the creation of the interest (T's death for a testamentary trust). Grandchildren born AFTER T's death are not valid measuring lives. If T's children are still living, more grandchildren could be born after T's death. The 21 years after those grandchildren's deaths would exceed the RAP period. If all of T's children were deceased at T's death, this would be valid."
+  },
+  {
+    section: null,
+    q: "O conveys Blackacre to A for life, then to B for life if B survives A, and if B fails to survive A, to B's children who are at least age 21. At conveyance, B is 5 years old with no children. What type of interest do B's children have?",
+    opts: [
+      "Indefeasibly vested remainder — B's children are ascertained",
+      "Contingent remainder — because B's children are unascertained (B has none) and subject to a condition precedent (must reach age 21)",
+      "Vested remainder subject to open — because more children could be born to B"
+    ],
+    ans: 1,
+    explain: "B's children have a CONTINGENT REMAINDER for two independent reasons: (1) they are unascertained (B currently has no children), and (2) they are subject to a condition precedent (must reach age 21). Even when B has children, each child's interest remains contingent until they reach 21. A child who dies before 21 has no interest to transfer."
+  },
+
+  // ── SECTION 16: ESTATE & GIFT TAX ──
+  {
+    section: "Estate Tax, Gift Tax & GST",
+    q: "In 2025, what is the federal estate/gift tax exemption and rate?",
+    opts: [
+      "$10 million exemption; 35% flat rate",
+      "$13.99 million exemption; 40% flat rate",
+      "$13.99 million exemption; rate varies from 18% to 40% based on estate size"
+    ],
+    ans: 1,
+    explain: "In 2025, the federal lifetime estate and gift tax exemption is $13.99 million (indexed for inflation). The rate is a FLAT 40% on any amount above the exemption. The gift and estate taxes are unified/coordinated — you cannot avoid estate tax by giving away wealth before death."
+  },
+  {
+    section: null,
+    q: "T made lifetime taxable gifts of $13.99 million during her life, using her entire exemption. T dies in 2025 with an estate of $2 million. How much estate tax is owed?",
+    opts: [
+      "$0 because the $2 million is below the exemption amount",
+      "$800,000 because T's entire exemption was used during her lifetime; the $2 million at death is fully taxable at 40%",
+      "$400,000 because T can use half the exemption again at death"
+    ],
+    ans: 1,
+    explain: "The estate and gift tax exemptions are UNIFIED. T used her entire $13.99 million exemption during her lifetime on taxable gifts. No exemption remains. Therefore, the full $2 million estate is subject to the 40% estate tax: $2,000,000 × 40% = $800,000 owed."
+  },
+  {
+    section: null,
+    q: "Sally pays $30,000 directly to Harvard Westlake School for her grandson Frank's tuition. She also pays $18,000 directly to an insurance company for her niece Catherine's health insurance. In 2025, how much of Sally's $13.99 million lifetime exemption is used?",
+    opts: [
+      "$29,000 — the amount above the $19,000 annual exclusion for the tuition gift, plus the health insurance",
+      "$0 — both payments qualify for statutory exclusions and do not use any lifetime exemption",
+      "$11,000 — only the excess above the annual exclusion for the health insurance payment"
+    ],
+    ans: 1,
+    explain: "Both payments qualify for the unlimited statutory exclusions: (1) tuition paid DIRECTLY to an educational institution (any amount), and (2) medical expenses paid DIRECTLY to the provider (any amount). These exclusions are completely separate from the annual exclusion AND from the lifetime exemption. ZERO of the lifetime exemption is used."
+  },
+  {
+    section: null,
+    q: "T transfers appreciated stock to her daughter. The stock has a fair market value of $500,000 and a cost basis of $100,000. The daughter immediately sells it. What are the income tax consequences to the daughter?",
+    opts: [
+      "No capital gain — the stock receives a stepped-up basis to fair market value as of the date of the gift",
+      "Capital gain of $400,000 — the daughter takes T's carryover basis of $100,000 and recognizes the full appreciation on sale",
+      "Capital gain of $500,000 — the entire sale price is taxable because gifts are fully taxable transfers"
+    ],
+    ans: 1,
+    explain: "Gifted property has a CARRYOVER BASIS — the donee inherits the donor's original basis. The daughter's basis is $100,000 (T's cost). Sale at $500,000 produces a capital gain of $400,000. CONTRAST with inherited property: if the daughter had inherited the stock at T's death when it was worth $500,000, she would have a stepped-up basis of $500,000 and NO capital gain on an immediate sale."
+  },
+  {
+    section: null,
+    q: "Which of the following GST tax statements is TRUE?",
+    opts: [
+      "A surviving spouse can use 'portability' to capture a deceased spouse's unused GST tax exemption",
+      "GST tax applies when a trustee distributes trust income to a grandchild from a trust that also benefits children",
+      "The GST tax rate is 20%, half the estate tax rate"
+    ],
+    ans: 1,
+    explain: "When a trustee distributes trust assets to a grandchild (a skip person) from a trust that also includes non-skip persons (children), this is a TAXABLE DISTRIBUTION and GST tax applies. FALSE: portability does NOT apply to GST exemption (only to estate tax exemption). FALSE: the GST tax rate is the same flat 40% as the estate/gift tax rate."
+  },
+  {
+    section: null,
+    q: "Phil and Claire have $16 million in joint community property. Phil dies first, leaving all assets in a single revocable trust for Claire's benefit, which she can revoke. The estate tax exemption is $14 million. Is estate tax due at Phil's death?",
+    opts: [
+      "Yes — Phil's $8 million half exceeds half the exemption",
+      "No — Phil's $8 million half qualifies for the unlimited marital deduction, so no tax is due at Phil's death",
+      "Yes — the total $16 million joint estate exceeds the $14 million exemption"
+    ],
+    ans: 1,
+    explain: "The unlimited marital deduction allows any amount to pass to a surviving US citizen spouse free of estate tax. Phil's $8 million passes to Claire (via the revocable trust she controls), fully qualifying for the marital deduction. The trust remains revocable by Claire, making it an outright transfer to her. No estate tax at Phil's death — but note that Claire will then hold the full $16 million, which may create tax at her death."
+  },
+  {
+    section: null,
+    q: "T made a lifetime taxable gift of $10 million in 2017. In 2025, T made another gift of $4.99 million. Is gift tax payable on the 2025 gift?",
+    opts: [
+      "No — T's 2025 exemption of $13.99 million exceeds both gifts combined ($14.99 million total)",
+      "Yes — after the 2017 gift, T has only $3.99 million remaining of the $13.99 million 2025 exemption. The 2025 gift of $4.99 million exceeds the remaining $3.99 million by $1 million, which is taxed at 40%: $400,000 due",
+      "No — each calendar year has a fresh exemption, so prior years' gifts do not count against the 2025 exemption"
+    ],
+    ans: 1,
+    explain: "The estate and gift tax exemption is CUMULATIVE across a lifetime — prior taxable gifts reduce the remaining exemption. After the 2017 gift of $10 million, T has $13.99M − $10M = $3.99M remaining in 2025. The 2025 gift of $4.99 million exceeds the remaining exemption by $1 million. Tax: $1,000,000 × 40% = $400,000 due."
+  },
+  {
+    section: null,
+    q: "T's estate plan: 'I leave to my children the maximum amount that can pass free of estate tax, $100,000 to the Red Cross, and the balance to my wife Carol outright.' T's estate is $20 million. Is estate tax due?",
+    opts: [
+      "Yes — $20 million minus the exemption of $13.99 million leaves $6.01 million taxable",
+      "No — the amounts to children are shielded by the exemption, the Red Cross gift qualifies for the charitable deduction (unlimited), and the balance to Carol qualifies for the marital deduction (unlimited)",
+      "Yes — the gift to the Red Cross is only partially deductible"
+    ],
+    ans: 1,
+    explain: "This is a formula Will designed to produce zero estate tax. The children's gift = the exemption amount ($13.99M). The Red Cross gift = unlimited charitable deduction. The balance to Carol = unlimited marital deduction. All three deductions/exclusions combine to eliminate estate tax entirely. This is exactly how estate planning avoids the 40% tax."
+  },
+
+  // ── SECTION 17: INTESTACY MATH ──
+  {
+    section: "Math Problems",
+    q: "Melinda is married to Juan. They have $900,000 in community property and Melinda has $600,000 in separate property. They have 3 children together (Maria, Adam, and Michael). Melinda dies intestate. How much does Maria receive in total?",
+    opts: [
+      "$200,000 — her equal share of the children's ⅔ portion of separate property only",
+      "$133,333 — her ⅓ share of the ⅔ of Melinda's separate property, plus the community property goes entirely to Juan",
+      "$300,000 — one-third of all of Melinda's property"
+    ],
+    ans: 1,
+    explain: "All $900,000 community property goes 100% to Juan. For Melinda's $600,000 separate property with 2+ children: ⅓ to Juan = $200,000; ⅔ to children equally = $400,000 ÷ 3 = $133,333 each. Maria receives $133,333. Juan receives $200,000 (SP) + $900,000 (CP Melinda's half) = in total Juan has the full $900k CP plus his $200k SP share."
+  },
+  {
+    section: null,
+    q: "An estate is valued at $1,500,000. Under California's statutory fee schedule, what is the executor's fee (not including extraordinary services)?",
+    opts: [
+      "$28,000",
+      "$25,000",
+      "$23,000"
+    ],
+    ans: 0,
+    explain: "Calculation: 4% × $100,000 = $4,000; 3% × $100,000 = $3,000; 2% × $800,000 = $16,000; 1% × $500,000 (the remaining amount out of the $9M tier) = $5,000. Total: $4,000 + $3,000 + $16,000 + $5,000 = $28,000. The attorney also receives $28,000 under the same fee schedule."
+  },
+  {
+    section: null,
+    q: "X makes $119,000 taxable gifts to each of 2 children and each of 4 of her brother's grandchildren in 2025. The annual exclusion is $19,000. How much of her $13,990,000 GST tax exemption remains after these gifts?",
+    opts: [
+      "$13,390,000 (reduced by $600,000 total taxable gifts including children's)",
+      "$13,590,000 (reduced by $400,000 — only the 4 grandchildren's gifts reduce GST, after annual exclusion per person)",
+      "$13,390,000 (reduced by $600,000 — all six gifts reduce GST)"
+    ],
+    ans: 1,
+    explain: "GST applies only to transfers to SKIP PERSONS (2+ generations away). The brother's grandchildren are skip persons; T's own children are NOT. For each of the 4 grandchildren: $119,000 − $19,000 annual exclusion = $100,000 in taxable GST gifts. 4 × $100,000 = $400,000 reduces the GST exemption. The 2 children's gifts do NOT reduce GST. $13,990,000 − $400,000 = $13,590,000 remaining."
+  },
+
+  // ── SECTION 18: MIXED TOPICS ──
+  {
+    section: "Mixed Review",
+    q: "A revocable living trust is valid as a Will substitute, but which of the following is TRUE about revocable living trusts and creditors?",
+    opts: [
+      "Assets in a revocable living trust are protected from the settlor's creditors during the settlor's lifetime",
+      "Assets in a revocable living trust are NOT protected from the settlor's creditors because the settlor retains control and the ability to revoke",
+      "Assets in a revocable living trust are only protected from creditors once the trust becomes irrevocable at the settlor's death"
+    ],
+    ans: 1,
+    explain: "A revocable living trust does NOT protect assets from the settlor's creditors. Because the settlor retains the power to revoke and control the assets, the trust assets are accessible to the settlor's creditors just as if the assets were held outright. Creditor protection typically requires an irrevocable trust (and even then, self-settled irrevocable trusts have limited protection)."
+  },
+  {
+    section: null,
+    q: "The 'No-Contest Clause' in a California Will or Trust is enforced. Under what circumstances?",
+    opts: [
+      "Whenever any beneficiary challenges the document, regardless of whether they had probable cause",
+      "When a direct contest is brought WITHOUT probable cause, or when the clause expressly covers other triggering actions (such as challenging property transfers or filing creditor claims)",
+      "Only when a beneficiary contests the document and actually loses the contest"
+    ],
+    ans: 1,
+    explain: "California enforces No-Contest Clauses in three circumstances: (1) a direct contest brought WITHOUT probable cause; (2) challenging the transfer of property (with or without probable cause) IF the clause expressly covers it; and (3) filing creditor claims IF the clause expressly covers it. A contest WITH probable cause will NOT trigger a no-contest clause under California law for type (1)."
+  },
+  {
+    section: null,
+    q: "Under California law, which of the following correctly describes how to change your domicile for estate planning purposes?",
+    opts: [
+      "Simply spending more than 183 days in the new state is sufficient to establish domicile",
+      "Get a driver's license and voter registration in the new state; file income taxes there; own/rent a home there; sell property in the old state — making a clean break",
+      "Notify the California Franchise Tax Board in writing that you are changing your domicile"
+    ],
+    ans: 1,
+    explain: "When changing domicile (especially from a high-tax state like California), clients should take affirmative steps: driver's license, voter registration, filing income taxes in the new state, car registration, owning/renting a home in the new state, and selling property in the old state. Simply spending time in another state is insufficient. The goal is to make a 'clean break' to avoid disputes over which state can levy estate or income taxes."
+  },
+  {
+    section: null,
+    q: "A pet trust in California terminates when:",
+    opts: [
+      "The human trustee dies or becomes incapacitated",
+      "No living animal covered by the trust remains alive",
+      "21 years have elapsed from the date of trust creation"
+    ],
+    ans: 1,
+    explain: "Under California Prob. Code § 15212 (and the UPC), a pet trust terminates when there are no living animals covered by the trust. Under the UPC, a pet trust may also continue for up to 21 years for stated purposes (honorary trusts for non-pets). California also allows any animal charity to enforce the trust and may require accountings if the balance exceeds $40,000."
+  },
+  {
+    section: null,
+    q: "Under California law, a killer (person who feloniously and intentionally kills a testator) is treated how for inheritance purposes?",
+    opts: [
+      "The killer inherits normally under the Will but must hold the assets in a constructive trust for the decedent's other heirs",
+      "The killer does not inherit under a Will, trust, or any non-probate transfers; joint ownership is severed; and there is no anti-lapse for the killer's children",
+      "The killer forfeits only the amount inherited above their intestate share"
+    ],
+    ans: 1,
+    explain: "Under California law, a person who feloniously and intentionally kills a testator is treated as having predeceased — they take nothing under a Will, trust, or any non-probate transfers. Joint ownership is deemed severed. If named as executor, that designation is ineffective. There is NO anti-lapse for the killer's children. Requires: either a final criminal conviction OR a civil court finding by preponderance of the evidence."
+  },
+  {
+    section: null,
+    q: "Which doctrine allows a court to modify a TRUST — not a Will — when circumstances were not anticipated by the settlor and failure to modify would frustrate the trust's purpose?",
+    opts: [
+      "Dependent Relative Revocation",
+      "Equitable Deviation",
+      "Cy Pres"
+    ],
+    ans: 1,
+    explain: "EQUITABLE DEVIATION (also called Equitable Deviation from Administrative Terms) allows a court to permit the trustee to deviate from the terms of a trust when there is an unforeseen change in circumstances that threatens to defeat or substantially impair the trust's purpose. It generally applies to ADMINISTRATIVE terms. CY PRES applies to charitable trusts. DRR applies to Will revocations."
+  },
+  {
+    section: null,
+    q: "Which of the following correctly describes a QTIP trust?",
+    opts: [
+      "A trust that allows the surviving spouse to control who receives the remainder after the spouse's death",
+      "A trust that qualifies for the unlimited marital deduction; the surviving spouse is the only beneficiary for life, must receive all income at least annually, and the remaining assets are included in the surviving spouse's taxable estate",
+      "An irrevocable trust that removes assets from the deceased spouse's estate and places them in a bypass trust for the benefit of children"
+    ],
+    ans: 1,
+    explain: "A QTIP (Qualified Terminable Interest Property) Trust qualifies for the unlimited marital deduction, deferring (not eliminating) estate tax. Requirements: (1) spouse is the ONLY beneficiary for life; (2) all income paid to spouse at LEAST annually; (3) spouse can demand assets be income-producing; (4) remaining assets are INCLUDED in the surviving spouse's taxable estate at her death. The KEY advantage is the DONOR controls who gets the remainder after the spouse dies — ideal for blended families."
+  }
+];
+
+// ── STATE ──
+let answers = {};
+let submitted = false;
+let reviewMode = false;
+
+function startExam() {
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('exam').style.display = 'block';
+  document.getElementById('submitBar').style.display = 'block';
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const wrap = document.getElementById('questionsWrap');
+  wrap.innerHTML = '';
+  let lastSection = null;
+
+  QUESTIONS.forEach((q, qi) => {
+    if (q.section && q.section !== lastSection) {
+      const div = document.createElement('div');
+      div.className = 'section-divider';
+      div.innerHTML = `<span class="section-label">Section — ${q.section}</span><div class="section-line"></div>`;
+      wrap.appendChild(div);
+      lastSection = q.section;
+    }
+
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.id = `q${qi}`;
+
+    const letters = ['A', 'B', 'C'];
+    let optionsHTML = q.opts.map((opt, oi) => `
+      <div class="option" id="q${qi}o${oi}" onclick="selectOption(${qi}, ${oi})">
+        <span class="opt-letter">${letters[oi]}</span>
+        <span class="opt-text">${opt}</span>
+      </div>
+    `).join('');
+
+    const scenarioHTML = q.scenario ? `<span class="scenario">${q.scenario}</span>` : '';
+
+    block.innerHTML = `
+      <div class="q-number">Question ${qi + 1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${scenarioHTML}${q.q}</div>
+      <div class="options">${optionsHTML}</div>
+      <div class="feedback" id="fb${qi}"></div>
+    `;
+    wrap.appendChild(block);
+  });
+}
+
+function selectOption(qi, oi) {
+  if (submitted) return;
+  answers[qi] = oi;
+
+  // Update UI
+  ['A','B','C'].forEach((_, i) => {
+    const el = document.getElementById(`q${qi}o${i}`);
+    el.classList.remove('selected');
+  });
+  document.getElementById(`q${qi}o${oi}`).classList.add('selected');
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  document.getElementById('answeredCount').textContent = count;
+  document.getElementById('examCounter').textContent = `${count} / ${QUESTIONS.length} answered`;
+  document.getElementById('progressFill').style.width = `${(count / QUESTIONS.length) * 100}%`;
+}
+
+function submitExam() {
+  submitted = true;
+  document.getElementById('submitBar').style.display = 'none';
+
+  let correct = 0;
+  let wrong = 0;
+  let skipped = 0;
+
+  QUESTIONS.forEach((q, qi) => {
+    const block = document.getElementById(`q${qi}`);
+    const fb = document.getElementById(`fb${qi}`);
+    const chosen = answers[qi];
+
+    // Lock all options
+    ['A','B','C'].forEach((_, oi) => {
+      const el = document.getElementById(`q${qi}o${oi}`);
+      el.classList.add('locked');
+    });
+
+    if (chosen === undefined) {
+      skipped++;
+      // Show correct answer
+      document.getElementById(`q${qi}o${q.ans}`).classList.add('correct-ans');
+      fb.className = 'feedback wrong-fb show';
+      fb.innerHTML = `<strong>Skipped.</strong> Correct answer: ${['A','B','C'][q.ans]}. ${q.explain}`;
+    } else if (chosen === q.ans) {
+      correct++;
+      block.classList.add('correct');
+      document.getElementById(`q${qi}o${chosen}`).classList.remove('selected');
+      document.getElementById(`q${qi}o${chosen}`).classList.add('correct-ans');
+      fb.className = 'feedback correct-fb show';
+      fb.innerHTML = `<strong>✓ Correct.</strong> ${q.explain}`;
+    } else {
+      wrong++;
+      block.classList.add('incorrect');
+      document.getElementById(`q${qi}o${chosen}`).classList.remove('selected');
+      document.getElementById(`q${qi}o${chosen}`).classList.add('wrong-ans');
+      document.getElementById(`q${qi}o${q.ans}`).classList.add('correct-ans');
+      fb.className = 'feedback wrong-fb show';
+      fb.innerHTML = `<strong>✗ Incorrect.</strong> Correct answer: ${['A','B','C'][q.ans]}. ${q.explain}`;
+    }
+  });
+
+  // Show results
+  const pct = Math.round((correct / QUESTIONS.length) * 100);
+  let grade = '';
+  if (pct >= 93) grade = 'Excellent';
+  else if (pct >= 83) grade = 'Good';
+  else if (pct >= 73) grade = 'Passing';
+  else if (pct >= 60) grade = 'Borderline';
+  else grade = 'Needs Review';
+
+  document.getElementById('exam').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('scoreNum').textContent = correct;
+  document.getElementById('scoreGrade').textContent = grade;
+  document.getElementById('scorePct').textContent = `${pct}% — ${correct} correct, ${wrong} incorrect, ${skipped} skipped`;
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rWrong').textContent = wrong;
+  document.getElementById('rSkipped').textContent = skipped;
+  document.getElementById('rPct').textContent = `${pct}%`;
+}
+
+function retryExam() {
+  answers = {};
+  submitted = false;
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('exam').style.display = 'block';
+  document.getElementById('submitBar').style.display = 'block';
+  renderQuestions();
+  updateProgress();
+  window.scrollTo(0,0);
+}
+
+function reviewExam() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('exam').style.display = 'block';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
