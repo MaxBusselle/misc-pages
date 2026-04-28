@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GWATS – Gifts, Wills, Trusts & Estates Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0d0a;
+  --paper: #f5f0e8;
+  --cream: #ede7d9;
+  --gold: #b8922a;
+  --gold-light: #d4a843;
+  --rust: #8b3a2a;
+  --sage: #4a6741;
+  --slate: #3a4a5c;
+  --muted: #6b6358;
+  --border: #c8bfae;
+  --highlight: #fff3cd;
+  --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+.nav {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--gold);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  padding: 14px 24px;
+  border-right: 1px solid #333;
+  white-space: nowrap;
+}
+.nav-brand span { color: var(--gold-light); }
+.nav-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  cursor: pointer;
+  color: #aaa;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  user-select: none;
+  border-right: 1px solid #222;
+}
+.nav-tab:hover { color: var(--paper); background: #1a1a1a; }
+.nav-tab.active { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+
+/* ── VIEWS ── */
+.view { display: none; max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+.view.active { display: block; }
+
+/* ── STUDY GUIDE ── */
+.section-header {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ink);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+.section-header:first-child { margin-top: 0; }
+
+.topic-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+.topic-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--slate);
+  padding: 10px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: background 0.15s;
+}
+.topic-title:hover { background: #2a3a4c; }
+.topic-title.important { background: var(--rust); }
+.topic-title.important:hover { background: #7a2a1a; }
+.topic-title .chevron { transition: transform 0.2s; font-size: 0.9rem; }
+.topic-title.open .chevron { transform: rotate(180deg); }
+
+.topic-body {
+  padding: 16px 20px;
+  display: none;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.topic-body.open { display: block; }
+
+.topic-body ul { padding-left: 20px; margin: 6px 0; }
+.topic-body li { margin-bottom: 4px; }
+.topic-body ol { padding-left: 22px; margin: 6px 0; }
+
+.callout {
+  background: var(--highlight);
+  border-left: 4px solid var(--gold);
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-size: 0.85rem;
+  border-radius: 0 3px 3px 0;
+}
+.callout.red { background: #fde8e8; border-left-color: var(--rust); }
+.callout.green { background: #e8f5e9; border-left-color: var(--sage); }
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin: 10px 0;
+}
+.compare-table th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+.compare-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: var(--cream); }
+
+.tag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+.tag-ca { background: var(--gold); color: white; }
+.tag-upc { background: var(--slate); color: white; }
+.tag-key { background: var(--rust); color: white; }
+
+/* ── FLASHCARDS ── */
+.fc-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.fc-filter {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.fc-filter-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+.fc-filter-btn:hover, .fc-filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.fc-progress {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+.fc-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fc-card-wrap {
+  width: 100%;
+  max-width: 680px;
+  perspective: 1200px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.fc-card {
+  width: 100%;
+  min-height: 240px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fc-card.flipped { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  text-align: center;
+  border: 2px solid var(--border);
+  box-shadow: var(--card-shadow);
+}
+.fc-front {
+  background: white;
+  min-height: 240px;
+}
+.fc-back {
+  background: var(--ink);
+  color: var(--paper);
+  transform: rotateY(180deg);
+  min-height: 240px;
+}
+.fc-category {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+.fc-back .fc-category { color: #888; }
+.fc-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.fc-a {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--paper);
+  text-align: left;
+  align-self: stretch;
+}
+.fc-hint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 16px;
+  letter-spacing: 0.05em;
+}
+
+.fc-nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.fc-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 1px solid var(--ink);
+  background: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+.fc-btn:hover { background: var(--ink); color: var(--paper); }
+.fc-btn.primary { background: var(--ink); color: var(--paper); }
+.fc-btn.primary:hover { background: var(--slate); }
+
+.fc-score {
+  display: flex;
+  gap: 8px;
+}
+.score-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s;
+}
+.score-dot.know { background: var(--sage); }
+.score-dot.review { background: var(--rust); }
+
+/* ── MATH / CALC ── */
+.calc-section {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--card-shadow);
+}
+.calc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+.calc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+.calc-row label {
+  font-size: 0.83rem;
+  font-weight: 500;
+  min-width: 200px;
+  color: var(--muted);
+}
+.calc-row input {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  width: 160px;
+  background: var(--cream);
+}
+.calc-row input:focus { outline: none; border-color: var(--gold); }
+.calc-result {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--ink);
+  color: var(--gold-light);
+  padding: 10px 16px;
+  border-radius: 2px;
+  margin-top: 12px;
+  white-space: pre-line;
+  line-height: 1.8;
+}
+.calc-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: var(--gold);
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.15s;
+}
+.calc-btn:hover { background: var(--gold-light); }
+
+/* ── QUICK REF ── */
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.qr-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  box-shadow: var(--card-shadow);
+}
+.qr-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.qr-item {
+  font-size: 0.83rem;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--cream);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  line-height: 1.4;
+}
+.qr-item:last-child { border-bottom: none; }
+.qr-item .val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--slate);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 40px;
+  margin-bottom: 40px;
+  border-bottom: 4px solid var(--gold);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: 'GWATS';
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 9rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none;
+  user-select: none;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.hero h1 span { color: var(--gold-light); }
+.hero p {
+  font-size: 0.88rem;
+  color: #aaa;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.hero-tags {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid #444;
+  padding: 4px 10px;
+  border-radius: 2px;
+  color: #888;
+}
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div style="max-width:1100px;margin:0 auto;">
+    <h1>Gifts, Wills, Trusts <span>&</span> Estates</h1>
+    <p>Exam Prep Study Guide · California Law School · Multiple Choice Format</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Probate</span>
+      <span class="hero-tag">Wills</span>
+      <span class="hero-tag">Trusts</span>
+      <span class="hero-tag">Intestacy</span>
+      <span class="hero-tag">Gifts</span>
+      <span class="hero-tag">Powers of Appointment</span>
+      <span class="hero-tag">Estate Tax</span>
+      <span class="hero-tag">CA Law Distinctions</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">G<span>WATS</span></div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="switchView('guide')">Study Guide</div>
+      <div class="nav-tab" onclick="switchView('flashcards')">Flashcards</div>
+      <div class="nav-tab" onclick="switchView('math')">Math Practice</div>
+      <div class="nav-tab" onclick="switchView('quickref')">Quick Reference</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="view active" id="view-guide">
+
+  <div class="section-header">1. Probate vs. Non-Probate Property</div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Probate Property <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li>Property that does <strong>not</strong> transfer automatically to another person or by a trust at death</li>
+        <li>Title is in the <strong>decedent's name</strong></li>
+        <li>Includes <strong>tenancy-in-common</strong> interests</li>
+        <li>No one can take title without <strong>court involvement (probate process)</strong></li>
+      </ul>
+      <div class="callout">💡 It is easier to name what is <em>non-probate</em>; everything else is probate estate.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Non-Probate Property / Will Substitutes <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Passes automatically <strong>without court involvement</strong>, by operation of law, by contract, or by terms of a trust:</p>
+      <ul>
+        <li><strong>Joint Tenancy (WROS)</strong> – e.g., real estate, bank accounts</li>
+        <li><strong>Tenancy by the Entirety</strong> – <span class="tag tag-ca">CA</span> NOT available in CA; only for spouses</li>
+        <li><strong>Beneficiary Designation / POD Arrangements</strong> – owner designates beneficiary; transfer done by company holding asset (e.g., retirement accounts, IRAs, POD accounts)</li>
+        <li><strong>Revocable "Transfer on Death" Deeds</strong> – owner puts beneficiary on deed; available in CA → <em>repeal in 2026</em></li>
+        <li><strong>Revocable (Living) Trusts</strong> – inter vivos; created by owner while living</li>
+        <li><strong>Trusts</strong> – a relationship, not an entity; trustee = legal title; beneficiary = equitable title</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-header">2. Wills — Vocabulary & Basics</div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Core Vocabulary <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td>Will / Testament</td><td>The document</td></tr>
+        <tr><td>Testator</td><td>Creator of a Will</td></tr>
+        <tr><td>Beneficiary / Legatee</td><td>Recipient of a devise</td></tr>
+        <tr><td>Devise</td><td>To give real property (also a noun)</td></tr>
+        <tr><td>Bequeath</td><td>To give personal property</td></tr>
+        <tr><td>Issue / Lineal Descendants</td><td>Children, grandchildren, etc. (singular & plural)</td></tr>
+        <tr><td>Collateral Relatives</td><td>Not descendants — siblings, aunts/uncles, cousins</td></tr>
+        <tr><td>Executor</td><td>Personal representative <em>named in</em> the Will</td></tr>
+        <tr><td>Administrator</td><td>Personal representative <em>not named</em> in Will, or if no Will</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ 2025 Federal Estate Tax Exemption: $13.99 million <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <div class="callout">The 2025 federal estate tax exemption is <strong>$13.99 million</strong>. The executor is responsible for paying decedent's debts and taxes, then distributing assets to beneficiaries.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Probate Process — Steps <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ol>
+        <li>Determine <strong>jurisdiction</strong> (based on domicile)</li>
+        <li>Determine <strong>venue</strong></li>
+        <li>Find last Will (if any)</li>
+        <li>Lodge the Will (original filed with County Clerk; anyone can lodge)</li>
+        <li>File petition to appoint executor/administrator and "admit" the Will for probate</li>
+        <li>Hearing on Petition for Probate
+          <ul>
+            <li>Notice given to all heirs, named persons, CA AG (if charitable foundation named)</li>
+            <li>Notice of death published in local newspaper</li>
+            <li>Letters Testamentary issued to executor (or Letters of Administration to administrator)</li>
+          </ul>
+        </li>
+        <li>Examine if ancillary probate is needed</li>
+      </ol>
+      <div class="callout red"><span class="tag tag-ca">CA</span> Venue = county where decedent was <strong>domiciled</strong> at time of death (not where they died)</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Executor/Attorney Compensation — Statutory Fee Schedule <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p><strong>Same fee structure</strong> for both executor and their attorney:</p>
+      <table class="compare-table">
+        <tr><th>Estate Value</th><th>Rate</th><th>Fee</th></tr>
+        <tr><td>First $100,000</td><td>4%</td><td>$4,000</td></tr>
+        <tr><td>Next $100,000</td><td>3%</td><td>$3,000</td></tr>
+        <tr><td>Next $800,000</td><td>2%</td><td>$16,000</td></tr>
+        <tr><td>Next $9 million</td><td>1%</td><td>$90,000</td></tr>
+        <tr><td>Next $15 million</td><td>0.5%</td><td>$75,000</td></tr>
+        <tr><td>Above $25 million</td><td>As determined by court</td><td>—</td></tr>
+      </table>
+      <div class="callout">Extraordinary services (tax prep, real estate sales, litigation) are billed separately at hourly rates, approved by court.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Alternatives to Probate (California) <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Affidavit procedure</strong> – estates up to <strong>$184,500</strong> of probate assets (no real property) can be settled by affidavit. Increasing to <strong>$750,000 effective 4/1/25</strong>, and can include primary residence.</li>
+        <li><strong>Spousal property petition</strong> – expedited process for surviving spouse; one hearing, one order; court order can be recorded to transfer real property</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-header">3. Will Formation & Execution</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ General Formalities (Majority Rule) <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li>Testator must be an <strong>adult of sound mind</strong></li>
+        <li>Must be <strong>IN WRITING</strong></li>
+        <li><strong>SIGNED</strong> by the testator (a mark is OK if intended as signature; someone else may sign if testator unable)</li>
+        <li><strong>Witnessed by two individuals</strong> — witnesses and testator sign in each other's presence</li>
+        <li>All pages must be present when Will is signed (physically connected)</li>
+        <li>Dating is not required but encouraged</li>
+        <li>Testamentary intent: "This is my Will," "I bequeath/devise/leave"</li>
+      </ul>
+      <div class="callout red"><span class="tag tag-ca">CA Prob. Code § 6110</span> Witnesses must sign <strong>DURING the testator's lifetime</strong>. Post-death witnessing is NOT allowed in California.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">UPC Formalities vs. California <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Issue</th><th>UPC</th><th>California</th></tr>
+        <tr><td>Witness timing</td><td>Can sign within reasonable time, even after testator's death</td><td>Must sign BEFORE testator's death</td></tr>
+        <tr><td>Alternative to witnesses</td><td>Notarized Will is acceptable</td><td>Not a substitute</td></tr>
+        <tr><td>Publication</td><td>Not required</td><td>Not required</td></tr>
+        <tr><td>Testamentary intent</td><td>May be shown by extrinsic evidence</td><td>Can show with extrinsic evidence</td></tr>
+        <tr><td>Testator signature location</td><td>Anywhere on the Will</td><td>Anywhere</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Interested Witnesses <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Rule</th><th>Effect</th></tr>
+        <tr><td>Common Law</td><td>Will void for lack of competent witnesses</td></tr>
+        <tr><td>Traditional Purging Statute</td><td>Eliminates witness's gift so witness is no longer "interested," saving the Will</td></tr>
+        <tr><td>Modern Statutes (slim majority)</td><td>Limit gift to lesser of (Will gift) or (intestate share)</td></tr>
+        <tr><td>UPC</td><td>Allows interested witnesses; relies on other safeguards</td></tr>
+      </table>
+      <div class="callout red"><span class="tag tag-ca">CA Prob. Code § 6112</span> Will is NOT invalid because signed by interested witness. Creates a <strong>rebuttable presumption</strong> of undue influence if fewer than 2 other disinterested witnesses exist. Interested witness may only take up to their intestate share if presumption applies.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Integration, Incorporation by Reference, Facts of Independent Significance <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Integration</strong>: All pages of Will intended to be part of it must be present when signed; should be physically connected</li>
+        <li><strong>Incorporation by Reference</strong>: Most jurisdictions accept (NOT NY, CT, LA). Document must be (1) in writing, (2) exist at date of signing, (3) identifiable with reasonable certainty. Need not be present at signing.</li>
+        <li><strong>Facts of Independent Significance</strong>: Allows identification of gifts by reference to other facts (e.g., "jewelry in my safe deposit box")</li>
+        <li><strong>Separate Writing for Tangibles (UPC § 2-513)</strong>: Separate statement for tangible personal property (NOT money, stocks, or real estate). Can be updated after Will signed. MUST be signed.</li>
+      </ul>
+      <div class="callout red"><span class="tag tag-ca">CA Prob. Code § 6132</span> Max value $25k; max $3k per item. <strong>NO CASH OR COIN.</strong> Tangible property not otherwise disposed of in a Will.</div>
+      <div class="callout">A document created AFTER a Will is signed is effective as part of the Will under <strong>neither</strong> integration nor incorporation by reference.</div>
+    </div>
+  </div>
+
+  <div class="section-header">4. Will Validity — Capacity & Defects</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Testator Capacity — Low Standard <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Lower than capacity to contract. Must be:</p>
+      <ol>
+        <li>An <strong>adult (at least 18)</strong></li>
+        <li>Of <strong>sound mind</strong> — checked at time Will was executed</li>
+      </ol>
+      <p>Restatement Third: testator must be capable of knowing (1) nature and extent of property, (2) natural objects of bounty, (3) disposition being made, and (4) relating these elements to one another to form an orderly desire.</p>
+      <div class="callout green">An Alzheimer's diagnosis does NOT automatically render someone incapacitated. <em>Wilson v. Lane.</em></div>
+      <div class="callout">A person is presumed to have capacity until proven otherwise. There is no such thing as a "presumption of lack of capacity."</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Insane Delusion <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li>Belief against all evidence and reason that must be product of derangement (mere eccentricity is NOT insane delusion)</li>
+        <li>Elements: (1) belief of facts with no real existence, (2) false belief is product of mental illness, (3) no evidence supporting false belief, (4) delusion causes a disposition testator would not otherwise make</li>
+      </ul>
+      <div class="callout red"><strong>Consequences:</strong> Only the PART of the Will affected by the delusion is void. Void gift(s) fall to residue or intestacy. Balance of Will is valid.</div>
+      <div class="callout">Compare to lack of capacity: lack of capacity invalidates ENTIRE Will; insane delusion only invalidates the affected part.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Undue Influence <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Wrongdoer overcame donor's free will, causing donative transfer donor would not otherwise make. "Regular" influence is OK.</p>
+      <p><strong>Elements (Restatement § 8.3):</strong></p>
+      <ol>
+        <li>Testator was susceptible</li>
+        <li>Alleged influencer had opportunity</li>
+        <li>Alleged influencer had disposition to exert undue influence</li>
+        <li>Part or all of Will appears to be the result</li>
+      </ol>
+      <p><strong>Presumption arises if:</strong> (1) confidential relationship exists AND (2) suspicious circumstances (e.g., they helped draft the Will)</p>
+      <p><strong>Types of confidential relationships:</strong> Fiduciary (attorney/client, trustee/beneficiary — matter of law); Reliant (doctor/patient — matter of fact); Dominant-Subservient (caregivers — matter of fact)</p>
+      <div class="callout red"><span class="tag tag-ca">CA Prob. Code §§ 810–812, 21380</span> Gifts to drafting attorneys, caregivers, partners, or relatives are <strong>VOID</strong> unless fiduciary proves by clear and convincing evidence not the product of undue influence. Requires a <strong>Certificate of Independent Review</strong> by independent attorney.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Fraud — Types & Consequences <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Type</th><th>Consequence</th></tr>
+        <tr><td>Fraud in the inducement</td><td>Only the part of the Will affected is invalid; rest is valid (testator intended to sign a Will)</td></tr>
+        <tr><td>Fraud in the execution</td><td>Entire Will is invalid (testator did not intend to sign a Will)</td></tr>
+        <tr><td>Fraud in preventing revocation</td><td>Will will not be probated</td></tr>
+      </table>
+      <div class="callout">Constructive trusts available for fraud in the inducement and preventing revocation — NOT for fraud in the execution.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Curative Doctrines: Saving a Will <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Reformation</strong>: Correct mistakes — clear and convincing evidence required</li>
+        <li><strong>Substantial Compliance</strong>: Close enough is good enough — (1) C&C evidence of testamentary intent AND (2) Will substantially complies with formalities</li>
+        <li><strong>Harmless Error (UPC § 2-503)</strong>: Court may excuse noncompliance if C&C evidence testator intended document to be Will</li>
+        <li><strong>Dependent Relative Revocation (DRR)</strong>: Revocation not actually a revocation if conditional on a 2nd Will that was never executed or was flawed; reinstates original bequests</li>
+        <li><strong>Revival</strong>: Revocation of Will #2 may revive Will #1 depending on intent</li>
+      </ul>
+      <div class="callout red"><span class="tag tag-ca">CA Harmless Error</span> Can overcome requirements for 2-witness presence, witness signing during testator's lifetime, and witness understanding document is Will. Requires C&C evidence of intent.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Holographic Wills <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li>In testator's own handwriting; recognized by ~half the states including CA (NOT NY)</li>
+        <li><strong>UPC § 5-502(b)</strong>: Signature and material provisions must be in testator's handwriting; preprinted forms are fine if material portion is handwritten</li>
+      </ul>
+      <div class="callout red"><span class="tag tag-ca">CA Requirements</span>: Signed by testator (anywhere); material provisions (gifts made, beneficiaries' names) in testator's own handwriting. Statement of testamentary intent not required (but extrinsic evidence admissible). Date not required. Preprinted forms allowed.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Revocation — Methods & Rules <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Formalities strictly enforced for revocation, just like execution.</p>
+      <p><strong>Methods:</strong></p>
+      <ol>
+        <li>Physical act with intent to revoke (burning, tearing, canceling, obliterating, destroying)</li>
+        <li>New Will that is inconsistent with previous Will (or expressly states revocation)</li>
+      </ol>
+      <div class="callout">If Will #2 doesn't dispose of entire estate → presumption of intent NOT to revoke Will #1 (rebuttable by C&C evidence). If Will #2 disposes of entire estate → presumption to revoke Will #1 (rebuttable).</div>
+      <div class="callout red"><strong>Lost Wills:</strong> If Will was in testator's possession until death and is lost, presumed destroyed with intent to revoke. Someone else should keep the original Will.</div>
+    </div>
+  </div>
+
+  <div class="section-header">5. Construction of Wills — Gifts & Lapse</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Types of Gifts <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Specific Devise</strong>: Gift of a specifically identifiable asset (e.g., "my house," "my Rolex watch")</li>
+        <li><strong>General Devise</strong>: Gift payable from general assets of the estate (e.g., "$X cash")</li>
+        <li><strong>Demonstrative Devise</strong>: Gift primarily payable from a stated source, secondarily from general assets (e.g., "$100,000 payable from my Chase Bank account")</li>
+        <li><strong>Residuary Devise</strong>: Gift of property not disposed of by the above gifts</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Abatement — Order When Estate Insufficient <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Priority: payment of funeral expenses, attorney's fees, and taxes FIRST. Then Will controls; if silent, statute applies:</p>
+      <ol>
+        <li>Intestate assets abate proportionately (if any)</li>
+        <li>Residue abates proportionately among multiple residuary devises</li>
+        <li>General bequests abate proportionately</li>
+        <li>Specific bequests abate proportionately</li>
+      </ol>
+      <div class="callout green"><strong>Specific gifts are the SAFEST.</strong> They are the last to abate.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Ademption — Specific Devises Only <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Occurs when an item gifted in a Will is no longer part of the testator's estate → gift fails ("adeemed"). Applies ONLY to specific devises.</p>
+      <ul>
+        <li><strong>Identity Rule (majority)</strong>: If asset not in estate, NO GIFT. Exception: "mere change in form" (mink coat → stole; bank acquired by another bank)</li>
+        <li><strong>UPC § 2-606(a)</strong> (Non-ademption/Substitute Gifts): Unpaid proceeds, insurance proceeds, replacement property pass to devisee</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Anti-Lapse Statutes <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Prevents lapsed gifts (to predeceased legatee who is a <strong>relative</strong>) from passing by intestacy. Passes to deceased legatee's descendants.</p>
+      <ul>
+        <li>Based on presumed intent of testator</li>
+        <li>If testator's clear intent to make gift conditional, gift lapses</li>
+        <li>For class gifts: if anti-lapse doesn't apply, surviving class members take</li>
+      </ul>
+      <div class="callout red"><span class="tag tag-upc">UPC</span> Words of survivorship ("if he survives me") are NOT sufficient evidence of contrary intent. Must be more specific to prevent anti-lapse.</div>
+      <div class="callout">Majority Rule: "if he survives me" DOES evidence intent not to substitute descendants. Wilma takes Blackacre.</div>
+      <table class="compare-table">
+        <tr><th>Lapsed Gift Situation</th><th>Traditional Rule</th><th>Modern/UPC/CA</th></tr>
+        <tr><td>Lapse in residuary clause (2+ people)</td><td>Passes by intestacy (no-residue-of-a-residue rule)</td><td>Other residuary devisees get 100%</td></tr>
+        <tr><td>Anti-lapse for spouses</td><td>Majority does NOT apply to testator's spouse</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Divorce & Killers <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p><strong>Divorce:</strong> Even if Will never changed, divorced spouses do NOT inherit. Divorce MUST be FINAL (legal separation is not enough).</p>
+      <table class="compare-table">
+        <tr><th></th><th>Majority</th><th>UPC & CA</th></tr>
+        <tr><td>Scope</td><td>Wills only</td><td>Wills, non-probate transfers, joint tenancy, beneficiary designations, POAs, nominations as executor/trustee</td></tr>
+        <tr><td>Former spouse's relatives</td><td>No</td><td>UPC includes revocation of gifts to former spouse's relatives</td></tr>
+      </table>
+      <div class="callout red"><span class="tag tag-ca">CA</span> Person who feloniously and intentionally kills testator does NOT inherit — not under Will, trust, or non-probate transfers. Joint ownership deemed severed. NO anti-lapse for killer's kids. Need: final criminal conviction OR civil court finding by preponderance.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Omitted Children & Spouses <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p><strong>Omitted Child:</strong> Child born after testator signed ALL Wills and codicils. There is NO RIGHT TO INHERIT (except Louisiana).</p>
+      <table class="compare-table">
+        <tr><th></th><th>Traditional</th><th>Modern/UPC</th><th>Revised UPC (& CA)</th></tr>
+        <tr><td>Share</td><td>Intestate share</td><td>Intestate share, or same as other children</td><td>Gets intestate share unless: omission appears intentional; provided for outside Will; substantially all estate left to other parent</td></tr>
+      </table>
+      <p style="margin-top:12px;"><strong>Omitted Spouse:</strong> Married after testator signed all estate plan documents. Entitled to: (1) deceased spouse's half of community/quasi-community property; (2) intestate share of separate property (½ if only 1 child, ⅓ if 2+ children) but no more than 50%.</p>
+    </div>
+  </div>
+
+  <div class="section-header">6. Intestacy</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ California Intestate Succession — Spouses <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Property Type</th><th>Spouse's Share</th></tr>
+        <tr><td>Community Property</td><td>100% goes to spouse</td></tr>
+        <tr><td>Separate Property: 1 child (or issue)</td><td>50% to spouse, 50% to child</td></tr>
+        <tr><td>Separate Property: 2+ children (or issue)</td><td>⅓ to spouse, ⅔ divided for kids/issue equally</td></tr>
+        <tr><td>Separate Property: no issue, but 1+ parents (or their issue) alive</td><td>50% to spouse, 50% to parents or issue</td></tr>
+        <tr><td>Separate Property: no issue, parents, siblings/issue of siblings</td><td>100% to spouse</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ CA Intestacy — Non-Spouse Priority Order <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ol>
+        <li>Issue (equally at 1st generation with living issue, then by right of representation)</li>
+        <li>Parents (equally, or all to surviving parent)</li>
+        <li>Issue of Parents (in same manner as decedent's issue)</li>
+        <li>Grandparents (equally, or all to surviving grandparent)</li>
+        <li>Issue of Grandparents</li>
+        <li>Issue of predeceased spouse</li>
+        <li>Next of Kin</li>
+        <li>Parents of Predeceased Spouse</li>
+        <li>Issue of Parents of Predeceased Spouse</li>
+        <li>Escheat to State of California</li>
+      </ol>
+      <div class="callout red"><strong>120 Hour Rule:</strong> Any heir must survive by 120 hours (5 days), otherwise deemed predeceased — unless escheat would occur. Applies to non-probate transfers as well.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Elective Share — Common Law States (NOT CA) <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <div class="callout red">There is NO elective share in CA — a community property state.</div>
+      <table class="compare-table">
+        <tr><th></th><th>Traditional Elective Share</th><th>Revised UPC (KNOW THIS)</th></tr>
+        <tr><td>Base</td><td>⅓ of probate estate (with children); ½ without children</td><td>Augmented estate (probate + non-probate)</td></tr>
+        <tr><td>Non-probate assets</td><td>NOT included</td><td>INCLUDED (POD accounts, life insurance, revocable trusts, joint tenancy, gifts >$15k within 2 years of death)</td></tr>
+        <tr><td>Elective share %</td><td>Fixed</td><td>Based on years of marriage (from 3% at <1 year to 100% at 15+ years)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">7. Gifts</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Inter Vivos Gift — Elements <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ol>
+        <li><strong>Donative Intent</strong>: Present intent to transfer without consideration; surrender dominion and control. Goodwill NOT required.</li>
+        <li><strong>Delivery</strong>: Must occur during donor's lifetime.
+          <ul>
+            <li>Manual: Physical transfer</li>
+            <li>Constructive: Delivering what controls the item (key to safe)</li>
+            <li>Symbolic: May reserve rights (deed to real property)</li>
+          </ul>
+        </li>
+        <li><strong>Acceptance</strong>: Usually presumed if gift has value</li>
+      </ol>
+      <div class="callout"><strong>Checks:</strong> Complete when presented to donor's bank for payment (revocable until cashed). <strong>Mailbox Rule:</strong> Duly-executed deed mailed to donee is complete upon placing in mailbox.</div>
+      <div class="callout red"><strong>Gifts Causa Mortis:</strong> Gift in contemplation of death. Fail if donor recovers or donee predeceases donor. Revocable. Subject to creditors. Limited to personal property. Must be delivered.</div>
+    </div>
+  </div>
+
+  <div class="section-header">8. Trusts</div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Trust Vocabulary & Creation <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Settlor/Grantor/Trustor</td><td>Creator; person who places property in trust</td></tr>
+        <tr><td>Trustee</td><td>Legal owner/manager; has all powers of legal owner; subject to fiduciary duties</td></tr>
+        <tr><td>Beneficiary</td><td>Equitable title; benefited per trust terms; "watchdog" of trustee</td></tr>
+        <tr><td>Principal/Corpus/Res</td><td>Assets that fund the trust</td></tr>
+        <tr><td>Income</td><td>Generated by principal (rental income, interest, dividends). Taxable income ≠ Trust income</td></tr>
+        <tr><td>Testamentary Trust</td><td>Created at settlor's death under Will terms</td></tr>
+        <tr><td>Inter Vivos / Living Trust</td><td>Created during settlor's lifetime; usually revocable during life, irrevocable at death</td></tr>
+      </table>
+      <p style="margin-top:10px;"><strong>Requirements for a valid express trust:</strong> (1) Intent to create trust, (2) definite property (res), (3) lawful purpose, (4) ascertainable beneficiaries, (5) acceptance by trustee</p>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Types of Trusts — Payment Distributions <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Type</th><th>Description</th><th>Creditors</th></tr>
+        <tr><td>Mandatory Trust</td><td>All income must be paid to A for life, remainder to B. Trustee has NO discretion.</td><td>Easier for creditors to reach</td></tr>
+        <tr><td>Discretionary Trust</td><td>Distributions made as needed per standard (health, support, education). Trustee has discretion.</td><td>Creditors cannot reach before trustee decides to distribute</td></tr>
+        <tr><td>Hybrid Trust</td><td>Mandatory as to income, discretionary as to principal</td><td>Depends on portion</td></tr>
+        <tr><td>Spendthrift Trust</td><td>Clause restricts alienation of beneficiary's interest; disables all alienation</td><td>Protects against most creditors</td></tr>
+      </table>
+      <div class="callout red"><span class="tag tag-ca">CA Spendthrift Exception</span>: Only child support (not spousal support). UPC: child support, spousal support, attorney providing services to protect beneficiary's interest.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Trustee Duties <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Duty of Loyalty</strong>: Administer solely in interests of beneficiary. No self-dealing (buying/selling to/from trust). No further inquiry rule — transaction voidable without regard to fairness. Cannot commingle assets.</li>
+        <li><strong>Duty of Impartiality</strong>: Act impartially between current and remainder beneficiaries (not necessarily equal, but with due regard)</li>
+        <li><strong>Prudent Investor Rule</strong>: Manage as a prudent investor; investments viewed in context of whole portfolio; diversification required</li>
+        <li><strong>Duty to Collect & Protect</strong>: Without unreasonable delay</li>
+        <li><strong>Duty to Earmark</strong>: Title assets appropriately in trustee capacity; keeps assets out of reach of trustee's personal creditors</li>
+        <li><strong>Duty to Inform and Report</strong>: Keep beneficiaries reasonably informed; within 60 days of accepting trusteeship, notify beneficiaries</li>
+        <li><strong>Duty to Account</strong>: Annual report of trust property, liabilities, receipts, disbursements</li>
+      </ul>
+      <div class="callout red"><strong>Exculpatory Clauses (UTC § 1008(b)):</strong> Cannot waive bad faith or recklessness. Drafted-by-trustee clauses are invalid unless trustee proves it is fair and contents were adequately communicated to settlor.</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Charitable Trusts & Cy Pres <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p><strong>Charitable purpose</strong>: Must benefit the public at large. Merely benevolent is NOT charitable. Purposes include: relief of poverty, advancement of education, advancement of religion, promotion of health, governmental/municipal purposes, other community-beneficial purposes.</p>
+      <ul>
+        <li>No limit on duration (not subject to RAP)</li>
+        <li>Beneficiaries need not be ascertainable</li>
+      </ul>
+      <p><strong>Cy Pres Doctrine:</strong> Modifies a trust so settlor's intentions are carried out "as near as possible." Invoked when original terms are impossible, impracticable, or illegal. Only allowed when donor had <strong>GENERAL charitable intent.</strong></p>
+      <p><strong>Enforcement:</strong> State AG has authority. Under UTC § 405 (majority): donor has standing while living; AG; individual current beneficiaries.</p>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Modifying / Terminating Trusts <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Situation</th><th>Rule</th></tr>
+        <tr><td>Settlor + ALL beneficiaries consent</td><td>Can modify/terminate without court approval (UTC)</td></tr>
+        <tr><td>Settlor + some beneficiaries consent</td><td>Court may modify/terminate if non-consenting beneficiary's interests are protected</td></tr>
+        <tr><td>No settlor consent — "Material Purpose" test (Claflin)</td><td>All beneficiaries must consent; court may terminate if continuance not necessary to achieve material purpose</td></tr>
+      </table>
+      <div class="callout">A spendthrift clause is NOT a material purpose under the UTC.</div>
+    </div>
+  </div>
+
+  <div class="section-header">9. Powers of Appointment</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Powers of Appointment — Key Concepts <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <p>Power held by a person to designate recipients of beneficial ownership interests. <strong>Non-fiduciary</strong> — no duties or obligations, only restrictions stated in the document.</p>
+      <table class="compare-table">
+        <tr><th>Type</th><th>General Power</th><th>Special/Non-General Power</th></tr>
+        <tr><td>Beneficiaries</td><td>Donee may appoint to themselves, creditors, estate, or others</td><td>Cannot benefit: powerholder, creditors, estate, or creditors of estate</td></tr>
+        <tr><td>Permissible appointees</td><td>Not required to be identified</td><td>MUST identify permissible appointees</td></tr>
+        <tr><td>Estate tax</td><td>Included in powerholder's taxable estate</td><td>Not included</td></tr>
+        <tr><td>Creditors (created by another)</td><td>Presently exercisable: subject to creditors if other property insufficient</td><td>Generally not reachable by creditor</td></tr>
+      </table>
+      <p style="margin-top:12px;"><strong>Key vocabulary:</strong> Donor (confers power); Donee/Powerholder (holds power); Objects/Appointees (permissible recipients); Takers in Default (take if power not exercised)</p>
+    </div>
+  </div>
+
+  <div class="section-header">10. Future Interests & RAP</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Rule Against Perpetuities (RAP) <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <div class="callout red"><strong>"An interest must vest, if at all, no later than 21 years after lives in being at the creation of the interest."</strong></div>
+      <ul>
+        <li>Look at MOST REMOTE POSSIBILITY — if ANY fact pattern could violate RAP, it is violated</li>
+        <li>Modern trend: 90-year "wait and see" rule</li>
+        <li>Indefeasibly vested remainder → NOT subject to RAP</li>
+        <li>Remainder vested subject to open → SUBJECT TO RAP</li>
+        <li>Contingent remainder → SUBJECT TO RAP</li>
+        <li>Reversionary interests → NOT subject to RAP</li>
+        <li>Vested interests → NOT subject to RAP (can last longer than RAP period)</li>
+      </ul>
+      <table class="compare-table">
+        <tr><th>Interest Type</th><th>Subject to RAP?</th></tr>
+        <tr><td>Indefeasibly vested remainder</td><td>NO</td></tr>
+        <tr><td>Vested remainder subject to open</td><td>YES (until class closes)</td></tr>
+        <tr><td>Contingent remainder</td><td>YES</td></tr>
+        <tr><td>Reversion (interest retained by transferor)</td><td>NO</td></tr>
+        <tr><td>Life estate (possessory)</td><td>NO — not a future interest</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">11. Estate & Gift Tax</div>
+
+  <div class="topic-block">
+    <div class="topic-title important" onclick="toggle(this)">⭐ Estate & Gift Tax — Key Numbers (2025) <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Item</th><th>Amount</th></tr>
+        <tr><td>Lifetime Estate/Gift Tax Exemption</td><td>$13.99 million</td></tr>
+        <tr><td>Estate/Gift Tax Rate</td><td>40% (flat)</td></tr>
+        <tr><td>Annual Gift Tax Exclusion</td><td>$19,000 per year, per donee (2025)</td></tr>
+        <tr><td>GST Exemption</td><td>$13.99 million</td></tr>
+        <tr><td>GST Annual Exclusion</td><td>$19,000</td></tr>
+        <tr><td>GST Tax Rate</td><td>40%</td></tr>
+        <tr><td>Annual exclusion for non-citizen spouse</td><td>$190,000 (2025)</td></tr>
+      </table>
+      <div class="callout red">Gift/estate taxes are COORDINATED (unified). You CANNOT avoid the estate tax by giving away wealth before you die.</div>
+      <div class="callout green"><strong>Statutory Gift Exclusions (unlimited):</strong> Medical expenses paid DIRECTLY to provider; Tuition paid DIRECTLY to institution (any level, NOT room & board). Marital deduction (unlimited, spouse must be US citizen). Charitable deduction (unlimited).</div>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">Basis Adjustment — Gifted vs. Inherited Property <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>How Property Received</th><th>Basis</th></tr>
+        <tr><td>Inherited (at death)</td><td>Stepped UP (or down) to fair market value as of date of death</td></tr>
+        <tr><td>Gifted during lifetime</td><td>Carryover — donee has same basis as donor</td></tr>
+        <tr><td>Community property (both halves)</td><td>Both halves get basis adjustment at first death</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-block">
+    <div class="topic-title" onclick="toggle(this)">GST Tax — When It Applies <span class="chevron">▼</span></div>
+    <div class="topic-body">
+      <table class="compare-table">
+        <tr><th>Circumstance</th><th>GST Type</th><th>When Tax Applies</th></tr>
+        <tr><td>T makes lifetime gift directly to grandchild</td><td>Direct Skip</td><td>At time of transfer</td></tr>
+        <tr><td>Trust benefits children AND grandchildren; trustee distributes to grandchild</td><td>Taxable Distribution</td><td>At time of distribution</td></tr>
+        <tr><td>Trust benefits children AND grandchildren; last child dies</td><td>Taxable Termination</td><td>At time last non-skip person's interest terminates</td></tr>
+      </table>
+      <div class="callout red">No portability of deceased spouse's GST exemption to surviving spouse (unlike estate tax portability).</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="view" id="view-flashcards">
+  <div class="fc-controls">
+    <div class="fc-filter" id="fcFilter">
+      <button class="fc-filter-btn active" onclick="filterCards('all', this)">All</button>
+      <button class="fc-filter-btn" onclick="filterCards('vocab', this)">Vocabulary</button>
+      <button class="fc-filter-btn" onclick="filterCards('ca', this)">CA Law</button>
+      <button class="fc-filter-btn" onclick="filterCards('rules', this)">Rules & Doctrines</button>
+      <button class="fc-filter-btn" onclick="filterCards('cases', this)">Cases</button>
+      <button class="fc-filter-btn" onclick="filterCards('tax', this)">Tax & Numbers</button>
+    </div>
+    <div class="fc-progress" id="fcProgress">Card 1 of 60</div>
+  </div>
+
+  <div class="fc-arena">
+    <div class="fc-card-wrap" onclick="flipCard()">
+      <div class="fc-card" id="flashcard">
+        <div class="fc-face fc-front">
+          <div class="fc-category" id="fcCategory">VOCABULARY</div>
+          <div class="fc-q" id="fcQuestion">Loading...</div>
+          <div class="fc-hint">Click to reveal answer</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-category" id="fcCategoryBack">VOCABULARY</div>
+          <div class="fc-a" id="fcAnswer">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc-nav">
+      <button class="fc-btn" onclick="prevCard()">← Prev</button>
+      <button class="fc-btn primary" onclick="markKnow()">✓ Know It</button>
+      <button class="fc-btn" onclick="markReview()">↺ Review</button>
+      <button class="fc-btn" onclick="nextCard()">Next →</button>
+    </div>
+
+    <div class="fc-score" id="fcScore"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MATH PRACTICE ═══════════════ -->
+<div class="view" id="view-math">
+  <div class="section-header" style="margin-top:0;">Math Practice Calculators</div>
+
+  <div class="calc-section">
+    <div class="calc-title">Executor / Attorney Fee Calculator</div>
+    <div class="calc-row">
+      <label>Estate Value ($)</label>
+      <input type="number" id="execVal" placeholder="e.g. 2000000" oninput="calcExecFee()">
+    </div>
+    <div class="calc-result" id="execResult">Enter an estate value above.</div>
+  </div>
+
+  <div class="calc-section">
+    <div class="calc-title">CA Separate Property Intestacy Calculator</div>
+    <div class="calc-row">
+      <label>Total Separate Property ($)</label>
+      <input type="number" id="spVal" placeholder="e.g. 1200000" oninput="">
+    </div>
+    <div class="calc-row">
+      <label>Number of living children</label>
+      <input type="number" id="spKids" placeholder="e.g. 2" oninput="">
+    </div>
+    <div class="calc-row">
+      <label>Is spouse surviving?</label>
+      <select id="spSpouse" style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;padding:6px 10px;border:1px solid var(--border);border-radius:2px;background:var(--cream);">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calcSP()">Calculate Shares</button>
+    <div class="calc-result" id="spResult" style="display:none;margin-top:12px;"></div>
+  </div>
+
+  <div class="calc-section">
+    <div class="calc-title">Estate Tax Calculator (2025)</div>
+    <div class="calc-row">
+      <label>Gross Estate at Death ($)</label>
+      <input type="number" id="etEstate" placeholder="e.g. 20000000" oninput="">
+    </div>
+    <div class="calc-row">
+      <label>Lifetime Taxable Gifts ($)</label>
+      <input type="number" id="etGifts" placeholder="e.g. 0" oninput="">
+    </div>
+    <div class="calc-row">
+      <label>Deductions (debts, marital, charitable) ($)</label>
+      <input type="number" id="etDeduct" placeholder="e.g. 0" oninput="">
+    </div>
+    <button class="calc-btn" onclick="calcET()">Calculate Estate Tax</button>
+    <div class="calc-result" id="etResult" style="display:none;margin-top:12px;"></div>
+  </div>
+
+  <div class="calc-section">
+    <div class="calc-title">Annual Gift Tax Exclusion Check</div>
+    <div class="calc-row">
+      <label>Number of donees</label>
+      <input type="number" id="giftDonees" placeholder="e.g. 4" oninput="">
+    </div>
+    <div class="calc-row">
+      <label>Gift per donee ($)</label>
+      <input type="number" id="giftAmount" placeholder="e.g. 25000" oninput="">
+    </div>
+    <button class="calc-btn" onclick="calcGift()">Calculate</button>
+    <div class="calc-result" id="giftResult" style="display:none;margin-top:12px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ QUICK REFERENCE ═══════════════ -->
+<div class="view" id="view-quickref">
+  <div class="section-header" style="margin-top:0;">Quick Reference Cards</div>
+
+  <div class="qr-grid">
+
+    <div class="qr-card">
+      <div class="qr-title">Key 2025 Numbers</div>
+      <div class="qr-item"><span>Estate/Gift Tax Exemption</span><span class="val">$13.99M</span></div>
+      <div class="qr-item"><span>Annual Gift Exclusion</span><span class="val">$19,000</span></div>
+      <div class="qr-item"><span>GST Exemption</span><span class="val">$13.99M</span></div>
+      <div class="qr-item"><span>Estate Tax Rate</span><span class="val">40% flat</span></div>
+      <div class="qr-item"><span>Non-citizen spouse annual exclusion</span><span class="val">$190,000</span></div>
+      <div class="qr-item"><span>CA small estate affidavit</span><span class="val">$184,500</span></div>
+      <div class="qr-item"><span>CA small estate affidavit (eff. 4/1/25)</span><span class="val">$750,000</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">CA Executor Fee Schedule</div>
+      <div class="qr-item"><span>First $100k</span><span class="val">4% = $4,000</span></div>
+      <div class="qr-item"><span>Next $100k</span><span class="val">3% = $3,000</span></div>
+      <div class="qr-item"><span>Next $800k</span><span class="val">2% = $16,000</span></div>
+      <div class="qr-item"><span>Next $9M</span><span class="val">1% = $90,000</span></div>
+      <div class="qr-item"><span>Next $15M</span><span class="val">0.5% = $75,000</span></div>
+      <div class="qr-item"><span>Above $25M</span><span class="val">Court decides</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Creditor Deadlines (CA)</div>
+      <div class="qr-item"><span>File claim after Letters issued</span><span class="val">4 months</span></div>
+      <div class="qr-item"><span>Or after creditor served with notice</span><span class="val">60 days</span></div>
+      <div class="qr-item"><span>File suit after claim denied</span><span class="val">3 months</span></div>
+      <div class="qr-item"><span>Independent SOL</span><span class="val">1 year</span></div>
+      <div class="qr-item"><span>Contest Will after admission (CA)</span><span class="val">120 days</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Marriage Length → Elective Share % (Augmented)</div>
+      <div class="qr-item"><span>0 – &lt;1 year</span><span class="val">3%</span></div>
+      <div class="qr-item"><span>1 – &lt;2 years</span><span class="val">6%</span></div>
+      <div class="qr-item"><span>2 – &lt;3 years</span><span class="val">12%</span></div>
+      <div class="qr-item"><span>5 – &lt;6 years</span><span class="val">30%</span></div>
+      <div class="qr-item"><span>10 – &lt;11 years</span><span class="val">60%</span></div>
+      <div class="qr-item"><span>15+ years</span><span class="val">100%</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Abatement Order (If Silent)</div>
+      <div class="qr-item"><span>1st (first to go)</span><span class="val">Intestate assets</span></div>
+      <div class="qr-item"><span>2nd</span><span class="val">Residuary devises</span></div>
+      <div class="qr-item"><span>3rd</span><span class="val">General devises</span></div>
+      <div class="qr-item"><span>4th (last to go)</span><span class="val">Specific devises</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">CA Intestacy — Separate Property</div>
+      <div class="qr-item"><span>1 child</span><span class="val">50% spouse / 50% child</span></div>
+      <div class="qr-item"><span>2+ children</span><span class="val">⅓ spouse / ⅔ children</span></div>
+      <div class="qr-item"><span>No issue, has parent(s)</span><span class="val">50% spouse / 50% parents</span></div>
+      <div class="qr-item"><span>No issue, no parents, no siblings</span><span class="val">100% spouse</span></div>
+      <div class="qr-item"><span>Community property (always)</span><span class="val">100% spouse</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Gift Completeness Rules</div>
+      <div class="qr-item"><span>Check</span><span class="val">Complete when cashed</span></div>
+      <div class="qr-item"><span>Deed mailed (Mailbox Rule)</span><span class="val">Complete upon mailing</span></div>
+      <div class="qr-item"><span>Gift to 3rd party (donor's agent)</span><span class="val">NOT complete</span></div>
+      <div class="qr-item"><span>Gift to 3rd party (donee's agent)</span><span class="val">Complete</span></div>
+      <div class="qr-item"><span>Revocable trust</span><span class="val">NOT a gift</span></div>
+      <div class="qr-item"><span>Irrevocable trust</span><span class="val">Gift is complete</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Fraud — Types & Effects</div>
+      <div class="qr-item"><span>Fraud in inducement</span><span class="val">Affected part void only</span></div>
+      <div class="qr-item"><span>Fraud in execution</span><span class="val">Entire Will void</span></div>
+      <div class="qr-item"><span>Fraud preventing revocation</span><span class="val">Will not probated</span></div>
+      <div class="qr-item"><span>Constructive trust available?</span><span class="val">Inducement & prevention only (not execution)</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">Non-Probate vs. Probate</div>
+      <div class="qr-item"><span>Joint tenancy (WROS)</span><span class="val">Non-probate</span></div>
+      <div class="qr-item"><span>Tenancy in common</span><span class="val">PROBATE</span></div>
+      <div class="qr-item"><span>Tenancy by Entirety</span><span class="val">Non-probate (not in CA)</span></div>
+      <div class="qr-item"><span>POD / Beneficiary designation</span><span class="val">Non-probate</span></div>
+      <div class="qr-item"><span>Revocable living trust</span><span class="val">Non-probate</span></div>
+      <div class="qr-item"><span>Property in decedent's name only</span><span class="val">PROBATE</span></div>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-title">GST — Trigger Points</div>
+      <div class="qr-item"><span>Direct gift to grandchild</span><span class="val">Direct Skip — immediate tax</span></div>
+      <div class="qr-item"><span>Distribution from trust to grandchild</span><span class="val">Taxable Distribution</span></div>
+      <div class="qr-item"><span>Last non-skip person dies in trust</span><span class="val">Taxable Termination</span></div>
+      <div class="qr-item"><span>Portability to surviving spouse?</span><span class="val">NO (unlike estate tax)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── TOGGLE ──
+function toggle(el) {
+  el.classList.toggle('open');
+  const body = el.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── VIEWS ──
+function switchView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'flashcards') renderCard();
+}
+
+// ── FLASHCARDS DATA ──
+const ALL_CARDS = [
+  // VOCABULARY
+  {cat:'vocab', q:'What is the difference between an Executor and an Administrator?', a:'Executor = personal representative NAMED in the Will.\nAdministrator = personal representative NOT named in the Will, or the term used when there is no Will.'},
+  {cat:'vocab', q:'Define "Issue" as used in wills and estates law.', a:'"Issue" means lineal descendants: children, grandchildren, and further down the line. It is both singular and plural.'},
+  {cat:'vocab', q:'What is a "Devise" and what is a "Bequest"?', a:'"Devise" = to give real property (also used as a noun).\n"Bequeath" = to give personal property.'},
+  {cat:'vocab', q:'What are "Collateral Relatives"?', a:'Relatives who are NOT your descendants — siblings, aunts & uncles, cousins, etc.'},
+  {cat:'vocab', q:'What is a Testamentary Trust?', a:'A trust created at the death of the settlor under the terms of the Will. It does not exist until the creator dies.'},
+  {cat:'vocab', q:'What is the difference between Principal/Corpus and Income in a trust?', a:'Principal/Corpus/Res = the assets that fund the trust (real estate, stocks, bonds, cash).\nIncome = generated by the principal assets (rental income, interest, dividends).\nIMPORTANT: Taxable income ≠ Trust income.'},
+  {cat:'vocab', q:'Who is the Settlor, Trustee, and Beneficiary?', a:'Settlor/Grantor/Trustor = creator of the trust; places property in trust.\nTrustee = legal owner/manager; has all powers of a legal owner; subject to fiduciary duties.\nBeneficiary = equitable title; benefits from trust per its terms.'},
+  {cat:'vocab', q:'What is "Probate Property"?', a:'Property that does NOT transfer automatically; title is in the decedent\'s name; requires court involvement to pass. Includes tenancy-in-common interests.'},
+  {cat:'vocab', q:'What is a "Demonstrative Devise"?', a:'A gift primarily payable from a stated source, secondarily from general assets of the estate.\nExample: "$100,000 payable from my Chase Bank account no. 12345."'},
+  {cat:'vocab', q:'What is a "Specific Devise"?', a:'A gift of a specifically identifiable asset.\nExamples: "my house," "my Rolex watch," "my 2015 Porsche Boxster."\nNOTE: "I give my 200 shares of Apple stock" = specific; "I give 200 shares of Apple stock" = NOT specific.'},
+
+  // CA LAW
+  {cat:'ca', q:'[CA LAW] What are the witness requirements for a Will in California?', a:'CA Prob. Code § 6110:\n• In writing\n• Signed by testator (or by another person at testator\'s direction and in testator\'s presence)\n• Signed by TWO witnesses DURING the testator\'s LIFETIME\n• Both witnesses present at the same time\n• Witnesses understood the instrument was a Will\n\nCRITICAL: Post-death witnessing is NOT allowed in California.'},
+  {cat:'ca', q:'[CA LAW] What is the California rule on interested witnesses?', a:'CA Prob. Code § 6112:\n• Will is NOT invalid because signed by an interested witness.\n• If fewer than 2 other disinterested witnesses, a REBUTTABLE PRESUMPTION arises that the interested witness procured the gift by duress, menace, fraud, or undue influence.\n• If the presumption applies and the witness cannot rebut it, the witness takes no more than their intestate share.'},
+  {cat:'ca', q:'[CA LAW] What are California\'s probate alternatives for small estates?', a:'1. Affidavit procedure: Up to $184,500 (no real property) — increasing to $750,000 effective 4/1/25 (can include primary residence).\n2. Spousal property petition: Expedited process for surviving spouse; one hearing, one order; recordable to transfer real property.'},
+  {cat:'ca', q:'[CA LAW] What is California\'s rule on void transfers to caregivers and drafting attorneys?', a:'CA Prob. Code §§ 810–812, 21380:\nGifts to drafting attorneys, caregivers, partners, or relatives are VOID unless:\n• Fiduciary proves by clear and convincing evidence the gift was NOT the product of undue influence.\n• A Certificate of Independent Review by an independent attorney must be obtained.\n\nPresumption for drafters and their relatives is CONCLUSIVE.'},
+  {cat:'ca', q:'[CA LAW] What is the CA rule for holographic wills?', a:'California recognizes holographic wills. Requirements:\n• Signed by the testator (anywhere on the Will)\n• Material provisions (gifts made, beneficiaries\' names) in testator\'s OWN handwriting\n• Statement of testamentary intent not required (extrinsic evidence admissible)\n• Date not required but encouraged\n• Preprinted forms allowed'},
+  {cat:'ca', q:'[CA LAW] What is the CA No-Contest Clause rule?', a:'Enforced if:\n1. Direct contest brought without probable cause\n2. Challenging transfer of property with or without probable cause (if no-contest clause expressly provides)\n3. Filing creditor\'s claims, whether or not probable cause (if no-contest clause expressly provides)'},
+  {cat:'ca', q:'[CA LAW] What happens to spendthrift trusts re: child/spousal support in CA vs. UPC?', a:'CA Spendthrift Exception: Only CHILD SUPPORT (NOT spousal support).\nUPC Exception: Child support AND spousal support, and attorneys providing services to protect beneficiary\'s interest in trust.'},
+  {cat:'ca', q:'[CA LAW] How does California\'s Harmless Error Rule work?', a:'Can be applied to overcome DEFECTS in:\n• Testator signing in presence of 2 witnesses, both present at same time\n• Witnesses signing during testator\'s lifetime\n• Witnesses understanding document is testator\'s Will\n\nRequires: Clear and convincing evidence that testator intended the document to be his/her Will.'},
+  {cat:'ca', q:'[CA LAW] California separate property intestacy — spouse\'s share with 2 children?', a:'With 2+ children (or their issue):\n• ⅓ to spouse\n• ⅔ divided equally among children/issue\n\nCommunity property ALWAYS goes 100% to surviving spouse.'},
+  {cat:'ca', q:'[CA LAW] What is the 120-Hour Rule in California?', a:'Any heir must survive the decedent by 120 hours (5 days), otherwise deemed predeceased.\nException: The 120-hour rule does not apply if it would cause escheat.\nApplies to non-probate transfers as well.'},
+
+  // RULES & DOCTRINES
+  {cat:'rules', q:'What is Dependent Relative Revocation (DRR)?', a:'A mistake-remedying doctrine: revocation is NOT actually a revocation if the intent was for it to be conditional on executing a 2nd Will that was never validly executed or is flawed.\nElements:\n1. Testator intended revocation of 1st Will to be conditional on executing a 2nd Will\n2. 2nd Will was never executed or was flawed\n3. 1st Will approximates testator\'s wishes more so than intestacy\n\nResult: Court reinstates original bequests.'},
+  {cat:'rules', q:'What is the Anti-Lapse Statute and when does it NOT apply?', a:'Prevents lapsed gifts (to predeceased legatee who is a RELATIVE) from passing by intestacy. Gift passes to deceased legatee\'s descendants.\n\nDoes NOT apply:\n• If testator\'s intent to make gift conditional is clear\n• Under majority rule, words of survivorship ("if he survives me") PREVENT anti-lapse\n• Under UPC, words of survivorship ("if he survives me") are NOT sufficient evidence of contrary intent'},
+  {cat:'rules', q:'What is the "No Further Inquiry Rule" in trust law?', a:'When a trustee engages in a transaction prohibited by the duty of loyalty (self-dealing or conflicted transaction), the transaction is VOIDABLE by a beneficiary without regard to the fairness of the transaction or the trustee\'s good faith.\n\nExceptions:\n1. Transaction authorized by trust terms or approved by court\n2. Routine technically self-dealing transactions (reasonable compensation, deposits in bank trustee operates)'},
+  {cat:'rules', q:'What is the Cy Pres Doctrine?', a:'A doctrine to modify a charitable trust so that the settlor\'s intentions are carried out "as near as possible."\n\nRequirements:\n1. Valid charitable trust\n2. Impossible or impractical to carry out specific purpose\n3. Donor had a GENERAL charitable intent (NOT specific intent)\n\nApplies to DISPOSITIVE terms.'},
+  {cat:'rules', q:'What is the Prudent Investor Rule for trustees?', a:'Trustee must manage trust as a prudent investor considering purpose, term, distribution, and other circumstances.\n• Investments viewed in context of WHOLE PORTFOLIO\n• Risk looked at in light of potential return\n• Can invest in any assets within guidelines\n• Diversification is EXPLICITLY required\n• No category of investment is inherently imprudent\n• Speculation and outright risk-taking NOT sanctioned'},
+  {cat:'rules', q:'What is Incorporation by Reference in will law?', a:'Allows unexecuted (or some executed) documents to be incorporated into a Will.\nRequirements:\n1. Other document must be IN WRITING\n2. Must EXIST at the date of signing of the Will\n3. Must be identifiable with reasonable certainty\n\nNeed not be present at time of signing.\n\nNOT recognized in: NY, CT, LA.'},
+  {cat:'rules', q:'What is Abatement and what is the order?', a:'Process of reducing gifts under Will due to insufficient assets.\n\nPriority (funeral/admin expenses paid first), then:\n1. FIRST: Intestate assets abate proportionately\n2. SECOND: Residue abates proportionately\n3. THIRD: General bequests abate proportionately\n4. FOURTH: Specific bequests abate proportionately\n\nSpecific gifts are the SAFEST — last to be reduced.'},
+  {cat:'rules', q:'What is Ademption and to which gifts does it apply?', a:'Occurs when a specifically devised item is no longer in the testator\'s estate at death → gift fails.\n\nApplies ONLY to SPECIFIC devises and bequests.\nCannot adeem: general devises, demonstrative devises, residuary devises.\n\nIdentity Rule (majority): If asset not in estate, NO GIFT.\nException: "mere change in form" (mink coat → stole; bank acquired by another bank; stock split)'},
+  {cat:'rules', q:'What is the Rule Against Perpetuities (RAP)?', a:'"An interest must vest, if at all, no later than 21 years after lives in being at the creation of the interest."\n\n• Any interest that MIGHT vest beyond this period is VOID\n• Look at MOST REMOTE POSSIBILITY\n• Modern trend: 90-year "wait and see" rule\n• Indefeasibly vested remainder → NOT subject to RAP\n• Contingent remainder and vested-subject-to-open → SUBJECT TO RAP\n• Reversionary interests → NOT subject to RAP'},
+  {cat:'rules', q:'What is the Material Purpose Test (Claflin Doctrine)?', a:'When there is no settlor consent and beneficiaries want to terminate/modify an irrevocable trust:\n• ALL beneficiaries must consent\n• Court may terminate only if continuance of trust is NOT necessary to achieve any MATERIAL PURPOSE\n• Court may modify if not inconsistent with material purpose\n• Under UTC: spendthrift clause is NOT a material purpose'},
+
+  // CASES
+  {cat:'cases', q:'Shapira v. Union National Bank — What was the holding?', a:'Father made son\'s inheritance conditional on marrying a Jewish woman within 7 years of father\'s death.\nHeld: Restriction IS ALLOWED.\n• Right to inherit is NOT a natural right; not constitutionally guaranteed\n• Father can completely disinherit son, so partial restrictions are valid\n• NOT a freedom of religion violation\n• Contrast: total restriction on marriage would be contrary to public policy'},
+  {cat:'cases', q:'Stevens v. Casdorph — What did the court hold about substantial compliance?', a:'Mr. Miller (wheelchair bound) signed Will at bank; bank manager took Will to two other employees to sign. Witnesses did not see Miller sign; he was not in their line of sight; witnesses didn\'t see each other sign.\nHeld: NO substantial compliance.\n• None of the parties were in each other\'s presence\n• Would also fail under UPC: witnesses did not see testator sign; testator did not declare he had signed; Will was not notarized'},
+  {cat:'cases', q:'Matter of Snide — What was held about a Will reform?', a:'Husband and wife signed EACH OTHER\'S Wills by mistake.\nHeld: The reformation stands.\n• It was harmless and there was no fraud present\n\nDissent: Failure to follow strict execution formalities would weaken Will protections (slippery slope).'},
+  {cat:'cases', q:'In re Rothko — What were the lessons about executor/trustee duty?', a:'Mark Rothko\'s 3 executors contracted to sell/consign 798 valuable paintings to companies where they had conflicts of interest.\nHeld:\n• Self-dealing = "No further inquiry" rule applies; voidable regardless of fairness\n• Conflicts of interest require a SHOWING OF UNFAIRNESS\n• Where there was misfeasance (more than mere negligence): appreciation damages apply\n• Appreciation damages intended to return estate to position it WOULD HAVE BEEN IN'},
+  {cat:'cases', q:'In re Gleeson\'s Will — What is the "No Further Inquiry" rule?', a:'Trustee who was also a farmer-tenant of the decedent\'s land voluntarily raised rent but continued to farm land as trustee.\nHeld: Breach of duty of loyalty. The trustee should have chosen: continue as tenant OR act as trustee — not both.\nThe ONLY defenses to the no-further-inquiry rule:\n(a) Settlor authorized the conflict in the trust terms;\n(b) Beneficiary consented after full disclosure; OR\n(c) Trustee obtained judicial approval in advance'},
+  {cat:'cases', q:'Gruen v. Gruen — What did the court hold about gifts with a retained life estate?', a:'Father wrote letters to son stating he was gifting son a painting but wanted to keep it for his lifetime. After father\'s death, stepmother opposed.\nHeld: A gift with a retained life estate IS VALID.\n• Letters were sufficient evidence of intent and "delivery"\n• It would be illogical to require parting with painting when donor wants to keep life estate\n• Son was presumed to have accepted because gift had value'},
+  {cat:'cases', q:'Farkas v. Williams — What was the rule about revocable inter vivos trusts?', a:'Farkas created 4 trusts for Williams; Farkas retained income, power to revoke and amend, and was the trustee.\nHeld: This is a valid inter vivos trust.\n• Williams had a PRESENT INTEREST he would receive unless trust was revoked\n• Power to revoke does NOT invalidate the trust\n• All powers were subject to a fiduciary duty\n• Validated as a Will substitute'},
+  {cat:'cases', q:'Scheffel v. Krueger — What was the rule about spendthrift trusts and tort creditors?', a:'Tort creditor sought to satisfy judgment against trust beneficiary who had been found liable for sexual abuse.\nHeld: Because the creator of the trust is NOT the beneficiary (third-party trust, not self-settled), the spendthrift provision IS ENFORCEABLE.\n• "Where the legislature has made specific exemptions, we must presume no others were intended."\n• No public policy exception for tort creditors where statute didn\'t create one'},
+
+  // TAX & NUMBERS
+  {cat:'tax', q:'What is the 2025 estate/gift tax exemption and rate?', a:'Lifetime Estate/Gift Tax Exemption: $13.99 million\nFlat Tax Rate: 40%\n\nThe gift and estate taxes are COORDINATED (unified). You cannot avoid estate tax by giving away wealth before death.'},
+  {cat:'tax', q:'What is the 2025 annual gift tax exclusion and how does it work?', a:'Annual Exclusion: $19,000 per year, per DONEE (2025 — indexed for inflation)\n• Must be a gift of PRESENT INTEREST (future interests in trusts usually do NOT qualify)\n• Exception: If beneficiary has withdrawal rights (Crummey power), treated as present interest\n• Does NOT reduce the lifetime exemption'},
+  {cat:'tax', q:'What gifts are excluded from gift tax regardless of amount?', a:'UNLIMITED EXCLUSIONS:\n1. Medical expenses paid DIRECTLY to doctor/hospital/insurance company\n2. Tuition paid DIRECTLY to educational institution (any level)\n• Does NOT include room & board\n• Must be paid DIRECTLY — paying off a student loan does NOT qualify\n\nAlso unlimited: Marital deduction (citizen spouse) and Charitable deduction.'},
+  {cat:'tax', q:'What is the Generation-Skipping Transfer (GST) Tax?', a:'A separate tax on transfers to "skip persons" (2+ generations away, or non-relatives more than 37.5 years younger).\n• 2025 Exemption: $13.99 million\n• Annual Exclusion: $19,000\n• Rate: 40%\n• No portability of deceased spouse\'s GST exemption\n\nThree types:\n1. Direct Skip — immediate tax\n2. Taxable Distribution — tax on distribution to skip person\n3. Taxable Termination — tax when last non-skip beneficiary dies'},
+  {cat:'tax', q:'What is the difference between inherited and gifted property for income tax basis?', a:'Inherited property:\n• Gets STEPPED UP (or down) to fair market value at date of death\n• Immediate sale results in NO capital gain\n• Applies to BOTH halves of community property\n\nGifted property (during lifetime):\n• CARRYOVER basis — donee has same basis as donor\n• Potential capital gain on eventual sale'},
+  {cat:'tax', q:'What is the Bypass/Exemption/Credit Shelter Trust vs. Portability for spouses?', a:'Bypass Trust:\n• Holds deceased spouse\'s property up to exemption amount in irrevocable trust\n• Wife\'s rights LIMITED so assets NOT in her estate\n• All appreciation after death stays out of surviving spouse\'s estate\n• Good for blended families (husband\'s kids get remainder)\n\nPortability:\n• Wife can "capture" husband\'s unused exemption (DSUE) by filing estate tax return\n• Wife can use DSUE for lifetime gifts\n• Wife has more control over asset distribution\n• NOT available for GST exemption'},
+  {cat:'tax', q:'What are QTIP Trusts and when are they used?', a:'Qualified Terminable Interest Property Trust:\n• Qualifies for unlimited marital deduction (tax deferred, not avoided)\n• Spouse is the ONLY beneficiary for life\n• All income paid to spouse at LEAST annually\n• Spouse can demand assets be income-producing\n• Assets includible in surviving spouse\'s estate at her death\n\nUsed in blended families to provide for spouse while ensuring remainder goes to donor\'s children.'},
+  {cat:'tax', q:'What is the formula to calculate the estate tax?', a:'1. Gross Estate − Deductions = Adjusted Gross Estate\n2. Adjusted Gross Estate − Lifetime Exclusion ($13.99M) = Taxable Estate\n3. Taxable Estate + Adjusted Taxable Gifts = Estate Tax Base\n4. Estate Tax Base × 40% = Tentative Estate Tax\n5. Tentative Estate Tax − Gift Tax Paid = Gross Estate Tax\n6. Gross Estate Tax − Applicable Credit = NET ESTATE TAX'},
+];
+
+let currentCards = [...ALL_CARDS];
+let currentIndex = 0;
+let scores = {};
+let isFlipped = false;
+
+function filterCards(cat, btn) {
+  document.querySelectorAll('.fc-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCards = cat === 'all' ? [...ALL_CARDS] : ALL_CARDS.filter(c => c.cat === cat);
+  currentIndex = 0;
+  isFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  if (!currentCards.length) return;
+  const card = currentCards[currentIndex];
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  isFlipped = false;
+  document.getElementById('fcCategory').textContent = card.cat.toUpperCase();
+  document.getElementById('fcCategoryBack').textContent = card.cat.toUpperCase();
+  document.getElementById('fcQuestion').textContent = card.q;
+  document.getElementById('fcAnswer').textContent = card.a;
+  document.getElementById('fcProgress').textContent = `Card ${currentIndex + 1} of ${currentCards.length}`;
+  renderScoreDots();
+}
+
+function flipCard() {
+  const fc = document.getElementById('flashcard');
+  isFlipped = !isFlipped;
+  fc.classList.toggle('flipped', isFlipped);
+}
+
+function nextCard() {
+  currentIndex = (currentIndex + 1) % currentCards.length;
+  renderCard();
+}
+
+function prevCard() {
+  currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
+  renderCard();
+}
+
+function markKnow() {
+  scores[currentIndex] = 'know';
+  renderScoreDots();
+  nextCard();
+}
+
+function markReview() {
+  scores[currentIndex] = 'review';
+  renderScoreDots();
+  nextCard();
+}
+
+function renderScoreDots() {
+  const container = document.getElementById('fcScore');
+  const show = Math.min(currentCards.length, 20);
+  container.innerHTML = '';
+  for (let i = 0; i < show; i++) {
+    const d = document.createElement('div');
+    d.className = 'score-dot' + (scores[i] === 'know' ? ' know' : scores[i] === 'review' ? ' review' : '');
+    container.appendChild(d);
+  }
+}
+
+// ── MATH CALCULATORS ──
+function calcExecFee() {
+  const val = parseFloat(document.getElementById('execVal').value);
+  if (isNaN(val) || val <= 0) { document.getElementById('execResult').textContent = 'Enter a valid estate value.'; return; }
+  let fee = 0;
+  let breakdown = '';
+  const tiers = [[100000, 0.04],[100000, 0.03],[800000, 0.02],[9000000, 0.01],[15000000, 0.005]];
+  let rem = val;
+  for (const [limit, rate] of tiers) {
+    const taxable = Math.min(rem, limit);
+    if (taxable <= 0) break;
+    const portion = taxable * rate;
+    fee += portion;
+    breakdown += `${(rate*100).toFixed(1)}% of $${taxable.toLocaleString()} = $${portion.toLocaleString()}\n`;
+    rem -= taxable;
+    if (rem <= 0) break;
+  }
+  if (rem > 0) breakdown += `Above $25M: Determined by court\n`;
+  document.getElementById('execResult').textContent = `EXECUTOR FEE: $${fee.toLocaleString()}\nATTORNEY FEE: $${fee.toLocaleString()}\nTOTAL (both): $${(fee*2).toLocaleString()}\n\n--- Breakdown ---\n${breakdown}`;
+}
+
+function calcSP() {
+  const sp = parseFloat(document.getElementById('spVal').value);
+  const kids = parseInt(document.getElementById('spKids').value);
+  const hasSpouse = document.getElementById('spSpouse').value === 'yes';
+  if (isNaN(sp) || sp < 0) { alert('Enter a valid separate property value'); return; }
+  let result = '';
+  const el = document.getElementById('spResult');
+  el.style.display = 'block';
+  if (!hasSpouse) {
+    if (kids <= 0) { result = 'No spouse, no children → passes to parents, then siblings, etc.'; }
+    else { result = `All $${sp.toLocaleString()} goes to ${kids} child(ren) equally: $${(sp/kids).toLocaleString()} each.`; }
+  } else {
+    if (kids === 0) { result = `No children → $${sp.toLocaleString()} passes to PARENTS 50%, SPOUSE 50%\n(or 100% to spouse if no parents or siblings).`; }
+    else if (kids === 1) {
+      result = `1 child:\nSpouse: $${(sp*0.5).toLocaleString()} (50%)\nChild: $${(sp*0.5).toLocaleString()} (50%)`;
+    } else {
+      const spouseShare = sp / 3;
+      const kidsTotal = (sp * 2) / 3;
+      result = `${kids} children:\nSpouse: $${spouseShare.toLocaleString()} (⅓)\nEach child: $${(kidsTotal/kids).toLocaleString()} (${(200/3/kids).toFixed(1)}%)\nTotal children: $${kidsTotal.toLocaleString()} (⅔)`;
+    }
+  }
+  el.textContent = result;
+}
+
+function calcET() {
+  const gross = parseFloat(document.getElementById('etEstate').value) || 0;
+  const gifts = parseFloat(document.getElementById('etGifts').value) || 0;
+  const deductions = parseFloat(document.getElementById('etDeduct').value) || 0;
+  const exemption = 13990000;
+  const taxRate = 0.40;
+  const adjGross = gross - deductions;
+  const totalTaxBase = adjGross + gifts;
+  const taxableEstate = Math.max(0, totalTaxBase - exemption);
+  const tax = taxableEstate * taxRate;
+  const el = document.getElementById('etResult');
+  el.style.display = 'block';
+  el.textContent = `Gross Estate:              $${gross.toLocaleString()}
+Less Deductions:          −$${deductions.toLocaleString()}
+Adjusted Gross Estate:    $${adjGross.toLocaleString()}
+Plus Lifetime Gifts:      +$${gifts.toLocaleString()}
+Estate Tax Base:          $${totalTaxBase.toLocaleString()}
+Less Exemption:           −$${exemption.toLocaleString()}
+TAXABLE ESTATE:           $${taxableEstate.toLocaleString()}
+─────────────────────────────────────
+TAX DUE (@ 40%):          $${tax.toLocaleString()}`;
+}
+
+function calcGift() {
+  const donees = parseInt(document.getElementById('giftDonees').value) || 0;
+  const amt = parseFloat(document.getElementById('giftAmount').value) || 0;
+  const annual = 19000;
+  const total = donees * amt;
+  const excluded = donees * Math.min(amt, annual);
+  const taxable = Math.max(0, total - excluded);
+  const el = document.getElementById('giftResult');
+  el.style.display = 'block';
+  el.textContent = `Gift per donee:           $${amt.toLocaleString()}
+Number of donees:         ${donees}
+Total gifts:              $${total.toLocaleString()}
+Annual exclusion used:    $${excluded.toLocaleString()} ($${Math.min(amt,annual).toLocaleString()} × ${donees})
+Taxable (uses lifetime):  $${taxable.toLocaleString()}
+(Note: if gift is future interest in trust, annual exclusion may NOT apply without Crummey powers)`;
+}
+
+// init
+renderCard();
+</script>
+</body>
+</html>
