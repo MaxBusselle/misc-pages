@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GWATS Tutor — AI Study Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ee;
+  --surface: #ffffff;
+  --surface2: #f0ece3;
+  --border: #ddd8ce;
+  --border-dark: #c4bdb0;
+  --ink: #1a1714;
+  --ink-mid: #4a4540;
+  --ink-dim: #8a8278;
+  --gold: #8b6914;
+  --gold-bg: #fdf6e3;
+  --gold-border: #e8d08a;
+  --teal: #1a6b6b;
+  --teal-bg: #e8f4f4;
+  --red: #8b2020;
+  --red-bg: #fdf0f0;
+  --tutor-bubble: #1a1714;
+  --user-bubble: #2a5c8a;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  flex-shrink: 0;
+  border-bottom: 2px solid var(--gold);
+  z-index: 10;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.tutor-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #c4930a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.header-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.header-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 1px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topic-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.topic-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border: 1px solid #3a3530;
+  color: #888;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.topic-pill:hover { border-color: var(--gold); color: var(--gold); }
+.clear-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid #3a3530;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+.clear-btn:hover { border-color: #666; color: #aaa; }
+
+/* ── CHAT AREA ── */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+.chat-area::-webkit-scrollbar { width: 5px; }
+.chat-area::-webkit-scrollbar-track { background: transparent; }
+.chat-area::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 3px; }
+
+/* ── MESSAGE BUBBLES ── */
+.msg-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  max-width: 820px;
+  width: 100%;
+  animation: fadeUp 0.25s ease;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg-row.user { flex-direction: row-reverse; align-self: flex-end; }
+.msg-row.tutor { align-self: flex-start; }
+
+.msg-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tutor .msg-avatar { background: var(--ink); }
+.user .msg-avatar { background: var(--user-bubble); }
+
+.msg-bubble {
+  padding: 12px 16px;
+  border-radius: 14px;
+  max-width: 680px;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  box-shadow: var(--shadow);
+}
+.tutor .msg-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top-left-radius: 4px;
+  color: var(--ink);
+}
+.user .msg-bubble {
+  background: var(--user-bubble);
+  color: white;
+  border-top-right-radius: 4px;
+}
+
+/* Rich text in tutor bubbles */
+.msg-bubble strong { font-weight: 600; }
+.msg-bubble em { font-style: italic; color: var(--gold); }
+.msg-bubble code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.msg-bubble ul { padding-left: 18px; margin: 6px 0; }
+.msg-bubble ol { padding-left: 20px; margin: 6px 0; }
+.msg-bubble li { margin-bottom: 3px; }
+.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p:last-child { margin-bottom: 0; }
+.msg-bubble hr { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
+
+/* Special callout inside bubble */
+.callout-box {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-size: 0.86rem;
+}
+.callout-box.ca { background: var(--teal-bg); border-color: #a8d4d4; }
+.callout-box.warn { background: var(--red-bg); border-color: #f0b8b8; }
+
+/* Question prompt chips */
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.chip {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border: 1px solid var(--border-dark);
+  background: var(--surface2);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--ink-mid);
+  font-family: 'DM Sans', sans-serif;
+}
+.chip:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  border-top-left-radius: 4px;
+  width: fit-content;
+  box-shadow: var(--shadow);
+}
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-dim);
+  animation: bounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+/* ── INPUT AREA ── */
+.input-area {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+.input-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.input-field {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  padding: 11px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  background: var(--bg);
+  color: var(--ink);
+  resize: none;
+  outline: none;
+  min-height: 44px;
+  max-height: 140px;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+  overflow-y: auto;
+}
+.input-field:focus { border-color: var(--gold); }
+.input-field::placeholder { color: var(--ink-dim); }
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: white;
+  font-size: 1.1rem;
+}
+.send-btn:hover:not(:disabled) { background: var(--gold); transform: scale(1.05); }
+.send-btn:disabled { background: var(--border); cursor: default; }
+
+.input-hint {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* ── WELCOME SCREEN ── */
+.welcome-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  max-width: 600px;
+  align-self: center;
+  margin: auto;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.welcome-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.welcome-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.welcome-sub {
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.welcome-starts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+.welcome-start-btn {
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.welcome-start-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+.welcome-start-btn .btn-title { font-size: 0.88rem; font-weight: 500; display: block; }
+.welcome-start-btn .btn-sub { font-size: 0.76rem; color: var(--ink-dim); margin-top: 2px; display: block; }
+.welcome-start-btn:hover .btn-sub { color: #aaa; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="tutor-avatar">⚖️</div>
+    <div>
+      <div class="header-title">GWATS Tutor</div>
+      <span class="header-sub">AI Study Coach · Gifts, Wills, Trusts &amp; Estates</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="topic-pills" id="topicPills">
+      <div class="topic-pill" onclick="jumpTopic('probate')">Probate</div>
+      <div class="topic-pill" onclick="jumpTopic('wills')">Wills</div>
+      <div class="topic-pill" onclick="jumpTopic('intestacy')">Intestacy</div>
+      <div class="topic-pill" onclick="jumpTopic('trusts')">Trusts</div>
+      <div class="topic-pill" onclick="jumpTopic('tax')">Tax</div>
+    </div>
+    <button class="clear-btn" onclick="clearChat()">New Session</button>
+  </div>
+</div>
+
+<div class="chat-area" id="chatArea">
+  <!-- Welcome shown before first message -->
+  <div class="welcome-card" id="welcomeCard">
+    <span class="welcome-icon">📚</span>
+    <div class="welcome-title">Your GWATS Study Coach</div>
+    <p class="welcome-sub">I know everything in your outline cold. I can quiz you, explain confusing doctrine, work through hypotheticals with you, draw connections between topics, or just answer questions. How do you want to start?</p>
+    <div class="welcome-starts">
+      <button class="welcome-start-btn" onclick="startWith(`I'm not sure what I know well and what I don't. Can you figure out where I need the most help?`)">
+        <span class="btn-title">🔍 Diagnose my weak spots</span>
+        <span class="btn-sub">Let the tutor probe what you know and don't know</span>
+      </button>
+      <button class="welcome-start-btn" onclick="startWith(`Quiz me on California-specific rules — things where California differs from the general rule or UPC.`)">
+        <span class="btn-title">🏛️ Drill California distinctions</span>
+        <span class="btn-sub">The exam tests CA-specific rules — let's make sure you have them</span>
+      </button>
+      <button class="welcome-start-btn" onclick="startWith(`Can you walk me through the hardest math problems likely to be on this exam? Start with something and work through it with me.`)">
+        <span class="btn-title">🧮 Work through math problems</span>
+        <span class="btn-sub">Intestacy calculations, executor fees, estate tax — step by step</span>
+      </button>
+      <button class="welcome-start-btn" onclick="startWith(`I always mix up lapse, anti-lapse, and class gifts. Can you help me understand how they connect and when each applies?`)">
+        <span class="btn-title">🔗 Explain how the doctrines connect</span>
+        <span class="btn-sub">Understand the relationships between rules, not just rules in isolation</span>
+      </button>
+      <button class="welcome-start-btn" onclick="startWith(`Give me a hypothetical — something like the ones in the outline — and let me try to work through it. Then tell me what I got right and wrong.`)">
+        <span class="btn-title">⚡ Give me a hypo to work through</span>
+        <span class="btn-sub">Practice applying rules to facts the way the exam will</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-wrap">
+    <textarea
+      class="input-field"
+      id="inputField"
+      placeholder="Ask anything, answer a question, or say what you're struggling with…"
+      rows="1"
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+  </div>
+  <div class="input-hint">Enter to send · Shift+Enter for new line</div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `You are an expert law school tutor specializing in Gifts, Wills, Trusts & Estates (GWATS). You are helping a student prepare for a multiple-choice exam that covers the following subject matter. The exam is not supposed to be incredibly difficult and has around 60 questions. Some questions will involve simple math (no calculator required) — for example, California intestacy distributions, executor fee calculations, or estate tax calculations.
+
+Your job is to be an active, Socratic tutor — not a passive information dispenser. Your primary goal is to help the student understand the material deeply, recognize connections between doctrines, and be able to apply rules to new facts.
+
+TUTORING STYLE:
+- Ask probing questions to find out what the student actually understands vs. what they just think they understand
+- When a student gets something partially right, affirm what's correct then zero in on the gap
+- Draw connections between related doctrines (e.g., how DRR connects to revocation; how anti-lapse connects to class gifts; how the duty of loyalty in trusts connects to the no-further-inquiry rule)
+- Use concrete hypotheticals — give facts and ask "who takes?" or "is this valid?"
+- When explaining a rule, always explain the WHY behind it, not just the rule itself
+- If the student seems confused, try a different angle or analogy
+- Keep responses focused and conversational — not a lecture. Usually 2-4 short paragraphs or a mix of prose and a short list
+- Celebrate when the student gets something right; be direct (not harsh) when they're wrong
+- Proactively identify common exam traps and misconceptions
+- For California law questions, always flag when the CA rule differs from the majority/UPC
+
+WHAT YOU KNOW (the full outline):
+
+=== PROBATE vs. NON-PROBATE PROPERTY ===
+Probate property: does not transfer automatically; title in decedent's name; includes tenancy-in-common; requires court involvement.
+Non-probate (Will substitutes): pass automatically by operation of law, by contract, or by trust terms.
+Types: Joint Tenancy (WROS) — real estate, bank accounts; Tenancy by the Entirety — NOT available in CA, only for spouses; Beneficiary Designation/POD arrangements — retirement accounts, IRAs, POD accounts; Revocable "Transfer on Death" deeds — available in CA (repeal in 2026); Revocable (Living) Trusts.
+Key rule: Easier to name what is non-probate; everything else is probate estate.
+Henry hypo: life insurance with named beneficiary = non-probate; joint tenancy = non-probate; tenancy in common = probate; IRA with predeceased beneficiary = maybe (depends on agreement with institution).
+
+=== WILLS — VOCABULARY ===
+Will/Testament = document. Testator = creator. Beneficiary/Legatee = recipient. Devise = give real property. Bequeath = give personal property. Issue/Lineal Descendants = children, grandchildren, etc. (singular and plural). Collateral Relatives = siblings, aunts/uncles, cousins — NOT descendants. Executor = named in Will. Administrator = not named in Will or no Will. Letters Testamentary issued to executor; Letters of Administration to administrator.
+
+=== GENERAL WILL CHARACTERISTICS ===
+Can be revoked or amended. Has a personal representative. Priority: spouse → closest relatives (children/parents) → remote relatives → public officials. PR takes title in representative capacity (uses estate ID number). Responsibilities: pay decedent's debts and taxes (2025 exemption: $13.99M), distribute assets to beneficiaries, may need court approval, may need to file accounting.
+
+=== WHO CAN INHERIT ===
+Shapira v. Union National Bank: conditional inheritance (marry Jewish woman within 7 years) ALLOWED. Right to inherit is NOT a natural right. Father can completely disinherit son. Maddox v. Maddox: unreasonable restraint on marriage (Society of Friends had only 4-5 people) = void.
+
+=== PROBATE PROCESS ===
+Steps: (1) jurisdiction (domicile); (2) venue; (3) find last Will; (4) lodge Will with County Clerk; (5) file petition to appoint executor and admit Will; (6) hearing — notice to all heirs, named persons, CA AG if charitable; notice published in newspaper; if no objections, admitted via self-proving Will or affidavits; Letters Testamentary issued; (7) examine if ancillary probate needed.
+CA venue = county where decedent was DOMICILED at time of death (not where they died).
+Ancillary probate: for assets in another state. Real estate jurisdiction = where it is. Same Will can be probated in many states.
+Domicile = fixed place where you intend to return. CA and TX fought over Howard Hughes estate.
+Change domicile: driver's license, voter registration, income tax filing in new state, car registration, own/rent home in new state, sell property in old state — make a clean break.
+
+=== VESTING ===
+Heir's interest vests at testator's death. Cannot document title until probate concludes. Sale after probate creates BFP. If heir dies after decedent but before probate concludes, heir's estate takes.
+
+=== CREDITORS ===
+Executor must conduct reasonable search for creditors. Send notice to known creditors. 4 months from Letters issued to file claim (or 60 days after creditor served, whichever later). If claim denied → creditor has 3 months to file suit. 1-year SOL applies independently.
+
+=== EXECUTOR & ATTORNEY COMPENSATION (California) ===
+Same fee structure for executor AND attorney. Statutory fees for "ordinary" services:
+4% of first $100,000 = $4,000
+3% of next $100,000 = $3,000
+2% of next $800,000 = $16,000
+1% of next $9 million = $90,000
+0.5% of next $15 million = $75,000
+Above $25 million: as determined by court
+Extraordinary services (tax prep, real estate sales, litigation) must be approved by court.
+
+=== CLOSING PROBATE ===
+Executor files petition to close → files accounting (unless waived) → court approves → executor signs deeds/sends checks → executor files receipts → executor discharged.
+Finality: debts paid cannot be collected again. BFP from probate takes against beneficiaries of later-discovered documents. Order final if not appealed except for fraud, accident, or mistake. CA: 120 days to petition to revoke probate after Will admitted.
+
+=== ALTERNATIVES TO PROBATE (CA) ===
+Affidavit: up to $184,500 (no real property). Increasing to $750,000 effective 4/1/25 (can include primary residence). Party signs affidavit swearing entitlement + attaches death certificate. Person holding asset must transfer. Protected from liability; responsible for attorney fees if refuses. Increases fraud risk.
+Spousal property petition: expedited; notice given; one hearing; court order recordable to transfer real property.
+
+=== WILL FORMATION / EXECUTION — GENERAL FORMALITIES ===
+Testator: adult of sound mind. Must be IN WRITING. SIGNED by testator (mark OK; someone else may sign for testator if unable; TN allows electronic signatures). Witnessed by two individuals (witnesses and testator sign in each other's presence). All pages present when signed (physically connected). Dating not required but encouraged. Testamentary intent: "This is my Will," "I bequeath/devise/leave."
+
+=== UPC FORMALITIES ===
+Testator can sign anywhere. Either: (a) testator signs or acknowledges in presence of 2 witnesses (who can sign within reasonable time, even after death of testator) OR (b) notarized. No "Publication and Request" required. Testamentary intent may be shown by extrinsic evidence.
+
+=== CALIFORNIA PROBATE CODE § 6110 ===
+In writing. Signed by testator (or another person in testator's name at testator's direction in testator's presence). Signed by two witnesses DURING testator's lifetime, both present at same time. Witnesses understood it was a Will. POST-DEATH WITNESSING NOT ALLOWED IN CA (unlike UPC).
+
+=== WITNESSES — PRESENCE ===
+Two witnesses generally required. Three components (some states require all): (1) witnesses see testator sign; (2) witnesses sign in front of testator; (3) witnesses sign in front of each other. UPC and CA allow acknowledgment. Majority: witness must see testator sign — IN THE LINE OF SIGHT. Newer rule: conscious presence (aware act is taking place).
+Stevens v. Casdorph: wheelchair-bound testator at bank; bank manager took Will to employees to sign; witnesses didn't see him sign and weren't in his line of sight; witnesses didn't see each other sign. NO substantial compliance. Under UPC: also invalid (witnesses didn't see testator sign or hear him declare he had signed; not notarized).
+Harry hypo: Linda went upstairs, Marco witnessed, then Linda came back and witnessed — NOT valid in strict compliance because witnesses didn't sign in each other's presence.
+
+=== INTERESTED WITNESSES ===
+Common Law: Will void. Traditional Purging Statute: eliminates witness's gift so witness is no longer "interested" — saves Will. Modern Statutes (slim majority): limit gift to lesser of Will gift or intestate share. UPC: allows interested witnesses; relies on other safeguards.
+CA Prob. Code § 6112: Will NOT invalid because signed by interested witness. Creates rebuttable presumption of undue influence if fewer than 2 other disinterested witnesses. If presumption applies and witness fails to rebut, witness takes only up to their intestate share.
+Matter of Morea: George (friend gets gift), Kevin (son gets less than intestate share), unrelated person (no gift). NY statute: gift to interested witness void unless 2 other witnesses receive no gift.
+Jose hypo: takes nothing under modern purging statute — unrelated to Tom so intestate share = zero; all of Will #2 gift is "excess."
+
+=== ATTESTATION ===
+Witnesses' verification that instrument executed in presence per required formalities. Methods: attestation language in Will where witnesses sign OR self-proving affidavit (separate document). Creates rebuttable presumption of due execution.
+
+=== INTEGRATION & INCORPORATION BY REFERENCE ===
+Integration: all pages present when signed; should be physically connected; Will should have internal coherence.
+Incorporation by Reference: most jurisdictions accept (NOT NY, CT, LA). Document must be (1) in writing; (2) exist at date of signing; (3) identifiable with reasonable certainty. Need not be present at signing (vs. integration). Clark v. Greenhalge: notebook incorporated because codicils were signed after notebook created (republished Will).
+IMPORTANT: Document created AFTER Will is signed = effective under NEITHER integration nor incorporation by reference.
+Facts of Independent Significance: allows identifying gifts by reference to other facts (e.g., "jewelry in my safe deposit box").
+
+=== SEPARATE WRITING FOR TANGIBLES ===
+UPC § 2-513: separate statement disposing of tangible personal property (not money, stocks, or real estate). Can be written and amended before or after Will. MUST be signed.
+CA Prob. Code § 6132: max value $25k; max $3k per item. NO CASH OR COIN. Tangible property "not otherwise disposed of in a Will."
+
+=== TESTATOR CAPACITY ===
+LOW standard — lower than capacity to contract (only thing lower is capacity to marry). Check at time Will was executed.
+Modern view (Restatement Third): testator must be capable of knowing (1) nature and extent of property; (2) natural objects of bounty; (3) disposition being made; AND (4) relating these to one another and forming an orderly desire.
+Criteria: adult (at least 18) + of sound mind.
+Wilson v. Lane: Alzheimer's diagnosis NOT automatically incapacitating. She was able to form a rational desire. An Alzheimer's diagnosis was not enough to automatically render her incapacitated.
+Hypos: Can't remember names but knows who children are = likely valid. Person has three sons and daughter who died 30 years ago = capacity issue. Timing is critical: doctor's testimony one week after signing (less probative) vs. three neighbors the day of signing (highly probative). "Incapable of managing estate" = WEAKLY probative (different standard). Similar diagnosis ≠ same result. Former doctor's opinion does not create presumption of lack of capacity. Person presumed to have capacity until proven otherwise.
+Best practice: if you know of capacity issues, have client get updated capacity evaluation.
+
+=== CA PROB. CODE § 6100.5 — LACK OF CAPACITY & INSANE DELUSION ===
+Not mentally competent if: (1) unable to understand testamentary act, recollect nature/situation of property, or remember/understand relations to descendants/spouse/parents; OR (2) suffers from mental health disorder with delusions/hallucinations resulting in devising property in a way they would not have but for the delusions.
+
+=== OUT OF STATE WILLS ===
+UPC: valid if executed in compliance with laws of (1) testator's domicile OR (2) place where Will was made.
+Examples: Will made in CA with 2 witnesses = valid in GA (which requires 3). Holographic Will made in CA = valid in Missouri (which doesn't recognize holographic).
+Military Wills enforceable in any state.
+
+=== INTERNATIONAL WILLS ===
+Requirements: not more than one person disposing; in writing; signed in presence of 2 witnesses AND "authorized person" (attorney — NOT NOTARY); signatures at end; multi-page: each page numbered and testator signs each page; if unable to sign: reason noted; certificate attached signed by authorized person.
+Valid in: Belgium, Canada, France, Italy, UK, Russia, 23 states including CA and DC.
+
+=== INSANE DELUSION ===
+Belief against all evidence and reason that must be product of derangement. Mere eccentricity is NOT insane delusion.
+Elements: (1) belief of facts with no real existence; (2) false belief is product of mental illness; (3) no evidence to support false belief; (4) delusion causes disposition testator would not otherwise make.
+Person with insane delusion is NOT necessarily deprived of capacity.
+Consequences: ONLY the PART affected by the delusion is void. Void gift(s) fall to residue (or intestacy). Balance of Will valid.
+In re Strittmater: paranoia, split personality, extreme hatred of men, left estate to National Women's Party → Will void as product of insanity.
+Matter of Honigman: obsessed with wife's infidelity, left her minimum; no reasonable basis for belief → insane delusion.
+Hypo: If Strittmater had left estate to animal rights charity (unrelated to feminism) → probably not void.
+Difference from lack of capacity: lack of capacity voids ENTIRE Will; insane delusion only voids AFFECTED PART.
+
+=== UNDUE INFLUENCE ===
+Wrongdoer exerted influence that overcame donor's free will, causing donation donor would not otherwise make. "Regular" influence is OK.
+Elements (Restatement § 8.3): (1) susceptible testator; (2) opportunity; (3) disposition to exercise; (4) part or all of Will appears to be result.
+Presumption IF: (1) confidential relationship + (2) suspicious circumstances (drew or helped draft Will).
+Presumption doesn't shift burden of proof — shifts burden going forward.
+EXCEPTION: Florida & CA statutes shift burden of proof.
+Confidential relationships: Fiduciary (attorney/client, trustee/beneficiary — matter of law); Reliant (doctor/patient, financial advisor, clergy — matter of fact); Dominant-Subservient (caregivers — matter of fact).
+CA: recognizes all above PLUS any relationship where one reposes trust in another.
+Suspicious circumstances (8): weakened condition; participated in preparation/procurement; no independent advice; prepared in secrecy or haste (repeated).
+CA Prob. Code §§ 810–812, 21380: gifts to drafting attorneys, caregivers, partners, relatives = VOID unless fiduciary proves by C&C evidence not product of undue influence. Presumption for drafters and their relatives is CONCLUSIVE. Requires Certificate of Independent Review by independent attorney.
+Who is a caregiver: provides health and social services; does NOT include relatives by blood or marriage or long-term relations without compensation.
+Lintz v. Lintz (MAJOR CA CASE): blended family; wife influenced husband to amend trust several times; final trust prepared by wife's attorney; signed against his own attorney's advice; wife also misinformed his lawyers and fired them. Held: undue influence. More complex document = higher "sliding scale" capacity standard.
+
+=== DURESS/COERCION ===
+Restatement: wrongdoer threatened or performed wrongful act that coerced donor into making transfer donor would not otherwise make. Made under threat of force. Remedy: constructive trust.
+Latham v. Father Divine: testator murdered through surgery to prevent her from signing new Will. Plaintiffs sought constructive trust.
+Darlene hypo: withholding life-saving medications unless new Will signed = duress, coercion, AND undue influence.
+
+=== FRAUD ===
+Elements: (1) misrepresentation of material fact or law; (2) intent to deceive; (3) for purpose of inducing disposition; (4) actually deceives testator and influences testamentary act.
+Types: Fraud in the inducement: only PART affected is invalid; rest is valid (testator intended to sign a Will). Fraud in the execution: ENTIRE Will invalid (testator did not intend to sign a Will). Fraud in preventing revocation: Will will not be probated.
+Constructive trusts available for fraud in inducement and preventing revocation — NOT for fraud in execution.
+Alex/Barbara hypo: fraudulent claim about dog attack = fraud in inducement → only Alex's $250k gift void; rest of Will valid. If you're a beneficiary under the Will, you HOPE it was fraud in inducement (so your gift survives), not fraud in execution (which voids entire Will).
+
+=== CA NO-CONTEST CLAUSE ===
+Enforced if: (1) direct contest brought WITHOUT probable cause; (2) challenging transfer of property with or without probable cause IF clause expressly provides; (3) filing/prosecuting creditor's claims IF clause expressly provides.
+
+=== REFORMATION ===
+Matter of Snide: husband and wife signed each other's Wills by mistake. Court reformed. Harmless, no fraud.
+Dissent: failure to follow strict formalities would weaken protections; slippery slope.
+
+=== SUBSTANTIAL COMPLIANCE ===
+Elements: (1) C&C evidence testator intended document to be a Will AND (2) Will substantially complies with required formalities. "Close enough is good enough."
+In re Will of Ranney (NJ): witnesses signed only the affidavit, not the Will itself. Held: substantial compliance.
+
+=== HARMLESS ERROR ===
+UPC § 2-503: court may excuse noncompliance if C&C evidence decedent intended document to be Will. Focus on testator's subjective belief.
+CA Harmless Error Rule: can overcome defects in (1) testator signing in presence of 2 witnesses both present at same time; (2) witnesses signing during testator's lifetime; (3) witnesses understanding document is testator's Will. Requires C&C evidence.
+In re Estate of Hall (MT): draft joint Will with handwritten changes; signed and notarized but not witnessed by 2 people. Held: valid.
+Hypo: UPC harmless error can allow unattested holographic Will in jurisdiction that doesn't otherwise recognize holographic Wills (if C&C intent). But substantial compliance CANNOT — it requires close-to-formalities compliance.
+
+=== CODICILS ===
+Amendment(s) to prior Will. If it has a residuary clause, more likely a replacement Will. Republishes Will as if executed again → re-dates to date of codicil. If meets formalities, can cure defects in prior Will.
+
+=== HOLOGRAPHIC WILLS ===
+In testator's handwriting. Recognized by ~half of states including CA — NOT NY.
+Approaches: Common Law: any printing invalidates; Surplusage: ignore printing if still intelligible; Material Terms: may allow forms with completed blanks.
+UPC § 5-502(b): signature and material provisions in testator's handwriting. Preprinted forms fine as long as material portion is handwritten.
+Benefits: authentication, voluntariness, allows testation without lawyer.
+Disadvantages: ambiguities; whole estate not distributed; no executor named; doesn't consider disability/SSI issues.
+CA Requirements: signed by testator (anywhere); material provisions (gifts made, beneficiaries' names) in own handwriting; statement of testamentary intent NOT required (extrinsic evidence admissible); series of letters can be holographic Will; preprinted forms allowed (may show testamentary intent); date not required but encouraged.
+In re Estate of Kuralt: journalist had secret mistress; 1994 formal Will revoked 1989 holographic; 1997 letter from hospital saying he'd have lawyer ensure Shannon inherits remaining MT property → valid holographic codicil. Court found intent to transfer.
+Tractor Fender Will: "In case I die in this mess I leave all to the wife. Cecil Geo Harris" scratched onto tractor fender with pocket knife → valid holographic Will.
+
+=== CONDITIONAL WILLS ===
+"If I die during surgery…" If testator survives the event and Will clearly states intent it's only effective if death occurs as stated → NULL AND VOID.
+CA: recognizes conditional Wills if validity made conditional by terms of Will.
+Tom/Nile hypo: "If I don't come back" — no evidence Tom wanted Will effective ONLY if he died on Nile. Court will probate.
+
+=== CONTRACTUAL WILL ===
+Contract to make a Will (e.g., "take care of me and I'll leave you X") — not valid between spouses. Contract not to revoke a Will — typical in second marriages with kids from prior marriages.
+
+=== REVOCATION ===
+Formalities strictly enforced. Need express revocation in subsequent Will/codicil. Methods:
+(1) Physical act with intent to revoke: burning, tearing, canceling, obliterating, destroying. Crossing out = partial revocation. CANNOT ADD new language unless complete holographic writing substitute. Need contemporaneous physical act with intent.
+(2) New Will inconsistent with previous Will (or expressly states revocation). If not entirely inconsistent, later codicil controls inconsistency. New Will should state intent to revoke.
+Thompson v. Royal: notation on back of Will "This will is null and void" — NOT in testator's handwriting, not witnessed → not revoked. Will still valid.
+UPC § 2-507: revocation by subsequent Will (expressly or by inconsistency) or by revocatory act with intent (by testator or another at testator's direction in conscious presence). Burning, tearing, canceling are revocatory acts whether or not they touch the words.
+If Will #2 doesn't expressly revoke Will #1: look to intent. If Will #2 disposes of entire estate → presumption to revoke Will #1, rebuttable by C&C. If Will #2 doesn't dispose of entire estate → presumption NOT to revoke Will #1, rebuttable by C&C.
+Nancy hypo: 2015 Will gives IBM stock to Mary and warehouse to Stefan (says nothing else). 2012 Will gives IBM stock to Terrell, cash to Sadie, warehouse to Max, residue to kids. Result: Mary gets 100 shares IBM, Terrell gets 100 shares IBM, Stefan gets warehouse, Sadie gets $100k, kids get $250k cash and house.
+If Nancy also obliterated Terrell's IBM gift (while alone): valid partial revocation by physical act; IBM stock goes 100 to Mary, 100 to residue (kids).
+Charles shredded Will by accident: Yes — can be probated. No intent to revoke.
+
+=== DEPENDENT RELATIVE REVOCATION (DRR) ===
+When a revocation is not actually a revocation. If intent was for revocation to be conditional on executing a 2nd Will, the requisite intent is not present if 2nd Will not effective.
+Elements: (1) testator intended revocation of 1st Will to be conditional on executing 2nd Will; (2) 2nd Will never executed or flawed; (3) 1st Will approximates testator's wishes more than intestacy.
+Allows court to reinstate original bequests — mistake-remedying doctrine.
+Restatement § 4.3: presumption consistent with above; also if testator had mistaken belief of law or fact. ASK: is 1st Will or intestacy closer to what testator wanted?
+Carter v. First United Methodist Church: 1963 Will with diagonal pencil marks; 1978 instrument not signed or witnessed → DRR; 1963 Will given effect.
+Fallon hypo (revocation = conditional): crosses out $20k and writes $30k → gets $20k because DRR applies (new $30k gift failed; $20k more closely matches intent).
+Fallon hypo (no DRR): crosses out $30k and writes $20k → gets NOTHING; $30k revoked by physical act; $20k doesn't qualify as codicil; DRR doesn't apply because no evidence Fallon intended to give MORE than $20k.
+
+=== INTERLINEATIONS ===
+Handwriting to replace crossed-out portions must qualify as a codicil meeting Will execution formalities (holographic: signed, material portions; or signed and witnessed). DRR might bring back crossed-out gift.
+
+=== REVIVAL ===
+UPC: revocation of Will #2 that completely revoked Will #1 does NOT revive Will #1 unless circumstances indicate intent to revive (e.g., declaration of testator).
+Revocation of Will #2 that partly revoked Will #1 DOES revive Will #1 provisions unless circumstances indicate intent not to revoke.
+If Will #1 revoked by Will #2, and Will #2 revoked by Will #3: Will #1 remains revoked unless revived by terms of Will #3.
+Hypos: "all to Jane" → "all to Tom" → Tom's Will destroyed → Will #1 NOT revived. "house to Jane, car to Mary, stocks to Martha" → "house to Tom" → Tom's Will destroyed → Jane gets house (Will #1 revived for house). T's Will #2 revokes $20k gift to Bob; T revokes Will #2 by burning → Will #1 IS revived; Bob gets $20k.
+
+=== INTERPRETING/CONSTRUCTING A WILL ===
+Intent of testator is main consideration. Plain meaning rule: ordinary meaning; cannot disturb plain meaning with extrinsic evidence (most states). UPC gives court ability to reform.
+Patent ambiguity: appears on face of Will. Traditional: no extrinsic evidence. Modern/CA: allow extrinsic evidence.
+Latent ambiguity: only apparent in context. Under UPC: extrinsic evidence admissible.
+Estate of Irving Duke (CA Supreme Court 2015): holographic Will left wife estate; if both died at same time, charities get it; nothing about wife dying first. Lower court: Will unambiguous, no extrinsic evidence. Held: bar on reformation NOT justified. C&C evidence can reform unambiguous Will if (1) Will contains mistake of testator's intent AND (2) true intent established.
+
+=== RESIDUE ===
+Everything left after specific gifts, cash gifts, etc. = the balance.
+Residuary Beneficiary: receives some/all of residue.
+If specific gift fails → falls to residue. If residuary gift fails → passes by intestacy.
+
+=== CLASS GIFTS ===
+Members described by reference to class designation, not by name. ("My siblings," "the employees working at my company as of time of my death.") "My nieces and nephews, Jan, Cindy, Peter, and Bobby Brady" → named, NOT a class gift. Testator's intent controls. Passes entirely to survivors in class when T dies. No lapse unless all members deceased.
+
+=== LAPSING ===
+Lapsed gift: gift to person who predeceases testator. Process: (1) if Will provides alternative gift, that controls; (2) if not, gift is void and falls to residue; (3) if lapse is a residuary gift, passes by intestacy.
+
+=== ANTI-LAPSE STATUTES ===
+Prevents lapsed gifts from passing by intestacy in some circumstances. If lapsed gift is to a relative, passes to relatives by anti-lapse statute. Based on presumed intent of testator. If testator's intent to make gift conditional is clear, gift lapses.
+If predeceased legatee is related to testator, gift passes to: deceased legatee's descendants (NOT the spouse) OR deceased legatee's estate.
+For class gifts: if anti-lapse doesn't apply (not a relative), surviving class members take.
+Lapse in residuary clause: (1) traditional: passes by intestacy (no-residue-of-a-residue rule); (2) modern/UPC/CA: surviving residuary devisees take 100%.
+Majority of jurisdictions' anti-lapse statutes do NOT apply to testator's spouse.
+UPC § 2-603(b)(3): "if he survives me" is NOT sufficient evidence of contrary intent to prevent anti-lapse. Majority Rule: "if he survives me" DOES prevent anti-lapse (Wilma takes Blackacre).
+Ruotolo v. Tietjen (CT): "I leave one half of the residue to Hazel, if she survives me" — step-daughter predeceased. Court said "if she survives me" is boilerplate, not sufficient contrary intent. Anti-lapse applies.
+UPC hypos: T gives house to niece B, residue to A; B predeceases T leaving child C → C takes house (B is descendant of T's grandparent).
+Drafting to overcome anti-lapse: "but if A or B or both do not survive me, then I give such predeceasing child's share to my friend F" → express alternative gift → anti-lapse doesn't apply → F takes.
+Class gift hypo: Blackacre to T's children; 3 kids A, B, C; C dies before T leaving D and E → A gets ⅓, B gets ⅓, D gets ⅙, E gets ⅙. (CA and UPC)
+C already dead when Will signed: CA — A and B each 50%. UPC — C's children take a share.
+Sisters hypo: 4% to niece, 96% balance to 3 sisters equally; all 3 sisters predecease T leaving children; anti-lapse applies to siblings → each sister's 32% passes to her children equally; niece gets 4%. If no descendants → under UPC/CA/modern: niece gets 100%; traditional: 96% intestacy.
+
+=== DISCLAIMER ===
+"No thank you, I don't want that gift." Reasons: creditors, estate taxes, too much to manage. Must be disclaimed within 9 months from decedent's death for tax purposes. Gift passes as if disclaiming legatee predeceased. Legatee has no control over who gets the gift.
+
+=== DIVORCE ===
+Even if Will never changed, divorced spouses do NOT inherit. Divorce/annulment must be FINAL (legal separation is not enough).
+Majority: applies to Wills only.
+UPC & CA: applies to Wills, non-probate transfers (joint tenancy, beneficiary designations), powers of appointment, nominations as executor/trustee/attorney-in-fact. UPC includes revocation of gifts to former spouse's relatives.
+
+=== KILLERS ===
+CA: person who feloniously and intentionally kills testator does not inherit — not under Will, trust, or any non-probate transfers. Joint ownership deemed severed. NO anti-lapse for killer's kids. If named as executor, that's ineffective.
+Need: final criminal conviction OR civil court finding by preponderance of the evidence. Much easier to prove in civil court.
+
+=== OMITTED CHILDREN ===
+Occurs when child is born after testator signed ALL Wills and codicils. If codicil signed after child is born → child loses "omitted" status. No RIGHT TO INHERIT (except Louisiana).
+Traditional: gets intestate share. Modern & UPC: intestate share OR same share as other children (if any). Revised UPC (& CA): gets intestate share UNLESS (1) omission appears intentional; (2) child is provided for outside Will; (3) substantially all estate left to other parent of omitted child.
+CA/UPC: omitted child gets intestate share OR same as siblings — whichever applies — reducing other children's gifts proportionately.
+John hypos: (1) $60k each to Andrew and Amy, residue to charity, Allison born after — UPC: $120k split 3 ways ($40k each); CA traditional: Allison gets intestate share (1/3), possibly more than $60k siblings get. (2) Residue to Allison's mother → Allison gets nothing (mother inherits substantially all). (3) Allison is beneficiary of $60k life insurance John intended as substitute → Allison takes nothing under Will.
+Other circumstances: child testator thought dead = omitted; child adopted after all Wills signed = treated like "born."
+
+=== TYPES OF GIFTS ===
+Specific Devise: gift of specifically identifiable asset ("my house," "my Rolex," "my 2015 Porsche Boxster"). NOTE: "I give my 200 shares of Apple stock to Caitlyn" = specific. "I give 200 shares of Apple stock to Caitlyn" = NOT specific.
+General Devise: payable from general assets ($X cash, $X value of property).
+Demonstrative Devise: primarily payable from stated source, secondarily from general assets.
+Residuary Devise: property not disposed of by above gifts.
+
+=== ADEMPTION ===
+Occurs when specifically devised item no longer in estate → gift adeemed (fails). Applies ONLY to specific devises.
+Identity Rule (majority): if asset not in estate → NO GIFT. "Mere change in form" exception: mink coat → stole, bank acquired by another bank, my 100 shares stock split 4:1 → all stock gifted. "100 shares of X stock" → only general gift; only 100 shares gifted even if stock split.
+Nonademption Statutes (UPC § 2-606(a)): unpaid proceeds go to devisee; insurance/condemnation proceeds → unpaid goes to devisee; foreclosed property passes to devisee; replacement property goes to devisee (NOT THE RULE IN CA).
+
+=== ABATEMENT ===
+Process of reducing gifts due to insufficient assets. PRIORITY: payment of (funeral) expenses, attorney's fees & taxes first. Then Will controls. If silent:
+(1) Intestate assets abate proportionately
+(2) Residue abates proportionately
+(3) General bequests abate proportionately
+(4) Specific bequests abate proportionately — SPECIFIC GIFTS ARE THE SAFEST
+Exception: if testamentary plan would be defeated by abatement, court can order alternate abatement (daughters-equality example).
+Abatement of specific gifts: executor may have to sell; devisee can give cash to estate for expenses.
+T has 2 daughters and a son example: ring ($10k) to Daughter 1; earrings ($20k) to Daughter 2; $10k cash to Daughter 1; $20k cash to Son; residue equally. At death: ring, earrings, $30k cash. No residue. Need $6k for expenses: Son's gift reduced $4k; Daughter 1's cash reduced $2k. Daughter 2's earrings (specific) don't abate.
+
+=== EXONERATION ===
+Pay off debt attached to specifically devised asset (e.g., mortgage). Generally NO right of exoneration. Will must specifically direct debt be paid. "Pay all my just debts" is NOT enough.
+
+=== ADVANCEMENT & SATISFACTION ===
+Is a lifetime gift considered an "advance" on inheritance?
+Common Law: YES if to an heir and testator dies intestate.
+Majority (UPC & CA): NO unless accompanied by writing stating it is an advance.
+If advance exceeds inheritance → no refund required; other gifts reduced to account for "over" advancement.
+Augmented Estate method: (1) add advancements to probate estate; (2) divide into equal shares; (3) deduct advancements from share.
+
+=== INTESTACY ===
+Used when no Will or Will doesn't dispose of all property. Partial intestacy: Will disposes of some but not all. Default estate plan. Laws of domicile control. Spouse given top consideration, followed by children. Parentelic system (UPC, CA, majority).
+
+=== CALIFORNIA INTESTACY — SPOUSES ===
+Community property (owned ½ each — acquired during marriage, earnings, income from community property): 100% goes to spouse.
+Separate property (owned before marriage; gifts and inheritances; income from separate property):
+- 1 child (or issue): 50% to spouse, 50% to child
+- 2+ children: ⅓ to spouse, ⅔ divided for kids equally
+- No issue, but 1+ parents (or their issue) alive: 50% to spouse, 50% to parents
+- No issue, parents, siblings/issue of siblings: 100% to spouse
+Exception re: predeceased spouse's property: if no spouse or issue, and estate includes property inherited from predeceased spouse (real property if predeceased died ≤15 years earlier; personal property if ≤5 years earlier) → passes back to predeceased spouse's heirs.
+
+=== OMITTED SPOUSES ===
+Married after testator signed all estate plan documents. Entitled to: (1) deceased spouse's half of community property and quasi-community property; (2) intestate share of separate property (½ if only 1 child, ⅓ if 2+ children — no more than 50%).
+Exceptions: deceased spouse's intent not to provide was intentional and appears from documents; provided for spouse through non-probate transfers intended as substitute; spouse signed waiver.
+How to satisfy: (1) from assets not transferred under Will or trust; (2) by all beneficiaries' shares proportionately.
+
+=== ELECTIVE SHARE (COMMON LAW STATES — NOT CA) ===
+No elective share in CA (community property state; each spouse owns equal undivided share of earnings).
+Traditional: ⅓ of probate estate if children; ½ if no children. Non-probate NOT included.
+Revised UPC (KNOW THIS): augmented estate = combine non-probate + probate. Include: POD accounts, life insurance, revocable trusts, retained possession/enjoyment, joint tenancy property, gifts >$15k within 2 years of death. Assets of BOTH spouses included. % based on years of marriage: <1yr=3%, 1yr=6%, 2yr=12%, 3yr=18%, 4yr=24%, 5yr=30%, 6yr=36%, 7yr=42%, 8yr=48%, 9yr=54%, 10yr=60%, 11yr=68%, 12yr=76%, 13yr=84%, 14yr=92%, 15+yr=100%. If wife's own property exceeds elective share, she gets NO additional part of husband's property.
+
+=== CA INTESTACY — NON-SPOUSE PRIORITY ORDER ===
+1. Issue (equally at 1st generation with living issue, then by right of representation)
+2. Parents (equally, or all to surviving parent)
+3. Issue of Parents
+4. Grandparents (equally, or all to surviving grandparent)
+5. Issue of Grandparents
+6. Issue of predeceased spouse (kids from prior marriage/relationship)
+7. Next of Kin
+8. Parents of Predeceased Spouse
+9. Issue of Parents of Predeceased Spouse
+10. Escheat to State of California
+
+=== SIMULTANEOUS DEATH ===
+If cannot determine by C&C evidence who died first: each spouse's property passes as if he/she survived the other.
+120-Hour Rule: any heir must survive by 120 hours (5 days); otherwise deemed predeceased. Exception: if escheat would occur, no 120-hour rule. Applies to non-probate transfers.
+
+=== BAD ACTORS ===
+Killers do not inherit. Elder abusers also do not inherit — person found to have committed elder abuse (physical or financial) or convicted of criminal false imprisonment or elder abuse is deemed to have predeceased.
+
+=== CA INTESTACY MATH HYPOS ===
+Wanda/Wendy/Dennis: $500k CP + $300k SP, 1 child → Wendy gets $400k, Dennis gets $150k.
+Gary/Anita/Fred/Annette (Amber+Indigo): $1.2M SP, 2 issue (1 living + 1 dead with 2 kids) → Anita $400k, Fred $400k, Amber $200k, Indigo $200k.
+Melinda/Juan/Maria/Adam/Michael (Michael dead, Troy+Charlie): $900k CP + $900k SP + $300k Juan SP → 3 kids for Melinda. Charlie gets $100k ($900k SP × ⅔ ÷ 3 = $200k per child; Michael dead leaving 2 kids so Charlie gets half of $200k = $100k).
+Eric/wife/grandmother: wife gets entire estate.
+Gary/Anita/Fred/Annette/Stephanie (Fred's wife, unadopted): Stephanie qualifies as child if parent-child relationship + clear/convincing evidence parent would have adopted but for legal barrier. Anita $400k, Stephanie 2/9, Indigo 1/9.
+
+=== INTER VIVOS GIFTS ===
+Gifts made during lifetime. Completion important: no revocation; creditor rights; income/appreciation to donee; repairs/taxes/insurance shift to donee.
+Elements: (1) Donative Intent — present intent to transfer without consideration; goodwill NOT required; (2) Delivery — must occur during donor's lifetime; (3) Acceptance — usually presumed if gift has value.
+Types of delivery: Manual: physical transfer; Constructive: delivering what controls the item (key to safe, combination to lock); Symbolic: may reserve rights (deed to real estate).
+Completion: donor has right to rescind, so delivery is complete when rescission right terminates. Checks: complete when presented to bank for payment (revocable until cashed). Agents: complete when donee/donee's agent receives. Securities: certificate must be delivered. Mailbox Rule: duly-executed deed mailed = complete when placed in mailbox.
+Delivery to 3rd person: if 3rd person is donor's agent → donor still has control, not complete. If 3rd person is donee's trustee/agent → complete upon giving to 3rd party.
+Gruen v. Gruen: father gifted painting to son but retained life estate. Letters sufficient delivery. Gift with retained life estate = VALID.
+Harry/daughter hypo: pressure + promise to drive to doctor = valid gift (undue influence/coercion could undo it, but goodwill not required).
+Diamond bracelet hypo: "next time I'm at bank I'll get it for you" + dies before → NOT valid. Only a future promise.
+Safe deposit box key hypo: "put your name on box, here's a key, giving you all jewelry" → valid gift, CONSTRUCTIVE delivery.
+Dana's car hypo: transferred + title transferred → Dana no longer owns it; her creditors cannot reach it.
+IBM stock hypo: hands certificate + says "I'm giving you my stock" → gift is made; dividends declared AFTER gift go to Susan.
+Amanda/check/drawing: Jacob's drawing (mailed) = completed gift. Connor's check (mailed same time, same day she changed mind + stopped payment) = NOT completed (check complete when cashed).
+
+=== GIFTS IN TRUST ===
+Revocable trust = no gift (no relinquishment of control). Irrevocable trust = gift is complete.
+
+=== GIFTS CAUSA MORTIS ===
+Gift made in contemplation of death (terminally ill, facing surgery). Characteristics: fails if donor recovers OR donee predeceases donor; revocable; subject to creditors of donor; limited to personal property; must be delivered.
+Delivery: note found at death = treated as a Will. Note handed over by decedent = gift causa mortis.
+Fred/Emily hypo: Fred gives car to Emily "in case I don't make it"; Emily dies before Fred → Fred's estate (donee predeceased donor).
+Victor/Emily revision: Victor dies first, then Emily → Emily's estate (donor died first, gift complete).
+
+=== GIFTS IN CONTEMPLATION OF MARRIAGE ===
+CA Rule: if wedding called off mutually OR if donee calls off marriage → donor may recover the gift. Some states use no-fault rule; others require donee to "unjustly" call off.
+
+=== TRUSTS ===
+Management device. Separates legal interest (trustee) from equitable interest (beneficiary). Trustee → legal title. Beneficiary → equitable title.
+Vocabulary: Settlor/Grantor/Trustor = creator; Trustee = legal owner/manager; Beneficiaries = equitable interest, watchdog of trustee; Testamentary trust = created at death under Will; Inter vivos/living/lifetime trust = created during lifetime; Principal/Corpus/Res = assets; Income = generated by principal (rental income, interest, dividends). Taxable income ≠ trust income.
+Tami hypo: Tami holds ALL THREE roles simultaneously — Settlor, Trustee, and Beneficiary.
+
+=== CREATION OF TRUSTS ===
+Requirements: creator manifests intent to separate legal title (trustee) and beneficial title (beneficiary); don't need to use word "trust"; beneficiary; trustee; delivery; intent; property.
+Matter of Mannara: "bequeath all assets to two nephews in trust for education" — most trust terms missing; court found testator contemplated guardianship, not trust; residue vested in nephews, not in trust.
+Matter of Maliszewski: "hold property so vested in a separate fund for benefit of such person and invest and reinvest... apply so much of net income or principal as necessary for care, support, maintenance and education... until age 25" → reversed; specific enough to show intent to create trust.
+
+=== WHY CREATE A TRUST ===
+Avoid probate (private vs. probate which is public); flexible distribution; tax planning; control property use; eliminate family feuds; manage incapacity.
+
+=== PAYMENT DISTRIBUTIONS ===
+Mandatory Trust: all income paid to A for life, remainder to B. Trustee has NO discretion. Easier for creditors to reach. Trustee cannot control payments.
+Discretionary Trust: distributions as needed for health, support, education. Trustee has discretion subject to standard. Can refrain from making distributions to avoid creditor. If A has own wealth, trustee need not make distributions. Creditors cannot reach before trustee decides to distribute.
+Hybrid Trust: mandatory as to income, discretionary as to principal.
+
+=== REVOCABLE INTER VIVOS TRUST ===
+Avoids probate (trustee holds title; trust continues to exist). When trustee dies → replaced with successor trustee. Benefits: easier to administer; successor trustee gets instant control; flexible choice of law; avoids conservatorship.
+Validated as Will substitute — can avoid probate. Can have oral inter vivos trust if terms established by C&C evidence. Assets NOT protected from creditors.
+Farkas v. Williams: Farkas retained income, power to revoke, was trustee. Held: valid inter vivos trust. Williams had present interest unless trust revoked. Power to revoke doesn't invalidate trust. All powers subject to fiduciary duty.
+
+=== EXPRESS TRUST ===
+Requirements: intent (more than "I hope..."); definite property (res); lawful purpose; ascertainable beneficiaries; acceptance of property by trustee.
+Methods: by agreement/transfer (A transfers to B in trust for C); by self-settled trust/declaration of trust (A declares herself trustee for C); by Will (testamentary trust).
+
+=== SPENDTHRIFT TRUST ===
+Spendthrift clause restricts alienation of beneficiary's interest. Disables ALL alienation. Prohibits: (1) trustee distributing to beneficiary's creditor; (2) beneficiary transferring/assigning interest.
+UTC validates if BOTH types prohibited.
+Exceptions: Common Law (Restatement): government creditors (IRS), child support, spousal support, necessities of life, tort judgment creditor (only for self-settled trusts). UTC: child support, spousal support, attorney providing services to protect beneficiary's interest.
+CA Exception: ONLY child support (not spousal support).
+With discretionary trust: trustee can exercise discretion to avoid making distribution if creditor would get funds.
+Scheffel v. Krueger: tort creditor (sexual abuse judgment) tried to attach spendthrift trust benefits. Trust created by grandmother, not beneficiary (not self-settled). Held: spendthrift provision enforceable. "Where legislature made specific exemptions, we must presume no others were intended." Legislature didn't create tort creditor exception.
+
+=== SUPPORT TRUSTS ===
+Discretionary, done as needed for support. Many jurisdictions treat as spendthrift even without clause. Creditors can only attach funds in excess of support.
+Restatement: protect amounts for beneficiary's needs if express or implied purpose is support, health, or education.
+UTC: creditor cannot compel distribution where trustee has discretion, even if trustee fails to comply with support standard. Court may order distributions for spousal/child support as "equitable" — not in excess of what beneficiary entitled to if trustee exercised discretion properly.
+
+=== SECRET & SEMI-SECRET TRUSTS ===
+Secret: no mention of "trust" arrangement in document; appears to be outright gift; eliminates heirs as objectors.
+Semi-secret: told trustee what to do but trust too indefinite to enforce.
+Olliffe v. Wells: residue to Rev. Wells "to distribute as I have expressed or may express to him." Semi-secret trust. Trust fails. Semi-secret: heirs have possibility of resulting trust. Secret: outright on face, but court establishes trust.
+Courts allow extrinsic evidence to establish secret trust and its terms.
+Resulting trust (semi-secret): trustee's sole duty is to convey trust property to those holding reversionary interest. If creator deceased, to residuary beneficiaries; if failed gift is residuary, to heirs as of testator's death. No constructive trust absent wrongdoing.
+
+=== UNITRUST ===
+Income defined as fixed % of trust value per year. Eliminates trustee's dilemma re investing. Income and remainder rise and fall together. Trustee still has pressure deciding how much to distribute in discretionary trust.
+
+=== SUPPLEMENTAL/SPECIAL NEEDS TRUST ===
+Beneficiary qualifies for needs-based government benefits (SSI, Medicaid). Trust limits benefits to things government programs do NOT provide (dental, computer equipment, etc.). Must look at specific eligibility requirements.
+First-Party: person puts own money into irrevocable SNT, then eligible for government benefits. State has reimbursement claim after beneficiary's death.
+Third-Party: another person establishes for indigent beneficiary.
+
+=== CHARITABLE TRUSTS ===
+Must have charitable purpose, res, intent, and beneficiaries (not necessarily ascertainable). Merely benevolent is NOT charitable — must benefit public at large.
+Restatement charitable purposes: (a) relief of poverty; (b) advancement of education; (c) advancement of religion; (d) promotion of health; (e) governmental/municipal purposes; (f) other purposes beneficial to community.
+NOT charitable: giving equal gifts to everyone (rich or poor); Christmas gifts without consideration of need; a swing set for one neighbor.
+No limit on duration (not subject to RAP). Beneficiaries need NOT be ascertainable.
+Shenandoah Valley National Bank: "trust" for 1st, 2nd, 3rd graders in local school "to be used for obtainment of education" — trustee had no control over use → merely benevolent.
+Barnes Foundation: Dr. Barnes hung art in Merion PA; no paintings to be moved; open Saturdays; unamendable rules. Eventually moved to Philadelphia. Key lesson: court can deviate from impossible/impractical terms.
+
+=== CY PRES DOCTRINE ===
+Modify trust so settlor's intentions carried out "as near as possible." Invoked when original terms impossible, impractical, or illegal. Applies to dispositive terms. Only allowed when donor had GENERAL charitable intent.
+Allowed when: (1) valid charitable trust; (2) impossible/impractical to carry out specific purpose; (3) donor had general charitable intent.
+General intent indicators: gifts of cash; lack of reverter clause; heirs specifically excluded or given other gifts; gift outright.
+Specific intent indicators: gifts of land; reverter clause; gift to charity made in trust.
+Words like "forever" or "for no other purpose" do NOT necessarily show specific intent.
+First Merit Bank: hospital sold to for-profit entity; donor's residuary gift only to charitable organizations = general charitable intent; cy pres applied to substitute donee.
+Obermeyer v. Bank of America: Wash. Univ. closed dental school. Court found general charitable intent (several gifts to university unrelated to dental school). Trust can be used for dental medicine at university.
+Buck Estate: Beryl Buck left residue for Marin County, CA only; now wealthiest county. Trustee petitioned to spend in 5 counties. Held: NO cy pres. Inefficient philanthropy ≠ impracticability/impossibility. Achieving greatest benefit is NOT basis for modifying donor's wishes. Under UTC: might come out differently (surplus funds to reasonably similar purpose).
+Donna/church hypo: specific charitable intent; if city ordinances prohibit church → court CANNOT apply cy pres.
+
+=== ENFORCEMENT OF CHARITABLE TRUSTS ===
+State AG has authority. Donor with completed gift has NO standing unless expressly reserved right.
+Modern Rule (UTC § 405 — majority): donor has standing while living; AG; individual current beneficiaries.
+Smithers v. St. Luke's: donor gave $10M for alcoholism treatment center; specific uses/limitations; hospital misappropriated funds. Wife (Mrs. Smithers) vigilance revealed violations. "Donor of a charitable gift is in a better position than the AG." Donor's intent entitled to protection. Co-existent standing for donor and AG.
+Sagtikos Manor: historical society not part of class of potential beneficiaries sharply defined and limited in number → no standing.
+Milton Hershey School: Alumni Association created by Milton Hershey; Trust doesn't mention Association; graduates specifically excluded. Court: cannot give Association "special interest" standing where settlors specifically denied beneficiary status to members.
+Russell v. Yale: suit to enjoin demolition of 1918 divinity school building. Donor (if alive) would have no standing → heirs don't either. Alumni donors lack standing. Students lack standing.
+
+=== NOT TRUSTS ===
+Constructive Trust: a remedy; equitable device to prevent unjust enrichment; court order to transfer property to rightful owner.
+Resulting Trust: when trust fails or purpose is complete but corpus remains; goal is settlor's intent.
+Precatory Trust: non-enforceable requests or statements of moral obligation ("I recommend to her the care and protection of my mother"). NOT an enforceable trust. Phrase as "non-binding request."
+Equitable Charges: security interest; "I give all my property to my wife, asking she pay $100,000 to my mother" → equitable charge. Sum certain = equitable charge. Kids own money outright; aunt is creditor.
+Totten Trusts: bank accounts paid on death; revocable by any manifestation of intent; if not revoked during life, goes to beneficiary outside probate.
+Joint Bank Accounts: different from real estate joint tenancy. While holders alive, they own what they put in. If one withdraws more than they put in → estoppel/laches defenses. Some states: creation of account = gift of equal share; over-withdrawal = right of survivorship goes away.
+Emily/David/Terry hypo: "I leave to David $100,000 on condition that he use money to help Terry" AND Victor/Kara/Alan hypo → EQUITABLE CHARGES; Terry and Alan are CREDITORS entitled to enforce payments.
+Pet trusts hypo: express trust → intended to be a trust. Precatory, constructive, resulting → NOT types settlor intends to create.
+
+=== POUR-OVER WILL ===
+Leaves property to trust ("I leave residue of my estate to trustee of the Smith Family Trust"). Picks up "the rest" not in trust. Allows single vehicle for distribution. May be for unfunded trust. Validity theories: (1) Incorporation by reference (trust must exist when Will signed; amendments not incorporated; trust would be testamentary); (2) Independent significance (trust need not exist when Will signed; later amendments have effect; must have significant assets before death); (3) Statute: vast majority of states adopted UTATA including CA.
+
+=== TRUSTEES ===
+Must be natural person, bank, or trust company with trust powers. Has legal title. Court can name one if document fails to name one, trustee dies/resigns, or never accepts. Once accepted (usually by signing trust document), all fiduciary duties enforceable. No one required to accept.
+Sankel v. Spector: Sankel informally said he'd decline but changed his mind and acted as trustee. Held: informal declination + change of heart = acceptance. Trustee owes undivided loyalty. Fiancé has conflict — not loyal to Barbara. Question of fact whether person manifested intent to accept. No bright line rule.
+
+=== TRUSTEE FIDUCIARY DUTIES ===
+Duty to collect & protect: without unreasonable delay.
+Duty to earmark: title assets appropriately in trustee capacity; keep out of reach of personal creditors. Bank accounts: title in trustee's name "as trustee"; separate tax ID. Real estate: change title. If no record title: maintain records showing trust assets. Failure: traditional = strictly liable for loss; modern = liable only to extent loss CAUSED by failure to earmark.
+Duty to inform and report: inform beneficiaries about administration. Within 60 days of accepting trusteeship, notify beneficiaries of acceptance and contact info. UTC § 813: keep beneficiaries "reasonably informed"; promptly respond; furnish copy of trust instrument.
+Quiet/Silent Trust: allowed in some states (AK, DE, SD until beneficiary reaches certain age). NOT allowed in CA after trust becomes irrevocable.
+Duty to account: annual report of trust property, liabilities, receipts, disbursements, trustee compensation, listing of assets and market values. Salter v. Lerner: waiver cannot waive duty to provide reasonable information.
+Duty to keep adequate records: documentation of important decisions; protects trustee against hindsight.
+Duty to safeguard: insure real estate; safely store jewelry/valuables; fiduciaries NOT insurers.
+Duty to diversify: but can decide not to if trust purposes better served by retaining (family farm, controlling interest in family business).
+Duty to defend validity.
+Duty to bring and defend claims.
+Duty to delegate: maybe; ongoing obligation to monitor delegees; most common = investment decisions. Must exercise reasonable care in selecting, instructing, monitoring. Under UTC: no liability if reasonable care exercised.
+Duty of cost sensitivity: consider cost in delegating; should not pay for functions already delegated.
+DUTY OF LOYALTY: administer solely in interests of beneficiary. Transaction prohibited by duty of loyalty is voidable even if made by party related to trustee (spouse, family, attorney, agent). Cannot commingle assets. Disloyalty: (1) self-dealing; (2) conflicted transactions.
+UTC: both types voidable without regard to fairness or purported good faith = "no further inquiry" rule.
+Self-Dealing: corporate trustees generally may not invest in own corporate stock. Cannot borrow trust funds. Cannot sell assets from one trust to another.
+Conflict of Interest: indirect personal interest even if not self-dealing. Example: trustee holds limited partnership interest in partnership of which she is general partner.
+No Further Inquiry Rule: see In re Gleeson. Exceptions: (a) authorized by trust terms or court; (b) routine technically self-dealing transactions if fair to beneficiaries (reasonable compensation; deposits in trustee's bank).
+Exculpatory Clauses (UTC § 1008(b)): clause drafted by trustee is invalid unless trustee proves it is fair and contents adequately communicated to settlor. CANNOT WAIVE BAD FAITH OR RECKLESSNESS.
+Damages for breach: (1) compensatory damages to restore corpus; (2) trust distributions to what they would have been; (3) disgorgement of trustee's profits.
+
+=== COMPETING INTERESTS — DUTY OF IMPARTIALITY ===
+UTC § 803: act impartially between current and remainder beneficiaries, giving due regard. Trust document might dictate priority. Trustee must balance current (income) and remainder (growth) beneficiaries' interests. Dilemma: growth stocks good for remainder; income-producing bonds good for current.
+Prudent Investor Rule: manage as prudent investor considering purpose, term, distribution. Investments in context of whole portfolio. Risk in light of potential return. Duty to verify facts. Use special knowledge if you have it. Focus on process, not result.
+Uniform Prudent Investor Act § 2: consider general economic conditions, inflation/deflation, tax consequences, role of each investment in portfolio, expected total return, other resources of beneficiaries, need for liquidity, regularity of income, preservation or appreciation, special relationship to trust purpose or beneficiary.
+Diversification explicitly required. No category of investment inherently imprudent. Speculation not sanctioned.
+Power to Adjust (UPIA): trustee may adjust between principal and income if investing as prudent investor, and terms describe distributions by referring to income, and trustee determines (after applying formal allocation rules) that it cannot comply with duty of impartiality. Default rule — may be negated by trust terms.
+
+=== CASES ON TRUSTEE DUTIES ===
+Old Colony Trust v. Rodd: distributions very modest; sent questionnaire and never followed up incomplete answers; amounts distributed were parsimonious. Court: prospect of illness in old age does not warrant persistent stinginess. Not retroactive; but going forward, not superficial or parsimonious.
+Roberts v. Roberts: executor hired bank to prepare estate tax return; bank made error costing $40k. Executor not liable — exercised reasonable care in delegating.
+Anton v. Anton: two co-trustees; bad brother stole trust money; inattentive brother signed blank checks without looking at statements. "Inattentive" brother liable. Each co-trustee must participate fully. Delegating to co-trustee = breach. Must "maintain attitude of vigilant concern."
+In re Rothko: 3 executors; 798 paintings; contracts with MAG and MNY. Reis was director of MNY. Stamos gained favor with MNY. Levine was aware of conflicts. Self-dealing: voidable regardless of fairness. Conflicts: requires showing unfairness. Appreciation damages applied to Reis and Stamos (misfeasance); not to Levine (only negligence). Appreciation damages not punitive — return estate to position it would have been in.
+Hartman v. Hartle: co-executors sold real property in estate to sister married to co-executor for $3,900; sold to third party 2 months later for $5,500. Sale illegal and void. Executor cannot sell estate property to self or spouse without court authority.
+In re Gleeson's Will: trustee was also farmer-tenant; continued farming own land; voluntarily raised rent from $6/acre to $10. No evidence tried to find another tenant. Good faith and lack of loss do NOT relieve trustee of breach. "Elected to act as trustee; could not deal with himself." No further inquiry rule. Three defenses: (a) settlor authorized; (b) beneficiary consented after full disclosure; (c) judicial approval in advance.
+Kasperbauer v. Fairfield: husband murdered wife; successor trustee William Fairfield; trust to be divided at wife's death; 10 years after youngest child turned 25, Fairfield still hadn't distributed; used trust property for parties; flew friends to Colorado; filed 1,000-page accounting costing >$100k; beneficiaries had to pay $250k back for Fairfield's attorneys. Held: trustees' attorneys entitled to be paid from trust assets.
+People ex rel. Harris v. Shine: trustee mismanaged charitable trust. AG filed to remove. Temporary trustee found gross mismanagement. Shine successfully got advanced fees to defend. Appellate court: fees based on Kasperbauer for accounting (benefits trust); but fees where trustee acts from personal interest → inappropriate when unsuccessful defense. Fees for successful defense generally chargeable even though trustee benefits.
+McNeil v. McNeil: $300M trust; co-trustees never told Hank Jr. he was a current beneficiary of Lois' trust; acquiesced in Lois' wish not to invade principal. Trustees breached fiduciary duties by (1) failing to inform Hank, (2) showing partiality, (3) allowing trust to run on autopilot. 7.5% make-up distribution. Provident National Bank removed. All co-trustees surcharged 1/5 of fees. Grant of absolute discretion may NOT relieve trustee of liability. Exculpatory clause cannot relieve of gross negligence/willful wrongdoing. Each co-trustee had duty; cannot defer to "dominant" trustee.
+
+=== REMEDIES FOR BREACH OF TRUST (UTC § 1001) ===
+Compelling performance; enjoining breach; compensatory damages; ordering accounting; appointing special fiduciary; suspending trustee; removing trustee; reducing/denying compensation; voiding act/imposing constructive trust/tracing; any other appropriate relief.
+
+=== RULES THAT CANNOT BE MODIFIED BY TRUST DOCUMENT ===
+Requirements to create trust; duty of good faith; trust must be for beneficiaries; lawful purpose; court power to modify/terminate; effect of spendthrift clause; court power re bond; court power to adjust unreasonable compensation; duty to notify adult beneficiaries of existence of trust; court power to compel accounting; statutory limits on exculpatory language; risks of third parties dealing with trust; SOL; court jurisdiction; venue.
+
+=== THIRD PARTIES DEALING WITH TRUSTEES ===
+Traditional: third parties required to inquire of trustee's power.
+Modern (UTC § 1012(a)-(b)): person other than beneficiary who in good faith deals with trustee, without knowledge trustee is exceeding/improperly exercising powers, is protected from liability. Not required to inquire into extent of powers.
+
+=== TRUST PROPERTY ===
+Requirement for valid trust (relaxing in many states). What is trust property: real estate, personal property, outright ownership and future interests (even contingent), fee simple, future interest, life insurance policy, stocks and bonds.
+NOT: expectancies/illusory interests (expectancy of taking under living person's Will; status as intestate heir of living person). Future profits: unclear.
+Failure to deliver property to trustee: if intent to deliver is clear, court may impose constructive trust. Traditional: court will not turn failed gift into declaration of trust. Restatement: gift of personal property can be perfected on basis of donative intent alone if established by C&C evidence.
+Hebrew University v. Nye: Ethel announced gift of husband's books to Hebrew University; catalogued and crated; never shipped; died. No words indicating intent to be trustee or assume trustee duties. Failed gift cannot be rescued by creating trust where none was intended.
+
+=== POWER OF APPOINTMENT ===
+Power held by person to designate recipients of beneficial ownership interests. NOT a trust — just gives someone power to assign property. Non-fiduciary — no duties or obligations, only restrictions as stated. Powerholder has authority to act, but not the duty.
+Vocabulary: Appointive Property; Donor (original owner, confers power); Donee/Powerholder (holds power); Objects/Appointees (permissible recipients); Takers in Default.
+Benefits: flexibility (grandchild with special needs; drug addiction; creditor problem; child is spendthrift; children grow up responsible).
+NOT a power of appointment: power given to trustee to decide how to distribute to beneficiaries — that's a fiduciary discretionary power.
+Uniform Powers of Appointment Act § 102(13): enables powerholder acting in non-fiduciary capacity to designate recipient.
+Creating: by valid document (Will or trust); document transfers subject property; shows intent to create power exercisable in favor of permissible appointee. No specific words required.
+
+=== CATEGORIES OF POWERS ===
+General Power: may be exercised in favor of at least one of: (1) powerholder; (2) her creditors; (3) her estate; (4) creditors of her estate; (5) others. This is why it's included in taxable estate. Identification of permissible appointees not necessary.
+Non-General/Special/Limited Power: donor specifies who can receive. Cannot benefit powerholder, her creditors, her estate, or creditors of her estate. MUST identify permissible appointees.
+Temporal: Testamentary (takes effect at powerholder's death; usually exercisable by Will); Presently Exercisable (can be exercised any time; general power exercised during lifetime = taxable gift); Postponed/Deferred (not yet exercisable).
+Matter of Weinstein: "to be distributed by him, at such time, in such manner and in such amounts, if any, as he alone shall determine, to and among his then living children..." → special power of appointment.
+Matter of Ramdin: "to whomsoever they jointly deemed fit to distribute" → general power of appointment.
+
+=== CREDITORS' RIGHTS — POWERS OF APPOINTMENT ===
+General Powers created by self: subject to creditors per Uniform Voidable Transactions Act unless exercised irrevocably in favor of another.
+General Powers created by another: presently exercisable → subject to creditor if other property insufficient; presently exercisable but for "support" only = treated as non-general power; if NOT presently exercisable → creditors cannot reach it.
+Special Powers: generally NOT reachable by creditor unless (1) property was owned by powerholder and transferred in violation of Voidable Transactions Act; (2) initial gift states powerholder or estate is taker in default.
+Spendthrift trusts = solution. Exceptions to spendthrift: IRS/tax liens, basic necessities, spouse/child support.
+
+=== EXERCISING A POWER OF APPOINTMENT ===
+In writing by valid document. Must show intent to exercise and satisfy requirements imposed by donor. Permissible exercise. Always best to refer to creating document and be VERY CLEAR.
+Will residuary clause: "residue of my estate, including property over which I have a power of appointment" → effective for GENERAL power. Residuary clause without more = effective for general power only (property is "in my estate"). Does NOT exercise non-general power without specific reference ("property is not in my estate").
+Donor's requirements/substantial compliance: court will look to purposes of requirements. If "substantially complies" and failure doesn't impair material purpose, may be valid.
+Divorce - CA: when divorce pending, spouse cannot amend trust due to Automatic Temporary Restraining Orders, unless other spouse consents. BUT spouse may sign a Will → can exercise power of appointment by Will. Remember: ex-spouse not "automatically disinherited" until divorce is final.
+Anti-Lapse: Restatement: anti-lapse may apply if appointee bears appropriate relationship to donee or donor. Look at who the donee is.
+Allocation: Doctrine of Allocation (common law): appointive property allocated to maximize intended effect. Selective Allocation Doctrine (Uniform POA Act & CA): if powerholder exercises over appointive property in disposition that also disposes of own property, both must be allocated in permissible manner that best carries out intent.
+Example: Will says "residue including any property over which I have a POA to 2 nieces and 2 nephews equally." $3M appointive property + $2M own property. Only 2 nieces are permissible appointees. 2 nieces get $1.5M each (appointive); 2 nephews get $1M each from testator's property.
+Capture (General Powers only): when property not appointed/appointment ineffective/not exercised → can be "captured" into estate. Only for general powers (already in estate). "Blending clause" generally = manifestation of intent to take control. Restatement and Uniform Act change priority to takers in default first.
+Ineffective exercise (Uniform Act): (1st) takers in default; (2nd) powerholder if permissible appointee and living; (3rd) powerholder's estate if permissible appointee; (4th) reversion to donor or donor's successors. CA: capture has priority, then takers in default.
+
+=== BENEFICIARIES ===
+Trust MUST HAVE ASCERTAINABLE BENEFICIARIES. Exception: charitable trusts.
+Class gifts allowed (but cannot be too large: "people of California"). "Family" or "relatives" may be too broad. Restatement: "relatives" construed as "heirs."
+Clark v. Campbell: Will leaves personal property to "friends"; trustees know who they are. Held: term too indefinite. Failed trust → resulting trust → goes to residue.
+Pets: pet trusts are honorary — no ascertainable beneficiary. Not binding or enforceable → resulting trust back to creator. Cannot enforce or file lawsuit.
+UPC § 2-907: trust may continue for 21 years without ascertainable beneficiaries. Trust for domestic pets valid; terminate when no living animal covered. Assets transfer as directed, then by residue, then to heirs. Can designate enforcement individual or court appoints.
+CA Pet Trust (Prob. Code § 15212): same as UPC EXCEPT any animal charity can enforce; inspection rights; accountings required if balance exceeds $40,000.
+
+=== INTERESTS & REMAINDERS ===
+Possessory: entitles holder to current possession. Life estate, term of years, fee simple.
+Future: intangible non-possessory interest. Remainder interests are future interests.
+Reversion: interest remaining in grantor who transfers lesser estate. Property can revert back if fails. Only original transferor. Example: "A for life, then to A's children who survive A" → A's children have contingent remainder and O has vested reversion (divested if A leaves surviving children).
+Transferability: transferred at death of interest holder UNLESS that person's death resolves a condition precedent. "To A for life, then to B if B survives A": B's death before A terminates B's interest. C's interest (alternate) is transferable even if C dies before B.
+
+=== VESTED vs. CONTINGENT REMAINDERS ===
+Vested: given to presently ascertained person AND not subject to condition precedent. "To A for life, then to B." If vested remainder person dies before life tenant, heirs/devisees get remainder. Can be transmitted. "Subject to open" because class is still open. "Remainder to B's heirs" = unascertained while B living.
+Contingent: NOT given to presently ascertained person OR subject to condition precedent. "To A for life, then to B if B survives A" → condition precedent: "if B survives A." Remainder to unascertained person(s) = contingent.
+Hypos: A conveys to B for life, remainder to C: B = possessory; C = remainder, future interest; both can transfer interests. B dies → C has possessory interest. B transfers life estate to D → D holds life estate measured by B's life (pur autre vie). "To A for life, then to B" → B gets fee simple absolute. "To A for life, then to B for life, then to C" → B has remainder in life estate.
+O conveys fund in trust "for A for life, then to A's children": no children = contingent remainder in A's children, O has reversion. One child B, A still alive = vested remainder in B, subject to open. One child B, A dies = class gift closed, B's remainder possessory.
+
+=== CONDITION OF SURVIVAL ===
+Not implied — only if expressed. Exception: multigenerational class subject to implied condition of survival to time of possession (issue, descendants). Absent clear indication, life tenant who is also a member of a class DOES participate in remainder. "Surviving" or "survive" DO make interest contingent.
+Baldwin v. Branch: Claude's revocable trust; gift to sister Bernice (among others); Bernice predeceased leaving 2 kids M and S; son C opposed. "Words such as 'at death,' 'after death,' 'upon death' refer to time when remaindermen are to take possession, not when to vest." Held: Bernice's remainder vested; her estate entitled to take. Preference for early vesting over contingency. Discussion: anti-lapse would give same result for kids; but if Bernice left estate to another, kids would not take (early vesting preferred).
+
+=== GIFTS TO HEIRS ===
+Remainder to heirs: ALWAYS CONTINGENT UNTIL person dies and heirs identifiable. Then indefeasibly vested.
+Traditional & Majority: heirs determined at DEATH of subject person even if not yet in possession (early vesting).
+UPC, CA, & Minority: determine heirs when prior interest terminates (as if designated individual died when disposition takes effect). BUT: if surviving spouse is remarried at time of possession, not considered an heir.
+Summers v. Summers: mother leaves property in trust for son, income/principal until age 25 then outright; son dies before 25 intestate. Vested remainder passes by intestacy → intestate heir is father (long divorced from mother). Lesson: vested interests can go to unintended people.
+
+=== VESTING ===
+Vested interest NOT subject to RAP. Interest cannot be vested in unborn person (but pregnant = vested). Vested interest does NOT require survival. "A to B for life, then to C" → C does not need to survive B. Reversionary interests not subject to RAP.
+
+=== RULE AGAINST PERPETUITIES (RAP) ===
+"An interest must vest, if at all, no later than 21 years after lives in being at the creation of the interest." Void if violated. Must prove contingent interest will necessarily vest or fail within 21 years after some life in being at creation. Look at MOST REMOTE POSSIBILITY — if ANY fact pattern could violate, RAP violated.
+Modern trend: 90-year "wait and see" rule. NV: 360; FL: 1000; DE, ID, NJ, RI, SD, WI: repealed RAP.
+Types: Indefeasibly vested → NOT subject to RAP. Vested subject to open → SUBJECT TO RAP. Contingent → SUBJECT TO RAP.
+Measuring lives: must be ascertainable group or person; 21 years at end of lives in being; child in gestation = life in being; 21 years allows next generation to reach majority.
+If created by Will → measuring lives must be alive at testator's death. If created by irrevocable inter vivos transfer → alive at time of transfer. If created by revocable trust that becomes irrevocable → alive at time trust becomes irrevocable.
+"21 years after the last to die of my descendants who are living at my death" → NO RAP violation (descendants living at death = measuring lives).
+"21 years after the death of the last to die of my grandchildren" → RAP VIOLATION — some grandchildren may be born after T's death (unless all T's children are deceased).
+Unborn widow: "to B for life, then to his widow for her life, then to B's issue" → widow not born at time of devise; this voids interest to B's issue (issues unidentifiable at B's death). "To B for life, then to his widow for life, then to B's children" → interest would vest immediately at B's death because both widow and children would be identifiable at B's death.
+Class gifts: "to children of B to be paid when they reach 21" — class closes when eldest child reaches 21; no RAP violation.
+O conveys to "Erin's youngest daughter when she graduates from college" → YES RAP violation (Erin could have another daughter after conveyance).
+T creates trust to continue 21 years after last to die of T's grandchildren → RAP VIOLATION unless all of T's children are deceased (grandchildren not yet born are not measuring lives).
+Vested interests can last LONGER than RAP period (they're just not subject to RAP).
+"To A for life, then remainder to A's children" → NO RAP; A is measuring life; distribution to A's children happens at A's death.
+"T creates trust to benefit A's children for life, remainder to A's grandchildren who are living 21.5 years after last of A's children dies" → NO RAP violation — if A is less than 3 months pregnant when trust created (assuming no premature delivery), unborn child is measuring life.
+
+=== REFORMING A TRUST ===
+Reformation: remedy to correct mistakes or omissions. NOT available to change terms to effectuate what settlor would have done had he known of unforeseen circumstances.
+Matter of Rappaport: Rose's Will creates trust for disabled daughter Susan; all income to Susan; Will says trust "shall not jeopardize any monies she is receiving from government agency." Petition to reform to third-party supplemental needs trust. Held: court granted reformation. Will shows intent to supplement (not supplant) government benefits. "Testator's actual purpose must be determined and effectuated."
+
+=== EQUITABLE DEVIATION ===
+Occurs when fairness or unworkable situation requires change to trust. Permits deviation from administration terms due to changed circumstances. CANNOT change distribution terms (under UTC).
+Matter of Carniol: co-op apartment in trust for granddaughter Aimee; co-op association prohibited transfer to a trust; Aimee never completed approval forms; history made board unlikely to approve. Equitable deviation authorized sale and holding proceeds in trust for Aimee.
+Matter of Smathers: 1928 testamentary trust; "no sale" provision on 2 NY properties; good offer of $23.4M. Held: testator's intent was unequivocal. Changed circumstances likely anticipated. Trust income sufficient. "Best interests" NOT the test — must show decedent's presumed intent is incapable of fulfillment. Sale DENIED. LLC formation GRANTED (C-corp had double taxation; S election not available in 1928 → consistent with decedent's presumed intent).
+
+=== MODIFYING A TRUST ===
+Common Law (Restatement): (1) circumstances unknown to creator at time of creation AND (2) failure to modify will impair accomplishment of trust's purpose.
+UTC § 412: court may modify/terminate due to circumstances not anticipated by settlor if modification/termination will further trust purposes. Done in accordance with settlor's probable intention. Upon termination, assets distributed consistent with purposes.
+With settlor consent: no "purpose of trust" test. Settlor + all beneficiaries = can modify/terminate without court approval. Settlor + some beneficiaries = court may modify/terminate if non-consenting beneficiaries' interests protected.
+Without settlor consent: "Material Purpose" test (Claflin Doctrine). All beneficiaries must consent. Court may terminate if continuance not necessary for any material purpose. May modify if not inconsistent with material purpose. Spendthrift clause is NOT a material purpose under UTC.
+
+=== TERMINATION OF TRUSTS ===
+Court will not terminate if termination will frustrate material purpose.
+Things preventing termination: spendthrift clauses; support trusts.
+In re Estate of Brown: nephew and wife plus all contingent remainder beneficiaries (children) agreed to terminate trust that was providing life-long income to nephew. Held: there are TWO material purposes (education complete, but providing life-long income through trustee management is SECOND material purpose). Not a support trust (all income required to be paid) and not a spendthrift trust (no language restricting alienation). Cannot terminate.
+
+=== ESTATE TAX & GIFT TAX ===
+Tax on transfer of wealth — either lifetime gifts or gifts at death (inheritance). Based on total value of assets (less deductions/exemptions). One-time tax on wealth transfer. CANNOT avoid estate tax by giving away wealth before death — gift & estate taxes coordinated (unified). FLAT 40%. Exemption: $13.99 million (2025).
+Calculating taxable estate: lifetime gifts + net assets owned at death = TOTAL TAXABLE ESTATE − exclusion ($13.99M) = TAXABLE ESTATE × 40% = TAX.
+Example: lifetime gifts $6.6M + estate $17.39M = $23.99M total − $13.99M = $10M taxable estate × 40% = $4M tax.
+
+=== GIFT TAXES ===
+Tax on gratuitous gifts. If less than fair market consideration = partial gift. Donor must relinquish all dominion and control. "If donor retains strings, might not be a completed gift." Sale for promissory note avoids gift (unless note is not real debt).
+Matilda/Deanne hypo: free rent = gift; fair rental value is the gift. $100/month below market = gift of the difference.
+Application: no donative intent required for tax. If incomplete or revocable = not a gift. That beneficiary cannot be changed is what matters; control of timing/manner does not matter.
+Dennis hypos: $50k to daughter and son-in-law ($25k each; $19k exclusion each; $6k each taxable); $55k tuition to USC = not taxable (tuition exclusion); son uses extra car for 8 months = taxable (value of car less $19k exclusion); $20k paid to son-in-law for $10k job (son-in-law used up annual exclusion in transaction A) = must report in full.
+
+=== GIFT TAX EXCLUSIONS ===
+Annual: $19,000 (2025; indexed for inflation). Per year, per donee. MUST be gift of present interest. Exception for trusts: if beneficiary can withdraw funds (Crummey power), treated as present interest.
+Crummey v. Commissioner: beneficiary can make $19k demand for payment each year = present interest. Does NOT reduce lifetime exemption.
+Cristofani v. Commissioner: 2 primary + 5 contingent remainder beneficiaries all had Crummey withdrawal rights. Commissioner allowed only 2. Held: court rejected; legal right to demand withdrawal is the only test; likelihood of withdrawal irrelevant; tax-saving motive irrelevant.
+Statutory Exclusions (separate from annual, unlimited): Medical expenses paid DIRECTLY to provider; Tuition paid DIRECTLY to institution (any level; NOT room & board).
+Deductions: Marital (unlimited to US citizen spouse; $190,000 annual to non-citizen spouse 2025). QTIP Trusts: donor spouse controls remainder after spouse's death; requirements: spouse is only beneficiary for life; all income at least annually; right to demand income-producing property; remaining assets includible in spouse's estate.
+Charitable: unlimited.
+
+=== ESTATE TAX ===
+Based on gross estate = everything you own or effectively own. Include: general power of appointments; joint property (entirely, unless other person contributed; exception: joint with spouse = only ½ included); life insurance (entire proceeds unless decedent held "no incidents of ownership"); revocable transfers; community property (decedent's half + all separate property).
+If gross estate exceeds lifetime exclusion → file Form 706. Due 9 months after death. Automatic 6-month extension; but estimated tax must be paid at 9 months.
+Hypos: T gifted house retaining life estate = includable (retained life estate). T transferred property to irrevocable trust retaining special power to appoint = includable (retained power to shift beneficial enjoyment). T gifted life insurance policy 4 years before death = NOT includable (>3 years). ½ of joint account with spouse = includable. Property in trust with special power to appoint to T's siblings' descendants = NOT includable (T didn't transfer; T didn't retain power). T's life estate in house given by mother = NOT includable (T didn't retain it; mother gave it). Trust created by T's father with unlimited general power of appointment = includable (all property subject to general POA). Trust with general power for maintenance/education/health/support = NOT includable (exception to general power of appointment inclusion). ½ of joint account with brother (no records of who contributed) = NO — 100% includable unless T's estate proves brother contributed.
+Special rules of inclusion (within 3 years of death): gift taxes paid within 3 years; transfer or release of interest that if retained would have been included under §2036 (retained life estate), §2038 (revocable transfers), §2042 (life insurance).
+
+=== BASIS ADJUSTMENT ===
+Basis = what you paid for it. Capital gain/loss = basis vs. sale price.
+Inherited assets: stepped UP (or down) to FMV at date of death. Applies to BOTH halves of community property (even surviving spouse's half not included in estate of first spouse to die).
+Gifted property during lifetime: "carryover" basis — donee has same basis as donor.
+Norman/Andrew hypo: Building A ($2M FMV; $100k basis; 35 years old) — if gifted, $1.9M gain on sale; if inherited, zero gain (stepped-up). Building B ($1.5M FMV; $1.5M basis; 1 year old) — if gifted, zero gain. Andrew should be GIFTED Building B (sell with no gain) and INHERIT Building A (stepped-up basis).
+
+=== DEDUCTIONS ===
+Cost of administering estate: funerals, lawyers, executors, accountants, appraisers. Decedent's debts: mortgage, credit cards, unpaid taxes. Marital deduction (no limit). Charitable deduction (no limit). State death taxes paid.
+
+=== CALCULATING ESTATE TAX ===
+1. Gross Estate − Deductions = Adjusted Gross Estate / Tentative Taxable Estate
+2. Adjusted Gross Estate − Lifetime Exclusion ($13.99M) = Taxable Estate
+3. Taxable Estate + Adjusted Taxable Gifts = Estate Tax Base
+4. Estate Tax Base × 40% = Tentative Estate Tax
+5. Tentative Estate Tax − Gift Tax Paid or Payable = Gross Estate Tax
+6. Gross Estate Tax − Applicable Credit Amount & other credits = NET ESTATE TAX
+
+=== SPOUSAL EXEMPTIONS ===
+Portability Option: wife can "capture" husband's unused exemption (DSUE) by filing Form 706. Can use for lifetime gifts. If wife remarries and new husband dies, she can only use LAST husband's DSUE.
+Bypass/Exemption/Credit Shelter Trust: holds husband's share up to exemption in irrevocable trust. Wife's rights limited → NOT in her estate. All appreciation after death stays out. At wife's death, remainder passes to beneficiaries named by husband (good for blended families). Excess can go to wife outright or to QTIP trust.
+QTIP Trusts: unlimited marital deduction (tax deferred, not avoided). Spouse only beneficiary for life. All income at least annually. Spouse can demand income-producing. Remaining assets includible in surviving spouse's estate.
+O/A/daughter example: policy transferred >3 years before death = NOT includable. A purchases policy on O's life and O dies = NOTHING includable (O never owned it).
+
+=== GENERATION-SKIPPING TRANSFER TAX (GST) ===
+Separate exemption from estate/gift tax. Exemption (2025): $13.99M. Annual Exclusion: $19k. Rate: 40%. Applies to transfers to "skip persons" (2+ generations away) or non-relatives more than 37.5 years younger than transferor. If T's child dies before T, grandchildren "move up" a generation → no GST tax.
+Direct Skip: lifetime gift to grandchild; legacy to grandchild at death; gift in trust to only skip persons → GST at time of transfer.
+Taxable Distribution: trust for both children and grandchildren; trustee distributes to grandchild → GST on amount distributed.
+Taxable Termination: trust for both; last child/non-skip person dies → GST on balance in trust.
+No portability of deceased spouse's GST exemption.
+Allocation: T can allocate exemption for lifetime transfers. Direct gifts to grandchildren = GST exemption automatically applies.
+Compare with estate/gift tax: gift to child = uses estate/gift tax exemption but NOT GST (child not skip person). Gift to grandchild = uses both estate/gift tax exemption AND GST exemption.
+GST hypos: $10M to grandchildren with no prior transfers = NO GST (exemption covers). $10M to grandchildren after using all GST exemption = YES, 40% on $10M. $10M to trust for children and grandchildren; distribute $10k to grandchild = YES taxable distribution ($4k tax). Distribute $10k to child = NO (not skip person). Last child dies in trust = YES taxable termination (balance taxed). Allocate GST exemption to transfer → always exempt.
+
+EXAM FORMAT CONTEXT: The exam is multiple choice with about 60 questions. 3 choices per question. Some questions will involve simple math — California intestacy distributions, executor fee calculations, or estate tax/gift tax calculations. Not supposed to be incredibly difficult. Professor tested California law distinctions specifically.
+
+TUTORING APPROACH:
+- When a student seems to understand something surface-level, dig deeper: "Right — and why does that rule make sense? What problem is it solving?"
+- When you give a hypo, wait for the student to answer before explaining.
+- Point out classic exam traps: "The exam loves to test the difference between UPC and California on the witness timing issue."
+- Make explicit connections that students often miss: "Notice how DRR and anti-lapse are both 'rescue' doctrines — they prevent results the testator/testator clearly didn't want."
+- For math problems, always show the step-by-step calculation.
+- Never just dump information. Respond conversationally. If the student says "I don't know much about RAP," start with a simple hypo before explaining the rule.
+- Use phrases like "Here's what trips people up..." and "The exam will probably test this by..."
+- Keep response length appropriate to the question — don't over-explain simple things.
+- If the student makes a mistake, first ask them a guiding question rather than immediately correcting.`;
+
+const TOPIC_STARTERS = {
+  probate: "Let's focus on probate and non-probate property. Quick check — can you tell me the difference, and give me two examples of each?",
+  wills: "Let's work on Will formation. Here's what I want to know first: what are the basic requirements for a valid attested Will in California? Don't look it up — just tell me what you know.",
+  intestacy: "Intestacy time. Let me start you with a math problem: Wanda dies intestate in California. She leaves a wife Wendy and one child Dennis. They have $500,000 in community property, and Wanda has $300,000 in separate property. How does Wanda's estate distribute?",
+  trusts: "Let's talk about trusts. Before I go into anything — what's the difference between a mandatory trust and a discretionary trust, and why does it matter for creditors?",
+  tax: "Let's do estate and gift tax. Key number first: what's the 2025 estate/gift tax exemption and rate? And then — what does it mean that the gift and estate taxes are 'unified'?"
+};
+
+let conversationHistory = [];
+let isLoading = false;
+
+function jumpTopic(topic) {
+  const starter = TOPIC_STARTERS[topic];
+  if (starter) startWith(starter);
+}
+
+function startWith(message) {
+  document.getElementById('welcomeCard')?.remove();
+  const inputField = document.getElementById('inputField');
+  inputField.value = message;
+  sendMessage();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+}
+
+function clearChat() {
+  conversationHistory = [];
+  const chatArea = document.getElementById('chatArea');
+  chatArea.innerHTML = `
+    <div class="welcome-card" id="welcomeCard">
+      <span class="welcome-icon">📚</span>
+      <div class="welcome-title">Your GWATS Study Coach</div>
+      <p class="welcome-sub">I know everything in your outline cold. I can quiz you, explain confusing doctrine, work through hypotheticals with you, draw connections between topics, or just answer questions. How do you want to start?</p>
+      <div class="welcome-starts">
+        <button class="welcome-start-btn" onclick="startWith(\`I'm not sure what I know well and what I don't. Can you figure out where I need the most help?\`)">
+          <span class="btn-title">🔍 Diagnose my weak spots</span>
+          <span class="btn-sub">Let the tutor probe what you know and don't know</span>
+        </button>
+        <button class="welcome-start-btn" onclick="startWith(\`Quiz me on California-specific rules — things where California differs from the general rule or UPC.\`)">
+          <span class="btn-title">🏛️ Drill California distinctions</span>
+          <span class="btn-sub">The exam tests CA-specific rules — let's make sure you have them</span>
+        </button>
+        <button class="welcome-start-btn" onclick="startWith(\`Can you walk me through the hardest math problems likely to be on this exam? Start with something and work through it with me.\`)">
+          <span class="btn-title">🧮 Work through math problems</span>
+          <span class="btn-sub">Intestacy calculations, executor fees, estate tax — step by step</span>
+        </button>
+        <button class="welcome-start-btn" onclick="startWith(\`I always mix up lapse, anti-lapse, and class gifts. Can you help me understand how they connect and when each applies?\`)">
+          <span class="btn-title">🔗 Explain how the doctrines connect</span>
+          <span class="btn-sub">Understand the relationships between rules, not just rules in isolation</span>
+        </button>
+        <button class="welcome-start-btn" onclick="startWith(\`Give me a hypothetical — something like the ones in the outline — and let me try to work through it. Then tell me what I got right and wrong.\`)">
+          <span class="btn-title">⚡ Give me a hypo to work through</span>
+          <span class="btn-sub">Practice applying rules to facts the way the exam will</span>
+        </button>
+      </div>
+    </div>`;
+}
+
+async function sendMessage() {
+  const inputField = document.getElementById('inputField');
+  const text = inputField.value.trim();
+  if (!text || isLoading) return;
+
+  // Remove welcome card
+  document.getElementById('welcomeCard')?.remove();
+
+  // Add user message
+  inputField.value = '';
+  inputField.style.height = 'auto';
+  addMessage('user', text);
+  conversationHistory.push({ role: 'user', content: text });
+
+  // Show typing indicator
+  const typingId = showTyping();
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await response.json();
+    removeTyping(typingId);
+
+    let reply = '';
+    if (data.content && data.content.length > 0) {
+      reply = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    } else if (data.error) {
+      reply = `⚠️ API error: ${data.error.message}`;
+    } else {
+      reply = "I didn't get a response — please try again.";
+    }
+
+    addMessage('tutor', reply);
+    conversationHistory.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    removeTyping(typingId);
+    addMessage('tutor', `⚠️ Connection error: ${err.message}. Check your network and try again.`);
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  inputField.focus();
+}
+
+function addMessage(role, text) {
+  const chatArea = document.getElementById('chatArea');
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'tutor' ? '⚖️' : '👤';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = formatMessage(text);
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chatArea.appendChild(row);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function formatMessage(text) {
+  // Convert markdown-ish formatting to HTML
+  let html = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Inline code
+  html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+
+  // Numbered lists
+  html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<li>$2</li>');
+  html = html.replace(/(<li>.*<\/li>)/s, (m) => {
+    if (m.includes('<li>')) return '<ol>' + m + '</ol>';
+    return m;
+  });
+
+  // Bullet lists
+  html = html.replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>');
+
+  // Wrap consecutive <li> in <ul> if not already in <ol>
+  html = html.replace(/((?:<li>(?:(?!<\/ol>).)*<\/li>\s*)+)/gs, (m) => {
+    if (!m.includes('<ol>')) return '<ul>' + m + '</ul>';
+    return m;
+  });
+
+  // Headers
+  html = html.replace(/^###\s+(.+)$/gm, '<strong style="font-size:0.95em;display:block;margin-top:10px;">$1</strong>');
+  html = html.replace(/^##\s+(.+)$/gm, '<strong style="font-size:1em;display:block;margin-top:12px;">$1</strong>');
+
+  // Horizontal rules
+  html = html.replace(/^---+$/gm, '<hr>');
+
+  // Paragraphs (double newlines)
+  const parts = html.split(/\n\n+/);
+  html = parts.map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (p.startsWith('<ul>') || p.startsWith('<ol>') || p.startsWith('<li>') || p.startsWith('<hr>') || p.startsWith('<strong')) return p;
+    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+
+  return html;
+}
+
+function showTyping() {
+  const chatArea = document.getElementById('chatArea');
+  const id = 'typing-' + Date.now();
+  const row = document.createElement('div');
+  row.className = 'msg-row tutor';
+  row.id = id;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = '⚖️';
+
+  const indicator = document.createElement('div');
+  indicator.className = 'typing-indicator';
+  indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+  row.appendChild(avatar);
+  row.appendChild(indicator);
+  chatArea.appendChild(row);
+  chatArea.scrollTop = chatArea.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  document.getElementById(id)?.remove();
+}
+</script>
+</body>
+</html>
