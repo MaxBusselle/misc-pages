@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Workout">
+<title>5-Block Workout</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #1C1C1E;
+    color: #F5F5F5;
+    font-family: Georgia, serif;
+    padding: 28px 18px 60px;
+    max-width: 580px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .mono { font-family: 'Courier New', monospace; }
+
+  /* MODE TOGGLE */
+  .mode-toggle {
+    display: flex; background: #2C2C2E; border: 1px solid #3A3A3C;
+    border-radius: 10px; padding: 4px; margin-bottom: 28px; gap: 4px;
+  }
+  .mode-btn {
+    flex: 1; padding: 10px 8px; border: none; border-radius: 7px;
+    font-family: 'Courier New', monospace; font-size: 12px; letter-spacing: 0.08em;
+    cursor: pointer; transition: all 0.2s; background: transparent; color: #8E8E93;
+  }
+  .mode-btn.active-workout { background: #FF6B3D; color: #fff; }
+  .mode-btn.active-standing { background: #2271B3; color: #fff; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+  .label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #AEAEB2; margin-bottom: 8px; }
+  h1 { font-size: 30px; font-weight: normal; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 10px; color: #F5F5F5; }
+  h1 em { font-style: italic; }
+  .subtitle { font-size: 13px; color: #AEAEB2; line-height: 1.6; margin-bottom: 28px; }
+
+  /* PROGRESS */
+  .progress-box { background: #2C2C2E; border: 1px solid #3A3A3C; border-radius: 8px; padding: 16px 20px; margin-bottom: 28px; }
+  .progress-top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; }
+  .progress-top span:first-child { color: #AEAEB2; }
+  .progress-top span:last-child { color: #F5F5F5; }
+  .progress-bar-bg { background: #3A3A3C; border-radius: 4px; height: 7px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; border-radius: 4px; background: #FF6B3D; transition: width 0.4s ease; }
+  .progress-bar-fill.complete { background: linear-gradient(90deg, #FF6B3D, #30D158); }
+  .complete-msg { margin-top: 10px; font-size: 13px; color: #30D158; letter-spacing: 0.05em; display: none; }
+  .complete-msg.show { display: block; }
+
+  /* BLOCKS */
+  .blocks { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .block { border-radius: 8px; overflow: hidden; border: 1px solid #3A3A3C; border-left-width: 3px; transition: opacity 0.2s; }
+  .block.done { opacity: 0.45; }
+  .block-header { padding: 15px 16px; cursor: pointer; display: flex; align-items: center; gap: 13px; user-select: none; background: #2C2C2E; }
+  .check-btn {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: all 0.2s; font-size: 12px; background: transparent;
+  }
+  .check-btn.checked { background: #3A3A3C; border-color: #636366 !important; color: #AEAEB2 !important; }
+  .block-meta { flex: 1; }
+  .block-time { font-size: 12px; letter-spacing: 0.05em; }
+  .block-name { font-size: 16px; margin-top: 3px; color: #F5F5F5; }
+  .block.done .block-name { text-decoration: line-through; color: #636366; }
+  .block.done .block-time { color: #48484A !important; }
+  .block-sub { font-size: 11px; color: #8E8E93; margin-top: 3px; }
+  .chevron { color: #636366; font-size: 11px; transition: transform 0.2s; flex-shrink: 0; }
+  .chevron.open { transform: rotate(180deg); }
+  .block-body { display: none; border-top: 1px solid #3A3A3C; background: #252527; }
+  .block-body.open { display: block; }
+
+  /* EXERCISES */
+  .exercise { border-bottom: 1px solid #3A3A3C; }
+  .exercise-row { padding: 12px 16px; display: flex; align-items: center; }
+  .ex-icon { font-size: 16px; flex-shrink: 0; width: 28px; text-align: center; }
+  .ex-name { flex: 1; font-size: 15px; color: #E5E5E7; margin-left: 6px; }
+  .ex-reps { font-size: 12px; color: #AEAEB2; white-space: nowrap; margin-right: 10px; font-family: 'Courier New', monospace; }
+  .how-btn {
+    background: #3A3A3C; border: 1px solid #48484A; color: #D1D1D6;
+    border-radius: 5px; padding: 5px 10px; font-size: 11px; cursor: pointer;
+    font-family: 'Courier New', monospace; letter-spacing: 0.05em;
+    white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
+  }
+  .how-btn.active { background: #48484A; border-color: #636366; color: #F5F5F5; }
+  .how-text {
+    display: none; margin: 0 16px 14px 50px;
+    background: #1C1C1E; border-radius: 6px; padding: 12px 14px;
+    font-size: 14px; color: #D1D1D6; line-height: 1.7;
+  }
+  .how-text.open { display: block; }
+
+  /* STANDING ALTERNATIVE */
+  .alt-row {
+    display: none; padding: 8px 16px 8px 50px;
+    background: #1C1C1E; border-top: 1px dashed #3A3A3C;
+    align-items: center; gap: 8px; cursor: pointer;
+  }
+  .alt-row.visible { display: flex; }
+  .alt-label {
+    font-size: 11px; color: #FF6B3D; font-family: 'Courier New', monospace;
+    letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
+  }
+  .alt-name { font-size: 13px; color: #AEAEB2; flex: 1; }
+  .alt-chevron { font-size: 10px; color: #636366; transition: transform 0.2s; flex-shrink: 0; }
+  .alt-chevron.open { transform: rotate(180deg); }
+  .alt-how {
+    display: none; margin: 0 16px 12px 50px;
+    background: #2C2C2E; border-radius: 6px; padding: 11px 13px;
+    font-size: 13px; color: #C7C7CC; line-height: 1.65;
+    border-left: 3px solid #FF6B3D88;
+  }
+  .alt-how.open { display: block; }
+
+  .block-tip { padding: 12px 16px 14px 50px; font-size: 13px; color: #8E8E93; font-style: italic; line-height: 1.5; }
+
+  /* STANDING MODE */
+  .standing-intro { font-size: 14px; color: #AEAEB2; line-height: 1.6; margin-bottom: 22px; }
+  .stretch-filters { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+  .filter-btn {
+    background: #2C2C2E; border: 1px solid #3A3A3C; color: #AEAEB2;
+    border-radius: 20px; padding: 6px 14px; font-size: 12px; cursor: pointer;
+    font-family: 'Courier New', monospace; letter-spacing: 0.04em; transition: all 0.15s;
+  }
+  .filter-btn.active { background: #2271B3; border-color: #2271B3; color: #fff; }
+  .stretch-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .stretch-card {
+    background: #2C2C2E; border: 1px solid #3A3A3C; border-left: 3px solid #2271B3;
+    border-radius: 8px; overflow: hidden; transition: opacity 0.2s;
+  }
+  .stretch-card.done-s { opacity: 0.4; border-left-color: #48484A; }
+  .stretch-card.hidden { display: none; }
+  .stretch-header { padding: 13px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+  .stretch-check {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid #2271B3;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; transition: all 0.2s; font-size: 11px; background: transparent; color: transparent;
+  }
+  .stretch-check.checked { background: #3A3A3C; border-color: #636366; color: #AEAEB2; }
+  .stretch-info { flex: 1; }
+  .stretch-name { font-size: 15px; color: #F5F5F5; }
+  .stretch-card.done-s .stretch-name { text-decoration: line-through; color: #636366; }
+  .stretch-tag { font-size: 11px; color: #6EB4F7; font-family: 'Courier New', monospace; margin-top: 3px; letter-spacing: 0.04em; }
+  .stretch-card.done-s .stretch-tag { color: #48484A; }
+  .stretch-duration { font-size: 11px; color: #AEAEB2; font-family: 'Courier New', monospace; white-space: nowrap; margin-right: 10px; }
+  .stretch-chevron { color: #636366; font-size: 11px; transition: transform 0.2s; flex-shrink: 0; }
+  .stretch-chevron.open { transform: rotate(180deg); }
+  .stretch-body { display: none; border-top: 1px solid #3A3A3C; background: #252527; }
+  .stretch-body.open { display: block; }
+  .stretch-how {
+    margin: 12px 16px 14px 16px; background: #1C1C1E; border-radius: 6px; padding: 12px 14px;
+    font-size: 14px; color: #D1D1D6; line-height: 1.7;
+  }
+
+  /* RULES */
+  .rules { background: #2C2C2E; border: 1px solid #3A3A3C; border-radius: 8px; padding: 18px; margin-bottom: 24px; }
+  .rules-title { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #8E8E93; margin-bottom: 14px; }
+  .rule { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 12px; }
+  .rule:last-child { margin-bottom: 0; }
+  .rule-icon { font-size: 15px; flex-shrink: 0; }
+  .rule-text { font-size: 14px; color: #D1D1D6; line-height: 1.5; }
+
+  /* RESET */
+  .reset-wrap { text-align: center; }
+  .reset-btn {
+    background: #2C2C2E; border: 1px solid #3A3A3C; color: #AEAEB2;
+    padding: 11px 28px; border-radius: 8px; cursor: pointer; font-size: 13px;
+    font-family: 'Courier New', monospace; letter-spacing: 0.08em;
+  }
+  .reset-btn:active { background: #3A3A3C; }
+</style>
+</head>
+<body>
+
+<div class="mode-toggle">
+  <button class="mode-btn active-workout" id="btn-workout" onclick="setMode('workout')">⚡ WORKOUT BLOCKS</button>
+  <button class="mode-btn" id="btn-standing" onclick="setMode('standing')">🧍 STANDING DESK</button>
+</div>
+
+<!-- WORKOUT PAGE -->
+<div class="page active" id="page-workout">
+  <div class="label mono">Work-From-Home Protocol</div>
+  <h1>The 5-Block<br><em style="color:#FF6B3D">Micro-Workout</em> Day</h1>
+  <p class="subtitle mono">21 min/day · 5 intervals · no floor work · vertigo-safe</p>
+
+  <div class="progress-box">
+    <div class="progress-top">
+      <span class="mono">TODAY'S PROGRESS</span>
+      <span id="prog-text">0/5 blocks · 0 min</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+    <div class="complete-msg mono" id="complete-msg">✓ FULL DAY COMPLETE</div>
+  </div>
+
+  <div class="blocks" id="blocks"></div>
+
+  <div class="rules">
+    <div class="rules-title mono">The Rules</div>
+    <div class="rule"><span class="rule-icon">⏱️</span><span class="rule-text">Set a recurring alarm for each block — no willpower required</span></div>
+    <div class="rule"><span class="rule-icon">👟</span><span class="rule-text">No equipment. No changing clothes. No floor work.</span></div>
+    <div class="rule"><span class="rule-icon">📈</span><span class="rule-text">Frequency > duration for maintaining muscle mass</span></div>
+    <div class="rule"><span class="rule-icon">✅</span><span class="rule-text">3 of 5 blocks = a good day. All 5 = great day.</span></div>
+    <div class="rule"><span class="rule-icon">🚫</span><span class="rule-text">All exercises are vertigo-safe — no inversions, no fast head turns</span></div>
+  </div>
+
+  <div class="reset-wrap">
+    <button class="reset-btn" onclick="resetWorkout()">RESET DAY</button>
+  </div>
+</div>
+
+<!-- STANDING PAGE -->
+<div class="page" id="page-standing">
+  <div class="label mono">Standing Desk Mode</div>
+  <h1>Pick What<br><em style="color:#6EB4F7">Feels Tight</em></h1>
+  <p class="subtitle mono">Do while working · no focus needed · vertigo-safe</p>
+  <p class="standing-intro">Tap any stretch to see how to do it. Check it off when done. Filter by body area or just scroll and pick whatever your body is asking for.</p>
+
+  <div class="stretch-filters">
+    <button class="filter-btn active" onclick="filterStretches('all',this)">All</button>
+    <button class="filter-btn" onclick="filterStretches('legs',this)">Legs & Hips</button>
+    <button class="filter-btn" onclick="filterStretches('core',this)">Core & Back</button>
+    <button class="filter-btn" onclick="filterStretches('upper',this)">Upper Body</button>
+    <button class="filter-btn" onclick="filterStretches('neck',this)">Neck</button>
+  </div>
+
+  <div class="stretch-list" id="stretch-list"></div>
+
+  <div class="reset-wrap">
+    <button class="reset-btn" onclick="resetStanding()">CLEAR DONE</button>
+  </div>
+</div>
+
+<script>
+// alt: optional standing alternative { name, how }
+const workouts = [
+  {
+    time:"9:00 AM", label:"Morning Ignition", duration:"4 min", color:"#FF6B3D",
+    tip:"Do this before your first real call. Sets your body in motion for the day.",
+    exercises:[
+      { icon:"💪", name:"Push-Ups", reps:"12 reps",
+        how:"Hands shoulder-width apart, body straight from head to heels. Lower chest to floor, press back up. Keep your head neutral — don't let it drop or crane upward. Modify on knees if needed." },
+      { icon:"🦵", name:"Air Squats", reps:"15 reps",
+        how:"Feet shoulder-width apart, toes slightly out. Keep your chest tall and head level — pick a fixed point on the wall to focus on. Lower until thighs are parallel, drive through heels to stand." },
+      { icon:"🧱", name:"Plank Hold", reps:"30 sec",
+        how:"Forearms on floor, elbows under shoulders. Body forms a straight line. Head stays neutral, eyes looking at the floor about a foot in front of you. No head movement needed." },
+      { icon:"🔄", name:"Chest Opener Stretch", reps:"30 sec",
+        how:"Stand in a doorway, arms at 90 degrees on the frame. Step one foot forward gently until you feel a stretch across your chest and front shoulders. Hold still — no bouncing, no head movement needed." },
+    ]
+  },
+  {
+    time:"11:00 AM", label:"Mid-Morning Reset", duration:"4 min", color:"#4A9EE8",
+    tip:"The hip flexor and thoracic work here directly counteracts what sitting and flying does to your body.",
+    exercises:[
+      { icon:"🪑", name:"Chair Dips", reps:"12 reps",
+        how:"Sit on the edge of a sturdy chair, hands gripping the seat beside your hips. Slide forward off the seat, lower yourself by bending elbows to ~90°, then press back up. Head stays level throughout." },
+      { icon:"🚶", name:"Standing Marches", reps:"20 reps (10/side)",
+        how:"Stand tall, hands on desk lightly for balance if needed. Slowly lift one knee up to hip height, lower, then the other — like marching in place but deliberate and controlled. Engages the core and hip flexors. Head stays level, gaze forward. Replaces Dead Bug.",
+        alt:{ name:"Dead Bug (floor version)", how:"If you're comfortable on the floor: lie on your back, arms pointing straight up, knees bent at 90° in the air. Slowly lower your right arm and left leg toward the floor simultaneously, keeping your lower back pressed down. Return and switch sides. Head stays flat throughout." }
+      },
+      { icon:"🧘", name:"Hip Flexor Stretch (Standing)", reps:"45 sec/side",
+        how:"Stand in a split stance — one foot forward, one back, about two feet apart. Keep both feet flat on the floor. Gently shift your hips forward until you feel a stretch in the front of the back hip. Hold your desk or a wall for balance. Keep your torso upright and head level. No kneeling needed.",
+        alt:{ name:"Kneeling Hip Flexor Stretch", how:"Kneel on one knee with a folded towel underneath for comfort. Other foot flat on floor in front. Shift hips forward gently until you feel the stretch in the front of the back hip. Keep torso upright, head level." }
+      },
+      { icon:"🌀", name:"Thoracic Rotation (Seated)", reps:"10 reps/side",
+        how:"Sit upright in your chair, arms crossed over your chest. Slowly rotate your upper body left, then right — moving only from the mid-back, not the neck. Keep your head tracking with your torso so there's no independent neck movement." },
+    ]
+  },
+  {
+    time:"1:00 PM", label:"Lunch Power Burst", duration:"5 min", color:"#34C759",
+    tip:"Highest intensity block. Gets heart rate up. All standing, no floor work.",
+    exercises:[
+      { icon:"🚀", name:"Squat Jumps", reps:"10 reps",
+        how:"Stand feet shoulder-width. Squat down with chest tall, then explode upward. Land softly, bending knees to absorb impact. Keep your gaze fixed forward at eye level — no chin drop on the jump." },
+      { icon:"💪", name:"Push-Ups", reps:"15 reps",
+        how:"Hands shoulder-width, body straight. Head neutral throughout. If standard is too easy, elevate feet on a low surface to increase intensity without adding head movement." },
+      { icon:"⚡", name:"Reverse Lunges", reps:"10 reps/side",
+        how:"Stand tall, step one foot backward and lower your back knee toward the floor. Push off the back foot to return. Reverse lunges are more stable and cause less head movement than forward lunges." },
+      { icon:"🧱", name:"Standing Wall Brace", reps:"3 × 20 sec",
+        how:"Stand facing a wall, arms-length away. Place both palms flat on the wall at chest height. Press into the wall as hard as you can — like you're trying to push it over — and simultaneously brace your entire core tight. Hold 20 seconds, rest 5, repeat 3 times. Same deep core engagement as a Hollow Body Hold, completely upright. Replaces Hollow Body Hold." },
+    ]
+  },
+  {
+    time:"3:00 PM", label:"Afternoon Strength", duration:"4 min", color:"#BF5AF2",
+    tip:"Posterior chain focus — glutes, hamstrings, upper back. All standing.",
+    exercises:[
+      { icon:"🔺", name:"Wall Push-Ups", reps:"12 reps",
+        how:"Place hands on a wall at shoulder height, step back until arms are nearly straight. Do a standing push-up against the wall. Targets shoulders without any inversion. Keep head neutral and level throughout." },
+      { icon:"🦅", name:"Single-Leg Deadlift (No Weight)", reps:"8 reps/side",
+        how:"Stand on one foot, slight bend in the knee. Hinge forward at the hips, letting your free leg float back behind you for balance — like a slow T shape. Keep your spine and head in one long neutral line. Return to standing. Slow and controlled." },
+      { icon:"🦵", name:"Standing Glute Kickbacks", reps:"15 reps/side",
+        how:"Stand holding your desk with both hands for balance. Keeping your leg straight, slowly extend one leg behind you, squeezing your glute hard at the top. Hold for a second, lower. Don't lean forward — keep your torso upright and head level. Replaces Glute Bridge." },
+      { icon:"😮‍💨", name:"Shoulder & Trap Stretch (Seated)", reps:"30 sec/side",
+        how:"Sit upright. Reach one arm across your body and use the other hand to gently press it closer to your chest. Hold. Then sit on one hand and very gently let your ear drift toward the opposite shoulder — move slowly, stop immediately if any dizziness." },
+    ]
+  },
+  {
+    time:"5:00 PM", label:"End-of-Day Wind Down", duration:"4 min", color:"#FFD60A",
+    tip:"Not about intensity — about recovery and decompression. Everything done standing or seated.",
+    exercises:[
+      { icon:"🌍", name:"Standing Hip Opener", reps:"5 reps/side",
+        how:"Stand next to a wall for balance if needed. Lift one knee to hip height and slowly rotate it outward in a circle, then lower. Fully upright, no head changes." },
+      { icon:"🙆", name:"Standing Forward Hang", reps:"30 sec",
+        how:"Stand with feet hip-width. Hinge forward at the hips and let your arms, head, and upper body hang loosely toward the floor — like a ragdoll. Keep a soft bend in the knees. Your head hangs in line with your spine naturally; don't force it down or up. Hold and breathe. If any dizziness, come up slowly. Replaces Child's Pose.",
+        alt:{ name:"Child's Pose (Modified)", how:"Kneel and sit back toward your heels, arms reaching forward on the floor. Rest your forehead on a stacked fist or folded blanket so your head stays at a comfortable level — not fully dropped to the floor. Stop immediately if any vertigo." }
+      },
+      { icon:"🦵", name:"Standing Glute Kickbacks", reps:"12 reps/side",
+        how:"Hold your desk with both hands for balance. Slowly extend one leg straight back, squeezing your glute hard at the top. Hold a second, lower. Keep your torso upright and head level throughout. A second set here accelerates glute development. Replaces Glute Bridge." },
+      { icon:"🌬️", name:"Diaphragm Breathing", reps:"5 slow breaths",
+        how:"Sit upright or stand. One hand on chest, one on belly. Breathe in through nose for 4 counts — only the belly hand rises. Hold 2 counts. Exhale through mouth for 6 counts. Activates the parasympathetic nervous system. Perfect end-of-day decompressor." },
+    ]
+  }
+];
+
+const stretches = [
+  {name:"Calf Raises", tag:"legs", duration:"30 reps", icon:"🦶", how:"Rise up onto your toes slowly, hold for a second at the top, lower back down. Do these continuously while reading an email. One hand on desk for balance if needed. Completely invisible to anyone on a video call."},
+  {name:"Heel Drops", tag:"legs", duration:"30 sec/side", icon:"⬇️", how:"Stand with the ball of one foot on a slight ledge or step (even a door threshold works). Let your heel drop slowly below the ledge level until you feel a stretch in your calf. Hold. Keep your torso upright and head level."},
+  {name:"Standing Quad Stretch", tag:"legs", duration:"30 sec/side", icon:"🦵", how:"Hold your desk with one hand for balance. Bend one knee and bring that foot up behind you toward your glute. Hold your ankle (or pants leg) gently. Stand tall, head level. If balance is tricky, just do it near the desk."},
+  {name:"Hip Circles", tag:"legs", duration:"10 reps each way", icon:"🔵", how:"Stand with feet shoulder-width, hands on hips. Make slow, deliberate circles with your hips — like a hula hoop in slow motion. Keep your head and shoulders still; move only from the hips. Go 10 circles each direction."},
+  {name:"Weight Shifts", tag:"legs", duration:"60 sec", icon:"↔️", how:"Stand with feet shoulder-width. Slowly shift your weight from your left foot to your right and back, in a gentle swaying motion. Keeps hips mobile and prevents the 'frozen standing' problem. Completely passive — do it while reading anything."},
+  {name:"Glute Squeezes", tag:"legs", duration:"10 reps", icon:"💺", how:"Simply clench both glutes as hard as you can, hold for 3 seconds, release. Completely invisible. Counters hip flexor tightening from sitting. Do these any time — on calls, reading, typing."},
+  {name:"Standing Figure-4", tag:"legs", duration:"30 sec/side", icon:"4️⃣", how:"Hold your desk with one hand. Cross your right ankle over your left knee, so your right leg forms a figure-4 shape. Slowly bend the standing knee into a slight squat until you feel a stretch in the outer right hip and glute. Keep your torso upright and head level. Switch sides."},
+  {name:"Pelvic Tilts (Standing)", tag:"core", duration:"10 reps", icon:"🔄", how:"Stand with feet hip-width. Gently tuck your pelvis under (flattening your lower back) then release back to a slight arch. Rock back and forth slowly. Mobilizes the lumbar spine without any head movement. Great after a long sitting session."},
+  {name:"Standing Hip Hinge", tag:"core", duration:"10 reps", icon:"🦅", how:"Stand tall, feet hip-width. Hinge forward slowly at the hips — pushing your hips back like you're closing a car door with them — until you feel a stretch in your hamstrings. Keep your spine long and your head in line with your spine throughout. Return to standing."},
+  {name:"Thoracic Extension over Desk", tag:"core", duration:"30 sec", icon:"🙆", how:"Place both hands on the edge of your desk, step back slightly. Gently let your chest sink toward the floor while your arms stay straight, creating a stretch across your mid-back and chest. Keep your head in line with your spine — slightly lifted, not dropped."},
+  {name:"Chest Opener in Doorway", tag:"upper", duration:"30 sec", icon:"🚪", how:"Stand in a doorway, arms at 90 degrees against the frame. Step one foot forward gently until you feel the stretch across your chest and front of shoulders. Hold still. No bouncing, no head movement needed."},
+  {name:"Shoulder Rolls", tag:"upper", duration:"10 reps each way", icon:"🔃", how:"Roll both shoulders slowly backward in big circles — up, back, down, forward. Then reverse. Move slowly and with intention. Keep your head level and still throughout."},
+  {name:"Cross-Body Shoulder Stretch", tag:"upper", duration:"30 sec/side", icon:"➡️", how:"Bring one arm straight across your chest. Use your other hand to gently press it closer to your body at the elbow. Hold. Keep your head facing forward, no turning needed."},
+  {name:"Tricep Stretch", tag:"upper", duration:"30 sec/side", icon:"💪", how:"Raise one arm straight up, then bend the elbow so your hand drops behind your head. Use your other hand to gently press the elbow back. Keep your head neutral and facing forward — no tilting back."},
+  {name:"Wrist & Forearm Stretch", tag:"upper", duration:"30 sec/side", icon:"🤲", how:"Extend one arm forward, palm facing up. Use your other hand to gently pull the fingers back toward you until you feel the stretch along your forearm. Hold. Then flip palm down and repeat."},
+  {name:"Chin Tucks", tag:"neck", duration:"10 reps", icon:"😶", how:"Stand or sit tall. Without tilting your head up or down, gently draw your chin straight back — like you're making a double chin. Hold for 2 seconds, release. Pure horizontal retraction — no tilting, no rotation. Excellent for reversing forward head posture from screen use."},
+  {name:"Ear-to-Shoulder (Slow)", tag:"neck", duration:"20 sec/side", icon:"👂", how:"Sit or stand tall. Very slowly let your right ear drift toward your right shoulder — move only as far as feels comfortable, stop well before any dizziness. Hold gently. Do not force it. Move at half the speed you think you need to."},
+];
+
+// ── STATE ──────────────────────────────────────────────
+let mode = 'workout';
+const wCompleted = {};
+const wOpenBlock = { val: null };
+const wOpenHows = {};
+const wOpenAlts = {};
+const sCompleted = {};
+const sOpenCards = {};
+let activeFilter = 'all';
+
+// ── MODE ───────────────────────────────────────────────
+function setMode(m) {
+  mode = m;
+  document.getElementById('page-workout').className = 'page' + (m==='workout'?' active':'');
+  document.getElementById('page-standing').className = 'page' + (m==='standing'?' active':'');
+  document.getElementById('btn-workout').className = 'mode-btn' + (m==='workout'?' active-workout':'');
+  document.getElementById('btn-standing').className = 'mode-btn' + (m==='standing'?' active-standing':'');
+}
+
+// ── WORKOUT ────────────────────────────────────────────
+function buildWorkout() {
+  const container = document.getElementById('blocks');
+  container.innerHTML = '';
+  workouts.forEach((w, i) => {
+    const isDone = !!wCompleted[i];
+    const isOpen = wOpenBlock.val === i;
+    const block = document.createElement('div');
+    block.className = 'block' + (isDone?' done':'');
+    block.style.cssText = `border-color:#3A3A3C;border-left-color:${isDone?'#48484A':w.color}`;
+
+    const header = document.createElement('div');
+    header.className = 'block-header';
+    header.innerHTML = `
+      <div class="check-btn ${isDone?'checked':''}" style="color:${w.color}" data-check="${i}">${isDone?'✓':''}</div>
+      <div class="block-meta">
+        <div class="block-time mono" style="color:${isDone?'#48484A':w.color}">${w.time}</div>
+        <div class="block-name">${w.label}</div>
+        <div class="block-sub mono">${w.duration} · ${w.exercises.length} exercises</div>
+      </div>
+      <div class="chevron ${isOpen?'open':''}">▼</div>`;
+    header.querySelector('[data-check]').addEventListener('click', e => { e.stopPropagation(); wCompleted[i]=!wCompleted[i]; buildWorkout(); });
+    header.addEventListener('click', () => { wOpenBlock.val=isOpen?null:i; buildWorkout(); });
+    block.appendChild(header);
+
+    if (isOpen) {
+      const body = document.createElement('div');
+      body.className = 'block-body open';
+
+      w.exercises.forEach((ex, j) => {
+        const key = `${i}-${j}`;
+        const altKey = `alt-${i}-${j}`;
+        const howOpen = !!wOpenHows[key];
+        const altOpen = !!wOpenAlts[altKey];
+
+        const exDiv = document.createElement('div');
+        exDiv.className = 'exercise';
+
+        // Main row
+        exDiv.innerHTML = `
+          <div class="exercise-row">
+            <span class="ex-icon">${ex.icon}</span>
+            <span class="ex-name">${ex.name}</span>
+            <span class="ex-reps">${ex.reps}</span>
+            <button class="how-btn ${howOpen?'active':''}" data-how="${key}">${howOpen?'HIDE':'HOW?'}</button>
+          </div>
+          <div class="how-text ${howOpen?'open':''}" style="border-left:3px solid ${w.color}88">${ex.how}</div>`;
+
+        // Standing alternative row
+        if (ex.alt) {
+          const altRowDiv = document.createElement('div');
+          altRowDiv.className = 'alt-row visible';
+          altRowDiv.innerHTML = `
+            <span class="alt-label">ALT ↑</span>
+            <span class="alt-name">${ex.alt.name}</span>
+            <span class="alt-chevron ${altOpen?'open':''}">▼</span>`;
+          altRowDiv.addEventListener('click', e => { e.stopPropagation(); wOpenAlts[altKey]=!wOpenAlts[altKey]; buildWorkout(); });
+          exDiv.appendChild(altRowDiv);
+
+          const altHowDiv = document.createElement('div');
+          altHowDiv.className = 'alt-how' + (altOpen?' open':'');
+          altHowDiv.textContent = ex.alt.how;
+          exDiv.appendChild(altHowDiv);
+        }
+
+        exDiv.querySelector('[data-how]').addEventListener('click', e => { e.stopPropagation(); wOpenHows[key]=!wOpenHows[key]; buildWorkout(); });
+        body.appendChild(exDiv);
+      });
+
+      const tip = document.createElement('div');
+      tip.className = 'block-tip';
+      tip.textContent = w.tip;
+      body.appendChild(tip);
+      block.appendChild(body);
+    }
+    container.appendChild(block);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.values(wCompleted).filter(Boolean).length;
+  document.getElementById('prog-text').textContent = `${count}/5 blocks · ${count*4} min`;
+  const fill = document.getElementById('prog-fill');
+  fill.style.width = `${(count/5)*100}%`;
+  fill.className = 'progress-bar-fill' + (count===5?' complete':'');
+  document.getElementById('complete-msg').className = 'complete-msg mono' + (count===5?' show':'');
+}
+
+function resetWorkout() {
+  Object.keys(wCompleted).forEach(k=>delete wCompleted[k]);
+  Object.keys(wOpenHows).forEach(k=>delete wOpenHows[k]);
+  Object.keys(wOpenAlts).forEach(k=>delete wOpenAlts[k]);
+  wOpenBlock.val = null;
+  buildWorkout();
+}
+
+// ── STANDING ───────────────────────────────────────────
+function buildStanding() {
+  const container = document.getElementById('stretch-list');
+  container.innerHTML = '';
+  stretches.forEach((s, i) => {
+    const isDone = !!sCompleted[i];
+    const isOpen = !!sOpenCards[i];
+    const hidden = activeFilter !== 'all' && s.tag !== activeFilter;
+
+    const card = document.createElement('div');
+    card.className = 'stretch-card' + (isDone?' done-s':'') + (hidden?' hidden':'');
+
+    const header = document.createElement('div');
+    header.className = 'stretch-header';
+    header.innerHTML = `
+      <div class="stretch-check ${isDone?'checked':''}" data-sc="${i}">${isDone?'✓':''}</div>
+      <div class="stretch-info">
+        <div class="stretch-name">${s.icon} ${s.name}</div>
+        <div class="stretch-tag">${s.tag.toUpperCase()}</div>
+      </div>
+      <span class="stretch-duration">${s.duration}</span>
+      <div class="stretch-chevron ${isOpen?'open':''}">▼</div>`;
+    header.querySelector('[data-sc]').addEventListener('click', e => { e.stopPropagation(); sCompleted[i]=!sCompleted[i]; buildStanding(); });
+    header.addEventListener('click', () => { sOpenCards[i]=!sOpenCards[i]; buildStanding(); });
+    card.appendChild(header);
+
+    if (isOpen) {
+      const body = document.createElement('div');
+      body.className = 'stretch-body open';
+      body.innerHTML = `<div class="stretch-how">${s.how}</div>`;
+      card.appendChild(body);
+    }
+    container.appendChild(card);
+  });
+}
+
+function filterStretches(tag, btn) {
+  activeFilter = tag;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildStanding();
+}
+
+function resetStanding() {
+  Object.keys(sCompleted).forEach(k=>delete sCompleted[k]);
+  Object.keys(sOpenCards).forEach(k=>delete sOpenCards[k]);
+  buildStanding();
+}
+
+buildWorkout();
+buildStanding();
+</script>
+</body>
+</html>
