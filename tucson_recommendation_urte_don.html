@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 Hyundai Tucson PHEV SEL — For Urte and Don</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF8F4;
+  --white: #FFFFFF;
+  --light-sage: #E8EDE6;
+  --sage: #7A9E7E;
+  --deep-sage: #3D6B42;
+  --navy: #002C5F;
+  --sky: #E8F0F7;
+  --sky-mid: #C4D8EC;
+  --gold: #B8913A;
+  --gold-light: #F5E9CE;
+  --text-dark: #1A1A1A;
+  --text-mid: #4A4A4A;
+  --text-light: #8A8A8A;
+  --border: #E2DDD5;
+  --nav-h: 68px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); font-size:16px; line-height:1.7; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; height:var(--nav-h);
+  background:rgba(255,255,255,0.94); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border); z-index:1000;
+  display:flex; align-items:center; justify-content:space-between; padding:0 40px;
+}
+.nav-brand { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; color:var(--navy); letter-spacing:0.02em; }
+.nav-brand span { font-weight:400; color:var(--text-light); font-family:'DM Sans',sans-serif; font-size:12px; display:block; letter-spacing:0.04em; }
+.nav-links { display:flex; gap:4px; list-style:none; }
+.nav-links a { text-decoration:none; font-size:12.5px; font-weight:500; color:var(--text-mid); padding:6px 13px; border-radius:20px; transition:all 0.2s; }
+.nav-links a:hover, .nav-links a.active { background:var(--navy); color:white; }
+
+/* HERO */
+.hero { margin-top:var(--nav-h); min-height:88vh; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; }
+.hero-left { background:var(--navy); display:flex; flex-direction:column; justify-content:center; padding:80px 60px; position:relative; overflow:hidden; }
+.hero-left::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); border-radius:50%; }
+.hero-eyebrow { font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--sky-mid); margin-bottom:20px; }
+.hero-title { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; color:white; line-height:1.1; margin-bottom:10px; }
+.hero-subtitle { font-family:'Playfair Display',serif; font-size:22px; font-weight:400; color:var(--sky-mid); margin-bottom:32px; font-style:italic; }
+.hero-intro { font-size:16px; color:rgba(255,255,255,0.75); line-height:1.75; max-width:420px; margin-bottom:40px; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:10px; }
+.pill { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:white; font-size:13px; font-weight:500; padding:8px 16px; border-radius:20px; }
+.hero-right { position:relative; overflow:hidden; background:var(--sky); }
+.hero-right img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+.hero-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top, rgba(0,44,95,0.55), transparent); padding:30px; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:white; font-size:12px; font-weight:600; padding:8px 16px; border-radius:4px; letter-spacing:0.05em; text-transform:uppercase; }
+
+/* SECTIONS */
+section { padding:80px 0; }
+.container { max-width:1100px; margin:0 auto; padding:0 40px; }
+.section-label { font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--sage); margin-bottom:12px; }
+.section-title { font-family:'Playfair Display',serif; font-size:38px; font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:16px; }
+.section-lead { font-size:17px; color:var(--text-mid); max-width:620px; line-height:1.75; margin-bottom:48px; }
+
+/* STAT STRIP */
+.stat-strip { background:var(--navy); padding:52px 0; }
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); }
+.stat-card { padding:36px 28px; text-align:center; border-right:1px solid rgba(255,255,255,0.1); }
+.stat-card:last-child { border-right:none; }
+.stat-number { font-family:'Playfair Display',serif; font-size:48px; font-weight:700; color:white; line-height:1; margin-bottom:6px; }
+.stat-unit { font-size:20px; color:var(--sky-mid); }
+.stat-label { font-size:13px; color:rgba(255,255,255,0.55); margin-top:8px; letter-spacing:0.03em; }
+.stat-delta { font-size:12px; color:#7EC8A4; margin-top:6px; font-weight:600; }
+
+/* WHY NOW */
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:48px; }
+.rdx-card { background:#F5F0E8; border:1px solid var(--border); border-radius:16px; padding:36px; }
+.tucson-card { background:white; border:2px solid var(--deep-sage); border-radius:16px; padding:36px; }
+.card-header { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+.card-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.icon-old { background:#EDE8DF; }
+.icon-new { background:var(--light-sage); }
+.card-title { font-family:'Playfair Display',serif; font-size:21px; font-weight:600; color:var(--text-dark); }
+.card-year { font-size:13px; color:var(--text-light); }
+.feature-list { list-style:none; }
+.feature-list li { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--text-mid); line-height:1.5; }
+.feature-list li:last-child { border-bottom:none; }
+.feat-bad { color:#C0A060; font-size:13px; flex-shrink:0; margin-top:2px; }
+.feat-good { color:var(--deep-sage); font-size:13px; flex-shrink:0; margin-top:2px; }
+
+/* COMPARE TABLE */
+.compare-section { background:white; }
+.compare-table { width:100%; border-collapse:collapse; font-size:14px; margin-top:40px; }
+.compare-table thead tr { border-bottom:2px solid var(--border); }
+.compare-table th { padding:13px 18px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); }
+.compare-table th.t-col { background:var(--sky); color:var(--navy); border-radius:8px 8px 0 0; }
+.compare-table tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+.compare-table tbody tr:hover { background:var(--cream); }
+.compare-table td { padding:12px 18px; color:var(--text-mid); vertical-align:middle; }
+.compare-table td:first-child { font-weight:500; color:var(--text-dark); font-size:13px; }
+.compare-table td.t-col { background:rgba(232,240,247,0.4); font-weight:500; color:var(--navy); }
+.compare-table td.r-col { color:var(--text-light); }
+.compare-table .s-row td { background:var(--cream); font-size:10.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); padding:9px 18px; }
+.win { color:var(--deep-sage) !important; font-weight:600 !important; }
+.muted { color:var(--text-light) !important; }
+
+/* GALLERY */
+.gallery-section { background:white; }
+.gallery-grid { display:grid; grid-template-columns:2fr 1fr; grid-template-rows:280px 280px; gap:10px; margin-top:40px; border-radius:20px; overflow:hidden; }
+.gallery-main { grid-row:1/3; overflow:hidden; position:relative; }
+.gallery-sub { overflow:hidden; position:relative; }
+.g-img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+.g-img:hover { transform:scale(1.04); }
+.g-caption { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top, rgba(0,44,95,0.7), transparent); color:white; font-size:12px; font-weight:500; padding:28px 16px 12px; }
+
+/* PHEV MODES */
+.phev-section { background:var(--cream); }
+.mode-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:40px; }
+.mode-card { background:white; border:1px solid var(--border); border-radius:16px; padding:26px 20px; position:relative; overflow:hidden; }
+.mode-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.mode-ev::before { background:var(--deep-sage); }
+.mode-auto::before { background:var(--navy); }
+.mode-hev::before { background:var(--gold); }
+.mode-sport::before { background:#C0392B; }
+.mode-icon { font-size:26px; margin-bottom:10px; }
+.mode-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:var(--text-dark); margin-bottom:8px; }
+.mode-desc { font-size:13px; color:var(--text-mid); line-height:1.6; margin-bottom:14px; }
+.mode-best { font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:5px 10px; border-radius:4px; display:inline-block; }
+.ev-badge { background:var(--light-sage); color:var(--deep-sage); }
+.auto-badge { background:var(--sky); color:var(--navy); }
+.hev-badge { background:var(--gold-light); color:#7A5A1A; }
+.sport-badge { background:#FDECEA; color:#8B2218; }
+
+/* SEL FEATURES */
+.features-section { background:var(--cream); }
+.features-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:48px; }
+.feat-group { background:white; border-radius:20px; padding:34px; border:1px solid var(--border); }
+.feat-group-title { font-family:'Playfair Display',serif; font-size:21px; font-weight:600; color:var(--navy); margin-bottom:22px; display:flex; align-items:center; gap:10px; }
+.fg-icon { width:38px; height:38px; background:var(--sky); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; }
+.feat-item { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); }
+.feat-item:last-child { border-bottom:none; }
+.feat-check { width:20px; height:20px; border-radius:50%; background:var(--deep-sage); color:white; display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; margin-top:2px; }
+.feat-text { font-size:14px; color:var(--text-mid); line-height:1.5; }
+.feat-text strong { color:var(--text-dark); font-weight:600; }
+
+/* PRICE BANNER */
+.price-banner { background:var(--navy); border-radius:16px; padding:36px 40px; display:flex; justify-content:space-between; align-items:center; margin-top:48px; gap:20px; }
+.p-label { font-size:12px; color:rgba(255,255,255,0.55); letter-spacing:0.07em; text-transform:uppercase; margin-bottom:6px; }
+.p-value { font-family:'Playfair Display',serif; font-size:42px; font-weight:700; color:white; line-height:1; }
+.p-note { font-size:12px; color:var(--sky-mid); margin-top:6px; }
+.p-divider { width:1px; height:60px; background:rgba(255,255,255,0.15); flex-shrink:0; }
+
+/* HOIST */
+.hoist-section { background:white; }
+.hoist-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; margin-top:48px; }
+.hoist-img-main { border-radius:16px; overflow:hidden; height:300px; margin-bottom:12px; }
+.hoist-img-main img { width:100%; height:100%; object-fit:cover; display:block; }
+.hoist-img-sub { border-radius:12px; overflow:hidden; height:190px; }
+.hoist-img-sub img { width:100%; height:100%; object-fit:cover; display:block; }
+.hoist-specs { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:24px 0; }
+.spec-item { background:var(--cream); border-radius:10px; padding:14px 16px; }
+.spec-name { font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:4px; }
+.spec-val { font-size:15px; font-weight:600; color:var(--text-dark); }
+.steps-list { list-style:none; margin:24px 0; }
+.step-item { display:flex; align-items:flex-start; gap:14px; padding:12px 0; border-bottom:1px solid var(--border); }
+.step-item:last-child { border-bottom:none; }
+.step-num { width:28px; height:28px; border-radius:50%; background:var(--navy); color:white; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-text { font-size:14px; color:var(--text-mid); line-height:1.5; padding-top:4px; }
+.hoist-note { background:var(--gold-light); border:1px solid #D4A83A; border-radius:12px; padding:16px 18px; font-size:14px; color:#5A3E0A; display:flex; gap:10px; align-items:flex-start; margin-top:8px; }
+
+/* COSTS */
+.cost-section { background:var(--cream); }
+.cost-table { width:100%; border-collapse:collapse; margin-top:40px; font-size:15px; max-width:640px; }
+.cost-table tr { border-bottom:1px solid var(--border); }
+.cost-table tr:last-child { border-bottom:none; border-top:2px solid var(--navy); }
+.cost-table td { padding:15px 20px; color:var(--text-mid); }
+.cost-table td:last-child { text-align:right; font-weight:500; color:var(--text-dark); }
+.cost-table tr:last-child td { font-weight:700; color:var(--navy); font-size:17px; }
+.credit td { color:var(--deep-sage) !important; }
+.subtotal td { color:var(--text-mid) !important; font-style:italic; padding-left:32px !important; }
+
+/* NEXT STEPS */
+.next-section { background:var(--navy); padding:80px 0; }
+.next-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:48px; }
+.next-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:32px; }
+.next-num { font-family:'Playfair Display',serif; font-size:54px; font-weight:700; color:rgba(255,255,255,0.12); line-height:1; margin-bottom:12px; }
+.next-title { font-size:17px; font-weight:600; color:white; margin-bottom:10px; }
+.next-desc { font-size:14px; color:rgba(255,255,255,0.6); line-height:1.65; margin-bottom:18px; }
+.next-detail { font-size:13px; color:var(--sky-mid); font-weight:500; line-height:1.7; }
+
+/* FOOTER */
+footer { background:#0D1E35; padding:32px 40px; text-align:center; font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
+
+/* ANIMATIONS */
+.fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+.fade-up.visible { opacity:1; transform:translateY(0); }
+
+@media(max-width:900px) {
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-right { height:300px; }
+  .hero-title { font-size:36px; }
+  .stat-grid { grid-template-columns:repeat(2,1fr); }
+  .why-grid,.features-grid,.hoist-grid,.next-grid { grid-template-columns:1fr; }
+  .mode-grid { grid-template-columns:1fr 1fr; }
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .container { padding:0 20px; }
+  .gallery-grid { grid-template-columns:1fr; grid-template-rows:auto; }
+  .gallery-main { grid-row:auto; height:240px; }
+  .gallery-sub { height:180px; }
+  .price-banner { flex-direction:column; text-align:center; }
+  .p-divider { width:60px; height:1px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-brand">
+    Tucson PHEV SEL
+    <span>A Recommendation for Urte &amp; Don</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#why-now">Why Now</a></li>
+    <li><a href="#comparison">Comparison</a></li>
+    <li><a href="#tucson">The Tucson</a></li>
+    <li><a href="#hoist">SmartLifter</a></li>
+    <li><a href="#costs">Costs</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="overview">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Vehicle Recommendation &middot; May 2026</div>
+      <h1 class="hero-title">2025 Hyundai<br>Tucson PHEV</h1>
+      <p class="hero-subtitle">SEL &middot; Plug-In Hybrid &middot; AWD Standard</p>
+      <p class="hero-intro">After a thorough review of every comparable compact SUV on the market, the Tucson PHEV SEL is the right next car — safer, more spacious, dramatically more efficient, and the ideal platform for the SmartLifter LC wheelchair hoist.</p>
+      <div class="hero-pills">
+        <div class="pill">⚡ 33 mi electric range</div>
+        <div class="pill">🚗 261 combined hp</div>
+        <div class="pill">🛡 10-yr warranty</div>
+        <div class="pill">💰 Up to $3,750 tax credit</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img
+        src="https://www.hyundainews.com/assets/images/original/29068-2025TucsonFront34FamilyShot.jpg"
+        alt="2025 Hyundai Tucson PHEV"
+        onerror="this.src='https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=1200&auto=format&fit=crop';this.onerror=null;"
+      >
+      <div class="hero-overlay">
+        <div class="hero-badge">✦ Recommended Vehicle</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stat-strip">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">33<span class="stat-unit"> mi</span></div>
+        <div class="stat-label">EV-only range per charge</div>
+        <div class="stat-delta">↑ Most Pasadena errands: zero gas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">38<span class="stat-unit"> mpg</span></div>
+        <div class="stat-label">Fuel economy in gas mode</div>
+        <div class="stat-delta">↑ 65% better than the RDX</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">38.7<span class="stat-unit"> ft³</span></div>
+        <div class="stat-label">Cargo space behind rear seats</div>
+        <div class="stat-delta">↑ 12.6 cu ft more than the RDX</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$35,980</div>
+        <div class="stat-label">Estimated price after tax credit</div>
+        <div class="stat-delta">↓ $3,750 federal PHEV credit applied</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY NOW -->
+<section id="why-now">
+  <div class="container">
+    <div class="section-label">The case for trading in</div>
+    <h2 class="section-title">Why Now Is the Right Time</h2>
+    <p class="section-lead">The 2015 RDX has been an excellent vehicle. But after 10 years, the gap between what it offers and what today's cars deliver — in safety, technology, efficiency, and accessibility — is meaningful.</p>
+    <div class="why-grid fade-up">
+      <div class="rdx-card">
+        <div class="card-header">
+          <div class="card-icon icon-old">🚗</div>
+          <div>
+            <div class="card-title">2015 Acura RDX</div>
+            <div class="card-year">10 years old &middot; All warranties expired</div>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><span class="feat-bad">⚠</span>No electric range — 23 mpg combined only</li>
+          <li><span class="feat-bad">⚠</span>No blind-spot monitoring or lane-keep assist standard</li>
+          <li><span class="feat-bad">⚠</span>No forward collision braking standard</li>
+          <li><span class="feat-bad">⚠</span>Only 26.1 cu ft of cargo — smallest in class</li>
+          <li><span class="feat-bad">⚠</span>Manual liftgate — must lift by hand every time</li>
+          <li><span class="feat-bad">⚠</span>No wireless CarPlay or Android Auto</li>
+          <li><span class="feat-bad">⚠</span>Warranty fully expired — all repairs out of pocket</li>
+          <li><span class="feat-bad">⚠</span>No over-the-air updates — aging infotainment</li>
+        </ul>
+      </div>
+      <div class="tucson-card">
+        <div class="card-header">
+          <div class="card-icon icon-new">✦</div>
+          <div>
+            <div class="card-title">2025 Tucson PHEV SEL</div>
+            <div class="card-year">New &middot; 10-yr / 100k mi powertrain warranty</div>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><span class="feat-good">✓</span>33 miles electric-only, then 38 mpg hybrid</li>
+          <li><span class="feat-good">✓</span>Full SmartSense safety suite — standard on all trims</li>
+          <li><span class="feat-good">✓</span>Forward collision, blind-spot, lane keep — all standard</li>
+          <li><span class="feat-good">✓</span>38.7 cu ft cargo — nearly 50% more than the RDX</li>
+          <li><span class="feat-good">✓</span>Hands-free smart liftgate — wave foot, it opens</li>
+          <li><span class="feat-good">✓</span>Wireless CarPlay &amp; Android Auto, 12.3" screen</li>
+          <li><span class="feat-good">✓</span>10-year / 100,000-mile powertrain warranty</li>
+          <li><span class="feat-good">✓</span>Up to $3,750 federal plug-in hybrid tax credit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison" class="compare-section">
+  <div class="container">
+    <div class="section-label">Spec for spec</div>
+    <h2 class="section-title">How They Compare</h2>
+    <p class="section-lead">Every major dimension, performance figure, and feature — Tucson PHEV SEL vs. the 2015 RDX.</p>
+    <table class="compare-table fade-up">
+      <thead>
+        <tr>
+          <th style="width:36%">Specification</th>
+          <th class="r-col" style="width:25%">2015 Acura RDX</th>
+          <th class="t-col" style="width:39%">2025 Tucson PHEV SEL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="s-row"><td colspan="3">Exterior Dimensions</td></tr>
+        <tr><td>Overall length</td><td class="r-col">183.5 in</td><td class="t-col win">179.9 in — 3.6" shorter, easier to park</td></tr>
+        <tr><td>Width</td><td class="r-col">73.7 in</td><td class="t-col win">73.4 in — slightly narrower</td></tr>
+        <tr><td>Height</td><td class="r-col">66.1 in</td><td class="t-col muted">65.0 in — a touch lower</td></tr>
+        <tr><td>Wheelbase</td><td class="r-col">105.7 in</td><td class="t-col win">108.5 in — +2.8" more interior room</td></tr>
+        <tr class="s-row"><td colspan="3">Interior Space</td></tr>
+        <tr><td>Rear legroom</td><td class="r-col">38.3 in</td><td class="t-col win">41.3 in — 3 full inches more</td></tr>
+        <tr><td>Rear headroom</td><td class="r-col">38.1 in</td><td class="t-col win">39.6 in — 1.5 inches more</td></tr>
+        <tr><td>Cargo (seats up)</td><td class="r-col">26.1 cu ft</td><td class="t-col win">38.7 cu ft — +48% more</td></tr>
+        <tr><td>Cargo (seats down)</td><td class="r-col">61.3 cu ft</td><td class="t-col win">74.8 cu ft</td></tr>
+        <tr class="s-row"><td colspan="3">Powertrain &amp; Efficiency</td></tr>
+        <tr><td>Engine</td><td class="r-col">3.5L V6 — gas only</td><td class="t-col win">1.6L turbo + dual electric motors</td></tr>
+        <tr><td>Horsepower</td><td class="r-col">273 hp</td><td class="t-col muted">261 hp combined — comparable</td></tr>
+        <tr><td>EV-only range</td><td class="r-col muted">None</td><td class="t-col win">33 miles all-electric</td></tr>
+        <tr><td>Fuel economy</td><td class="r-col">23 mpg combined</td><td class="t-col win">38 mpg + 33 mi electric</td></tr>
+        <tr><td>AWD</td><td class="r-col">Optional (extra cost)</td><td class="t-col win">Standard on all PHEV trims</td></tr>
+        <tr class="s-row"><td colspan="3">Convenience &amp; Technology</td></tr>
+        <tr><td>Liftgate</td><td class="r-col">Manual — lift by hand</td><td class="t-col win">Hands-free smart power liftgate</td></tr>
+        <tr><td>CarPlay / Android Auto</td><td class="r-col">Not available</td><td class="t-col win">Wireless, standard</td></tr>
+        <tr><td>Touchscreen</td><td class="r-col">7" — no wireless</td><td class="t-col win">12.3" — wireless</td></tr>
+        <tr><td>Heated front seats</td><td class="r-col">Not standard</td><td class="t-col win">Standard on SEL</td></tr>
+        <tr><td>Dual-zone climate</td><td class="r-col">Not standard</td><td class="t-col win">Standard on SEL</td></tr>
+        <tr><td>Wireless charging pad</td><td class="r-col">No</td><td class="t-col win">15W wireless — standard on SEL</td></tr>
+        <tr class="s-row"><td colspan="3">Safety (Standard Features)</td></tr>
+        <tr><td>Forward collision braking</td><td class="r-col">Not standard</td><td class="t-col win">Standard — all trims</td></tr>
+        <tr><td>Blind-spot warning</td><td class="r-col">Not standard</td><td class="t-col win">Standard — all trims</td></tr>
+        <tr><td>Lane keeping assist</td><td class="r-col">Not available</td><td class="t-col win">Standard — all trims</td></tr>
+        <tr><td>Adaptive cruise control</td><td class="r-col">Not available</td><td class="t-col win">Smart Cruise with Stop &amp; Go</td></tr>
+        <tr class="s-row"><td colspan="3">Ownership</td></tr>
+        <tr><td>Powertrain warranty</td><td class="r-col">Expired</td><td class="t-col win">10 years / 100,000 miles</td></tr>
+        <tr><td>Basic warranty</td><td class="r-col">Expired</td><td class="t-col win">5 years / 60,000 miles</td></tr>
+        <tr><td>Federal tax credit</td><td class="r-col">None</td><td class="t-col win">Up to $3,750</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="tucson" class="gallery-section">
+  <div class="container">
+    <div class="section-label">The Vehicle</div>
+    <h2 class="section-title">2025 Hyundai Tucson PHEV SEL</h2>
+    <p class="section-lead">Redesigned inside and out for 2025 with a sharper exterior, a dramatic curved dashboard, and a spacious, technology-forward cabin built around comfort and accessibility.</p>
+    <div class="gallery-grid fade-up">
+      <div class="gallery-main">
+        <img class="g-img"
+          src="https://www.hyundainews.com/assets/images/original/29068-2025TucsonFront34FamilyShot.jpg"
+          alt="2025 Tucson exterior"
+          onerror="this.src='https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=1200&auto=format&fit=crop';this.onerror=null;"
+        >
+        <div class="g-caption">Bold redesign — PHEV badging, 18" alloys, standard AWD</div>
+      </div>
+      <div class="gallery-sub">
+        <img class="g-img"
+          src="https://www.hyundainews.com/assets/images/original/29079-2025TucsonInteriorFamilyShot.jpg"
+          alt="Tucson interior"
+          onerror="this.src='https://images.unsplash.com/photo-1547038577-da80abbc4f19?w=800&auto=format&fit=crop';this.onerror=null;"
+        >
+        <div class="g-caption">12.3" curved display — standard on SEL and above</div>
+      </div>
+      <div class="gallery-sub">
+        <img class="g-img"
+          src="https://www.hyundainews.com/assets/images/original/29076-2025TucsonRear34FamilyShot.jpg"
+          alt="Tucson rear"
+          onerror="this.src='https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&auto=format&fit=crop';this.onerror=null;"
+        >
+        <div class="g-caption">38.7 cu ft cargo — wide, flat, low load floor for SmartLifter</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHEV MODES -->
+<section class="phev-section">
+  <div class="container">
+    <div class="section-label">How the plug-in hybrid works</div>
+    <h2 class="section-title">Four Drive Modes</h2>
+    <p class="section-lead">Most daily driving around Pasadena — errands, appointments, short trips — will run on electricity alone. Plug in at home each night and wake up with a full charge. No special infrastructure needed.</p>
+    <div class="mode-grid fade-up">
+      <div class="mode-card mode-ev">
+        <div class="mode-icon">⚡</div>
+        <div class="mode-name">EV Mode</div>
+        <p class="mode-desc">Pure electric only. Silent, zero emissions, no gas used whatsoever. Battery power only.</p>
+        <span class="mode-best ev-badge">Best for local errands</span>
+      </div>
+      <div class="mode-card mode-auto">
+        <div class="mode-icon">🔄</div>
+        <div class="mode-name">Auto Mode</div>
+        <p class="mode-desc">The car decides. Prioritizes electric and switches to gas only when needed. Recommended for everyday use.</p>
+        <span class="mode-best auto-badge">Best for everyday driving</span>
+      </div>
+      <div class="mode-card mode-hev">
+        <div class="mode-icon">⛽</div>
+        <div class="mode-name">HEV Mode</div>
+        <p class="mode-desc">Gas and electric work together. Deliberately saves battery charge for specific situations later in the trip.</p>
+        <span class="mode-best hev-badge">Best for highway trips</span>
+      </div>
+      <div class="mode-card mode-sport">
+        <div class="mode-icon">🏁</div>
+        <div class="mode-name">Sport Mode</div>
+        <p class="mode-desc">Maximum power from both gas and electric simultaneously. Sharpens throttle response when you need it.</p>
+        <span class="mode-best sport-badge">When you need it</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEL FEATURES -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-label">What's included</div>
+    <h2 class="section-title">SEL Trim — Standard Features</h2>
+    <p class="section-lead">The SEL is the lowest trim that includes a hands-free smart power liftgate — and it adds every comfort feature Urte and Don will use daily.</p>
+    <div class="features-grid fade-up">
+      <div class="feat-group">
+        <div class="feat-group-title">
+          <div class="fg-icon">🛠</div>Comfort &amp; Convenience
+        </div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Hands-free smart liftgate</strong> — wave foot under bumper, opens automatically</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Heated front seats</strong> — 3 levels, standard on SEL</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>8-way power driver seat</strong> with power lumbar support</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Dual automatic climate control</strong> — separate temperatures for driver and passenger</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Wireless 15W charging pad</strong> — set your phone down, it charges</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Hyundai Digital Key 2</strong> — use your smartphone to lock, unlock, and start</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Remote start via app</strong> — climate-condition the car before you walk out</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>18" alloy wheels</strong>, roof side rails, rear privacy glass</div></div>
+      </div>
+      <div class="feat-group">
+        <div class="feat-group-title">
+          <div class="fg-icon">🛡</div>Safety &amp; Technology
+        </div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Forward collision avoidance</strong> with pedestrian detection — brakes automatically</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Blind-spot collision warning</strong> — alerts when a car is in your blind spot during lane changes</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Lane keeping assist</strong> — gently steers back if the car drifts</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Smart Cruise Control with Stop &amp; Go</strong> — maintains speed and gap in traffic, including full stops</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Rear cross-traffic alert</strong> — warns when reversing out of a parking space</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>12.3" touchscreen</strong> — wireless Apple CarPlay &amp; Android Auto, navigation</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Driver attention warning</strong> — detects drowsiness or distraction and prompts a break</div></div>
+        <div class="feat-item"><div class="feat-check">✓</div><div class="feat-text"><strong>Rearview camera</strong> with dynamic guidelines, standard</div></div>
+      </div>
+    </div>
+    <div class="price-banner fade-up">
+      <div>
+        <div class="p-label">MSRP</div>
+        <div class="p-value">$39,730</div>
+        <div class="p-note">2025 Tucson PHEV SEL · AWD standard</div>
+      </div>
+      <div class="p-divider"></div>
+      <div>
+        <div class="p-label">Federal PHEV Tax Credit</div>
+        <div class="p-value" style="color:#7EC8A4;">−$3,750</div>
+        <div class="p-note">Subject to income limits — confirm with tax advisor</div>
+      </div>
+      <div class="p-divider"></div>
+      <div>
+        <div class="p-label">Net After Tax Credit</div>
+        <div class="p-value">$35,980</div>
+        <div class="p-note">Best PHEV value in the compact SUV class</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SMARTLIFTER LC -->
+<section id="hoist" class="hoist-section">
+  <div class="container">
+    <div class="section-label">Mobility Equipment</div>
+    <h2 class="section-title">SmartLifter LC Wheelchair Hoist</h2>
+    <p class="section-lead">The SmartLifter LC installs directly inside the Tucson's cargo area and lifts the wheelchair in at the touch of a button. No manual lifting, no dismantling, no effort required.</p>
+    <div class="hoist-grid fade-up">
+      <div>
+        <div class="hoist-img-main">
+          <img
+            src="https://www.mobilityinnovations.com/wp-content/uploads/2021/09/Smart-Lifter-LC-Range-1-1.jpg"
+            alt="SmartLifter LC installed in SUV"
+            onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop';this.onerror=null;"
+          >
+        </div>
+        <div class="hoist-img-sub">
+          <img
+            src="https://www.mobilityinnovations.com/wp-content/uploads/2021/09/Smart-Lifter-LC-Range-2.jpg"
+            alt="SmartLifter LC loading wheelchair"
+            onerror="this.src='https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&auto=format&fit=crop';this.onerror=null;"
+          >
+        </div>
+      </div>
+      <div>
+        <div class="hoist-specs">
+          <div class="spec-item"><div class="spec-name">Lifting Capacity</div><div class="spec-val">Up to 220 lbs</div></div>
+          <div class="spec-item"><div class="spec-name">Loading Time</div><div class="spec-val">~60 seconds</div></div>
+          <div class="spec-item"><div class="spec-name">Operation</div><div class="spec-val">4-way remote</div></div>
+          <div class="spec-item"><div class="spec-name">Warranty</div><div class="spec-val">3 years</div></div>
+          <div class="spec-item"><div class="spec-name">Fitting Kit</div><div class="spec-val">Tucson-specific</div></div>
+          <div class="spec-item"><div class="spec-name">Arm Removable</div><div class="spec-val">Yes — in seconds</div></div>
+        </div>
+
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.7;margin-bottom:6px;">The Tucson's 38.7 cu ft cargo area — nearly 50% larger than the RDX — gives the SmartLifter ample room to operate. The low, flat load floor and wide cargo opening are ideal for the hoist arm's swing-out motion.</p>
+
+        <ol class="steps-list">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text">Open the hands-free liftgate — wave foot under bumper, gate opens on its own</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text">SmartLifter arm swings out from the cargo area automatically</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text">Attach the wheelchair to the hoist hook</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text">Press the button — wheelchair lifts, rotates, and stows in ~60 seconds</div></li>
+          <li class="step-item"><div class="step-num">5</div><div class="step-text">Close the liftgate — restraint system holds the wheelchair securely during travel</div></li>
+        </ol>
+
+        <div class="hoist-note">
+          <span style="font-size:17px;flex-shrink:0;">💡</span>
+          <span>When the hoist isn't needed, the lifting arm detaches from the frame in seconds, reclaiming the full cargo area. Installation requires a certified mobility equipment dealer using a Tucson-specific fitting kit. <strong>MobilityWorks (LA area)</strong> handles SmartLifter LC sales and installation.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COSTS -->
+<section id="costs" class="cost-section">
+  <div class="container">
+    <div class="section-label">The numbers</div>
+    <h2 class="section-title">Total Cost Picture</h2>
+    <p class="section-lead">A full estimate including the vehicle, wheelchair hoist, and the trade-in credit from the current RDX.</p>
+    <div class="fade-up">
+      <table class="cost-table">
+        <tr><td>2025 Tucson PHEV SEL — MSRP</td><td>~$39,730</td></tr>
+        <tr class="credit"><td>Federal PHEV tax credit</td><td>−$3,750</td></tr>
+        <tr class="subtotal"><td>Net vehicle cost after credit</td><td>~$35,980</td></tr>
+        <tr><td>SmartLifter LC — installed (estimate)</td><td>~$2,000–$3,500</td></tr>
+        <tr><td style="font-weight:600;color:var(--text-dark);">Total estimated investment</td><td style="font-weight:600;">~$38,000–$39,500</td></tr>
+        <tr class="credit"><td>RDX trade-in value (est. — 10 yr / ~80k mi)</td><td>−$8,000–$12,000</td></tr>
+        <tr><td>Estimated out-of-pocket</td><td>~$26,000–$31,500</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--text-light);margin-top:20px;line-height:1.75;max-width:620px;">Trade-in estimate varies by mileage, condition, and market — get a dealer appraisal or check KBB.com for a current figure. Tax credit eligibility depends on household income and IRS rules; confirm with a tax advisor. SmartLifter LC pricing is quote-based; contact MobilityWorks for a firm estimate specific to the 2025 Tucson PHEV.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section id="next-steps" class="next-section">
+  <div class="container">
+    <div class="section-label">Getting started</div>
+    <h2 class="section-title" style="color:white;">Recommended Next Steps</h2>
+    <p class="section-lead" style="color:rgba(255,255,255,0.65);">Three clear actions to move from recommendation to ownership.</p>
+    <div class="next-grid fade-up">
+      <div class="next-card">
+        <div class="next-num">01</div>
+        <div class="next-title">Test Drive the Tucson SEL</div>
+        <p class="next-desc">Schedule a test drive at CardinaleWay Hyundai El Monte — the closest highly-rated Hyundai dealer to Pasadena. Ask specifically for the PHEV SEL and request a hands-free liftgate demo.</p>
+        <div class="next-detail">
+          CardinaleWay Hyundai El Monte<br>
+          3462 Peck Rd, El Monte &middot; ⭐ 4.3 / 1,656 reviews<br>
+          (626) 686-3910 &middot; ~8 miles from Pasadena<br>
+          Mon–Sat 9am–9pm &middot; Sun 10am–6pm
+        </div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">02</div>
+        <div class="next-title">Get the RDX Appraised</div>
+        <p class="next-desc">Ask for a trade-in appraisal during the same dealer visit. Also get a Carmax or KBB Instant Cash Offer for a second data point — use the higher number as leverage.</p>
+        <div class="next-detail">
+          Check kbb.com for current trade-in estimate<br>
+          A 2015 RDX in good condition (~80k mi)<br>
+          typically appraises at $8,000–$12,000<br>
+          Condition and mileage will determine the final figure
+        </div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">03</div>
+        <div class="next-title">Get a SmartLifter Quote</div>
+        <p class="next-desc">Contact MobilityWorks for a firm quote on the SmartLifter LC fitted for the 2025 Tucson PHEV. They can confirm compatibility and schedule professional installation.</p>
+        <div class="next-detail">
+          MobilityWorks — Southern California<br>
+          mobilityworks.com &middot; Multiple LA-area locations<br>
+          Request: "SmartLifter LC quote for<br>
+          2025 Hyundai Tucson PHEV"
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Prepared May 2026 for Urte and Don &middot; 2025 Hyundai Tucson PHEV SEL Recommendation</p>
+  <p style="margin-top:6px;">Prices, specs, and tax credits are current as of preparation date and subject to change. Tax credit eligibility depends on buyer income and IRS rules — consult a tax advisor. Trade-in values and SmartLifter pricing are estimates only.</p>
+</footer>
+
+<script>
+// Active nav on scroll
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionIds = ['overview','why-now','comparison','tucson','hoist','costs','next-steps'];
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) io.observe(el);
+});
+
+// Fade-up on scroll
+const fo = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-up').forEach(el => fo.observe(el));
+</script>
+</body>
+</html>
