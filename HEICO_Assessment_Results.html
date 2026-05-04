@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEICO — Assessment Results</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D1117;
+      --card:      #161B22;
+      --card2:     #1C2330;
+      --border:    #2D3748;
+      --text:      #E6EDF3;
+      --text2:     #8B949E;
+      --track:     #1E2530;
+      --before-c:  #374151;
+      --gain-c:    #1D6FD8;
+      --delta-c:   #3DD68C;
+      --ivaco:     #60A5FA;
+      --infasco:   #C4B5FD;
+      --sivaco:    #FCD34D;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 52px 0 88px;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 44px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 44px; }
+
+    .overline {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gain-c);
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      margin-bottom: 7px;
+    }
+
+    .page-subtitle { font-size: 14.5px; color: var(--text2); }
+
+    /* ── SUMMARY STATS ── */
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .stat-val {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--delta-c);
+      letter-spacing: -0.5px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label { font-size: 12.5px; color: var(--text2); line-height: 1.5; }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text2);
+    }
+
+    .legend-swatch {
+      width: 32px;
+      height: 9px;
+      border-radius: 5px;
+    }
+
+    .ls-before { background: var(--before-c); }
+    .ls-after  { background: var(--gain-c); }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 56px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .section-title { font-size: 19px; font-weight: 700; }
+
+    .section-note { font-size: 12.5px; color: var(--text2); }
+
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    /* ── QUESTION BLOCK ── */
+    .question-block { margin-bottom: 20px; }
+
+    .question-text {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      padding-left: 2px;
+    }
+
+    .bu-rows {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    /* ── BU ROW ── */
+    .bu-row {
+      display: grid;
+      grid-template-columns: 82px 1fr 130px;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bu-chip {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .bu-chip.ivaco   { background: rgba(96,165,250,0.12);  color: var(--ivaco);   }
+    .bu-chip.infasco { background: rgba(196,181,253,0.12); color: var(--infasco); }
+    .bu-chip.sivaco  { background: rgba(252,211,77,0.12);  color: var(--sivaco);  }
+
+    /* ── BAR ── */
+    .bar-track {
+      position: relative;
+      height: 18px;
+      background: var(--track);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .bar-before {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      background: var(--before-c);
+      border-radius: 5px 0 0 5px;
+    }
+
+    .bar-gain {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: var(--gain-c);
+      /* rounded right end */
+      border-radius: 0 5px 5px 0;
+    }
+
+    /* divider between before and gain */
+    .bar-divider {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: var(--bg);
+      opacity: 0.6;
+      z-index: 2;
+    }
+
+    /* ── VALUES ── */
+    .bar-values {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+    }
+
+    .v-before { font-size: 12px; color: var(--text2); }
+    .v-arrow  { font-size: 11px; color: var(--text2); }
+    .v-after  { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    .delta {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--delta-c);
+      background: rgba(61,214,140,0.10);
+      border: 1px solid rgba(61,214,140,0.22);
+      border-radius: 20px;
+      padding: 2px 8px;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    /* ── CALLOUT NOTE ── */
+    .callout {
+      margin-top: 20px;
+      background: var(--card);
+      border-left: 3px solid var(--gain-c);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .callout strong { color: var(--text); font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="overline">HEICO · Behavioral Assessment</div>
+    <div class="page-title">Measuring the Shift</div>
+    <div class="page-subtitle">Self-assessment and manager assessment — start vs. end of initiative &nbsp;·&nbsp; Scale: 0–10</div>
+  </div>
+
+  <!-- Summary stats -->
+  <div class="summary-row">
+    <div class="stat-card">
+      <div class="stat-val">+1.9</div>
+      <div class="stat-label">Avg improvement per behavior<br>Sales rep self-assessment</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">+2.0</div>
+      <div class="stat-label">Avg improvement per behavior<br>Manager assessment</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">100%</div>
+      <div class="stat-label">Of assessed behaviors showing<br>measurable improvement</div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch ls-before"></div>
+      <span>Start of initiative</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch ls-after"></div>
+      <span>End of initiative</span>
+    </div>
+  </div>
+
+  <!-- Section 1: Sales Rep Self-Assessment -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Sales Rep Self-Assessment</span>
+      <span class="section-note">Aligned questions across 3 business units</span>
+    </div>
+    <hr class="section-rule">
+    <div id="rep-qs"></div>
+  </div>
+
+  <!-- Section 2: Manager Assessment -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Manager Assessment</span>
+      <span class="section-note">Ivaco &amp; Infasco &nbsp;·&nbsp; Sivaco manager baseline not completed</span>
+    </div>
+    <hr class="section-rule">
+    <div id="mgr-qs"></div>
+
+    <div class="callout">
+      <strong>Infasco closed the gap.</strong> At the start of the initiative Ivaco managers rated their teams higher than Infasco managers across every behavior, averaging 6.1 vs. 5.0. By the end, Infasco managers' average rating rose from 5.0 to 7.1 — nearly matching Ivaco's 7.9 — the largest relative gain of any group assessed.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const REP = [
+    {
+      q: "Asks what's behind budget-to-actual gaps",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.1 },
+        { name:"Infasco", c:"infasco", b:6.2, a:7.9 },
+        { name:"Sivaco",  c:"sivaco",  b:6.3, a:8.0 },
+      ]
+    },
+    {
+      q: "Reviews order history before customer calls",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.7, a:6.9 },
+        { name:"Infasco", c:"infasco", b:6.8, a:8.4 },
+        { name:"Sivaco",  c:"sivaco",  b:5.2, a:7.3 },
+      ]
+    },
+    {
+      q: "Asks about equipment investments and capacity plans",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:3.8, a:6.2 },
+        { name:"Infasco", c:"infasco", b:6.1, a:7.8 },
+        { name:"Sivaco",  c:"sivaco",  b:5.0, a:7.2 },
+      ]
+    },
+    {
+      q: "Prepares specific questions tied to data before calling",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.0, a:6.4 },
+        { name:"Infasco", c:"infasco", b:6.8, a:8.5 },
+        { name:"Sivaco",  c:"sivaco",  b:6.2, a:8.0 },
+      ]
+    },
+    {
+      q: "Connects market intelligence to customer-specific plans",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:5.2, a:7.4 },
+        { name:"Infasco", c:"infasco", b:6.3, a:8.0 },
+        { name:"Sivaco",  c:"sivaco",  b:4.7, a:6.9 },
+      ]
+    },
+    {
+      q: "Analyzes order timing and frequency patterns",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.7, a:7.0 },
+        { name:"Infasco", c:"infasco", b:5.4, a:7.2 },
+        { name:"Sivaco",  c:"sivaco",  b:4.7, a:6.8 },
+      ]
+    },
+    {
+      q: "Anticipates requirement changes before they appear",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.5, a:6.8 },
+        { name:"Infasco", c:"infasco", b:5.7, a:7.5 },
+        { name:"Sivaco",  c:"sivaco",  b:4.7, a:7.0 },
+      ]
+    },
+    {
+      q: "Key accounts share strategic info proactively",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.7, a:6.5 },
+        { name:"Infasco", c:"infasco", b:5.3, a:7.1 },
+        { name:"Sivaco",  c:"sivaco",  b:5.5, a:7.3 },
+      ]
+    },
+    {
+      q: "Forecasts require minimal correction",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:5.0, a:6.8 },
+        { name:"Infasco", c:"infasco", b:5.4, a:7.1 },
+        { name:"Sivaco",  c:"sivaco",  b:5.7, a:7.4 },
+      ]
+    },
+  ];
+
+  const MGR = [
+    {
+      q: "Asks what's behind order variations",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:6.0, a:7.9 },
+        { name:"Infasco", c:"infasco", b:4.9, a:7.0 },
+      ]
+    },
+    {
+      q: "Reviews order history and identifies patterns",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.1 },
+        { name:"Infasco", c:"infasco", b:4.8, a:6.9 },
+      ]
+    },
+    {
+      q: "Uncovers investment plans before they appear in orders",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:5.5, a:7.5 },
+        { name:"Infasco", c:"infasco", b:4.3, a:6.5 },
+      ]
+    },
+    {
+      q: "Prepares data-informed questions before calls",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.2 },
+        { name:"Infasco", c:"infasco", b:5.4, a:7.3 },
+      ]
+    },
+    {
+      q: "Uses data / market intelligence for forecasting",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:4.8, a:7.0 },
+        { name:"Infasco", c:"infasco", b:4.4, a:6.6 },
+      ]
+    },
+    {
+      q: "Forecasts are reliable / require minimal correction",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:5.7, a:7.6 },
+        { name:"Infasco", c:"infasco", b:4.6, a:6.7 },
+      ]
+    },
+    {
+      q: "Key accounts share strategic info proactively",
+      bus: [
+        { name:"Ivaco",   c:"ivaco",   b:8.0, a:9.2 },
+        { name:"Infasco", c:"infasco", b:6.7, a:8.4 },
+      ]
+    },
+  ];
+
+  function renderQuestions(data, containerId) {
+    const wrap = document.getElementById(containerId);
+
+    data.forEach(function(q) {
+      const block = document.createElement('div');
+      block.className = 'question-block';
+
+      const qt = document.createElement('div');
+      qt.className = 'question-text';
+      qt.textContent = q.q;
+      block.appendChild(qt);
+
+      const rows = document.createElement('div');
+      rows.className = 'bu-rows';
+
+      q.bus.forEach(function(bu) {
+        const row = document.createElement('div');
+        row.className = 'bu-row';
+
+        // Chip
+        const chip = document.createElement('div');
+        chip.className = 'bu-chip ' + bu.c;
+        chip.textContent = bu.name;
+        row.appendChild(chip);
+
+        // Bar
+        const track = document.createElement('div');
+        track.className = 'bar-track';
+
+        const barB = document.createElement('div');
+        barB.className = 'bar-before';
+        barB.style.width = (bu.b / 10 * 100) + '%';
+
+        const divider = document.createElement('div');
+        divider.className = 'bar-divider';
+        divider.style.left = (bu.b / 10 * 100) + '%';
+
+        const barG = document.createElement('div');
+        barG.className = 'bar-gain';
+        barG.style.left  = (bu.b / 10 * 100) + '%';
+        barG.style.width = ((bu.a - bu.b) / 10 * 100) + '%';
+
+        track.appendChild(barB);
+        track.appendChild(divider);
+        track.appendChild(barG);
+        row.appendChild(track);
+
+        // Values
+        const vals = document.createElement('div');
+        vals.className = 'bar-values';
+        const d = (bu.a - bu.b).toFixed(1);
+        vals.innerHTML =
+          '<span class="v-before">' + bu.b.toFixed(1) + '</span>' +
+          '<span class="v-arrow">→</span>' +
+          '<span class="v-after">'  + bu.a.toFixed(1) + '</span>' +
+          '<span class="delta">+'   + d + '</span>';
+        row.appendChild(vals);
+
+        rows.appendChild(row);
+      });
+
+      block.appendChild(rows);
+      wrap.appendChild(block);
+    });
+  }
+
+  renderQuestions(REP, 'rep-qs');
+  renderQuestions(MGR, 'mgr-qs');
+</script>
+</body>
+</html>
