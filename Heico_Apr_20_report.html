@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Strategic Customer Understanding — HEICO Mid-Pilot Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#2E4A6E;--navy-light:#3E6490;--navy-bright:#5B8EC2;--navy-pale:rgba(46,74,110,0.12);--dk:#0A0F18;--dk-mid:#0E1624;--dk-card:#141E30;--dk-deep:#060B12;--gold:#D4A24C;--gold-pale:rgba(212,162,76,0.10);--gold-border:rgba(212,162,76,0.25);--white:#F0EDE8;--white-dim:rgba(240,237,232,0.65);--white-muted:rgba(240,237,232,0.35);--border:rgba(255,255,255,0.07);--border-light:rgba(255,255,255,0.12);--p1:#5B8EC2;--p2:#D4A24C;--p3:#A87FD4;--green:#22C55E;--green-pale:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.25);--warn:#E06070;--warn-pale:rgba(224,96,112,0.08);--warn-border:rgba(224,96,112,0.25);--amber:#FBB130;--amber-pale:rgba(251,177,48,0.10);--amber-border:rgba(251,177,48,0.25);--radius:10px;--radius-lg:16px;}
+body{font-family:'DM Sans',sans-serif;background:var(--dk);color:var(--white);line-height:1.6;overflow:hidden;height:100vh;width:100vw;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes barGrow{from{width:0;}to{width:var(--bar-w);}}
+.anim{opacity:0;}.page.active .anim{animation:fadeUp .5s ease-out both;}
+.page.active .anim.d1{animation-delay:.1s;}.page.active .anim.d2{animation-delay:.2s;}.page.active .anim.d3{animation-delay:.3s;}.page.active .anim.d4{animation-delay:.4s;}.page.active .anim.d5{animation-delay:.5s;}.page.active .anim.d6{animation-delay:.6s;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:8px;padding:12px clamp(16px,3vw,28px);background:rgba(10,15,24,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{height:28px;opacity:0.85;margin-right:4px;}
+.nav-sep{width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0;}
+.nav-dots{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+.nd{width:clamp(22px,2.5vw,26px);height:clamp(22px,2.5vw,26px);border-radius:50%;border:1.5px solid rgba(255,255,255,0.12);cursor:pointer;font-size:clamp(9px,1vw,10px);font-weight:700;color:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;transition:all .25s;flex-shrink:0;}.nd:hover{border-color:rgba(255,255,255,0.3);}.nd.active{background:var(--navy);border-color:var(--navy-bright);color:var(--white);}
+.nav-label{font-size:clamp(9px,1.1vw,11px);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--white-muted);margin-left:auto;white-space:nowrap;}
+.nav-arrows{display:flex;gap:4px;margin-left:8px;}.na{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:var(--white-dim);font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}.na:hover{background:rgba(255,255,255,0.1);}
+.page{display:none;height:100vh;overflow-y:auto;scroll-behavior:smooth;}.page.active{display:flex;flex-direction:column;}
+.frame{min-height:calc(100vh - 56px);padding:clamp(64px,8vh,80px) clamp(20px,5vw,64px) clamp(28px,4vh,40px);display:flex;flex-direction:column;justify-content:center;flex-shrink:0;}
+.detail{padding:clamp(24px,4vh,32px) clamp(20px,5vw,64px) clamp(40px,8vh,80px);border-top:1px solid var(--border);display:none;}.detail.open{display:block;}
+.ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(13px,1.5vw,16px);font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--navy-bright);margin-bottom:10px;}
+.pt{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(30px,4.5vw,54px);font-weight:800;line-height:1.08;letter-spacing:clamp(-0.8px,-0.05em,-1.2px);color:var(--white);margin-bottom:12px;max-width:100%;}.pt .em{color:var(--navy-bright);}
+.ps{font-size:clamp(17px,2vw,24px);color:var(--white-dim);line-height:1.6;max-width:100%;margin-bottom:clamp(12px,2vh,16px);}
+.nar{font-size:clamp(16px,1.7vw,20px);color:var(--white-dim);line-height:1.6;max-width:100%;margin-top:16px;}
+.dlbl{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white-muted);margin-bottom:20px;display:flex;align-items:center;gap:8px;}.dlbl::before{content:'';width:20px;height:1px;background:var(--white-muted);}
+.abtn{display:inline-flex;align-items:center;gap:8px;margin-top:clamp(16px,2.5vh,24px);padding:12px 24px;background:rgba(91,142,194,0.08);border:1px solid rgba(91,142,194,0.25);border-radius:100px;color:var(--navy-bright);font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(14px,1.5vw,17px);font-weight:600;cursor:pointer;transition:all .25s;}.abtn:hover{background:rgba(91,142,194,0.15);border-color:rgba(91,142,194,0.4);}
+.sr{display:flex;gap:clamp(8px,1.5vw,20px);flex-wrap:wrap;margin:16px 0;}
+.sc{flex:1;min-width:clamp(100px,20vw,140px);background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(14px,2.5vw,26px);text-align:center;}
+.sn{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.5vw,50px);font-weight:800;color:var(--white);line-height:1;}.sn.navy{color:var(--navy-bright);}.sn.green{color:var(--green);}.sn.gold{color:var(--gold);}
+.sl{font-size:clamp(13px,1.3vw,16px);color:var(--white-muted);margin-top:6px;line-height:1.3;}
+.card{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(16px,2.5vw,28px);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,2vw,20px);}
+@media(max-width:900px){.grid-3{grid-template-columns:1fr 1fr;}}@media(max-width:600px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+.pc{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(16px,2.5vw,24px);position:relative;overflow:hidden;}.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}.pc.p1::before{background:var(--p1);}.pc.p2::before{background:var(--p2);}.pc.p3::before{background:var(--p3);}
+.pcb{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}.pc.p1 .pcb{color:var(--p1);}.pc.p2 .pcb{color:var(--p2);}.pc.p3 .pcb{color:var(--p3);}
+.pcn{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,1.7vw,20px);font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.25;}.pcd{font-size:clamp(14px,1.4vw,17px);color:var(--white-dim);line-height:1.5;}
+.ib{border-radius:var(--radius-lg);padding:clamp(14px,2vw,24px);margin-top:14px;}.ib p,.ib li{font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);line-height:1.6;}.ib strong{font-weight:700;}.ib.g{background:var(--green-pale);border:1px solid var(--green-border);}.ib.g strong{color:var(--green);}.ib.t{background:rgba(91,142,194,0.06);border:1px solid rgba(91,142,194,0.2);}.ib.t strong{color:var(--navy-bright);}.ib.w{background:var(--warn-pale);border:1px solid var(--warn-border);}.ib.w strong{color:var(--warn);}.ib.a{background:var(--amber-pale);border:1px solid var(--amber-border);}.ib.a strong{color:var(--amber);}
+.bridge{min-height:calc(100vh - 56px);padding:clamp(64px,8vh,80px) clamp(20px,5vw,64px) clamp(28px,4vh,40px);display:flex;flex-direction:column;justify-content:center;position:relative;}.bridge .pt{font-size:clamp(32px,5.5vw,60px);}.bridge-accent{position:absolute;right:clamp(20px,5vw,80px);top:50%;transform:translateY(-50%);width:clamp(60px,10vw,120px);height:clamp(60px,10vw,120px);border-radius:50%;background:radial-gradient(circle,rgba(91,142,194,0.12),transparent 70%);pointer-events:none;}
+.tab-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;}.tab-btn{padding:10px 18px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(13px,1.3vw,16px);font-weight:600;color:var(--white-muted);cursor:pointer;border:1px solid transparent;transition:all .2s;}.tab-btn:hover{color:var(--white-dim);}.tab-btn.active{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--white);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.mkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.mkt-card{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(14px,2vw,20px);}
+.mkt-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,1.5vw,18px);font-weight:700;color:var(--white);margin-bottom:8px;}
+.mkt-row{display:flex;justify-content:space-between;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);margin-bottom:4px;padding:3px 0;}
+.mkt-val{font-weight:700;color:var(--white);}
+/* Signal cards */
+.sig-card{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(18px,2.5vw,28px);border-left:3px solid var(--green);cursor:pointer;transition:all .2s;position:relative;}.sig-card:hover{border-color:var(--border-light);background:rgba(20,30,48,0.9);}.sig-card.gap{border-left-color:var(--warn);}.sig-card.caution{border-left-color:var(--amber);}
+.sig-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(12px,1.2vw,14px);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}.sig-label.pos{color:var(--green);}.sig-label.neg{color:var(--warn);}.sig-label.cau{color:var(--amber);}
+.sig-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--white);line-height:1;margin-bottom:6px;}
+.sig-desc{font-size:clamp(14px,1.4vw,17px);color:var(--white-dim);line-height:1.4;}
+.sig-cta{font-size:clamp(14px,1.4vw,16px);color:var(--navy-bright);margin-top:10px;font-weight:600;}
+/* Quote card */
+.qc{background:var(--dk-card);border:1px solid var(--border);border-left:3px solid var(--navy-bright);border-radius:0 var(--radius-lg) var(--radius-lg) 0;padding:clamp(18px,2.5vw,28px);margin:14px 0;}
+.qt{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy-bright);margin-bottom:8px;}
+.qtx{font-size:clamp(16px,1.6vw,20px);color:var(--white-dim);font-style:italic;line-height:1.6;}
+.qa{font-size:clamp(13px,1.3vw,16px);color:var(--white-muted);margin-top:8px;font-style:normal;}
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}.modal-overlay.open{display:flex;}
+.modal{background:var(--dk-mid);border:1px solid var(--border-light);border-radius:var(--radius-lg);max-width:900px;width:92%;max-height:85vh;overflow-y:auto;padding:clamp(28px,3.5vw,44px);position:relative;}
+.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--white-muted);cursor:pointer;background:none;border:none;font-family:inherit;}.modal-close:hover{color:var(--white);}
+/* Chat bubbles */
+.chat-wrap{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
+.chat-turn{display:flex;flex-direction:column;}.chat-turn.from-user{align-items:flex-end;}.chat-turn.from-ai{align-items:flex-start;}
+.chat-bubble{max-width:85%;padding:12px 18px;border-radius:16px;font-size:clamp(16px,1.7vw,20px);line-height:1.5;}
+.chat-ai{background:rgba(91,142,194,0.12);border:1px solid rgba(91,142,194,0.2);color:var(--white-dim);border-bottom-left-radius:4px;}
+.chat-user{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);border-bottom-right-radius:4px;}
+.chat-label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}.chat-label.ai{color:var(--navy-bright);}.chat-label.user{color:var(--white-muted);}
+/* Journeys */
+.journey{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(24px,3vw,36px);position:relative;overflow:hidden;}
+.journey::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.journey.ivaco::before{background:var(--p1);}.journey.infasco::before{background:var(--p2);}.journey.sivaco::before{background:var(--p3);}
+.j-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.j-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:var(--white);flex-shrink:0;}
+.journey.ivaco .j-avatar{background:rgba(91,142,194,0.2);}.journey.infasco .j-avatar{background:rgba(212,162,76,0.2);}.journey.sivaco .j-avatar{background:rgba(168,127,212,0.2);}
+.j-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,2vw,22px);font-weight:700;color:var(--white);}
+.j-meta{font-size:clamp(13px,1.3vw,15px);color:var(--white-muted);}
+.j-step{padding:12px 0;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start;}
+.j-step:last-child{border-bottom:none;}
+.j-dot{width:10px;height:10px;border-radius:50%;margin-top:7px;flex-shrink:0;}
+.j-dot.signal{background:var(--green);}.j-dot.action{background:var(--navy-bright);}.j-dot.insight{background:var(--gold);}
+.j-text{font-size:clamp(14px,1.4vw,17px);color:var(--white-dim);line-height:1.5;}.j-text strong{color:var(--white);font-weight:600;}
+.j-outcome{margin-top:16px;padding:20px 24px;background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(34,197,94,0.02));border:1px solid var(--green-border);border-radius:var(--radius-lg);}.j-outcome p{font-size:clamp(15px,1.6vw,18px);color:var(--white-dim);line-height:1.6;}.j-outcome strong{color:var(--green);font-weight:700;}
+.j-outcome .j-outcome-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+/* Findings */
+.finding{background:var(--dk-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(20px,3vw,32px);margin-bottom:16px;}
+.f-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3vw,36px);font-weight:800;color:var(--navy-bright);line-height:1;margin-bottom:6px;}
+.f-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,1.8vw,22px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;}
+.f-body{font-size:clamp(14px,1.4vw,17px);color:var(--white-dim);line-height:1.6;}.f-body strong{color:var(--white);font-weight:600;}
+/* Baseline bars */
+.bl-group{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.bl-group:last-child{border-bottom:none;}
+.bl-q{font-size:clamp(14px,1.4vw,17px);color:var(--white);font-weight:600;margin-bottom:10px;line-height:1.4;}
+.bl-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.bl-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(13px,1.3vw,15px);font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;}
+.bl-label.iv{color:var(--p1);}.bl-label.inf{color:var(--gold);}.bl-label.sv{color:var(--p3);}.bl-label.mgr{color:var(--amber);}
+.bl-track{flex:1;height:26px;border-radius:4px;background:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
+.bl-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transition:width 1s ease-out;}
+.bl-fill span{font-size:13px;font-weight:700;color:var(--white);}
+.bl-fill.iv{background:rgba(91,142,194,0.5);}.bl-fill.inf{background:rgba(212,162,76,0.5);}.bl-fill.sv{background:rgba(168,127,212,0.5);}.bl-fill.mgr{background:rgba(251,177,48,0.4);border:1px dashed rgba(251,177,48,0.5);}
+/* Heatmap */
+.heat-grid{display:grid;grid-template-columns:1fr auto auto;gap:0;font-size:clamp(13px,1.3vw,15px);}
+.heat-name{padding:6px 12px;border-bottom:1px solid var(--border);color:var(--white-dim);}
+.heat-cell{padding:6px 12px;border-bottom:1px solid var(--border);text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;}
+/* Difficulty progress */
+.diff-bar{display:flex;height:40px;border-radius:8px;overflow:hidden;margin:12px 0;}
+.pill{display:inline-block;padding:6px 16px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(12px,1.2vw,14px);font-weight:700;margin:3px 4px 3px 0;}
+.diff-seg{display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.5vw,17px);font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;}
+</style>
+<body>
+<div class="nav">
+  <img class="nav-logo" src="data:image/png;base64,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Yaf1RpnW+pkqtDUfTN0mfC4qfhaFOMOEfLPCOXCo88ZyOVT/AFIJa7FNagxfhUl1lbbbfWBAJKSBknsFZClTKbk7sKNlYjVgsxmbeQ9PaktbYxAbhyo6nEuIXwthJwR3ZzjsNYXZfRUzQ8K82x595+I7O6yCt5YU4GeBISlWCeacY9AFT+lM3Zr5IxV0yL7rW+63jb+82WzQ0ypk+I5HQFupbSkqGMkn013bZwrla9BWO0XaGIsu3wGIjiUupcSottpTxAjuOKkVKZenEnHe5W28tg1Lf7ppZyxWpqU3abq3OeU7KS0FJT+KM5Oaz1xl60mKjxothiwG3HkCTKVPStbbOQV8CQnmogEAkjGc91SulTnslboRju2fDwUplaU/hFJA9NQCy/06jaKasd60tCukv4L1HWIno6lQ4cAPBYyCByVwhYODjtqwqVClb2JauRXafTC9HaCtun3XOsdjhanCPweJayohPM/JBVgeapVSlRKTk7slKyshSlKgClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAf/Z" alt="HEICO">
+  <div class="nav-sep"></div>
+  <div class="nav-dots" id="nD"></div>
+  <div class="nav-label" id="nL"></div>
+  <div class="nav-arrows"><div class="na" onclick="prev()">&#8592;</div><div class="na" onclick="next()">&#8594;</div></div>
+</div>
+
+<!-- MODAL CONTAINER -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ PAGE 1: HERO ═══════════════ -->
+<div class="page active" data-label="Overview" data-pg="1">
+<div class="frame">
+  <div class="ey anim d1">Building Strategic Customer Understanding &middot; Mid-Pilot Update</div>
+  <div class="pt anim d2">Six weeks of practice.<br><span class="em">Real customer intelligence surfaced.</span></div>
+  <div class="ps anim d3">18 sales reps who completed coaching sessions across Infasco, Ivaco Rolling Mills, and Sivaco are practicing the strategic questioning, data analysis, and timeline discovery skills that turn reactive order-taking into proactive account management.</div>
+  <div class="sr anim d4">
+    <div class="sc"><div class="sn navy" data-count="89">0</div><div class="sl">Coaching sessions</div></div>
+    <div class="sc"><div class="sn gold" data-count="163">0</div><div class="sl">Workplace actions</div></div>
+    <div class="sc"><div class="sn" data-count="18">0</div><div class="sl">Sales reps across 3 BUs</div></div>
+  </div>
+  <div class="anim d5"><div class="abtn" data-open="What did they practice? &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,1)">What did they practice? &darr;</div></div>
+</div>
+<div class="detail" id="det1">
+  <div class="dlbl">Three Practices &mdash; Building Strategic Customer Understanding</div>
+  <div class="nar" style="margin-top:0;margin-bottom:20px;">Three practices are running simultaneously across three business units. Each targets a different dimension of strategic customer understanding &mdash; from asking better questions to analyzing patterns to uncovering long-range timelines.</div>
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div class="pc p1"><div class="pcb">Practice 1 &middot; 14 coaching sessions</div><div class="pcn">Asking the Right Strategic Questions</div><div class="pcd">Moving past surface-level budget conversations. Probing for production realities, market conditions, and business factors that forecasts miss.</div></div>
+    <div class="pc p2"><div class="pcb">Practice 2 &middot; 23 coaching sessions</div><div class="pcn">Analyzing Data &amp; Trends to Better Anticipate Needs</div><div class="pcd">Reading historical order patterns, tracking ordering rhythms, comparing customer demand against market trends, and using data to anchor customer conversations.</div></div>
+    <div class="pc p3"><div class="pcb">Practice 3 &middot; 52 coaching sessions</div><div class="pcn">Uncovering Strategic Customer Timelines</div><div class="pcd">Learning about expansion plans, equipment investments, contract cycles, and multi-year roadmaps before they appear in budget forecasts.</div></div>
+  </div>
+</div></div>
+
+<!-- ═══════════════ PAGE 2: ENGAGEMENT ═══════════════ -->
+<div class="page" data-label="Engagement" data-pg="2">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Engagement</div>
+  <div class="pt anim d2">Your people are <span class="em">showing up.</span></div>
+  <div class="ps anim d3">89 <strong>coaching sessions</strong> and <strong>163 distinct workplace actions</strong> completed by 18 sales reps in 6 weeks.</div>
+  <div class="anim d4"><div class="abtn" data-open="See the engagement detail &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,2)">See the engagement detail &darr;</div></div>
+</div>
+<div class="detail" id="det2">
+  <div class="dlbl">Engagement by Business Unit</div>
+  <div class="grid-3" style="margin-bottom:24px;">
+    <div class="sc" style="border-color:rgba(91,142,194,0.3);background:rgba(91,142,194,0.06);padding:clamp(20px,3vw,36px);">
+      <div class="sl" style="font-size:clamp(12px,1.2vw,14px);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--p1);margin-bottom:12px;">Infasco</div>
+      <div class="sn navy" style="margin-bottom:4px;">42</div>
+      <div class="sl">sessions &middot; 83 actions &middot; 8 reps</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(20px,2.2vw,26px);font-weight:800;color:var(--p1);margin-top:12px;">2.0<span style="font-size:0.5em;color:var(--white-muted);"> actions/session</span></div>
+    </div>
+    <div class="sc" style="border-color:rgba(212,162,76,0.3);background:rgba(212,162,76,0.06);padding:clamp(20px,3vw,36px);">
+      <div class="sl" style="font-size:clamp(12px,1.2vw,14px);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Ivaco Rolling Mills</div>
+      <div class="sn gold" style="margin-bottom:4px;">27</div>
+      <div class="sl">sessions &middot; 46 actions &middot; 5 reps</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(20px,2.2vw,26px);font-weight:800;color:var(--gold);margin-top:12px;">1.7<span style="font-size:0.5em;color:var(--white-muted);"> actions/session</span></div>
+    </div>
+    <div class="sc" style="border-color:rgba(168,127,212,0.3);background:rgba(168,127,212,0.06);padding:clamp(20px,3vw,36px);">
+      <div class="sl" style="font-size:clamp(12px,1.2vw,14px);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--p3);margin-bottom:12px;">Sivaco</div>
+      <div class="sn" style="color:var(--p3);margin-bottom:4px;">20</div>
+      <div class="sl">sessions &middot; 34 actions &middot; 5 reps</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(20px,2.2vw,26px);font-weight:800;color:var(--p3);margin-top:12px;">1.7<span style="font-size:0.5em;color:var(--white-muted);"> actions/session</span></div>
+    </div>
+  </div>
+
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,1.6vw,19px);font-weight:700;color:var(--white);margin:28px 0 12px;">Where coaching sessions are landing by difficulty level</div>
+  <div class="diff-bar" style="margin-bottom:6px;">
+    <div class="diff-seg" style="width:43%;background:rgba(91,142,194,0.3);color:var(--navy-bright);">43% Basic</div>
+    <div class="diff-seg" style="width:36%;background:rgba(212,162,76,0.3);color:var(--gold);">36% Intermediate</div>
+    <div class="diff-seg" style="width:21%;background:rgba(168,127,212,0.3);color:var(--p3);">21% Advanced</div>
+  </div>
+  <div style="font-size:clamp(14px,1.4vw,16px);color:var(--white-muted);margin-bottom:28px;">Activities range from difficulty 1 (basic) to 9 (advanced). Most sessions are still at the basic and intermediate level &mdash; with harder activities available as reps progress in the second half of the pilot.</div>
+
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,1.6vw,19px);font-weight:700;color:var(--white);margin-bottom:12px;">Per-Rep Detail</div>
+  <div class="grid-3">
+    <div class="mkt-card">
+      <div class="mkt-name" style="color:var(--p1);">Infasco</div>
+      <div class="mkt-row"><span>Eric Steinke</span><span class="mkt-val">10 sessions &middot; 14 actions</span></div>
+      <div class="mkt-row"><span>Noah Dorsey</span><span class="mkt-val">10 sessions &middot; 20 actions</span></div>
+      <div class="mkt-row"><span>Kevin Theriault</span><span class="mkt-val">7 sessions &middot; 20 actions</span></div>
+      <div class="mkt-row"><span>Brian Rzepka</span><span class="mkt-val">5 sessions &middot; 9 actions</span></div>
+      <div class="mkt-row"><span>Adam Jacobs</span><span class="mkt-val">3 sessions &middot; 8 actions</span></div>
+      <div class="mkt-row"><span>Ryan Jones</span><span class="mkt-val">3 sessions &middot; 6 actions</span></div>
+      <div class="mkt-row"><span>Lucia Rodrigues</span><span class="mkt-val">3 sessions &middot; 4 actions</span></div>
+      <div class="mkt-row"><span>Shawn Luky</span><span class="mkt-val">1 session &middot; 2 actions</span></div>
+    </div>
+    <div class="mkt-card">
+      <div class="mkt-name" style="color:var(--gold);">Ivaco Rolling Mills</div>
+      <div class="mkt-row"><span>Robert Tulloch</span><span class="mkt-val">10 sessions &middot; 21 actions</span></div>
+      <div class="mkt-row"><span>Chad Novak</span><span class="mkt-val">9 sessions &middot; 12 actions</span></div>
+      <div class="mkt-row"><span>Chris Aichholz</span><span class="mkt-val">5 sessions &middot; 8 actions</span></div>
+      <div class="mkt-row"><span>Matthew Jones</span><span class="mkt-val">2 sessions &middot; 3 actions</span></div>
+      <div class="mkt-row"><span>Keith Campbell</span><span class="mkt-val">1 session &middot; 2 actions</span></div>
+    </div>
+    <div class="mkt-card">
+      <div class="mkt-name" style="color:var(--p3);">Sivaco</div>
+      <div class="mkt-row"><span>Jeff Roberts</span><span class="mkt-val">11 sessions &middot; 17 actions</span></div>
+      <div class="mkt-row"><span>Julie Hogg</span><span class="mkt-val">3 sessions &middot; 6 actions</span></div>
+      <div class="mkt-row"><span>Mathew Lapointe</span><span class="mkt-val">3 sessions &middot; 5 actions</span></div>
+      <div class="mkt-row"><span>David Loiello</span><span class="mkt-val">2 sessions &middot; 3 actions</span></div>
+      <div class="mkt-row"><span>Carole Temple</span><span class="mkt-val">1 session &middot; 3 actions</span></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ═══════════════ PAGE 3: WORKPLACE ACTIONS ═══════════════ -->
+<div class="page" data-label="Workplace Actions" data-pg="3">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Workplace Actions</div>
+  <div class="pt anim d2">Not assignments. <span class="em">Real work.</span></div>
+  <div class="ps anim d3">Each coaching session involves the AI coach guiding your sales reps through real workplace tasks &mdash; pulling customer data, making strategic calls, reviewing CRM records, and documenting intelligence. Across 89 coaching sessions, your reps took 163 distinct workplace actions.</div>
+  <div class="anim d4"><div class="abtn" data-open="What counts as a workplace action? &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,3)">What counts as a workplace action? &darr;</div></div>
+</div>
+<div class="detail" id="det3">
+  <div class="dlbl">Defining a Workplace Action</div>
+  <div class="nar" style="margin-top:0;margin-bottom:24px;">A <strong style="color:var(--navy-bright);">workplace action</strong> occurs when a sales rep leaves the AI coaching conversation to perform a real task (digital or physical) then returns with new information or a report that the AI uses to guide their next action. These are not quiz answers. Each action represents real work with or for real customers.</div>
+
+  <div class="sr" style="margin-bottom:24px;">
+    <div class="sc" style="border-color:rgba(91,142,194,0.3);background:rgba(91,142,194,0.06);">
+      <div class="sn navy">163</div><div class="sl">Total workplace actions</div>
+    </div>
+    <div class="sc">
+      <div class="sn">1.8</div><div class="sl">Avg actions per session</div>
+    </div>
+    <div class="sc" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.06);">
+      <div class="sn green">54%</div><div class="sl">Sessions with 2+ actions</div>
+    </div>
+  </div>
+
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(16px,1.6vw,19px);font-weight:700;color:var(--white);margin-bottom:16px;">What these actions look like</div>
+  <div class="grid-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div style="font-size:clamp(14px,1.4vw,17px);color:var(--navy-bright);font-weight:700;margin-bottom:10px;">&#128200; Data Analysis</div>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Pulling 6&ndash;12 months of customer order history</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Calculating average days between orders</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Comparing customer trends against market data</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Building draft tonnage or volume projections</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-size:clamp(14px,1.4vw,17px);color:var(--gold);font-weight:700;margin-bottom:10px;">&#128222; Strategic Customer Calls</div>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Confirming ordering patterns with purchasing teams</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Asking about expansion plans and equipment investments</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Questioning budget-to-actual gaps and their causes</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Probing for competitive positioning intelligence</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-size:clamp(14px,1.4vw,17px);color:var(--green);font-weight:700;margin-bottom:10px;">&#128269; Research &amp; Preparation</div>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Reviewing CRM records and expired contracts</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Researching LinkedIn and trade news for growth signals</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Preparing equipment-focused questions before visits</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Identifying specific forecast variances to ask about</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-size:clamp(14px,1.4vw,17px);color:var(--p3);font-weight:700;margin-bottom:10px;">&#128203; CRM Documentation</div>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Logging competitive intelligence and pricing gaps</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Recording expansion timelines and investment plans</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Documenting ordering rhythm drivers and triggers</li>
+        <li style="padding:4px 0;font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);">&#8226; Capturing strategic conversation outcomes for the team</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prominent AI adapts section -->
+  <div style="background:linear-gradient(135deg,rgba(91,142,194,0.1),rgba(91,142,194,0.03));border:1px solid rgba(91,142,194,0.3);border-radius:var(--radius-lg);padding:clamp(24px,3vw,36px);margin-top:8px;">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,2.5vw,30px);font-weight:800;color:var(--white);margin-bottom:4px;">The AI coach doesn&rsquo;t just assign work &mdash; it adapts.</div>
+    <div style="font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);margin-bottom:20px;">When a sales rep returns from a customer call, the AI reads what they learned and adjusts the next step. Here&rsquo;s a real exchange from the pilot:</div>
+    <div class="chat-wrap">
+      <div class="chat-turn from-ai"><div class="chat-label ai">AI Coach</div><div class="chat-bubble chat-ai">Take a quick look at that customer&rsquo;s recent order history and identify the specific budget-to-actual gap. Come back once you&rsquo;ve got it.</div></div>
+      <div class="chat-turn from-user"><div class="chat-label user">Sales Rep</div><div class="chat-bubble chat-user">Several factors &mdash; they had a production line go down for about a week causing lost production, planned new business has been slow to start up, and they were reducing inventory ahead of their fiscal year-end in March.</div></div>
+      <div class="chat-turn from-ai"><div class="chat-label ai">AI Coach</div><div class="chat-bubble chat-ai">That&rsquo;s excellent strategic intelligence. You got three distinct business factors: line downtime, new business ramp delay, and fiscal year-end inventory reduction. One more step &mdash; get this documented in your CRM while it&rsquo;s fresh.</div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ═══════════════ PAGE 4: STRATEGIC INTELLIGENCE ═══════════════ -->
+<div class="page" data-label="Intelligence" data-pg="4">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Strategic Intelligence Surfaced</div>
+  <div class="pt anim d2">Your teams are bringing back<br><span class="em">real business intelligence.</span></div>
+  <div class="ps anim d3">The value is in what your people are learning about their customers &mdash; expansion plans, competitive positioning, ordering logic, and capability gaps that now live in your CRM.</div>
+  <div class="anim d4"><div class="abtn" data-open="See what they are finding &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,4)">See what they are finding &darr;</div></div>
+</div>
+<div class="detail" id="det4">
+  <div class="dlbl">Signals &mdash; What Your Sales Reps Are Uncovering</div>
+  <div class="grid-3" style="margin-bottom:28px;">
+    <div class="sig-card" onclick="openModal('m-expansion')">
+      <div class="sig-label pos">Expansion &amp; Investment Plans</div>
+      <div class="sig-val">28</div>
+      <div class="sig-desc">Customer expansion, facility, or equipment investment plans explored across 13 reps</div>
+      <div class="sig-cta">Matthew Jones &rarr;</div>
+    </div>
+    <div class="sig-card" onclick="openModal('m-competitive')">
+      <div class="sig-label pos">Competitive Positioning</div>
+      <div class="sig-val">16</div>
+      <div class="sig-desc">Competitive pricing gaps, rebate programs, and supplier displacement insights surfaced across 9 reps</div>
+      <div class="sig-cta">Kevin Theriault &rarr;</div>
+    </div>
+    <div class="sig-card" onclick="openModal('m-ordering')">
+      <div class="sig-label pos">Ordering Patterns Decoded</div>
+      <div class="sig-val">15</div>
+      <div class="sig-desc">Customer ordering rhythms, triggers, and procurement logic identified across 7 reps</div>
+      <div class="sig-cta">Ryan Jones &rarr;</div>
+    </div>
+    <div class="sig-card" onclick="openModal('m-multiyear')">
+      <div class="sig-label pos">Multi-Year Projections</div>
+      <div class="sig-val">9</div>
+      <div class="sig-desc">Forward demand projections built or validated with customers across 3 reps</div>
+      <div class="sig-cta">Robert Tulloch &rarr;</div>
+    </div>
+    <div class="sig-card caution" onclick="openModal('m-capgap')">
+      <div class="sig-label cau">Capability Gaps Identified</div>
+      <div class="sig-val">8</div>
+      <div class="sig-desc">Specific product or capacity limitations costing business &mdash; documented with specs and dollar values</div>
+      <div class="sig-cta">Julie Hogg &rarr;</div>
+    </div>
+    <div class="sig-card" onclick="openModal('m-contract')">
+      <div class="sig-label pos">Contract Cycles Mapped</div>
+      <div class="sig-val">5</div>
+      <div class="sig-desc">Renewal timelines, evaluation criteria, and procurement calendars documented across 4 reps</div>
+      <div class="sig-cta">Noah Dorsey &rarr;</div>
+    </div>
+  </div>
+
+  <div class="dlbl" style="margin-top:36px;">Gaps &amp; Barriers &mdash; Where Conversations Hit Limits</div>
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="sig-card gap" onclick="openModal('m-b-earlystage')">
+      <div class="sig-label neg">Plans Too Early-Stage</div>
+      <div class="sig-val">7</div>
+      <div class="sig-desc">Reps asked the right questions, but the customer&rsquo;s plans are not far enough along for specifics. Follow-up triggers are set.</div>
+      <div class="sig-cta" style="color:var(--warn);">Noah Dorsey &rarr;</div>
+    </div>
+    <div class="sig-card gap" onclick="openModal('m-b-tariff')">
+      <div class="sig-label neg">Tariff-Blocked Opportunities</div>
+      <div class="sig-val">7</div>
+      <div class="sig-desc">Intelligence was gathered and opportunities identified, but 50% steel tariffs prevent follow-through on sourcing changes.</div>
+      <div class="sig-cta" style="color:var(--warn);">Jeff Roberts &rarr;</div>
+    </div>
+    <div class="sig-card gap" onclick="openModal('m-b-couldnt')">
+      <div class="sig-label neg">Customer Couldn&rsquo;t Articulate</div>
+      <div class="sig-val">7</div>
+      <div class="sig-desc">The sales rep asked correctly, but the contact didn&rsquo;t have visibility into equipment, production, or spec implications.</div>
+      <div class="sig-cta" style="color:var(--warn);">Robert Tulloch &rarr;</div>
+    </div>
+    <div class="sig-card gap" onclick="openModal('m-b-noplans')">
+      <div class="sig-label neg">Confirmed No Plans</div>
+      <div class="sig-val">4</div>
+      <div class="sig-desc">Customer confirmed no expansion, investment, or operational changes planned. Confirming stability is still useful intelligence.</div>
+      <div class="sig-cta" style="color:var(--warn);">Chad Novak &rarr;</div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ═══════════════ PAGE 5: JOURNEYS ═══════════════ -->
+<div class="page" data-label="Journeys" data-pg="5">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Sales Rep Journeys</div>
+  <div class="pt anim d2">Three stories. <span class="em">Three kinds of impact.</span></div>
+  <div class="ps anim d3">One sales rep per business unit. Each shows a different dimension of what &ldquo;building strategic customer understanding&rdquo; looks like when it is actually practiced.</div>
+  <div class="anim d4"><div class="abtn" data-open="See the journeys &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,5)">See the journeys &darr;</div></div>
+</div>
+<div class="detail" id="det5">
+  <div class="tab-row">
+    <div class="tab-btn active" onclick="switchTab(this,'j-tulloch','jt')">Robert Tulloch</div>
+    <div class="tab-btn" onclick="switchTab(this,'j-dorsey','jt')">Noah Dorsey</div>
+    <div class="tab-btn" onclick="switchTab(this,'j-hogg','jt')">Julie Hogg</div>
+  </div>
+
+  <div id="j-tulloch" class="tab-panel active" data-group="jt">
+  <div class="journey ivaco">
+    <div class="j-header">
+      <div class="j-avatar">RT</div>
+      <div><div class="j-name">Robert Tulloch</div><div class="j-meta">Territory Manager, Ivaco Rolling Mills &middot; 10 sessions, 21 workplace actions</div></div>
+    </div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,1.6vw,18px);font-weight:700;color:var(--white);margin-bottom:16px;">From budget gaps to multi-year roadmaps.</div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Questioned budget reality.</strong> Named a specific gap &mdash; orders running below budget &mdash; and uncovered three distinct business factors: a production line down for a week, new business ramp delayed, and fiscal year-end inventory drawdown.</div></div>
+    <div class="j-step"><div class="j-dot signal"></div><div class="j-text"><strong>Predicted the recovery.</strong> Called it: April shipments would be 600 tons, up 200 from budget. Then confirmed it with the customer as the factors resolved.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Built a multi-year projection.</strong> Used 3 years of historical data to draft a tonnage roadmap (5,300 tons in 2026, +5% annually). Presented it to the customer. Got honest pushback on tariff uncertainty.</div></div>
+    <div class="j-step"><div class="j-dot insight"></div><div class="j-text"><strong>Validated with conditions.</strong> Customer confirmed the growth assumption is reasonable &mdash; contingent on tariff relief. Revised 2027 to 5,500 tons. Fuel costs and political uncertainty flagged as headwinds.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Explored equipment at multiple accounts.</strong> One customer: no capex plans but watching interest rates and energy costs. Another: aging equipment with a potential new line in 2027.</div></div>
+    <div class="j-outcome"><div class="j-outcome-label">The Outcome</div><p>Robert now has a documented strategic picture across multiple accounts &mdash; validated growth projections, known constraints, and trigger points for when conditions change.</p></div>
+    <div style="margin-top:12px;"><span class="abtn" style="font-size:13px;padding:8px 18px;" onclick="openModal('m-tulloch-chat')">Full coaching chat &rarr;</span></div>
+  </div></div>
+
+  <div id="j-dorsey" class="tab-panel" data-group="jt">
+  <div class="journey infasco">
+    <div class="j-header">
+      <div class="j-avatar">ND</div>
+      <div><div class="j-name">Noah Dorsey</div><div class="j-meta">Account Manager, Infasco &middot; 10 sessions, 20 workplace actions</div></div>
+    </div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,1.6vw,18px);font-weight:700;color:var(--white);margin-bottom:16px;">Turning blank CRM records into strategic footholds.</div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Built a foothold at Cummins from zero.</strong> No CRM notes existed. Researched the X15 engine lineup expansion on LinkedIn, called, and learned about potential increased fastener demand &mdash; gated by a market test. Set a follow-up trigger.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Turned a vague signal into specifics.</strong> All State said &ldquo;we&rsquo;re growing with PACCAR.&rdquo; Noah drilled in: the ramp-up is real but gated by fluctuating inventory from the previous supplier.</div></div>
+    <div class="j-step"><div class="j-dot insight"></div><div class="j-text"><strong>Diagnosed a volume drop at Optimas.</strong> Orders were down. Noah investigated: internal restructuring after losing a major client &mdash; not a market issue. Different diagnosis, different response.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Led with data at General Fasteners.</strong> Brought Class 8 truck build forecasts (+30% in Q3/Q4) to the call. Customer confirmed they expect the same trend.</div></div>
+    <div class="j-outcome"><div class="j-outcome-label">The Outcome</div><p>Across four accounts, Noah is systematically surfacing intelligence that enables smarter forecasting. The Cummins account went from zero CRM notes to a documented strategic opportunity with a clear timeline.</p></div>
+    <div style="margin-top:12px;"><span class="abtn" style="font-size:13px;padding:8px 18px;" onclick="openModal('m-dorsey-chat')">Full coaching chat &rarr;</span></div>
+  </div></div>
+
+  <div id="j-hogg" class="tab-panel" data-group="jt">
+  <div class="journey sivaco">
+    <div class="j-header">
+      <div class="j-avatar">JH</div>
+      <div><div class="j-name">Julie Hogg</div><div class="j-meta">Outside Sales Rep, Sivaco &middot; 3 sessions, 6 workplace actions</div></div>
+    </div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,1.6vw,18px);font-weight:700;color:var(--white);margin-bottom:16px;">Uncovering opportunities the current setup can&rsquo;t reach.</div>
+    <div class="j-step"><div class="j-dot insight"></div><div class="j-text"><strong>Found a $1M+ capability gap at PLP.</strong> Probed on coating weight and discovered PLP buys $1,000,000+ annually of Class B and C galvanized that Sivaco cannot supply. The galv line maxes at 1.2 min vs. the 1.4 needed for Class B.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Identified a 75-ton new market opportunity at Formedge.</strong> Met with the GM. Construction customer mandating Canadian-made products. Spec: 23mm 1018 AKCHQ (1010 fallback). Timeline: Q2&ndash;Q3 2026.</div></div>
+    <div class="j-step"><div class="j-dot action"></div><div class="j-text"><strong>Uncovered a 20K/month conversion at Leicatex.</strong> Customer shifting from imported spool to domestic carrier wire due to import duties. Trial pending. If successful: 20,000 lbs/month starting May 2026.</div></div>
+    <div class="j-outcome"><div class="j-outcome-label">The Outcome</div><p>Three coaching sessions. Three concrete business opportunities with dollar values, specifications, and timelines. Julie&rsquo;s conversations show what happens when specification questions get specific enough to surface real revenue potential &mdash; and honest capability gaps.</p></div>
+    <div style="margin-top:12px;"><span class="abtn" style="font-size:13px;padding:8px 18px;" onclick="openModal('m-hogg-chat')">Full coaching chat &rarr;</span></div>
+  </div></div>
+</div></div>
+
+<!-- ═══════════════ PAGE 6: BY BU ═══════════════ -->
+<div class="page" data-label="By Business Unit" data-pg="6">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Signals by Business Unit</div>
+  <div class="pt anim d2">Different markets. <span class="em">Same shift.</span></div>
+  <div class="ps anim d3">Each business unit faces different customer dynamics &mdash; but the pattern is consistent: when your people ask better questions, they get better intelligence.</div>
+  <div class="anim d4"><div class="abtn" data-open="See the unit-level view &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,6)">See the unit-level view &darr;</div></div>
+</div>
+<div class="detail" id="det6">
+  <div class="dlbl">Intelligence by Business Unit</div>
+
+  <div class="mkt-card" style="padding:clamp(24px,3vw,36px);margin-bottom:20px;border-left:3px solid var(--p1);">
+    <div class="mkt-name" style="font-size:clamp(20px,2.2vw,26px);color:var(--p1);">Infasco</div>
+    <div style="font-size:clamp(14px,1.4vw,17px);color:var(--white-muted);margin-bottom:16px;">42 sessions &middot; 83 workplace actions &middot; 8 sales reps</div>
+    <div style="margin-bottom:12px;"><span class="pill" style="background:rgba(91,142,194,0.15);color:var(--p1);">Competitive Intelligence</span><span class="pill" style="background:rgba(91,142,194,0.15);color:var(--p1);">Contract Cycle Mapping</span><span class="pill" style="background:rgba(91,142,194,0.15);color:var(--p1);">New Customer Development</span></div>
+    <div style="font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);line-height:1.6;margin-bottom:12px;">Infasco&rsquo;s team is focused on understanding when and how customers evaluate suppliers &mdash; and what it takes to win or retain business.</div>
+    <div class="qc" style="margin:12px 0;"><div class="qt">Competitive Displacement</div><div class="qtx">&ldquo;Gregg Distributors is actively purchasing HCS Grade 5/8, Plow Bolts, and Threaded Rod from alternate suppliers due to more competitive pricing and better availability.&rdquo;</div><div class="qa">&mdash; Ryan Jones</div></div>
+    <div class="ib w" style="margin-top:12px;"><p><strong>Barrier:</strong> Competitive pricing pressure is the primary obstacle. Nucor&rsquo;s rebate program and offshore pricing are winning share that Infasco&rsquo;s quality advantage alone isn&rsquo;t recovering.</p></div>
+  </div>
+
+  <div class="mkt-card" style="padding:clamp(24px,3vw,36px);margin-bottom:20px;border-left:3px solid var(--gold);">
+    <div class="mkt-name" style="font-size:clamp(20px,2.2vw,26px);color:var(--gold);">Ivaco Rolling Mills</div>
+    <div style="font-size:clamp(14px,1.4vw,17px);color:var(--white-muted);margin-bottom:16px;">27 sessions &middot; 46 workplace actions &middot; 5 sales reps</div>
+    <div style="margin-bottom:12px;"><span class="pill" style="background:rgba(212,162,76,0.15);color:var(--gold);">Multi-Year Tonnage Planning</span><span class="pill" style="background:rgba(212,162,76,0.15);color:var(--gold);">Equipment Investment Timing</span><span class="pill" style="background:rgba(212,162,76,0.15);color:var(--gold);">Tariff Impact Assessment</span></div>
+    <div style="font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);line-height:1.6;margin-bottom:12px;">Ivaco&rsquo;s team is building the deepest forward-looking visibility. Multiple reps constructed tonnage roadmaps, validated them with customers, and documented strategic factors.</div>
+    <div class="qc" style="margin:12px 0;border-left-color:var(--gold);"><div class="qt" style="color:var(--gold);">Equipment Investment</div><div class="qtx">&ldquo;Hobart plans to launch a new grade they think will be a large gamechanger. New equipment should be ready end of this year, early next year. Ivaco is the only mill working on this with them.&rdquo;</div><div class="qa">&mdash; Matthew Jones</div></div>
+    <div class="ib a" style="margin-top:12px;"><p><strong>Barrier:</strong> Tariff uncertainty is making customers reluctant to plan beyond 12 months. Multiple reps report customers saying it&rsquo;s &ldquo;very difficult to predict&rdquo; past the current year.</p></div>
+  </div>
+
+  <div class="mkt-card" style="padding:clamp(24px,3vw,36px);margin-bottom:20px;border-left:3px solid var(--p3);">
+    <div class="mkt-name" style="font-size:clamp(20px,2.2vw,26px);color:var(--p3);">Sivaco</div>
+    <div style="font-size:clamp(14px,1.4vw,17px);color:var(--white-muted);margin-bottom:16px;">20 sessions &middot; 34 workplace actions &middot; 5 sales reps</div>
+    <div style="margin-bottom:12px;"><span class="pill" style="background:rgba(168,127,212,0.15);color:var(--p3);">Specification Evolution</span><span class="pill" style="background:rgba(168,127,212,0.15);color:var(--p3);">Tariff-Driven Sourcing Shifts</span><span class="pill" style="background:rgba(168,127,212,0.15);color:var(--p3);">Strategic Partnership Positioning</span></div>
+    <div style="font-size:clamp(15px,1.5vw,18px);color:var(--white-dim);line-height:1.6;margin-bottom:12px;">Sivaco&rsquo;s team is surfacing the most concrete dollar-valued opportunities &mdash; and the most honest capability gaps.</div>
+    <div class="qc" style="margin:12px 0;border-left-color:var(--p3);"><div class="qt" style="color:var(--p3);">Tariff-Driven Opportunity</div><div class="qtx">&ldquo;Leicatex is looking at switching from imported spool wire from Spain to domestic carrier wire due to duty/quota. If our trial is successful, 20,000 lbs per month starting May 2026.&rdquo;</div><div class="qa">&mdash; Julie Hogg</div></div>
+    <div class="ib a" style="margin-top:12px;"><p><strong>Barrier:</strong> Capability limitations are the primary constraint. The PLP coating gap ($1M+ annually) is the starkest example &mdash; documented with exact specs for a future investment decision.</p></div>
+  </div>
+</div></div>
+
+<!-- ═══════════════ PAGE 7: BASELINE ═══════════════ -->
+<div class="page" data-label="Baseline" data-pg="7">
+<div class="bridge"><div class="bridge-accent"></div>
+  <div class="ey anim d1">Where They Started</div>
+  <div class="pt anim d2">The starting line, <span class="em">not the finish.</span></div>
+  <div class="ps anim d3">Before the pilot, sales reps and managers rated current behaviors on a 0&ndash;10 scale. Follow-up surveys will measure the shift.</div>
+  <div class="anim d4"><div class="abtn" data-open="See baseline scores &darr;" data-close="Collapse &uarr;" onclick="openDetail(this,7)">See baseline scores &darr;</div></div>
+</div>
+<div class="detail" id="det7">
+  <div class="dlbl">Sales Rep Self-Assessment &mdash; Aligned Questions Across 3 BUs</div>
+  <div style="font-size:clamp(14px,1.4vw,16px);color:var(--white-muted);margin-bottom:20px;">Each bar represents one business unit&rsquo;s average on the same behavioral question, adapted for their product context. Scale: 0&ndash;10.</div>
+
+  <div class="bl-group"><div class="bl-q">Asks what&rsquo;s behind budget-to-actual gaps</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:63%;width:0;"><span>6.3</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:62%;width:0;"><span>6.2</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:63%;width:0;"><span>6.3</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Reviews order history before customer calls</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:68%;width:0;"><span>6.8</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:52%;width:0;"><span>5.2</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Asks about equipment investments and capacity plans</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:38%;width:0;"><span>3.8</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:61%;width:0;"><span>6.1</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:50%;width:0;"><span>5.0</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Prepares specific questions tied to data before calling</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:40%;width:0;"><span>4.0</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:68%;width:0;"><span>6.8</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:62%;width:0;"><span>6.2</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Connects market intelligence to customer-specific plans</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:52%;width:0;"><span>5.2</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:63%;width:0;"><span>6.3</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Analyzes order timing and frequency patterns</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:54%;width:0;"><span>5.4</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Anticipates requirement changes before they appear</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:45%;width:0;"><span>4.5</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:57%;width:0;"><span>5.7</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Key accounts share strategic info proactively</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:47%;width:0;"><span>4.7</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:53%;width:0;"><span>5.3</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:55%;width:0;"><span>5.5</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Forecasts require minimal correction</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill iv" style="--bar-w:50%;width:0;"><span>5.0</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill inf" style="--bar-w:54%;width:0;"><span>5.4</span></div></div></div>
+    <div class="bl-row"><div class="bl-label sv">Sivaco</div><div class="bl-track"><div class="bl-fill sv" style="--bar-w:57%;width:0;"><span>5.7</span></div></div></div>
+  </div>
+
+  <div class="dlbl" style="margin-top:36px;">Manager Assessment &mdash; Ivaco &amp; Infasco</div>
+  <div style="font-size:clamp(14px,1.4vw,16px);color:var(--white-muted);margin-bottom:20px;">Managers rated their direct reports on the same behaviors. Sivaco manager baseline was not completed. Dashed bars = manager view.</div>
+
+  <div class="bl-group"><div class="bl-q">Asks what&rsquo;s behind order variations</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:60%;width:0;"><span>6.0</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:49%;width:0;"><span>4.9</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Reviews order history and identifies patterns</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:63%;width:0;"><span>6.3</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:48%;width:0;"><span>4.8</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Uncovers investment plans before they appear in orders</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:55%;width:0;"><span>5.5</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:43%;width:0;"><span>4.3</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Prepares data-informed questions before calls</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:63%;width:0;"><span>6.3</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:54%;width:0;"><span>5.4</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Uses data/market intelligence for forecasting</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:48%;width:0;"><span>4.8</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:44%;width:0;"><span>4.4</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Forecasts are reliable / require minimal correction</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:57%;width:0;"><span>5.7</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:46%;width:0;"><span>4.6</span></div></div></div>
+  </div>
+
+  <div class="bl-group"><div class="bl-q">Key accounts share strategic info proactively</div>
+    <div class="bl-row"><div class="bl-label iv">Ivaco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:80%;width:0;"><span>8.0</span></div></div></div>
+    <div class="bl-row"><div class="bl-label inf">Infasco</div><div class="bl-track"><div class="bl-fill mgr" style="--bar-w:67%;width:0;"><span>6.7</span></div></div></div>
+  </div>
+
+  <div class="ib t" style="margin-top:20px;"><p><strong>Ivaco managers rate their teams higher than Infasco managers</strong> across every question &mdash; averaging 5.8 vs. 4.8. The largest gap: &ldquo;understands what will change requirements&rdquo; (Ivaco 7.0, Infasco 4.8). Follow-up surveys will show whether practice is closing these gaps.</p></div>
+</div></div>
+
+<!-- ═══════════════ PAGE 8: WHAT COMES NEXT ═══════════════ -->
+<div class="page" data-label="What Comes Next" data-pg="8">
+<div class="frame" style="text-align:center;">
+  <div class="ey anim d1">What Comes Next</div>
+  <div class="pt anim d2" style="max-width:900px;margin-left:auto;margin-right:auto;font-size:clamp(36px,6vw,64px);">The pilot is the calibration.<br><span class="em">The program is the payoff.</span></div>
+  <div class="ps anim d3" style="max-width:800px;margin-left:auto;margin-right:auto;font-size:clamp(20px,2.5vw,28px);">Part 2 proposes a structured program: one practice at a time, progressive difficulty, and a clear path from behavior change to forecast accuracy.</div>
+  <div class="sr anim d4" style="justify-content:center;max-width:900px;margin-left:auto;margin-right:auto;margin-top:clamp(24px,4vh,40px);">
+    <div class="sc" style="border-color:rgba(91,142,194,0.3);background:rgba(91,142,194,0.06);padding:clamp(24px,3vw,36px);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--navy-bright);margin-bottom:6px;">One Practice at a Time</div>
+      <div class="sl" style="font-size:clamp(15px,1.5vw,18px);">Depth over breadth. Habits that stick.</div>
+    </div>
+    <div class="sc" style="border-color:rgba(212,162,76,0.3);background:rgba(212,162,76,0.06);padding:clamp(24px,3vw,36px);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--gold);margin-bottom:6px;">201-Level Activities</div>
+      <div class="sl" style="font-size:clamp(15px,1.5vw,18px);">Built for where your teams are now.</div>
+    </div>
+    <div class="sc" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.06);padding:clamp(24px,3vw,36px);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--green);margin-bottom:6px;">Reusable for Onboarding</div>
+      <div class="sl" style="font-size:clamp(15px,1.5vw,18px);">Pilot activities become the new-hire path.</div>
+    </div>
+  </div>
+</div></div>
+
+<script>
+const pages=document.querySelectorAll('.page'),nD=document.getElementById('nD'),nL=document.getElementById('nL');
+let cur=0;
+function buildNav(){pages.forEach((_,i)=>{const d=document.createElement('div');d.className='nd'+(i===0?' active':'');d.textContent=i+1;d.onclick=()=>go(i);nD.appendChild(d);});updateLabel();}
+function updateLabel(){nL.textContent=pages[cur].dataset.label||'';}
+function go(i){if(i<0||i>=pages.length)return;pages[cur].classList.remove('active');document.querySelectorAll('.nd')[cur].classList.remove('active');cur=i;pages[cur].classList.add('active');document.querySelectorAll('.nd')[cur].classList.add('active');updateLabel();pages[cur].scrollTop=0;runCounters(pages[cur]);}
+function next(){go(cur+1);}function prev(){go(cur-1);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev();});
+buildNav();
+
+function openDetail(btn,n){
+  const d=document.getElementById('det'+n);if(!d)return;
+  const isOpen=d.classList.contains('open');
+  d.classList.toggle('open');
+  if(!isOpen){
+    btn.innerHTML=btn.dataset.close||'Collapse &uarr;';
+    setTimeout(()=>{d.scrollIntoView({behavior:'smooth',block:'start'});animateBars(d);},100);
+    runCounters(d);
+  } else {
+    btn.innerHTML=btn.dataset.open||'Expand &darr;';
+  }
+}
+
+function switchTab(btn,panelId,group){
+  const parent=btn.closest('.detail')||btn.closest('.page');
+  parent.querySelectorAll('[data-group="'+group+'"]').forEach(p=>p.classList.remove('active'));
+  parent.querySelectorAll('.tab-btn').forEach(b=>{
+    if(b.closest('.tab-row')===btn.closest('.tab-row'))b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+function runCounters(container){container.querySelectorAll('[data-count]').forEach(el=>{const target=parseFloat(el.dataset.count);const suffix=el.dataset.suffix||'';const isDecimal=String(target).includes('.');const duration=800;const start=performance.now();function tick(now){const elapsed=now-start;const progress=Math.min(elapsed/duration,1);const eased=1-Math.pow(1-progress,3);const current=target*eased;el.textContent=(isDecimal?current.toFixed(1):Math.round(current).toLocaleString())+(suffix?' '+suffix:'');if(progress<1)requestAnimationFrame(tick);}requestAnimationFrame(tick);});}
+
+function animateBars(container){
+  container.querySelectorAll('.bl-fill').forEach(bar=>{
+    const target=bar.style.getPropertyValue('--bar-w');
+    bar.style.width='0';
+    setTimeout(()=>{bar.style.width=target;},50);
+  });
+}
+
+// Modal system
+const ct=(role,name,text)=>{
+  const isUser=role==='user';
+  return `<div class="chat-turn ${isUser?'from-user':'from-ai'}"><div class="chat-label ${isUser?'user':'ai'}">${name}</div><div class="chat-bubble ${isUser?'chat-user':'chat-ai'}">${text}</div></div>`;
+};
+const modalData={
+  'm-expansion':`<div class="qt">Expansion &amp; Investment Plans</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Matthew Jones &mdash; Learn Equipment Investment Implications</div><div class="chat-wrap">${ct('ai','AI Coach','Good pick. Go have that conversation with Hobart Bros about equipment plans and spec changes.')}\n${ct('user','Matthew Jones','We have been in the midst of running trials with Hobart. Ivaco is working with Hobart&rsquo;s quality department, along with their research and development group. They plan to launch a new grade that they think will be a large gamechanger in the welding industry. They are buying new equipment that should be ready to process the goods starting the end of this year, early next year.')}\n${ct('ai','AI Coach','That&rsquo;s exactly what you&rsquo;re looking for &mdash; great outcome! Did you get a sense of the timeline and when they&rsquo;d start supplier discussions?')}\n${ct('user','Matthew Jones','They provided a timeline of a third quarter target.')}</div>`,
+  'm-competitive':`<div class="qt" style="color:var(--gold);">Competitive Positioning</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Kevin Theriault &mdash; Map Out Contract Renewal and Pricing Review Cycles</div><div class="chat-wrap">${ct('ai','AI Coach','What did you find out about Wurth&rsquo;s pricing review timing and how they evaluate suppliers?')}\n${ct('user','Kevin Theriault','No evaluation. Both have quality product. Nucor has a rebate program and Infasco does not. We are about 7-8% more expensive.')}\n${ct('ai','AI Coach','That&rsquo;s really useful intel. So it&rsquo;s not about quality or evaluation criteria &mdash; it&rsquo;s a straight price/rebate gap. Did you get a sense of when they do their annual pricing review?')}\n${ct('user','Kevin Theriault','Beginning of each year.')}\n${ct('ai','AI Coach','Perfect &mdash; so you have until end of year to put something together. Log this in CRM: annual pricing review in January, competitive on quality, 7-8% price gap vs. Nucor, rebate program is the differentiator.')}</div>`,
+  'm-ordering':`<div class="qt" style="color:var(--green);">Ordering Patterns Decoded</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Ryan Jones &mdash; Identify Basic Ordering Rhythm</div><div class="chat-wrap">${ct('ai','AI Coach','Go pull up their last 6 months of order history and list out the order dates &mdash; then calculate the average gap between orders.')}\n${ct('user','Ryan Jones','The calculated ordering rhythm averages approximately 10 days between orders, but with significant variability and no consistent clustering, indicating a lack of a regular purchasing cycle. This was confirmed through discussions with the customer&rsquo;s purchasing team, who advised that orders are placed on an as-needed basis &mdash; primarily driven by specific end-user requests or supply gaps.')}\n${ct('ai','AI Coach','That&rsquo;s a sharp analysis &mdash; and a really valuable insight. The irregular pattern isn&rsquo;t just about ordering rhythm, it&rsquo;s a signal about your supplier position with them. Now just log that in your CRM.')}</div>`,
+  'm-multiyear':`<div class="qt" style="color:var(--navy-bright);">Multi-Year Projections</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Robert Tulloch &mdash; Build a Preliminary Tonnage Roadmap</div><div class="chat-wrap">${ct('ai','AI Coach','Now it&rsquo;s time to bring this to the customer &mdash; present the draft and let them react to it.')}\n${ct('user','Robert Tulloch','We spoke this morning and they said as long as we can remain competitive and we see some tariff relief by year end we should see modest growth in 2027 and hopefully beyond. Market uncertainty as escalation in fuel pricing a concern leading to difficulty in predicting market direction. Also, expectations of Democratic control of House and or Senate after upcoming mid-terms will lead to two years of nothing being accomplished is concerning.')}\n${ct('ai','AI Coach','That&rsquo;s really valuable validation. Your 5% growth assumption sounds reasonable to them, but it&rsquo;s clearly contingent. Worth documenting those conditions so you can revisit the roadmap as things develop.')}\n${ct('user','Robert Tulloch','2027 5500 tons.')}</div>`,
+  'm-capgap':`<div class="qt" style="color:var(--amber);">Capability Gaps Identified</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Julie Hogg &mdash; Explore Specification Evolution</div><div class="chat-wrap">${ct('ai','AI Coach','That&rsquo;s a perfect signal &mdash; they&rsquo;re probing on coating weight. On your next call with PLP, dig into what&rsquo;s driving the coating weight question.')}\n${ct('user','Julie Hogg','They are not looking at changing spec for what they are buying from Sivaco but they do buy $1,000,000 annual of the Class B and some class C as well.')}\n${ct('ai','AI Coach','That&rsquo;s a great discovery &mdash; there&rsquo;s potentially $1M+ of business. Do you know if Sivaco has the capability to supply Class B and Class C coating weights?')}\n${ct('user','Julie Hogg','Unfortunately, we do not. Here are the specs Class A 0.7min, Class B 1.4 min, Class C 2.1 min. On our galv line, we can guarantee 1.2 min (not quite enough for class B, and far off class C).')}\n${ct('ai','AI Coach','So the conversation confirmed a real capability gap. Worth documenting in CRM: the gap, the $1M+ volume, and the specs &mdash; so if Sivaco ever upgrades the line, this is a ready opportunity.')}</div>`,
+  'm-contract':`<div class="qt" style="color:var(--p3);">Contract Cycles Mapped</div><div style="font-size:18px;font-weight:700;margin:12px 0;">Noah Dorsey &mdash; Review Contract and Procurement Context</div><div class="chat-wrap">${ct('ai','AI Coach','Good start &mdash; having the contract itself is more than most reps dig up. Now go make the call &mdash; reference the expired contract and ask your prepared questions.')}\n${ct('user','Noah Dorsey','Pablo Santiago is new to his role as sourcing manager, so he needs to get his footing before they renew any contracts.')}\n${ct('ai','AI Coach','That&rsquo;s valuable intel &mdash; you now know exactly why it&rsquo;s been stalled. Go log that in the CRM: Pablo&rsquo;s new role, the contract renewal on hold while he gets settled.')}\n${ct('user','Noah Dorsey','Also key to this is Pablo&rsquo;s project to send out RFQ packages before renewing contracts.')}\n${ct('ai','AI Coach','That&rsquo;s critical &mdash; add that to your CRM note too. You&rsquo;re now ahead of a competitive RFQ process rather than getting surprised by it.')}</div>`,
+  'm-b-earlystage':`<div class="qt" style="color:var(--warn);">Plans Too Early-Stage</div><div style="font-size:16px;font-weight:700;margin:12px 0;">Noah Dorsey &mdash; Turn General Growth Plans Into Specific Timelines</div><div class="chat-wrap">${ct('ai','AI Coach','You mentioned All State said they&rsquo;re growing with PACCAR. Turn that into specifics &mdash; what specifically, when, and how it affects fastener volumes.')}\n${ct('user','Noah Dorsey','Unfortunately, their ramp up schedule is currently complicated by a fluctuating inventory of product. They went into this project assuming they had a certain amount of inventory, and in some cases they have more and in some cases they have less. This is making it difficult for them to pinpoint how quickly they&rsquo;ll ramp up with Infasco.')}\n${ct('ai','AI Coach','That&rsquo;s really useful intel &mdash; not a blank wall, just a timing blocker you now understand. You know the ramp-up is real, just gated by inventory clarity. Log what you learned and set a follow-up trigger for when their inventory picture clears up.')}</div>`,
+  'm-b-tariff':`<div class="qt" style="color:var(--warn);">Tariff-Blocked Opportunities</div><div style="font-size:16px;font-weight:700;margin:12px 0;">Jeff Roberts &mdash; Understand Customer Investment Plans</div><div class="chat-wrap">${ct('ai','AI Coach','What did you learn from Valley Fastener about the Chicago Fastener acquisition?')}\n${ct('user','Jeff Roberts','It is all carbon and alloy DFAR CHQ from .500&quot; - .875&quot;. This is currently supplied by Charter Steel and will not consider a change due to 50% tariffs. Will revisit once tariffs are reduced or removed.')}\n${ct('ai','AI Coach','Useful intelligence. Document that timeline trigger in your CRM: revisit when tariffs on DFAR CHQ are reduced or removed. That&rsquo;s your follow-up flag.')}</div>`,
+  'm-b-couldnt':`<div class="qt" style="color:var(--warn);">Customer Couldn&rsquo;t Articulate</div><div style="font-size:16px;font-weight:700;margin:12px 0;">Robert Tulloch &mdash; Explore How Existing Equipment Changes Affect Specifications</div><div class="chat-wrap">${ct('ai','AI Coach','Will the new equipment change what wire rod specs they need, or just let them run current specs more efficiently?')}\n${ct('user','Robert Tulloch','Faster and more reliable with much less downtime.')}\n${ct('ai','AI Coach','Good context. Faster and more reliable usually means they can run tighter tolerances and potentially higher volumes. Worth asking on your next touchpoint: will the new line change what specs they need, or just increase throughput?')}</div>`,
+  'm-b-noplans':`<div class="qt" style="color:var(--warn);">Confirmed No Plans</div><div style="font-size:16px;font-weight:700;margin:12px 0;">Chad Novak &mdash; Learn Equipment Investment Implications</div><div class="chat-wrap">${ct('ai','AI Coach','Which customer comes to mind for an equipment investment conversation?')}\n${ct('user','Chad Novak','Unlikely no customer at the moment but the only one to likely listen would be Mid-South.')}\n${ct('ai','AI Coach','Even if no major investments are on the horizon, the goal is to have the conversation with someone at the management level and ask the question directly.')}\n${ct('user','Chad Novak','Nothing of importance in the near future. Spec changes and size changes are usually driven by the market/customer unless something can be done more efficiently at Mid-South level.')}\n${ct('ai','AI Coach','That&rsquo;s still useful intel &mdash; confirms their spec changes are market-driven, not capital-driven. Go ahead and log that in your CRM so you have it on record.')}</div>`,
+  'm-tulloch-chat':`<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;">Robert Tulloch &mdash; Question Customer Budget Reality</div><div class="chat-wrap">${ct('ai','AI Coach','Take a quick look at that customer&rsquo;s recent order history and identify the specific gap. Come back once you&rsquo;ve got the gap identified.')}\n${ct('user','Robert Tulloch','I have recently discussed with them why the gap from budget and historical levels.')}\n${ct('ai','AI Coach','Did you learn the specific business factors behind the gap &mdash; things like equipment issues, line shutdowns, customer cancellations?')}\n${ct('user','Robert Tulloch','Several factors, they did have a production line go down for about a week causing them lost production. Also, planned new business has been slow to start up delaying planned full production of new diameters on new equipment. Also, they are on a fiscal calendar with year-end in March and had been reducing inventory. Now that they are past that we can expect business to be closer to plan.')}\n${ct('ai','AI Coach','That&rsquo;s excellent strategic intelligence. You got three distinct business factors: line downtime, new business ramp delay, and fiscal year-end inventory reduction. Get this documented in your CRM.')}\n${ct('user','Robert Tulloch','As discussed with customer we are seeing increased shipments for April now that their financial year end is over. Also, their line that was down is now back up and operating. As for the new line they expect to be in full production by late Q2 or early Q3.')}\n${ct('user','Robert Tulloch','April shipments should be 600 tons up by 200 tons from budget numbers.')}</div>`,
+  'm-dorsey-chat':`<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;">Noah Dorsey &mdash; Understand Strategic Investment Plans (Cummins)</div><div class="chat-wrap">${ct('ai','AI Coach','Cummins is a great choice. Before you call, take a quick look at your CRM and any recent notes on Cummins.')}\n${ct('user','Noah Dorsey','There are no notes on the Cummins account in our CRM. I&rsquo;m coming in blind.')}\n${ct('ai','AI Coach','Cummins is a public company, so there&rsquo;s plenty to work with. A quick Google of recent Cummins news will give you enough to ask smart questions.')}\n${ct('user','Noah Dorsey','They are expanding their heavy-duty X15 engine lineup.')}\n${ct('ai','AI Coach','X15 expansion could mean increased production volumes, new specifications, or both. Time to go ask about it.')}\n${ct('user','Noah Dorsey','Yes, they said there could be an increase in demand for fasteners due to this.')}\n${ct('ai','AI Coach','Did you get any specifics on timing or volume?')}\n${ct('user','Noah Dorsey','Their first priority is to deal with an ongoing market test, then they will address this.')}\n${ct('ai','AI Coach','Good intel &mdash; you know what&rsquo;s on their plate and what comes next. Log that in the CRM so you have a reason to follow up at the right time.')}</div>`,
+  'm-hogg-chat':`<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;">Julie Hogg &mdash; Explore Specification Evolution (PLP)</div><div class="chat-wrap">${ct('ai','AI Coach','Good choice. What do you know about PLP&rsquo;s current markets and wire usage?')}\n${ct('user','Julie Hogg','Customer is asking about our hot dip galvanized capability in terms of coating weight / thickness. At the present we supply them a .100 class A hot dip galv.')}\n${ct('ai','AI Coach','That&rsquo;s a perfect signal. On your next call with PLP, dig into what&rsquo;s driving the coating weight question.')}\n${ct('user','Julie Hogg','They are not looking at changing spec for what they are buying from Sivaco but they do buy $1,000,000 annual of the Class B and some class C as well.')}\n${ct('ai','AI Coach','That&rsquo;s a great discovery &mdash; there&rsquo;s potentially $1M+ of business. Do you know if Sivaco has the capability?')}\n${ct('user','Julie Hogg','Unfortunately, we do not. Here are the specs Class A 0.7min, Class B 1.4 min, Class C 2.1 min. On our galv line, we can guarantee 1.2 min (not quite enough for class B, and far off class C).')}\n${ct('ai','AI Coach','So the conversation confirmed a real capability gap. Worth documenting in CRM: the gap, the $1M+ volume, and the specs &mdash; so if Sivaco ever upgrades the line, this is a ready opportunity.')}</div>`,
+};
+
+function openModal(id){
+  const body=document.getElementById('modalBody');
+  body.innerHTML=modalData[id]||'<p>Content not available.</p>';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+runCounters(pages[0]);
+</script>
+</body>
+</html>
