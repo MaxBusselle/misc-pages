@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEICO — Client Overview · Flint</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy:        #0F2648;
+      --navy-mid:    #1C3D6E;
+      --blue:        #1D6FD8;
+      --blue-light:  #E8F1FB;
+      --text:        #0F2648;
+      --text-sub:    #5A6478;
+      --border:      #DDE3EC;
+      --bg:          #FFFFFF;
+      --bg-alt:      #F7F9FC;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* ── SLIDES ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 48px 64px 44px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── HEADER ── */
+    .slide-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--navy);
+      flex-shrink: 0;
+    }
+    .client-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.4px;
+    }
+    .client-meta {
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+    .slide-label {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: var(--blue);
+    }
+
+    /* ── SECTION LABELS ── */
+    .eyebrow {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+    .col-headline {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.35;
+      margin-bottom: 18px;
+    }
+
+    /* ══════════════════════════
+       SLIDE 1
+    ══════════════════════════ */
+    .s1-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr auto;
+      gap: 24px 48px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Investment list */
+    .investment-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .investment-list li {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+    }
+    .investment-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* Friction items */
+    .friction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .friction-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .friction-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--blue-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .friction-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--blue);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .friction-text strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .friction-text span {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    /* Missed bar — spans full width */
+    .missed-bar {
+      grid-column: 1 / -1;
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-shrink: 0;
+    }
+    .missed-bar-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+    }
+    .missed-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .missed-tag {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    /* ══════════════════════════
+       SLIDE 2
+    ══════════════════════════ */
+    .s2-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 48px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Practice cards */
+    .practices-col {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .practice-card {
+      background: var(--bg-alt);
+      border-radius: 10px;
+      padding: 15px 18px;
+      border-left: 3px solid var(--blue);
+    }
+    .practice-num {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--blue);
+      margin-bottom: 5px;
+    }
+    .practice-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .practice-desc {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    /* Right column */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    /* Pilot badge */
+    .pilot-badge {
+      display: inline-flex;
+      gap: 28px;
+      background: var(--blue-light);
+      border-radius: 10px;
+      padding: 14px 22px;
+      align-self: flex-start;
+    }
+    .pilot-stat-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .pilot-stat-lbl {
+      font-size: 11.5px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* Measurement */
+    .measure-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .measure-item {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+    }
+    .measure-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .measure-item strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 1px;
+    }
+    .measure-item span {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    /* Bridge line */
+    .bridge {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--blue);
+      border-top: 1px solid var(--border);
+    }
+    .bridge-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    .bridge-arrow svg {
+      width: 12px;
+      height: 12px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      bottom: 26px;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+    }
+    .nav-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+      color: var(--text-sub);
+    }
+    .nav-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .nav-btn:hover:not(:disabled) {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .nav-btn:disabled {
+      opacity: 0.28;
+      cursor: default;
+    }
+    .nav-indicator {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-sub);
+      min-width: 32px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ SLIDE 1 ══ -->
+  <div class="slide active" id="slide-1">
+
+    <div class="slide-header">
+      <span class="client-name">HEICO</span>
+      <span class="client-meta">Aerospace Parts Manufacturer &nbsp;·&nbsp; Three Business Units</span>
+      <span class="slide-label">The Challenge</span>
+    </div>
+
+    <div class="s1-body">
+
+      <!-- Left: Investment -->
+      <div>
+        <div class="eyebrow">The Training Investment</div>
+        <div class="col-headline">HEICO has invested in<br>developing its sales team.</div>
+        <ul class="investment-list">
+          <li>Extensive onboarding program for all new sales reps</li>
+          <li>Twice-yearly in-person events — annual kickoff and midyear training</li>
+          <li>Monthly best-practices sessions, remote and optional</li>
+        </ul>
+      </div>
+
+      <!-- Right: Friction -->
+      <div>
+        <div class="eyebrow">Why Behaviors Weren't Sticking</div>
+        <div class="col-headline">Yet the habits weren't<br>translating in the field.</div>
+        <div class="friction-list">
+
+          <div class="friction-item">
+            <div class="friction-icon">
+              <!-- Refresh/cycle icon -->
+              <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg>
+            </div>
+            <div class="friction-text">
+              <strong>Reactive selling as the default</strong>
+              <span>Under pressure, reps respond to what customers ask for rather than leading the conversation</span>
+            </div>
+          </div>
+
+          <div class="friction-item">
+            <div class="friction-icon">
+              <!-- Scale/balance icon -->
+              <svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="21"/><path d="M5 8l7-5 7 5"/><path d="M6 12H2l4 7"/><path d="M18 12h4l-4 7"/></svg>
+            </div>
+            <div class="friction-text">
+              <strong>Manager variability</strong>
+              <span>How much a rep develops depends heavily on the relative strength of their individual manager</span>
+            </div>
+          </div>
+
+          <div class="friction-item">
+            <div class="friction-icon">
+              <!-- Zap/pace icon -->
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="friction-text">
+              <strong>The pace of the job</strong>
+              <span>Traveling, busy — advanced skill-building loses out to getting through the week</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom: What gets missed -->
+      <div class="missed-bar">
+        <span class="missed-bar-label">What Gets Missed</span>
+        <div class="missed-tags">
+          <span class="missed-tag">Expansion plans</span>
+          <span class="missed-tag">Equipment investments</span>
+          <span class="missed-tag">Ordering logic</span>
+          <span class="missed-tag">Competitive positioning</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 2 ══ -->
+  <div class="slide" id="slide-2">
+
+    <div class="slide-header">
+      <span class="client-name">HEICO</span>
+      <span class="client-meta">Aerospace Parts Manufacturer &nbsp;·&nbsp; Three Business Units</span>
+      <span class="slide-label">What They Set Out to Build</span>
+    </div>
+
+    <div class="s2-body">
+
+      <!-- Left: Three practices -->
+      <div class="practices-col">
+        <div class="eyebrow">Three Target Behaviors</div>
+
+        <div class="practice-card">
+          <div class="practice-num">Practice 01</div>
+          <div class="practice-title">Asking Strategic Questions</div>
+          <div class="practice-desc">Moving past surface-level budget conversations to probe production realities, market conditions, and business factors that forecasts miss.</div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-num">Practice 02</div>
+          <div class="practice-title">Analyzing Data &amp; Trends</div>
+          <div class="practice-desc">Reading order history, identifying patterns, comparing customer demand against market trends, and using data to anchor customer conversations.</div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-num">Practice 03</div>
+          <div class="practice-title">Uncovering Long-Range Timelines</div>
+          <div class="practice-desc">Surfacing expansion plans, equipment investments, contract cycles, and multi-year roadmaps before they appear in budget forecasts.</div>
+        </div>
+      </div>
+
+      <!-- Right: Pilot + Measurement -->
+      <div class="right-col">
+
+        <div>
+          <div class="eyebrow">The Pilot</div>
+          <div class="pilot-badge">
+            <div>
+              <div class="pilot-stat-val">3</div>
+              <div class="pilot-stat-lbl">Business Units</div>
+            </div>
+            <div>
+              <div class="pilot-stat-val">6</div>
+              <div class="pilot-stat-lbl">Weeks</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="eyebrow">How They're Measuring It</div>
+          <div class="measure-list">
+
+            <div class="measure-item">
+              <div class="measure-dot"></div>
+              <div>
+                <strong>Participant self-assessment</strong>
+                <span>Behavioral ratings at start and end of the initiative</span>
+              </div>
+            </div>
+
+            <div class="measure-item">
+              <div class="measure-dot"></div>
+              <div>
+                <strong>Manager assessment</strong>
+                <span>Each manager rates their direct reports at start and end</span>
+              </div>
+            </div>
+
+            <div class="measure-item">
+              <div class="measure-dot"></div>
+              <div>
+                <strong>Business outcomes <em style="font-style:normal; font-weight:400; color:var(--text-sub); font-size:12px;">(intended)</em></strong>
+                <span>Average order values, client retention</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="bridge">
+          <span>Here's what practice looks like for a rep</span>
+          <div class="bridge-arrow">
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ NAVIGATION ══ -->
+  <div class="nav">
+    <button class="nav-btn" id="prev-btn" onclick="navigate(-1)" disabled>
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <span class="nav-indicator" id="nav-ind">1 / 2</span>
+    <button class="nav-btn" id="next-btn" onclick="navigate(1)">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <script>
+    let cur = 1;
+    const total = 2;
+
+    function navigate(dir) {
+      document.getElementById('slide-' + cur).classList.remove('active');
+      cur += dir;
+      document.getElementById('slide-' + cur).classList.add('active');
+      document.getElementById('nav-ind').textContent = cur + ' / ' + total;
+      document.getElementById('prev-btn').disabled = cur === 1;
+      document.getElementById('next-btn').disabled = cur === total;
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && cur < total) navigate(1);
+      if ((e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   && cur > 1)     navigate(-1);
+    });
+  </script>
+
+</body>
+</html>
