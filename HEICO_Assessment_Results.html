@@ -12,7 +12,6 @@
     :root {
       --bg:        #0D1117;
       --card:      #161B22;
-      --card2:     #1C2330;
       --border:    #2D3748;
       --text:      #E6EDF3;
       --text2:     #8B949E;
@@ -20,6 +19,7 @@
       --before-c:  #374151;
       --gain-c:    #1D6FD8;
       --delta-c:   #3DD68C;
+      --threshold: #F59E0B;
       --ivaco:     #60A5FA;
       --infasco:   #C4B5FD;
       --sivaco:    #FCD34D;
@@ -65,7 +65,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      margin-bottom: 48px;
+      margin-bottom: 44px;
     }
 
     .stat-card {
@@ -90,8 +90,9 @@
     .legend {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 24px;
       margin-bottom: 32px;
+      flex-wrap: wrap;
     }
 
     .legend-item {
@@ -103,13 +104,21 @@
     }
 
     .legend-swatch {
-      width: 32px;
+      width: 28px;
       height: 9px;
       border-radius: 5px;
     }
 
     .ls-before { background: var(--before-c); }
     .ls-after  { background: var(--gain-c); }
+
+    .legend-threshold {
+      width: 2px;
+      height: 16px;
+      background: var(--threshold);
+      border-radius: 1px;
+      opacity: 0.85;
+    }
 
     /* ── SECTION ── */
     .section { margin-bottom: 56px; }
@@ -122,8 +131,7 @@
     }
 
     .section-title { font-size: 19px; font-weight: 700; }
-
-    .section-note { font-size: 12.5px; color: var(--text2); }
+    .section-note  { font-size: 12.5px; color: var(--text2); }
 
     .section-rule {
       border: none;
@@ -180,6 +188,14 @@
       height: 18px;
       background: var(--track);
       border-radius: 5px;
+      overflow: visible;
+    }
+
+    /* clip inner segments */
+    .bar-inner {
+      position: absolute;
+      inset: 0;
+      border-radius: 5px;
       overflow: hidden;
     }
 
@@ -188,7 +204,6 @@
       left: 0; top: 0;
       height: 100%;
       background: var(--before-c);
-      border-radius: 5px 0 0 5px;
     }
 
     .bar-gain {
@@ -196,19 +211,29 @@
       top: 0;
       height: 100%;
       background: var(--gain-c);
-      /* rounded right end */
-      border-radius: 0 5px 5px 0;
     }
 
-    /* divider between before and gain */
     .bar-divider {
       position: absolute;
       top: 0;
       width: 2px;
       height: 100%;
       background: var(--bg);
-      opacity: 0.6;
+      opacity: 0.5;
       z-index: 2;
+    }
+
+    /* Threshold marker — sits on top of the track, slightly taller */
+    .bar-threshold {
+      position: absolute;
+      top: -3px;
+      bottom: -3px;
+      width: 2px;
+      background: var(--threshold);
+      opacity: 0.85;
+      border-radius: 1px;
+      z-index: 10;
+      left: 50%; /* 5/10 = 50% */
     }
 
     /* ── VALUES ── */
@@ -235,7 +260,7 @@
       text-align: center;
     }
 
-    /* ── CALLOUT NOTE ── */
+    /* ── CALLOUT ── */
     .callout {
       margin-top: 20px;
       background: var(--card);
@@ -253,30 +278,27 @@
 <body>
 <div class="container">
 
-  <!-- Header -->
   <div class="page-header">
     <div class="overline">HEICO · Behavioral Assessment</div>
     <div class="page-title">Measuring the Shift</div>
     <div class="page-subtitle">Self-assessment and manager assessment — start vs. end of initiative &nbsp;·&nbsp; Scale: 0–10</div>
   </div>
 
-  <!-- Summary stats -->
   <div class="summary-row">
     <div class="stat-card">
-      <div class="stat-val">+1.9</div>
+      <div class="stat-val">+1.4</div>
       <div class="stat-label">Avg improvement per behavior<br>Sales rep self-assessment</div>
     </div>
     <div class="stat-card">
-      <div class="stat-val">+2.0</div>
+      <div class="stat-val">+1.4</div>
       <div class="stat-label">Avg improvement per behavior<br>Manager assessment</div>
     </div>
     <div class="stat-card">
-      <div class="stat-val">100%</div>
-      <div class="stat-label">Of assessed behaviors showing<br>measurable improvement</div>
+      <div class="stat-val">2 in 3</div>
+      <div class="stat-label">Behaviors at or above target<br>threshold by end of initiative</div>
     </div>
   </div>
 
-  <!-- Legend -->
   <div class="legend">
     <div class="legend-item">
       <div class="legend-swatch ls-before"></div>
@@ -286,9 +308,13 @@
       <div class="legend-swatch ls-after"></div>
       <span>End of initiative</span>
     </div>
+    <div class="legend-item">
+      <div class="legend-threshold"></div>
+      <span>Target threshold (5)</span>
+    </div>
   </div>
 
-  <!-- Section 1: Sales Rep Self-Assessment -->
+  <!-- Sales Rep Self-Assessment -->
   <div class="section">
     <div class="section-header">
       <span class="section-title">Sales Rep Self-Assessment</span>
@@ -298,7 +324,7 @@
     <div id="rep-qs"></div>
   </div>
 
-  <!-- Section 2: Manager Assessment -->
+  <!-- Manager Assessment -->
   <div class="section">
     <div class="section-header">
       <span class="section-title">Manager Assessment</span>
@@ -308,7 +334,7 @@
     <div id="mgr-qs"></div>
 
     <div class="callout">
-      <strong>Infasco closed the gap.</strong> At the start of the initiative Ivaco managers rated their teams higher than Infasco managers across every behavior, averaging 6.1 vs. 5.0. By the end, Infasco managers' average rating rose from 5.0 to 7.1 — nearly matching Ivaco's 7.9 — the largest relative gain of any group assessed.
+      <strong>Infasco closed the gap.</strong> Ivaco managers rated their teams higher at baseline across nearly every behavior — averaging 3.9 vs. 3.0. By end of initiative the gap largely closed, with Infasco managers' average rising from 3.0 to 4.9. Notably, Infasco showed the single largest gain of any group on "asks what's behind order variations" (+2.3) while Ivaco managers saw almost no movement on behaviors where they already rated their teams above threshold.
     </div>
   </div>
 
@@ -319,73 +345,73 @@
     {
       q: "Asks what's behind budget-to-actual gaps",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.1 },
-        { name:"Infasco", c:"infasco", b:6.2, a:7.9 },
-        { name:"Sivaco",  c:"sivaco",  b:6.3, a:8.0 },
+        { name:"Ivaco",   c:"ivaco",   b:5.3, a:5.4 },
+        { name:"Infasco", c:"infasco", b:4.2, a:6.1 },
+        { name:"Sivaco",  c:"sivaco",  b:3.8, a:5.6 },
       ]
     },
     {
       q: "Reviews order history before customer calls",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.7, a:6.9 },
-        { name:"Infasco", c:"infasco", b:6.8, a:8.4 },
-        { name:"Sivaco",  c:"sivaco",  b:5.2, a:7.3 },
+        { name:"Ivaco",   c:"ivaco",   b:2.9, a:5.3 },
+        { name:"Infasco", c:"infasco", b:4.8, a:5.0 },
+        { name:"Sivaco",  c:"sivaco",  b:3.4, a:5.1 },
       ]
     },
     {
       q: "Asks about equipment investments and capacity plans",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:3.8, a:6.2 },
-        { name:"Infasco", c:"infasco", b:6.1, a:7.8 },
-        { name:"Sivaco",  c:"sivaco",  b:5.0, a:7.2 },
+        { name:"Ivaco",   c:"ivaco",   b:2.3, a:4.5 },
+        { name:"Infasco", c:"infasco", b:2.8, a:5.0 },
+        { name:"Sivaco",  c:"sivaco",  b:3.1, a:3.2 },
       ]
     },
     {
       q: "Prepares specific questions tied to data before calling",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.0, a:6.4 },
-        { name:"Infasco", c:"infasco", b:6.8, a:8.5 },
-        { name:"Sivaco",  c:"sivaco",  b:6.2, a:8.0 },
+        { name:"Ivaco",   c:"ivaco",   b:3.2, a:5.5 },
+        { name:"Infasco", c:"infasco", b:5.1, a:5.2 },
+        { name:"Sivaco",  c:"sivaco",  b:2.7, a:4.9 },
       ]
     },
     {
       q: "Connects market intelligence to customer-specific plans",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:5.2, a:7.4 },
-        { name:"Infasco", c:"infasco", b:6.3, a:8.0 },
-        { name:"Sivaco",  c:"sivaco",  b:4.7, a:6.9 },
+        { name:"Ivaco",   c:"ivaco",   b:4.0, a:5.0 },
+        { name:"Infasco", c:"infasco", b:3.5, a:5.9 },
+        { name:"Sivaco",  c:"sivaco",  b:2.9, a:5.1 },
       ]
     },
     {
       q: "Analyzes order timing and frequency patterns",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.7, a:7.0 },
-        { name:"Infasco", c:"infasco", b:5.4, a:7.2 },
-        { name:"Sivaco",  c:"sivaco",  b:4.7, a:6.8 },
+        { name:"Ivaco",   c:"ivaco",   b:3.7, a:5.8 },
+        { name:"Infasco", c:"infasco", b:2.4, a:4.4 },
+        { name:"Sivaco",  c:"sivaco",  b:5.2, a:5.3 },
       ]
     },
     {
       q: "Anticipates requirement changes before they appear",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.5, a:6.8 },
-        { name:"Infasco", c:"infasco", b:5.7, a:7.5 },
-        { name:"Sivaco",  c:"sivaco",  b:4.7, a:7.0 },
+        { name:"Ivaco",   c:"ivaco",   b:2.5, a:4.9 },
+        { name:"Infasco", c:"infasco", b:3.8, a:5.0 },
+        { name:"Sivaco",  c:"sivaco",  b:3.1, a:3.1 },
       ]
     },
     {
       q: "Key accounts share strategic info proactively",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.7, a:6.5 },
-        { name:"Infasco", c:"infasco", b:5.3, a:7.1 },
-        { name:"Sivaco",  c:"sivaco",  b:5.5, a:7.3 },
+        { name:"Ivaco",   c:"ivaco",   b:4.9, a:5.0 },
+        { name:"Infasco", c:"infasco", b:3.6, a:5.3 },
+        { name:"Sivaco",  c:"sivaco",  b:4.1, a:5.7 },
       ]
     },
     {
       q: "Forecasts require minimal correction",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:5.0, a:6.8 },
-        { name:"Infasco", c:"infasco", b:5.4, a:7.1 },
-        { name:"Sivaco",  c:"sivaco",  b:5.7, a:7.4 },
+        { name:"Ivaco",   c:"ivaco",   b:3.9, a:5.1 },
+        { name:"Infasco", c:"infasco", b:4.5, a:4.8 },
+        { name:"Sivaco",  c:"sivaco",  b:3.2, a:4.7 },
       ]
     },
   ];
@@ -394,50 +420,50 @@
     {
       q: "Asks what's behind order variations",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:6.0, a:7.9 },
-        { name:"Infasco", c:"infasco", b:4.9, a:7.0 },
+        { name:"Ivaco",   c:"ivaco",   b:5.5, a:5.6 },
+        { name:"Infasco", c:"infasco", b:2.9, a:5.2 },
       ]
     },
     {
       q: "Reviews order history and identifies patterns",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.1 },
-        { name:"Infasco", c:"infasco", b:4.8, a:6.9 },
+        { name:"Ivaco",   c:"ivaco",   b:3.8, a:5.4 },
+        { name:"Infasco", c:"infasco", b:2.4, a:4.7 },
       ]
     },
     {
       q: "Uncovers investment plans before they appear in orders",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:5.5, a:7.5 },
-        { name:"Infasco", c:"infasco", b:4.3, a:6.5 },
+        { name:"Ivaco",   c:"ivaco",   b:2.7, a:5.1 },
+        { name:"Infasco", c:"infasco", b:2.2, a:2.3 },
       ]
     },
     {
       q: "Prepares data-informed questions before calls",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:6.3, a:8.2 },
-        { name:"Infasco", c:"infasco", b:5.4, a:7.3 },
+        { name:"Ivaco",   c:"ivaco",   b:4.1, a:5.9 },
+        { name:"Infasco", c:"infasco", b:3.3, a:5.3 },
       ]
     },
     {
       q: "Uses data / market intelligence for forecasting",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:4.8, a:7.0 },
-        { name:"Infasco", c:"infasco", b:4.4, a:6.6 },
+        { name:"Ivaco",   c:"ivaco",   b:2.9, a:4.3 },
+        { name:"Infasco", c:"infasco", b:3.5, a:5.0 },
       ]
     },
     {
       q: "Forecasts are reliable / require minimal correction",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:5.7, a:7.6 },
-        { name:"Infasco", c:"infasco", b:4.6, a:6.7 },
+        { name:"Ivaco",   c:"ivaco",   b:4.6, a:4.7 },
+        { name:"Infasco", c:"infasco", b:3.0, a:5.2 },
       ]
     },
     {
       q: "Key accounts share strategic info proactively",
       bus: [
-        { name:"Ivaco",   c:"ivaco",   b:8.0, a:9.2 },
-        { name:"Infasco", c:"infasco", b:6.7, a:8.4 },
+        { name:"Ivaco",   c:"ivaco",   b:5.8, a:6.2 },
+        { name:"Infasco", c:"infasco", b:4.0, a:5.8 },
       ]
     },
   ];
@@ -471,6 +497,10 @@
         const track = document.createElement('div');
         track.className = 'bar-track';
 
+        // Inner clip container
+        const inner = document.createElement('div');
+        inner.className = 'bar-inner';
+
         const barB = document.createElement('div');
         barB.className = 'bar-before';
         barB.style.width = (bu.b / 10 * 100) + '%';
@@ -484,20 +514,30 @@
         barG.style.left  = (bu.b / 10 * 100) + '%';
         barG.style.width = ((bu.a - bu.b) / 10 * 100) + '%';
 
-        track.appendChild(barB);
-        track.appendChild(divider);
-        track.appendChild(barG);
+        inner.appendChild(barB);
+        inner.appendChild(divider);
+        inner.appendChild(barG);
+        track.appendChild(inner);
+
+        // Threshold marker at 5/10 = 50%
+        const thresh = document.createElement('div');
+        thresh.className = 'bar-threshold';
+        track.appendChild(thresh);
+
         row.appendChild(track);
 
         // Values
         const vals = document.createElement('div');
         vals.className = 'bar-values';
-        const d = (bu.a - bu.b).toFixed(1);
+        const raw = bu.a - bu.b;
+        const d = raw.toFixed(1);
+        const badge = raw <= 0 ? '—' : '+' + d;
+        const badgeStyle = raw <= 0 ? 'style="opacity:0.4"' : '';
         vals.innerHTML =
           '<span class="v-before">' + bu.b.toFixed(1) + '</span>' +
           '<span class="v-arrow">→</span>' +
           '<span class="v-after">'  + bu.a.toFixed(1) + '</span>' +
-          '<span class="delta">+'   + d + '</span>';
+          '<span class="delta" ' + badgeStyle + '>' + badge + '</span>';
         row.appendChild(vals);
 
         rows.appendChild(row);
