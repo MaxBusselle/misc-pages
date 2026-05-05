@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boyd University × FLiNT</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --fl-dark:#0F1A2E;--fl-dark-mid:#132035;--fl-dark-card:#1B2740;--fl-dark-deep:#0A1220;
+  --fl-orange:#F08030;--fl-orange-light:#F5A05C;--fl-orange-pale:rgba(240,128,48,0.12);
+  --fl-amber:#FBB130;--fl-teal:#2DD4BF;--fl-blue:#60A5FA;
+  --fl-white:#FFFFFF;--fl-white-dim:rgba(255,255,255,0.65);--fl-white-muted:rgba(255,255,255,0.35);
+  --fl-border:rgba(255,255,255,0.07);--fl-border-light:rgba(255,255,255,0.12);
+  --p1:#2DD4BF;--p1-pale:rgba(45,212,191,0.12);--p1-border:rgba(45,212,191,0.25);
+  --p2:#60A5FA;--p2-pale:rgba(96,165,250,0.12);--p2-border:rgba(96,165,250,0.25);
+  --p3:#C084FC;--p3-pale:rgba(192,132,252,0.12);--p3-border:rgba(192,132,252,0.25);
+  --ms-basic:#78C6A3;--ms-basic-pale:rgba(120,198,163,0.10);--ms-basic-border:rgba(120,198,163,0.30);
+  --ms-inter:#E8B44C;--ms-inter-pale:rgba(232,180,76,0.10);--ms-inter-border:rgba(232,180,76,0.30);
+  --ms-adv:#E07868;--ms-adv-pale:rgba(224,120,104,0.10);--ms-adv-border:rgba(224,120,104,0.30);
+  --signal:#7AC4D4;--leading:#F5A05C;--business:#E06070;
+  --acc-line:#E06070;--acc-above:rgba(224,96,112,0.08);
+  --green:#22C55E;--green-pale:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.25);
+  --radius:10px;--radius-lg:16px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--fl-dark);color:var(--fl-white);line-height:1.55;overflow:hidden;height:100vh;width:100vw;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.anim{opacity:0;}.slide.active .anim{animation:fadeUp .5s ease-out both;}
+.slide.active .anim.d1{animation-delay:.08s;}.slide.active .anim.d2{animation-delay:.16s;}
+.slide.active .anim.d3{animation-delay:.24s;}.slide.active .anim.d4{animation-delay:.32s;}
+.slide.active .anim.d5{animation-delay:.40s;}.slide.active .anim.d6{animation-delay:.48s;}
+.slide.active .anim.d7{animation-delay:.56s;}.slide.active .anim.d8{animation-delay:.64s;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:6px;padding:12px 28px;background:rgba(15,26,46,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--fl-border);}
+.nav-brand{display:flex;align-items:center;gap:10px;margin-right:10px;}
+.nav-sep{width:1px;height:16px;background:var(--fl-border);margin:0 4px;}
+.nav-dots{display:flex;gap:4px;align-items:center;}
+.nav-dot{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.12);background:transparent;cursor:pointer;transition:all .25s;font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;}
+.nav-dot:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5);}
+.nav-dot.active{background:var(--fl-orange);border-color:var(--fl-orange);color:var(--fl-dark);}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-left:auto;white-space:nowrap;}
+.nav-arrows{display:flex;gap:5px;margin-left:12px;}
+.nav-arrow{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:var(--fl-white-dim);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-arrow:hover{background:rgba(255,255,255,0.1);}
+
+/* SLIDES */
+.slide{height:100vh;padding:64px 48px 36px;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.slide.active{display:flex;}
+.eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:8px;}
+.slide-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3.2vw,48px);font-weight:800;line-height:1.08;letter-spacing:-1.2px;margin-bottom:8px;color:var(--fl-white);flex-shrink:0;}
+.slide-title .em{color:var(--fl-orange);}
+.slide-sub{font-size:19px;font-weight:400;color:var(--fl-white-dim);line-height:1.55;max-width:90%;margin-bottom:16px;flex-shrink:0;}
+
+/* HERO */
+.slide-hero{background:linear-gradient(150deg,var(--fl-dark-deep) 0%,var(--fl-dark) 50%,var(--fl-dark-mid) 100%);justify-content:center;position:relative;overflow-y:hidden;}
+.slide-hero::before{content:'';position:absolute;top:-20%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(240,128,48,0.06) 0%,transparent 60%);border-radius:50%;pointer-events:none;}
+.slide-hero::after{content:'';position:absolute;bottom:-10%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(45,212,191,0.04) 0%,transparent 60%);border-radius:50%;pointer-events:none;}
+.hero-kicker{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.hero-kicker::before{content:'';display:block;width:28px;height:1px;background:var(--fl-orange);}
+.hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(38px,5vw,68px);font-weight:900;line-height:1.02;letter-spacing:-2.5px;color:var(--fl-white);margin-bottom:16px;max-width:92%;}
+.hero-desc{font-size:20px;color:var(--fl-white-dim);max-width:820px;line-height:1.6;margin-bottom:36px;}
+.hero-rule{width:50px;height:2px;background:linear-gradient(90deg,var(--fl-orange),transparent);margin:20px 0;}
+
+/* TRANSITION */
+.slide-transition{background:linear-gradient(150deg,var(--fl-dark-deep) 0%,var(--fl-dark) 100%);justify-content:center;align-items:center;text-align:center;}
+.trans-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:72px;font-weight:900;color:rgba(240,128,48,0.14);line-height:1;margin-bottom:8px;}
+.trans-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3.2vw,48px);font-weight:800;color:var(--fl-white);letter-spacing:-1px;margin-bottom:12px;}
+.trans-desc{font-size:20px;color:var(--fl-white-muted);max-width:720px;line-height:1.65;}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+
+/* PRACTICE / BUCKET CARDS */
+.practice-card{border-radius:var(--radius-lg);padding:22px 26px;position:relative;overflow:hidden;transition:all .6s ease;}
+.practice-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.practice-card.p1{background:var(--p1-pale);border:1px solid var(--p1-border);}.practice-card.p1::before{background:var(--p1);}
+.practice-card.p2{background:var(--p2-pale);border:1px solid var(--p2-border);}.practice-card.p2::before{background:var(--p2);}
+.practice-card.p3{background:var(--p3-pale);border:1px solid var(--p3-border);}.practice-card.p3::before{background:var(--p3);}
+
+/* MILESTONE CARDS */
+.ms-card{border-radius:var(--radius);padding:16px 20px;position:relative;overflow:hidden;transition:all .5s ease;}
+.ms-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.ms-card.ms-basic{background:var(--ms-basic-pale);border:1px solid var(--ms-basic-border);}.ms-card.ms-basic::before{background:var(--ms-basic);}
+.ms-card.ms-inter{background:var(--ms-inter-pale);border:1px solid var(--ms-inter-border);}.ms-card.ms-inter::before{background:var(--ms-inter);}
+.ms-card.ms-adv{background:var(--ms-adv-pale);border:1px solid var(--ms-adv-border);}.ms-card.ms-adv::before{background:var(--ms-adv);}
+
+/* BADGES */
+.badge{display:inline-flex;padding:4px 12px;border-radius:100px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.badge-basic{background:var(--ms-basic-pale);color:var(--ms-basic);border:1px solid var(--ms-basic-border);}
+.badge-inter{background:var(--ms-inter-pale);color:var(--ms-inter);border:1px solid var(--ms-inter-border);}
+.badge-adv{background:var(--ms-adv-pale);color:var(--ms-adv);border:1px solid var(--ms-adv-border);}
+.badge-p1{background:var(--p1-pale);color:var(--p1);border:1px solid var(--p1-border);}
+.badge-p2{background:var(--p2-pale);color:var(--p2);border:1px solid var(--p2-border);}
+.badge-p3{background:var(--p3-pale);color:var(--p3);border:1px solid var(--p3-border);}
+.ms-signal{font-size:14px;padding:4px 12px;border-radius:100px;font-weight:600;background:rgba(122,196,212,0.12);color:var(--signal);border:1px solid rgba(122,196,212,0.2);display:inline-block;}
+.sig-leading{background:rgba(245,160,92,0.12);color:var(--leading);border:1px solid rgba(245,160,92,0.2);}
+
+/* MEASUREMENT / ACCOUNTABILITY LINE */
+.meas-pill{padding:6px 16px;border-radius:100px;font-weight:600;border:1px solid;}
+.acc-line-wrap{padding:0 10px;margin:12px 0;}
+.acc-line-rule{height:2px;background:linear-gradient(90deg,transparent 0%,var(--acc-line) 10%,var(--acc-line) 90%,transparent 100%);}
+.acc-above-zone{padding:20px 28px;background:var(--acc-above);border:1px solid rgba(224,96,112,0.2);border-radius:var(--radius-lg);}
+.acc-arrow-label{text-align:center;padding:4px 0;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+
+/* TIMELINE */
+.tl-wrap{position:relative;padding-top:34px;margin:20px 0;}
+.tl-track{display:flex;align-items:stretch;height:64px;border-radius:var(--radius-lg);overflow:visible;}
+.tl-block{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;padding:8px 16px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;position:relative;}
+.tl-cool{background:rgba(255,255,255,0.03);color:var(--fl-white-muted);font-weight:500;font-size:20px;}
+.tl-marker{position:absolute;top:-28px;left:20%;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:var(--fl-orange);color:var(--fl-dark);}
+.tl-marker::after{content:'';position:absolute;bottom:-4px;left:18px;width:7px;height:7px;background:var(--fl-orange);transform:rotate(45deg);}
+
+/* NEXT STEPS CARDS */
+.next-card{display:flex;align-items:flex-start;gap:16px;padding:18px 24px;background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius-lg);}
+.next-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--fl-orange);line-height:1;flex-shrink:0;}
+
+/* FLOW / PATH INTELLIGENCE */
+.flow-box{border-radius:var(--radius);padding:13px 16px;text-align:center;}
+.flow-arrow{display:flex;justify-content:center;font-size:18px;padding:3px 0;}
+
+/* === SLIDE 3 (Program Architecture) STATES === */
+.s3-t1{transition:all .5s ease;max-height:200px;opacity:1;overflow:hidden;}
+.s3-revealed .s3-t1{max-height:0;opacity:0;margin:0;}
+.s3-t2{max-height:0;opacity:0;overflow:hidden;transition:all .5s ease;}
+.s3-revealed .s3-t2{max-height:200px;opacity:1;}
+#s3-buckets .p-desc{transition:all .5s ease;max-height:200px;opacity:1;overflow:hidden;}
+#s3-buckets .p-leading{transition:all .5s ease;max-height:0;opacity:0;overflow:hidden;}
+.s3-revealed #s3-buckets .p-desc{max-height:0;opacity:0;margin:0;}
+.s3-revealed #s3-buckets .p-leading{max-height:80px;opacity:1;}
+.s3-revealed #s3-buckets .practice-card{padding:16px 20px;}
+#s3-measurement{max-height:0;opacity:0;overflow:hidden;transition:all .7s ease .2s;}
+.s3-revealed #s3-measurement{max-height:2000px;opacity:1;}
+
+/* === SLIDE 5 (Activity Deep Dive) STATES === */
+#s5-leading{transition:all .4s ease;max-height:100px;opacity:1;overflow:hidden;}
+#s5-behav,#s5-ext,#s5-prog{max-height:0;opacity:0;overflow:hidden;transition:all .5s ease .1s;}
+.s5-ms-grid .ms-card{transition:all .5s ease;}
+.s5-s2 #s5-leading{max-height:0;opacity:0;}
+.s5-s2 .s5-ms-grid .ms-card.ms-inter,.s5-s2 .s5-ms-grid .ms-card.ms-adv{opacity:0.2;transform:scale(0.96);}
+.s5-s2 .s5-ms-grid .ms-card.ms-basic{box-shadow:0 0 24px rgba(120,198,163,0.15);}
+.s5-s2 #s5-behav{max-height:2000px;opacity:1;}
+.s5-s3 #s5-leading{max-height:0;opacity:0;}
+.s5-s3 .s5-ms-grid .ms-card.ms-inter,.s5-s3 .s5-ms-grid .ms-card.ms-adv{opacity:0.2;transform:scale(0.96);}
+.s5-s3 .s5-ms-grid .ms-card.ms-basic{box-shadow:0 0 24px rgba(120,198,163,0.15);}
+.s5-s3 #s5-ext{max-height:2000px;opacity:1;}
+.s5-s4 #s5-leading{max-height:0;opacity:0;}
+.s5-s4 .s5-ms-grid .ms-card{opacity:1;transform:scale(1);}
+.s5-s4 #s5-prog{max-height:200px;opacity:1;}
+
+/* SCROLLBAR */
+.slide::-webkit-scrollbar{width:4px;}.slide::-webkit-scrollbar-track{background:transparent;}.slide::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+
+@media(max-width:1100px){.grid-3{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.slide{padding:58px 18px 24px;}.grid-2,.grid-3{grid-template-columns:1fr;}.nav{padding:8px 12px;}.nav-label{display:none;}.tl-track{flex-direction:column;height:auto;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px;color:var(--fl-white);letter-spacing:-0.3px;">Boyd Gaming</div>
+    <div style="width:1px;height:16px;background:rgba(255,255,255,0.12);margin:0 2px;"></div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:18px;color:var(--fl-orange);letter-spacing:-0.5px;">FLiNT</div>
+  </div>
+  <div class="nav-sep"></div>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-label" id="navLabel"></div>
+  <div class="nav-arrows">
+    <div class="nav-arrow" onclick="prevSlide()">&#8592;</div>
+    <div class="nav-arrow" onclick="nextSlide()">&#8594;</div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 0 — VIDEO INTRO
+═══════════════════════════════════════════════════ -->
+<div class="slide active" data-label="Intro" style="background:var(--fl-dark-deep);justify-content:center;align-items:center;gap:0;padding:64px 48px 36px;">
+  <div style="width:100%;max-width:960px;display:flex;flex-direction:column;align-items:center;gap:20px;">
+    <div class="anim d1" style="text-align:center;">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;"><span style="display:block;width:20px;height:1px;background:var(--fl-orange);"></span>Boyd Gaming &middot; Boyd University<span style="display:block;width:20px;height:1px;background:var(--fl-orange);"></span></div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(22px,2.4vw,34px);font-weight:800;letter-spacing:-0.8px;color:var(--fl-white);line-height:1.1;">A brief introduction</div>
+    </div>
+    <div class="anim d2" style="width:100%;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--fl-border-light);box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+      <video
+        src="https://p193.p3.n0.cdn.zight.com/items/NQu0ApGg/0e91f789-e8ba-40cf-b206-09f0c4f25b17.mp4?v=bbfb4e5778c9ae75745621b0bf66616a-4"
+        controls
+        style="display:block;width:100%;max-height:calc(100vh - 240px);background:#000;"
+      ></video>
+    </div>
+    <div class="anim d3" style="display:flex;align-items:center;gap:8px;">
+      <div style="font-size:14px;color:var(--fl-white-muted);">Use the arrows or keyboard to continue</div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:1px;color:var(--fl-white-muted);">&rarr;</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 — HERO / THE GAP
+═══════════════════════════════════════════════════ -->
+<div class="slide slide-hero" data-label="The Gap" style="overflow-y:hidden;">
+  <div class="hero-kicker anim d1">Boyd Gaming &middot; Boyd University</div>
+  <div class="hero-title anim d2">Your leaders finished Session 1.<br>How many of them did the homework?</div>
+  <div class="hero-rule anim d3"></div>
+  <div class="hero-desc anim d4">Boyd University&rsquo;s architecture is sound &mdash; six sessions, three buckets, a SharePoint leadership toolkit, a competency matrix built for every level from slot attendant to Senior VP, accountability partners between sessions. What&rsquo;s missing is the layer that bridges the one-hour session to the 730 hours between them. FLiNT turns the between-session homework into AI-guided, job-connected, <span style="color:var(--fl-white);font-weight:600;">documented</span> practice &mdash; and connects it to the assessment data that should be driving your talent decisions.</div>
+  <div class="anim d5" style="display:flex;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);border-radius:100px;">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--fl-teal);flex-shrink:0;"></div>
+      <span style="font-size:15px;font-weight:600;color:var(--fl-teal);">Closes the session-to-floor gap</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);border-radius:100px;">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--fl-blue);flex-shrink:0;"></div>
+      <span style="font-size:15px;font-weight:600;color:var(--fl-blue);">Automates path recommendations</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(240,128,48,0.08);border:1px solid rgba(240,128,48,0.2);border-radius:100px;">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--fl-orange);flex-shrink:0;"></div>
+      <span style="font-size:15px;font-weight:600;color:var(--fl-orange);">Produces the CEO-level data</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 — TRANSITION 01
+═══════════════════════════════════════════════════ -->
+<div class="slide slide-transition" data-label="">
+  <div class="trans-num anim d1">01</div>
+  <div class="trans-title anim d2">A layer for the <span style="color:var(--fl-orange);">4 weeks between sessions</span></div>
+  <div class="trans-desc anim d3">FLiNT connects Boyd University&rsquo;s six sessions to the actual work &mdash; turning each between-session assignment into an AI-coached activity, a documented milestone, and the Kirkpatrick Level 3 data you&rsquo;ve been missing.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 — PROGRAM ARCHITECTURE (2-state)
+═══════════════════════════════════════════════════ -->
+<div class="slide" data-label="Program Architecture" id="slide3">
+  <div class="eyebrow anim d1">Program Architecture</div>
+  <div class="s3-t1">
+    <div class="slide-title anim d2">Three buckets. Six sessions. <span class="em">One layer to close the gap.</span></div>
+    <div class="slide-sub anim d3" style="max-width:100%;">FLiNT plugs into Boyd University&rsquo;s existing structure &mdash; one activity track per bucket, grounded in the actual work your leaders do between sessions.</div>
+  </div>
+  <div class="s3-t2">
+    <div class="slide-title">We change the behaviors. <span class="em">You tell us which ones move your numbers.</span></div>
+    <div class="slide-sub" style="max-width:100%;">FLiNT drives the activity layer. Boyd connects the behavioral signals to the business outcomes that matter at the executive level.</div>
+  </div>
+
+  <div class="grid-3 anim d4" id="s3-buckets" style="margin-bottom:16px;flex-shrink:0;">
+    <div class="practice-card p1">
+      <div class="badge badge-p1" style="margin-bottom:6px;">Clarify Expectations</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Sessions 1 &ndash; 2</div>
+      <div class="p-desc" style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">From &ldquo;go create your team guidelines&rdquo; to AI-coached conversations &mdash; grounded in each leader&rsquo;s specific department, role level, and the job profiles already in the Leadership Toolkit.</div>
+      <div class="p-leading" style="margin-top:8px;"><span class="ms-signal sig-leading" style="font-size:14px;">Purpose statements written &middot; team norms documented &middot; expectations aligned</span></div>
+    </div>
+    <div class="practice-card p2">
+      <div class="badge badge-p2" style="margin-bottom:6px;">Enable Your Team</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Sessions 3 &ndash; 4</div>
+      <div class="p-desc" style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">From &ldquo;coach someone this month&rdquo; to structured, AI-guided coaching conversations &mdash; anchored to the technical competency matrix for Guest Service, Attention to Detail, Regulatory Compliance, and more.</div>
+      <div class="p-leading" style="margin-top:8px;"><span class="ms-signal sig-leading" style="font-size:14px;">Documented coaching conversations &middot; competency gaps identified &middot; evidence recorded</span></div>
+    </div>
+    <div class="practice-card p3">
+      <div class="badge badge-p3" style="margin-bottom:6px;">Review Results</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Sessions 5 &ndash; 6</div>
+      <div class="p-desc" style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">From annual performance review prep to AI-assisted conversations grounded in assessment scores &mdash; with documented evidence of how each team member is developing against their competency track.</div>
+      <div class="p-leading" style="margin-top:8px;"><span class="ms-signal sig-leading" style="font-size:14px;">Performance conversations documented &middot; assessment gaps closing &middot; path data produced</span></div>
+    </div>
+  </div>
+
+  <div id="s3-measurement">
+    <div style="font-size:21px;color:var(--fl-teal);font-weight:600;margin-bottom:12px;line-height:1.5;text-align:center;">When these three compound, you stop asking if Boyd University is working &mdash; and start proving it.</div>
+    <div class="acc-arrow-label" style="color:var(--fl-teal);">&uarr;&nbsp; FLiNT drives this</div>
+    <div class="acc-line-wrap"><div class="acc-line-rule"></div></div>
+    <div class="acc-arrow-label" style="color:var(--acc-line);">&darr;&nbsp; Boyd measures this</div>
+    <div class="acc-above-zone" style="margin-top:6px;">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <span class="meas-pill" style="font-size:17px;color:var(--acc-line);border-color:rgba(224,96,112,0.3);background:rgba(224,96,112,0.08);">New leader retention at 12 months</span>
+        <span class="meas-pill" style="font-size:17px;color:var(--acc-line);border-color:rgba(224,96,112,0.3);background:rgba(224,96,112,0.08);">Internal fill rate for Director+ roles</span>
+        <span class="meas-pill" style="font-size:17px;color:var(--acc-line);border-color:rgba(224,96,112,0.3);background:rgba(224,96,112,0.08);">Guest satisfaction scores</span>
+        <span class="meas-pill" style="font-size:17px;color:var(--acc-line);border-color:rgba(224,96,112,0.3);background:rgba(224,96,112,0.08);">Time-to-competency for new supervisors</span>
+      </div>
+      <div style="font-size:19px;color:rgba(224,96,112,0.65);line-height:1.5;">You&rsquo;ve been tracking these. FLiNT gives you the behavioral data layer that connects the program directly to the numbers your CEO runs on.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 — TRANSITION 02
+═══════════════════════════════════════════════════ -->
+<div class="slide slide-transition" data-label="">
+  <div class="trans-num anim d1">02</div>
+  <div class="trans-title anim d2">Inside Session 1:<br><span style="color:var(--fl-orange);font-weight:900;">Establish expectations for your team</span></div>
+  <div class="trans-desc anim d3">The first homework is to know what your team is responsible for before you can hold them accountable. Here&rsquo;s what that looks like in FLiNT &mdash; for a Slot Shift Supervisor at Boyd.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — ACTIVITY DEEP DIVE (4-state)
+═══════════════════════════════════════════════════ -->
+<div class="slide s5-s1" data-label="Activity Deep Dive" id="slide5">
+  <div class="eyebrow anim d1">Activity Deep Dive</div>
+  <div class="slide-title anim d2" style="margin-bottom:12px;">How <span class="em">Establish your team&rsquo;s expectations</span> works</div>
+
+  <div class="anim d3" style="padding:18px 22px;background:var(--p1-pale);border:1px solid var(--p1-border);border-radius:var(--radius-lg);margin-bottom:12px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+      <div class="badge badge-p1">Clarify Expectations &middot; Session 1</div>
+      <div style="font-size:16px;font-weight:600;color:var(--fl-white);">Slot Shift Supervisor &rarr; Slot Attendants</div>
+    </div>
+    <div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;margin-bottom:14px;">The supervisor turns &ldquo;go review the job descriptions&rdquo; from a self-directed homework item into a documented, AI-coached conversation &mdash; grounded in the Casino Operations competency matrix and tied to a real moment on their floor.</div>
+    <div class="grid-3 s5-ms-grid" style="gap:10px;">
+      <div class="ms-card ms-basic">
+        <div class="badge badge-basic" style="margin-bottom:6px;">Basic</div>
+        <div style="font-size:16px;font-weight:700;color:var(--fl-white);line-height:1.25;margin-bottom:6px;">Know what each role is responsible for</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);line-height:1.5;">Pull each slot attendant&rsquo;s job description from the Leadership Toolkit. Before your next pre-shift huddle, be able to articulate the Guest Service and Attention to Detail expectations for each role without the document in hand.</div>
+        <div style="margin-top:10px;"><span class="ms-signal">Can state expectations unprompted</span></div>
+      </div>
+      <div class="ms-card ms-inter">
+        <div class="badge badge-inter" style="margin-bottom:6px;">Intermediate</div>
+        <div style="font-size:16px;font-weight:700;color:var(--fl-white);line-height:1.25;margin-bottom:6px;">Have the expectations conversation</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);line-height:1.5;">Have a 1-on-1 with one slot attendant. Walk through their job description together. Ask them to tell you what they believe their top expectations are &mdash; then confirm, correct, or build on it. Document it in FLiNT.</div>
+        <div style="margin-top:10px;"><span class="ms-signal">1 documented expectations conversation</span></div>
+      </div>
+      <div class="ms-card ms-adv">
+        <div class="badge badge-adv" style="margin-bottom:6px;">Advanced</div>
+        <div style="font-size:16px;font-weight:700;color:var(--fl-white);line-height:1.25;margin-bottom:6px;">Create your team&rsquo;s guidelines and purpose</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);line-height:1.5;">Facilitate a team session where you co-create communication norms and a department purpose statement &mdash; cascaded from Boyd&rsquo;s mission. Post them in the Leadership Toolkit for your shift.</div>
+        <div style="margin-top:10px;"><span class="ms-signal">Team guidelines + purpose statement posted</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 1: Leading Indicator -->
+  <div id="s5-leading" class="anim d4">
+    <div style="padding:16px 22px;background:rgba(255,255,255,0.03);border:1px solid var(--fl-border);border-radius:var(--radius-lg);">
+      <div style="font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:4px;">Leading Indicator</div>
+      <div style="font-size:19px;font-weight:600;color:var(--fl-white);line-height:1.4;">Supervisors who can articulate their team&rsquo;s expectations unprompted &mdash; and have had the documented conversation &mdash; before their first performance discussion at Month 5.</div>
+    </div>
+  </div>
+
+  <!-- State 2: Behavioral Execution -->
+  <div id="s5-behav">
+    <div style="font-size:16px;color:var(--fl-white-dim);margin:8px 0 10px;">Basic technique: know what each role is responsible for before you can hold anyone accountable to it.</div>
+    <div style="border-radius:var(--radius-lg);border:1px solid var(--ms-basic-border);overflow:hidden;">
+      <div style="padding:12px 22px;background:var(--ms-basic-pale);border-bottom:1px solid var(--ms-basic-border);">
+        <div style="font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ms-basic);">Behavioral Execution</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);margin-top:2px;">What the supervisor did</div>
+      </div>
+      <div style="padding:14px 22px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--green);">Successful</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">Opens the Leadership Toolkit, reviews each job profile before the next shift, and completes the FLiNT activity &mdash; noting the expectations they hadn&rsquo;t been articulating clearly. Documents a specific team member example as evidence.</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--fl-orange);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--fl-orange);">Partial</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">Reviews the job descriptions but defaults to general impressions rather than specific competency language. Marks the activity complete without a concrete example &mdash; system flags for follow-up before moving to Intermediate.</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--acc-line);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--acc-line);">Struggle</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">Doesn&rsquo;t know where to find the job profiles. Unsure what &ldquo;Guest Service at the supervisor level&rdquo; looks like differently than at the attendant level. FLiNT scaffolds deeper &mdash; this person isn&rsquo;t penalized, they&rsquo;re supported.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 3: External Outcome -->
+  <div id="s5-ext">
+    <div style="font-size:16px;color:var(--fl-white-dim);margin:8px 0 10px;">Same activity &mdash; but what changed for the team?</div>
+    <div style="border-radius:var(--radius-lg);border:1px solid var(--p2-border);overflow:hidden;">
+      <div style="padding:12px 22px;background:var(--p2-pale);border-bottom:1px solid var(--p2-border);">
+        <div style="font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--p2);">External Outcome</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);margin-top:2px;">What happened on the floor</div>
+      </div>
+      <div style="padding:14px 22px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--green);">Good</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">Team members know exactly what their supervisor expects &mdash; not what they inferred from tone or rumor. The expectations conversation becomes the foundation for the first real performance discussion at Session 5.</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--fl-orange);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--fl-orange);">Mixed</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">Supervisor has the toolkit knowledge but hasn&rsquo;t had the explicit conversation yet. Team members are still guessing at priorities &mdash; especially around Attention to Detail and documentation accuracy on machine resets.</div></div></div>
+        <div style="display:flex;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--acc-line);flex-shrink:0;margin-top:8px;"></div><div><div style="font-size:15px;font-weight:700;color:var(--acc-line);">Poor</div><div style="font-size:17px;color:var(--fl-white-dim);line-height:1.5;">No shared understanding of expectations. When a guest service complaint surfaces or a machine maintenance error is logged, the supervisor has no documented baseline to point to &mdash; and no data to defend the accountability conversation.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 4: Progression -->
+  <div id="s5-prog">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap;">
+      <span class="badge badge-basic" style="font-size:14px;padding:6px 16px;">Basic</span>
+      <span style="color:var(--fl-white-muted);font-size:18px;">&rarr;</span>
+      <span class="badge badge-inter" style="font-size:14px;padding:6px 16px;">Intermediate</span>
+      <span style="color:var(--fl-white-muted);font-size:18px;">&rarr;</span>
+      <span class="badge badge-adv" style="font-size:14px;padding:6px 16px;">Advanced</span>
+    </div>
+    <div style="text-align:center;font-size:17px;color:var(--fl-white-dim);margin-top:10px;line-height:1.5;">Each milestone develops a distinct capability. Supervisors prove one before advancing &mdash; and their manager signs off before the next session begins. This is the documentation Boyd University is currently missing.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — PATH INTELLIGENCE
+═══════════════════════════════════════════════════ -->
+<div class="slide" data-label="Path Intelligence" id="slide6">
+  <div class="eyebrow anim d1">AI Path Intelligence</div>
+  <div class="slide-title anim d2">The AI agent <span class="em">Boyd University is missing.</span></div>
+  <div class="slide-sub anim d3" style="max-width:100%;margin-bottom:16px;">Right now, your team manually reviews assessment scores and makes path recommendations by hand. FLiNT automates that &mdash; and delivers the activities.</div>
+
+  <div class="grid-2 anim d4" style="gap:20px;flex:1;min-height:0;">
+    <!-- Left: Today — Manual -->
+    <div style="padding:20px 24px;background:rgba(255,255,255,0.02);border:1px solid var(--fl-border);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:0;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:14px;">Today &mdash; Manual</div>
+      <div style="display:flex;flex-direction:column;gap:0;flex:1;">
+        <div class="flow-box" style="background:rgba(255,255,255,0.04);border:1px solid var(--fl-border);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-white-dim);">Leadership + Technical Assessment</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Microsoft Forms score returned to Eric&rsquo;s team</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-white-muted);">↓</div>
+        <div class="flow-box" style="background:rgba(255,255,255,0.04);border:1px solid var(--fl-border);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-white-dim);">Team reviews manually</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Reads scores, identifies gaps, drafts a recommendation</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-white-muted);">↓</div>
+        <div class="flow-box" style="background:rgba(255,255,255,0.04);border:1px solid var(--fl-border);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-white-dim);">Email or conversation to leader</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Leader receives a suggestion &mdash; and self-directs from there</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-white-muted);">↓</div>
+        <div class="flow-box" style="background:rgba(224,96,112,0.06);border:1px solid rgba(224,96,112,0.2);">
+          <div style="font-size:15px;font-weight:600;color:var(--acc-line);">Unknown outcome</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Did they do it? No documentation. No data. One person&rsquo;s bandwidth limits scale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: With FLiNT -->
+    <div style="padding:20px 24px;background:var(--fl-orange-pale);border:1px solid rgba(240,128,48,0.22);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:0;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:14px;">With FLiNT &mdash; Automated</div>
+      <div style="display:flex;flex-direction:column;gap:0;flex:1;">
+        <div class="flow-box" style="background:rgba(240,128,48,0.08);border:1px solid rgba(240,128,48,0.2);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-white);">Assessment score ingested</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Leadership + Technical competency scores, by role tier (Supervisor &rarr; Director &rarr; SOVP)</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-orange);">↓</div>
+        <div class="flow-box" style="background:rgba(240,128,48,0.08);border:1px solid rgba(240,128,48,0.2);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-orange);">FLiNT AI maps gaps to path</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Casino Ops &middot; Finance &middot; F&amp;B &middot; HR &middot; Marketing tracks &mdash; personalized by score and role</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-orange);">↓</div>
+        <div class="flow-box" style="background:rgba(240,128,48,0.08);border:1px solid rgba(240,128,48,0.2);">
+          <div style="font-size:15px;font-weight:600;color:var(--fl-white);">AI-guided activity delivered</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Calibrated to leader&rsquo;s role, department, session progress &mdash; no manual effort</div>
+        </div>
+        <div class="flow-arrow" style="color:var(--fl-orange);">↓</div>
+        <div class="flow-box" style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);">
+          <div style="font-size:15px;font-weight:600;color:var(--green);">Evidence + reporting</div>
+          <div style="font-size:13px;color:var(--fl-white-muted);margin-top:3px;">Documented completions, manager sign-offs, Kirkpatrick L3/L4 data &mdash; automatically</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="anim d5" style="margin-top:14px;padding:14px 22px;background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.18);border-radius:var(--radius-lg);display:flex;align-items:center;gap:14px;flex-shrink:0;">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;color:var(--fl-teal);flex-shrink:0;">&#8594;</div>
+    <div style="font-size:17px;font-weight:600;color:var(--fl-white);line-height:1.5;">When a Slot Supervisor scores a 2.4 on the Leadership Assessment, FLiNT doesn&rsquo;t wait for your team to notice. It reads the gap, builds a path, and starts the coaching &mdash; whether you have 16 leaders or 2,000.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — TIMELINE + PILOT
+═══════════════════════════════════════════════════ -->
+<div class="slide" data-label="What&rsquo;s Next" style="justify-content:center;">
+  <div class="eyebrow anim d1">Pilot &amp; Deployment</div>
+  <div class="slide-title anim d2">A pilot that fits inside <span class="em">what you&rsquo;re already building.</span></div>
+  <div class="slide-sub anim d3" style="max-width:100%;margin-bottom:14px;">Start with the 16 leaders currently being certified. By the time the Hypo group arrives, you&rsquo;ll have the data to decide how to deploy at scale.</div>
+
+  <div class="anim d4 tl-wrap">
+    <div class="tl-track">
+      <div class="tl-block" style="flex:8;background:var(--p1-pale);color:var(--p1);border:1px solid var(--p1-border);border-radius:var(--radius-lg) 0 0 var(--radius-lg);">
+        <div class="tl-marker">Start here</div>
+        <div style="font-size:14px;">Pilot: 16 leaders</div>
+        <div style="font-size:12px;color:var(--fl-white-muted);font-weight:500;">Now &rarr; Q2 2026</div>
+      </div>
+      <div class="tl-block tl-cool" style="flex:2;">&rarr;</div>
+      <div class="tl-block" style="flex:10;background:var(--p2-pale);color:var(--p2);border:1px solid var(--p2-border);">
+        <div style="font-size:14px;">Hypo Group ~200</div>
+        <div style="font-size:12px;color:var(--fl-white-muted);font-weight:500;">Q2 &ndash; Q3 2026</div>
+      </div>
+      <div class="tl-block tl-cool" style="flex:2;">&rarr;</div>
+      <div class="tl-block" style="flex:10;background:var(--p3-pale);color:var(--p3);border:1px solid var(--p3-border);">
+        <div style="font-size:14px;">All current leaders</div>
+        <div style="font-size:12px;color:var(--fl-white-muted);font-weight:500;">Q3 &ndash; Q4 2026</div>
+      </div>
+      <div class="tl-block tl-cool" style="flex:2;">&rarr;</div>
+      <div class="tl-block" style="flex:10;background:rgba(251,177,48,0.10);color:var(--fl-amber);border:1px solid rgba(251,177,48,0.25);border-radius:0 var(--radius-lg) var(--radius-lg) 0;">
+        <div style="font-size:14px;">Ongoing new hires</div>
+        <div style="font-size:12px;color:var(--fl-white-muted);font-weight:500;">2027+</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin:18px 0 10px;" class="anim d5">Here&rsquo;s what we need from you</div>
+  <div style="display:flex;flex-direction:column;gap:10px;" class="anim d6">
+    <div class="next-card">
+      <div class="next-num">1</div>
+      <div>
+        <div style="font-size:17px;font-weight:700;color:var(--fl-white);margin-bottom:3px;">Share the session content and competency frameworks</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);">So FLiNT can build activities in Boyd language &mdash; grounded in the Leadership Toolkit, the Casino Ops and Table Games competency matrices, and the job profiles your leaders already use.</div>
+      </div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">2</div>
+      <div>
+        <div style="font-size:17px;font-weight:700;color:var(--fl-white);margin-bottom:3px;">Identify the first cohort from your 16 pilot leaders</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);">They&rsquo;re already being certified to facilitate future sessions. They&rsquo;re the right people to validate whether FLiNT&rsquo;s activity layer works before it goes to the 200.</div>
+      </div>
+    </div>
+    <div class="next-card">
+      <div class="next-num">3</div>
+      <div>
+        <div style="font-size:17px;font-weight:700;color:var(--fl-white);margin-bottom:3px;">Walk through a live demo of the platform</div>
+        <div style="font-size:15px;color:var(--fl-white-dim);">Let the experience decide. We&rsquo;ll show an active initiative, a real AI coaching conversation, and the reporting layer &mdash; and let you judge whether it fits what you&rsquo;re building.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="anim d7" style="margin-top:14px;padding:16px 24px;background:var(--fl-orange-pale);border:1px solid rgba(240,128,48,0.25);border-radius:var(--radius-lg);text-align:center;flex-shrink:0;">
+    <div style="font-size:19px;font-weight:700;color:var(--fl-orange);">Start with the 16. Data by session 2. Decide whether to bring it to the 200.</div>
+    <div style="font-size:17px;color:var(--fl-white-dim);margin-top:4px;">If it proves the homework is getting done and changing behavior on the floor, the program stays on. If not, we turn it off. Your call.</div>
+  </div>
+</div>
+
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const navLabel = document.getElementById('navLabel');
+let current = 0, s3r = false, s5s = 1;
+const sl3 = document.getElementById('slide3');
+const sl5 = document.getElementById('slide5');
+
+slides.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.textContent = i + 1;
+  d.addEventListener('click', () => { resetAll(); goTo(i); });
+  navDots.appendChild(d);
+});
+
+function resetAnims(s) {
+  s.querySelectorAll('.anim').forEach(e => { e.style.animation = 'none'; e.offsetHeight; e.style.animation = ''; });
+}
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  resetAnims(slides[current]);
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  navLabel.textContent = slides[current].dataset.label || '';
+}
+
+function resetAll() {
+  s3r = false; sl3.classList.remove('s3-revealed');
+  s5s = 1; sl5.classList.remove('s5-s2', 's5-s3', 's5-s4'); sl5.classList.add('s5-s1');
+}
+
+function nextSlide() {
+  if (current === 3 && !s3r) { s3r = true; sl3.classList.add('s3-revealed'); return; }
+  if (current === 5 && s5s < 4) { sl5.classList.remove('s5-s' + s5s); s5s++; sl5.classList.add('s5-s' + s5s); return; }
+  if (current < slides.length - 1) { resetAll(); goTo(current + 1); }
+}
+
+function prevSlide() {
+  if (current === 3 && s3r) { s3r = false; sl3.classList.remove('s3-revealed'); return; }
+  if (current === 5 && s5s > 1) { sl5.classList.remove('s5-s' + s5s); s5s--; sl5.classList.add('s5-s' + s5s); return; }
+  if (current > 0) { resetAll(); goTo(current - 1); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// Init label
+navLabel.textContent = slides[0].dataset.label || '';
+</script>
+</body>
+</html>
