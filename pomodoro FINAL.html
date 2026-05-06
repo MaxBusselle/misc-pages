@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOCUS — Pomodoro Timer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f2f0eb;
+    --surface: #ffffff;
+    --surface2: #f7f5f1;
+    --border: #dddbd4;
+    --accent: #c0392b;
+    --accent2: #e67e22;
+    --accent3: #2980b9;
+    --text: #1a1a1a;
+    --muted: #888880;
+    --success: #27ae60;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    grid-template-rows: 60px 1fr;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    background: var(--surface);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+
+  .header-status {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+    margin-right: 6px;
+    vertical-align: middle;
+    transition: background 0.3s;
+  }
+  .dot.active { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+  /* LEFT PANEL */
+  .left-panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .panel-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* SETUP FORM */
+  .setup-field {
+    margin-bottom: 12px;
+  }
+
+  .setup-field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .setup-field input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 9px 12px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .setup-field input:focus { border-color: var(--accent); }
+  .setup-field input::placeholder { color: var(--muted); }
+
+  .setup-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .btn-add {
+    width: 100%;
+    padding: 10px;
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn-add:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-add:active { transform: translateY(0); }
+
+  /* QUEUE */
+  .queue-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 12px;
+  }
+
+  .queue-list::-webkit-scrollbar { width: 4px; }
+  .queue-list::-webkit-scrollbar-track { background: transparent; }
+  .queue-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .queue-item {
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 3px;
+    border: 1px solid transparent;
+  }
+  .queue-item:hover { background: var(--surface2); }
+  .queue-item.active {
+    background: var(--surface2);
+    border-color: var(--accent);
+  }
+  .queue-item.done {
+    opacity: 0.45;
+  }
+
+  .qi-indicator {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+  .queue-item.active .qi-indicator { background: var(--accent); }
+  .queue-item.done .qi-indicator { background: var(--success); }
+
+  .qi-info { flex: 1; min-width: 0; }
+  .qi-name {
+    font-size: 12px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .qi-meta {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  .qi-del {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+  }
+  .queue-item:hover .qi-del { opacity: 1; }
+  .qi-del:hover { color: var(--accent2); }
+
+  .qi-drag {
+    color: var(--border);
+    font-size: 14px;
+    cursor: grab;
+    flex-shrink: 0;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+  }
+  .queue-item:hover .qi-drag { color: var(--muted); }
+  .qi-drag:active { cursor: grabbing; }
+
+  .qi-add-pomo {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    border-radius: 3px;
+    padding: 2px 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .queue-item:hover .qi-add-pomo { opacity: 1; }
+  .qi-add-pomo:hover { color: var(--success); border-color: var(--success); }
+
+  .queue-item.dragging { opacity: 0.4; }
+  .queue-item.drag-over { border-color: var(--accent3); background: var(--surface2); }
+
+  /* RIGHT PANEL — TIMER */
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle grid bg */
+  .right-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .timer-project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .timer-phase {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  /* CIRCULAR TIMER */
+  .timer-ring-wrap {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .timer-svg {
+    position: absolute;
+    inset: 0;
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 3;
+  }
+
+  .ring-progress {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.4s;
+  }
+
+  .ring-progress.break { stroke: var(--accent3); }
+  .ring-progress.warning { stroke: var(--accent2); }
+
+  .timer-display {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .timer-time {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 58px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    transition: color 0.4s;
+  }
+  .timer-time.warning { color: var(--accent2); }
+
+  .timer-time.overtime {
+    color: var(--accent);
+    animation: flash 0.9s ease-in-out infinite;
+  }
+
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.15; }
+  }
+
+  .btn-end {
+    width: 70px; height: 70px;
+    font-size: 13px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+  }
+  .btn-end:hover { background: #a93226; border-color: #a93226; }
+
+  .ring-progress.overtime {
+    stroke: var(--accent);
+    animation: ringFlash 0.9s ease-in-out infinite;
+  }
+
+  @keyframes ringFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .timer-pomo-count {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* POMO DOTS */
+  .pomo-dots {
+    display: flex;
+    gap: 8px;
+    position: relative;
+  }
+
+  .pomo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .pomo-dot.done { background: var(--success); border-color: var(--success); }
+  .pomo-dot.current { background: var(--accent); border-color: var(--accent); animation: pulse 1.2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.4); }
+    50% { box-shadow: 0 0 0 5px rgba(192, 57, 43, 0); }
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    position: relative;
+  }
+
+  .btn-ctrl {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+  }
+  .btn-ctrl:hover { border-color: var(--muted); transform: scale(1.05); }
+
+  .btn-play {
+    width: 70px; height: 70px;
+    font-size: 22px;
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+  }
+  .btn-play:hover { background: #a93226; border-color: #a93226; }
+
+  .btn-skip { font-size: 14px; }
+
+  /* STATS STRIP */
+  .stats-strip {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+
+  .stat-block { text-align: center; }
+  .stat-val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  .stat-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* IDLE STATE */
+  .idle-msg {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--muted);
+    text-align: center;
+    position: relative;
+  }
+
+  /* SESSION LOG */
+  .log-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    width: 320px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .log-header {
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .log-toggle {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+  }
+  .log-toggle:hover { color: var(--text); }
+
+  .log-body {
+    max-height: 180px;
+    overflow-y: auto;
+  }
+  .log-body::-webkit-scrollbar { width: 3px; }
+  .log-body::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .log-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    padding: 8px 14px;
+    font-size: 10px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .log-row:last-child { border-bottom: none; }
+  .log-name { color: var(--text); font-size: 11px; font-family: 'Syne', sans-serif; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .log-pomos { color: var(--accent); }
+  .log-time { color: var(--muted); }
+
+  .log-empty { padding: 14px; font-size: 11px; color: var(--muted); text-align: center; }
+
+  /* BREAK OVERLAY */
+  .break-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(242,240,235,0.94);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .break-overlay.visible { opacity: 1; pointer-events: all; }
+  .break-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--accent3);
+    letter-spacing: 0.06em;
+  }
+  .break-sub { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; }
+  .break-timer { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 52px; color: var(--accent3); }
+  .btn-break-skip {
+    margin-top: 10px;
+    padding: 10px 28px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-break-skip:hover { border-color: var(--accent3); }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: #ffffff;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 18px;
+    font-size: 12px;
+    z-index: 200;
+    transform: translateX(120%);
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    max-width: 260px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .notif.show { transform: translateX(0); }
+  .notif-title { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+  .notif-body { color: var(--muted); font-size: 11px; }
+
+  /* Responsive scroll for queue section label */
+  .queue-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }
+  .queue-section-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 14px 24px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">FOCUS</div>
+  <div class="header-status">
+    <span class="dot" id="statusDot"></span>
+    <span id="statusText">IDLE</span>
+  </div>
+</header>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <div class="panel-section">
+    <div class="section-label">New Task</div>
+
+    <div class="setup-field">
+      <label>Project / Task Name</label>
+      <input type="text" id="inp-name" placeholder="e.g. Flint demo prep" maxlength="60">
+    </div>
+    <div class="setup-row">
+      <div class="setup-field">
+        <label>Pomodoros</label>
+        <input type="number" id="inp-pomos" placeholder="4" min="1" max="20" value="">
+      </div>
+      <div class="setup-field">
+        <label>Minutes / Pomo</label>
+        <input type="number" id="inp-mins" placeholder="25" min="1" max="90" value="">
+      </div>
+    </div>
+    <button class="btn-add" onclick="addTask()">+ Add Task</button>
+  </div>
+
+  <div class="queue-section">
+    <div class="queue-section-label">Queue</div>
+    <div class="queue-list" id="queueList">
+      <div class="log-empty" id="emptyQueue">No tasks yet. Add one above.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel" id="rightPanel">
+
+  <!-- IDLE STATE -->
+  <div class="idle-msg" id="idleMsg">
+    Add a task and hit start →
+  </div>
+
+  <!-- TIMER STATE (hidden initially) -->
+  <div id="timerUI" style="display:none; flex-direction:column; align-items:center; gap:24px;">
+    <div>
+      <div class="timer-project-name" id="timerProjectName">—</div>
+      <div class="timer-phase" id="timerPhase" style="text-align:center; margin-top:4px;">FOCUS</div>
+    </div>
+
+    <div class="timer-ring-wrap">
+      <svg class="timer-svg" viewBox="0 0 280 280">
+        <circle class="ring-bg" cx="140" cy="140" r="130"/>
+        <circle class="ring-progress" id="ringProgress" cx="140" cy="140" r="130"/>
+      </svg>
+      <div class="timer-display">
+        <div class="timer-time" id="timerTime">25:00</div>
+        <div class="timer-pomo-count" id="timerPomoCount">POMO 1 OF 4</div>
+      </div>
+    </div>
+
+    <div class="pomo-dots" id="pomoDots"></div>
+
+    <div class="controls">
+      <button class="btn-ctrl" onclick="resetTimer()" title="Reset">↺</button>
+      <button class="btn-ctrl btn-play" id="btnPlay" onclick="togglePlay()">▶</button>
+      <button class="btn-ctrl btn-end" id="btnEnd" onclick="endOvertime()" style="display:none;">END</button>
+      <button class="btn-ctrl btn-skip" onclick="skipPomo()" title="Skip">⏭</button>
+      <button class="btn-ctrl" id="btnTick" onclick="toggleTick()" title="Mute tick" style="font-size:15px;">🔊</button>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-block">
+        <div class="stat-val" id="statPomos">0</div>
+        <div class="stat-lbl">Actual Pomos</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-val" id="statTime">0m</div>
+        <div class="stat-lbl">Focus Time</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-val" id="statPlanned">—</div>
+        <div class="stat-lbl">Planned</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION LOG -->
+  <div class="log-panel" id="logPanel">
+    <div class="log-header">
+      Today's Sessions
+      <button class="log-toggle" onclick="toggleLog()">▼</button>
+    </div>
+    <div class="log-body" id="logBody">
+      <div class="log-empty">No completed sessions yet.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BREAK OVERLAY -->
+<div class="break-overlay" id="breakOverlay">
+  <div class="break-title">BREAK TIME</div>
+  <div class="break-sub">Pomodoro complete — take 5 minutes</div>
+  <div class="break-timer" id="breakTimer">5:00</div>
+  <button class="btn-break-skip" onclick="endBreak()">Skip Break →</button>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif">
+  <div class="notif-title" id="notifTitle">Done!</div>
+  <div class="notif-body" id="notifBody"></div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────
+let tasks = [];       // { id, name, plannedPomos, minsPerPomo, actualPomos, totalSecs, done }
+let activeId = null;
+let timerInterval = null;
+let breakInterval = null;
+let isRunning = false;
+let secondsLeft = 0;
+let totalSecondsForPomo = 0;
+let currentPomoIndex = 0; // 0-based within active task
+let logVisible = true;
+let breakSecondsLeft = 0;
+const BREAK_DURATION = 5 * 60;
+let focusSecondsAccum = 0; // seconds accumulated this pomo so far (for tracking even partial)
+let overtimeMode = false;
+let overtimeSecs = 0;
+let audioCtx = null;
+
+// ─── AUDIO ───────────────────────────────────────────────────────────
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+let tickEnabled = true;
+
+function playTick() {
+  if (!tickEnabled) return;
+  try {
+    const ctx = getAudioCtx();
+    // Use a buffer of white noise shaped into a very short transient — sounds like a real clock escapement
+    const bufferSize = ctx.sampleRate * 0.025; // 25ms
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 12);
+    }
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+
+    // High-pass to cut low rumble, bandpass to add mechanical "clack" character
+    const hp = ctx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = 800;
+
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'peaking';
+    bp.frequency.value = 3500;
+    bp.gain.value = 14;
+    bp.Q.value = 1.2;
+
+    const gain = ctx.createGain();
+    gain.gain.value = 1.4;
+
+    source.connect(hp);
+    hp.connect(bp);
+    bp.connect(gain);
+    gain.connect(ctx.destination);
+    source.start();
+  } catch(e) {}
+}
+
+function toggleTick() {
+  tickEnabled = !tickEnabled;
+  const btn = document.getElementById('btnTick');
+  btn.textContent = tickEnabled ? '🔊' : '🔇';
+  btn.title = tickEnabled ? 'Mute tick' : 'Unmute tick';
+}
+
+function playAlert(type = 'done') {
+  try {
+    const ctx = getAudioCtx();
+    const notes = type === 'done' ? [523, 659, 784, 1046] : [784, 659];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      const t = ctx.currentTime + i * 0.18;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.25, t + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+      osc.start(t); osc.stop(t + 0.36);
+    });
+  } catch(e) {}
+}
+
+// ─── TASKS ───────────────────────────────────────────────────────────
+function addTask() {
+  const name = document.getElementById('inp-name').value.trim();
+  const pomos = parseInt(document.getElementById('inp-pomos').value) || 4;
+  const mins = parseInt(document.getElementById('inp-mins').value) || 25;
+  if (!name) { document.getElementById('inp-name').focus(); return; }
+
+  const task = {
+    id: Date.now(),
+    name,
+    plannedPomos: Math.min(Math.max(pomos, 1), 20),
+    minsPerPomo: Math.min(Math.max(mins, 1), 90),
+    actualPomos: 0,
+    totalSecs: 0,
+    done: false
+  };
+  tasks.push(task);
+
+  document.getElementById('inp-name').value = '';
+  document.getElementById('inp-pomos').value = '';
+  document.getElementById('inp-mins').value = '';
+
+  renderQueue();
+  saveState();
+
+  // Auto-activate if none active
+  if (!activeId) activateTask(task.id);
+}
+
+function removeTask(id) {
+  if (activeId === id) {
+    stopTimer();
+    activeId = null;
+    showIdle();
+  }
+  tasks = tasks.filter(t => t.id !== id);
+  renderQueue();
+  saveState();
+}
+
+function activateTask(id) {
+  if (activeId === id) return;
+  if (isRunning) stopTimer();
+  overtimeMode = false;
+  overtimeSecs = 0;
+  document.getElementById('btnEnd').style.display = 'none';
+  document.getElementById('btnPlay').style.display = 'flex';
+  document.getElementById('timerTime').classList.remove('overtime', 'warning');
+  document.getElementById('ringProgress').classList.remove('overtime', 'warning');
+  document.getElementById('timerPhase').textContent = 'FOCUS';
+  activeId = id;
+  currentPomoIndex = 0;
+  focusSecondsAccum = 0;
+  const task = getTask(id);
+  if (!task) return;
+  totalSecondsForPomo = task.minsPerPomo * 60;
+  secondsLeft = totalSecondsForPomo;
+  renderQueue();
+  saveState();
+  showTimerUI(task);
+}
+
+function getTask(id) { return tasks.find(t => t.id === id); }
+
+// ─── RENDER QUEUE ────────────────────────────────────────────────────
+let dragSrcIdx = null;
+
+function renderQueue() {
+  const list = document.getElementById('queueList');
+  if (tasks.length === 0) {
+    list.innerHTML = '<div class="log-empty" id="emptyQueue">No tasks yet. Add one above.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  tasks.forEach((task, idx) => {
+    const el = document.createElement('div');
+    el.className = 'queue-item' + (task.id === activeId ? ' active' : '') + (task.done ? ' done' : '');
+    el.draggable = true;
+    el.dataset.idx = idx;
+
+    el.innerHTML = `
+      <div class="qi-drag" title="Drag to reorder">⠿</div>
+      <div class="qi-indicator"></div>
+      <div class="qi-info" onclick="activateTask(${task.id})">
+        <div class="qi-name">${esc(task.name)}</div>
+        <div class="qi-meta">${task.actualPomos}/${task.plannedPomos} pomos · ${task.minsPerPomo}m each</div>
+      </div>
+      <button class="qi-add-pomo" onclick="addPomoToTask(${task.id})" title="Add a Pomodoro">+1</button>
+      <button class="qi-del" onclick="removeTask(${task.id})" title="Remove">×</button>
+    `;
+
+    // Drag events
+    el.addEventListener('dragstart', e => {
+      dragSrcIdx = idx;
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(() => el.classList.add('dragging'), 0);
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      document.querySelectorAll('.queue-item').forEach(i => i.classList.remove('drag-over'));
+    });
+    el.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.queue-item').forEach(i => i.classList.remove('drag-over'));
+      el.classList.add('drag-over');
+    });
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrcIdx === null || dragSrcIdx === idx) return;
+      const moved = tasks.splice(dragSrcIdx, 1)[0];
+      tasks.splice(idx, 0, moved);
+      dragSrcIdx = null;
+      renderQueue();
+      saveState();
+    });
+
+    list.appendChild(el);
+  });
+}
+
+function addPomoToTask(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  task.plannedPomos = Math.min(task.plannedPomos + 1, 20);
+  renderQueue();
+  if (id === activeId) {
+    const t = getTask(activeId);
+    updateStats(t);
+    renderPomoDots(t);
+  }
+  saveState();
+}
+
+// ─── TIMER UI ────────────────────────────────────────────────────────
+function showIdle() {
+  document.getElementById('idleMsg').style.display = 'block';
+  document.getElementById('timerUI').style.display = 'none';
+  setStatus(false);
+}
+
+function showTimerUI(task) {
+  document.getElementById('idleMsg').style.display = 'none';
+  const ui = document.getElementById('timerUI');
+  ui.style.display = 'flex';
+  document.getElementById('timerProjectName').textContent = task.name;
+  updateTimerDisplay(task);
+  updateStats(task);
+  renderPomoDots(task);
+  updateRing(secondsLeft, totalSecondsForPomo);
+}
+
+function updateTimerDisplay(task) {
+  document.getElementById('timerTime').textContent = formatTime(secondsLeft);
+  const pIdx = currentPomoIndex + 1;
+  document.getElementById('timerPomoCount').textContent = `POMO ${pIdx} OF ${task.plannedPomos}`;
+
+  // Warning coloring under 60s
+  const timeEl = document.getElementById('timerTime');
+  const ringEl = document.getElementById('ringProgress');
+  if (secondsLeft <= 60 && secondsLeft > 0 && isRunning) {
+    timeEl.classList.add('warning');
+    ringEl.classList.add('warning');
+    ringEl.classList.remove('break');
+  } else {
+    timeEl.classList.remove('warning');
+    ringEl.classList.remove('warning');
+  }
+}
+
+function updateStats(task) {
+  document.getElementById('statPomos').textContent = task.actualPomos;
+  const mins = Math.floor(task.totalSecs / 60);
+  document.getElementById('statTime').textContent = mins < 60 ? `${mins}m` : `${Math.floor(mins/60)}h ${mins%60}m`;
+  document.getElementById('statPlanned').textContent = task.plannedPomos;
+}
+
+function renderPomoDots(task) {
+  const wrap = document.getElementById('pomoDots');
+  wrap.innerHTML = '';
+  for (let i = 0; i < task.plannedPomos; i++) {
+    const d = document.createElement('div');
+    d.className = 'pomo-dot' +
+      (i < task.actualPomos ? ' done' : '') +
+      (i === currentPomoIndex && isRunning ? ' current' : '');
+    wrap.appendChild(d);
+  }
+}
+
+function updateRing(sLeft, sTotal) {
+  const r = 130;
+  const circ = 2 * Math.PI * r;
+  const ring = document.getElementById('ringProgress');
+  ring.style.strokeDasharray = circ;
+  const progress = sTotal > 0 ? sLeft / sTotal : 1;
+  ring.style.strokeDashoffset = circ * (1 - progress);
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────
+function togglePlay() {
+  if (!activeId) return;
+  isRunning ? pauseTimer() : startTimer();
+}
+
+function startTimer() {
+  if (!activeId || isRunning) return;
+  isRunning = true;
+  document.getElementById('btnPlay').innerHTML = '⏸';
+  setStatus(true);
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tick, 1000);
+}
+
+function pauseTimer() {
+  isRunning = false;
+  document.getElementById('btnPlay').innerHTML = '▶';
+  clearInterval(timerInterval);
+  timerInterval = null;
+  setStatus(false);
+}
+
+function stopTimer() {
+  pauseTimer();
+  secondsLeft = 0;
+  focusSecondsAccum = 0;
+}
+
+function resetTimer() {
+  const task = getTask(activeId);
+  if (!task) return;
+  pauseTimer();
+  overtimeMode = false;
+  overtimeSecs = 0;
+  document.getElementById('btnEnd').style.display = 'none';
+  document.getElementById('btnPlay').style.display = 'flex';
+  document.getElementById('btnPlay').innerHTML = '▶';
+  document.getElementById('timerTime').classList.remove('overtime', 'warning');
+  document.getElementById('ringProgress').classList.remove('overtime', 'warning');
+  document.getElementById('timerPhase').textContent = 'FOCUS';
+  secondsLeft = totalSecondsForPomo;
+  focusSecondsAccum = 0;
+  updateTimerDisplay(task);
+  updateRing(secondsLeft, totalSecondsForPomo);
+}
+
+function skipPomo() {
+  const task = getTask(activeId);
+  if (!task) return;
+  pauseTimer();
+
+  // Count this as a completed pomo
+  task.totalSecs += focusSecondsAccum;
+  focusSecondsAccum = 0;
+  task.actualPomos++;
+  currentPomoIndex++;
+
+  if (currentPomoIndex >= task.plannedPomos) {
+    completeTask(task);
+  } else {
+    secondsLeft = totalSecondsForPomo;
+    updateTimerDisplay(task);
+    updateRing(secondsLeft, totalSecondsForPomo);
+    updateStats(task);
+    renderPomoDots(task);
+    renderQueue();
+    saveState();
+    showNotif('Pomo skipped', `Starting pomo ${currentPomoIndex + 1}`);
+  }
+}
+
+function tick() {
+  const task = getTask(activeId);
+  if (!task) return;
+
+  if (overtimeMode) {
+    overtimeSecs++;
+    focusSecondsAccum++;
+    // NO tick in overtime
+    const timeEl = document.getElementById('timerTime');
+    timeEl.textContent = '+' + formatTime(overtimeSecs);
+    return;
+  }
+
+  secondsLeft--;
+  focusSecondsAccum++;
+  playTick();
+
+  updateTimerDisplay(task);
+  updateRing(secondsLeft, totalSecondsForPomo);
+
+  if (secondsLeft <= 0) {
+    // Pomo time's up — enter overtime
+    enterOvertime(task);
+  }
+}
+
+// ─── OVERTIME ────────────────────────────────────────────────────────
+function enterOvertime(task) {
+  overtimeMode = true;
+  overtimeSecs = 0;
+  playAlert('done');
+
+  // Switch buttons
+  document.getElementById('btnPlay').style.display = 'none';
+  document.getElementById('btnEnd').style.display = 'flex';
+
+  // Flash ring and time
+  const timeEl = document.getElementById('timerTime');
+  const ringEl = document.getElementById('ringProgress');
+  timeEl.classList.remove('warning');
+  timeEl.classList.add('overtime');
+  ringEl.classList.remove('warning');
+  ringEl.classList.add('overtime');
+  // Keep ring full
+  const r = 130;
+  const circ = 2 * Math.PI * r;
+  ringEl.style.strokeDashoffset = 0;
+
+  document.getElementById('timerPhase').textContent = 'OVERTIME — HIT END WHEN DONE';
+  document.getElementById('timerTime').textContent = '+00:00';
+
+  showNotif('Time\'s up!', 'Keep going or hit END to start your break.');
+}
+
+function endOvertime() {
+  const task = getTask(activeId);
+  if (!task) return;
+
+  clearInterval(timerInterval);
+  timerInterval = null;
+  isRunning = false;
+  overtimeMode = false;
+
+  // Tally everything
+  task.actualPomos++;
+  task.totalSecs += focusSecondsAccum;
+  focusSecondsAccum = 0;
+  currentPomoIndex++;
+
+  // Reset UI state
+  document.getElementById('btnEnd').style.display = 'none';
+  document.getElementById('btnPlay').style.display = 'flex';
+  document.getElementById('btnPlay').innerHTML = '▶';
+
+  const timeEl = document.getElementById('timerTime');
+  const ringEl = document.getElementById('ringProgress');
+  timeEl.classList.remove('overtime');
+  ringEl.classList.remove('overtime');
+  document.getElementById('timerPhase').textContent = 'FOCUS';
+
+  setStatus(false);
+  renderPomoDots(task);
+  updateStats(task);
+  renderQueue();
+  saveState();
+
+  if (currentPomoIndex >= task.plannedPomos) {
+    completeTask(task);
+  } else {
+    startBreak(task);
+  }
+}
+
+
+function startBreak(task) {
+  breakSecondsLeft = BREAK_DURATION;
+  const overlay = document.getElementById('breakOverlay');
+  overlay.classList.add('visible');
+  document.getElementById('breakTimer').textContent = formatTime(breakSecondsLeft);
+  document.getElementById('ringProgress').classList.add('break');
+
+  showNotif('Pomo complete! 🎉', `Take a 5-minute break.`);
+
+  breakInterval = setInterval(() => {
+    breakSecondsLeft--;
+    document.getElementById('breakTimer').textContent = formatTime(breakSecondsLeft);
+    if (breakSecondsLeft <= 0) endBreak();
+  }, 1000);
+}
+
+function endBreak() {
+  clearInterval(breakInterval);
+  document.getElementById('breakOverlay').classList.remove('visible');
+  document.getElementById('ringProgress').classList.remove('break');
+
+  const task = getTask(activeId);
+  if (!task) return;
+  secondsLeft = totalSecondsForPomo;
+  updateTimerDisplay(task);
+  updateRing(secondsLeft, totalSecondsForPomo);
+  renderPomoDots(task);
+  showNotif('Break over', `Ready for pomo ${currentPomoIndex + 1}? Hit play.`);
+}
+
+// ─── COMPLETE TASK ────────────────────────────────────────────────────
+function completeTask(task) {
+  task.done = true;
+  playAlert('done');
+  addToLog(task);
+  renderQueue();
+  saveState();
+  showNotif('Task complete! ✓', `${task.actualPomos} pomos · ${Math.round(task.totalSecs/60)}m`);
+
+  // Find next non-done task
+  const next = tasks.find(t => !t.done && t.id !== task.id);
+  if (next) {
+    setTimeout(() => activateTask(next.id), 1500);
+  } else {
+    setTimeout(() => { activeId = null; showIdle(); }, 1500);
+  }
+}
+
+// ─── SESSION LOG ─────────────────────────────────────────────────────
+let sessionLog = [];
+
+function addToLog(task) {
+  sessionLog.push({
+    name: task.name,
+    pomos: task.actualPomos,
+    planned: task.plannedPomos,
+    secs: task.totalSecs,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  });
+  saveState();
+  renderLog();
+}
+
+function renderLog() {
+  const body = document.getElementById('logBody');
+  if (sessionLog.length === 0) {
+    body.innerHTML = '<div class="log-empty">No completed sessions yet.</div>';
+    return;
+  }
+  body.innerHTML = '';
+  [...sessionLog].reverse().forEach(s => {
+    const mins = Math.round(s.secs / 60);
+    const row = document.createElement('div');
+    row.className = 'log-row';
+    row.innerHTML = `
+      <div class="log-name" title="${esc(s.name)}">${esc(s.name)}</div>
+      <div class="log-pomos">${s.pomos}/${s.planned} pomos</div>
+      <div class="log-time">${mins}m</div>
+    `;
+    body.appendChild(row);
+  });
+}
+
+function toggleLog() {
+  const body = document.getElementById('logBody');
+  const btn = document.querySelector('.log-toggle');
+  logVisible = !logVisible;
+  body.style.display = logVisible ? '' : 'none';
+  btn.textContent = logVisible ? '▼' : '▲';
+}
+
+// ─── NOTIFICATION ─────────────────────────────────────────────────────
+let notifTimeout = null;
+function showNotif(title, body) {
+  const el = document.getElementById('notif');
+  document.getElementById('notifTitle').textContent = title;
+  document.getElementById('notifBody').textContent = body;
+  el.classList.add('show');
+  clearTimeout(notifTimeout);
+  notifTimeout = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// ─── STATUS ───────────────────────────────────────────────────────────
+function setStatus(active) {
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  dot.className = 'dot' + (active ? ' active' : '');
+  txt.textContent = active ? 'FOCUSING' : 'IDLE';
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── KEYBOARD ─────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+});
+
+// ─── PERSISTENCE ──────────────────────────────────────────────────────
+const STORAGE_KEY = 'focus_pomodoro_v1';
+
+function saveState() {
+  try {
+    const data = {
+      date: new Date().toDateString(),
+      tasks,
+      sessionLog,
+      activeId
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+
+    // New day — keep tasks queue but wipe session log
+    if (data.date !== new Date().toDateString()) {
+      tasks = (data.tasks || []).map(t => ({ ...t, done: false, actualPomos: 0, totalSecs: 0 }));
+      sessionLog = [];
+      activeId = null;
+      saveState();
+    } else {
+      tasks = data.tasks || [];
+      sessionLog = data.sessionLog || [];
+      activeId = data.activeId || null;
+    }
+
+    renderQueue();
+    renderLog();
+
+    // Restore active task display if we had one
+    if (activeId) {
+      const task = getTask(activeId);
+      if (task && !task.done) {
+        totalSecondsForPomo = task.minsPerPomo * 60;
+        secondsLeft = totalSecondsForPomo;
+        currentPomoIndex = task.actualPomos;
+        showTimerUI(task);
+        return;
+      }
+    }
+    // Fall through to idle if nothing to restore
+    const nextTask = tasks.find(t => !t.done);
+    if (nextTask) {
+      activeId = nextTask.id;
+      totalSecondsForPomo = nextTask.minsPerPomo * 60;
+      secondsLeft = totalSecondsForPomo;
+      currentPomoIndex = nextTask.actualPomos;
+      renderQueue();
+      showTimerUI(nextTask);
+    } else {
+      showIdle();
+    }
+  } catch(e) {
+    showIdle();
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────
+loadState();
+</script>
+</body>
+</html>
