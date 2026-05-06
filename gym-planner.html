@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Gym Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --border: #2e2e2e;
+    --accent: #c8f060;
+    --accent2: #60d0f0;
+    --danger: #f06060;
+    --text: #f0f0f0;
+    --muted: #888;
+    --dimmed: #555;
+    --radius: 12px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    min-height: 100vh;
+    padding: 0;
+  }
+  .screen { display: none; padding: 20px 16px 40px; max-width: 480px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  /* Header */
+  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-top: 8px; }
+  .logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+  .icon-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); cursor: pointer; padding: 8px 10px; font-size: 16px; line-height: 1; transition: color 0.15s, border-color 0.15s; }
+  .icon-btn:hover { color: var(--text); border-color: var(--dimmed); }
+
+  /* Section label */
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--dimmed); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+
+  /* Input group */
+  .input-group { margin-bottom: 22px; }
+  .input-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  .input-group .hint { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+  /* Pill grid */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 13px;
+    padding: 7px 14px;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--dimmed); color: var(--text); }
+  .pill.selected { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 500; }
+  .pill.selected-blue { background: var(--accent2); border-color: var(--accent2); color: #111; font-weight: 500; }
+  .pill.selected-red { background: var(--danger); border-color: var(--danger); color: #fff; font-weight: 500; }
+
+  /* Time slider */
+  .time-row { display: flex; gap: 6px; }
+  .time-btn {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 10px 4px;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .time-btn:hover { border-color: var(--dimmed); color: var(--text); }
+  .time-btn.selected { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 500; }
+
+  /* Generate button */
+  .btn-primary {
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    color: #111;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px;
+    width: 100%;
+    transition: opacity 0.15s, transform 0.1s;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { background: var(--surface2); color: var(--dimmed); cursor: not-allowed; }
+
+  .btn-secondary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--dimmed); }
+
+  /* Loading */
+  .loading-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 20px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--muted); font-size: 14px; }
+
+  /* Workout output */
+  .workout-header { margin-bottom: 20px; }
+  .workout-title { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .workout-meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  .exercise-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .exercise-card-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .exercise-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .exercise-muscles { font-size: 12px; color: var(--accent2); font-family: var(--mono); }
+  .exercise-body { padding: 12px 16px; }
+  .exercise-stats { display: flex; gap: 16px; margin-bottom: 10px; }
+  .stat { flex: 1; }
+  .stat-label { font-family: var(--mono); font-size: 10px; color: var(--dimmed); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+  .stat-value { font-size: 14px; font-weight: 500; color: var(--accent); }
+  .exercise-tip { font-size: 13px; color: var(--muted); line-height: 1.5; border-left: 2px solid var(--border); padding-left: 10px; margin-bottom: 10px; }
+
+  /* Weight log */
+  .weight-log-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+  .weight-log-row label { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .weight-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 7px 10px;
+    width: 90px;
+    text-align: center;
+  }
+  .weight-input:focus { outline: none; border-color: var(--accent); }
+  .weight-prev { font-family: var(--mono); font-size: 11px; color: var(--dimmed); }
+
+  /* Rationale box */
+  .rationale-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+  .rationale-label { font-family: var(--mono); font-size: 10px; color: var(--dimmed); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .rationale-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* Action bar */
+  .action-bar { display: flex; gap: 10px; margin-top: 20px; }
+  .action-bar .btn-primary { flex: 2; }
+  .action-bar .btn-secondary { flex: 1; }
+
+  /* History screen */
+  .history-entry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .history-date { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+  .history-summary { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .history-weights { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .weight-tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; font-family: var(--mono); font-size: 11px; color: var(--dimmed); padding: 3px 8px; }
+
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--dimmed); font-size: 14px; }
+
+  .export-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #111; font-size: 13px; font-weight: 500;
+    padding: 10px 20px; border-radius: 100px;
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none; z-index: 100;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Nav tabs */
+  .nav { display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; margin-bottom: 24px; }
+  .nav-btn { flex: 1; background: none; border: none; border-radius: 7px; color: var(--muted); cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500; padding: 9px; transition: all 0.15s; }
+  .nav-btn.active { background: var(--surface2); color: var(--text); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* Caution chip */
+  .caution-chip { display: inline-flex; align-items: center; gap: 5px; background: rgba(240,96,96,0.12); border: 1px solid rgba(240,96,96,0.3); border-radius: 100px; color: var(--danger); font-size: 11px; font-family: var(--mono); padding: 4px 10px; margin-right: 6px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN: PLAN -->
+<div class="screen active" id="screen-plan">
+  <div class="header">
+    <span class="logo">⬡ GymPlan</span>
+    <button class="icon-btn" onclick="showScreen('screen-history')" title="History">📋</button>
+  </div>
+
+  <div class="input-group">
+    <div class="section-label">Today's session</div>
+    <label>How much time do you have?</label>
+    <div class="time-row" id="time-btns">
+      <button class="time-btn" data-val="5" onclick="selectTime(this)">5m</button>
+      <button class="time-btn" data-val="10" onclick="selectTime(this)">10m</button>
+      <button class="time-btn" data-val="15" onclick="selectTime(this)">15m</button>
+      <button class="time-btn" data-val="20" onclick="selectTime(this)">20m</button>
+      <button class="time-btn" data-val="25" onclick="selectTime(this)">25m</button>
+      <button class="time-btn" data-val="30" onclick="selectTime(this)">30m</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Energy level today</label>
+    <div class="pills" id="energy-pills">
+      <button class="pill" data-val="low" onclick="selectPill(this,'energy-pills',false)">Low — take it easy</button>
+      <button class="pill" data-val="medium" onclick="selectPill(this,'energy-pills',false)">Medium — solid session</button>
+      <button class="pill" data-val="high" onclick="selectPill(this,'energy-pills',false)">High — push it</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Cardio today?</label>
+    <div class="pills" id="cardio-pills">
+      <button class="pill" data-val="none" onclick="selectPill(this,'cardio-pills',false)">No cardio</button>
+      <button class="pill" data-val="before" onclick="selectPill(this,'cardio-pills',false)">~25 min before weights</button>
+      <button class="pill" data-val="after" onclick="selectPill(this,'cardio-pills',false)">~25 min after weights</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Last strength session</label>
+    <div class="pills" id="last-pills">
+      <button class="pill" data-val="today" onclick="selectPill(this,'last-pills',false)">Today (earlier)</button>
+      <button class="pill" data-val="1" onclick="selectPill(this,'last-pills',false)">Yesterday</button>
+      <button class="pill" data-val="2" onclick="selectPill(this,'last-pills',false)">2 days ago</button>
+      <button class="pill" data-val="3" onclick="selectPill(this,'last-pills',false)">3+ days ago</button>
+      <button class="pill" data-val="first" onclick="selectPill(this,'last-pills',false)">First session</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Next session likely</label>
+    <div class="pills" id="next-pills">
+      <button class="pill" data-val="tomorrow" onclick="selectPill(this,'next-pills',false)">Tomorrow</button>
+      <button class="pill" data-val="2" onclick="selectPill(this,'next-pills',false)">In 2 days</button>
+      <button class="pill" data-val="3" onclick="selectPill(this,'next-pills',false)">In 3+ days</button>
+      <button class="pill" data-val="unknown" onclick="selectPill(this,'next-pills',false)">Not sure</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Areas to avoid today</label>
+    <div class="hint">Your chronic areas are pre-checked — uncheck if you're fine today.</div>
+    <div class="pills" id="avoid-pills">
+      <button class="pill selected-red" data-val="lower back" onclick="toggleAvoid(this)">Lower back</button>
+      <button class="pill selected-red" data-val="knees" onclick="toggleAvoid(this)">Knees</button>
+      <button class="pill selected-red" data-val="shoulders" onclick="toggleAvoid(this)">Shoulders</button>
+      <button class="pill" data-val="chest" onclick="toggleAvoid(this)">Chest</button>
+      <button class="pill" data-val="legs" onclick="toggleAvoid(this)">Legs</button>
+      <button class="pill" data-val="core" onclick="toggleAvoid(this)">Core</button>
+      <button class="pill" data-val="arms" onclick="toggleAvoid(this)">Arms</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Anything to focus on? <span style="color:var(--dimmed);font-weight:400">(optional)</span></label>
+    <input type="text" id="focus-input" placeholder="e.g. upper body, glutes, posture…"
+      style="background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:14px;padding:12px 14px;width:100%;outline:none;"
+      onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+  </div>
+
+  <button class="btn-primary" id="generate-btn" onclick="generateWorkout()">Build my workout →</button>
+</div>
+
+<!-- SCREEN: LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="header">
+    <span class="logo">⬡ GymPlan</span>
+  </div>
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loading-msg">Designing your workout…</div>
+  </div>
+</div>
+
+<!-- SCREEN: WORKOUT -->
+<div class="screen" id="screen-workout">
+  <div class="header">
+    <span class="logo">⬡ GymPlan</span>
+    <button class="icon-btn" onclick="showScreen('screen-plan')" title="New session">↩</button>
+  </div>
+  <div class="workout-header">
+    <div class="workout-title" id="workout-title">Today's workout</div>
+    <div class="workout-meta" id="workout-meta"></div>
+  </div>
+  <div id="chronic-chips" style="margin-bottom:14px;"></div>
+  <div id="exercises-container"></div>
+  <div class="rationale-box" id="rationale-box" style="display:none">
+    <div class="rationale-label">Why this workout</div>
+    <div class="rationale-text" id="rationale-text"></div>
+  </div>
+  <div class="action-bar">
+    <button class="btn-primary" onclick="saveSession()">Save session ✓</button>
+    <button class="btn-secondary" onclick="showScreen('screen-plan')">Redo</button>
+  </div>
+</div>
+
+<!-- SCREEN: HISTORY -->
+<div class="screen" id="screen-history">
+  <div class="header">
+    <span class="logo">⬡ GymPlan</span>
+    <button class="icon-btn" onclick="showScreen('screen-plan')" title="Back">←</button>
+  </div>
+  <div class="export-bar">
+    <button class="btn-secondary" onclick="exportHistory()" style="flex:1">Export history</button>
+    <button class="icon-btn" onclick="clearHistory()" title="Clear all" style="color:var(--danger);border-color:rgba(240,96,96,0.3)">🗑</button>
+  </div>
+  <div id="history-container"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'gymplan_v1';
+
+function loadStorage() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { sessions: [] }; }
+  catch { return { sessions: [] }; }
+}
+function saveStorage(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// ── Navigation ─────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'screen-history') renderHistory();
+  window.scrollTo(0, 0);
+}
+
+// ── Input helpers ──────────────────────────────────────────────────────────
+let selectedTime = null;
+
+function selectTime(btn) {
+  document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTime = btn.dataset.val;
+}
+
+function selectPill(btn, groupId, multi) {
+  if (!multi) {
+    document.querySelectorAll(`#${groupId} .pill`).forEach(b => {
+      b.classList.remove('selected');
+    });
+  }
+  btn.classList.toggle('selected');
+}
+
+function toggleAvoid(btn) {
+  if (btn.classList.contains('selected-red')) {
+    btn.classList.remove('selected-red');
+  } else if (btn.classList.contains('selected')) {
+    btn.classList.remove('selected');
+  } else {
+    btn.classList.add('selected-red');
+  }
+}
+
+function getSelected(groupId) {
+  return [...document.querySelectorAll(`#${groupId} .pill.selected, #${groupId} .pill.selected-red`)]
+    .map(b => b.dataset.val);
+}
+
+function getSingleSelected(groupId) {
+  const btn = document.querySelector(`#${groupId} .pill.selected`);
+  return btn ? btn.dataset.val : null;
+}
+
+// ── Build prompt ───────────────────────────────────────────────────────────
+function buildPrompt(inputs, history) {
+  const recentSessions = history.sessions.slice(-4);
+  const recentText = recentSessions.length
+    ? recentSessions.map(s =>
+        `${s.date}: ${s.muscleGroups.join(', ')} — machines: ${s.machines.join(', ')}${s.weights ? ' — weights: ' + JSON.stringify(s.weights) : ''}`
+      ).join('\n')
+    : 'No previous sessions logged.';
+
+  const weightHistory = {};
+  history.sessions.forEach(s => {
+    if (s.weights) Object.assign(weightHistory, s.weights);
+  });
+  const weightText = Object.keys(weightHistory).length
+    ? Object.entries(weightHistory).map(([k, v]) => `${k}: ${v}`).join(', ')
+    : 'No weight history yet.';
+
+  return `You are a personal trainer designing a strength workout for this specific person and gym.
+
+ABOUT THE PERSON:
+- Age 56, male, intermediate fitness level, functional strength goal
+- Cardio: does ~25 min treadmill sessions separately from weights
+- CHRONIC CAUTION AREAS (always apply care, even if not avoided today): lower back, knees, shoulders
+
+AVAILABLE MACHINES (Hoist brand, apartment building gym — ONLY these 6 machines, no free weights):
+1. Leg Press (horizontal sled)
+2. Lat Pulldown / High Cable Row
+3. Cable Fly / Chest Fly (cable machine with adjustable pulleys)
+4. Ab Crunch machine (ROC-ABS)
+5. Chest Press
+6. Leg Extension + Leg Curl combo
+
+TODAY'S SESSION INPUTS:
+- Time available: ${inputs.time} minutes
+- Energy level: ${inputs.energy}
+- Cardio today: ${inputs.cardio}
+- Last strength session: ${inputs.lastSession}
+- Next session likely: ${inputs.nextSession}
+- Areas to AVOID today: ${inputs.avoid.length ? inputs.avoid.join(', ') : 'none specified'}
+- Focus area (if any): ${inputs.focus || 'none'}
+
+RECENT WORKOUT HISTORY (to avoid overworking same muscles):
+${recentText}
+
+WEIGHT HISTORY (most recent logged weights per machine):
+${weightText}
+
+INSTRUCTIONS:
+Design a workout fitting exactly in ${inputs.time} minutes including rest time. Select 1–5 exercises depending on time. Each exercise must be from the 6 available machines only. Output ONLY valid JSON in this exact format, no extra text:
+
+{
+  "title": "short catchy workout name",
+  "exercises": [
+    {
+      "machine": "exact machine name from the list",
+      "muscles": "primary muscles targeted",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": "60 sec",
+      "intensity": "moderate",
+      "weightSuggestion": "suggest a starting weight or progression note based on weight history",
+      "tip": "one specific form tip, especially for their chronic areas if relevant"
+    }
+  ],
+  "rationale": "2-3 sentences explaining why this combination was chosen today given their inputs and history"
+}
+
+Rules:
+- Never include an exercise that directly loads their avoided areas today
+- Always note shoulder-safe technique if using chest press or lat pulldown
+- For lower back caution: note bracing cues on leg press; avoid heavy loading if lower back is in avoid list
+- For knee caution: note range of motion limits on leg press and leg extension
+- Weight suggestion must reference their history if available, otherwise give a beginner-friendly starting estimate
+- Keep JSON clean and parseable`;
+}
+
+// ── Generate ───────────────────────────────────────────────────────────────
+let currentWorkout = null;
+let currentInputs = null;
+
+async function generateWorkout() {
+  // Validate
+  const time = selectedTime;
+  const energy = getSingleSelected('energy-pills');
+  const cardio = getSingleSelected('cardio-pills');
+  const lastSession = getSingleSelected('last-pills');
+  const nextSession = getSingleSelected('next-pills');
+
+  if (!time || !energy || !cardio || !lastSession || !nextSession) {
+    showToast('Please fill in all fields above ↑');
+    return;
+  }
+
+  const avoid = getSelected('avoid-pills');
+  const focus = document.getElementById('focus-input').value.trim();
+
+  currentInputs = { time, energy, cardio, lastSession, nextSession, avoid, focus };
+
+  showScreen('screen-loading');
+
+  const loadingMsgs = [
+    'Checking your history…',
+    'Designing your workout…',
+    'Considering your energy level…',
+    'Almost ready…'
+  ];
+  let msgIdx = 0;
+  const msgEl = document.getElementById('loading-msg');
+  const msgInterval = setInterval(() => {
+    msgIdx = (msgIdx + 1) % loadingMsgs.length;
+    msgEl.textContent = loadingMsgs[msgIdx];
+  }, 2200);
+
+  try {
+    const history = loadStorage();
+    const prompt = buildPrompt(currentInputs, history);
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    clearInterval(msgInterval);
+
+    if (!resp.ok) throw new Error(`API error ${resp.status}`);
+    const data = await resp.json();
+    const raw = data.content.map(b => b.text || '').join('');
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No JSON in response');
+    currentWorkout = JSON.parse(jsonMatch[0]);
+    renderWorkout(currentWorkout, currentInputs);
+    showScreen('screen-workout');
+  } catch (err) {
+    clearInterval(msgInterval);
+    showScreen('screen-plan');
+    showToast('Error: ' + err.message);
+  }
+}
+
+// ── Render workout ─────────────────────────────────────────────────────────
+function renderWorkout(workout, inputs) {
+  document.getElementById('workout-title').textContent = workout.title || "Today's Workout";
+  document.getElementById('workout-meta').textContent =
+    `${inputs.time} min · ${inputs.energy} energy · ${new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}`;
+
+  // Chronic chips
+  const chipContainer = document.getElementById('chronic-chips');
+  const actives = ['lower back', 'knees', 'shoulders'].filter(a => !inputs.avoid.includes(a));
+  const avoided = inputs.avoid;
+  chipContainer.innerHTML = '';
+  avoided.forEach(a => {
+    chipContainer.innerHTML += `<span class="caution-chip">⚠ avoiding ${a}</span>`;
+  });
+
+  // Exercises
+  const container = document.getElementById('exercises-container');
+  container.innerHTML = '';
+  const history = loadStorage();
+
+  workout.exercises.forEach((ex, i) => {
+    const prevWeight = getPrevWeight(ex.machine, history);
+    const card = document.createElement('div');
+    card.className = 'exercise-card';
+    card.innerHTML = `
+      <div class="exercise-card-header">
+        <div class="exercise-name">${i + 1}. ${ex.machine}</div>
+        <div class="exercise-muscles">${ex.muscles}</div>
+      </div>
+      <div class="exercise-body">
+        <div class="exercise-stats">
+          <div class="stat">
+            <div class="stat-label">Sets × Reps</div>
+            <div class="stat-value">${ex.sets} × ${ex.reps}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Rest</div>
+            <div class="stat-value">${ex.rest}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Intensity</div>
+            <div class="stat-value" style="color:var(--accent2)">${ex.intensity}</div>
+          </div>
+        </div>
+        <div class="exercise-tip">💡 ${ex.tip}</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">⚖ ${ex.weightSuggestion}</div>
+        <div class="weight-log-row">
+          <label>Log weight used:</label>
+          <input type="text" class="weight-input" id="weight-${i}" placeholder="e.g. 45 lbs" inputmode="decimal">
+          ${prevWeight ? `<span class="weight-prev">last: ${prevWeight}</span>` : ''}
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Rationale
+  if (workout.rationale) {
+    document.getElementById('rationale-text').textContent = workout.rationale;
+    document.getElementById('rationale-box').style.display = 'block';
+  }
+}
+
+function getPrevWeight(machineName, history) {
+  for (let i = history.sessions.length - 1; i >= 0; i--) {
+    const w = history.sessions[i].weights;
+    if (w && w[machineName]) return w[machineName];
+  }
+  return null;
+}
+
+// ── Save session ───────────────────────────────────────────────────────────
+function saveSession() {
+  if (!currentWorkout) return;
+  const history = loadStorage();
+
+  const weights = {};
+  currentWorkout.exercises.forEach((ex, i) => {
+    const val = document.getElementById('weight-' + i)?.value.trim();
+    if (val) weights[ex.machine] = val;
+  });
+
+  const muscleGroups = [...new Set(currentWorkout.exercises.map(e => e.muscles.split(',')[0].trim()))];
+  const machines = currentWorkout.exercises.map(e => e.machine);
+
+  history.sessions.push({
+    date: new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }),
+    timestamp: Date.now(),
+    title: currentWorkout.title,
+    muscleGroups,
+    machines,
+    weights: Object.keys(weights).length ? weights : null,
+    inputs: {
+      time: currentInputs.time,
+      energy: currentInputs.energy,
+      cardio: currentInputs.cardio
+    }
+  });
+
+  saveStorage(history);
+  showToast('Session saved ✓');
+  setTimeout(() => showScreen('screen-plan'), 800);
+}
+
+// ── History ────────────────────────────────────────────────────────────────
+function renderHistory() {
+  const history = loadStorage();
+  const container = document.getElementById('history-container');
+  if (!history.sessions.length) {
+    container.innerHTML = '<div class="empty-state">No sessions logged yet.<br>Complete your first workout to see history here.</div>';
+    return;
+  }
+  const sorted = [...history.sessions].reverse();
+  container.innerHTML = sorted.map(s => `
+    <div class="history-entry">
+      <div class="history-date">${s.date}</div>
+      <div style="font-size:14px;font-weight:500;margin-bottom:4px">${s.title || 'Workout'}</div>
+      <div class="history-summary">${s.muscleGroups.join(' · ')} &nbsp;·&nbsp; ${s.inputs?.time}min ${s.inputs?.energy} energy</div>
+      ${s.weights ? `<div class="history-weights">${Object.entries(s.weights).map(([k,v]) => `<span class="weight-tag">${k}: ${v}</span>`).join('')}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function clearHistory() {
+  if (!confirm('Clear all session history? This cannot be undone.')) return;
+  saveStorage({ sessions: [] });
+  renderHistory();
+  showToast('History cleared');
+}
+
+function exportHistory() {
+  const history = loadStorage();
+  if (!history.sessions.length) { showToast('No history to export'); return; }
+  const lines = ['GymPlan Export — ' + new Date().toLocaleDateString(), ''];
+  history.sessions.forEach(s => {
+    lines.push(`${s.date} — ${s.title || 'Workout'}`);
+    lines.push(`Muscles: ${s.muscleGroups.join(', ')}`);
+    lines.push(`Machines: ${s.machines.join(', ')}`);
+    lines.push(`Time: ${s.inputs?.time}min, Energy: ${s.inputs?.energy}`);
+    if (s.weights) lines.push(`Weights: ${Object.entries(s.weights).map(([k,v]) => `${k} ${v}`).join(', ')}`);
+    lines.push('');
+  });
+  navigator.clipboard.writeText(lines.join('\n'))
+    .then(() => showToast('Copied to clipboard ✓'))
+    .catch(() => showToast('Could not copy — try again'));
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
