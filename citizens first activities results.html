@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A7D37">
+<title>Early Experiences from Fresh Eyes — Citizens Skills Coach</title>
+<meta name="description" content="An early-read on the first three activity completions in the Fresh Eyes practice on Citizens Skills Coach.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0; padding:0; box-sizing:border-box;}
+:root{
+  /* Citizens Skills Coach brand */
+  --cl-primary:#1A7D37;
+  --cl-primary-dark:#14612B;
+  --cl-primary-deep:#0E4A20;
+  --cl-primary-pale:#E8F3EC;
+  --cl-primary-soft:#D1E7D8;
+  --cl-primary-tint:rgba(26,125,55,0.08);
+
+  /* Surfaces */
+  --bg:#FBFAF6;
+  --bg-alt:#FFFFFF;
+  --bg-deep:#0F1A2E;
+  --bg-deep-mid:#132035;
+  --ink:#0F1A2E;
+  --ink-soft:#3D4A5E;
+  --ink-mute:#6B7689;
+  --ink-line:#E5E1D6;
+  --ink-line-strong:#CFC8B5;
+
+  /* Accents */
+  --accent:#E8630A;
+  --accent-soft:#FCE9D8;
+
+  /* Inverse */
+  --inv:#FFFFFF;
+  --inv-dim:rgba(255,255,255,0.72);
+  --inv-mute:rgba(255,255,255,0.45);
+  --inv-line:rgba(255,255,255,0.10);
+
+  --radius:12px;
+  --radius-lg:18px;
+  --radius-pill:100px;
+
+  --shadow-sm:0 1px 2px rgba(15,26,46,0.04), 0 2px 6px rgba(15,26,46,0.04);
+  --shadow:0 4px 14px rgba(15,26,46,0.06), 0 2px 4px rgba(15,26,46,0.04);
+}
+
+html{font-size:16px;}
+body{
+  font-family:'DM Sans', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+h1,h2,h3,h4{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  line-height:1.2;
+  letter-spacing:-0.015em;
+  color:var(--ink);
+  font-weight:800;
+}
+
+em{font-style:italic;}
+strong{font-weight:700;}
+
+/* ─── NAV ─── */
+.nav{
+  background:var(--bg-alt);
+  border-bottom:1px solid var(--ink-line);
+  padding:14px 28px;
+  display:flex; align-items:center; gap:14px;
+}
+.nav-brand{display:flex; align-items:center; gap:10px; min-width:0;}
+.nav-brand-mark{
+  width:34px; height:34px; border-radius:9px;
+  background:linear-gradient(135deg, var(--cl-primary) 0%, var(--cl-primary-dark) 100%);
+  color:white; display:flex; align-items:center; justify-content:center;
+  font-family:'Plus Jakarta Sans', sans-serif; font-weight:900; font-size:1rem;
+  letter-spacing:-0.02em; flex-shrink:0;
+  box-shadow:0 2px 6px rgba(26,125,55,0.25);
+}
+.nav-brand-name{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-weight:800; font-size:1rem; color:var(--ink);
+  letter-spacing:-0.01em; white-space:nowrap;
+}
+.nav-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 11px; border-radius:var(--radius-pill);
+  background:var(--cl-primary-pale);
+  color:var(--cl-primary-dark);
+  border:1px solid var(--cl-primary-soft);
+  font-size:0.72rem; font-weight:700; letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.nav-pill::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+.nav-spacer{flex:1;}
+.nav-flint{
+  display:flex; align-items:center; gap:5px;
+  font-size:0.7rem; color:var(--ink-mute);
+  letter-spacing:0.04em;
+}
+.nav-flint-mark{
+  font-family:'Plus Jakarta Sans', sans-serif; font-weight:800;
+  color:var(--accent); letter-spacing:0.06em; font-size:0.78rem;
+}
+@media(max-width:640px){
+  .nav-flint{display:none;}
+  .nav{padding:12px 18px;}
+}
+
+/* ─── PAGE ─── */
+.page{
+  max-width:780px;
+  margin:0 auto;
+  padding:48px 32px 64px;
+}
+@media(max-width:640px){.page{padding:36px 22px 48px;}}
+
+/* ─── HEADER ─── */
+.eyebrow{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.78rem; font-weight:800;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--cl-primary);
+  margin-bottom:0.6rem;
+  display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:''; width:28px; height:1.5px; background:var(--cl-primary);}
+header h1{
+  font-size:clamp(2rem, 4vw, 2.6rem);
+  letter-spacing:-0.025em;
+  font-weight:900;
+  margin-bottom:0.4rem;
+}
+.subtitle{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-weight:600;
+  font-size:1.1rem;
+  color:var(--ink-soft);
+  margin-bottom:1rem;
+  letter-spacing:-0.005em;
+}
+.date{
+  font-size:0.78rem;
+  color:var(--ink-mute);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-weight:700;
+}
+
+hr.divider{
+  border:0;
+  border-top:1px solid var(--ink-line);
+  margin:32px 0;
+}
+
+/* ─── LEDE ─── */
+.lede{
+  font-size:1.1rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+  max-width:62ch;
+}
+
+/* ─── VIGNETTE ─── */
+.vignette{margin:48px 0;}
+.vignette-head{
+  display:flex; align-items:flex-start; gap:16px;
+  margin-bottom:1.4rem;
+}
+.vignette-num{
+  flex-shrink:0;
+  width:44px; height:44px; border-radius:11px;
+  background:linear-gradient(135deg, var(--cl-primary) 0%, var(--cl-primary-dark) 100%);
+  color:white;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Plus Jakarta Sans', sans-serif; font-weight:900; font-size:1.15rem;
+  box-shadow:0 4px 10px rgba(26,125,55,0.22);
+}
+.vignette-head-text{flex:1; min-width:0;}
+.vignette-head h2{
+  font-size:1.4rem;
+  font-weight:800;
+  line-height:1.25;
+  margin-bottom:4px;
+}
+.vignette-role{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.82rem;
+  font-weight:700;
+  color:var(--ink-mute);
+  letter-spacing:0.04em;
+}
+.vignette-role .sep{
+  color:var(--ink-line-strong);
+  margin:0 8px;
+}
+.vignette p{
+  margin-bottom:1rem;
+  color:var(--ink);
+}
+.vignette p.muted{color:var(--ink-soft);}
+
+/* ─── CHAT EXCHANGE ─── */
+.chat{
+  background:var(--bg-alt);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--cl-primary);
+  border-radius:var(--radius-lg);
+  padding:22px 24px;
+  margin:1.4rem 0;
+  box-shadow:var(--shadow-sm);
+}
+.chat-label{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.7rem; font-weight:800;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--cl-primary-dark);
+  margin-bottom:12px;
+  display:flex; align-items:center; gap:8px;
+}
+.chat-label::after{
+  content:''; flex:1; height:1px; background:var(--cl-primary-soft);
+}
+.turn{margin-bottom:14px;}
+.turn:last-child{margin-bottom:0;}
+.speaker{
+  display:block;
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  font-weight:800;
+  margin-bottom:4px;
+}
+.speaker.coach{color:var(--cl-primary);}
+.speaker.fm{color:var(--ink-mute);}
+.turn .text{
+  color:var(--ink);
+  font-size:0.96rem;
+  line-height:1.55;
+}
+
+/* ─── PULL QUOTE ─── */
+.pullquote{
+  background:linear-gradient(135deg, var(--cl-primary-pale) 0%, #F0F8F2 100%);
+  border:1px solid var(--cl-primary-soft);
+  border-left:4px solid var(--cl-primary);
+  border-radius:var(--radius-lg);
+  padding:22px 26px;
+  margin:1.4rem 0;
+  position:relative;
+}
+.pullquote::before{
+  content:'\201C';
+  position:absolute;
+  top:6px; left:18px;
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:3.2rem;
+  font-weight:900;
+  color:var(--cl-primary-soft);
+  line-height:1;
+  pointer-events:none;
+}
+.pullquote-text{
+  font-size:1.08rem;
+  line-height:1.55;
+  color:var(--cl-primary-deep);
+  font-style:italic;
+  font-weight:500;
+  position:relative;
+  padding-left:8px;
+}
+.pullquote-attribution{
+  display:block;
+  margin-top:12px;
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.78rem;
+  font-weight:700;
+  color:var(--cl-primary-dark);
+  letter-spacing:0.04em;
+  font-style:normal;
+}
+
+/* ─── INLINE QUOTE ─── */
+.inline-q{
+  font-style:italic;
+  color:var(--cl-primary-deep);
+  font-weight:500;
+}
+
+/* ─── CLOSING ─── */
+.closing{
+  background:var(--bg-alt);
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius-lg);
+  padding:28px 32px;
+  margin-top:48px;
+  box-shadow:var(--shadow-sm);
+}
+.closing .closing-label{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:0.74rem; font-weight:800;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--cl-primary-dark);
+  margin-bottom:8px;
+}
+.closing h2{
+  font-size:1.3rem;
+  font-weight:800;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.closing p{
+  color:var(--ink-soft);
+  font-size:1rem;
+}
+
+/* ─── FOOTER ─── */
+.footer{
+  border-top:1px solid var(--ink-line);
+  margin-top:56px;
+  padding:20px 32px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:0.74rem;
+  color:var(--ink-mute);
+  letter-spacing:0.04em;
+}
+.footer-left{font-family:'Plus Jakarta Sans', sans-serif; font-weight:600;}
+.footer-flint{
+  font-family:'Plus Jakarta Sans', sans-serif; font-weight:800;
+  color:var(--accent); letter-spacing:0.06em;
+}
+@media(max-width:640px){
+  .footer{padding:18px 22px; flex-direction:column; align-items:flex-start; gap:6px;}
+}
+
+/* ─── PRINT ─── */
+@media print{
+  body{background:white;}
+  .nav{border-bottom:1px solid #ddd;}
+  .vignette{page-break-inside:avoid;}
+  .chat, .pullquote, .closing{box-shadow:none;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#" style="text-decoration:none;">
+    <div class="nav-brand-mark">SC</div>
+    <div class="nav-brand-name">Citizens Skills Coach</div>
+  </a>
+  <div class="nav-pill">Fresh Eyes &middot; Pilot</div>
+  <div class="nav-spacer"></div>
+  <div class="nav-flint">
+    <span>Powered by</span>
+    <span class="nav-flint-mark">FLiNT</span>
+  </div>
+</nav>
+
+<main class="page">
+
+  <header>
+    <div class="eyebrow">Early Read</div>
+    <h1>Early experiences from Fresh Eyes</h1>
+    <p class="subtitle">A look at the first three activity completions in the practice.</p>
+    <p class="date">May 6, 2026</p>
+  </header>
+
+  <hr class="divider">
+
+  <p class="lede">The first three activities have been completed in the Fresh Eyes practice on Citizens Skills Coach. Three is not a sample size to draw adoption conclusions from, and that is not the point of this update. What is worth sharing is the content of those first sessions &mdash; what the facility managers noticed, how the activity coach worked with them in the moment, and what they said about the experience in their own words.</p>
+
+  <section class="vignette">
+    <div class="vignette-head">
+      <div class="vignette-num">1</div>
+      <div class="vignette-head-text">
+        <h2>Joseph Dudar, Facility Manager</h2>
+        <p class="vignette-role">Downtown Utica<span class="sep">&middot;</span>Fresh Eyes Walkthrough</p>
+      </div>
+    </div>
+
+    <p>Five months into the FM role, Joseph was assigned the <em>Fresh Eyes Walkthrough</em> &mdash; the entry-level activity in the practice, asking him to visit a branch as if he were seeing it for the first time and document at least one thing he found.</p>
+
+    <p>Before sending him out the door, the activity coach worked through the documentation step with him &mdash; specifically the difference between a vague 360 entry and a usable one:</p>
+
+    <div class="chat">
+      <div class="chat-label">Activity coach exchange</div>
+      <div class="turn">
+        <span class="speaker coach">Activity coach</span>
+        <span class="text">If you spot something &mdash; say, a cove base separating at the teller counter &mdash; what would a vague vs. a good 360 entry look like to you?</span>
+      </div>
+      <div class="turn">
+        <span class="speaker fm">Joseph</span>
+        <span class="text">Vague &mdash; &ldquo;Please fix the cove base on the teller line.&rdquo;</span>
+      </div>
+      <div class="turn">
+        <span class="speaker coach">Activity coach</span>
+        <span class="text">A strong entry looks like: &ldquo;Cove base separating at teller counter, roughly 6 feet &mdash; not on any open work order.&rdquo; The key ingredients: what it is, where exactly, how much, and whether it&rsquo;s already tracked.</span>
+      </div>
+    </div>
+
+    <p>Joseph returned with two findings, both logged in 360 with photos. He described the first this way:</p>
+
+    <blockquote class="pullquote">
+      <span class="pullquote-text">The branch vestibule is in need of a fresh coat of paint, as there are visible scuffs and dirt that create a poor first impression for customers entering the branch.</span>
+      <span class="pullquote-attribution">Joseph Dudar &middot; post-walkthrough write-up</span>
+    </blockquote>
+
+    <p>In his post-activity reflection, asked to describe the most significant thing he had been missing, Joseph wrote that the chipped paint on the lower portion of the vestibule wall was <span class="inline-q">&ldquo;an area that I had previously missed.&rdquo;</span></p>
+  </section>
+
+  <section class="vignette">
+    <div class="vignette-head">
+      <div class="vignette-num">2</div>
+      <div class="vignette-head-text">
+        <h2>Mark Marterella, Facility Manager</h2>
+        <p class="vignette-role">Sewickley<span class="sep">&middot;</span>Fresh Eyes Walkthrough</p>
+      </div>
+    </div>
+
+    <p>Four years in the FM role with 45 locations under his management, Mark fits the profile where familiarity blindness runs highest. He was assigned the <em>Fresh Eyes Walkthrough</em> and chose Sewickley as his site for it.</p>
+
+    <p>When the activity coach asked where he typically begins a branch visit, Mark gave the honest answer &mdash; and the coach used it as the moment to reset the approach:</p>
+
+    <div class="chat">
+      <div class="chat-label">Activity coach exchange</div>
+      <div class="turn">
+        <span class="speaker coach">Activity coach</span>
+        <span class="text">When you walk a branch normally, where do you typically start?</span>
+      </div>
+      <div class="turn">
+        <span class="speaker fm">Mark</span>
+        <span class="text">Main lobby area.</span>
+      </div>
+      <div class="turn">
+        <span class="speaker coach">Activity coach</span>
+        <span class="text">That makes sense &mdash; it&rsquo;s the hub. For this walkthrough though, you&rsquo;re going to start before you even get to the lobby &mdash; in the parking lot &mdash; and work your way in as a customer would.</span>
+      </div>
+    </div>
+
+    <p>The change in starting point had an immediate effect. Mark generated two work orders before he entered the building &mdash; exterior basement stairwell debris and a front entrance area that needed sweeping &mdash; and a third inside for paint touch-up work. All three were documented in 360 with photos. His own reflection on the interior finding:</p>
+
+    <blockquote class="pullquote">
+      <span class="pullquote-text">Inside we need to have some paint touch up work done. Nothing major but still it&rsquo;s the little things that make a big difference.</span>
+      <span class="pullquote-attribution">Mark Marterella &middot; post-walkthrough debrief</span>
+    </blockquote>
+  </section>
+
+  <section class="vignette">
+    <div class="vignette-head">
+      <div class="vignette-num">3</div>
+      <div class="vignette-head-text">
+        <h2>John Scaglia, Senior Facility Manager</h2>
+        <p class="vignette-role">Orange branch<span class="sep">&middot;</span>Keep Fresh Eyes During a Work Order Visit (difficulty 3.5)</p>
+      </div>
+    </div>
+
+    <p>John oversees CT and NY locations and had already completed the entry-level walkthrough at his Shelton office in a prior session. This time he was assigned the harder activity in the Fresh Eyes practice &mdash; <em>Keep Fresh Eyes During a Work Order Visit</em> &mdash; which asks the FM to apply the same observation discipline alongside a routine work order visit, and to document at least one issue unrelated to why they are there.</p>
+
+    <p>On a visit to the Orange branch for an unrelated purpose, John noticed inconsistent unpainted curbing in the drive-through. The on-site facility manager entered the work order and attached a photo. The activity coach pushed past the surface acknowledgment to ask exactly how the photo was handled, and used the answer to raise the standard:</p>
+
+    <div class="chat">
+      <div class="chat-label">Activity coach exchange</div>
+      <div class="turn">
+        <span class="speaker fm">John</span>
+        <span class="text">Attached to the work order by the facility manager.</span>
+      </div>
+      <div class="turn">
+        <span class="speaker coach">Activity coach</span>
+        <span class="text">Perfect &mdash; that&rsquo;s exactly how it should be done. One small note: ideally you attach the photo directly rather than relying on the FM to do it. Keeps your documentation complete without the handoff. Worth owning that step yourself next time.</span>
+      </div>
+    </div>
+
+    <p>In his own outcome statement, John recorded that he had <span class="inline-q">&ldquo;completed the work order and documented at least one finding unrelated to it.&rdquo;</span> The session is worth noting on two counts: the practice working at a more senior level of the organization, and a coaching moment that quietly raised the documentation standard for a habit that could otherwise have stayed implicit.</p>
+  </section>
+
+  <section class="closing">
+    <div class="closing-label">Looking forward</div>
+    <h2>These are the first three.</h2>
+    <p>Across the very first time through the practice, facility managers are surfacing things they describe as previously missed, the activity coach is shaping documentation habits in real time, and the sessions read differently than a routine branch visit. Worth watching as more activities come in.</p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">Citizens Skills Coach &middot; Fresh Eyes Pilot</div>
+  <div>
+    <span style="color:var(--ink-mute);">Prepared by</span>
+    <span class="footer-flint">FLiNT</span>
+    <span style="color:var(--ink-mute);">&middot; May 6, 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
