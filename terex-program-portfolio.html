@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flint Programs in the Flow of Work — Terex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF8F5;
+  --bg-soft: #F4F2EE;
+  --text: #1A1F2E;
+  --text-mid: #3D4660;
+  --text-muted: #6B7594;
+  --text-faded: #B0B5C2;
+  --border: #E8E5DF;
+  --border-light: #F0EEEA;
+  --card-bg: #FFFFFF;
+  --highlight: #E8A020;
+
+  --safety: #C8102E;
+  --safety-soft: rgba(200, 16, 46, 0.08);
+  --mfg: #1A8A7A;
+  --mfg-soft: rgba(26, 138, 122, 0.08);
+  --accountability: #5B4D8E;
+  --accountability-soft: rgba(91, 77, 142, 0.08);
+  --copilot: #2E5C9E;
+  --copilot-soft: rgba(46, 92, 158, 0.08);
+  --sales: #B8702E;
+  --sales-soft: rgba(184, 112, 46, 0.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─────────────────────────────────── */
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  background-color: rgba(250, 248, 245, 0.92);
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--text);
+  display: inline-block;
+}
+.brand-divider {
+  width: 1px; height: 18px;
+  background: var(--border);
+}
+.brand-context {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+.header-meta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ─── HERO ────────────────────────────────────── */
+.hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 40px 60px;
+}
+.hero-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(40px, 5.5vw, 76px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 980px;
+  margin-bottom: 32px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--text-mid);
+}
+.hero-sub {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--text-mid);
+  max-width: 780px;
+  font-weight: 400;
+}
+
+/* ─── CONCEPT TILES ───────────────────────────── */
+.concepts {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 40px 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.concept {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 32px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.concept:hover {
+  border-color: var(--text-faded);
+}
+.concept-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--text-faded);
+  margin-bottom: 24px;
+  display: block;
+  line-height: 1;
+}
+.concept h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.concept p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── CHART SECTION ───────────────────────────── */
+.chart-section {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 0;
+}
+.chart-header {
+  max-width: 1280px;
+  margin: 0 auto 48px;
+  padding: 0 40px;
+}
+.chart-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.chart-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  max-width: 820px;
+}
+.chart-header p {
+  font-size: 17px;
+  color: var(--text-mid);
+  max-width: 760px;
+  line-height: 1.55;
+}
+
+.chart-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.chart-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 24px 0 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.chart {
+  position: relative;
+  min-width: 1480px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 56px 28px 28px;
+}
+
+/* time axis */
+.time-axis {
+  position: relative;
+  height: 28px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+}
+.quarter {
+  position: absolute;
+  top: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+.year-marker {
+  position: absolute;
+  top: -36px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  color: var(--text-mid);
+  transform: translateX(-50%);
+  font-style: italic;
+}
+
+/* today line */
+.today-line {
+  position: absolute;
+  top: 4px;
+  bottom: 28px;
+  width: 0;
+  border-left: 1.5px dashed var(--highlight);
+  z-index: 5;
+  pointer-events: none;
+}
+.today-label {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  transform: translateX(-50%);
+  background: var(--highlight);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* lanes */
+.lanes {
+  position: relative;
+}
+.lane {
+  position: relative;
+  height: 84px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+}
+.lane:last-child { border-bottom: 1px solid var(--border-light); }
+.lane-label {
+  position: sticky;
+  left: 0;
+  width: 168px;
+  flex-shrink: 0;
+  padding-right: 16px;
+  background: linear-gradient(to right, var(--card-bg) 80%, rgba(255,255,255,0));
+  z-index: 3;
+}
+.lane-label-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.lane-label-meta {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.lane-track {
+  position: relative;
+  flex: 1;
+  height: 100%;
+}
+
+/* tiles */
+.tile {
+  position: absolute;
+  top: 16px;
+  height: 52px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid transparent;
+  user-select: none;
+}
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  z-index: 4;
+}
+.tile-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tile-status {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  opacity: 0.7;
+}
+
+/* tile states by lane color */
+.lane[data-program="safety"] .tile.complete { background: var(--safety-soft); color: var(--safety); }
+.lane[data-program="safety"] .tile.active { background: var(--safety); color: #fff; box-shadow: 0 8px 24px rgba(200,16,46,0.25); animation: pulse-safety 3s ease-in-out infinite; }
+.lane[data-program="safety"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(200,16,46,0.45); color: var(--safety); }
+
+.lane[data-program="mfg"] .tile.complete { background: var(--mfg-soft); color: var(--mfg); }
+.lane[data-program="mfg"] .tile.active { background: var(--mfg); color: #fff; box-shadow: 0 8px 24px rgba(26,138,122,0.25); animation: pulse-mfg 3s ease-in-out infinite; }
+.lane[data-program="mfg"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(26,138,122,0.45); color: var(--mfg); }
+
+.lane[data-program="accountability"] .tile.complete { background: var(--accountability-soft); color: var(--accountability); }
+.lane[data-program="accountability"] .tile.active { background: var(--accountability); color: #fff; box-shadow: 0 8px 24px rgba(91,77,142,0.25); animation: pulse-acc 3s ease-in-out infinite; }
+.lane[data-program="accountability"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(91,77,142,0.45); color: var(--accountability); }
+
+.lane[data-program="copilot"] .tile.complete { background: var(--copilot-soft); color: var(--copilot); }
+.lane[data-program="copilot"] .tile.active { background: var(--copilot); color: #fff; box-shadow: 0 8px 24px rgba(46,92,158,0.25); animation: pulse-cop 3s ease-in-out infinite; }
+.lane[data-program="copilot"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(46,92,158,0.45); color: var(--copilot); }
+
+.lane[data-program="sales"] .tile.complete { background: var(--sales-soft); color: var(--sales); }
+.lane[data-program="sales"] .tile.active { background: var(--sales); color: #fff; box-shadow: 0 8px 24px rgba(184,112,46,0.25); animation: pulse-sales 3s ease-in-out infinite; }
+.lane[data-program="sales"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(184,112,46,0.45); color: var(--sales); }
+
+.tile.selected { outline: 2px solid var(--text); outline-offset: 2px; }
+
+@keyframes pulse-safety { 0%,100% { box-shadow: 0 8px 24px rgba(200,16,46,0.25); } 50% { box-shadow: 0 8px 32px rgba(200,16,46,0.45); } }
+@keyframes pulse-mfg { 0%,100% { box-shadow: 0 8px 24px rgba(26,138,122,0.25); } 50% { box-shadow: 0 8px 32px rgba(26,138,122,0.45); } }
+@keyframes pulse-acc { 0%,100% { box-shadow: 0 8px 24px rgba(91,77,142,0.25); } 50% { box-shadow: 0 8px 32px rgba(91,77,142,0.45); } }
+@keyframes pulse-cop { 0%,100% { box-shadow: 0 8px 24px rgba(46,92,158,0.25); } 50% { box-shadow: 0 8px 32px rgba(46,92,158,0.45); } }
+@keyframes pulse-sales { 0%,100% { box-shadow: 0 8px 24px rgba(184,112,46,0.25); } 50% { box-shadow: 0 8px 32px rgba(184,112,46,0.45); } }
+
+/* horizon fade */
+.horizon-fade {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 90px;
+  background: linear-gradient(to right, rgba(255,255,255,0), var(--card-bg));
+  pointer-events: none;
+  z-index: 2;
+}
+.horizon-label {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-faded);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+/* legend */
+.legend {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 0 4px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.legend-swatch {
+  width: 28px;
+  height: 12px;
+  border-radius: 3px;
+}
+.legend-swatch.complete { background: rgba(60,60,80,0.15); }
+.legend-swatch.active { background: var(--text); }
+.legend-swatch.upcoming { background: transparent; border: 1.5px dashed var(--text-muted); }
+
+/* ─── DETAIL PANEL ────────────────────────────── */
+.detail-section {
+  max-width: 1280px;
+  margin: 56px auto 0;
+  padding: 0 40px;
+}
+.detail-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 48px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.detail-accent {
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--text);
+  transition: background 0.2s ease;
+}
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.detail-meta {
+  flex: 1;
+  min-width: 0;
+}
+.detail-program {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+}
+.detail-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.detail-status-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  color: var(--text-mid);
+}
+.status-badge.active { background: var(--highlight); color: #fff; }
+.status-badge.complete { background: rgba(60,60,80,0.12); color: var(--text-mid); }
+.status-badge.upcoming { background: transparent; border: 1px dashed var(--text-faded); color: var(--text-muted); }
+
+.detail-goal {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-mid);
+  max-width: 720px;
+  margin-bottom: 40px;
+  font-style: italic;
+  border-left: 3px solid var(--border);
+  padding-left: 20px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; gap: 32px; }
+  .detail-card { padding: 36px 28px; }
+}
+.detail-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.activity-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.activity-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  border-left: 3px solid var(--text-faded);
+}
+.activity-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--text-faded);
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+.activity-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+}
+.activity-text strong {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* outcome */
+.outcome-empty {
+  background: var(--bg-soft);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.outcome-empty strong {
+  color: var(--text-mid);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.headline-stat {
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-mid) 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+.headline-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 8px;
+}
+.headline-numbers {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.headline-from-to {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+}
+.headline-arrow {
+  color: var(--highlight);
+  font-size: 22px;
+}
+.headline-delta {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--highlight);
+  letter-spacing: 0.01em;
+}
+.headline-meta {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+
+.practice-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+@media (max-width: 700px) {
+  .practice-row { grid-template-columns: 1fr; }
+}
+.practice-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 16px;
+}
+.practice-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  margin-bottom: 12px;
+  min-height: 28px;
+}
+.practice-pre-post {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.practice-pre-post .arrow { color: var(--highlight); margin: 0 4px; }
+.practice-delta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--highlight);
+  letter-spacing: 0.02em;
+}
+
+/* ─── CLOSING ─────────────────────────────────── */
+.closing {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 40px 80px;
+  text-align: center;
+}
+.closing-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.closing h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.closing h2 em {
+  font-style: italic;
+  color: var(--text-mid);
+}
+.closing p {
+  font-size: 18px;
+  color: var(--text-mid);
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faded);
+  letter-spacing: 0.04em;
+}
+
+/* responsive */
+@media (max-width: 800px) {
+  .concepts { grid-template-columns: 1fr; }
+  .hero { padding: 60px 24px 40px; }
+  .concepts { padding: 24px 24px 60px; }
+  .chart-header, .chart-wrap, .detail-section, .closing { padding-left: 24px; padding-right: 24px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span>Flint</span>
+      <span class="brand-divider"></span>
+      <span class="brand-context">Programs in the Flow of Work</span>
+    </div>
+    <div class="header-meta">Terex — illustrative portfolio</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">The Flint framework</div>
+  <h1>Where training ends,<br><em>behavior begins.</em></h1>
+  <p class="hero-sub">Behavior change in the flow of work happens through long-running <strong>Programs</strong> — each composed of 90-day <strong>Initiatives</strong>, each delivered by short, situational <strong>Activities</strong> that reach every level between the individual contributor and the senior leader, in the flow of their actual work. Here is how Terex is using that framework across five programs running in parallel.</p>
+</section>
+
+<section class="concepts">
+  <div class="concept">
+    <span class="concept-num">01</span>
+    <h3>Programs are durable</h3>
+    <p>A Program — Safety, Manufacturing SOPs, Accountability — runs indefinitely. It's the strategic frame. The behavior outcomes compound year over year as new initiatives ladder onto previous ones.</p>
+  </div>
+  <div class="concept">
+    <span class="concept-num">02</span>
+    <h3>Initiatives cycle every 90 days</h3>
+    <p>Within each Program, a focused 3-month Initiative tackles one concrete behavioral lever — PPE compliance, peer feedback, prompt fundamentals. New Initiatives queue up perpetually behind the active one.</p>
+  </div>
+  <div class="concept">
+    <span class="concept-num">03</span>
+    <h3>Activities live in the flow of work</h3>
+    <p>The Initiative gets delivered through small Flint Activities — daily huddles, end-of-shift checks, real-time field coaching prompts — that integrate into the existing rhythm rather than pulling people offline.</p>
+  </div>
+</section>
+
+<section class="chart-section">
+  <div class="chart-header">
+    <div class="chart-eyebrow">The Terex portfolio</div>
+    <h2>Five programs running in parallel, each cycling its initiatives every quarter.</h2>
+    <p>The colored tiles are active right now. Click any tile — past, present, or queued — to see the activities behind it.</p>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-scroll">
+      <div class="chart" id="chart">
+
+        <!-- time axis -->
+        <div class="time-axis" id="timeAxis"></div>
+
+        <!-- horizon fade -->
+        <div class="horizon-fade"></div>
+        <div class="horizon-label">…and continuing</div>
+
+        <!-- lanes -->
+        <div class="lanes" id="lanes"></div>
+
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch complete"></span>Complete</div>
+      <div class="legend-item"><span class="legend-swatch active"></span>Active now</div>
+      <div class="legend-item"><span class="legend-swatch upcoming"></span>Queued</div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-section">
+  <div class="detail-card" id="detailCard">
+    <div class="detail-accent" id="detailAccent"></div>
+    <div class="detail-header">
+      <div class="detail-meta">
+        <div class="detail-program" id="detailProgram">Safety</div>
+        <h2 class="detail-title" id="detailTitle">PPE — Personal Protective Equipment</h2>
+        <div class="detail-status-row">
+          <span class="status-badge active" id="detailStatus">Active</span>
+          <span id="detailDates">Mar – May 2026 · in progress</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-goal" id="detailGoal">
+      Build front-line manager habits around modeling proper PPE use, setting clear expectations with their teams, and monitoring compliance during shifts — moving safety from a poster on the wall to a daily leadership practice.
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="detail-section-title">Sample Flint activities</div>
+        <ul class="activity-list" id="detailActivities"></ul>
+      </div>
+      <div>
+        <div class="detail-section-title">Outcome data</div>
+        <div id="detailOutcome"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="closing-eyebrow">Same model, every program</div>
+  <h2>One framework, five programs, perpetual behavior change <em>in the flow of work.</em></h2>
+  <p>Terex chose Safety as their proof point. The same Program → Initiative → Activity model now scales across Manufacturing SOPs, Accountability, Copilot AI Adoption, and Strategic Sales — each cycling its own 90-day initiatives, each delivering compounding behavioral outcomes across the organization.</p>
+</section>
+
+<footer>
+  Flint Leadership Solutions · Terex portfolio illustrative as of May 2026
+</footer>
+
+<script>
+// ─── DATA MODEL ────────────────────────────────────
+// Time axis: June 2025 → December 2027 (30 months)
+// month index 0 = Jun 2025; today = May 2026 = month 11
+
+const MONTHS_TOTAL = 30;
+const MONTH_LABELS = [
+  'Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25',
+  'Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26','Jul 26','Aug 26',
+  'Sep 26','Oct 26','Nov 26','Dec 26','Jan 27','Feb 27','Mar 27','Apr 27','May 27','Jun 27',
+  'Jul 27','Aug 27','Sep 27','Oct 27','Nov 27','Dec 27'
+];
+const TODAY_MONTH = 11; // May 2026 sits at month 11
+
+const PROGRAMS = [
+  {
+    id: 'accountability',
+    name: 'Accountability',
+    started: 'Started Jul 2025',
+    color: '#5B4D8E',
+    initiatives: [
+      { id: 'acc-1', name: 'Daily Huddles', fullName: 'Daily Huddles & Stand-ups', start: 1, dates: 'Jul – Sep 2025',
+        goal: 'Establish a 10-minute daily team rhythm — what we did, what\'s next, what\'s in the way — as the foundation of every other accountability practice.',
+        activities: [
+          { t: 'Huddle facilitation prompt', d: 'Daily 60-second pre-huddle prep — the three questions to ask, in order.' },
+          { t: 'Block-out logger', d: 'Quick capture of what got in the way today, surfaced to the manager weekly.' },
+          { t: 'End-of-week pattern reflection', d: 'Five-minute Friday review on which blockers repeated and what to escalate.' }
+        ]
+      },
+      { id: 'acc-2', name: 'Goals & OKRs', fullName: 'Cascading Goals & OKRs', start: 4, dates: 'Oct – Dec 2025',
+        goal: 'Connect every team\'s weekly work to enterprise objectives so the line of sight from front-line task to strategic outcome is visible to everyone.',
+        activities: [
+          { t: 'Goal-tree prompt', d: 'Manager drafts how their team\'s top 3 priorities ladder up to the BU goal — Flint reviews, manager refines.' },
+          { t: 'Weekly check-in script', d: 'Re-anchors team huddles on the goal tree once a week, not as a rigid review but as a 5-minute realignment.' }
+        ]
+      },
+      { id: 'acc-3', name: 'Peer Feedback', start: 7, dates: 'Jan – Mar 2026',
+        goal: 'Move feedback off the manager\'s shoulders alone — make peer-to-peer feedback a normal weekly act between team members.',
+        activities: [
+          { t: 'Feedback simulation', d: 'Role-play a low-stakes peer feedback conversation; Flint coaches on phrasing and follow-through.' },
+          { t: 'Peer thanks-and-asks', d: 'Lightweight weekly cadence — one specific thanks, one specific ask — practiced inside team huddles.' }
+        ]
+      },
+      { id: 'acc-4', name: 'Performance Conversations', start: 10, dates: 'Apr – Jun 2026', active: true,
+        goal: 'Shift performance conversations from annual events to monthly micro-touchpoints — small, specific, future-focused.',
+        activities: [
+          { t: 'Pre-conversation prep', d: 'Manager drafts the one outcome they want from the conversation; Flint sharpens the framing before it happens.' },
+          { t: 'Live coaching prompt', d: 'In-the-moment prompt during the conversation: "Have you asked them what would help most?"' },
+          { t: 'Follow-through tracker', d: 'Three days later: "Has the agreed action started? If not, why not?"' }
+        ]
+      },
+      { id: 'acc-5', name: 'Recognition', fullName: 'Recognition & Reinforcement', start: 13, dates: 'Jul – Sep 2026' },
+      { id: 'acc-6', name: 'Difficult Conversations', start: 16, dates: 'Oct – Dec 2026' },
+      { id: 'acc-7', name: 'Cross-Functional', fullName: 'Cross-Functional Commitments', start: 19, dates: 'Jan – Mar 2027' },
+      { id: 'acc-8', name: 'Coaching for Growth', start: 22, dates: 'Apr – Jun 2027' }
+    ]
+  },
+  {
+    id: 'mfg',
+    name: 'Manufacturing SOPs',
+    started: 'Started Oct 2025',
+    color: '#1A8A7A',
+    initiatives: [
+      { id: 'mfg-1', name: 'Quality Inspection', fullName: 'Quality Inspection Standards', start: 4, dates: 'Oct – Dec 2025',
+        goal: 'Embed standard inspection checks at every shift handover — moving quality from a QA department function to a line-level habit.',
+        activities: [
+          { t: 'Pre-shift inspection prompt', d: 'Three-question check at the start of each shift; flagged exceptions go to the supervisor in real time.' },
+          { t: 'Inspector-of-the-shift rotation', d: 'Each shift names one peer to walk the line with the inspection checklist.' }
+        ]
+      },
+      { id: 'mfg-2', name: 'Tool Calibration', fullName: 'Tool Calibration & Maintenance', start: 7, dates: 'Jan – Mar 2026',
+        goal: 'Reduce tool-related defects by making calibration a visible, owned, weekly-cadence practice rather than an annual event.',
+        activities: [
+          { t: 'Tool ownership map', d: 'Every critical tool has a named owner, a calibration cadence, and a Flint reminder.' },
+          { t: 'Anomaly-spot prompt', d: 'When measurements drift, Flint walks the operator through "what would I check first" before escalating.' }
+        ]
+      },
+      { id: 'mfg-3', name: 'Material Handling', fullName: 'Material Handling Procedures', start: 10, dates: 'Apr – Jun 2026', active: true,
+        goal: 'Cut material damage and rework by formalizing handling SOPs at every transfer point and making the next-step visible.',
+        activities: [
+          { t: 'Transfer-point huddle', d: '90-second alignment between handler and receiver before each transfer — what to expect, what to look for.' },
+          { t: 'Damage-report short loop', d: 'When damage is spotted, Flint captures conditions immediately, before memory fades.' },
+          { t: 'SOP-in-the-moment lookup', d: 'Voice-activated SOP retrieval at the workstation — no clipboard, no walk to the binder.' }
+        ]
+      },
+      { id: 'mfg-4', name: 'Changeover & Setup', fullName: 'Changeover & Setup Reduction', start: 13, dates: 'Jul – Sep 2026' },
+      { id: 'mfg-5', name: 'First-Article Inspection', start: 16, dates: 'Oct – Dec 2026' },
+      { id: 'mfg-6', name: 'Non-Conformance', fullName: 'Non-Conformance Reporting', start: 19, dates: 'Jan – Mar 2027' },
+      { id: 'mfg-7', name: '5S Organization', fullName: '5S Workplace Organization', start: 22, dates: 'Apr – Jun 2027' },
+      { id: 'mfg-8', name: 'Lean Daily Mgmt', fullName: 'Lean Daily Management', start: 25, dates: 'Jul – Sep 2027' }
+    ]
+  },
+  {
+    id: 'safety',
+    name: 'Safety',
+    started: 'Started Mar 2026',
+    color: '#C8102E',
+    initiatives: [
+      { id: 'saf-1', name: 'PPE', fullName: 'PPE — Personal Protective Equipment', start: 9, dates: 'Mar – May 2026', active: true, isProof: true,
+        goal: 'Build front-line manager habits around modeling proper PPE use, setting clear expectations with their teams, and monitoring compliance during shifts — moving safety from a poster on the wall to a daily leadership practice.',
+        activities: [
+          { t: 'Daily PPE huddle activity', d: 'Three-minute team check-in at shift start — eyewear, gloves, hearing — manager models before reviewing the team.' },
+          { t: 'End-of-shift equipment review', d: 'Structured equipment-condition review designed to surface degradation gaps invisible to walk-by inspections.' },
+          { t: 'Real-time field coaching prompt', d: 'When a violation is spotted, Flint gives the manager a consequence-framed coaching script in 30 seconds.' },
+          { t: 'Weekly reflection on team patterns', d: 'Manager identifies one team-level pattern from the week and drafts one targeted intervention.' }
+        ],
+        outcome: {
+          headline: { pre: 5.77, post: 7.32, delta: '+1.55', pct: '+27%', label: 'Overall self-rating, baseline → follow-up' },
+          cohort: 'N = 30 learners with both baseline and follow-up self-assessments · 1–10 scale',
+          practices: [
+            { name: 'Model', pre: 6.42, post: 7.80, delta: '+1.38', pct: '+22%' },
+            { name: 'Set Expectations', pre: 5.14, post: 6.89, delta: '+1.74', pct: '+34%' },
+            { name: 'Monitor', pre: 5.75, post: 7.28, delta: '+1.53', pct: '+27%' }
+          ],
+          note: 'Set Expectations started lowest and moved most. Model started highest and moved least (ceiling effect). All 11 underlying survey items improved; none regressed.'
+        }
+      },
+      { id: 'saf-2', name: 'Vehicle & Forklift', fullName: 'Vehicle & Forklift Safety', start: 12, dates: 'Jun – Aug 2026',
+        goal: 'Apply the same Model / Set Expectations / Monitor framework to vehicle and forklift operation — pre-use checks, traffic-rule discipline, near-miss reporting.',
+        activities: [
+          { t: 'Pre-use vehicle check huddle', d: 'Operator walks the manager through the 5-point pre-use check; the manager spot-corrects in real time.' },
+          { t: 'Near-miss capture in 60 seconds', d: 'When a near-miss happens, Flint walks the team through capture-and-share before the shift ends.' }
+        ]
+      },
+      { id: 'saf-3', name: 'Chemical Handling', start: 15, dates: 'Sep – Nov 2026' },
+      { id: 'saf-4', name: 'Machine Guarding', fullName: 'Machine Guarding & LOTO', start: 18, dates: 'Dec 2026 – Feb 2027' },
+      { id: 'saf-5', name: 'Fall Protection', start: 21, dates: 'Mar – May 2027' },
+      { id: 'saf-6', name: 'Confined Space Entry', start: 24, dates: 'Jun – Aug 2027' },
+      { id: 'saf-7', name: 'Emergency Response', start: 27, dates: 'Sep – Nov 2027' }
+    ]
+  },
+  {
+    id: 'copilot',
+    name: 'Copilot AI Adoption',
+    started: 'Launches Jun 2026',
+    color: '#2E5C9E',
+    initiatives: [
+      { id: 'cop-1', name: 'Prompting Fundamentals', start: 12, dates: 'Jun – Aug 2026',
+        goal: 'Move office workers from "AI as a search bar" to "AI as a thinking partner" — establish the habit of writing prompts that include role, context, and desired output.',
+        activities: [
+          { t: 'Prompt-of-the-day', d: 'A daily 5-minute Flint exercise applying one prompt pattern to the user\'s actual work in progress.' },
+          { t: 'Before-and-after capture', d: 'User submits a draft prompt and Flint coaches it into a stronger one — building intuition over reps.' }
+        ]
+      },
+      { id: 'cop-2', name: 'Email & Drafting', fullName: 'Email & Document Drafting', start: 15, dates: 'Sep – Nov 2026' },
+      { id: 'cop-3', name: 'Meeting Prep', fullName: 'Meeting Prep & Summarization', start: 18, dates: 'Dec 2026 – Feb 2027' },
+      { id: 'cop-4', name: 'Data Analysis', fullName: 'Data Analysis with Copilot', start: 21, dates: 'Mar – May 2027' },
+      { id: 'cop-5', name: 'Workflow Automation', start: 24, dates: 'Jun – Aug 2027' },
+      { id: 'cop-6', name: 'Custom Agents', fullName: 'Custom Agents & GPTs', start: 27, dates: 'Sep – Nov 2027' }
+    ]
+  },
+  {
+    id: 'sales',
+    name: 'Strategic Sales',
+    started: 'Launches Sep 2026',
+    color: '#B8702E',
+    initiatives: [
+      { id: 'sal-1', name: 'Discovery', fullName: 'Discovery & Qualification', start: 15, dates: 'Sep – Nov 2026',
+        goal: 'Establish disciplined discovery as a habit — every account qualified against a clear rubric before pursuit, every conversation surfacing the buyer\'s real economic driver.',
+        activities: [
+          { t: 'Pre-call prep prompt', d: 'Five-minute Flint walkthrough that produces three sharp discovery questions for the named buyer role.' },
+          { t: 'Post-call qualification check', d: 'After every discovery call, Flint asks the rep three things they now know — and three they still don\'t.' }
+        ]
+      },
+      { id: 'sal-2', name: 'Multi-Threading', fullName: 'Multi-Threading & Champion Building', start: 18, dates: 'Dec 2026 – Feb 2027' },
+      { id: 'sal-3', name: 'Value-Based Selling', start: 21, dates: 'Mar – May 2027' },
+      { id: 'sal-4', name: 'Negotiation', fullName: 'Negotiation & Closing', start: 24, dates: 'Jun – Aug 2027' },
+      { id: 'sal-5', name: 'Account Planning', start: 27, dates: 'Sep – Nov 2027' }
+    ]
+  }
+];
+
+// ─── RENDER ────────────────────────────────────────
+function renderTimeAxis() {
+  const axis = document.getElementById('timeAxis');
+  // Place quarter labels at quarter starts (months: 1=Jul25, 4=Oct25, 7=Jan26, ..., 28=Oct27)
+  const quarters = [
+    { month: 1, label: 'Q3 2025', year: 2025 },
+    { month: 4, label: 'Q4 2025', year: 2025 },
+    { month: 7, label: 'Q1 2026', year: 2026 },
+    { month: 10, label: 'Q2 2026', year: 2026 },
+    { month: 13, label: 'Q3 2026', year: 2026 },
+    { month: 16, label: 'Q4 2026', year: 2026 },
+    { month: 19, label: 'Q1 2027', year: 2027 },
+    { month: 22, label: 'Q2 2027', year: 2027 },
+    { month: 25, label: 'Q3 2027', year: 2027 },
+    { month: 28, label: 'Q4 2027', year: 2027 }
+  ];
+  // Account for the lane label width (168px sticky col on the left).
+  // Quarter labels need to position within the right portion of the chart.
+  quarters.forEach(q => {
+    const mid = q.month + 1.5; // middle of the quarter
+    const pct = mid / MONTHS_TOTAL * 100;
+    const el = document.createElement('div');
+    el.className = 'quarter';
+    el.textContent = q.label;
+    el.style.left = `calc(168px + (100% - 168px) * ${pct/100})`;
+    axis.appendChild(el);
+  });
+}
+
+function renderLanes() {
+  const container = document.getElementById('lanes');
+  PROGRAMS.forEach(prog => {
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.dataset.program = prog.id;
+
+    const labelCell = document.createElement('div');
+    labelCell.className = 'lane-label';
+    labelCell.innerHTML = `
+      <div class="lane-label-name">${prog.name}</div>
+      <div class="lane-label-meta">${prog.started}</div>
+    `;
+    lane.appendChild(labelCell);
+
+    const track = document.createElement('div');
+    track.className = 'lane-track';
+
+    prog.initiatives.forEach(init => {
+      const tile = document.createElement('div');
+      let state;
+      if (init.active) state = 'active';
+      else if (init.start + 3 <= TODAY_MONTH) state = 'complete';
+      else state = 'upcoming';
+      tile.className = `tile ${state}`;
+      tile.dataset.id = init.id;
+      tile.dataset.programId = prog.id;
+      const leftPct = (init.start / MONTHS_TOTAL) * 100;
+      const widthPct = (3 / MONTHS_TOTAL) * 100;
+      tile.style.left = `${leftPct}%`;
+      tile.style.width = `calc(${widthPct}% - 6px)`;
+      tile.innerHTML = `
+        <div class="tile-name">${init.name}</div>
+        <div class="tile-status">${state === 'active' ? '● Active' : state === 'complete' ? '✓ Complete' : 'Queued'}</div>
+      `;
+      tile.addEventListener('click', () => selectInitiative(prog, init));
+      track.appendChild(tile);
+    });
+
+    lane.appendChild(track);
+    container.appendChild(lane);
+  });
+}
+
+function selectInitiative(prog, init) {
+  // mark selected
+  document.querySelectorAll('.tile.selected').forEach(t => t.classList.remove('selected'));
+  const tile = document.querySelector(`.tile[data-id="${init.id}"]`);
+  if (tile) tile.classList.add('selected');
+
+  // accent color
+  document.getElementById('detailAccent').style.background = prog.color;
+
+  // status
+  let state;
+  if (init.active) state = 'active';
+  else if (init.start + 3 <= TODAY_MONTH) state = 'complete';
+  else state = 'upcoming';
+
+  document.getElementById('detailProgram').textContent = prog.name;
+  document.getElementById('detailProgram').style.color = prog.color;
+  document.getElementById('detailTitle').textContent = init.fullName || init.name;
+  const statusEl = document.getElementById('detailStatus');
+  statusEl.className = `status-badge ${state}`;
+  statusEl.textContent = state === 'active' ? 'Active' : state === 'complete' ? 'Complete' : 'Queued';
+  document.getElementById('detailDates').textContent = init.dates + (init.active ? ' · in progress' : '');
+
+  document.getElementById('detailGoal').textContent = init.goal || `${init.name} — initiative content in design ahead of kickoff.`;
+
+  // activities
+  const actList = document.getElementById('detailActivities');
+  actList.innerHTML = '';
+  if (init.activities) {
+    init.activities.forEach((a, idx) => {
+      const li = document.createElement('li');
+      li.className = 'activity-item';
+      li.style.borderLeftColor = prog.color;
+      li.innerHTML = `
+        <div class="activity-num">${String(idx+1).padStart(2,'0')}</div>
+        <div class="activity-text"><strong>${a.t}</strong>${a.d}</div>
+      `;
+      actList.appendChild(li);
+    });
+  } else {
+    actList.innerHTML = `<div class="outcome-empty"><strong>Activities in design</strong>The activity set for this initiative will be authored ~30 days ahead of kickoff, drawing on the patterns established in earlier initiatives in this program.</div>`;
+  }
+
+  // outcome
+  const outcomeEl = document.getElementById('detailOutcome');
+  if (init.outcome) {
+    const o = init.outcome;
+    outcomeEl.innerHTML = `
+      <div class="headline-stat">
+        <div class="headline-label">${o.headline.label}</div>
+        <div class="headline-numbers">
+          <span class="headline-from-to">${o.headline.pre}<span class="headline-arrow"> → </span>${o.headline.post}</span>
+          <span class="headline-delta">${o.headline.delta} (${o.headline.pct})</span>
+        </div>
+        <div class="headline-meta">${o.cohort}</div>
+      </div>
+      <div class="practice-row">
+        ${o.practices.map(p => `
+          <div class="practice-card">
+            <div class="practice-name">${p.name}</div>
+            <div class="practice-pre-post">${p.pre}<span class="arrow">→</span>${p.post}</div>
+            <div class="practice-delta">${p.delta} (${p.pct})</div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-top: 16px; line-height: 1.55; font-style: italic;">${o.note}</div>
+    `;
+  } else if (state === 'active') {
+    outcomeEl.innerHTML = `<div class="outcome-empty"><strong>Outcome data captured at end of initiative</strong>Pre/post Practice-level deltas and item-by-item movement are measured against baseline at the conclusion of the 90-day cycle.</div>`;
+  } else if (state === 'complete') {
+    outcomeEl.innerHTML = `<div class="outcome-empty"><strong>Outcome summary</strong>Initiative concluded; follow-up assessment results live in the program-level dashboard. Headline numbers shown for the active proof-point initiative (PPE) on the Safety lane.</div>`;
+  } else {
+    outcomeEl.innerHTML = `<div class="outcome-empty"><strong>Outcome targets set at kickoff</strong>The behavior outcomes this initiative will be measured against are agreed with program leadership in the 30 days before launch.</div>`;
+  }
+
+  // scroll detail into view
+  document.getElementById('detailCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ─── INIT ──────────────────────────────────────────
+renderTimeAxis();
+renderLanes();
+// Default detail to PPE (the proof point)
+const safety = PROGRAMS.find(p => p.id === 'safety');
+const ppe = safety.initiatives.find(i => i.id === 'saf-1');
+// Don't auto-scroll on load
+const tile = document.querySelector(`.tile[data-id="saf-1"]`);
+if (tile) tile.classList.add('selected');
+document.getElementById('detailAccent').style.background = safety.color;
+document.getElementById('detailProgram').style.color = safety.color;
+// Populate (without scrolling)
+(function loadInitial() {
+  const init = ppe;
+  const prog = safety;
+  const o = init.outcome;
+  document.getElementById('detailGoal').textContent = init.goal;
+  const actList = document.getElementById('detailActivities');
+  actList.innerHTML = '';
+  init.activities.forEach((a, idx) => {
+    const li = document.createElement('li');
+    li.className = 'activity-item';
+    li.style.borderLeftColor = prog.color;
+    li.innerHTML = `<div class="activity-num">${String(idx+1).padStart(2,'0')}</div><div class="activity-text"><strong>${a.t}</strong>${a.d}</div>`;
+    actList.appendChild(li);
+  });
+  const outcomeEl = document.getElementById('detailOutcome');
+  outcomeEl.innerHTML = `
+    <div class="headline-stat">
+      <div class="headline-label">${o.headline.label}</div>
+      <div class="headline-numbers">
+        <span class="headline-from-to">${o.headline.pre}<span class="headline-arrow"> → </span>${o.headline.post}</span>
+        <span class="headline-delta">${o.headline.delta} (${o.headline.pct})</span>
+      </div>
+      <div class="headline-meta">${o.cohort}</div>
+    </div>
+    <div class="practice-row">
+      ${o.practices.map(p => `
+        <div class="practice-card">
+          <div class="practice-name">${p.name}</div>
+          <div class="practice-pre-post">${p.pre}<span class="arrow">→</span>${p.post}</div>
+          <div class="practice-delta">${p.delta} (${p.pct})</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="font-size: 13px; color: var(--text-muted); margin-top: 16px; line-height: 1.55; font-style: italic;">${o.note}</div>
+  `;
+})();
+</script>
+
+</body>
+</html>
