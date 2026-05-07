@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREX PPE — Learner Progression Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #18181B;
+  --ink-mid: #3F3F46;
+  --ink-light: #71717A;
+  --ink-faint: #A1A1AA;
+  --rule: #E4E4E7;
+  --bg: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-2: #F4F4F5;
+  --accent: #1D4ED8;
+  --accent-light: #EFF6FF;
+  --accent-mid: #BFDBFE;
+  --amber: #B45309;
+  --amber-light: #FFFBEB;
+  --amber-mid: #FDE68A;
+  --red: #B91C1C;
+  --red-light: #FEF2F2;
+  --red-mid: #FECACA;
+  --green: #15803D;
+  --green-light: #F0FDF4;
+  --green-mid: #BBF7D0;
+  --purple: #7C3AED;
+  --purple-light: #F5F3FF;
+  --purple-mid: #DDD6FE;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+code { font-family: 'JetBrains Mono', ui-monospace, monospace; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+
+/* Topbar */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 20px; }
+.doc-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint); }
+.topbar-divider { width: 1px; height: 18px; background: var(--rule); }
+.doc-title-small { font-size: 13px; font-weight: 500; color: var(--ink-mid); }
+.phase-pill { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); }
+nav { display: flex; gap: 2px; }
+nav a { font-size: 12px; font-weight: 500; color: var(--ink-light); text-decoration: none; padding: 5px 12px; border-radius: 6px; transition: all 0.15s; letter-spacing: 0.2px; }
+nav a:hover { background: var(--surface-2); color: var(--ink); }
+
+/* Video intro */
+.video-intro { max-width: 980px; margin: 0 auto; padding: 36px 48px 0; }
+.video-intro-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.watch-first-badge { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 4px; background: var(--accent); color: white; }
+.video-intro-tagline { font-size: 13px; color: var(--ink-light); font-weight: 500; }
+.video-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid var(--rule); }
+.video-wrapper video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Hero */
+.hero { max-width: 980px; margin: 0 auto; padding: 56px 48px 56px; }
+.hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.eyebrow-tag { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); }
+.eyebrow-line { flex: 1; max-width: 40px; height: 1px; background: var(--accent-mid); }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1.1; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 20px; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-desc { font-size: 17px; color: var(--ink-mid); line-height: 1.7; max-width: 720px; font-weight: 300; margin-bottom: 40px; }
+.hero-meta-strip { display: flex; gap: 40px; padding-top: 28px; border-top: 1px solid var(--rule); flex-wrap: wrap; }
+.meta-item { display: flex; flex-direction: column; gap: 3px; }
+.meta-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-faint); }
+.meta-value { font-size: 14px; font-weight: 500; color: var(--ink-mid); }
+
+/* Page body */
+.page-body { max-width: 980px; margin: 0 auto; padding: 0 48px 96px; }
+
+/* Section header */
+.section-intro { padding: 56px 0 32px; border-top: 1px solid var(--rule); }
+.section-intro:first-child { border-top: none; }
+.section-kicker { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+.section-kicker.blue { color: var(--accent); }
+.section-kicker.amber { color: var(--amber); }
+.section-kicker.red { color: var(--red); }
+.section-kicker.purple { color: var(--purple); }
+.section-kicker.green { color: var(--green); }
+.section-headline { font-family: 'DM Serif Display', serif; font-size: 30px; line-height: 1.2; color: var(--ink); letter-spacing: -0.2px; margin-bottom: 14px; }
+.section-lead { font-size: 16px; color: var(--ink-mid); line-height: 1.75; max-width: 760px; font-weight: 300; }
+.subsection-h { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); margin: 32px 0 12px; letter-spacing: 0.2px; text-transform: uppercase; }
+
+/* KPI tiles */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0; }
+.kpi-tile { padding: 18px 20px; border-radius: 10px; border: 1px solid; background: var(--surface); }
+.kpi-tile.blue { border-color: var(--accent-mid); background: var(--accent-light); }
+.kpi-tile.amber { border-color: var(--amber-mid); background: var(--amber-light); }
+.kpi-tile.purple { border-color: var(--purple-mid); background: var(--purple-light); }
+.kpi-tile.green { border-color: var(--green-mid); background: var(--green-light); }
+.kpi-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; }
+.kpi-big { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1; color: var(--ink); margin-bottom: 4px; }
+.kpi-pct { font-size: 12px; font-weight: 600; color: var(--ink-mid); margin-bottom: 8px; font-variant-numeric: tabular-nums; letter-spacing: 0.2px; }
+.kpi-sub { font-size: 12px; color: var(--ink-light); line-height: 1.4; }
+
+/* Inline relative-growth % styling */
+.pct { font-size: 0.85em; font-weight: 500; opacity: 0.78; margin-left: 2px; font-variant-numeric: tabular-nums; }
+.pct-tiny { font-size: 11px; font-weight: 500; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.pct-cell { text-align: right; font-size: 13px; color: var(--ink-light); font-weight: 500; font-variant-numeric: tabular-nums; padding-right: 0; }
+
+/* Finding bar */
+.finding-bar { border-radius: 10px; padding: 20px 24px; margin: 28px 0; display: flex; align-items: flex-start; gap: 16px; border: 1px solid; }
+.finding-bar.blue { background: var(--accent-light); border-color: var(--accent-mid); }
+.finding-bar.amber { background: var(--amber-light); border-color: var(--amber-mid); }
+.finding-bar.red { background: var(--red-light); border-color: var(--red-mid); }
+.finding-bar.purple { background: var(--purple-light); border-color: var(--purple-mid); }
+.finding-bar.green { background: var(--green-light); border-color: var(--green-mid); }
+.finding-bar-icon { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.finding-bar.blue .finding-bar-icon { color: var(--accent); }
+.finding-bar.amber .finding-bar-icon { color: var(--amber); }
+.finding-bar.red .finding-bar-icon { color: var(--red); }
+.finding-bar.purple .finding-bar-icon { color: var(--purple); }
+.finding-bar.green .finding-bar-icon { color: var(--green); }
+.finding-bar-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+.finding-bar-text p { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+
+/* Caveat bar */
+.caveat-bar { background: var(--surface-2); border-left: 3px solid var(--ink-faint); padding: 14px 18px; margin: 20px 0; font-size: 13px; color: var(--ink-mid); line-height: 1.6; border-radius: 0 6px 6px 0; }
+.caveat-bar strong { color: var(--ink); }
+
+/* Practice chart */
+.practice-chart { margin: 28px 0; display: flex; flex-direction: column; gap: 28px; }
+.practice-row { padding: 20px 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.practice-row-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.practice-name { font-family: 'DM Serif Display', serif; font-size: 22px; }
+.practice-delta { font-size: 16px; font-weight: 700; padding: 4px 12px; border-radius: 6px; }
+.practice-delta.blue { background: var(--accent-light); color: var(--accent); }
+.practice-delta.amber { background: var(--amber-light); color: var(--amber); }
+.practice-delta.purple { background: var(--purple-light); color: var(--purple); }
+.practice-delta.red { background: var(--red-light); color: var(--red); }
+.practice-delta.green { background: var(--green-light); color: var(--green); }
+.practice-delta.low { background: var(--green-light); color: var(--green); }
+.practice-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.practice-bar-row { display: grid; grid-template-columns: 80px 1fr 60px; gap: 14px; align-items: center; }
+.practice-bar-label { font-size: 12px; font-weight: 600; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.5px; }
+.practice-bar-value { font-size: 14px; color: var(--ink-mid); text-align: right; font-variant-numeric: tabular-nums; }
+.practice-bar-value.strong { color: var(--ink); font-weight: 600; font-size: 15px; }
+.practice-desc { font-size: 13px; color: var(--ink-light); margin-top: 8px; line-height: 1.5; font-style: italic; }
+.chart-track { height: 22px; background: var(--surface-2); border-radius: 4px; overflow: hidden; position: relative; }
+.chart-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+.chart-fill.blue { background: var(--accent); }
+.chart-fill.amber { background: #F59E0B; }
+.chart-fill.purple { background: var(--purple); }
+.chart-fill.red { background: var(--red); }
+.chart-fill.green { background: var(--green); }
+.chart-fill.slate { background: #94A3B8; }
+
+/* Data table */
+.data-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+.data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-faint); padding: 0 16px 10px 0; border-bottom: 2px solid var(--rule); }
+.data-table thead th:last-child { text-align: right; padding-right: 0; }
+.data-table tbody tr { border-bottom: 1px solid var(--rule); }
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table tbody td { padding: 12px 16px 12px 0; color: var(--ink-mid); vertical-align: top; }
+.data-table tbody td:first-child { color: var(--ink); font-weight: 500; }
+.data-table tbody td:last-child { text-align: right; padding-right: 0; }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px; font-variant-numeric: tabular-nums; }
+.tag.high { background: var(--amber-light); color: var(--amber); }
+.tag.medium { background: var(--accent-light); color: var(--accent); }
+.tag.low { background: var(--green-light); color: var(--green); }
+.practice-pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.3px; }
+.practice-pill.blue { background: var(--accent-light); color: var(--accent); }
+.practice-pill.amber { background: var(--amber-light); color: var(--amber); }
+.practice-pill.purple { background: var(--purple-light); color: var(--purple); }
+.practice-pill.green { background: var(--green-light); color: var(--green); }
+
+/* Per-learner cards */
+.learner-controls { display: flex; align-items: center; gap: 16px; margin: 20px 0; }
+.learner-controls input { flex: 1; max-width: 320px; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 8px; font-family: inherit; font-size: 14px; background: var(--surface); }
+.learner-controls input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+.learner-count { font-size: 12px; color: var(--ink-light); }
+.learner-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.learner-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; transition: all 0.15s; }
+.learner-card:hover { border-color: var(--accent-mid); box-shadow: 0 2px 12px rgba(29, 78, 216, 0.06); }
+.learner-card.hidden { display: none; }
+.learner-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.learner-card-name { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); line-height: 1.2; }
+.learner-card-sub { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+.learner-card-sub strong { color: var(--accent); font-weight: 600; }
+.learner-card-radar { flex-shrink: 0; }
+.card-practice-list { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.card-practice-row { display: grid; grid-template-columns: 110px 1fr 60px; gap: 8px; font-size: 13px; align-items: center; }
+.card-practice-row.mgr { color: var(--ink-light); font-style: italic; }
+.card-practice-name { font-weight: 600; font-size: 12px; }
+.card-practice-vals { color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+.card-practice-delta { text-align: right; font-weight: 600; color: var(--green); font-variant-numeric: tabular-nums; }
+.card-mgr-block { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--rule); }
+.card-mgr-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 6px; }
+
+/* Method block */
+.method-block { margin-bottom: 32px; }
+.method-block p { font-size: 14px; color: var(--ink-mid); line-height: 1.7; max-width: 760px; }
+.method-block p + p { margin-top: 8px; }
+
+/* Footer */
+.footer { max-width: 980px; margin: 0 auto; padding: 32px 48px 48px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--ink-faint); display: flex; justify-content: space-between; align-items: center; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topbar { padding: 0 20px; }
+  .video-intro { padding: 24px 20px 0; }
+  .hero { padding: 36px 20px 40px; }
+  .hero h1 { font-size: 32px; }
+  .page-body { padding: 0 20px 60px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .learner-grid { grid-template-columns: 1fr; }
+  .practice-bar-row { grid-template-columns: 60px 1fr 50px; gap: 10px; }
+  nav { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="doc-label">FLINT × TEREX</span>
+    <div class="topbar-divider"></div>
+    <span class="doc-title-small">PPE Learner Progression — Baseline → Follow-up</span>
+    <span class="phase-pill">N=30</span>
+  </div>
+  <nav>
+    <a href="#summary">Summary</a>
+    <a href="#practices">Practices</a>
+    <a href="#baseline-gap">Baseline gap</a>
+    <a href="#endstate-gap">End-state gap</a>
+    <a href="#items">Items</a>
+    <a href="#profiles">Profiles</a>
+    <a href="#methodology">Methodology</a>
+  </nav>
+</div>
+
+
+<section class="video-intro">
+  <div class="video-intro-head">
+    <span class="watch-first-badge">▶ WATCH FIRST</span>
+    <span class="video-intro-tagline">A short walkthrough before you dive in</span>
+  </div>
+  <div class="video-wrapper">
+    <video controls preload="metadata" playsinline>
+      <source src="https://p193.p3.n0.cdn.zight.com/items/Z4uR9pQk/680e5203-9857-482f-9b56-0f0507826756.mp4?v=48753486f6dbfa08edac2e7bf6894a54-4" type="video/mp4">
+      Your browser doesn't support embedded video. <a href="https://p193.p3.n0.cdn.zight.com/items/Z4uR9pQk/680e5203-9857-482f-9b56-0f0507826756.mp4?v=48753486f6dbfa08edac2e7bf6894a54-4">Open the video directly</a>.
+    </video>
+  </div>
+</section>
+
+
+
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span class="eyebrow-tag">PPE LEADERSHIP INITIATIVE</span>
+    <span class="eyebrow-line"></span>
+    <span class="eyebrow-tag" style="color:var(--ink-faint)">PROGRESSION REPORT</span>
+  </div>
+  <h1>From baseline to follow-up — <em>did the practices move?</em></h1>
+  <p class="hero-desc">Analyzing self-rating and manager-rating shifts across the three Practices that anchor the TEREX PPE Leadership Initiative — Model, Set Expectations, and Monitor — for the 30 learners with both baseline and follow-up self-assessments.</p>
+  <div class="hero-meta-strip">
+    <div class="meta-item">
+      <div class="meta-label">Baseline</div>
+      <div class="meta-value">Feb 2026 · 81 learners</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Follow-up</div>
+      <div class="meta-value">May 2026 · 30 learners</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Matched cohort</div>
+      <div class="meta-value">30 learners (this report)</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Scale</div>
+      <div class="meta-value">1 (low) – 10 (high)</div>
+    </div>
+  </div>
+</section>
+
+
+<div class="page-body">
+  
+<section id="summary">
+  <div class="section-intro">
+    <div class="section-kicker blue">EXECUTIVE SUMMARY</div>
+    <h2 class="section-headline">Every Practice moved up, every item improved.</h2>
+    <p class="section-lead">Across the 30 learners who completed both surveys, average self-rating rose from 5.77 to 7.32 — a +1.55-point lift on the 1–10 scale (+27% relative growth). All 11 survey items registered improvement; none regressed.</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-tile blue">
+      <div class="kpi-eyebrow">Overall lift</div>
+      <div class="kpi-big">+1.55</div>
+      <div class="kpi-pct">+27% relative growth</div>
+      <div class="kpi-sub">5.77 → 7.32 avg across the three Practices</div>
+    </div>
+    <div class="kpi-tile amber">
+      <div class="kpi-eyebrow">Biggest mover</div>
+      <div class="kpi-big">+1.74</div>
+      <div class="kpi-pct">+34% relative growth</div>
+      <div class="kpi-sub">Set Expectations</div>
+    </div>
+    <div class="kpi-tile purple">
+      <div class="kpi-eyebrow">Smallest mover</div>
+      <div class="kpi-big">+1.38</div>
+      <div class="kpi-pct">+22% relative growth</div>
+      <div class="kpi-sub">Model — still positive, just less than the others</div>
+    </div>
+    <div class="kpi-tile green">
+      <div class="kpi-eyebrow">Items that improved</div>
+      <div class="kpi-big">11<span style="font-size:24px;color:var(--ink-light);font-weight:400">/11</span></div>
+      <div class="kpi-pct">100% of items moved up</div>
+      <div class="kpi-sub">Every survey item moved in the right direction</div>
+    </div>
+  </div>
+
+  <div class="finding-bar blue">
+    <div class="finding-bar-icon">→</div>
+    <div class="finding-bar-text">
+      <strong>The headline read</strong>
+      <p>Self-rated supervisor behaviour shifted upward across all three Practices. The lift is largest in the Practice that started lowest (Set Expectations) and smallest in the Practice that started highest (Model) — a pattern consistent with a real intervention rather than uniform self-flattery. Every one of the 11 survey items moved positively; none regressed.</p>
+    </div>
+  </div>
+</section>
+
+  
+<section id="practices">
+  <div class="section-intro">
+    <div class="section-kicker amber">THE THREE-PRACTICE ARC</div>
+    <h2 class="section-headline">Where the lift came from.</h2>
+    <p class="section-lead">Self-rating averages, baseline vs follow-up, for each of the three manager Practices. Matched-pair cohort, N=30.</p>
+  </div>
+  <div class="practice-chart">
+    
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#1D4ED8">Model</div>
+            <div class="practice-delta blue">+1.38 <span class="pct">(+22%)</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Baseline</div>
+              <div class="chart-track"><div class="chart-fill blue" style="width:0%; opacity:0.4" data-w="64.16666666666667%"></div></div>
+              <div class="practice-bar-value">6.42</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Follow-up</div>
+              <div class="chart-track"><div class="chart-fill blue" style="width:0%" data-w="78.0%"></div></div>
+              <div class="practice-bar-value strong">7.80</div>
+            </div>
+          </div>
+          <div class="practice-desc">Modeling proper PPE habits — wearing the standard you expect from your team.</div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#B45309">Set Expectations</div>
+            <div class="practice-delta amber">+1.74 <span class="pct">(+34%)</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Baseline</div>
+              <div class="chart-track"><div class="chart-fill amber" style="width:0%; opacity:0.4" data-w="51.44444444444445%"></div></div>
+              <div class="practice-bar-value">5.14</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Follow-up</div>
+              <div class="chart-track"><div class="chart-fill amber" style="width:0%" data-w="68.88888888888889%"></div></div>
+              <div class="practice-bar-value strong">6.89</div>
+            </div>
+          </div>
+          <div class="practice-desc">Setting and communicating clear PPE expectations — explaining the why and reinforcing through peers.</div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#7C3AED">Monitor</div>
+            <div class="practice-delta purple">+1.53 <span class="pct">(+27%)</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Baseline</div>
+              <div class="chart-track"><div class="chart-fill purple" style="width:0%; opacity:0.4" data-w="57.5%"></div></div>
+              <div class="practice-bar-value">5.75</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Follow-up</div>
+              <div class="chart-track"><div class="chart-fill purple" style="width:0%" data-w="72.77777777777777%"></div></div>
+              <div class="practice-bar-value strong">7.28</div>
+            </div>
+          </div>
+          <div class="practice-desc">Monitoring PPE during your shifts — verifying, catching, and acknowledging in the moment.</div>
+        </div>
+        
+  </div>
+  <div class="finding-bar amber">
+    <div class="finding-bar-icon">▲</div>
+    <div class="finding-bar-text">
+      <strong>Set Expectations led the change</strong>
+      <p>Set Expectations was the lowest-scoring Practice at baseline (5.14) and saw the largest lift — +1.74 absolute, +34% relative growth. The lowest-scoring practice having the most room to grow is consistent with what you'd hope to see from a targeted intervention. Model started highest (6.42) and moved least (+1.38 absolute, +22% relative) — ceiling effects are at play.</p>
+    </div>
+  </div>
+</section>
+
+  
+  
+<section id="baseline-gap">
+  <div class="section-intro">
+    <div class="section-kicker red">SELF VS MANAGER · BASELINE</div>
+    <h2 class="section-headline">At the start, learners under-rated themselves.</h2>
+    <p class="section-lead">For the 52 learners with both a self-assessment and at least one manager assessment at baseline, learners scored themselves <strong>lower</strong> than their managers did on every Practice. Set Expectations had the widest gap — managers thought their reports were communicating expectations more clearly than the learners thought they were.</p>
+  </div>
+  <div class="practice-chart">
+    
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#1D4ED8">Model</div>
+            <div class="practice-delta red">-0.89 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Manager rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill blue" style="width:0%; opacity:0.5" data-w="64.32692307692308%"></div></div>
+              <div class="practice-bar-value">6.43</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="73.26923076923077%"></div></div>
+              <div class="practice-bar-value strong">7.33</div>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#B45309">Set Expectations</div>
+            <div class="practice-delta red">-1.19 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Manager rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill amber" style="width:0%; opacity:0.5" data-w="50.06410256410256%"></div></div>
+              <div class="practice-bar-value">5.01</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="61.92307692307693%"></div></div>
+              <div class="practice-bar-value strong">6.19</div>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#7C3AED">Monitor</div>
+            <div class="practice-delta amber">-0.32 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Manager rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill purple" style="width:0%; opacity:0.5" data-w="55.83333333333333%"></div></div>
+              <div class="practice-bar-value">5.58</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="59.07051282051282%"></div></div>
+              <div class="practice-bar-value strong">5.91</div>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+  <div class="finding-bar red">
+    <div class="finding-bar-icon">!</div>
+    <div class="finding-bar-text">
+      <strong>What this means for the program</strong>
+      <p>The baseline self-vs-manager gap is informative for two reasons. First, it gives the program a real starting line — learners walked in already humble about Set Expectations, the Practice that ended up moving most. Second, it's an honest signal of self-awareness: a cohort that under-rates itself at baseline is a cohort with room to grow into accurate self-assessment.</p>
+    </div>
+  </div>
+</section>
+
+  
+<section id="endstate-gap">
+  <div class="section-intro">
+    <div class="section-kicker red">SELF VS MANAGER · END-STATE</div>
+    <h2 class="section-headline">At follow-up, the gap flipped — but read this with care.</h2>
+    <p class="section-lead">Only <strong>7 learners</strong> have both a follow-up self-assessment and a follow-up manager assessment. For that small group, learners now rate themselves <em>higher</em> than their managers do — the inverse of baseline. This is an early signal, not proof.</p>
+  </div>
+
+  <div class="caveat-bar">
+    <strong>Sample caveat:</strong> N=7 is too small to support strong claims. The same 7 learners' self-rating shifts ARE captured in the main matched-pair cohort (N=30) above; the unique value of this section is just the side-by-side with manager view at end-state. Treat this as anecdotal evidence, not statistical evidence.
+  </div>
+
+  <div class="practice-chart">
+    
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#1D4ED8">Model</div>
+            <div class="practice-delta amber">+1.50 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Self rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill blue" style="width:0%; opacity:0.5" data-w="87.14285714285714%"></div></div>
+              <div class="practice-bar-value">8.71</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="72.14285714285714%"></div></div>
+              <div class="practice-bar-value strong">7.21</div>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#B45309">Set Expectations</div>
+            <div class="practice-delta amber">+0.52 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Self rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill amber" style="width:0%; opacity:0.5" data-w="75.23809523809524%"></div></div>
+              <div class="practice-bar-value">7.52</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="70.0%"></div></div>
+              <div class="practice-bar-value strong">7.00</div>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="practice-row">
+          <div class="practice-row-header">
+            <div class="practice-name" style="color:#7C3AED">Monitor</div>
+            <div class="practice-delta amber">+1.19 <span style="font-weight:400; color:var(--ink-light); margin-left:6px">Self rated higher</span></div>
+          </div>
+          <div class="practice-bars">
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Self</div>
+              <div class="chart-track"><div class="chart-fill purple" style="width:0%; opacity:0.5" data-w="79.52380952380952%"></div></div>
+              <div class="practice-bar-value">7.95</div>
+            </div>
+            <div class="practice-bar-row">
+              <div class="practice-bar-label">Manager</div>
+              <div class="chart-track"><div class="chart-fill slate" style="width:0%" data-w="67.61904761904762%"></div></div>
+              <div class="practice-bar-value strong">6.76</div>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="finding-bar amber">
+    <div class="finding-bar-icon">?</div>
+    <div class="finding-bar-text">
+      <strong>Three plausible explanations</strong>
+      <p><strong>1. Confidence shift.</strong> Learners now feel more capable than they're being credited for. <strong>2. Rater turnover.</strong> Different managers may have rated at follow-up than at baseline, with their own calibration. <strong>3. Selection.</strong> The most engaged learners are over-represented in the N=7 that came back. The honest read: any of these could be true, and the sample is too small to separate them.</p>
+    </div>
+  </div>
+</section>
+
+  
+<section id="items">
+  <div class="section-intro">
+    <div class="section-kicker purple">ITEM-LEVEL DETAIL</div>
+    <h2 class="section-headline">The items that moved most — and least.</h2>
+    <p class="section-lead">Drilling below the Practice averages: which specific behaviours showed the biggest lift, and which moved least. All values are matched-pair cohort averages (N=30).</p>
+  </div>
+  
+    <h3 class="subsection-h">Top 5 movers</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:36%">Item</th><th>Practice</th><th>Baseline</th><th>Follow-up</th><th>Δ</th><th>% growth</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Identify prepared team member in huddles</td>
+        <td><span class="practice-pill amber">Set Expectations</span></td>
+        <td>4.50</td>
+        <td>6.70</td>
+        <td><span class="tag low">+2.20</span></td>
+        <td class="pct-cell">+49%</td>
+      </tr>
+      <tr>
+        <td>End-of-shift PPE check</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>4.53</td>
+        <td>6.57</td>
+        <td><span class="tag low">+2.03</span></td>
+        <td class="pct-cell">+45%</td>
+      </tr>
+      <tr>
+        <td>Connect requirement to specific hazard</td>
+        <td><span class="practice-pill amber">Set Expectations</span></td>
+        <td>6.03</td>
+        <td>7.70</td>
+        <td><span class="tag low">+1.67</span></td>
+        <td class="pct-cell">+28%</td>
+      </tr>
+      <tr>
+        <td>Verify PPE at break transitions</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>5.20</td>
+        <td>6.87</td>
+        <td><span class="tag low">+1.67</span></td>
+        <td class="pct-cell">+32%</td>
+      </tr>
+      <tr>
+        <td>Acknowledge correct PPE during shift</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>5.60</td>
+        <td>7.23</td>
+        <td><span class="tag low">+1.63</span></td>
+        <td class="pct-cell">+29%</td>
+      </tr></tbody>
+    </table>
+    
+  
+    <h3 class="subsection-h">Smallest movers (still positive)</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:36%">Item</th><th>Practice</th><th>Baseline</th><th>Follow-up</th><th>Δ</th><th>% growth</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Team knows violations get followed up</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>6.50</td>
+        <td>7.67</td>
+        <td><span class="tag medium">+1.17</span></td>
+        <td class="pct-cell">+18%</td>
+      </tr>
+      <tr>
+        <td>Stop violations immediately</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>6.80</td>
+        <td>8.10</td>
+        <td><span class="tag medium">+1.30</span></td>
+        <td class="pct-cell">+19%</td>
+      </tr>
+      <tr>
+        <td>Maintain full PPE even for quick tasks</td>
+        <td><span class="practice-pill blue">Model</span></td>
+        <td>6.77</td>
+        <td>8.10</td>
+        <td><span class="tag medium">+1.33</span></td>
+        <td class="pct-cell">+20%</td>
+      </tr>
+      <tr>
+        <td>Arrange peer demos of proper PPE</td>
+        <td><span class="practice-pill amber">Set Expectations</span></td>
+        <td>4.90</td>
+        <td>6.27</td>
+        <td><span class="tag medium">+1.37</span></td>
+        <td class="pct-cell">+28%</td>
+      </tr>
+      <tr>
+        <td>Acknowledge consistent practices publicly</td>
+        <td><span class="practice-pill purple">Monitor</span></td>
+        <td>5.87</td>
+        <td>7.23</td>
+        <td><span class="tag medium">+1.37</span></td>
+        <td class="pct-cell">+23%</td>
+      </tr></tbody>
+    </table>
+    
+  <div class="finding-bar purple">
+    <div class="finding-bar-icon">◇</div>
+    <div class="finding-bar-text">
+      <strong>The pattern</strong>
+      <p>The top-moving items are concrete, observable behaviours a manager can do during a shift — verifying PPE at break transitions, end-of-shift checks, identifying a prepared team member in huddles. Even the smallest-moving items grew by more than a full point on the 10-point scale; the lowest-performing item ("Team knows violations get followed up") still gained +1.17 (+18%).</p>
+    </div>
+  </div>
+</section>
+
+  
+<section id="profiles">
+  <div class="section-intro">
+    <div class="section-kicker blue">PER-LEARNER PROFILES</div>
+    <h2 class="section-headline">The 30 learners who completed both surveys.</h2>
+    <p class="section-lead">Each card shows that learner's baseline-to-follow-up shift across the three Practices, plus their manager's view where managers also responded. Sorted by total lift, biggest movers first. Dashed grey shape = baseline; blue shape = follow-up.</p>
+  </div>
+  <div class="learner-controls">
+    <input type="text" id="learner-search" placeholder="Search by name…" />
+    <span class="learner-count"><strong id="learner-count">30</strong> of 30 learners shown</span>
+  </div>
+  <div class="learner-grid">
+    
+    <div class="learner-card" data-name="rendy wolford" data-delta="4.944">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Rendy Wolford</div>
+          <div class="learner-card-sub">Avg lift: <strong>+4.94</strong> <span class="pct-tiny">(+111%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,42.1 105.8,99.1 68.3,102.5" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,25.0 143.3,120.8 32.7,123.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">7.00 → <strong>9.50</strong></span>
+          <span class="card-practice-delta">+2.50 <span class="pct-tiny">(+36%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">2.67 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+6.33 <span class="pct-tiny">(+238%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">3.67 → <strong>9.67</strong></span>
+          <span class="card-practice-delta">+6.00 <span class="pct-tiny">(+164%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">10.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.33 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="anthony hamm" data-delta="4.000">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Anthony Hamm</div>
+          <div class="learner-card-sub">Avg lift: <strong>+4.00</strong> <span class="pct-tiny">(+189%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,72.9 97.9,94.6 75.2,98.6" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,45.5 123.6,109.4 53.5,111.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">2.50 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+4.00 <span class="pct-tiny">(+160%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">1.33 → <strong>5.67</strong></span>
+          <span class="card-practice-delta">+4.33 <span class="pct-tiny">(+325%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">2.50 → <strong>6.17</strong></span>
+          <span class="card-practice-delta">+3.67 <span class="pct-tiny">(+147%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.33 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="ashley hart" data-delta="3.444">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Ashley Hart</div>
+          <div class="learner-card-sub">Avg lift: <strong>+3.44</strong> <span class="pct-tiny">(+64%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,52.4 121.6,108.2 58.4,108.2" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,28.4 143.3,120.8 39.6,119.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">5.50 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+3.50 <span class="pct-tiny">(+64%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.33 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+3.67 <span class="pct-tiny">(+69%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">5.33 → <strong>8.50</strong></span>
+          <span class="card-practice-delta">+3.17 <span class="pct-tiny">(+59%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">4.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">4.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="thomas dozier" data-delta="2.889">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Thomas Dozier</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.89</strong> <span class="pct-tiny">(+50%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,45.5 117.6,106.0 53.5,111.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,25.0 137.4,117.4 39.6,119.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.50 → <strong>9.50</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+46%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+3.33 <span class="pct-tiny">(+71%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.17 → <strong>8.50</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+38%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="larry coleman" data-delta="2.778">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Larry Coleman</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.78</strong> <span class="pct-tiny">(+69%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,59.2 113.7,103.7 69.3,102.0" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,42.1 131.5,113.9 52.5,111.7" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">4.50 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+2.50 <span class="pct-tiny">(+56%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+75%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">3.50 → <strong>6.33</strong></span>
+          <span class="card-practice-delta">+2.83 <span class="pct-tiny">(+81%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">10.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.33 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="joseph mohr" data-delta="2.722">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Joseph Mohr</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.72</strong> <span class="pct-tiny">(+55%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,55.8 119.6,107.1 61.4,106.5" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,35.3 133.4,115.1 44.6,116.2" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">5.00 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+60%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.00 → <strong>7.33</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+47%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.83 → <strong>7.67</strong></span>
+          <span class="card-practice-delta">+2.83 <span class="pct-tiny">(+59%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">10.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="keith gibson" data-delta="2.611">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Keith Gibson</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.61</strong> <span class="pct-tiny">(+41%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,49.0 127.5,111.7 50.5,112.8" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,25.0 141.3,119.6 38.7,119.6" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.00 → <strong>9.50</strong></span>
+          <span class="card-practice-delta">+3.50 <span class="pct-tiny">(+58%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">6.33 → <strong>8.67</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+37%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.67 → <strong>8.67</strong></span>
+          <span class="card-practice-delta">+2.00 <span class="pct-tiny">(+30%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>9.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">8.33 → <strong>9.33</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">8.00 → <strong>8.33</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="russell misner" data-delta="2.444">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Russell Misner</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.44</strong> <span class="pct-tiny">(+49%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,42.1 109.7,101.4 63.3,105.4" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,31.9 131.5,113.9 50.5,112.8" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">7.00 → <strong>8.50</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+21%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">3.33 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+3.67 <span class="pct-tiny">(+110%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.50 → <strong>6.67</strong></span>
+          <span class="card-practice-delta">+2.17 <span class="pct-tiny">(+48%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>6.50</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">4.33 → <strong>5.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">5.50 → <strong>5.67</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="christopher oliver" data-delta="2.278">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Christopher Oliver</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.28</strong> <span class="pct-tiny">(+42%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,52.4 119.6,107.1 56.4,109.4" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,35.3 133.4,115.1 44.6,116.2" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">5.50 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+2.50 <span class="pct-tiny">(+45%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.00 → <strong>7.33</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+47%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">5.67 → <strong>7.67</strong></span>
+          <span class="card-practice-delta">+2.00 <span class="pct-tiny">(+35%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>7.50</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">8.00 → <strong>8.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">7.50 → <strong>8.00</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="calvin manley" data-delta="2.111">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Calvin Manley</div>
+          <div class="learner-card-sub">Avg lift: <strong>+2.11</strong> <span class="pct-tiny">(+28%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,28.4 125.5,110.5 46.6,115.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,21.6 143.3,120.8 32.7,123.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">9.00 → <strong>10.00</strong></span>
+          <span class="card-practice-delta">+1.00 <span class="pct-tiny">(+11%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">6.00 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+50%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">7.33 → <strong>9.67</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+32%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="curtis brown" data-delta="1.944">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Curtis Brown</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.94</strong> <span class="pct-tiny">(+43%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,59.2 115.7,104.8 61.4,106.5" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,49.0 129.5,112.8 49.5,113.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">4.50 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+33%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.33 → <strong>6.67</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+54%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.83 → <strong>6.83</strong></span>
+          <span class="card-practice-delta">+2.00 <span class="pct-tiny">(+41%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="dusk geffre" data-delta="1.944">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Dusk Geffre</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.94</strong> <span class="pct-tiny">(+49%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,66.1 117.6,106.0 67.3,103.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,45.5 121.6,108.2 54.5,110.5" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">3.50 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+86%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>5.33</strong></span>
+          <span class="card-practice-delta">+0.67 <span class="pct-tiny">(+14%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">3.83 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">+2.17 <span class="pct-tiny">(+57%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="adam earnest" data-delta="1.833">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Adam Earnest</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.83</strong> <span class="pct-tiny">(+29%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,38.7 117.6,106.0 51.5,112.2" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,28.4 133.4,115.1 43.6,116.8" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">7.50 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+20%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>7.33</strong></span>
+          <span class="card-practice-delta">+2.67 <span class="pct-tiny">(+57%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.50 → <strong>7.83</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+21%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>6.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">5.67 → <strong>5.67</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">5.00 → <strong>5.67</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="steve greer" data-delta="1.778">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Steve Greer</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.78</strong> <span class="pct-tiny">(+36%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,49.0 113.7,103.7 62.4,106.0" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,42.1 131.5,113.9 54.5,110.5" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+1.00 <span class="pct-tiny">(+17%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+3.00 <span class="pct-tiny">(+75%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.67 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+29%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">4.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">4.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="robert lankow" data-delta="1.611">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Robert Lankow</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.61</strong> <span class="pct-tiny">(+29%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,45.5 119.6,107.1 60.4,107.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,35.3 127.5,111.7 48.5,113.9" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.50 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+23%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.00 → <strong>6.33</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+27%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">5.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+2.00 <span class="pct-tiny">(+40%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="garrie pate" data-delta="1.278">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Garrie Pate</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.28</strong> <span class="pct-tiny">(+19%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,38.7 127.5,111.7 52.5,111.7" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,35.3 137.4,117.4 42.6,117.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">7.50 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+7%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">6.33 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+1.67 <span class="pct-tiny">(+26%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.33 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+1.67 <span class="pct-tiny">(+26%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>8.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.33 → <strong>7.33</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">7.50 → <strong>7.67</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="josh moumy" data-delta="1.056">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Josh Moumy</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.06</strong> <span class="pct-tiny">(+24%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,55.8 113.7,103.7 65.3,104.3" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,45.5 115.7,104.8 57.4,108.8" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">5.00 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+30%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.00 → <strong>4.33</strong></span>
+          <span class="card-practice-delta">+0.33 <span class="pct-tiny">(+8%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.17 → <strong>5.50</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+32%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="tyler lykins" data-delta="1.000">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Tyler Lykins</div>
+          <div class="learner-card-sub">Avg lift: <strong>+1.00</strong> <span class="pct-tiny">(+21%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,62.6 117.6,106.0 57.4,108.8" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,49.0 119.6,107.1 53.5,111.1" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">4.00 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">+2.00 <span class="pct-tiny">(+50%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>5.00</strong></span>
+          <span class="card-practice-delta">+0.33 <span class="pct-tiny">(+7%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">5.50 → <strong>6.17</strong></span>
+          <span class="card-practice-delta">+0.67 <span class="pct-tiny">(+12%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="beatriz mendoza-chavez" data-delta="0.722">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Beatriz Mendoza-Chavez</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.72</strong> <span class="pct-tiny">(+8%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,25.0 133.4,115.1 38.7,119.6" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,25.0 143.3,120.8 35.7,121.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">9.50 → <strong>9.50</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">7.33 → <strong>9.00</strong></span>
+          <span class="card-practice-delta">+1.67 <span class="pct-tiny">(+23%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">8.67 → <strong>9.17</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+6%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">10.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">8.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="eric avery" data-delta="0.722">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Eric Avery</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.72</strong> <span class="pct-tiny">(+11%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,45.5 125.5,110.5 48.5,113.9" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,38.7 129.5,112.8 45.6,115.7" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.50 → <strong>7.50</strong></span>
+          <span class="card-practice-delta">+1.00 <span class="pct-tiny">(+15%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">6.00 → <strong>6.67</strong></span>
+          <span class="card-practice-delta">+0.67 <span class="pct-tiny">(+11%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">7.00 → <strong>7.50</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+7%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">5.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="mark mcdermott" data-delta="0.722">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Mark McDermott</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.72</strong> <span class="pct-tiny">(+9%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,35.3 135.4,116.2 39.6,119.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,25.0 131.5,113.9 31.8,123.6" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">8.00 → <strong>9.50</strong></span>
+          <span class="card-practice-delta">+1.50 <span class="pct-tiny">(+19%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">7.67 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">-0.67 <span class="pct-tiny">(-9%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">8.50 → <strong>9.83</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+16%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>9.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.67 → <strong>9.00</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">7.00 → <strong>9.00</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="sharlyn lewis" data-delta="0.722">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Sharlyn Lewis</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.72</strong> <span class="pct-tiny">(+12%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,45.5 117.6,106.0 53.5,111.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,45.5 131.5,113.9 54.5,110.5" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.50 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+2.33 <span class="pct-tiny">(+50%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.17 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">-0.17 <span class="pct-tiny">(-3%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">10.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">8.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="michael dirkschneider" data-delta="0.667">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Michael Dirkschneider</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.67</strong> <span class="pct-tiny">(+15%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,52.4 113.7,103.7 69.3,102.0" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,55.8 121.6,108.2 62.4,106.0" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">5.50 → <strong>5.00</strong></span>
+          <span class="card-practice-delta">-0.50 <span class="pct-tiny">(-9%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.00 → <strong>5.33</strong></span>
+          <span class="card-practice-delta">+1.33 <span class="pct-tiny">(+33%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">3.50 → <strong>4.67</strong></span>
+          <span class="card-practice-delta">+1.17 <span class="pct-tiny">(+33%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">3.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">3.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">1.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="sheridan ernest" data-delta="0.556">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Sheridan Ernest</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.56</strong> <span class="pct-tiny">(+8%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,31.9 113.7,103.7 46.6,115.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,31.9 119.6,107.1 42.6,117.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">8.50 → <strong>8.50</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.00 → <strong>5.00</strong></span>
+          <span class="card-practice-delta">+1.00 <span class="pct-tiny">(+25%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">7.33 → <strong>8.00</strong></span>
+          <span class="card-practice-delta">+0.67 <span class="pct-tiny">(+9%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.33 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="randall barnette" data-delta="0.444">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Randall Barnette</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.44</strong> <span class="pct-tiny">(+6%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,35.3 131.5,113.9 51.5,112.2" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,31.9 133.4,115.1 48.5,113.9" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">8.00 → <strong>8.50</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+6%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">7.00 → <strong>7.33</strong></span>
+          <span class="card-practice-delta">+0.33 <span class="pct-tiny">(+5%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.50 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+8%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater · follow-up 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">4.00 → <strong>4.50</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.33 → <strong>4.67</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">4.50 → <strong>3.00</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="michelle albert" data-delta="0.333">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Michelle Albert</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.33</strong> <span class="pct-tiny">(+6%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,49.0 119.6,107.1 62.4,106.0" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,49.0 119.6,107.1 56.4,109.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.00 → <strong>6.00</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.00 → <strong>5.00</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">4.67 → <strong>5.67</strong></span>
+          <span class="card-practice-delta">+1.00 <span class="pct-tiny">(+21%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="andrew hanisch" data-delta="0.111">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Andrew Hanisch</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.11</strong> <span class="pct-tiny">(+2%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,49.0 117.6,106.0 60.4,107.1" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,45.5 119.6,107.1 63.3,105.4" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">6.00 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+0.50 <span class="pct-tiny">(+8%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">4.67 → <strong>5.00</strong></span>
+          <span class="card-practice-delta">+0.33 <span class="pct-tiny">(+7%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">5.00 → <strong>4.50</strong></span>
+          <span class="card-practice-delta">-0.50 <span class="pct-tiny">(-10%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="jimbo thompson" data-delta="0.056">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Jimbo Thompson</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.06</strong> <span class="pct-tiny">(+1%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,42.1 121.6,108.2 52.5,111.7" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,42.1 121.6,108.2 51.5,112.2" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">7.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">5.33 → <strong>5.33</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">6.33 → <strong>6.50</strong></span>
+          <span class="card-practice-delta">+0.17 <span class="pct-tiny">(+3%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">6.67 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="learner-card" data-name="peter lebron" data-delta="0.000">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Peter Lebron</div>
+          <div class="learner-card-sub">Avg lift: <strong>+0.00</strong> <span class="pct-tiny">(+0%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,21.6 147.3,123.1 30.8,124.2" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,21.6 147.3,123.1 30.8,124.2" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">10.00 → <strong>10.00</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">9.67 → <strong>9.67</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">10.00 → <strong>10.00</strong></span>
+          <span class="card-practice-delta">+0.00 <span class="pct-tiny">(+0%)</span></span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="learner-card" data-name="anthony price" data-delta="-1.167">
+      <div class="learner-card-head">
+        <div>
+          <div class="learner-card-name">Anthony Price</div>
+          <div class="learner-card-sub">Avg lift: <strong>-1.17</strong> <span class="pct-tiny">(-15%)</span></div>
+        </div>
+        <div class="learner-card-radar">
+    <svg viewBox="0 0 180 180" width="180" height="180">
+      <polygon points="90.0,62.6 113.7,103.7 66.3,103.7" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,42.1 131.5,113.9 48.5,113.9" fill="none" stroke="#E4E4E7" stroke-width="1"/><polygon points="90.0,21.6 149.2,124.2 30.8,124.2" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+      <line x1="90.0" y1="90.0" x2="90.0" y2="21.6" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="149.2" y2="124.2" stroke="#E4E4E7" stroke-width="1"/><line x1="90.0" y1="90.0" x2="30.8" y2="124.2" stroke="#E4E4E7" stroke-width="1"/>
+      <polygon points="90.0,35.3 135.4,116.2 43.6,116.8" fill="#71717A" fill-opacity="0.15" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <polygon points="90.0,42.1 127.5,111.7 50.5,112.8" fill="#1D4ED8" fill-opacity="0.25" stroke="#1D4ED8" stroke-width="2"/>
+      <text x="90.0" y="4.5" font-size="9" fill="#71717A" text-anchor="middle" dominant-baseline="middle" font-weight="600">Model</text><text x="164.0" y="132.8" font-size="9" fill="#71717A" text-anchor="start" dominant-baseline="middle" font-weight="600">Set Expect.</text><text x="16.0" y="132.8" font-size="9" fill="#71717A" text-anchor="end" dominant-baseline="middle" font-weight="600">Monitor</text>
+    </svg>
+    </div>
+      </div>
+      <div class="card-practice-list">
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+          <span class="card-practice-vals">8.00 → <strong>7.00</strong></span>
+          <span class="card-practice-delta">-1.00 <span class="pct-tiny">(-12%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+          <span class="card-practice-vals">7.67 → <strong>6.33</strong></span>
+          <span class="card-practice-delta">-1.33 <span class="pct-tiny">(-17%)</span></span>
+        </div>
+        
+        <div class="card-practice-row">
+          <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+          <span class="card-practice-vals">7.83 → <strong>6.67</strong></span>
+          <span class="card-practice-delta">-1.17 <span class="pct-tiny">(-15%)</span></span>
+        </div>
+        
+      </div>
+      
+        <div class="card-mgr-block">
+          <div class="card-mgr-label">Manager view (baseline 1 rater)</div>
+          
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#1D4ED8">Model</span>
+              <span class="card-practice-vals">8.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#B45309">Set Expectations</span>
+              <span class="card-practice-vals">7.00 → <strong>—</strong></span>
+            </div>
+            
+            <div class="card-practice-row mgr">
+              <span class="card-practice-name" style="color:#7C3AED">Monitor</span>
+              <span class="card-practice-vals">6.50 → <strong>—</strong></span>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+  </div>
+</section>
+
+  
+<section id="methodology">
+  <div class="section-intro">
+    <div class="section-kicker">METHODOLOGY &amp; CAVEATS</div>
+    <h2 class="section-headline">How the numbers were assembled.</h2>
+  </div>
+  <div class="method-block">
+    <h3 class="subsection-h">Sample sizes</h3>
+    <table class="data-table">
+      <thead><tr><th>Cohort</th><th>N</th><th>Where it appears in this report</th></tr></thead>
+      <tbody>
+        <tr><td>Self-rating, baseline only</td><td>81</td><td>Background context only</td></tr>
+        <tr><td>Self-rating, follow-up only</td><td>30</td><td>Background context only</td></tr>
+        <tr><td>Self-rating, matched pairs (both)</td><td>30</td><td>The headline. Sections 1, 2, 3, 6, 7.</td></tr>
+        <tr><td>Self-baseline + manager-baseline</td><td>52</td><td>Section 4: Baseline self-vs-manager gap</td></tr>
+        <tr><td>Self-followup + manager-followup</td><td>7</td><td>Section 5: End-state gap (caveated)</td></tr>
+        <tr><td>Manager-rating, both phases (per learner)</td><td>9</td><td>Cross-referenced in per-learner cards where available</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="method-block">
+    <h3 class="subsection-h">Joining the data</h3>
+    <p>The <code>LearnerID</code> column in the self-rating files uses a different identifier scheme than in the manager files (FLiNT generates a fresh ID per survey instance). All cross-file joins in this report are done on <strong>normalised learner name</strong> (lowercased, whitespace-trimmed). 30 of 30 follow-up learners matched to their baseline records by name.</p>
+  </div>
+
+  <div class="method-block">
+    <h3 class="subsection-h">Item → Practice mapping</h3>
+    <p>11 of the 13 self-rating items and 8 of the 10 manager-rating items were mapped to the three program Practices (Model, Set Expectations, Monitor). Mapping was confirmed with the program owner before analysis. Two items in each survey were dropped because they measure downstream team conditions ("PPE-related safety incidents on my team are rare" and "Other supervisors on my shift are consistent with me") rather than supervisor behaviours — they don't correspond to anything a single manager does, so including them in any Practice would have misrepresented the data.</p>
+  </div>
+
+  <div class="method-block">
+    <h3 class="subsection-h">What this report does not claim</h3>
+    <p>This is a pre/post comparison without a control group. We can describe the change observed in the matched cohort. We cannot attribute the change exclusively to the program — concurrent factors (other safety initiatives, seasonal change, leadership turnover) could contribute. Self-rating shifts also include a confidence component that follows training; the manager-rating data is included to triangulate, but with much smaller samples.</p>
+  </div>
+
+  <div class="method-block">
+    <h3 class="subsection-h">Response dropoff</h3>
+    <p>Of the 81 learners who completed the baseline self-assessment, 30 (37%) also completed the follow-up. Manager-rating dropoff was steeper: 66 unique learners had baseline manager ratings, but only 9 had follow-up manager ratings. The matched-pair lens used throughout this report controls for selection bias within the cohort it covers, but cannot speak to learners who did not return for follow-up.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="footer">
+  <span>FLiNT Leadership Sciences · TEREX PPE Initiative</span>
+  <span>Generated May 2026 · 30 matched-pair learners</span>
+</div>
+
+<script>
+// Animate bars on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.width = entry.target.dataset.w;
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.chart-fill[data-w]').forEach(el => observer.observe(el));
+
+// Learner card search
+const search = document.getElementById('learner-search');
+const cards = document.querySelectorAll('.learner-card');
+const countEl = document.getElementById('learner-count');
+search.addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  let shown = 0;
+  cards.forEach(c => {
+    const name = c.dataset.name;
+    if (!q || name.includes(q)) {
+      c.classList.remove('hidden');
+      shown++;
+    } else {
+      c.classList.add('hidden');
+    }
+  });
+  countEl.textContent = shown;
+});
+
+// Active nav link tracking
+const navLinks = document.querySelectorAll('nav a');
+const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href')));
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const link = document.querySelector(`nav a[href="#${id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-50% 0px -50% 0px' });
+sections.forEach(s => s && navObserver.observe(s));
+</script>
+</body>
+</html>
