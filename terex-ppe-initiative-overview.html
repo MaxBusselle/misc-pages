@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEREX × FLiNT — PPE Leadership Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --surface-warm: #F4EFE6;
+    --ink: #1A1F2E;
+    --ink-soft: #2D3445;
+    --body: #4A5366;
+    --muted: #8B95A8;
+    --line: #E5E2DA;
+    --line-soft: #EFECE4;
+    --accent: #1E3A5F;
+    --accent-mid: #2D4F73;
+    --accent-soft: #E8EEF5;
+    --tag: #5A6478;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Navigation ────────────────────────────── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250, 250, 247, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1180px; margin: 0 auto;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px;
+  }
+  .nav-brand {
+    font-weight: 600; font-size: 0.875rem;
+    color: var(--ink); letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand .x {
+    color: var(--accent); font-weight: 400;
+    margin: 0 2px;
+  }
+  .nav-links {
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .nav-link {
+    color: var(--tag);
+    font-size: 0.8rem; font-weight: 500;
+    text-decoration: none;
+    padding: 6px 12px; border-radius: 6px;
+    transition: all 0.15s ease;
+    letter-spacing: 0.01em;
+  }
+  .nav-link:hover { color: var(--ink); background: var(--line-soft); }
+
+  /* ── Layout ────────────────────────────────── */
+  section {
+    padding: 96px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .container {
+    max-width: 1180px; margin: 0 auto;
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .display {
+    font-family: 'DM Serif Display', serif;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  h1.display { font-size: clamp(2.4rem, 4.4vw, 3.8rem); }
+  h2.display { font-size: clamp(1.9rem, 3.2vw, 2.6rem); margin-bottom: 24px; }
+  h3.display { font-size: 1.4rem; margin-bottom: 12px; }
+  .lede {
+    font-size: 1.15rem; line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+
+  p { margin-bottom: 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Hero ──────────────────────────────────── */
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 100px;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--surface-warm) 100%);
+  }
+  .hero h1 { margin-bottom: 28px; max-width: 14ch; }
+  .hero .lede { margin-bottom: 56px; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 32px;
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .stat {
+    flex: 1 1 160px; min-width: 140px;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ── Two-column ────────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .two-col { grid-template-columns: 1fr; gap: 36px; }
+  }
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 36px;
+  }
+  .col-card h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .snapshot-list {
+    list-style: none;
+  }
+  .snapshot-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    gap: 24px;
+  }
+  .snapshot-list li:last-child { border-bottom: none; }
+  .snapshot-list .label {
+    font-size: 0.85rem; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .snapshot-list .value {
+    font-size: 0.95rem; color: var(--ink);
+    font-weight: 500; text-align: right;
+  }
+
+  .context-list {
+    list-style: none;
+  }
+  .context-list li {
+    padding: 12px 0;
+    padding-left: 22px;
+    position: relative;
+    color: var(--ink-soft);
+  }
+  .context-list li::before {
+    content: '';
+    position: absolute; left: 0; top: 22px;
+    width: 8px; height: 1px;
+    background: var(--accent);
+  }
+  .context-list li strong {
+    display: block; margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .context-list li span {
+    font-size: 0.92rem; color: var(--body);
+  }
+
+  /* ── Why-safety section ────────────────────── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+  @media (max-width: 800px) {
+    .why-grid { grid-template-columns: 1fr; }
+  }
+  .why-card {
+    padding: 28px 0;
+    border-top: 2px solid var(--accent);
+  }
+  .why-card .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem; color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .why-card h4 {
+    font-size: 1.05rem; color: var(--ink);
+    font-weight: 600; margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .why-card p {
+    font-size: 0.93rem; color: var(--body);
+  }
+
+  /* ── How constructed (Practices/Categories/Gaps) ── */
+  .construct-intro {
+    max-width: 800px; margin-bottom: 64px;
+    font-size: 1.08rem; color: var(--ink-soft); line-height: 1.7;
+  }
+
+  .construct-block {
+    margin-bottom: 80px;
+  }
+  .construct-block:last-child { margin-bottom: 0; }
+
+  .block-header {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .block-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .block-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem; color: var(--ink);
+  }
+  .block-role {
+    margin-left: auto;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .block-intro {
+    color: var(--body); font-size: 0.98rem;
+    margin-bottom: 28px; max-width: 720px;
+  }
+
+  /* Practice cards — primary visual */
+  .practices {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .practices { grid-template-columns: 1fr; }
+  }
+  .practice-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 32px 28px;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  .practice-card:hover {
+    border-color: var(--accent-mid);
+    transform: translateY(-2px);
+  }
+  .practice-card .verb {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.95rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .practice-card h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .practice-card p {
+    font-size: 0.92rem;
+    color: var(--body);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .practice-card .doing-well {
+    border-top: 1px solid var(--line-soft);
+    padding-top: 14px;
+    margin-top: 16px;
+  }
+  .practice-card .doing-well-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .practice-card .doing-well-text {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  /* Categories — secondary, lighter treatment */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) {
+    .categories { grid-template-columns: 1fr; }
+  }
+  .category-pill {
+    padding: 24px 28px;
+    background: var(--surface-warm);
+    border-radius: 8px;
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .category-pill .cat-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+  .category-pill .cat-context {
+    font-size: 0.85rem;
+    color: var(--body);
+  }
+
+  /* Gaps — diagnostic, lightest treatment */
+  .gaps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  @media (max-width: 800px) {
+    .gaps { grid-template-columns: 1fr; }
+    .gap:not(:last-child) { border-bottom: 1px solid var(--line); }
+  }
+  .gap {
+    padding: 24px 28px;
+  }
+  .gap:not(:last-child) {
+    border-right: 1px solid var(--line);
+  }
+  @media (max-width: 800px) {
+    .gap:not(:last-child) { border-right: none; }
+  }
+  .gap-name {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+  .gap-desc {
+    font-size: 0.85rem;
+    color: var(--body);
+    line-height: 1.55;
+  }
+
+  /* Delivery flow */
+  .flow {
+    background: var(--accent);
+    color: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    padding: 40px;
+  }
+  .flow-header {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .flow-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; color: white;
+  }
+  .flow-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 800px) {
+    .flow-steps { grid-template-columns: 1fr; gap: 12px; }
+  }
+  .flow-step {
+    padding: 20px 16px 0 0;
+    border-top: 2px solid rgba(255,255,255,0.3);
+    position: relative;
+  }
+  .flow-step .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .flow-step .step-name {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+    font-size: 1rem;
+  }
+  .flow-step .step-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.5;
+  }
+  .flow-meta {
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 800px) {
+    .flow-meta { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .flow-meta-block .meta-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .flow-meta-block .meta-value {
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  /* ── Stub sections ─────────────────────────── */
+  .stub {
+    background: var(--bg);
+    padding: 80px 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stub-title-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 16px; gap: 20px; flex-wrap: wrap;
+  }
+  .stub h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem; color: var(--ink);
+  }
+  .stub-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+  }
+  .stub p {
+    color: var(--body);
+    max-width: 720px;
+    font-size: 0.98rem;
+  }
+
+  /* ── Footer ────────────────────────────────── */
+  footer {
+    padding: 56px 40px 48px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+  }
+  .footer-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand {
+    font-weight: 600; color: white;
+    font-size: 0.95rem; letter-spacing: 0.02em;
+  }
+  .footer-brand .x { color: var(--accent-mid); margin: 0 4px; }
+  .footer-meta {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">TEREX <span class="x">×</span> FLiNT</div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About TEREX</a>
+      <a href="#priority" class="nav-link">Why Safety</a>
+      <a href="#construct" class="nav-link">How It's Built</a>
+      <a href="#data" class="nav-link">Data</a>
+      <a href="#findings" class="nav-link">Findings</a>
+      <a href="#phase2" class="nav-link">Phase 2</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">PPE Leadership Initiative — Case Study Overview</div>
+    <h1 class="display">Front-line managers as the engine of safety culture.</h1>
+    <p class="lede">
+      A multi-phase program developing TEREX manufacturing managers into active PPE leaders — built on three repeatable manager practices, deployed across three PPE focus areas, and instrumented through field-level data on every shift.
+    </p>
+    <div class="hero-meta">
+      <div class="stat">
+        <div class="stat-num">81</div>
+        <div class="stat-label">Front-line managers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Business units</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">PPE focus areas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">689</div>
+        <div class="stat-label">Field activities logged</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT TEREX ─── -->
+<section id="about">
+  <div class="container">
+    <div class="eyebrow">01 — The Organization</div>
+    <h2 class="display">About TEREX</h2>
+    <p class="lede" style="margin-bottom: 56px;">
+      TEREX is a multi-site specialty vehicle manufacturer producing emergency response, transit, and commercial vehicles for North American and global markets. The company operates across multiple manufacturing locations, each with its own production line, workforce, and safety profile.
+    </p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h3>Company Snapshot</h3>
+        <ul class="snapshot-list">
+          <li><span class="label">Industry</span><span class="value">Specialty vehicle manufacturing</span></li>
+          <li><span class="label">Footprint</span><span class="value">Multiple North American sites</span></li>
+          <li><span class="label">Business units in scope</span><span class="value">10</span></li>
+          <li><span class="label">Front-line managers in program</span><span class="value">81</span></li>
+          <li><span class="label">Production environment</span><span class="value">Heavy fabrication &amp; assembly</span></li>
+          <li><span class="label">Initiative partner</span><span class="value">FLiNT Leadership Solutions</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; margin-bottom: 20px;">The Work That Drives PPE Risk</h3>
+        <ul class="context-list">
+          <li>
+            <strong>Heavy fabrication and welding</strong>
+            <span>Cutting, grinding, and joining metal — the daily source of eyewear and hand-injury exposure.</span>
+          </li>
+          <li>
+            <strong>Powered tools and pneumatics</strong>
+            <span>Sustained noise levels across assembly bays drive hearing-protection requirements throughout the shift.</span>
+          </li>
+          <li>
+            <strong>Paint and finishing operations</strong>
+            <span>Chemical exposure and respiratory standards layered on top of foundational PPE habits.</span>
+          </li>
+          <li>
+            <strong>Multi-step assembly lines</strong>
+            <span>Hand-intensive work where glove selection and condition directly determine injury outcomes.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY SAFETY ─── -->
+<section id="priority">
+  <div class="container">
+    <div class="eyebrow">02 — Strategic Context</div>
+    <h2 class="display">Why safety leadership is a strategic priority at TEREX.</h2>
+    <p class="lede">
+      Manufacturing has one of the highest injury rates of any U.S. industry sector, and PPE is one of the few interventions where day-to-day manager behavior — not policy — determines outcomes. TEREX&apos;s focus on front-line managers reflects a deliberate decision to invest where the leverage is highest.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="num">01</div>
+        <h4>The injury data lives at the floor level.</h4>
+        <p>Recordable incidents in manufacturing concentrate around hand, eye, and hearing exposure — exactly the categories PPE is designed to address. Safety policy alone has well-documented limits in changing daily behavior; the proximate variable is how supervisors run their shifts.</p>
+      </div>
+      <div class="why-card">
+        <div class="num">02</div>
+        <h4>Front-line managers are the lever.</h4>
+        <p>A front-line manager interacts with PPE-relevant decisions hundreds of times per shift — what they model, expect, and notice becomes the operating standard. Investing in manager capability is the most direct path to improving the conditions that produce or prevent injuries.</p>
+      </div>
+      <div class="why-card">
+        <div class="num">03</div>
+        <h4>Culture is the durable outcome.</h4>
+        <p>Programs that target individual workers tend to fade with attention. Programs that build manager capability change how the floor operates regardless of who&apos;s on it. TEREX&apos;s investment is structured to produce durable behavior change, not a campaign-cycle improvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW CONSTRUCTED ─── -->
+<section id="construct">
+  <div class="container">
+    <div class="eyebrow">03 — Program Architecture</div>
+    <h2 class="display">How the initiative is constructed.</h2>
+    <p class="construct-intro">
+      The program develops front-line managers as active safety leaders by training <strong>three repeatable practices</strong>, expressed across <strong>three PPE categories</strong>, and instrumented through <strong>three diagnostic lenses</strong> applied to field data. Each layer answers a different question: what managers do, where they do it, and what we learn from doing it.
+    </p>
+
+    <!-- Block A: Practices -->
+    <div class="construct-block">
+      <div class="block-header">
+        <span class="block-num">A.</span>
+        <span class="block-title">The Three Practices</span>
+        <span class="block-role">What managers do</span>
+      </div>
+      <p class="block-intro">
+        The behavioral backbone of the program. Each practice is a discrete, repeatable action managers train against — sequenced as a complete leadership cycle from setting the standard to sustaining it in real time.
+      </p>
+      <div class="practices">
+        <div class="practice-card">
+          <span class="verb">Practice 01 — Model</span>
+          <h4>Modeling Proper PPE Habits</h4>
+          <p>The manager as the visible standard. PPE compliance starts with what supervisors wear and how they wear it — not as a rule, but as the unmistakable signal of what&apos;s expected on the floor.</p>
+          <div class="doing-well">
+            <div class="doing-well-label">Doing it well looks like</div>
+            <div class="doing-well-text">PPE on before entering the production area, every time, without comment.</div>
+          </div>
+        </div>
+        <div class="practice-card">
+          <span class="verb">Practice 02 — Set</span>
+          <h4>Setting and Communicating Clear PPE Expectations</h4>
+          <p>Making the standard explicit and shared. Managers translate site-wide policy into the specific expectations of their team, in language workers actually use, with reasoning workers can repeat.</p>
+          <div class="doing-well">
+            <div class="doing-well-label">Doing it well looks like</div>
+            <div class="doing-well-text">Pre-shift huddles where PPE is named in context — not recited from a poster.</div>
+          </div>
+        </div>
+        <div class="practice-card">
+          <span class="verb">Practice 03 — Monitor</span>
+          <h4>Monitoring PPE During Your Shifts</h4>
+          <p>Sustaining the standard in real time. Active observation across the shift — including high-risk transitions like breaks and shift changes — and consistent, low-friction correction when something slips.</p>
+          <div class="doing-well">
+            <div class="doing-well-label">Doing it well looks like</div>
+            <div class="doing-well-text">Walking the floor with intent, catching small drift before it becomes a habit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block B: Categories -->
+    <div class="construct-block">
+      <div class="block-header">
+        <span class="block-num">B.</span>
+        <span class="block-title">The Three PPE Categories</span>
+        <span class="block-role">Where they do it</span>
+      </div>
+      <p class="block-intro">
+        The three contexts in which each Practice plays out. Selected because they account for the highest concentration of recordable PPE-related exposure in the TEREX production environment.
+      </p>
+      <div class="categories">
+        <div class="category-pill">
+          <span class="cat-name">Eyewear</span>
+          <span class="cat-context">Welding, grinding, and cutting operations across all fabrication areas.</span>
+        </div>
+        <div class="category-pill">
+          <span class="cat-name">Gloves</span>
+          <span class="cat-context">Hand-intensive assembly and material handling — where selection and condition matter as much as use.</span>
+        </div>
+        <div class="category-pill">
+          <span class="cat-name">Hearing</span>
+          <span class="cat-context">Sustained-noise environments across powered-tool, pneumatic, and assembly-line work.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block C: Gaps -->
+    <div class="construct-block">
+      <div class="block-header">
+        <span class="block-num">C.</span>
+        <span class="block-title">The Three-Gap Diagnostic</span>
+        <span class="block-role">What we learn from the data</span>
+      </div>
+      <p class="block-intro">
+        Each manager activity generates field-level data. The three-gap framework is the lens used to interpret that data — separating issues of habit from issues of knowledge from issues of system.
+      </p>
+      <div class="gaps">
+        <div class="gap">
+          <div class="gap-name">Habit Gap</div>
+          <div class="gap-desc">Workers know the rule and have the equipment, but routine behavior has drifted. The intervention is repetition and reinforcement.</div>
+        </div>
+        <div class="gap">
+          <div class="gap-name">Knowledge Gap</div>
+          <div class="gap-desc">Workers do not understand the standard, the reasoning, or the specific equipment. The intervention is teaching.</div>
+        </div>
+        <div class="gap">
+          <div class="gap-name">System Gap</div>
+          <div class="gap-desc">Equipment, supply, layout, or process makes compliance hard or impossible. The intervention is fixing the system.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block D: Delivery flow -->
+    <div class="construct-block">
+      <div class="flow">
+        <div class="flow-header">
+          <span class="block-num" style="color: rgba(255,255,255,0.6);">D.</span>
+          <span class="flow-title">Delivery Mechanism</span>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-num">Step 01</div>
+            <div class="step-name">FLiNT AI Walkthrough</div>
+            <div class="step-desc">Managers complete short, structured AI-led activities tied to the three Practices.</div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">Step 02</div>
+            <div class="step-name">Field Data Capture</div>
+            <div class="step-desc">Each activity records what the manager observed, decided, and acted on — across PPE categories.</div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">Step 03</div>
+            <div class="step-name">Coaching Loop</div>
+            <div class="step-desc">Patterns surface across managers, business units, and PPE areas — feeding tailored coaching.</div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">Step 04</div>
+            <div class="step-name">Manager Development</div>
+            <div class="step-desc">Insights drive what managers practice next — closing the loop and compounding capability.</div>
+          </div>
+        </div>
+        <div class="flow-meta">
+          <div class="flow-meta-block">
+            <div class="meta-label">Stakeholders</div>
+            <div class="meta-value">Safety leadership and Learning &amp; Development partner closely on program design, cadence, and rollout decisions across business units.</div>
+          </div>
+          <div class="flow-meta-block">
+            <div class="meta-label">Phasing</div>
+            <div class="meta-value">Phase 1 establishes the baseline and proves the model. Phase 2 layers in role-specific depth and expands scope across the organization.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STUB: DATA ─── -->
+<section class="stub" id="data">
+  <div class="container">
+    <div class="stub-title-row">
+      <h2>04 — Field Data Overview</h2>
+      <span class="stub-tag">Detail in case study</span>
+    </div>
+    <p>
+      Aggregate view of activity volume, manager participation, business-unit coverage, and weekly engagement trend across Phase 1. Establishes the empirical base for everything that follows.
+    </p>
+  </div>
+</section>
+
+<!-- ─── STUB: FINDINGS ─── -->
+<section class="stub" id="findings">
+  <div class="container">
+    <div class="stub-title-row">
+      <h2>05 — Findings by PPE Category</h2>
+      <span class="stub-tag">Detail in case study</span>
+    </div>
+    <p>
+      Category-by-category read of where managers are encountering the highest-volume issues, organized through the three-gap diagnostic. Includes specific behavioral patterns observed across business units.
+    </p>
+  </div>
+</section>
+
+<!-- ─── STUB: MANAGER BEHAVIOR ─── -->
+<section class="stub" id="behavior">
+  <div class="container">
+    <div class="stub-title-row">
+      <h2>06 — What the Data Reveals About Manager Behavior</h2>
+      <span class="stub-tag">Detail in case study</span>
+    </div>
+    <p>
+      Patterns in how managers across the program are practicing each of the three Practices — including which practices show the strongest engagement, where coaching has the most leverage, and what differentiates high-performing manager populations from the rest.
+    </p>
+  </div>
+</section>
+
+<!-- ─── STUB: PHASE 2 ─── -->
+<section class="stub" id="phase2">
+  <div class="container">
+    <div class="stub-title-row">
+      <h2>07 — Phase 2 Implications</h2>
+      <span class="stub-tag">Detail in case study</span>
+    </div>
+    <p>
+      What the Phase 1 data has told us about where to go next — including role-specific deployment, expansion into adjacent practice areas, and how the program scales from a manufacturing-floor pilot to an organization-wide capability.
+    </p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">TEREX <span class="x">×</span> FLiNT</div>
+    <div class="footer-meta">PPE Leadership Initiative — Case Study Overview</div>
+  </div>
+</footer>
+
+</body>
+</html>
