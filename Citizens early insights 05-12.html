@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Eyes Initiative — Early Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0c1e35; --navy-2: #162d4a; --navy-3: #1e3d63;
+  --green: #1a8a4e; --green-bright: #22c06a; --green-pale: #e8f5ef; --green-mid: #a8d8bc;
+  --gold: #b8913a; --gold-pale: #f8f1e4;
+  --cream: #faf8f4; --white: #ffffff;
+  --ink: #0c1e35; --ink-2: #3a4d62; --ink-3: #6b7f95; --ink-4: #a0b0c0;
+  --rule: #dde4ec; --rule-light: #edf1f5;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Instrument Sans', sans-serif; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* NAV */
+#site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(12,30,53,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.07); transition: box-shadow 0.3s; }
+#site-nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 58px; display: flex; align-items: center; }
+.nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.55); letter-spacing: 0.02em; margin-right: auto; white-space: nowrap; }
+.nav-brand em { font-style: italic; color: rgba(255,255,255,0.85); }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; }
+.nav-links a { display: block; padding: 8px 16px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; border-radius: 6px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+.nav-links a:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.07); }
+.nav-links a.active { color: var(--green-bright); background: rgba(34,192,106,0.1); }
+
+/* HERO */
+#hero { background: var(--navy); padding: 140px 40px 90px; position: relative; overflow: hidden; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 60px 60px; }
+.hero-glow { position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(26,138,78,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+.eyebrow-pip { width: 28px; height: 2px; background: var(--green-bright); }
+.eyebrow-text { font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green-bright); }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 7vw, 86px); font-weight: 400; line-height: 1.05; color: #fff; margin-bottom: 24px; }
+.hero-title em { font-style: italic; color: var(--green-bright); }
+.hero-sub { font-size: 15px; color: rgba(255,255,255,0.4); font-weight: 300; letter-spacing: 0.04em; margin-bottom: 64px; }
+.hero-stats { display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; flex-wrap: wrap; }
+.hero-stat { flex: 1; min-width: 120px; padding-right: 40px; }
+.hero-stat + .hero-stat { padding-left: 40px; border-left: 1px solid rgba(255,255,255,0.1); }
+.stat-n { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: #fff; line-height: 1; margin-bottom: 6px; }
+.stat-n sup { font-size: 24px; color: var(--green-bright); vertical-align: super; }
+.stat-label { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.5; }
+
+/* LEARNING SLIDES */
+.learning-slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+#learning-1 { background: var(--white); }
+#learning-2 { background: var(--navy); }
+#learning-3 { background: var(--cream); }
+.slide-bg-num { position: absolute; font-family: 'Cormorant Garamond', serif; font-size: clamp(200px, 28vw, 380px); font-weight: 600; line-height: 1; pointer-events: none; user-select: none; right: -20px; bottom: -50px; }
+#learning-1 .slide-bg-num { color: rgba(26,138,78,0.05); }
+#learning-2 .slide-bg-num { color: rgba(255,255,255,0.04); }
+#learning-3 .slide-bg-num { color: rgba(26,138,78,0.06); }
+.slide-inner { max-width: 1200px; margin: 0 auto; padding: 100px 40px; width: 100%; display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+.slide-index { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; margin-bottom: 20px; }
+#learning-1 .slide-index { color: var(--ink-3); } #learning-2 .slide-index { color: rgba(255,255,255,0.3); } #learning-3 .slide-index { color: var(--ink-3); }
+.slide-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; line-height: 1.15; margin-bottom: 8px; }
+#learning-1 .slide-title { color: var(--ink); } #learning-2 .slide-title { color: #fff; } #learning-3 .slide-title { color: var(--ink); }
+.slide-title em { font-style: italic; font-weight: 400; }
+#learning-1 .slide-title em { color: var(--green); } #learning-2 .slide-title em { color: var(--green-bright); } #learning-3 .slide-title em { color: var(--gold); }
+.slide-divider { width: 48px; height: 2px; margin: 28px 0; }
+#learning-1 .slide-divider { background: var(--green); } #learning-2 .slide-divider { background: var(--green-bright); } #learning-3 .slide-divider { background: var(--gold); }
+.slide-body { font-size: 15.5px; line-height: 1.85; font-weight: 300; margin-bottom: 32px; }
+#learning-1 .slide-body { color: var(--ink-2); } #learning-2 .slide-body { color: rgba(255,255,255,0.62); } #learning-3 .slide-body { color: var(--ink-2); }
+.slide-callout { border-radius: 10px; padding: 24px 28px; margin-bottom: 28px; }
+#learning-1 .slide-callout { background: var(--green-pale); border-left: 3px solid var(--green); }
+#learning-2 .slide-callout { background: rgba(255,255,255,0.06); border-left: 3px solid var(--green-bright); }
+#learning-3 .slide-callout { background: var(--gold-pale); border-left: 3px solid var(--gold); }
+.callout-quote { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; line-height: 1.55; margin-bottom: 12px; }
+#learning-1 .callout-quote { color: var(--ink); } #learning-2 .callout-quote { color: rgba(255,255,255,0.9); } #learning-3 .callout-quote { color: var(--ink); }
+.callout-source { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+#learning-1 .callout-source { color: var(--green); } #learning-2 .callout-source { color: var(--green-bright); } #learning-3 .callout-source { color: var(--gold); }
+.slide-evidence { display: flex; gap: 16px; }
+.evidence-chip { flex: 1; border-radius: 8px; padding: 16px 18px; text-align: center; }
+#learning-1 .evidence-chip { background: rgba(26,138,78,0.07); } #learning-2 .evidence-chip { background: rgba(255,255,255,0.06); } #learning-3 .evidence-chip { background: rgba(184,145,58,0.09); }
+.chip-n { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; line-height: 1; margin-bottom: 5px; }
+#learning-1 .chip-n { color: var(--green); } #learning-2 .chip-n { color: var(--green-bright); } #learning-3 .chip-n { color: var(--gold); }
+.chip-label { font-size: 11px; font-weight: 400; line-height: 1.45; }
+#learning-1 .chip-label { color: var(--ink-2); } #learning-2 .chip-label { color: rgba(255,255,255,0.45); } #learning-3 .chip-label { color: var(--ink-2); }
+
+/* PROFILES */
+#profiles { background: var(--white); padding: 100px 40px; }
+.section-header { max-width: 1200px; margin: 0 auto 40px; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+.section-eyebrow { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+.section-heading { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 400; color: var(--ink); line-height: 1.2; }
+.section-heading em { font-style: italic; }
+.section-count { font-size: 13px; color: var(--ink-3); font-weight: 300; padding-bottom: 4px; }
+.filter-bar { max-width: 1200px; margin: 0 auto 40px; padding: 0 0px; display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--rule); background: transparent; font-family: 'Instrument Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-3); cursor: pointer; transition: all 0.18s; }
+.filter-btn:hover { border-color: var(--green); color: var(--green); }
+.filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.cards-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.profile-card { background: var(--cream); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+.profile-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(12,30,53,0.1); }
+.profile-card.clean-card { opacity: 0.78; } .profile-card.clean-card:hover { opacity: 1; }
+.card-bar { height: 4px; width: 100%; }
+.bar-strong { background: linear-gradient(90deg, var(--green), var(--green-bright)); }
+.bar-mid { background: linear-gradient(90deg, var(--navy-2), var(--navy-3)); }
+.bar-clean { background: var(--rule); }
+.bar-wo { background: linear-gradient(90deg, var(--gold), #e8b85a); }
+.card-head { padding: 20px 22px 16px; display: flex; align-items: flex-start; gap: 14px; border-bottom: 1px solid var(--rule-light); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; flex-shrink: 0; letter-spacing: 0.02em; }
+.av-navy { background: var(--navy); color: #fff; } .av-green { background: var(--green); color: #fff; } .av-gold { background: var(--gold); color: #fff; } .av-muted { background: var(--rule); color: var(--ink-3); }
+.card-identity { flex: 1; min-width: 0; }
+.card-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-role { font-size: 11.5px; color: var(--ink-3); font-weight: 300; }
+.activity-badge { flex-shrink: 0; font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-top: 2px; }
+.badge-walk { background: #e3f0fb; color: #1558a0; } .badge-wo { background: var(--gold-pale); color: var(--gold); } .badge-clean { background: var(--rule-light); color: var(--ink-4); }
+.card-body { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; gap: 13px; }
+.field-label { font-size: 9.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 5px; }
+.branch-line { display: flex; align-items: center; gap: 7px; }
+.branch-pip { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.branch-name { font-size: 13px; color: var(--ink); font-weight: 400; }
+.finding-box { background: var(--white); border: 1px solid var(--rule-light); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: 13px; line-height: 1.65; color: var(--ink); font-style: italic; }
+.finding-box.clean { border-left-color: var(--rule); color: var(--ink-3); font-style: normal; }
+.commentary { padding: 14px 16px; background: var(--white); border-radius: 8px; border: 1px solid var(--rule-light); flex: 1; }
+.commentary-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.commentary-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-4); flex-shrink: 0; }
+.cd-green { background: var(--green); } .cd-gold { background: var(--gold); } .cd-navy { background: var(--navy-3); } .cd-muted { background: var(--rule); }
+.commentary-tag { font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.ct-green { color: var(--green); } .ct-gold { color: var(--gold); } .ct-navy { color: var(--navy-3); } .ct-muted { color: var(--ink-4); }
+.commentary-text { font-size: 12.5px; line-height: 1.68; color: var(--ink-2); font-weight: 300; }
+.coaching-row { padding-top: 12px; border-top: 1px solid var(--rule-light); }
+.coaching-label { font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.coaching-text { font-size: 12px; line-height: 1.6; color: var(--ink-3); font-weight: 300; }
+.card-foot { padding: 11px 22px; background: var(--white); border-top: 1px solid var(--rule-light); display: flex; align-items: center; justify-content: space-between; }
+.mgr-line { font-size: 11px; color: var(--ink-4); font-weight: 300; }
+.mgr-line strong { color: var(--ink-2); font-weight: 500; }
+.filed-badge { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; }
+.filed-pip { width: 6px; height: 6px; border-radius: 50%; }
+.fb-yes { color: var(--green); } .fb-yes .filed-pip { background: var(--green); }
+.fb-no { color: var(--ink-4); } .fb-no .filed-pip { background: var(--rule); }
+
+/* FOOTER */
+#site-footer { background: var(--navy); padding: 48px 40px; text-align: center; }
+.footer-mark { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: rgba(255,255,255,0.22); letter-spacing: 0.05em; }
+
+/* ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.rd-1 { transition-delay: 0.05s; } .rd-2 { transition-delay: 0.12s; } .rd-3 { transition-delay: 0.19s; }
+.rd-4 { transition-delay: 0.26s; } .rd-5 { transition-delay: 0.33s; } .rd-6 { transition-delay: 0.4s; }
+.profile-card.hidden { display: none; }
+
+@media (max-width: 1000px) {
+  .slide-inner { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+  .cards-grid { grid-template-columns: repeat(2,1fr); }
+  .nav-inner { padding: 0 20px; }
+  .hero-stats { gap: 20px; } .hero-stat + .hero-stat { border-left: none; padding-left: 0; }
+  #hero, #profiles { padding-left: 24px; padding-right: 24px; }
+  .filter-bar { padding: 0; }
+}
+@media (max-width: 640px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .nav-links a { padding: 6px 10px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Citizens &mdash; <em>Fresh Eyes Initiative</em></div>
+    <ul class="nav-links">
+      <li><a href="#hero" data-section="hero">Overview</a></li>
+      <li><a href="#learning-1" data-section="learning-1">What They're Learning</a></li>
+      <li><a href="#profiles" data-section="profiles">Learner Profiles</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal"><div class="eyebrow-pip"></div><span class="eyebrow-text">Facilities Management · Early Results</span></div>
+    <h1 class="hero-title reveal rd-1">Fresh<br><em>Eyes</em></h1>
+    <p class="hero-sub reveal rd-2">Week of May 5, 2026 &nbsp;·&nbsp; First wave completions</p>
+    <div class="hero-stats reveal rd-3">
+      <div class="hero-stat"><div class="stat-n">25</div><div class="stat-label">Activity<br>completions</div></div>
+      <div class="hero-stat"><div class="stat-n">22</div><div class="stat-label">Facility managers<br>participated</div></div>
+      <div class="hero-stat"><div class="stat-n">23<sup>/25</sup></div><div class="stat-label">360 entries<br>filed</div></div>
+      <div class="hero-stat"><div class="stat-n">6</div><div class="stat-label">States<br>covered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING 1 -->
+<section id="learning-1" class="learning-slide">
+  <div class="slide-bg-num">1</div>
+  <div class="slide-inner">
+    <div class="slide-left reveal">
+      <div class="slide-index">What FMs are learning &middot; 01 of 03</div>
+      <h2 class="slide-title">The customer lens<br>shifts <em>what they see</em></h2>
+      <div class="slide-divider"></div>
+    </div>
+    <div class="slide-right reveal rd-2">
+      <p class="slide-body">These facility managers visit branches constantly — many managing 40 to 115 locations. They are experienced walkers. But walking as a customer activates a different mode of seeing than walking as the person responsible for the work orders.<br><br>The finds in this first wave tell that story clearly. Worn door handle finishes. A faded night drop sign. Old unused security equipment still hanging from a ceiling vestibule. Vestibule scuffs that have been there for months. These are not things that escaped inspection — they were visible on every visit. The program is changing the filter, not the frequency.</p>
+      <div class="slide-callout">
+        <div class="callout-quote">"Aesthetics matter — not just utility. I would suggest looking at everything top to bottom."</div>
+        <div class="callout-source">Sean Conroy, Senior Facility Manager</div>
+      </div>
+      <div class="slide-evidence">
+        <div class="evidence-chip"><div class="chip-n">18</div><div class="chip-label">of 22 FMs followed the full customer route</div></div>
+        <div class="evidence-chip"><div class="chip-n">30+</div><div class="chip-label">distinct findings documented this week</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING 2 -->
+<section id="learning-2" class="learning-slide">
+  <div class="slide-bg-num">2</div>
+  <div class="slide-inner">
+    <div class="slide-left reveal">
+      <div class="slide-index">What FMs are learning &middot; 02 of 03</div>
+      <h2 class="slide-title">360 is the habit,<br>not just <em>the finding</em></h2>
+      <div class="slide-divider"></div>
+    </div>
+    <div class="slide-right reveal rd-2">
+      <p class="slide-body">Several FMs in this first wave had sharp instincts and real findings — but imperfect follow-through on where those findings landed. One logged a flooring gap via punch list to the GC. One texted a photo to their FM. One walked a pristine new fit-out and kept the photos on their phone.<br><br>In each case the coaching was consistent: 360 is the record that travels with the location. A punch list doesn't. A text message doesn't. Getting findings into the system — not just identifying them — is the behavior this program is building, and it's one of the harder shifts because the workarounds feel just as effective in the moment.</p>
+      <div class="slide-callout">
+        <div class="callout-quote">"Even when something's going to the GC or vendor directly, log it in 360 first. That's the record that travels with the location, not the punch list."</div>
+        <div class="callout-source">AI Coach — Joseph Dudar, Queensbury</div>
+      </div>
+      <div class="slide-evidence">
+        <div class="evidence-chip"><div class="chip-n">23</div><div class="chip-label">of 25 completions with a 360 entry filed</div></div>
+        <div class="evidence-chip"><div class="chip-n">3</div><div class="chip-label">learners redirected from workarounds to 360</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING 3 -->
+<section id="learning-3" class="learning-slide">
+  <div class="slide-bg-num">3</div>
+  <div class="slide-inner">
+    <div class="slide-left reveal">
+      <div class="slide-index">What FMs are learning &middot; 03 of 03</div>
+      <h2 class="slide-title">Landlord responsibility<br>&#8800; <em>not my problem</em></h2>
+      <div class="slide-divider"></div>
+    </div>
+    <div class="slide-right reveal rd-2">
+      <p class="slide-body">Three FMs in this wave identified real issues — a broken thermostat, a separating cove base, a non-functioning parking structure — and moved to hand them off to the landlord without logging them first. The instinct makes sense: if it's their property, it's their record to keep.<br><br>The program is explicitly redirecting this. Log it in 360 first, then escalate. The 360 entry documents that the issue exists, records that you've initiated contact, and creates accountability on the landlord's end. Without it, the finding exists only in a phone call or an email — and it disappears when those do.</p>
+      <div class="slide-callout">
+        <div class="callout-quote">"Even on landlord items, make sure the 360 entry documents that it's LL responsibility and that you've initiated contact. That paper trail protects you."</div>
+        <div class="callout-source">AI Coach — Sean Conroy, 1215 Superior</div>
+      </div>
+      <div class="slide-evidence">
+        <div class="evidence-chip"><div class="chip-n">3</div><div class="chip-label">learners coached to log before escalating to LL</div></div>
+        <div class="evidence-chip"><div class="chip-n">100%</div><div class="chip-label">redirected and filed in 360 after coaching</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILES -->
+<section id="profiles">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Every completion this week</div>
+      <h2 class="section-heading">Learner <em>profiles</em></h2>
+    </div>
+    <div class="section-count">25 completions &middot; 22 facility managers</div>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="walkthrough">Walkthrough</button>
+    <button class="filter-btn" data-filter="wo">WO Visit</button>
+    <button class="filter-btn" data-filter="clean">Clean walk</button>
+  </div>
+  <div class="cards-grid">
+
+    <!-- Argeny Garcia -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-green">AG</div><div class="card-identity"><div class="card-name">Argeny Garcia</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Parkchester</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Customer-facing door handles: black finish wearing off, hardware needs replacement. Two work orders opened with photos.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Strong execution</span></div><div class="commentary-text">Garcia went straight to a customer touchpoint that's easy to overlook — the thing a visitor literally puts their hand on to enter the branch. Her outcome note offered a peer tip unprompted: "Walk the space slow and take your time." The coaching landed on the one missing element: logging how long the issue has been there, which turns a find into a maintenance record.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Add duration estimates to 360 entries — "months of wear" helps vendors scope the work and builds the location's maintenance history.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Juan Jorge</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Brandon Allen -->
+    <div class="profile-card reveal rd-1" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">BA</div><div class="card-identity"><div class="card-name">Brandon Allen</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">950 Main St, Springfield MA</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Paint chipping on interior windowsills; drive-through window trim exterior also chipped. Two finds, both documented with photos and filed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Efficient and complete</span></div><div class="commentary-text">Allen found two separate issues — one interior, one exterior — photographed both, and filed work orders on the spot. The conversation was compact, with minimal coaching friction and a clear documentation instinct already in place. His coaching moment was about habit-building, not performance correction: make the customer-route reset automatic, not intentional.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Make the parking lot → restrooms reset a habit on every arrival — the routine is what keeps the lens from fading between dedicated walkthroughs.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Shawn Evans</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- David Patterson -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">DP</div><div class="card-identity"><div class="card-name">David Patterson</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Foxboro MA</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Two damaged ceiling tiles — work order submitted in 360 and assigned to the Senior Technician.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Clean process</span></div><div class="commentary-text">Patterson confirmed he always starts in the parking lot — the right instinct — and moved cleanly through the customer route. Ceiling tiles are a classic fresh-eyes catch: visible every visit, rarely on a work order. His documentation was solid; the one gap was the absence of an estimated duration on the 360 entry, which the coaching addressed directly.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Including how long an issue has been there builds a maintenance history and tells the next person whether this is new or recurring.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Shawn Evans</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- David Schofield -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">DS</div><div class="card-identity"><div class="card-name">David Schofield</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Orange CT</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Drive-thru siding needed power washing — approximately 100 sq ft. Work order filed with photo attached.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Good sequence, tighten the entry</span></div><div class="commentary-text">Schofield came in for a landscaping and construction walk, handled that first, then reset for the fresh-eyes portion — exactly the right sequence. His find was exterior and real. The coaching note was about documentation specificity: the 360 entry needed scope and duration to be fully useful to the vendor scoping the work. The find was there; the record needed more context to be actionable.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">"Siding needs washing" is a starting point; "100 sq ft, drive-thru face, several months of buildup" closes the loop for whoever handles it next.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Scaglia</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Jami Sarokon -->
+    <div class="profile-card clean-card reveal rd-1" data-type="clean"><div class="card-bar bar-clean"></div><div class="card-head"><div class="avatar av-muted">JS</div><div class="card-identity"><div class="card-name">Jami Sarokon</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-clean">Clean walk</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Rocky River</span></div></div><div><div class="field-label">Finding</div><div class="finding-box clean">All findings were already on open work orders — nothing net-new documented this visit.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-muted"></div><span class="commentary-tag ct-muted">Lens not yet shifted</span></div><div class="commentary-text">Sarokon walked the location including the parking lot, but arrived in FM mode rather than customer mode. When all findings match existing work orders, it's a signal that the observation filter hasn't changed — the same eyes doing the same walk. The coaching offered a specific technique: slow down in customer dwell zones where familiarity creates the most blind spots. That's the adjustment for the next rep.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">If everything you're finding is already on open WOs, try slowing down in the spots customers linger — lobby seating, near the teller line. That's where fresh eyes tend to surface what routine visits miss.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Sean Conroy</strong></div><div class="filed-badge fb-no"><div class="filed-pip"></div>No new entry</div></div></div>
+
+    <!-- John Conti -->
+    <div class="profile-card clean-card reveal rd-2" data-type="clean"><div class="card-bar bar-clean"></div><div class="card-head"><div class="avatar av-muted">JC</div><div class="card-identity"><div class="card-name">John Conti</div><div class="card-role">Senior Facility Manager</div></div><span class="activity-badge badge-clean">Clean walk</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">99 High Street, Boston (new fit-out)</span></div></div><div><div class="field-label">Finding</div><div class="finding-box clean">First visit to a pristine brand-new build-out. Photos taken but not entered in 360.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-muted"></div><span class="commentary-tag ct-muted">Context, not failure</span></div><div class="commentary-text">Conti's clean walk has a specific explanation: 99 High Street is a brand-new Wealth space that had just been fit out, and he was the first FM to visit. The location was genuinely pristine. He took photos but kept them on his phone. The missed step wasn't observation — it was the as-found baseline log in 360, which on a brand-new location is actually the most important first entry the space will ever have.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">A perfect new space needs a baseline entry most of all — that first record is the benchmark everything gets measured against as the location ages. Get the photos into 360 before you leave.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Jessica Ann Kamer</strong></div><div class="filed-badge fb-no"><div class="filed-pip"></div>Photos not filed</div></div></div>
+
+    <!-- John Hay -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">JH</div><div class="card-identity"><div class="card-name">John Hay</div><div class="card-role">Landscape Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Monroeville</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Lawn debris — work order created and logged. Exterior route completed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Role-shaped blind spot</span></div><div class="commentary-text">Hay's background is landscape facilities, and his first rep showed exactly what you'd expect: he gravitated to the exterior grounds and didn't make it inside. The find was real and documented correctly. But the fresh-eyes lens for a landscape FM needs explicit direction toward the building interior — without it, the walkthrough becomes an exterior inspection by a different name. His next rep should push through the door.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Push through the interior path on the next visit. The building is where the customer lens is hardest to maintain and most valuable for someone with an exterior instinct.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Brian Hawtin</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- John Scaglia (WO Visit) -->
+    <div class="profile-card reveal rd-1" data-type="wo"><div class="card-bar bar-wo"></div><div class="card-head"><div class="avatar av-gold">JS</div><div class="card-identity"><div class="card-name">John Scaglia</div><div class="card-role">Senior Facility Manager</div></div><span class="activity-badge badge-wo">WO Visit</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Orange CT</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Drive-through curbing unpainted — inconsistent with rest of property. Spotted on a visit for an unrelated reason. WO entered, pending weather.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-gold"></div><span class="commentary-tag ct-gold">The habit in action</span></div><div class="commentary-text">This is what the WO Visit activity is designed to produce: Scaglia was on site for something else entirely, kept his awareness up, and caught a visual inconsistency in the drive-through that had nothing to do with his work order. The find was real and documented. The coaching note was procedural — the photo was attached by the FM rather than by Scaglia himself — a small but meaningful distinction in building personal documentation ownership.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Own the photo attachment yourself — routing it through the FM adds a step that can fail silently and breaks the documentation chain.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Timothy Butvilas</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- John Scaglia (Walkthrough) -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-gold">JS</div><div class="card-identity"><div class="card-name">John Scaglia</div><div class="card-role">Senior Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Shelton CT (local office)</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Screws in kitchen wall with nothing hanging from them — had been visible long enough to become completely invisible to regular visitors.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Classic familiarity blindness</span></div><div class="commentary-text">The screws-in-the-wall find is a textbook example of what this program targets: a small, visible, non-urgent thing that has been present long enough to stop registering. Scaglia acknowledged seeing them before. The work order was entered; the documentation gap was the photo — texted to the FM rather than attached in 360. As a Senior FM, his coaching note carried extra weight: own the full documentation loop yourself.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">The photo belongs in 360, attached to the WO in the moment — not in a text. When documentation has a handoff step, that step can and does fail.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Timothy Butvilas</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Jose Graca -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">JG</div><div class="card-identity"><div class="card-name">Jose Graca</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Chepachet RI</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Several patches of lawn needing to be raked out and reseeded — 360 ticket committed by end of day.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Strong habits, exterior bias</span></div><div class="commentary-text">Graca manages 115 locations across RI — one of the largest portfolios in this cohort. He already starts outside on every visit and pushes slow through the grounds. The find was real; the documentation commitment was genuine. The coaching was an honest push: at 115 locations, the most value from this habit comes from the interior spaces, where the customer lens is hardest to maintain on familiar ground.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Go slow at customer dwell spots inside — teller line, lobby seating, restroom entry. On a well-maintained exterior, that's where the hidden items live.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Shawn Evans</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Joseph Dudar (WO Visit) -->
+    <div class="profile-card reveal rd-1" data-type="wo"><div class="card-bar bar-wo"></div><div class="card-head"><div class="avatar av-gold">JD</div><div class="card-identity"><div class="card-name">Joseph Dudar</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-wo">WO Visit</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Queensbury</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Visible gaps around newly installed flooring at the man door — incomplete finishing, unrelated to the reason for the visit.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-gold"></div><span class="commentary-tag ct-gold">Caught it — wrong channel</span></div><div class="commentary-text">Dudar spotted exactly what this activity is designed to surface: a quality issue that had nothing to do with why he was there. The find was sharp — incomplete finishing on new flooring is easy to walk past in work-order mode. Where the coaching landed was on the routing: it went to the GC via punch list, not into 360. The message was direct: the punch list doesn't travel with the location. 360 does.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Log it in 360 first, then route it to the GC. One creates a permanent location record. The other doesn't.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Scaglia</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Joseph Dudar (Walkthrough) -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-gold">JD</div><div class="card-identity"><div class="card-name">Joseph Dudar</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Downtown Utica</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Vestibule walls with visible scuffs and dirt creating a poor first impression; night drop requiring thorough cleaning. Both filed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Self-identified the lesson</span></div><div class="commentary-text">Dudar's most telling moment came before the walkthrough — when asked what separates a vague from a good 360 entry, he answered correctly and specifically, unprompted. That kind of pre-fluency signals the concept has landed. His finds at Downtown Utica were high-value: the vestibule is the first customer impression, and scuffs there undermine a branch that may be otherwise well-kept. His outcome note named the chipped vestibule paint as the most significant thing he'd been missing.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">The vestibule and entrance go invisible fastest — they're seen every day. The parking lot reset reinforces the customer lens before you ever reach the door.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Scaglia</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Joshua Whitlock -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">JW</div><div class="card-identity"><div class="card-name">Joshua Whitlock</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">12 Mile Van Dyke</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Lever set for the Vault Room / Teller Line door needed to be flipped — functional hardware issue caught and documented.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Functional find, cosmetic gap</span></div><div class="commentary-text">Whitlock's find — a door lever that needed to be flipped — is a good example of what the customer path surfaces: functional issues adjacent to customer-facing spaces that FM mode might not catch. He started in the parking lot and completed a full exterior walk first. The coaching nudge was to extend attention to cosmetic details too — cove bases, ceiling tiles — which rarely make it onto work orders on their own but shape the customer experience directly.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Push the lens toward cosmetic details too — cove bases, ceiling tiles, HVAC diffusers are the things customers notice that rarely surface through reactive maintenance alone.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Sean Conroy</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Juan Jorge -->
+    <div class="profile-card reveal rd-1" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-green">JJ</div><div class="card-identity"><div class="card-name">Juan Jorge</div><div class="card-role">Facilities Manager Lead</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">1301 Avenue of the Americas</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Entrance doors: worn weatherstripping, exterior glass streaking; customer bathroom door lock not functioning. WO filed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Pre-visit planning, multiple finds</span></div><div class="commentary-text">Jorge — a Facilities Manager Lead — came in with a detailed pre-visit plan, noting specific issues he expected to find before he arrived. That anticipatory thinking is a sign of real engagement with the method. His finds covered both cosmetic (weatherstripping, glass) and functional (broken bathroom lock) issues in customer-facing areas. The coaching directed him to extend the exterior reset to the street approach — even on a city branch without a parking lot, the approach matters.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">On a city branch, the reset starts on the street — there's often something visible from the approach that regulars stop noticing once they know the block.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Scaglia</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Kevin Ozmun -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">KO</div><div class="card-identity"><div class="card-name">Kevin Ozmun</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">North Plaza, Canton OH</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Scuff marks from customer footwear on the teller line surface — recent, within a week. Work order created with photo attached.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Right find, right location</span></div><div class="commentary-text">Ozmun's find came from exactly the right place on the customer path: the teller line, where customers stand and look down. Scuff marks from footwear accumulate and get cleaned periodically — but the first time you walk past them with fresh eyes, they're striking. His instinct to photograph first was already in place. The coaching tightened the 360 entry language to make it more actionable than a generic wipe-down request.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">"Scuff marks from customer footwear on teller line, recent — within a week" is more actionable than a wipe-down work order. Specific description tells the next person exactly what to fix.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Conti</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Leonard Manigbas (WO) -->
+    <div class="profile-card reveal" data-type="wo"><div class="card-bar bar-wo"></div><div class="card-head"><div class="avatar av-gold">LM</div><div class="card-identity"><div class="card-name">Leonard Manigbas</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-wo">WO Visit</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Northern Blvd</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Bird droppings and dirt on exterior awning — unrelated to the reason for the visit. Photo submitted and logged in 360.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-gold"></div><span class="commentary-tag ct-gold">Textbook WO visit execution</span></div><div class="commentary-text">Manigbas came in for a location inspection and used that visit to run the secondary awareness layer this activity is designed to build. The awning find was unrelated to his inspection purpose, noticed on approach, photographed, and logged — the full loop. His peer tip went beyond the branch itself: "Keep in mind the vacancies of neighboring tenants within the in-line." That's genuine extension of the customer lens to the surrounding retail context.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Add duration context to the 360 entry — "accumulated over several weeks" tells the maintenance team more than the photo alone and informs prioritization.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Juan Jorge</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Leonard Manigbas (Walkthrough) -->
+    <div class="profile-card reveal rd-1" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-gold">LM</div><div class="card-identity"><div class="card-name">Leonard Manigbas</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Bohemia</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Mix of new findings alongside existing work order items — new issues specifically identified and logged in 360 with photos.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Most completions in the cohort</span></div><div class="commentary-text">Manigbas is the only learner in this first wave with two completions — both the Walkthrough and the Work Order Visit. Across both, he demonstrated the full loop: customer-lens entry, new-vs-existing issue discrimination, photo documentation, and 360 filing. At Bohemia he specifically distinguished net-new findings from known work orders — a more sophisticated observation habit than simply reporting everything seen.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">When you find something new, note how long it's been there — that's what turns a good catch into a time-stamped, proactive record that builds the location's maintenance history.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Juan Jorge</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Mark Marterella -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-green">MM</div><div class="card-identity"><div class="card-name">Mark Marterella</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Sewickley</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Three findings before reaching the front door: exterior stairwell debris, unswepped entrance, and interior paint touch-ups. All three in 360 with photos.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Standout first rep</span></div><div class="commentary-text">Marterella generated two work orders before he even entered the building — the exterior reset working exactly as intended. Three total findings, all specific, all with photos, all in 360. His debrief comment — "the little things make a big difference" — wasn't prompted by the coaching; it came out of his own walkthrough. His peer tip captured the method cleanly: the 5-minute parking lot pause before every visit keeps the fresh-eyes habit sharp even on familiar branches.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Try this reset habit at every visit — even a brief parking lot pause is enough to shift the lens before you reach the door.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Sean Conroy</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Matthew DeMartino -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">MD</div><div class="card-identity"><div class="card-name">Matthew DeMartino</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Boca Raton (back office)</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Non-functioning thermostat — landlord-owned HVAC. Initially deferred; coaching redirected to file in 360 as LL responsibility.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Experience as a headwind</span></div><div class="commentary-text">DeMartino has 30 years in facilities — the most experienced FM in this cohort. His walkthrough required the most coaching friction: no parking lot (garage), initially reported nothing to log, then found a thermostat and deferred it to the landlord. Each step required a redirect. This is a pattern worth watching: the most experienced FMs sometimes have the strongest instincts running against what this program is building — particularly around documentation ownership for landlord-managed issues.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Landlord items go in 360 first. That entry shows you identified it, escalated it, and protects you if it isn't resolved. Without it, the finding disappears.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Anna Mann</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Michael Konczewski -->
+    <div class="profile-card reveal rd-1" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">MK</div><div class="card-identity"><div class="card-name">Michael Konczewski</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Progress Plaza</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Old tape adhesive on vestibule kickplate; burnt-out light in ATM vestibule. Two solid finds, both logged with photos.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Two finds, right spaces</span></div><div class="commentary-text">Konczewski had a recurring exterior inspection already on the calendar, which gave him a natural anchor for the walkthrough. His two finds were both in vestibule spaces — exactly where customer first impressions form. The tape adhesive is a particularly good fresh-eyes catch: it's the kind of thing left behind during a past project and then simply stays. He had a hunch the interior would yield more than the exterior — that instinct proved right.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Add duration context when logging — "tape adhesive, estimated 6+ months" elevates the entry from a task description to a maintenance insight.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Patricia Zieverink</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Nicholas Velardi -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">NV</div><div class="card-identity"><div class="card-name">Nicholas Velardi</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Spring Lake Heights</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Property in good condition — landscaping issues documented. Full interior and exterior route completed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">High confidence, solid habits</span></div><div class="commentary-text">Velardi pushed back early — he already takes detailed notes and always attaches photos. That confidence was warranted: he walked the full route inside and out, and his documentation instincts were solid. The coaching was light and forward-looking. The note for next time was about what a well-maintained branch can still hide — HVAC diffusers, cove base edges, ceiling details — the things that are easy to skip when everything looks good at first glance.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">A clean first impression shouldn't shorten the walk — diffusers, cove bases, and corners are where the small things tend to hide on otherwise well-maintained branches.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Maria Kingsley</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Richard Hunter -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-green">RH</div><div class="card-identity"><div class="card-name">Richard Hunter</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Kingston</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Crack in hard lobby floor; old unused security equipment hanging from ceiling near the vestibule. Two separate work orders opened in 360.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Two strong, distinct finds</span></div><div class="commentary-text">Hunter's walkthrough produced two genuinely different find types: a structural issue (lobby floor crack) and an obsolete installation (security equipment decommissioned but never removed). The second one is a particularly good example of fresh eyes working — equipment that's been "off" long enough to stop registering as something that needs to come down. Both were documented and filed. With 18 years at Citizens, his observation quality was high; the coaching gap was only about adding duration estimates.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Add estimated duration when logging — "crack in lobby floor, estimated 3+ months" informs whether this is a new issue or a recurring one that's been missed.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Eric Kaechelin</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- Sean Conroy -->
+    <div class="profile-card reveal rd-1" data-type="walkthrough"><div class="card-bar bar-strong"></div><div class="card-head"><div class="avatar av-green">SC</div><div class="card-identity"><div class="card-name">Sean Conroy</div><div class="card-role">Senior Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">1215 Superior</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Cove base corner separating from wall — identified as landlord responsibility. Landlord call initiated. Full street-to-suite route completed.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-green"></div><span class="commentary-tag ct-green">Near-complete execution</span></div><div class="commentary-text">Conroy's walkthrough had almost no coaching friction. He completed the full customer route — "street to suite" in his own words — found a cove base separation, correctly identified the ownership, and already had a next step in place before the debrief. His peer tip, unprompted, captured the program's thesis precisely: "Aesthetics matter — not just utility." The one coaching note was about 360 documentation for landlord-owned items, which he understood immediately and received as reinforcement, not correction.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Document LL items in 360 with a note that it's their responsibility and you've initiated contact — that paper trail creates accountability and protects you if the issue lingers.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Timothy Butvilas</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- William Granville -->
+    <div class="profile-card reveal rd-2" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">WG</div><div class="card-identity"><div class="card-name">William Granville</div><div class="card-role">Facilities Manager Lead</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">Broad Avenue, Altoona PA</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Faded night drop sign in need of replacement — a fixture so familiar it had become invisible on regular visits.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Familiarity made visible</span></div><div class="commentary-text">Granville has 12 years in the role and manages 40 locations. His find — a faded night drop sign — is a clean example of what long familiarity does: signage that degrades gradually over time stops registering as "wrong" because each change is imperceptible. The coaching pushed past the first find: the second or third thing a fresh-eyes walk surfaces is often the one that's been hiding longest, and stopping after one find is a habit worth resisting.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">After you find the first thing, push past it — the second and third finds are often the ones that have been invisible the longest.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>Sean Conroy</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+    <!-- William Strobele -->
+    <div class="profile-card reveal" data-type="walkthrough"><div class="card-bar bar-mid"></div><div class="card-head"><div class="avatar av-navy">WS</div><div class="card-identity"><div class="card-name">William Strobele</div><div class="card-role">Facility Manager</div></div><span class="activity-badge badge-walk">Walkthrough</span></div><div class="card-body"><div><div class="field-label">Branch</div><div class="branch-line"><div class="branch-pip"></div><span class="branch-name">West Seneca</span></div></div><div><div class="field-label">Finding</div><div class="finding-box">Damaged section of vinyl fencing; parking lot striping faded and difficult to see — both submitted in 360 with photos attached.</div></div><div class="commentary"><div class="commentary-header"><div class="commentary-dot cd-navy"></div><span class="commentary-tag ct-navy">Strong on process, exterior only</span></div><div class="commentary-text">Strobele's walkthrough was clean in process — no work order to handle, straight into the walkthrough, started in the parking lot, came back with two documented finds and photos already in 360. Both finds were exterior. Managing 67 branches, his instinct to be efficient is rational — but the interior route is where fresh eyes tend to surface the most per minute of visit, and it was missing from this rep.</div></div><div class="coaching-row"><div class="coaching-label">Coaching focus</div><div class="coaching-text">Duration estimates on 360 entries give the maintenance team context the photo can't — "appears weathered, likely 1+ months" is a meaningful data point for prioritization.</div></div></div><div class="card-foot"><div class="mgr-line">Reports to <strong>John Scaglia</strong></div><div class="filed-badge fb-yes"><div class="filed-pip"></div>360 filed</div></div></div>
+
+  </div><!-- /cards-grid -->
+</section>
+
+<footer id="site-footer">
+  <div class="footer-mark">Citizens &middot; Fresh Eyes Initiative &middot; May 2026 &middot; Powered by Flint Learning Solutions</div>
+</footer>
+
+<script>
+// Scrollspy
+const navEl = document.getElementById('site-nav');
+const sectionEls = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a[data-section]');
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  navEl.classList.toggle('scrolled', y > 20);
+  let cur = sectionEls[0].id;
+  sectionEls.forEach(s => { if (y >= s.offsetTop - 90) cur = s.id; });
+  const target = ['learning-1','learning-2','learning-3'].includes(cur) ? 'learning-1' : cur;
+  navAs.forEach(a => a.classList.toggle('active', a.dataset.section === target));
+}, { passive: true });
+
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.profile-card').forEach(c => {
+      c.classList.toggle('hidden', f !== 'all' && c.dataset.type !== f);
+    });
+  });
+});
+</script>
+</body>
+</html>
