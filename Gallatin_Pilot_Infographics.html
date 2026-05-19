@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallatin Pilot — Voiceover Infographics</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0F1A2E;
+  --bg-deep:#0A1220;
+  --bg-mid:#132035;
+  --card:#1B2740;
+  --orange:#F08030;
+  --orange-light:#F5A05C;
+  --orange-pale:rgba(240,128,48,0.12);
+  --orange-border:rgba(240,128,48,0.30);
+  --amber:#FBB130;
+  --teal:#2DD4BF;
+  --teal-pale:rgba(45,212,191,0.12);
+  --teal-border:rgba(45,212,191,0.30);
+  --blue:#60A5FA;
+  --blue-pale:rgba(96,165,250,0.12);
+  --blue-border:rgba(96,165,250,0.30);
+  --purple:#C084FC;
+  --purple-pale:rgba(192,132,252,0.12);
+  --purple-border:rgba(192,132,252,0.30);
+  --red:#E06070;
+  --red-pale:rgba(224,96,112,0.10);
+  --red-border:rgba(224,96,112,0.30);
+  --green:#22C55E;
+  --green-pale:rgba(34,197,94,0.10);
+  --green-border:rgba(34,197,94,0.30);
+  --white:#FFFFFF;
+  --dim:rgba(255,255,255,0.65);
+  --muted:rgba(255,255,255,0.38);
+  --faint:rgba(255,255,255,0.18);
+  --border:rgba(255,255,255,0.08);
+  --border-strong:rgba(255,255,255,0.15);
+  --radius:12px;
+  --radius-lg:20px;
+}
+html,body{height:100%;width:100%;overflow:hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.55;
+}
+
+/* === SLIDE STRUCTURE === */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  padding:72px 80px 84px;
+  opacity:0;
+  transition:opacity .4s ease;
+}
+.slide.active{display:flex;opacity:1;}
+
+/* === BACKGROUND ATMOSPHERE === */
+.slide::before{
+  content:'';position:absolute;
+  top:-15%;right:-10%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(240,128,48,0.07) 0%,transparent 60%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+}
+.slide::after{
+  content:'';position:absolute;
+  bottom:-20%;left:-10%;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(96,165,250,0.04) 0%,transparent 60%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+}
+.slide > *{position:relative;z-index:1;}
+
+/* === TYPOGRAPHY === */
+.eyebrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:14px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{
+  content:'';display:block;
+  width:32px;height:1px;
+  background:var(--orange);
+}
+.title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-1.5px;
+  color:var(--white);
+}
+.title-xl{font-size:clamp(52px,5.8vw,84px);font-weight:900;letter-spacing:-3px;}
+.title-l{font-size:clamp(38px,4.2vw,60px);}
+.title-m{font-size:clamp(30px,3.2vw,46px);}
+.sub{
+  font-size:clamp(18px,1.5vw,22px);
+  font-weight:400;
+  color:var(--dim);
+  line-height:1.55;
+  max-width:880px;
+}
+.em-orange{color:var(--orange);}
+.em-teal{color:var(--teal);}
+.em-blue{color:var(--blue);}
+.em-amber{color:var(--amber);}
+
+/* === LAYOUT HELPERS === */
+.center{align-items:center;justify-content:center;text-align:center;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.row{display:flex;gap:24px;align-items:center;}
+.col{display:flex;flex-direction:column;gap:14px;}
+.stretch{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.gap-l{gap:36px;}
+.gap-m{gap:24px;}
+.gap-s{gap:14px;}
+.mt-l{margin-top:36px;}
+.mt-m{margin-top:24px;}
+.mt-s{margin-top:14px;}
+
+/* === FOOTER NAV === */
+.nav{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;
+  background:rgba(10,18,32,0.85);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  z-index:100;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.nav-brand{font-weight:700;color:var(--orange);}
+.nav-counter{font-weight:600;}
+.nav-dots{display:flex;gap:5px;}
+.nav-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--faint);
+  cursor:pointer;
+  transition:all .25s;
+}
+.nav-dot.active{background:var(--orange);width:18px;border-radius:3px;}
+.nav-dot:hover{background:var(--dim);}
+.nav-arrows{display:flex;gap:6px;}
+.nav-arrow{
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  cursor:pointer;
+  color:var(--dim);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+  font-family:inherit;
+}
+.nav-arrow:hover{background:rgba(255,255,255,0.10);color:var(--white);}
+
+/* === CARDS === */
+.card{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:32px 30px;
+  position:relative;
+  overflow:hidden;
+}
+.card.orange{background:var(--orange-pale);border-color:var(--orange-border);}
+.card.teal{background:var(--teal-pale);border-color:var(--teal-border);}
+.card.blue{background:var(--blue-pale);border-color:var(--blue-border);}
+.card.purple{background:var(--purple-pale);border-color:var(--purple-border);}
+.card.red{background:var(--red-pale);border-color:var(--red-border);}
+.card-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.card-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:24px;font-weight:700;
+  letter-spacing:-0.4px;
+  line-height:1.15;
+  margin-bottom:12px;
+  color:var(--white);
+}
+.card-body{
+  font-size:16px;
+  color:var(--dim);
+  line-height:1.5;
+}
+.card-accent-bar{
+  position:absolute;top:0;left:0;right:0;height:3px;
+}
+.card.orange .card-accent-bar{background:var(--orange);}
+.card.teal .card-accent-bar{background:var(--teal);}
+.card.blue .card-accent-bar{background:var(--blue);}
+.card.purple .card-accent-bar{background:var(--purple);}
+
+/* === SLIDE 1 - HERO === */
+.hero{justify-content:center;align-items:flex-start;padding:80px 100px;}
+.hero-mark{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;font-weight:700;
+  letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:32px;
+  display:flex;align-items:center;gap:14px;
+}
+.hero-mark-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--orange);
+  box-shadow:0 0 24px var(--orange);
+}
+.hero-rule{
+  width:64px;height:3px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  margin:28px 0 32px;
+}
+.hero-tag{
+  font-size:15px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--orange);
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+/* === SLIDE 2 - TIMELINE === */
+.timeline{
+  position:relative;
+  margin:60px 0 40px;
+  padding:0 60px;
+}
+.timeline-rail{
+  height:4px;
+  background:linear-gradient(90deg,var(--faint) 0%,var(--faint) 30%,var(--orange) 30%,var(--orange) 70%,var(--faint) 70%);
+  border-radius:2px;
+  position:relative;
+}
+.timeline-node{
+  position:absolute;top:-12px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bg);
+  border:3px solid var(--dim);
+  display:flex;align-items:center;justify-content:center;
+}
+.timeline-node.active{border-color:var(--orange);background:var(--orange);box-shadow:0 0 32px var(--orange);}
+.timeline-node.future{border-color:var(--faint);background:var(--bg);}
+.timeline-label{
+  position:absolute;
+  top:36px;
+  transform:translateX(-50%);
+  text-align:center;
+  width:180px;
+}
+.timeline-label .lbl-when{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.timeline-label.active .lbl-when{color:var(--orange);}
+.timeline-label .lbl-what{
+  font-size:15px;font-weight:500;
+  color:var(--dim);
+}
+.timeline-label.active .lbl-what{color:var(--white);font-weight:600;}
+.timeline-band{
+  position:absolute;
+  top:-44px;
+  height:88px;
+  left:30%;width:40%;
+  background:rgba(240,128,48,0.06);
+  border-left:1px dashed rgba(240,128,48,0.4);
+  border-right:1px dashed rgba(240,128,48,0.4);
+  border-radius:6px;
+}
+.timeline-band-label{
+  position:absolute;
+  top:-32px;left:50%;
+  transform:translateX(-50%);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--orange);
+  white-space:nowrap;
+}
+.big-stat{
+  display:flex;align-items:baseline;gap:18px;
+  margin-top:80px;
+}
+.big-stat-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(120px,14vw,200px);
+  font-weight:900;
+  line-height:0.85;
+  letter-spacing:-6px;
+  color:var(--orange);
+}
+.big-stat-text{
+  display:flex;flex-direction:column;gap:4px;
+  padding-bottom:14px;
+}
+.big-stat-unit{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:24px;font-weight:800;
+  letter-spacing:-0.5px;
+  color:var(--white);
+}
+.big-stat-cap{
+  font-size:15px;color:var(--dim);max-width:380px;
+}
+
+/* === SLIDE 3 - LAYERS === */
+.layer{
+  display:flex;align-items:center;
+  gap:28px;
+  padding:24px 32px;
+  border-radius:var(--radius-lg);
+  background:var(--card);
+  border:1px solid var(--border-strong);
+}
+.layer.focus{
+  background:var(--orange-pale);
+  border-color:var(--orange-border);
+  border-width:2px;
+  box-shadow:0 0 0 4px rgba(240,128,48,0.08);
+}
+.layer-icon{
+  width:64px;height:64px;border-radius:14px;
+  background:rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.layer.focus .layer-icon{background:rgba(240,128,48,0.18);}
+.layer-icon svg{width:32px;height:32px;color:var(--dim);}
+.layer.focus .layer-icon svg{color:var(--orange);}
+.layer-body{flex:1;}
+.layer-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:24px;font-weight:700;
+  letter-spacing:-0.4px;
+  margin-bottom:4px;
+}
+.layer-status{font-size:15px;color:var(--dim);}
+.layer-tag{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:6px 12px;border-radius:100px;
+}
+.layer-tag.ok{background:var(--teal-pale);color:var(--teal);border:1px solid var(--teal-border);}
+.layer-tag.prog{background:var(--blue-pale);color:var(--blue);border:1px solid var(--blue-border);}
+.layer-tag.now{background:var(--orange-pale);color:var(--orange);border:1px solid var(--orange-border);}
+
+/* === SLIDE 4 - 7:30 MOMENT === */
+.moment-stage{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.clock{
+  width:280px;height:280px;
+  border-radius:50%;
+  background:var(--card);
+  border:3px solid var(--orange-border);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:0 0 80px rgba(240,128,48,0.18);
+}
+.clock::before{
+  content:'';position:absolute;
+  inset:-20px;border-radius:50%;
+  border:1px dashed var(--faint);
+}
+.clock-time{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:72px;font-weight:900;
+  letter-spacing:-2px;
+  color:var(--orange);
+}
+.clock-day{
+  position:absolute;bottom:54px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--dim);
+}
+.issue-tag{
+  position:absolute;
+  padding:14px 22px;
+  background:var(--card);
+  border:1px solid var(--red-border);
+  border-radius:100px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;font-weight:600;
+  color:var(--white);
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.issue-tag::before{
+  content:'';display:block;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 12px var(--red);
+}
+.issue-1{top:18%;left:14%;}
+.issue-2{top:26%;right:14%;}
+.issue-3{bottom:22%;left:50%;transform:translateX(-50%);}
+.fallback-band{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:24px 32px;
+  display:flex;align-items:center;gap:24px;
+  margin-top:24px;
+}
+.fallback-arrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:32px;color:var(--orange);
+}
+.fallback-text{flex:1;}
+.fallback-text strong{color:var(--white);font-weight:700;}
+
+/* === SLIDE 5 - VARIANCE === */
+.sup-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:14px;
+  margin:20px 0 32px;
+}
+.sup-tile{
+  aspect-ratio:1;
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:14px;
+  padding:14px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  position:relative;
+}
+.sup-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:13px;
+  color:var(--dim);
+}
+.sup-bars{display:flex;gap:3px;align-items:flex-end;height:28px;}
+.sup-bar{width:5px;background:var(--teal);border-radius:1px;opacity:0.85;}
+.sup-tile.var-a .sup-bar:nth-child(1){height:60%;}
+.sup-tile.var-a .sup-bar:nth-child(2){height:90%;}
+.sup-tile.var-a .sup-bar:nth-child(3){height:40%;}
+.sup-tile.var-b .sup-bar:nth-child(1){height:30%;background:var(--amber);}
+.sup-tile.var-b .sup-bar:nth-child(2){height:50%;background:var(--amber);}
+.sup-tile.var-b .sup-bar:nth-child(3){height:70%;background:var(--amber);}
+.sup-tile.var-c .sup-bar:nth-child(1){height:80%;background:var(--blue);}
+.sup-tile.var-c .sup-bar:nth-child(2){height:30%;background:var(--blue);}
+.sup-tile.var-c .sup-bar:nth-child(3){height:55%;background:var(--blue);}
+.sup-tile.var-d .sup-bar{height:75%;background:var(--purple);}
+.sup-tile.var-e .sup-bar:nth-child(1){height:20%;background:var(--red);}
+.sup-tile.var-e .sup-bar:nth-child(2){height:30%;background:var(--red);}
+.sup-tile.var-e .sup-bar:nth-child(3){height:25%;background:var(--red);}
+.sup-tile.var-f .sup-bar:nth-child(1){height:95%;background:var(--orange);}
+.sup-tile.var-f .sup-bar:nth-child(2){height:45%;background:var(--orange);}
+.sup-tile.var-f .sup-bar:nth-child(3){height:65%;background:var(--orange);}
+.sup-tile.var-g .sup-bar:nth-child(1){height:50%;background:var(--green);}
+.sup-tile.var-g .sup-bar:nth-child(2){height:55%;background:var(--green);}
+.sup-tile.var-g .sup-bar:nth-child(3){height:50%;background:var(--green);}
+.variance-arrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--orange);
+  text-align:center;
+  margin:8px 0 18px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.variance-arrow::before,.variance-arrow::after{
+  content:'';display:block;width:60px;height:1px;background:var(--orange);
+}
+.outcome-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.outcome-tile{
+  background:var(--red-pale);
+  border:1px solid var(--red-border);
+  border-radius:14px;
+  padding:18px 20px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.outcome-tile .ico{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(224,96,112,0.15);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--red);
+  margin-bottom:6px;
+}
+.outcome-tile .ico svg{width:18px;height:18px;}
+.outcome-tile .lbl{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+}
+
+/* === SLIDE 6 - FLYWHEEL === */
+.flywheel-stage{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  gap:60px;
+}
+.flywheel{
+  position:relative;
+  width:440px;height:440px;
+}
+.flywheel-ring{
+  position:absolute;inset:0;
+  border-radius:50%;
+  border:2px dashed var(--faint);
+}
+.fw-step{
+  position:absolute;
+  width:130px;height:130px;
+  border-radius:50%;
+  background:var(--card);
+  border:2px solid var(--orange-border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:14px;
+  text-align:center;
+  box-shadow:0 12px 32px rgba(0,0,0,0.3);
+}
+.fw-step .num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:4px;
+}
+.fw-step .lbl{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  line-height:1.15;
+  color:var(--white);
+}
+.fw-step.s1{top:0;left:50%;transform:translateX(-50%);}
+.fw-step.s2{top:50%;right:0;transform:translateY(-50%);}
+.fw-step.s3{bottom:0;left:50%;transform:translateX(-50%);}
+.fw-step.s4{top:50%;left:0;transform:translateY(-50%);}
+.fw-center{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle,var(--orange-pale) 0%,transparent 70%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--orange);
+  text-align:center;
+  padding:18px;
+  line-height:1.3;
+}
+.flywheel-meta{
+  max-width:280px;
+}
+.flywheel-meta h3{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:28px;font-weight:700;
+  letter-spacing:-0.5px;
+  line-height:1.15;
+  margin-bottom:16px;
+}
+.flywheel-meta p{
+  font-size:16px;color:var(--dim);line-height:1.55;
+}
+.flywheel-meta p + p{margin-top:12px;}
+
+/* === SLIDE 7 - THREE OUTCOMES === */
+.outcome-card{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:32px 28px;
+  display:flex;flex-direction:column;gap:14px;
+  position:relative;
+  overflow:hidden;
+  height:100%;
+}
+.outcome-card.feat{
+  background:var(--orange-pale);
+  border-color:var(--orange-border);
+  border-width:2px;
+  box-shadow:0 0 0 4px rgba(240,128,48,0.08);
+}
+.outcome-card .num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:800;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--muted);
+}
+.outcome-card.feat .num{color:var(--orange);}
+.outcome-card .ttl{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:26px;font-weight:700;
+  letter-spacing:-0.5px;
+  line-height:1.15;
+}
+.outcome-card .desc{
+  font-size:15px;color:var(--dim);line-height:1.5;
+  flex:1;
+}
+.outcome-card .punch{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:14px;font-weight:600;
+  color:var(--orange);
+  font-style:italic;
+  padding-top:14px;
+  border-top:1px solid var(--border-strong);
+}
+.outcome-card.feat .punch{color:var(--orange-light);}
+.outcome-card .ico-big{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:6px;
+}
+.outcome-card.feat .ico-big{background:rgba(240,128,48,0.18);}
+.outcome-card .ico-big svg{width:24px;height:24px;color:var(--dim);}
+.outcome-card.feat .ico-big svg{color:var(--orange);}
+
+/* === SLIDE 8 - LEADERSHIP VIEW === */
+.dash{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:28px 32px;
+  flex:1;
+  display:flex;flex-direction:column;gap:18px;
+}
+.dash-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--border-strong);
+}
+.dash-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:18px;font-weight:700;
+  letter-spacing:-0.3px;
+}
+.dash-tag{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--teal);
+  display:flex;align-items:center;gap:8px;
+}
+.dash-tag::before{
+  content:'';display:block;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 12px var(--teal);
+}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;}
+.insight{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px 20px;
+  display:flex;align-items:flex-start;gap:16px;
+}
+.insight-ico{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--orange-pale);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange);
+  flex-shrink:0;
+}
+.insight-ico svg{width:20px;height:20px;}
+.insight-body{flex:1;}
+.insight-lbl{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;font-weight:700;
+  letter-spacing:-0.2px;
+  margin-bottom:4px;
+}
+.insight-meta{
+  font-size:13px;color:var(--dim);
+}
+.insight-count{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:24px;font-weight:800;
+  color:var(--orange);
+  letter-spacing:-1px;
+}
+
+/* === SLIDE 9 - WHY GALLATIN === */
+.why-card{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:36px 30px;
+  display:flex;flex-direction:column;gap:18px;
+  position:relative;
+  overflow:hidden;
+  height:100%;
+}
+.why-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.why-card.c1::before{background:var(--orange);}
+.why-card.c2::before{background:var(--teal);}
+.why-card.c3::before{background:var(--blue);}
+.why-ico{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.why-card.c1 .why-ico{background:var(--orange-pale);color:var(--orange);}
+.why-card.c2 .why-ico{background:var(--teal-pale);color:var(--teal);}
+.why-card.c3 .why-ico{background:var(--blue-pale);color:var(--blue);}
+.why-ico svg{width:32px;height:32px;}
+.why-eyebrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;font-weight:800;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--muted);
+}
+.why-card.c1 .why-eyebrow{color:var(--orange);}
+.why-card.c2 .why-eyebrow{color:var(--teal);}
+.why-card.c3 .why-eyebrow{color:var(--blue);}
+.why-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:24px;font-weight:700;
+  letter-spacing:-0.5px;
+  line-height:1.2;
+}
+.why-body{
+  font-size:15px;color:var(--dim);line-height:1.55;
+  flex:1;
+}
+
+/* === SLIDE 10 - CO-DESIGN === */
+.codesign{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:32px;
+  margin:30px 0;
+}
+.codesign-side{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:32px 28px;
+}
+.codesign-side.left{border-color:var(--blue-border);background:var(--blue-pale);}
+.codesign-side.right{border-color:var(--orange-border);background:var(--orange-pale);}
+.codesign-eyebrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;font-weight:800;
+  letter-spacing:2.5px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.codesign-side.left .codesign-eyebrow{color:var(--blue);}
+.codesign-side.right .codesign-eyebrow{color:var(--orange);}
+.codesign-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:22px;font-weight:700;
+  letter-spacing:-0.4px;
+  margin-bottom:18px;
+}
+.codesign-list{
+  display:flex;flex-direction:column;gap:10px;
+}
+.codesign-list .item{
+  font-size:15px;color:var(--dim);
+  padding:10px 14px;
+  background:rgba(255,255,255,0.04);
+  border-radius:10px;
+  border-left:2px solid var(--faint);
+}
+.codesign-side.left .item{border-left-color:var(--blue);}
+.codesign-side.right .item{border-left-color:var(--orange);}
+.codesign-connector{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.codesign-arrow{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+  position:relative;
+}
+.codesign-arrow::after{
+  content:'';position:absolute;
+  right:-6px;top:-5px;
+  width:0;height:0;
+  border-left:8px solid var(--orange);
+  border-top:5px solid transparent;
+  border-bottom:5px solid transparent;
+}
+.codesign-label{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:800;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--dim);
+}
+.codesign-tagline{
+  text-align:center;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:18px;font-weight:600;
+  color:var(--orange);
+  letter-spacing:-0.2px;
+  margin-top:16px;
+}
+
+/* === SLIDE 11 - ASKS === */
+.ask-card{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+  display:flex;flex-direction:column;gap:18px;
+  height:100%;
+  position:relative;
+  overflow:hidden;
+}
+.ask-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+  background:var(--orange);
+}
+.ask-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:64px;font-weight:900;
+  letter-spacing:-3px;
+  color:var(--orange);
+  line-height:0.9;
+}
+.ask-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:22px;font-weight:700;
+  letter-spacing:-0.4px;
+  line-height:1.2;
+}
+.ask-body{
+  font-size:15px;color:var(--dim);line-height:1.55;flex:1;
+}
+.ask-emph{
+  color:var(--white);font-weight:600;
+}
+
+/* === SLIDE 12 - CLOSING === */
+.closing{justify-content:center;align-items:flex-start;padding:80px 100px;}
+.closing-mark{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:36px;
+  display:flex;align-items:center;gap:14px;
+}
+.closing-mark::before{
+  content:'';display:block;
+  width:48px;height:1px;background:var(--orange);
+}
+.closing-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(64px,7vw,110px);
+  font-weight:900;
+  line-height:0.95;
+  letter-spacing:-3.5px;
+  margin-bottom:36px;
+}
+.closing-sub{
+  font-size:clamp(20px,1.7vw,26px);
+  color:var(--dim);
+  max-width:760px;
+  line-height:1.5;
+  font-weight:400;
+}
+.closing-sub em{color:var(--white);font-style:normal;font-weight:600;}
+.closing-rule{
+  width:120px;height:3px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  margin-top:48px;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.slide.active .anim{animation:fadeUp .6s ease-out both;}
+.slide.active .anim.d1{animation-delay:.10s;}
+.slide.active .anim.d2{animation-delay:.20s;}
+.slide.active .anim.d3{animation-delay:.30s;}
+.slide.active .anim.d4{animation-delay:.40s;}
+.slide.active .anim.d5{animation-delay:.50s;}
+.slide.active .anim.d6{animation-delay:.60s;}
+.slide.active .anim.d7{animation-delay:.70s;}
+.slide.active .anim.d8{animation-delay:.80s;}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ============================================== -->
+  <!-- SLIDE 1 — HERO                                 -->
+  <!-- ============================================== -->
+  <section class="slide hero active" data-slide="1">
+    <div class="hero-mark anim d1">
+      <span class="hero-mark-dot"></span>
+      A pilot proposal for Gallatin leadership
+    </div>
+    <div class="title title-xl anim d2">
+      Stabilizing Gallatin's<br>
+      <span class="em-orange">Ramp-Up</span>
+    </div>
+    <div class="hero-rule anim d3"></div>
+    <div class="sub anim d4" style="max-width:680px;font-size:24px;">
+      Through supervisor habit formation in the flow of work.
+    </div>
+    <div class="hero-tag anim d5" style="margin-top:60px;">
+      Flint × Simpson Strong-Tie
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 2 — THE 90-DAY WINDOW                    -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="2">
+    <div class="eyebrow anim d1">The window you're in right now</div>
+    <div class="title title-l anim d2">
+      Whatever habits set in the next 90 days<br>
+      become Gallatin's muscle memory<br>
+      for the <span class="em-orange">next ten years</span>.
+    </div>
+
+    <div class="stretch">
+      <div class="timeline anim d3">
+        <div class="timeline-rail"></div>
+        <div class="timeline-band">
+          <div class="timeline-band-label">Habit formation window</div>
+        </div>
+        <div class="timeline-node" style="left:10%;"></div>
+        <div class="timeline-label" style="left:10%;">
+          <div class="lbl-when">Jan 15, 2026</div>
+          <div class="lbl-what">Plant opens</div>
+        </div>
+        <div class="timeline-node active" style="left:30%;"></div>
+        <div class="timeline-label active" style="left:30%;">
+          <div class="lbl-when">May 2026 · Now</div>
+          <div class="lbl-what">4 months in. Rituals still forming.</div>
+        </div>
+        <div class="timeline-node future" style="right:30%;"></div>
+        <div class="timeline-label" style="left:70%;">
+          <div class="lbl-when">~Aug 2026</div>
+          <div class="lbl-what">Patterns harden into habit</div>
+        </div>
+        <div class="timeline-node future" style="right:5%;"></div>
+        <div class="timeline-label" style="left:95%;">
+          <div class="lbl-when">2036+</div>
+          <div class="lbl-what">Steady-state operations</div>
+        </div>
+      </div>
+
+      <div class="big-stat anim d5">
+        <div class="big-stat-num">90</div>
+        <div class="big-stat-text">
+          <div class="big-stat-unit">days</div>
+          <div class="big-stat-cap">The window is exceptional. It doesn't repeat.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 3 — THE LAYERS / SUPERVISOR IS THE LEVER -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="3">
+    <div class="eyebrow anim d1">What's dialed in, and what isn't</div>
+    <div class="title title-l anim d2">
+      Equipment and operators get attention.<br>
+      <span class="em-orange">The supervisor layer is the variable.</span>
+    </div>
+
+    <div class="stretch col gap-m" style="margin-top:32px;">
+      <div class="layer anim d3">
+        <div class="layer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h.01M12 12h.01M17 12h.01M7 17h.01M12 17h.01M17 17h.01"/></svg>
+        </div>
+        <div class="layer-body">
+          <div class="layer-title">Equipment</div>
+          <div class="layer-status">$125M of new lines. Dialing in. Measurable. Engineered.</div>
+        </div>
+        <div class="layer-tag ok">On track</div>
+      </div>
+
+      <div class="layer anim d4">
+        <div class="layer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="layer-body">
+          <div class="layer-title">Operators</div>
+          <div class="layer-status">Hiring active. Training cycles running. Skills being built.</div>
+        </div>
+        <div class="layer-tag prog">In progress</div>
+      </div>
+
+      <div class="layer focus anim d5">
+        <div class="layer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="layer-body">
+          <div class="layer-title">Supervisors</div>
+          <div class="layer-status">The single biggest determinant of how each shift actually runs — and the pattern is still being set.</div>
+        </div>
+        <div class="layer-tag now">The lever, now</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 4 — THE 7:30 TUESDAY MOMENT              -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="4">
+    <div class="eyebrow anim d1">Why classroom training doesn't catch this</div>
+    <div class="title title-l anim d2">
+      Training teaches what to do.<br>
+      <span class="em-orange">It doesn't show up at 7:30 Tuesday morning.</span>
+    </div>
+
+    <div class="moment-stage anim d3">
+      <div class="issue-tag issue-1 anim d4">Hardener lot off-spec</div>
+      <div class="issue-tag issue-2 anim d5">Videojet down on Line 2</div>
+      <div class="issue-tag issue-3 anim d6">Operator no-show, Shift 1</div>
+      <div class="clock">
+        <div class="clock-time">7:30</div>
+        <div class="clock-day">Tuesday morning</div>
+      </div>
+    </div>
+
+    <div class="fallback-band anim d7">
+      <div class="fallback-arrow">↓</div>
+      <div class="fallback-text">
+        In that moment — the moment that actually shapes the habit — the supervisor falls back on <strong>what feels natural</strong>, not what they were trained on three weeks ago.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 5 — VARIANCE                             -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="5">
+    <div class="eyebrow anim d1">The result</div>
+    <div class="title title-l anim d2">
+      Every supervisor runs the same ritual<br>
+      <span class="em-orange">differently</span>.
+    </div>
+
+    <div class="sup-grid anim d3">
+      <div class="sup-tile var-a"><div class="sup-avatar">SA</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-b"><div class="sup-avatar">JM</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-c"><div class="sup-avatar">RL</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-d"><div class="sup-avatar">CK</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-e"><div class="sup-avatar">DP</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-f"><div class="sup-avatar">TN</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+      <div class="sup-tile var-g"><div class="sup-avatar">BH</div><div class="sup-bars"><div class="sup-bar"></div><div class="sup-bar"></div><div class="sup-bar"></div></div></div>
+    </div>
+
+    <div class="variance-arrow anim d4">The variance shows up as</div>
+
+    <div class="outcome-grid anim d5">
+      <div class="outcome-tile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div>
+        <div class="lbl">Inconsistent quality</div>
+      </div>
+      <div class="outcome-tile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 17l5-5-5-5M8 7l-5 5 5 5"/></svg></div>
+        <div class="lbl">Missed handoffs</div>
+      </div>
+      <div class="outcome-tile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+        <div class="lbl">Repeat issues</div>
+      </div>
+      <div class="outcome-tile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg></div>
+        <div class="lbl">SOPs that don't match the floor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 6 — THE CONCEPT (FLYWHEEL)               -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="6">
+    <div class="eyebrow anim d1">A different approach</div>
+    <div class="title title-l anim d2">
+      Short, personalized activities<br>
+      <span class="em-orange">in the flow of work.</span>
+    </div>
+
+    <div class="flywheel-stage">
+      <div class="flywheel anim d3">
+        <div class="flywheel-ring"></div>
+        <div class="fw-step s1">
+          <div class="num">Step 1</div>
+          <div class="lbl">Activity prompt tied to today</div>
+        </div>
+        <div class="fw-step s2">
+          <div class="num">Step 2</div>
+          <div class="lbl">Do the work — huddle, coach, walk</div>
+        </div>
+        <div class="fw-step s3">
+          <div class="num">Step 3</div>
+          <div class="lbl">10-second reflection log</div>
+        </div>
+        <div class="fw-step s4">
+          <div class="num">Step 4</div>
+          <div class="lbl">Next activity is tuned</div>
+        </div>
+        <div class="fw-center">Weekly<br>Loop</div>
+      </div>
+
+      <div class="flywheel-meta anim d5">
+        <h3>One activity. One real moment. Every week.</h3>
+        <p>The activity attaches to work the supervisor was already going to do — the huddle, the coaching conversation, the floor walk.</p>
+        <p>Nothing extra on top of the day. The system learns from what each supervisor logs, and the next activity meets them where they actually are.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 7 — THREE OUTCOMES                       -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="7">
+    <div class="eyebrow anim d1">What this produces</div>
+    <div class="title title-l anim d2">
+      Three outcomes at once.
+    </div>
+
+    <div class="stretch grid-3 gap-m" style="margin-top:30px;">
+      <div class="outcome-card anim d3">
+        <div class="ico-big">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="num">Outcome 1</div>
+        <div class="ttl">Standard work adherence</div>
+        <div class="desc">Supervisors don't just know the standard — they execute it, reflect on it, and get reinforcement on it every working week.</div>
+        <div class="punch">Habits form in weeks, not years.</div>
+      </div>
+
+      <div class="outcome-card anim d4">
+        <div class="ico-big">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="num">Outcome 2</div>
+        <div class="ttl">Proper habits & expectations</div>
+        <div class="desc">New supervisors and transferred-in veterans converge on the same ritual — instead of importing whatever pattern they ran somewhere else.</div>
+        <div class="punch">One Gallatin standard, lived daily.</div>
+      </div>
+
+      <div class="outcome-card feat anim d5">
+        <div class="ico-big">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="num">Outcome 3 · The leadership one</div>
+        <div class="ttl">Visibility into what's actually breaking</div>
+        <div class="desc">As supervisors complete activities and log what happened, leadership sees the gaps in real time — not after the next audit, not after the next incident.</div>
+        <div class="punch">The gaps you currently discover through incidents.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 8 — WHAT LEADERSHIP SEES                 -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="8">
+    <div class="eyebrow anim d1">Outcome 3, up close</div>
+    <div class="title title-l anim d2">
+      A real-time picture of<br>
+      <span class="em-orange">what's actually breaking.</span>
+    </div>
+
+    <div class="dash anim d3" style="margin-top:24px;">
+      <div class="dash-head">
+        <div class="dash-title">Gallatin · Week of May 18 · Leadership view</div>
+        <div class="dash-tag">Surfaced from this week's activities</div>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight">
+          <div class="insight-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <div class="insight-body">
+            <div class="insight-lbl">SOPs that don't match the floor</div>
+            <div class="insight-meta"><span class="insight-count">3</span> &nbsp; flagged by supervisors this week</div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <div class="insight-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div class="insight-body">
+            <div class="insight-lbl">Communication paths breaking</div>
+            <div class="insight-meta"><span class="insight-count">2</span> &nbsp; hotspots between shifts</div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <div class="insight-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+          <div class="insight-body">
+            <div class="insight-lbl">Process steps that repeatedly fail</div>
+            <div class="insight-meta"><span class="insight-count">5</span> &nbsp; patterns surfacing across cohort</div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <div class="insight-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+          <div class="insight-body">
+            <div class="insight-lbl">Expectations the team can't meet</div>
+            <div class="insight-meta"><span class="insight-count">4</span> &nbsp; flagged for leadership decision</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 9 — WHY GALLATIN                         -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="9">
+    <div class="eyebrow anim d1">Why Gallatin specifically</div>
+    <div class="title title-l anim d2">
+      Three reasons this fits Gallatin<br>
+      <span class="em-orange">right now.</span>
+    </div>
+
+    <div class="stretch grid-3 gap-m" style="margin-top:30px;">
+      <div class="why-card c1 anim d3">
+        <div class="why-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="why-eyebrow">Reason 01 · Timing</div>
+        <div class="why-title">The rituals are still forming.</div>
+        <div class="why-body">There's nothing to retrain, only to shape. This is the cheapest, fastest moment in the plant's whole life to build the supervisor habit you want.</div>
+      </div>
+
+      <div class="why-card c2 anim d4">
+        <div class="why-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="why-eyebrow">Reason 02 · Scale</div>
+        <div class="why-title">~70 supervisors. The right size.</div>
+        <div class="why-body">Large enough to produce real variance and meaningful signal. Small enough to coordinate as a single pilot under one leadership team.</div>
+      </div>
+
+      <div class="why-card c3 anim d5">
+        <div class="why-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="why-eyebrow">Reason 03 · Stakes</div>
+        <div class="why-title">The cost of getting it right is visible.</div>
+        <div class="why-body">Ramp-up performance is already on the corporate radar. Anything that accelerates supervisor capability accelerates the moderation curve.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 10 — CO-DESIGN                           -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="10">
+    <div class="eyebrow anim d1">What we'd do together</div>
+    <div class="title title-l anim d2">
+      Not a pre-built program.<br>
+      <span class="em-orange">Built for Gallatin, with Gallatin.</span>
+    </div>
+
+    <div class="codesign anim d3">
+      <div class="codesign-side left">
+        <div class="codesign-eyebrow">Gallatin leadership</div>
+        <div class="codesign-title">Points us at what's actually hurting</div>
+        <div class="codesign-list">
+          <div class="item">Shift-to-shift handoffs</div>
+          <div class="item">New-hire onboarding load</div>
+          <div class="item">Heat-treat process traceability</div>
+          <div class="item">Problem-solving discipline</div>
+          <div class="item">Anything we haven't named yet</div>
+        </div>
+      </div>
+
+      <div class="codesign-connector">
+        <div class="codesign-label">Co-design</div>
+        <div class="codesign-arrow"></div>
+      </div>
+
+      <div class="codesign-side right">
+        <div class="codesign-eyebrow">Flint</div>
+        <div class="codesign-title">Builds the activities around it</div>
+        <div class="codesign-list">
+          <div class="item">Practice areas you decide matter</div>
+          <div class="item">Activities tied to your supervisors' real day</div>
+          <div class="item">Language, examples, artifacts from your floor</div>
+          <div class="item">Measurement architecture you can act on</div>
+          <div class="item">Six-week proof loop before any expansion</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="codesign-tagline anim d6">
+      You point us at what's hurting. We build the activities around it.
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 11 — THE ASK                             -->
+  <!-- ============================================== -->
+  <section class="slide" data-slide="11">
+    <div class="eyebrow anim d1">What we'd ask of you</div>
+    <div class="title title-l anim d2">
+      Three small commitments.<br>
+      A six-week proof loop.
+    </div>
+
+    <div class="stretch grid-3 gap-m" style="margin-top:30px;">
+      <div class="ask-card anim d3">
+        <div class="ask-num">01</div>
+        <div class="ask-title">A supervisor cohort</div>
+        <div class="ask-body">
+          A small group of supervisors willing to complete <span class="ask-emph">one activity per week</span> — work they are <span class="ask-emph">already supposed to be doing</span>, not additional work on top of it.
+        </div>
+      </div>
+
+      <div class="ask-card anim d4">
+        <div class="ask-num">02</div>
+        <div class="ask-title">A leadership sponsor</div>
+        <div class="ask-body">
+          Someone willing to look at the <span class="ask-emph">weekly pattern</span> of what surfaces — the SOP gaps, the communication breakdowns, the repeat issues — and <span class="ask-emph">act on it</span>.
+        </div>
+      </div>
+
+      <div class="ask-card anim d5">
+        <div class="ask-num">03</div>
+        <div class="ask-title">A scoping conversation</div>
+        <div class="ask-body">
+          One working session to decide <span class="ask-emph">which behaviors matter most</span> at Gallatin in the next 90 days. Everything downstream flows from that decision.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SLIDE 12 — CLOSING                             -->
+  <!-- ============================================== -->
+  <section class="slide closing" data-slide="12">
+    <div class="closing-mark anim d1">That's the pilot</div>
+    <div class="closing-title anim d2">
+      We bring the program.<br>
+      <span class="em-orange">You bring the problem.</span>
+    </div>
+    <div class="closing-sub anim d3">
+      We design the activities, build the measurement, run the program, and surface what's breaking. <em>All we need from your leadership team is a clear picture of which business challenges matter most at Gallatin in the next ninety days.</em>
+    </div>
+    <div class="closing-rule anim d4"></div>
+    <div class="hero-tag anim d5" style="margin-top:32px;">Let's scope it.</div>
+  </section>
+
+</div>
+
+<!-- ============================================== -->
+<!-- NAVIGATION FOOTER                              -->
+<!-- ============================================== -->
+<div class="nav">
+  <div class="nav-brand">Flint × Simpson Strong-Tie · Gallatin Pilot</div>
+  <div class="nav-dots" id="navDots"></div>
+  <div style="display:flex;align-items:center;gap:18px;">
+    <div class="nav-counter"><span id="cur">01</span> / <span id="total">12</span></div>
+    <div class="nav-arrows">
+      <button class="nav-arrow" id="prev">←</button>
+      <button class="nav-arrow" id="next">→</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const slides=Array.from(document.querySelectorAll('.slide'));
+  const total=slides.length;
+  let idx=0;
+  const dotsWrap=document.getElementById('navDots');
+  const curEl=document.getElementById('cur');
+  const totalEl=document.getElementById('total');
+  totalEl.textContent=String(total).padStart(2,'0');
+
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='nav-dot'+(i===0?' active':'');
+    d.addEventListener('click',()=>go(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots=Array.from(dotsWrap.children);
+
+  function go(n){
+    if(n<0||n>=total)return;
+    slides[idx].classList.remove('active');
+    dots[idx].classList.remove('active');
+    idx=n;
+    slides[idx].classList.add('active');
+    dots[idx].classList.add('active');
+    curEl.textContent=String(idx+1).padStart(2,'0');
+  }
+
+  document.getElementById('prev').addEventListener('click',()=>go(idx-1));
+  document.getElementById('next').addEventListener('click',()=>go(idx+1));
+
+  document.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(idx+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(idx-1);}
+    if(e.key==='Home'){e.preventDefault();go(0);}
+    if(e.key==='End'){e.preventDefault();go(total-1);}
+    // hide nav with 'h' for clean recording
+    if(e.key==='h'||e.key==='H'){
+      document.querySelector('.nav').style.display=document.querySelector('.nav').style.display==='none'?'flex':'none';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
