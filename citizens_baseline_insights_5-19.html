@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Eyes — Baseline Survey Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #6b6860;
+    --rule: #ddd9d0;
+    --accent: #1a3a5c;
+    --accent-light: #e8eef5;
+    --green: #2d6a4f;
+    --green-light: #eaf3ee;
+    --amber: #b45309;
+    --amber-light: #fef3e2;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --tag-bg: #ededea;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 52px;
+  }
+
+  .nav-left { display: flex; align-items: center; gap: 16px; }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-sep { width: 1px; height: 16px; background: var(--rule); }
+
+  .nav-title { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  .nav-right { display: flex; align-items: center; gap: 6px; }
+
+  .slide-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--rule);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .slide-dot.active { background: var(--accent); }
+
+  /* SLIDES */
+  .slides-container { padding-top: 52px; }
+
+  .slide {
+    min-height: calc(100vh - 52px);
+    padding: 52px 60px 56px;
+    display: none;
+    flex-direction: column;
+  }
+
+  .slide.active { display: flex; }
+
+  /* SLIDE HEADER */
+  .slide-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .slide-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .slide-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .tag-blue  { background: var(--accent-light); color: var(--accent); }
+  .tag-amber { background: var(--amber-light);  color: var(--amber); }
+  .tag-green { background: var(--green-light);  color: var(--green); }
+  .tag-grey  { background: var(--tag-bg);       color: var(--muted); }
+
+  .slide-headline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 8px;
+    max-width: 720px;
+  }
+
+  .slide-subhead {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 620px;
+    margin-bottom: 32px;
+  }
+
+  .slide-rule { height: 1px; background: var(--rule); margin-bottom: 32px; }
+
+  /* LAYOUTS */
+  .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; align-content: start; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; flex: 1; align-content: start; }
+  .full-col  { display: flex; flex-direction: column; gap: 20px; flex: 1; }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 22px;
+  }
+
+  .card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .card-body {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #3a3830;
+  }
+
+  /* SCORE BAR */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .score-row:last-child { border-bottom: none; }
+
+  .score-label {
+    font-size: 12px;
+    color: var(--ink);
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  .score-bar-wrap {
+    width: 120px;
+    height: 6px;
+    background: #e8e4dc;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+
+  .bar-learner { background: var(--accent); }
+  .bar-manager { background: var(--amber); }
+  .bar-gap     { background: var(--red); }
+
+  .score-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .score-val.learner { color: var(--accent); }
+  .score-val.manager { color: var(--amber); }
+
+  /* STAT BOXES */
+  .stat-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 20px;
+    flex: 1;
+  }
+
+  .stat-number {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .stat-number.blue  { color: var(--accent); }
+  .stat-number.amber { color: var(--amber); }
+  .stat-number.green { color: var(--green); }
+  .stat-number.red   { color: var(--red); }
+
+  .stat-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* QUOTE */
+  .quote-block {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    margin-top: 14px;
+  }
+
+  .quote-text {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+
+  .quote-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5a7a9a;
+  }
+
+  .quote-block.amber {
+    border-left-color: var(--amber);
+    background: var(--amber-light);
+  }
+
+  .quote-block.amber .quote-text { color: var(--amber); }
+  .quote-block.amber .quote-attr { color: #8a6030; }
+
+  /* DIVERGENCE TABLE */
+  .div-table { width: 100%; }
+
+  .div-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    gap: 12px;
+  }
+
+  .div-row:last-child { border-bottom: none; }
+
+  .div-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    width: 130px;
+    flex-shrink: 0;
+  }
+
+  .div-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .div-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .div-bar-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    width: 14px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .div-bar-track {
+    width: 160px;
+    height: 5px;
+    background: #e8e4dc;
+    border-radius: 2px;
+  }
+
+  .div-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  .div-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    width: 24px;
+  }
+
+  .div-gap-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .gap-pos { background: var(--amber-light); color: var(--amber); }
+  .gap-neg { background: var(--green-light); color: var(--green); }
+  .gap-zero { background: var(--tag-bg); color: var(--muted); }
+
+  /* HIGHLIGHT BAR */
+  .highlight-bar {
+    background: var(--accent);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-top: 20px;
+  }
+
+  .highlight-bar strong {
+    display: block;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    opacity: 0.7;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* NAV BUTTONS */
+  .slide-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .nav-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 7px 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover { background: var(--accent); color: white; }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-btn:disabled:hover { background: none; color: var(--accent); }
+
+  .slide-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .data-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .finding-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #3a3830;
+  }
+
+  .finding-row:last-child { border-bottom: none; }
+  .finding-icon { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .finding-row strong { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-logo">Citizens Bank · Fresh Eyes</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Baseline Survey Insights</span>
+  </div>
+  <div class="nav-right">
+    <div class="slide-dot active" onclick="goTo(0)"></div>
+    <div class="slide-dot" onclick="goTo(1)"></div>
+    <div class="slide-dot" onclick="goTo(2)"></div>
+  </div>
+</nav>
+
+<div class="slides-container">
+
+  <!-- ===== SLIDE 1: COMPETENCY SNAPSHOT ===== -->
+  <div class="slide active" id="slide-0">
+    <div class="slide-meta">
+      <span class="slide-num">01 / 03</span>
+      <span class="slide-tag tag-blue">Competency Snapshot</span>
+    </div>
+
+    <h1 class="slide-headline">Where the team is starting from</h1>
+    <p class="slide-subhead">45 participants and 9 managers completed the baseline survey across five focus areas. Here is how the group rated themselves — and how managers rated them.</p>
+    <div class="slide-rule"></div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-number blue">6.1</div>
+        <div class="stat-desc">Average participant self-rating across all five areas (out of 10)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number amber">5.6</div>
+        <div class="stat-desc">Average manager rating of their direct reports across all three areas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number red">0.5</div>
+        <div class="stat-desc">Average gap — participants rate themselves half a point higher than their managers do</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number blue">45</div>
+        <div class="stat-desc">Participants surveyed across Facilities, Landscape, and Senior FM roles</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Participant Self-Ratings — All Five Focus Areas</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Participant avg (out of 10)</div>
+        </div>
+
+        <div class="score-row">
+          <div class="score-label">Intentional customer lens on every visit</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-learner" style="width:60%"></div></div>
+          <div class="score-val learner">6.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Customer experience shapes what I look for and fix</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-learner" style="width:63%"></div></div>
+          <div class="score-val learner">6.3</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Issues caught before customers notice</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-learner" style="width:60%"></div></div>
+          <div class="score-val learner">6.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Root cause thinking on persistent issues</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-learner" style="width:68%"></div></div>
+          <div class="score-val learner">6.8</div>
+        </div>
+        <div class="score-row" style="background:#fdf9f6; margin: 0 -22px -22px; padding: 9px 22px; border-radius: 0 0 4px 4px; border-top: 2px solid var(--rule);">
+          <div class="score-label" style="font-weight:600; color:var(--red)">360 documentation tells the full story</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-gap" style="width:57%"></div></div>
+          <div class="score-val" style="color:var(--red)">5.7</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Manager Ratings — Three Focus Areas</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Manager avg (out of 10)</div>
+        </div>
+
+        <div class="score-row">
+          <div class="score-label">Proactively surfaces issues not already flagged</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-manager" style="width:57%"></div></div>
+          <div class="score-val manager">5.7</div>
+        </div>
+        <div class="score-row" style="background:#fdf9f6; margin: 0 -22px; padding: 9px 22px; border-bottom: 1px solid var(--rule);">
+          <div class="score-label" style="font-weight:600; color:var(--red)">Documents with enough specificity to act on</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-gap" style="width:55%"></div></div>
+          <div class="score-val" style="color:var(--red)">5.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Proactively brings findings managers wouldn't know about</div>
+          <div class="score-bar-wrap"><div class="score-bar-fill bar-manager" style="width:58%"></div></div>
+          <div class="score-val manager">5.8</div>
+        </div>
+
+        <div class="quote-block amber" style="margin-top: 20px;">
+          <div class="quote-text">Documentation quality is the lowest-rated area from both directions — 5.7 from participants, 5.5 from their managers. The initiative has a clear primary target.</div>
+          <div class="quote-attr">Key takeaway from baseline</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-note">Baseline surveys completed May 5–18, 2026 · 45 participant respondents · 9 managers rating 33 direct reports</div>
+
+    <div class="slide-nav">
+      <button class="nav-btn" disabled>← Previous</button>
+      <span class="slide-counter">1 of 3</span>
+      <button class="nav-btn" onclick="goTo(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: WHERE THE GAPS ARE ===== -->
+  <div class="slide" id="slide-1">
+    <div class="slide-meta">
+      <span class="slide-num">02 / 03</span>
+      <span class="slide-tag tag-amber">Where the Gaps Are</span>
+    </div>
+
+    <h1 class="slide-headline">The two areas this initiative needs to move most</h1>
+    <p class="slide-subhead">Across participants and managers, the same two gaps show up consistently — and they're tightly connected to each other.</p>
+    <div class="slide-rule"></div>
+
+    <div class="two-col">
+      <div class="full-col">
+        <div class="card">
+          <div class="card-label">Gap 1 — Documentation Completeness</div>
+          <div class="card-title">FMs know what they're seeing. The system doesn't.</div>
+          <div class="card-body">
+            Documentation completeness — "My 360 activity tells the full story of what I find on visits" — is the lowest-rated area across the entire survey at <strong>5.7</strong>. Managers independently rate documentation specificity at <strong>5.5</strong>, the lowest of their three areas. These two numbers are measuring the same problem from different angles.
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>24 of 45 participants (53%) rated their own documentation at 5 or below</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>Only 10 participants rated documentation at 8 or above — the smallest high-confidence group of any area</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>No manager rated their team's documentation above an 8</span>
+          </div>
+          <div class="quote-block">
+            <div class="quote-text">"My 360 activity doesn't always tell the full story — I handle things on the spot."</div>
+            <div class="quote-attr">Common pattern from activity coaching sessions</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="full-col">
+        <div class="card">
+          <div class="card-label">Gap 2 — Customer Lens on Every Visit</div>
+          <div class="card-title">The instinct exists. The habit doesn't.</div>
+          <div class="card-body">
+            "Every time I visit a branch, I intentionally walk it with the same judgment a first-time customer would" scores <strong>6.0</strong> — tied for the lowest learner score along with proactive quality. Notably, the distribution here is the widest of any question: scores span from 3 to 10, meaning the team is highly split on how consistently this happens.
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>11 participants (24%) rated this at 4 or below — nearly one in four say this is not a consistent practice</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>11 participants (24%) rated this at 8 or above — a vocal high-confidence group</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span>The spread suggests this is more a function of individual habit than team-wide practice</span>
+          </div>
+          <div class="quote-block amber">
+            <div class="quote-text">"Visit my sites and see what I notice as a Citizens customer."</div>
+            <div class="quote-attr">Vincent Parrino, FM — describing his role in the survey</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">One bright spot</div>
+          <div class="card-title">Root cause thinking is the team's strongest area</div>
+          <div class="card-body">
+            "Whenever I find a persistent issue, I dig into why it keeps coming back" scores <strong>6.8</strong> — the highest of all five areas. The team has a real foundation here. The initiative can build on that instinct and connect it to the documentation and customer lens gaps.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-nav">
+      <button class="nav-btn" onclick="goTo(0)">← Previous</button>
+      <span class="slide-counter">2 of 3</span>
+      <button class="nav-btn" onclick="goTo(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: MANAGER vs PARTICIPANT VIEW ===== -->
+  <div class="slide" id="slide-2">
+    <div class="slide-meta">
+      <span class="slide-num">03 / 03</span>
+      <span class="slide-tag tag-green">Manager vs. Participant View</span>
+    </div>
+
+    <h1 class="slide-headline">Where managers and participants see things differently</h1>
+    <p class="slide-subhead">For the 33 participants whose managers also completed the baseline, we can compare how each person rated themselves versus how their manager rated them. Most participants rated themselves higher — but not all.</p>
+    <div class="slide-rule"></div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Self vs. Manager Rating — Selected Participants</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Self</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Manager</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Gap (self higher)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Gap (manager higher)</div>
+        </div>
+
+        <!-- Notable divergences -->
+        <div class="div-table">
+
+          <div class="div-row">
+            <div class="div-name">T. Donohue</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:100%"></div></div>
+                <span class="div-num" style="color:var(--accent)">10.0</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:40%"></div></div>
+                <span class="div-num" style="color:var(--amber)">4.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-pos">+6.0</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">M. DeMartino</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:96%"></div></div>
+                <span class="div-num" style="color:var(--accent)">9.6</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:60%"></div></div>
+                <span class="div-num" style="color:var(--amber)">6.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-pos">+3.6</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">Juan Jorge</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:66%"></div></div>
+                <span class="div-num" style="color:var(--accent)">6.6</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:30%"></div></div>
+                <span class="div-num" style="color:var(--amber)">3.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-pos">+3.6</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">V. Parrino</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:40%"></div></div>
+                <span class="div-num" style="color:var(--accent)">4.0</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:80%"></div></div>
+                <span class="div-num" style="color:var(--amber)">8.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-neg">−4.0</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">J. Gilmore</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:50%"></div></div>
+                <span class="div-num" style="color:var(--accent)">5.0</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:80%"></div></div>
+                <span class="div-num" style="color:var(--amber)">8.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-neg">−3.0</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">Brandon Allen</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:58%"></div></div>
+                <span class="div-num" style="color:var(--accent)">5.8</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:80%"></div></div>
+                <span class="div-num" style="color:var(--amber)">8.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-neg">−2.2</span>
+          </div>
+
+          <div class="div-row">
+            <div class="div-name">Jose Graca</div>
+            <div class="div-bars">
+              <div class="div-bar-row">
+                <span class="div-bar-label">Self</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-learner" style="width:78%"></div></div>
+                <span class="div-num" style="color:var(--accent)">7.8</span>
+              </div>
+              <div class="div-bar-row">
+                <span class="div-bar-label">Mgr</span>
+                <div class="div-bar-track"><div class="div-bar-fill bar-manager" style="width:80%"></div></div>
+                <span class="div-num" style="color:var(--amber)">8.0</span>
+              </div>
+            </div>
+            <span class="div-gap-badge gap-zero">~</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="full-col">
+        <div class="card">
+          <div class="card-label">What the divergences tell us</div>
+          <div class="card-title">Overconfidence is more common than underconfidence</div>
+          <div class="card-body">
+            Of the 33 participants with matching manager ratings, <strong>24 rated themselves higher than their manager did</strong> — an average gap of +1.4 points. Only 7 were rated higher by their manager than themselves. Three were essentially aligned.
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span><strong>Largest overconfidence gap: +6.0</strong> — one participant rated themselves 10/10 across the board; their manager rated them 4.0</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span><strong>Most interesting underconfidence cases:</strong> Vincent Parrino (−4.0) and Brandon Allen (−2.2) both rated themselves significantly lower than their manager did — worth exploring what's behind that</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">→</span>
+            <span><strong>Best-aligned pairs:</strong> Jose Graca, Jeffrey Tommer, and Donald Knight — managers and participants essentially agreed</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">An open question for this meeting</div>
+          <div class="card-title">Do these gaps surprise you?</div>
+          <div class="card-body">The manager vs. participant divergences are some of the most useful data the baseline generates — because they reveal not just skill gaps but awareness gaps. A few things worth discussing:</div>
+          <div class="finding-row">
+            <span class="finding-icon">?</span>
+            <span>Are there participants in the large overconfidence group who you'd flag as a concern going in?</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">?</span>
+            <span>The underconfidence cases — do those match your read of those individuals?</span>
+          </div>
+          <div class="finding-row">
+            <span class="finding-icon">?</span>
+            <span>Which manager's ratings surprised you most — either high or low?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-bar">
+      <strong>What to watch at the end</strong>
+      This baseline is the starting line. When the follow-up survey arrives in weeks 11–12, we'll measure every one of these numbers again — and show the delta. The documentation and customer lens gaps are the ones most likely to move.
+    </div>
+
+    <div class="slide-nav">
+      <button class="nav-btn" onclick="goTo(1)">← Previous</button>
+      <span class="slide-counter">3 of 3</span>
+      <button class="nav-btn" disabled>End</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slide-dot');
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>

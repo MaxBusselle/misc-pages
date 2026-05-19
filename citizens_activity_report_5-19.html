@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Eyes — Activity Report</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f3ef;
+    --white: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #6b6860;
+    --rule: #ddd9d0;
+    --accent: #1a3a5c;
+    --accent-light: #e8eef5;
+    --green: #2d6a4f;
+    --green-light: #e8f5ee;
+    --amber: #b45309;
+    --amber-light: #fef3e2;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --tag: #e8e6e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--accent);
+    color: white;
+    padding: 28px 40px 24px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 6px;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .hstat {
+    text-align: right;
+  }
+
+  .hstat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .hstat-label {
+    font-size: 11px;
+    opacity: 0.65;
+  }
+
+  /* FILTERS */
+  .filters-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .filter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .filter-select {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 5px 24px 5px 10px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6860'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    min-width: 140px;
+  }
+
+  .filter-select:focus { outline: none; border-color: var(--accent); }
+
+  .filter-search {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 5px 10px;
+    min-width: 180px;
+  }
+
+  .filter-search:focus { outline: none; border-color: var(--accent); }
+
+  .filter-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--rule);
+  }
+
+  .results-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-left: auto;
+  }
+
+  .clear-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: none;
+    border: 1px solid #c0cdd8;
+    border-radius: 3px;
+    padding: 4px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .clear-btn:hover { background: var(--accent-light); }
+
+  /* TABLE */
+  .table-wrap {
+    padding: 24px 40px 40px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 12.5px;
+  }
+
+  thead tr {
+    background: #f0eee8;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 10px 14px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  th:hover { color: var(--accent); }
+  th.sorted { color: var(--accent); }
+
+  th .sort-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    opacity: 0.4;
+    font-size: 8px;
+  }
+
+  th.sorted .sort-arrow { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #faf9f6; }
+
+  td {
+    padding: 12px 14px;
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  /* CELL TYPES */
+  .cell-name {
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .cell-title {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .cell-manager {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .activity-pill {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .pill-walkthrough { background: var(--accent-light); color: var(--accent); }
+  .pill-workorder   { background: var(--green-light);  color: var(--green); }
+  .pill-longopen    { background: var(--amber-light);  color: var(--amber); }
+  .pill-repetitive  { background: #f3e8ff; color: #6b21a8; }
+  .pill-pattern     { background: #fef9c3; color: #854d0e; }
+  .pill-zone        { background: #ffe4e6; color: #9f1239; }
+
+  .diff-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: var(--tag);
+    color: var(--muted);
+  }
+
+  .cell-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .outcome-text {
+    font-size: 12px;
+    color: #3a3830;
+    line-height: 1.5;
+    max-width: 240px;
+  }
+
+  .outcome-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+  }
+
+  .outcome-done    { background: var(--green-light); color: var(--green); }
+  .outcome-partial { background: var(--amber-light); color: var(--amber); }
+  .outcome-missed  { background: var(--red-light);   color: var(--red); }
+
+  .coach-text {
+    font-size: 11.5px;
+    color: #4a4640;
+    line-height: 1.5;
+    max-width: 300px;
+  }
+
+  .rating-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .rating-dots {
+    display: flex;
+    gap: 2px;
+  }
+
+  .rdot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+
+  .rdot.filled { background: var(--accent); }
+  .rdot.high   { background: var(--green); }
+  .rdot.low    { background: var(--amber); }
+
+  .rating-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* EMPTY STATE */
+  .empty-row td {
+    text-align: center;
+    padding: 48px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-top">
+    <div>
+      <div class="header-label">Citizens Bank · Fresh Eyes Initiative · May 2026</div>
+      <div class="header-title">Completed Activity Report</div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat">
+        <div class="hstat-num" id="total-count">62</div>
+        <div class="hstat-label">Activities Completed</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">38</div>
+        <div class="hstat-label">Participants</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">12</div>
+        <div class="hstat-label">Managers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <span class="filter-label">Filter by</span>
+
+  <select class="filter-select" id="filter-manager" onchange="applyFilters()">
+    <option value="">All Managers</option>
+  </select>
+
+  <select class="filter-select" id="filter-activity" onchange="applyFilters()">
+    <option value="">All Activities</option>
+  </select>
+
+  <select class="filter-select" id="filter-title" onchange="applyFilters()">
+    <option value="">All Titles</option>
+  </select>
+
+  <select class="filter-select" id="filter-outcome" onchange="applyFilters()">
+    <option value="">All Outcomes</option>
+    <option value="done">Completed with finding</option>
+    <option value="partial">Partial / no new items</option>
+    <option value="missed">Didn't document</option>
+  </select>
+
+  <div class="filter-sep"></div>
+
+  <input class="filter-search" id="filter-search" type="text" placeholder="Search by name…" oninput="applyFilters()">
+
+  <button class="clear-btn" onclick="clearFilters()">Clear</button>
+
+  <span class="results-count" id="results-count">62 results</span>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th onclick="sortBy('name')">Participant <span class="sort-arrow">↕</span></th>
+        <th onclick="sortBy('manager')">Reports To <span class="sort-arrow">↕</span></th>
+        <th onclick="sortBy('activity')">Activity <span class="sort-arrow">↕</span></th>
+        <th onclick="sortBy('completed')">Completed <span class="sort-arrow">↕</span></th>
+        <th>What Happened</th>
+        <th onclick="sortBy('self_rating')">Self-Rating <span class="sort-arrow">↕</span></th>
+        <th>Coach Summary</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+    </tbody>
+  </table>
+</div>
+
+<script>
+const DATA = [{"name": "John Conti", "title": "Senior Facility Manager", "manager": "Jessica Ann Kamer", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Walked through a branch visit where a quality issue (burning grass) was spotted, documented with photos, escalated to the appropriate contacts, and logged as a work order \u2014 completing the fresh-eyes activity."}, {"name": "William Strobele", "title": "Facility Manager", "manager": "John Scaglia", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Walked through a completed branch visit where a rusted, downed bollard was spotted and logged in 360 during a property inspection, then reinforced with a tip about adding deterioration context to future entries."}, {"name": "Shawn Evans", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 9, "coach_summary": "Spotted a quality finding (dusty light fixtures) during a building inspection visit and logged it in 360, then received a tip on how to strengthen future documentation with condition estimates."}, {"name": "Argeny Garcia", "title": "Facility Manager", "manager": "Juan Jorge", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 8, "coach_summary": "Recounted noticing and logging quality issues spotted during a work order visit, and received a tip about reviewing open items in 360 before future visits."}, {"name": "Maria Kingsley", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Identified and logged multiple exterior maintenance findings at a branch location, including doors needing paint, window trim work, and a missing door sweep, then captured photos and assigned the work to a painter in the tracking system."}, {"name": "Brandon Allen", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Identified three fresh-eyes findings at a branch during a parking lot visit (salt-stained vestibule carpet, chipped entrance paint, dirty awnings) and logged all three as work orders in 360."}, {"name": "Shawn Evans", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 18, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Walked through the Fresh Eyes Walkthrough activity, covering approach strategies like high dusting and customer-perspective thinking, then guided documentation of a specific finding in 360 with location details and a photo."}, {"name": "Richard Hunter", "title": "Facility Manager", "manager": "Eric Kaechelin", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 18, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Practiced spotting and logging a non-work-order issue (a damaged gate) during a branch visit, then debriefed on techniques for catching exterior problems before entering a building."}, {"name": "John Hay", "title": "Landscape Manager", "manager": "Brian Hawtin", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 15, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 5, "coach_summary": "Spotted debris near an ATM during a branch work order visit and logged it in 360, while receiving encouragement to extend future walkthroughs into branch interiors."}, {"name": "David Patterson", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 15, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Completed a branch visit activity by identifying a customer-visible exterior ATM cleanliness issue unrelated to the original inspection purpose, then logged and photographed it in 360."}, {"name": "Mark Marterella", "title": "Facility Manager", "manager": "Sean Conroy", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 15, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 9, "coach_summary": "Practiced spotting and logging a customer-facing quality issue (cigarette butts and debris along curbs) during a general site visit to Oil City, and received a tip on how to add context to future findings."}, {"name": "John Conti", "title": "Senior Facility Manager", "manager": "Jessica Ann Kamer", "activity": "Focus on One Zone", "difficulty": 3.0, "short_desc": "Walk a single zone of a branch as a customer would \u2014 from entry to lobby \u2014 and document what you notice before filtering for operational relevance.", "completed": "May 15, 2026", "what_happened": "I walked the zone and documented what I noticed as a customer would", "self_rating": 6, "coach_summary": "Completed a zone walkthrough at a branch location, documented a cleanliness issue, and confirmed proper work order creation with photos attached in the facilities management system."}, {"name": "Morgan McNary", "title": "Facility Manager", "manager": "Anna Mann", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 15, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 7, "coach_summary": "Guided a fresh-eyes walkthrough activity, then wrapped up after the learner reported completing it at an alternate site, identifying carpet stains and elevator lobby issues, and submitting work orders directly to the landlord."}, {"name": "James Wright", "title": "Facilities Manager Lead", "manager": "Sean Conroy", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 15, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 7, "coach_summary": "Guided a fresh-eyes branch walkthrough activity, covering the inspection route, documentation steps, and reinforcing the importance of capturing findings in 360 before resolving them."}, {"name": "William Granville", "title": "Facilities Manager Lead", "manager": "Sean Conroy", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 15, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 6, "coach_summary": "Identified a cosmetic issue at a branch entrance during a facility inspection visit and logged it in 360 with a photo, then reflected on sustaining customer-perspective awareness throughout future visits."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Review a Long-Open Work Order", "difficulty": 4.0, "short_desc": "Find a work order that's been sitting open too long for a location you're visiting and take a specific documented action step toward fixing it.", "completed": "May 14, 2026", "what_happened": "I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind", "self_rating": 9, "coach_summary": "Practiced reviewing a long-open work order before a branch visit, then completed the on-site loop by confirming conditions, photographing the issue, contacting the vendor, and logging the update in the system."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Review a Long-Open Work Order", "difficulty": 4.0, "short_desc": "Find a work order that's been sitting open too long for a location you're visiting and take a specific documented action step toward fixing it.", "completed": "May 14, 2026", "what_happened": "I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind", "self_rating": 9, "coach_summary": "Identified a long-open ceiling tile work order at Kimberton, assessed the condition on-site, and logged a documented update in 360 with a target completion date and photo."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Review a Long-Open Work Order", "difficulty": 4.0, "short_desc": "Find a work order that's been sitting open too long for a location you're visiting and take a specific documented action step toward fixing it.", "completed": "May 14, 2026", "what_happened": "I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind", "self_rating": 8, "coach_summary": "Identified a 90+ day decommission work order at Norristown, traced the delay to permitting and architect holdups, then logged an action item in 360 with an ownership date after connecting with the general contractor on-site."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Review a Long-Open Work Order", "difficulty": 4.0, "short_desc": "Find a work order that's been sitting open too long for a location you're visiting and take a specific documented action step toward fixing it.", "completed": "May 14, 2026", "what_happened": "I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind", "self_rating": 8, "coach_summary": "Investigated a long-open ADA door work order at a branch location, tested the door on-site, logged findings in 360, and received coaching on strengthening follow-up action steps with specific triggers and target dates."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Spot the Pattern Before You Walk In", "difficulty": 6.0, "short_desc": "Find one issue in 360 that keeps coming up, think through what might be behind it, and arrive at your next location visit ready to investigate.", "completed": "May 14, 2026", "what_happened": "The items in 360 didn't point clearly to a pattern \u2014 everything looked like a one-off", "self_rating": 8, "coach_summary": "Practiced pre-visit analysis by identifying a persistent facilities issue at a branch, then confirmed the hypothesis on-site and documented it with a work order, assigned owner, and target date."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Catch the Repetitive Issue", "difficulty": 5.0, "short_desc": "Find one issue that has been persisting at a location without resolution, categorize why, and take a specific documented action step toward fixing it.", "completed": "May 14, 2026", "what_happened": "I identified a recurring issue but don't yet know why it persists", "self_rating": 7, "coach_summary": "Identified a persisting parking lot/sidewalk issue at a branch during a site visit, diagnosed the root cause as budget limitations, and logged it in a work order system with an owner and target resolution date."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 14, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 4, "coach_summary": "Identified rusted ADA handrails at a branch during a general visit and logged the finding with a photo in 360."}, {"name": "Patricia Zieverink", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 14, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a Fresh Eyes Walkthrough at a branch location, documenting a parking lot concrete repair finding in the work order system and reinforcing the habit of logging issues on-site with photos and specific descriptions."}, {"name": "Tony Petaccio", "title": "Facility Manager", "manager": "Patricia Zieverink", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 14, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 5, "coach_summary": "Guided a fresh-eyes walkthrough activity across three bank branches, coaching on customer-mindset inspection techniques and prompting documentation of findings like landscaping issues and a camera relocation repair in the facilities management system."}, {"name": "Kevin Ozmun", "title": "Facility Manager", "manager": "John Conti", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 14, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 8, "coach_summary": "Identified a quality finding (black streak mark near the entrance) during a work order visit and logged it with photos, then received feedback on adding estimated timeframes to notes."}, {"name": "Taeyon Thompson", "title": "Facility Manager", "manager": "Maria Kingsley", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 14, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 10, "coach_summary": "Completed a Fresh Eyes Walkthrough activity at a branch, identifying and logging two exterior issues (a missing parking sign and trash accumulation) in the facilities management system with photos and estimated durations."}, {"name": "Sean Flatt", "title": "Landscape Manager", "manager": "Brian Hawtin", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 14, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Walked through a completed branch visit, identified customer-facing issues (septic smell, potholes, peeling ATM paint), and reinforced the importance of logging findings in 360 with photos even when issues are handled immediately by phone."}, {"name": "Vincent Parrino", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 14, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 4, "coach_summary": "Completed a Fresh Eyes Walkthrough across three branches, spotting issues like misplaced floor rugs and shopping carts, resolving them on the spot, and receiving guidance on logging findings in 360 for future visits."}, {"name": "Joshua Whitlock", "title": "Facility Manager", "manager": "Sean Conroy", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 14, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Identified door closer issues during a pothole repair visit and logged them in the work order system."}, {"name": "Nicholas Velardi", "title": "Facility Manager", "manager": "Maria Kingsley", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 14, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 8, "coach_summary": "Identified and documented multiple quality findings (potholes, broken curb, interior lighting issue) unrelated to the original work order during a site visit, then logged and submitted them in 360."}, {"name": "Maria Kingsley", "title": "Facilities Manager Lead", "manager": "Eric Kaechelin", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 13, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 8, "coach_summary": "Guided a walkthrough of a branch visit to identify and document facility issues, with discussion around logging findings in a work order system despite resource constraints."}, {"name": "Eric Kaechelin", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 13, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Walked through preparation and execution of a branch inspection, identifying a parking lot finding and clarifying documentation expectations around logging observations directly in the facility management system."}, {"name": "Michael Konczewski", "title": "Facility Manager", "manager": "Patricia Zieverink", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 13, 2026", "what_happened": "I noticed something while working but didn't stop to document it", "self_rating": 9, "coach_summary": "Identified multiple quality issues during a branch visit and discussed the importance of documenting findings in the tracking system even when repairs are completed on the spot."}, {"name": "Isabel Kingsley", "title": "Facility Manager", "manager": "John Conti", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 12, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 6, "coach_summary": "Completed a \"fresh eyes\" branch walkthrough activity, documenting a cleanliness issue spotted at a New Jersey branch and logging it with a photo in the tracking system."}, {"name": "Juan Jorge", "title": "Facilities Manager Lead", "manager": "John Scaglia", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 12, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Completed work orders at a branch location, identified an unrelated customer-facing issue (walls needing paint in the elevator vestibule and reception area), and logged the finding with photos while navigating union building constraints around next steps."}, {"name": "Leonard Manigbas", "title": "Facility Manager", "manager": "Juan Jorge", "activity": "Catch the Repetitive Issue", "difficulty": 5.0, "short_desc": "Find one issue that has been persisting at a location without resolution, categorize why, and take a specific documented action step toward fixing it.", "completed": "May 12, 2026", "what_happened": "I identified a recurring issue but don't yet know why it persists", "self_rating": 5, "coach_summary": "Identified a lingering restroom cleaning issue at a branch location, categorized it as a vendor gap, and walked through logging it in the work order system with a photo, specific action note, and SLA assignment."}, {"name": "Sean Conroy", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 12, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Spotted and logged a stained ceiling tile finding during an unrelated branch visit, then debriefed on documentation quality including the importance of attaching a photo to the 360 entry."}, {"name": "Jami Sarokon", "title": "Facility Manager", "manager": "Sean Conroy", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 12, 2026", "what_happened": "I did the walkthrough. There were no new items to document", "self_rating": null, "coach_summary": "Completed a fresh eyes walkthrough at a branch location, reviewing findings against existing work orders, then wrapped up with a reminder to log and photo-document at least one item in 360 on future visits."}, {"name": "Joseph Dudar", "title": "Facility Manager", "manager": "John Scaglia", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 11, 2026", "what_happened": "", "self_rating": null, "coach_summary": "Spotted a flooring gap during a branch visit and logged it in 360 with a photo, reinforcing the importance of documenting findings in the system even when they're already being handled through other channels."}, {"name": "David Schofield", "title": "Facility Manager", "manager": "John Scaglia", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 11, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a Fresh Eyes Walkthrough at a branch, documenting a finding in a work order, then debriefed on logging specificity and the importance of covering the full interior customer route."}, {"name": "John Hay", "title": "Landscape Manager", "manager": "Brian Hawtin", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 11, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a fresh eyes walkthrough at a branch location, documenting exterior debris and logging a work order, with coaching to extend the habit to interior spaces on future visits."}, {"name": "Argeny Garcia", "title": "Facility Manager", "manager": "Juan Jorge", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 11, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 8, "coach_summary": "Completed a branch walkthrough activity, identifying worn door handle finishes and paint issues, logging them as work orders in 360, and receiving feedback on adding estimated duration to future documentation."}, {"name": "Joshua Whitlock", "title": "Facility Manager", "manager": "Sean Conroy", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 08, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a branch walkthrough activity, identifying and logging a vault room door hardware issue, then marked the assignment done."}, {"name": "Leonard Manigbas", "title": "Facility Manager", "manager": "Juan Jorge", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 08, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": 3, "coach_summary": "Debriefed a completed location inspection visit, confirming that a quality issue (bird droppings on an exterior awning) was spotted, photographed, and logged in 360, and offered a tip about documenting estimated duration of issues."}, {"name": "Sean Conroy", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 08, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 9, "coach_summary": "Completed a fresh-eyes walkthrough activity at a branch location, documenting a cove base deficiency, logging it in the system, and identifying it as a landlord-responsibility repair requiring direct follow-up."}, {"name": "Matthew DeMartino", "title": "Facility Manager", "manager": "Anna Mann", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 08, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 10, "coach_summary": "Conducted a fresh eyes walkthrough of a back-office branch location, identifying a landlord-owned broken thermostat and logging it in 360 with guidance on documenting findings regardless of responsibility."}, {"name": "Juan Jorge", "title": "Facilities Manager Lead", "manager": "John Scaglia", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 4, "coach_summary": "Prompted to identify which branch they plan to visit and when for an upcoming customer walkthrough activity."}, {"name": "Michael Konczewski", "title": "Facility Manager", "manager": "Patricia Zieverink", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a fresh eyes walkthrough activity at a branch, identifying two maintenance findings (old tape adhesive on a vestibule kickplate and a burnt-out ATM vestibule light) logged in 360, with coaching on adding estimated timeframes to future documentation."}, {"name": "Nicholas Velardi", "title": "Facility Manager", "manager": "Maria Kingsley", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 8, "coach_summary": "Guided a learner through a fresh-eyes branch walkthrough activity, from preparation tips on documenting findings to debriefing on observations made during the visit and marking the activity complete."}, {"name": "David Patterson", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a Fresh Eyes Walkthrough activity at a branch location, identifying and logging damaged ceiling tiles, then reinforced best practices for documenting findings with context like estimated duration."}, {"name": "William Granville", "title": "Facilities Manager Lead", "manager": "Sean Conroy", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 5, "coach_summary": "Planned a branch walkthrough visit, practiced spotting overlooked maintenance issues, then reported back on finding and logging a faded night drop sign in 360."}, {"name": "Jose Graca", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Guided a walkthrough activity at a specific branch location, from preparation through completion, and collected a finding about lawn condition that needed to be logged in a ticketing system."}, {"name": "John Conti", "title": "Senior Facility Manager", "manager": "Jessica Ann Kamer", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough. There were no new items to document", "self_rating": null, "coach_summary": "Guided a first-time branch visitor through a fresh-eyes walkthrough activity, covering the inspection path, observation techniques, and documentation standards before assigning the task."}, {"name": "Richard Hunter", "title": "Facility Manager", "manager": "Eric Kaechelin", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 07, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": 3, "coach_summary": "Completed a fresh-eyes branch walkthrough at Kingston, identifying two facility issues (a lobby floor crack and obsolete ceiling-mounted security equipment), logging both in 360, and debriefing on the value of including age estimates in work order documentation."}, {"name": "Kevin Ozmun", "title": "Facility Manager", "manager": "John Conti", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 06, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Guided a learner through a branch observation activity, covering how to document findings with specificity, then debriefed on what was discovered and logged during the visit."}, {"name": "Mark Marterella", "title": "Facility Manager", "manager": "Sean Conroy", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 06, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a Fresh Eyes Walkthrough at a bank branch, identifying and logging three maintenance issues \u2014 exterior stairwell debris, an unswepped entrance, and interior paint touch-ups \u2014 with photos documented in the work order system."}, {"name": "John Scaglia", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Keep Fresh Eyes During a Work Order Visit", "difficulty": 3.5, "short_desc": "During an upcoming location visit, document at least one quality issue a first-time customer would notice that is unrelated to the reason you're there.", "completed": "May 06, 2026", "what_happened": "I completed the work order and documented at least one finding unrelated to it", "self_rating": null, "coach_summary": "Identified an unpainted curb inconsistency in a drive-through during an unrelated site visit, confirmed the finding was documented with a photo attached to a work order in 360, and reinforced the habit of self-documenting rather than delegating that step."}, {"name": "Leonard Manigbas", "title": "Facility Manager", "manager": "Juan Jorge", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 06, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Debriefed a completed branch walkthrough, confirming the customer-lens approach was used from the parking lot through to logging new and existing issues in 360."}, {"name": "Brandon Allen", "title": "Facility Manager", "manager": "Shawn Evans", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 06, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a fresh-eyes walkthrough activity at a branch location, identifying and documenting two paint-related findings with photos logged into a work order system."}, {"name": "Joseph Dudar", "title": "Facility Manager", "manager": "John Scaglia", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 05, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a Fresh Eyes Walkthrough at a branch location, identifying and documenting two maintenance issues with photos, and reinforced best practices for specific 360 work order entries and consistent walkthrough starting points."}, {"name": "John Scaglia", "title": "Senior Facility Manager", "manager": "Timothy Butvilas", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 05, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Completed a branch walkthrough activity, identifying an overlooked maintenance issue and logging a work order, with coaching on proper photo documentation practices in 360."}, {"name": "William Strobele", "title": "Facility Manager", "manager": "John Scaglia", "activity": "Fresh Eyes Walkthrough", "difficulty": 2.0, "short_desc": "Walk a branch as if you've never been there before, and document at least one issue you find.", "completed": "May 05, 2026", "what_happened": "I did the walkthrough and documented one or more new issues", "self_rating": null, "coach_summary": "Prompted reflection on familiarity bias and asked about upcoming branch visit timing."}];
+
+const ACTIVITY_COLORS = {
+  'Fresh Eyes Walkthrough': 'pill-walkthrough',
+  'Keep Fresh Eyes During a Work Order Visit': 'pill-workorder',
+  'Review a Long-Open Work Order': 'pill-longopen',
+  'Catch the Repetitive Issue': 'pill-repetitive',
+  'Spot the Pattern Before You Walk In': 'pill-pattern',
+  'Focus on One Zone': 'pill-zone',
+};
+
+function outcomeClass(text) {
+  if (!text) return null;
+  const t = text.toLowerCase();
+  if (t.includes('documented one or more') || t.includes('documented at least one') || t.includes('walked the zone')) return 'done';
+  if (t.includes("didn't") || t.includes('no new items') || t.includes("didn't get") || t.includes('noticed something') || t.includes("didn't point")) return 'partial';
+  if (t.includes('identified a recurring')) return 'partial';
+  return 'done';
+}
+
+function outcomeBadgeClass(cls) {
+  if (cls === 'done') return 'outcome-done';
+  if (cls === 'partial') return 'outcome-partial';
+  return 'outcome-missed';
+}
+
+function ratingDots(rating) {
+  if (!rating) return '<span style="color:#ccc;font-size:11px">—</span>';
+  const color = rating >= 8 ? 'high' : rating >= 5 ? 'filled' : 'low';
+  let dots = '';
+  for (let i = 1; i <= 10; i++) {
+    dots += `<span class="rdot ${i <= rating ? color : ''}"></span>`;
+  }
+  return `<div class="rating-bar"><div class="rating-dots">${dots}</div><span class="rating-num">${rating}/10</span></div>`;
+}
+
+let sortCol = 'completed';
+let sortDir = -1;
+let filtered = [...DATA];
+
+function populateFilters() {
+  const managers = [...new Set(DATA.map(d => d.manager))].sort();
+  const activities = [...new Set(DATA.map(d => d.activity))].sort();
+  const titles = [...new Set(DATA.map(d => d.title))].sort();
+
+  const mSel = document.getElementById('filter-manager');
+  managers.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mSel.appendChild(o); });
+
+  const aSel = document.getElementById('filter-activity');
+  activities.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; aSel.appendChild(o); });
+
+  const tSel = document.getElementById('filter-title');
+  titles.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; tSel.appendChild(o); });
+}
+
+function applyFilters() {
+  const manager = document.getElementById('filter-manager').value;
+  const activity = document.getElementById('filter-activity').value;
+  const title = document.getElementById('filter-title').value;
+  const outcome = document.getElementById('filter-outcome').value;
+  const search = document.getElementById('filter-search').value.toLowerCase().trim();
+
+  filtered = DATA.filter(d => {
+    if (manager && d.manager !== manager) return false;
+    if (activity && d.activity !== activity) return false;
+    if (title && d.title !== title) return false;
+    if (search && !d.name.toLowerCase().includes(search)) return false;
+    if (outcome) {
+      const cls = outcomeClass(d.what_happened);
+      if (outcome === 'done' && cls !== 'done') return false;
+      if (outcome === 'partial' && cls !== 'partial') return false;
+      if (outcome === 'missed' && cls !== 'missed') return false;
+    }
+    return true;
+  });
+
+  renderTable();
+}
+
+function clearFilters() {
+  document.getElementById('filter-manager').value = '';
+  document.getElementById('filter-activity').value = '';
+  document.getElementById('filter-title').value = '';
+  document.getElementById('filter-outcome').value = '';
+  document.getElementById('filter-search').value = '';
+  applyFilters();
+}
+
+function sortBy(col) {
+  if (sortCol === col) { sortDir *= -1; }
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
+  renderTable();
+}
+
+function renderTable() {
+  const sorted = [...filtered].sort((a, b) => {
+    let av = a[sortCol] ?? '';
+    let bv = b[sortCol] ?? '';
+    if (typeof av === 'number' && typeof bv === 'number') return sortDir * (av - bv);
+    if (av === null) av = '';
+    if (bv === null) bv = '';
+    return sortDir * String(av).localeCompare(String(bv));
+  });
+
+  const tbody = document.getElementById('table-body');
+  document.getElementById('results-count').textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''}`;
+
+  if (sorted.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">No results match the current filters.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = sorted.map(d => {
+    const pillClass = ACTIVITY_COLORS[d.activity] || 'pill-walkthrough';
+    const shortActivity = d.activity.replace('Keep Fresh Eyes During a ', '').replace('Review a ', '').replace('Spot the Pattern Before You Walk In', 'Spot the Pattern');
+    const oCls = outcomeClass(d.what_happened);
+    const oBadge = oCls ? `<div class="outcome-badge ${outcomeBadgeClass(oCls)}">${oCls === 'done' ? '✓ Documented' : oCls === 'partial' ? '~ Partial' : '✗ Not logged'}</div>` : '';
+    const outcomeText = d.what_happened ? `<div class="outcome-text">${d.what_happened}</div>` : '<span style="color:#bbb;font-size:11px">—</span>';
+
+    return `<tr>
+      <td>
+        <div class="cell-name">${d.name}</div>
+        <div class="cell-title">${d.title}</div>
+      </td>
+      <td class="cell-manager">${d.manager}</td>
+      <td>
+        <span class="activity-pill ${pillClass}">${shortActivity}</span>
+        <div style="margin-top:5px"><span class="diff-badge">Level ${d.difficulty}</span></div>
+      </td>
+      <td class="cell-date">${d.completed}</td>
+      <td>${oBadge}${outcomeText}</td>
+      <td>${ratingDots(d.self_rating)}</td>
+      <td><div class="coach-text">${d.coach_summary || '—'}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+populateFilters();
+renderTable();
+</script>
+</body>
+</html>
