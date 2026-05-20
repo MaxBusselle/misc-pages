@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens · Fresh Eyes — Baseline Survey Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --white: #ffffff;
+  --ink: #1c1c1e;
+  --muted: #6b6860;
+  --rule: #ddd9d0;
+  --accent: #1a3a5c;
+  --accent-light: #e8eef5;
+  --highlight: #c84b2f;
+  --highlight-light: #fdf0ec;
+  --green: #2d6a4f;
+  --green-light: #eaf3ee;
+  --amber: #b45309;
+  --amber-light: #fef3c7;
+  --tag-bg: #ededea;
+  --nav-h: 56px;
+  --self-color: #1a3a5c;
+  --mgr-color: #6b3fa0;
+  --mgr-light: #f3eeff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; }
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white); border-bottom: 1px solid var(--rule);
+  height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; gap: 16px;
+}
+.nav-left { display: flex; align-items: center; gap: 12px; }
+.nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+.nav-sep { width: 1px; height: 18px; background: var(--rule); }
+.nav-title { font-weight: 600; font-size: 13px; }
+.nav-right { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+/* PAGE */
+.page { max-width: 1160px; margin: 0 auto; padding: 36px 28px 80px; }
+
+/* SECTION SCAFFOLDING */
+.section { margin-bottom: 52px; }
+.section-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.section-heading { font-family: 'Libre Baskerville', serif; font-size: 22px; margin-bottom: 4px; }
+.section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+.section-divider { border: none; border-top: 2px solid var(--rule); margin: 44px 0; }
+
+/* OVERVIEW CARDS */
+.overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+@media(max-width:860px){ .overview-grid { grid-template-columns: repeat(2,1fr); } }
+.overview-card { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 20px; }
+.ov-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+.ov-value { font-family: 'Libre Baskerville', serif; font-size: 30px; font-weight: 700; line-height: 1; }
+.ov-value.blue { color: var(--self-color); }
+.ov-value.purple { color: var(--mgr-color); }
+.ov-value.green { color: var(--green); }
+.ov-value.muted { color: var(--muted); }
+.ov-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+/* ALIGNMENT BAR */
+.align-bar-wrap { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; }
+.align-bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+.align-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; }
+.ab-seg { display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--white); transition: all 0.3s; position: relative; }
+.ab-seg:hover::after { content: attr(data-tip); position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--white); padding: 4px 10px; border-radius: 4px; font-size: 11px; white-space: nowrap; font-weight: 400; pointer-events: none; }
+.ab-over { background: var(--highlight); }
+.ab-aligned { background: var(--green); }
+.ab-under { background: var(--mgr-color); }
+.align-legend { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+.al-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.al-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+/* Q AVERAGES TABLE */
+.q-table { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+.q-table-header { display: grid; grid-template-columns: 2fr 1fr 120px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.q-table-header span { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.q-row { display: grid; grid-template-columns: 2fr 1fr 120px; padding: 12px 16px; border-bottom: 1px solid var(--rule); align-items: center; }
+.q-row:last-child { border-bottom: none; }
+.q-name { font-size: 13px; }
+.q-source { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+.q-source.self { color: var(--self-color); }
+.q-source.mgr { color: var(--mgr-color); }
+.score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.score-bar-bg { flex: 1; height: 8px; background: var(--tag-bg); border-radius: 4px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 4px; }
+.score-bar-fill.self { background: var(--self-color); }
+.score-bar-fill.mgr { background: var(--mgr-color); }
+.score-val { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; min-width: 28px; text-align: right; }
+.score-val.self { color: var(--self-color); }
+.score-val.mgr { color: var(--mgr-color); }
+
+/* MANAGER CALIBRATION */
+.mgr-cal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 12px; }
+.mgr-cal-card { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+.mgr-cal-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+.mgr-cal-meta { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.mgr-cal-score-row { display: flex; align-items: center; gap: 8px; }
+.mgr-cal-bar-bg { flex: 1; height: 8px; background: var(--tag-bg); border-radius: 4px; overflow: hidden; }
+.mgr-cal-bar-fill { height: 100%; border-radius: 4px; background: var(--mgr-color); }
+.mgr-cal-score { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--mgr-color); min-width: 30px; text-align: right; }
+.uniform-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--amber-light); color: var(--amber); margin-top: 8px; }
+.range-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* MAIN TABLE */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+.filter-bar select, .filter-bar input {
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
+  border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px;
+  background: var(--white); color: var(--ink); outline: none;
+}
+.filter-bar select:focus, .filter-bar input:focus { border-color: var(--accent); }
+.clear-btn { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; border: 1px solid var(--rule); border-radius: 6px; padding: 7px 12px; background: var(--white); color: var(--muted); cursor: pointer; }
+.clear-btn:hover { background: var(--bg); }
+.results-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+.main-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; font-size: 13px; }
+.main-table th {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--muted); padding: 10px 12px;
+  background: var(--bg); border-bottom: 1px solid var(--rule); text-align: left;
+  white-space: nowrap; cursor: pointer; user-select: none;
+}
+.main-table th:hover { color: var(--ink); }
+.main-table th.sorted { color: var(--accent); }
+.main-table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.main-table tr:last-child td { border-bottom: none; }
+.main-table tr:hover td { background: #faf9f6; }
+
+/* Column group headers */
+.col-group-self { background: var(--accent-light) !important; color: var(--self-color) !important; border-bottom: 2px solid var(--self-color) !important; }
+.col-group-mgr { background: var(--mgr-light) !important; color: var(--mgr-color) !important; border-bottom: 2px solid var(--mgr-color) !important; }
+.col-group-gap { background: var(--tag-bg) !important; }
+
+/* Score pills */
+.score-pill { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; border-radius: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
+.sp-self { background: var(--accent-light); color: var(--self-color); }
+.sp-mgr { background: var(--mgr-light); color: var(--mgr-color); }
+
+/* Avg cells */
+.avg-cell { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; }
+.avg-cell.self { color: var(--self-color); }
+.avg-cell.mgr { color: var(--mgr-color); }
+
+/* Gap cell */
+.gap-pill { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 12px; }
+.gap-big-over { background: var(--highlight-light); color: var(--highlight); }
+.gap-small-over { background: #fff5eb; color: #c26300; }
+.gap-aligned { background: var(--green-light); color: var(--green); }
+.gap-small-under { background: #f0ebff; color: #6b3fa0; }
+.gap-big-under { background: var(--mgr-light); color: var(--mgr-color); }
+
+/* Name cell */
+.name-cell { font-weight: 600; }
+.mgr-cell { font-size: 12px; color: var(--muted); }
+.no-mgr-flag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-left: 4px; }
+.no-results { text-align: center; padding: 40px; color: var(--muted); font-style: italic; }
+
+/* LEGEND BAR */
+.legend-bar { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 14px; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; }
+.lb-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.lb-swatch { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+/* CALLOUT BOX */
+.callout { background: var(--white); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; line-height: 1.7; }
+.callout.amber { border-left-color: var(--amber); }
+.callout.red { border-left-color: var(--highlight); }
+.callout.purple { border-left-color: var(--mgr-color); }
+.callout strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-logo">Citizens · Fresh Eyes</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Baseline Survey — Self vs. Manager Comparison</span>
+  </div>
+  <div class="nav-right">Survey date: May 5, 2026</div>
+</nav>
+
+<div class="page">
+
+  <!-- SECTION 1: OVERVIEW -->
+  <div class="section">
+    <div class="section-eyebrow">Overview</div>
+    <div class="section-heading">Group Snapshot</div>
+    <div class="section-sub">45 learners completed the self-assessment. 39 have a matched manager rating; 6 are managers themselves in the program hierarchy and have no manager assessor. At the group level, self and manager scores are nearly identical — but individual divergence is significant, spanning a +6.0 to −4.0 range.</div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="ov-label">Group Self Avg</div>
+        <div class="ov-value blue">6.2</div>
+        <div class="ov-sub">39 matched learners</div>
+      </div>
+      <div class="overview-card">
+        <div class="ov-label">Group Manager Avg</div>
+        <div class="ov-value purple">6.0</div>
+        <div class="ov-sub">39 matched learners</div>
+      </div>
+      <div class="overview-card">
+        <div class="ov-label">Net Group Gap</div>
+        <div class="ov-value muted">+0.2</div>
+        <div class="ov-sub">Self slightly above manager</div>
+      </div>
+      <div class="overview-card">
+        <div class="ov-label">Self-Report Only</div>
+        <div class="ov-value muted">6</div>
+        <div class="ov-sub">No manager assessor on file</div>
+      </div>
+    </div>
+
+    <div class="align-bar-wrap">
+      <div class="align-bar-label">Alignment Distribution — 39 matched learners</div>
+      <div class="align-bar">
+        <div class="ab-seg ab-over" style="flex:10" data-tip="10 learners: self &gt; manager by more than 1.5 pts (overconfidence signal)">10</div>
+        <div class="ab-seg ab-aligned" style="flex:20" data-tip="20 learners: self and manager within ±1.5 pts (aligned)">20</div>
+        <div class="ab-seg ab-under" style="flex:9" data-tip="9 learners: manager &gt; self by more than 1.5 pts (underconfidence signal)">9</div>
+      </div>
+      <div class="align-legend">
+        <div class="al-item"><div class="al-dot" style="background:var(--highlight)"></div>Self significantly above manager (&gt;+1.5) — 10 learners (26%)</div>
+        <div class="al-item"><div class="al-dot" style="background:var(--green)"></div>Aligned (±1.5) — 20 learners (51%)</div>
+        <div class="al-item"><div class="al-dot" style="background:var(--mgr-color)"></div>Manager significantly above self (&gt;+1.5) — 9 learners (23%)</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>What the numbers show:</strong> The cohort is nearly split — slightly more overconfidence than underconfidence, but both directions are well represented. The near-zero group average gap can be misleading; it masks the fact that nearly half the cohort has meaningful divergence between how they see themselves and how their manager sees them. These gaps are the most valuable part of the baseline.
+    </div>
+  </div>
+
+  <!-- SECTION 2: QUESTION-LEVEL AVERAGES -->
+  <hr class="section-divider">
+  <div class="section">
+    <div class="section-eyebrow">Question-Level Analysis</div>
+    <div class="section-heading">What the Group Rated by Dimension</div>
+    <div class="section-sub">The two surveys asked different but related questions. Learner questions (5) map to self-perception of habits and behaviors. Manager questions (3) map to observable, from-the-outside behaviors. Direct question-to-question comparison isn't possible, but the pattern across dimensions tells a story.</div>
+
+    <div class="callout amber">
+      <strong>Key pattern:</strong> Learners rate their <em>intent and mindset</em> (fresh eyes mindset, customer experience lens) higher than their <em>documented output</em> (360 documentation fidelity — the lowest self-rated dimension at 5.8). Managers independently rate documentation specificity as their lowest dimension (5.8). Both surveys point to the same gap: <strong>the doing is ahead of the recording.</strong>
+    </div>
+
+    <div class="q-table">
+      <div class="q-table-header">
+        <span>Statement</span><span>Source</span><span>Group Avg</span>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Root Cause &amp; Documentation — <em>Whenever I find a persistent issue, I dig into why it keeps coming back and document clear steps to resolve it.</em></div>
+        <div class="q-source self">Self</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill self" style="width:67%"></div></div><span class="score-val self">6.7</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Customer Experience Lens — <em>When I walk a location, the customer experience shapes what I look for, what I flag, and what I fix.</em></div>
+        <div class="q-source self">Self</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill self" style="width:63%"></div></div><span class="score-val self">6.3</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Unsolicited Quality Findings — <em>Proactively brings findings I wouldn't have known about from QC reports or work order data alone.</em></div>
+        <div class="q-source mgr">Manager</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill mgr" style="width:62%"></div></div><span class="score-val mgr">6.2</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Fresh Eyes Mindset — <em>Every time I visit a branch, I intentionally walk it with the same judgment a first-time customer would.</em></div>
+        <div class="q-source self">Self</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill self" style="width:61%"></div></div><span class="score-val self">6.1</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Proactive Issue Surfacing — <em>Tends to proactively surface quality issues not already flagged through work orders or QC inspections.</em></div>
+        <div class="q-source mgr">Manager</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill mgr" style="width:61%"></div></div><span class="score-val mgr">6.1</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Proactive Quality Catch — <em>Quality issues at my locations are being caught and addressed before customers notice or complaints come in.</em></div>
+        <div class="q-source self">Self</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill self" style="width:60%"></div></div><span class="score-val self">6.0</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">Documentation Specificity — <em>Documents findings with enough specificity that I can review them in 360 without needing to follow up.</em></div>
+        <div class="q-source mgr">Manager</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill mgr" style="width:58%"></div></div><span class="score-val mgr">5.8</span></div>
+      </div>
+      <div class="q-row">
+        <div class="q-name">360 Documentation Fidelity — <em>My 360 activity tells the full story of what I find on visits, not just what's reported to me.</em></div>
+        <div class="q-source self">Self</div>
+        <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill self" style="width:58%"></div></div><span class="score-val self">5.8</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: MANAGER CALIBRATION -->
+  <hr class="section-divider">
+  <div class="section">
+    <div class="section-eyebrow">Manager Calibration</div>
+    <div class="section-heading">How Each Manager Scored Their Team</div>
+    <div class="section-sub">Managers rated their direct reports on 3 behaviors (1–10 scale). The range across managers is striking — from 3.0 to 9.3. Several managers gave all of their direct reports identical scores across all three questions, suggesting some may be rating their team as a unit rather than differentiating individuals. This calibration context is essential for interpreting individual gaps.</div>
+
+    <div class="callout purple">
+      <strong>Calibration note:</strong> 6 of 11 managers rated all their reports at a completely uniform average — meaning every person on their team got the same score across every question. John Scaglia's entire team was rated 3.0 uniform. Shawn Evans rated all 8 of his reports at 8.0 uniform. Maria Kingsley rated all 3 of hers at 9.0 uniform. When you see large gaps for individuals reporting to these managers, consider the manager's overall scale calibration before drawing conclusions about the individual.
+    </div>
+
+    <div class="mgr-cal-grid">
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">John Scaglia</div>
+        <div class="mgr-cal-meta">4 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:30%"></div></div><span class="mgr-cal-score">3.0</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">All 4 reports scored 3.0 avg, every question identical</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Patricia Zieverink</div>
+        <div class="mgr-cal-meta">3 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:40%"></div></div><span class="mgr-cal-score">4.0</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">All 3 reports scored 4.0 avg, every question identical</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">John Conti</div>
+        <div class="mgr-cal-meta">3 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:45%"></div></div><span class="mgr-cal-score">4.5</span></div>
+        <div class="range-text">Range: 4.3–5.0 · Differentiated scores</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Brian Hawtin</div>
+        <div class="mgr-cal-meta">4 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:48%"></div></div><span class="mgr-cal-score">4.8</span></div>
+        <div class="range-text">Range: 4.3–5.3 · Differentiated scores</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Juan Jorge</div>
+        <div class="mgr-cal-meta">2 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:50%"></div></div><span class="mgr-cal-score">5.0</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">Both reports scored 5.0 avg</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Anna Mann</div>
+        <div class="mgr-cal-meta">2 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:58%"></div></div><span class="mgr-cal-score">5.8</span></div>
+        <div class="range-text">Range: 5.7–6.0 · Differentiated scores</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Sean Conroy</div>
+        <div class="mgr-cal-meta">6 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:60%"></div></div><span class="mgr-cal-score">6.0</span></div>
+        <div class="range-text">Range: 5.0–7.3 · Most differentiated manager</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Eric Kaechelin</div>
+        <div class="mgr-cal-meta">3 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:67%"></div></div><span class="mgr-cal-score">6.7</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">All 3 reports scored 6.7 avg identically</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Shawn Evans</div>
+        <div class="mgr-cal-meta">8 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:80%"></div></div><span class="mgr-cal-score">8.0</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">All 8 reports scored 8.0 avg, every question identical</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Maria Kingsley</div>
+        <div class="mgr-cal-meta">3 direct reports rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:90%"></div></div><span class="mgr-cal-score">9.0</span></div>
+        <div class="uniform-badge">⚠ Uniform score</div>
+        <div class="range-text">All 3 reports scored 9.0 avg identically</div>
+      </div>
+      <div class="mgr-cal-card">
+        <div class="mgr-cal-name">Jillian K Caillouette</div>
+        <div class="mgr-cal-meta">1 direct report rated</div>
+        <div class="mgr-cal-score-row"><div class="mgr-cal-bar-bg"><div class="mgr-cal-bar-fill" style="width:93%"></div></div><span class="mgr-cal-score">9.3</span></div>
+        <div class="range-text">Anna Mann rated 10, 8, 10 across 3 questions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: INDIVIDUAL COMPARISON TABLE -->
+  <hr class="section-divider">
+  <div class="section">
+    <div class="section-eyebrow">Individual Profiles</div>
+    <div class="section-heading">Full Self vs. Manager Comparison</div>
+    <div class="section-sub">Every learner's individual scores across all questions, with averages and gap. Self questions (S1–S5) and manager questions (M1–M3) use different scales and are not directly comparable question-to-question — compare averages and observe patterns within each perspective. Sorted by gap (largest self-above-manager first) by default.</div>
+
+    <div class="legend-bar">
+      <div class="lb-item"><div class="lb-swatch" style="background:var(--accent-light);border:1px solid var(--self-color)"></div>Self-rated scores (S1–S5)</div>
+      <div class="lb-item"><div class="lb-swatch" style="background:var(--mgr-light);border:1px solid var(--mgr-color)"></div>Manager-rated scores (M1–M3)</div>
+      <div class="lb-item"><div class="lb-swatch" style="background:var(--highlight-light)"></div>Gap &gt; +1.5 (self above)</div>
+      <div class="lb-item"><div class="lb-swatch" style="background:var(--green-light)"></div>Gap ±1.5 (aligned)</div>
+      <div class="lb-item"><div class="lb-swatch" style="background:var(--mgr-light)"></div>Gap &lt; −1.5 (manager above)</div>
+    </div>
+
+    <div class="filter-bar">
+      <select id="filterManager" onchange="applyFilters()">
+        <option value="">All Managers</option>
+        <option>John Scaglia</option>
+        <option>Patricia Zieverink</option>
+        <option>John Conti</option>
+        <option>Brian Hawtin</option>
+        <option>Juan Jorge</option>
+        <option>Anna Mann</option>
+        <option>Sean Conroy</option>
+        <option>Eric Kaechelin</option>
+        <option>Shawn Evans</option>
+        <option>Maria Kingsley</option>
+        <option>Jillian K Caillouette</option>
+        <option value="__none__">No manager survey</option>
+      </select>
+      <select id="filterAlignment" onchange="applyFilters()">
+        <option value="">All Alignments</option>
+        <option value="over">Self significantly above (&gt;+1.5)</option>
+        <option value="aligned">Aligned (±1.5)</option>
+        <option value="under">Manager significantly above (&gt;+1.5)</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Search by name…" oninput="applyFilters()">
+      <button class="clear-btn" onclick="clearFilters()">Clear</button>
+    </div>
+    <div class="results-count" id="resultsCount">45 learners</div>
+
+    <div style="overflow-x:auto;">
+    <table class="main-table" id="mainTable">
+      <thead>
+        <tr>
+          <th rowspan="2" onclick="sortBy('name')" id="th-name">Learner <span>↕</span></th>
+          <th rowspan="2" onclick="sortBy('manager_name')" id="th-mgr">Assessor <span>↕</span></th>
+          <th colspan="5" class="col-group-self" style="text-align:center">Self-Assessment</th>
+          <th colspan="3" class="col-group-mgr" style="text-align:center">Manager Assessment</th>
+          <th rowspan="2" class="col-group-gap" onclick="sortBy('gap')" id="th-gap" style="text-align:center">Gap <span>↓</span></th>
+        </tr>
+        <tr>
+          <th class="col-group-self" onclick="sortBy('self_q1')" title="Fresh Eyes Mindset">S1 <span>↕</span></th>
+          <th class="col-group-self" onclick="sortBy('self_q2')" title="Root Cause &amp; Documentation">S2 <span>↕</span></th>
+          <th class="col-group-self" onclick="sortBy('self_q3')" title="Customer Experience Lens">S3 <span>↕</span></th>
+          <th class="col-group-self" onclick="sortBy('self_q4')" title="Proactive Quality Catch">S4 <span>↕</span></th>
+          <th class="col-group-self" onclick="sortBy('self_q5')" title="360 Documentation Fidelity">S5 <span>↕</span></th>
+          <th class="col-group-mgr" onclick="sortBy('mgr_q1')" title="Proactive Issue Surfacing">M1 <span>↕</span></th>
+          <th class="col-group-mgr" onclick="sortBy('mgr_q2')" title="Documentation Specificity">M2 <span>↕</span></th>
+          <th class="col-group-mgr" onclick="sortBy('mgr_q3')" title="Unsolicited Quality Findings">M3 <span>↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    </div>
+
+    <div style="margin-top:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); line-height:1.8;">
+      <strong>Self questions:</strong> S1 = Fresh Eyes Mindset · S2 = Root Cause &amp; Documentation · S3 = Customer Experience Lens · S4 = Proactive Quality Catch · S5 = 360 Documentation Fidelity<br>
+      <strong>Manager questions:</strong> M1 = Proactive Issue Surfacing · M2 = Documentation Specificity · M3 = Unsolicited Quality Findings<br>
+      All scores on a 1–10 scale. Gap = Self Avg minus Manager Avg.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DATA = [{"name":"Timothy Donohue","self_avg":10.0,"self_q1":10,"self_q2":10,"self_q3":10,"self_q4":10,"self_q5":10,"has_manager":true,"manager_name":"Patricia Zieverink","mgr_avg":4.0,"mgr_q1":4,"mgr_q2":4,"mgr_q3":4,"gap":6.0},{"name":"Juan Jorge","self_avg":6.6,"self_q1":7,"self_q2":7,"self_q3":7,"self_q4":5,"self_q5":7,"has_manager":true,"manager_name":"John Scaglia","mgr_avg":3.0,"mgr_q1":4,"mgr_q2":2,"mgr_q3":3,"gap":3.6},{"name":"Matthew DeMartino","self_avg":9.6,"self_q1":8,"self_q2":10,"self_q3":10,"self_q4":10,"self_q5":10,"has_manager":true,"manager_name":"Anna Mann","mgr_avg":6.0,"mgr_q1":6,"mgr_q2":6,"mgr_q3":6,"gap":3.6},{"name":"Argeny Garcia","self_avg":8.0,"self_q1":8,"self_q2":8,"self_q3":8,"self_q4":8,"self_q5":8,"has_manager":true,"manager_name":"Juan Jorge","mgr_avg":5.0,"mgr_q1":5,"mgr_q2":5,"mgr_q3":5,"gap":3.0},{"name":"Joshua Whitlock","self_avg":8.4,"self_q1":8,"self_q2":9,"self_q3":8,"self_q4":7,"self_q5":10,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":6.0,"mgr_q1":5,"mgr_q2":6,"mgr_q3":7,"gap":2.4},{"name":"David Schofield","self_avg":5.2,"self_q1":5,"self_q2":6,"self_q3":4,"self_q4":5,"self_q5":6,"has_manager":true,"manager_name":"John Scaglia","mgr_avg":3.0,"mgr_q1":3,"mgr_q2":3,"mgr_q3":3,"gap":2.2},{"name":"Alexander Maxwell","self_avg":7.0,"self_q1":8,"self_q2":8,"self_q3":8,"self_q4":6,"self_q5":5,"has_manager":true,"manager_name":"John Conti","mgr_avg":5.0,"mgr_q1":5,"mgr_q2":5,"mgr_q3":5,"gap":2.0},{"name":"William Strobele","self_avg":5.0,"self_q1":5,"self_q2":5,"self_q3":5,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"John Scaglia","mgr_avg":3.0,"mgr_q1":3,"mgr_q2":3,"mgr_q3":3,"gap":2.0},{"name":"Joseph Dudar","self_avg":4.6,"self_q1":4,"self_q2":5,"self_q3":6,"self_q4":4,"self_q5":4,"has_manager":true,"manager_name":"John Scaglia","mgr_avg":3.0,"mgr_q1":3,"mgr_q2":3,"mgr_q3":3,"gap":1.6},{"name":"James Wright","self_avg":6.6,"self_q1":5,"self_q2":8,"self_q3":7,"self_q4":8,"self_q5":5,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":5.0,"mgr_q1":5,"mgr_q2":4,"mgr_q3":6,"gap":1.6},{"name":"Morgan McNary","self_avg":7.2,"self_q1":8,"self_q2":7,"self_q3":8,"self_q4":7,"self_q5":6,"has_manager":true,"manager_name":"Anna Mann","mgr_avg":5.7,"mgr_q1":6,"mgr_q2":5,"mgr_q3":6,"gap":1.5},{"name":"Michael Konczewski","self_avg":5.4,"self_q1":6,"self_q2":5,"self_q3":8,"self_q4":4,"self_q5":4,"has_manager":true,"manager_name":"Patricia Zieverink","mgr_avg":4.0,"mgr_q1":4,"mgr_q2":4,"mgr_q3":4,"gap":1.4},{"name":"Mark Marterella","self_avg":6.4,"self_q1":6,"self_q2":7,"self_q3":6,"self_q4":7,"self_q5":6,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":5.3,"mgr_q1":5,"mgr_q2":5,"mgr_q3":6,"gap":1.1},{"name":"Matthew Otten","self_avg":9.0,"self_q1":10,"self_q2":10,"self_q3":9,"self_q4":8,"self_q5":8,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":1.0},{"name":"Kevin Ozmun","self_avg":5.2,"self_q1":4,"self_q2":7,"self_q3":3,"self_q4":6,"self_q5":6,"has_manager":true,"manager_name":"John Conti","mgr_avg":4.3,"mgr_q1":5,"mgr_q2":4,"mgr_q3":4,"gap":0.9},{"name":"Donald Lucariello","self_avg":5.8,"self_q1":7,"self_q2":5,"self_q3":6,"self_q4":7,"self_q5":4,"has_manager":true,"manager_name":"Brian Hawtin","mgr_avg":5.0,"mgr_q1":5,"mgr_q2":5,"mgr_q3":5,"gap":0.8},{"name":"John Hay","self_avg":5.0,"self_q1":5,"self_q2":5,"self_q3":5,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"Brian Hawtin","mgr_avg":4.3,"mgr_q1":4,"mgr_q2":5,"mgr_q3":4,"gap":0.7},{"name":"Tony Petaccio","self_avg":4.6,"self_q1":4,"self_q2":5,"self_q3":5,"self_q4":5,"self_q5":4,"has_manager":true,"manager_name":"Patricia Zieverink","mgr_avg":4.0,"mgr_q1":4,"mgr_q2":4,"mgr_q3":4,"gap":0.6},{"name":"Maria Kingsley","self_avg":7.2,"self_q1":6,"self_q2":8,"self_q3":8,"self_q4":6,"self_q5":8,"has_manager":true,"manager_name":"Eric Kaechelin","mgr_avg":6.7,"mgr_q1":7,"mgr_q2":6,"mgr_q3":7,"gap":0.5},{"name":"Isabel Kingsley","self_avg":4.8,"self_q1":3,"self_q2":5,"self_q3":6,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"John Conti","mgr_avg":4.3,"mgr_q1":5,"mgr_q2":4,"mgr_q3":4,"gap":0.5},{"name":"Leonard Manigbas","self_avg":5.2,"self_q1":5,"self_q2":7,"self_q3":6,"self_q4":5,"self_q5":3,"has_manager":true,"manager_name":"Juan Jorge","mgr_avg":5.0,"mgr_q1":5,"mgr_q2":5,"mgr_q3":5,"gap":0.2},{"name":"William Granville","self_avg":6.8,"self_q1":7,"self_q2":8,"self_q3":7,"self_q4":5,"self_q5":7,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":6.7,"mgr_q1":7,"mgr_q2":7,"mgr_q3":6,"gap":0.1},{"name":"Jami Sarokon","self_avg":7.4,"self_q1":10,"self_q2":6,"self_q3":10,"self_q4":7,"self_q5":4,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":7.3,"mgr_q1":7,"mgr_q2":7,"mgr_q3":8,"gap":0.1},{"name":"Donald Knight","self_avg":8.0,"self_q1":8,"self_q2":9,"self_q3":8,"self_q4":8,"self_q5":7,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":0.0},{"name":"Jose Graca","self_avg":7.8,"self_q1":7,"self_q2":9,"self_q3":7,"self_q4":8,"self_q5":8,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-0.2},{"name":"Jeffrey Tommer","self_avg":4.6,"self_q1":4,"self_q2":5,"self_q3":5,"self_q4":5,"self_q5":4,"has_manager":true,"manager_name":"Brian Hawtin","mgr_avg":5.3,"mgr_q1":5,"mgr_q2":5,"mgr_q3":6,"gap":-0.7},{"name":"David Patterson","self_avg":7.0,"self_q1":7,"self_q2":8,"self_q3":7,"self_q4":6,"self_q5":7,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-1.0},{"name":"Sean Flatt","self_avg":3.6,"self_q1":3,"self_q2":4,"self_q3":4,"self_q4":4,"self_q5":3,"has_manager":true,"manager_name":"Brian Hawtin","mgr_avg":4.7,"mgr_q1":5,"mgr_q2":4,"mgr_q3":5,"gap":-1.1},{"name":"Matthew Ferschke","self_avg":6.6,"self_q1":6,"self_q2":7,"self_q3":7,"self_q4":6,"self_q5":7,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-1.4},{"name":"Andrew O'Dell","self_avg":4.2,"self_q1":3,"self_q2":5,"self_q3":3,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"Sean Conroy","mgr_avg":5.7,"mgr_q1":5,"mgr_q2":6,"mgr_q3":6,"gap":-1.5},{"name":"Taeyon Thompson","self_avg":7.4,"self_q1":8,"self_q2":8,"self_q3":5,"self_q4":6,"self_q5":10,"has_manager":true,"manager_name":"Maria Kingsley","mgr_avg":9.0,"mgr_q1":9,"mgr_q2":9,"mgr_q3":9,"gap":-1.6},{"name":"Brandon Allen","self_avg":5.8,"self_q1":7,"self_q2":6,"self_q3":6,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-2.2},{"name":"Nicholas Velardi","self_avg":6.4,"self_q1":5,"self_q2":10,"self_q3":7,"self_q4":5,"self_q5":5,"has_manager":true,"manager_name":"Maria Kingsley","mgr_avg":9.0,"mgr_q1":9,"mgr_q2":9,"mgr_q3":9,"gap":-2.6},{"name":"Anna Mann","self_avg":6.6,"self_q1":6,"self_q2":8,"self_q3":7,"self_q4":8,"self_q5":4,"has_manager":true,"manager_name":"Jillian K Caillouette","mgr_avg":9.3,"mgr_q1":10,"mgr_q2":8,"mgr_q3":10,"gap":-2.7},{"name":"Patricia Zieverink","self_avg":3.8,"self_q1":4,"self_q2":4,"self_q3":4,"self_q4":4,"self_q5":3,"has_manager":true,"manager_name":"Eric Kaechelin","mgr_avg":6.7,"mgr_q1":7,"mgr_q2":6,"mgr_q3":7,"gap":-2.9},{"name":"Richard Hunter","self_avg":3.8,"self_q1":4,"self_q2":4,"self_q3":4,"self_q4":3,"self_q5":4,"has_manager":true,"manager_name":"Eric Kaechelin","mgr_avg":6.7,"mgr_q1":7,"mgr_q2":6,"mgr_q3":7,"gap":-2.9},{"name":"James Gilmore","self_avg":5.0,"self_q1":5,"self_q2":7,"self_q3":4,"self_q4":5,"self_q5":4,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-3.0},{"name":"Lisa Oliveira","self_avg":5.2,"self_q1":6,"self_q2":4,"self_q3":5,"self_q4":6,"self_q5":5,"has_manager":true,"manager_name":"Maria Kingsley","mgr_avg":9.0,"mgr_q1":9,"mgr_q2":9,"mgr_q3":9,"gap":-3.8},{"name":"Vincent Parrino","self_avg":4.0,"self_q1":4,"self_q2":4,"self_q3":3,"self_q4":5,"self_q5":4,"has_manager":true,"manager_name":"Shawn Evans","mgr_avg":8.0,"mgr_q1":8,"mgr_q2":8,"mgr_q3":8,"gap":-4.0},{"name":"Brian Hawtin","self_avg":5.6,"self_q1":5,"self_q2":7,"self_q3":6,"self_q4":5,"self_q5":5,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null},{"name":"Eric Kaechelin","self_avg":7.0,"self_q1":7,"self_q2":6,"self_q3":7,"self_q4":7,"self_q5":8,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null},{"name":"John Conti","self_avg":6.8,"self_q1":6,"self_q2":9,"self_q3":6,"self_q4":8,"self_q5":5,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null},{"name":"John Scaglia","self_avg":4.4,"self_q1":4,"self_q2":7,"self_q3":5,"self_q4":3,"self_q5":3,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null},{"name":"Sean Conroy","self_avg":7.2,"self_q1":6,"self_q2":7,"self_q3":7,"self_q4":8,"self_q5":8,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null},{"name":"Shawn Evans","self_avg":6.4,"self_q1":8,"self_q2":8,"self_q3":7,"self_q4":5,"self_q5":4,"has_manager":false,"manager_name":null,"mgr_avg":null,"mgr_q1":null,"mgr_q2":null,"mgr_q3":null,"gap":null}];
+
+let filtered = [...DATA];
+let currentSort = 'gap';
+let sortDir = -1;
+
+function gapClass(gap) {
+  if (gap === null) return '';
+  if (gap > 1.5) return 'gap-big-over';
+  if (gap > 0) return 'gap-small-over';
+  if (gap === 0) return 'gap-aligned';
+  if (gap >= -1.5) return 'gap-small-under';
+  return 'gap-big-under';
+}
+
+function gapLabel(gap) {
+  if (gap === null) return '<span style="color:var(--rule)">—</span>';
+  const sign = gap > 0 ? '+' : '';
+  return `<span class="gap-pill ${gapClass(gap)}">${sign}${gap.toFixed(1)}</span>`;
+}
+
+function pill(val, type) {
+  if (val === null) return '<span style="color:var(--rule);font-size:12px">—</span>';
+  return `<span class="score-pill sp-${type}">${val}</span>`;
+}
+
+function avg(val, type) {
+  if (val === null) return '<span style="color:var(--rule)">—</span>';
+  return `<span class="avg-cell ${type}">${val.toFixed(1)}</span>`;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  document.getElementById('resultsCount').textContent = `${filtered.length} learner${filtered.length !== 1 ? 's' : ''}`;
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="11" class="no-results">No learners match the current filters.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map(r => {
+    const noMgrFlag = !r.has_manager ? '<span class="no-mgr-flag">self-only</span>' : '';
+    const mgrName = r.manager_name ? `<div class="mgr-cell">${r.manager_name}</div>` : `<div class="mgr-cell" style="color:var(--rule)">—</div>`;
+    return `<tr>
+      <td><span class="name-cell">${r.name}</span>${noMgrFlag}</td>
+      <td>${mgrName}</td>
+      <td style="text-align:center">${pill(r.self_q1,'self')}</td>
+      <td style="text-align:center">${pill(r.self_q2,'self')}</td>
+      <td style="text-align:center">${pill(r.self_q3,'self')}</td>
+      <td style="text-align:center">${pill(r.self_q4,'self')}</td>
+      <td style="text-align:center">${pill(r.self_q5,'self')}</td>
+      <td style="text-align:center">${pill(r.mgr_q1,'mgr')}</td>
+      <td style="text-align:center">${pill(r.mgr_q2,'mgr')}</td>
+      <td style="text-align:center">${pill(r.mgr_q3,'mgr')}</td>
+      <td style="text-align:center">${gapLabel(r.gap)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function applyFilters() {
+  const mgr = document.getElementById('filterManager').value;
+  const align = document.getElementById('filterAlignment').value;
+  const search = document.getElementById('filterSearch').value.toLowerCase();
+  filtered = DATA.filter(r => {
+    if (mgr === '__none__' && r.has_manager) return false;
+    if (mgr && mgr !== '__none__' && r.manager_name !== mgr) return false;
+    if (align === 'over' && !(r.gap !== null && r.gap > 1.5)) return false;
+    if (align === 'aligned' && !(r.gap !== null && r.gap >= -1.5 && r.gap <= 1.5)) return false;
+    if (align === 'under' && !(r.gap !== null && r.gap < -1.5)) return false;
+    if (search && !r.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  sortData();
+  renderTable();
+}
+
+function clearFilters() {
+  document.getElementById('filterManager').value = '';
+  document.getElementById('filterAlignment').value = '';
+  document.getElementById('filterSearch').value = '';
+  filtered = [...DATA];
+  sortData();
+  renderTable();
+}
+
+const sortKeys = { name: 'name', manager_name: 'manager_name', gap: 'gap', self_q1: 'self_q1', self_q2: 'self_q2', self_q3: 'self_q3', self_q4: 'self_q4', self_q5: 'self_q5', mgr_q1: 'mgr_q1', mgr_q2: 'mgr_q2', mgr_q3: 'mgr_q3' };
+
+function sortBy(key) {
+  if (currentSort === key) sortDir = -sortDir;
+  else { currentSort = key; sortDir = key === 'gap' ? -1 : 1; }
+  sortData();
+  renderTable();
+}
+
+function sortData() {
+  const key = sortKeys[currentSort] || 'gap';
+  filtered.sort((a, b) => {
+    let av = a[key], bv = b[key];
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+    return (av - bv) * sortDir;
+  });
+}
+
+sortData();
+renderTable();
+</script>
+</body>
+</html>
