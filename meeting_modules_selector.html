@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module Selector — Flint CS</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --white: #ffffff;
+  --ink: #1c1c1e;
+  --muted: #6b6860;
+  --rule: #ddd9d0;
+  --accent: #1a3a5c;
+  --accent-light: #e8eef5;
+  --red: #c84b2f;
+  --red-light: #fdf0ec;
+  --green: #2d6a4f;
+  --green-light: #eaf3ee;
+  --tag-bg: #ededea;
+  --tag-text: #5a5040;
+  --nav-h: 56px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.nav-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nav-brand span {
+  color: var(--red);
+}
+
+.tab-bar {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 18px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover { background: var(--tag-bg); color: var(--ink); }
+
+.tab-btn.active {
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+}
+
+/* MAIN LAYOUT */
+.main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ===================== GUIDE ===================== */
+.guide-header {
+  margin-bottom: 36px;
+}
+
+.guide-header h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.guide-header p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Steps */
+.step-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.step-num.done {
+  background: var(--green);
+}
+
+.step-content { flex: 1; }
+
+.step-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.step-question {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+/* Phase selector */
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.phase-btn {
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  background: var(--white);
+  padding: 12px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.phase-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+
+.phase-btn.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.phase-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.phase-weeks {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* Goal selector */
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-btn {
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  background: var(--white);
+  padding: 12px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+  transition: all 0.15s;
+}
+
+.goal-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+
+.goal-btn.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* Used modules */
+.used-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.used-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.used-check:hover { border-color: var(--rule); background: var(--tag-bg); }
+
+.used-check input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.used-check-label {
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.used-check-emoji { font-size: 15px; flex-shrink: 0; }
+
+/* Recommend button */
+.recommend-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 28px;
+  transition: opacity 0.15s;
+}
+
+.recommend-btn:hover { opacity: 0.88; }
+.recommend-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Reset */
+.reset-link {
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 12px;
+  display: inline-block;
+}
+
+.reset-link:hover { color: var(--red); }
+
+/* RECOMMENDATION */
+.recommendation { margin-top: 40px; }
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rec-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+
+.rec-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.rec-emoji { font-size: 32px; }
+
+.rec-card {
+  background: var(--white);
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rec-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rec-section:last-child { border-bottom: none; }
+
+.rec-section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.fit-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 0 4px 4px 0;
+}
+
+.agenda-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agenda-list li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+  color: var(--ink);
+}
+
+.agenda-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.agenda-list li strong {
+  font-weight: 600;
+}
+
+.questions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.questions-list li {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  padding: 10px 14px;
+  background: var(--tag-bg);
+  border-radius: 4px;
+  padding-left: 30px;
+  position: relative;
+}
+
+.questions-list li::before {
+  content: 'Q';
+  position: absolute;
+  left: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  top: 12px;
+}
+
+.client-agenda {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.client-agenda p {
+  margin-bottom: 6px;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.client-agenda ul {
+  padding-left: 18px;
+}
+
+.client-agenda ul li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+/* Pairs */
+.pairs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pair-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--tag-bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.pair-chip:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* Alt modules */
+.alt-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.alt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  margin-top: 28px;
+}
+
+.alt-card {
+  flex: 1;
+  min-width: 200px;
+  background: var(--white);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.alt-card:hover { border-color: var(--accent); }
+
+.alt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.alt-card-emoji { font-size: 18px; }
+.alt-card-name { font-weight: 600; font-size: 14px; }
+.alt-card-title { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+
+/* ===================== BROWSE ===================== */
+.browse-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.browse-header h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 26px;
+  font-weight: 400;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 28px;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+.filter-group-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.filter-sep {
+  width: 1px;
+  background: var(--rule);
+  margin: 0 8px;
+  align-self: stretch;
+}
+
+.filter-chip {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  background: var(--white);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-chip:hover { background: var(--tag-bg); color: var(--ink); }
+
+.filter-chip.active {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.filter-chip.phase-early.active    { background: #1a3a5c; border-color: #1a3a5c; color: #fff; }
+.filter-chip.phase-mid.active      { background: #2d6a4f; border-color: #2d6a4f; color: #fff; }
+.filter-chip.phase-late.active     { background: #7a4820; border-color: #7a4820; color: #fff; }
+.filter-chip.phase-closing.active  { background: #4a1b0c; border-color: #4a1b0c; color: #fff; }
+
+.clear-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px dashed var(--rule);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.clear-btn:hover { color: var(--red); border-color: var(--red); }
+
+/* Module grid */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.module-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+}
+
+.module-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+.module-card.hidden { display: none; }
+
+.module-card-top {
+  padding: 18px 20px 14px;
+  cursor: pointer;
+}
+
+.module-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.module-emoji { font-size: 22px; flex-shrink: 0; }
+
+.module-codename {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.module-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.module-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--rule);
+}
+
+.tag.exec     { background: #dfeaf5; color: #1a3a5c; border-color: #b8d0e8; }
+.tag.repeat   { background: #dff0e4; color: #2d6a4f; border-color: #b0d8ba; }
+.tag.expansion{ background: #f5e8cc; color: #6b4c10; border-color: #e0c88a; }
+
+.module-desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.expand-toggle {
+  width: 100%;
+  background: var(--tag-bg);
+  border: none;
+  border-top: 1px solid var(--rule);
+  padding: 9px 20px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.12s, color 0.12s;
+}
+
+.expand-toggle:hover { background: var(--accent-light); color: var(--accent); }
+
+.expand-icon { font-size: 14px; transition: transform 0.2s; }
+
+.module-drawer {
+  display: none;
+  border-top: 1px solid var(--rule);
+}
+
+.module-drawer.open { display: block; }
+
+.expand-toggle.open .expand-icon { transform: rotate(180deg); }
+
+.drawer-section {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.drawer-section:last-child { border-bottom: none; }
+
+.drawer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.drawer-agenda {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-agenda li {
+  font-size: 12px;
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+  color: var(--ink);
+}
+
+.drawer-agenda li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 10px;
+}
+
+.drawer-agenda li strong { font-weight: 600; }
+
+.drawer-questions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.drawer-questions li {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  padding: 7px 10px 7px 26px;
+  background: var(--tag-bg);
+  border-radius: 3px;
+  position: relative;
+}
+
+.drawer-questions li::before {
+  content: 'Q';
+  position: absolute;
+  left: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  top: 9px;
+}
+
+.drawer-client p {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.drawer-client ul {
+  padding-left: 16px;
+}
+
+.drawer-client ul li {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  display: none;
+}
+
+.empty-state.show { display: block; }
+.empty-state p { font-size: 14px; margin-top: 8px; }
+
+/* Divider */
+.rule-line {
+  height: 1px;
+  background: var(--rule);
+  margin: 28px 0;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Flint&nbsp;<span>·</span>&nbsp;CS Module Selector</div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('guide')">Guide</button>
+    <button class="tab-btn" onclick="switchTab('browse')">Browse</button>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- ============ GUIDE PANEL ============ -->
+  <div id="panel-guide" class="panel active">
+
+    <div class="guide-header">
+      <h1>What module fits this meeting?</h1>
+      <p>Answer three quick questions and get a recommendation — plus alternates and pairing options.</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-row">
+      <div class="step-num" id="step-num-1">1</div>
+      <div class="step-content">
+        <div class="step-label">Step 1 of 3</div>
+        <div class="step-question">Where are you in the initiative?</div>
+        <div class="phase-grid">
+          <button class="phase-btn" onclick="selectPhase('early')" id="phase-early">
+            <span class="phase-name">Early</span>
+            <span class="phase-weeks">Weeks 1–3</span>
+          </button>
+          <button class="phase-btn" onclick="selectPhase('mid')" id="phase-mid">
+            <span class="phase-name">Mid</span>
+            <span class="phase-weeks">Weeks 4–7</span>
+          </button>
+          <button class="phase-btn" onclick="selectPhase('late')" id="phase-late">
+            <span class="phase-name">Late</span>
+            <span class="phase-weeks">Weeks 8–10</span>
+          </button>
+          <button class="phase-btn" onclick="selectPhase('closing')" id="phase-closing">
+            <span class="phase-name">Closing</span>
+            <span class="phase-weeks">Weeks 11–12</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-row">
+      <div class="step-num" id="step-num-2">2</div>
+      <div class="step-content">
+        <div class="step-label">Step 2 of 3</div>
+        <div class="step-question">What's the primary goal for this meeting?</div>
+        <div class="goal-list" id="goal-list">
+          <!-- populated by JS based on phase -->
+          <div style="font-size:13px; color:var(--muted); font-style:italic;">Select a phase above to see goal options.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-row">
+      <div class="step-num" id="step-num-3">3</div>
+      <div class="step-content">
+        <div class="step-label">Step 3 of 3</div>
+        <div class="step-question">Which modules have you already used with this sponsor?</div>
+        <div class="used-grid">
+          <label class="used-check"><div class="used-check-emoji">🚀</div><input type="checkbox" value="launch" class="used-cb"><span class="used-check-label">Launch</span></label>
+          <label class="used-check"><div class="used-check-emoji">💚</div><input type="checkbox" value="pulse" class="used-cb"><span class="used-check-label">Pulse</span></label>
+          <label class="used-check"><div class="used-check-emoji">⚓</div><input type="checkbox" value="baseline" class="used-cb"><span class="used-check-label">Baseline</span></label>
+          <label class="used-check"><div class="used-check-emoji">📋</div><input type="checkbox" value="ledger" class="used-cb"><span class="used-check-label">Ledger</span></label>
+          <label class="used-check"><div class="used-check-emoji">🤖</div><input type="checkbox" value="coach" class="used-cb"><span class="used-check-label">Coach</span></label>
+          <label class="used-check"><div class="used-check-emoji">🎯</div><input type="checkbox" value="themes" class="used-cb"><span class="used-check-label">Themes</span></label>
+          <label class="used-check"><div class="used-check-emoji">🧭</div><input type="checkbox" value="northstar" class="used-cb"><span class="used-check-label">North Star</span></label>
+          <label class="used-check"><div class="used-check-emoji">🔍</div><input type="checkbox" value="excavate" class="used-cb"><span class="used-check-label">Excavate</span></label>
+          <label class="used-check"><div class="used-check-emoji">🌅</div><input type="checkbox" value="horizon" class="used-cb"><span class="used-check-label">Horizon</span></label>
+          <label class="used-check"><div class="used-check-emoji">📊</div><input type="checkbox" value="delta" class="used-cb"><span class="used-check-label">Delta</span></label>
+        </div>
+      </div>
+    </div>
+
+    <button class="recommend-btn" id="rec-btn" onclick="recommend()" disabled>Get recommendation →</button>
+    <br>
+    <button class="reset-link" onclick="resetGuide()">Reset</button>
+
+    <!-- RECOMMENDATION OUTPUT -->
+    <div id="recommendation" class="recommendation" style="display:none;"></div>
+
+  </div>
+
+  <!-- ============ BROWSE PANEL ============ -->
+  <div id="panel-browse" class="panel">
+
+    <div class="browse-header">
+      <h1>All modules</h1>
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-group-label">Phase</span>
+      <button class="filter-chip phase-early" onclick="toggleFilter('phase','early',this)">Early</button>
+      <button class="filter-chip phase-mid" onclick="toggleFilter('phase','mid',this)">Mid</button>
+      <button class="filter-chip phase-late" onclick="toggleFilter('phase','late',this)">Late</button>
+      <button class="filter-chip phase-closing" onclick="toggleFilter('phase','closing',this)">Closing</button>
+      <div class="filter-sep"></div>
+      <span class="filter-group-label">Type</span>
+      <button class="filter-chip" onclick="toggleFilter('type','insight',this)">Insight</button>
+      <button class="filter-chip" onclick="toggleFilter('type','strategic',this)">Strategic</button>
+      <button class="filter-chip" onclick="toggleFilter('type','relational',this)">Relational</button>
+      <button class="filter-chip" onclick="toggleFilter('type','operational',this)">Operational</button>
+      <button class="filter-chip" onclick="toggleFilter('type','exec',this)">Executive</button>
+      <button class="filter-chip" onclick="toggleFilter('type','repeats',this)">Repeats</button>
+      <button class="filter-chip" onclick="toggleFilter('type','expansion',this)">Expansion</button>
+      <button class="clear-btn" onclick="clearFilters()">Clear all</button>
+    </div>
+
+    <div class="module-grid" id="module-grid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <div style="font-size:28px;">🔍</div>
+      <p>No modules match the active filters.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const MODULES = {
+  launch: {
+    emoji: '🚀',
+    code: 'Launch',
+    name: 'Initiative Kickoff & Onboarding Readiness',
+    phases: ['early'],
+    types: ['operational'],
+    exec: false,
+    repeats: false,
+    expansion: false,
+    desc: 'Confirm the initiative is launching cleanly, surface early blockers, and send the sponsor away with a clear action list and committed follow-up steps.',
+    agenda: [
+      { title: 'Access & Enrollment Status', detail: 'On track for 80–90% by week one?' },
+      { title: 'Technical Issues', detail: 'Problems and resolution plan' },
+      { title: 'Onboarding Materials', detail: 'Distribution confirmed?' }
+    ],
+    questions: [
+      'Have you personally reviewed the onboarding materials? Do they feel right for your audience?',
+      'Are there any participants we should already know are going to be hard to reach or resistant?',
+      'Who on your team owns nudging and internal follow-up?',
+      'Are there any blackout dates or competing priorities in the next two weeks we should know about?'
+    ],
+    clientAgendaTitle: 'Kickoff & Onboarding Review',
+    clientAgendaItems: ['Enrollment status and progress toward full participation', 'Open technical issues and resolution plan', 'Onboarding materials distribution confirmation'],
+    pairs: ['pulse', 'baseline'],
+    goals: ['confirm-launch']
+  },
+  pulse: {
+    emoji: '💚',
+    code: 'Pulse',
+    name: 'Very Early Insights',
+    phases: ['early'],
+    types: ['relational'],
+    exec: true,
+    repeats: false,
+    expansion: false,
+    desc: 'Relieve early anxiety. Replace "will they adopt it?" with specific, visible evidence that the initiative is alive and working.',
+    agenda: [
+      { title: 'Early Activity Completion', detail: 'Who\'s in, and what are they saying?' },
+      { title: 'Participant Sentiment', detail: 'Early experience with the platform' },
+      { title: 'Coach Engagement', detail: 'What early interactions look like' }
+    ],
+    questions: [
+      'What are you hearing informally from participants or their managers so far?',
+      'Is there anyone whose early engagement has surprised you — positively or negatively?',
+      'Are there any early narratives forming internally about the initiative that we should be aware of?'
+    ],
+    clientAgendaTitle: 'Early Initiative Insights',
+    clientAgendaItems: ['Activity completion and early participant feedback', 'Participant sentiment and platform experience', 'Early coach engagement overview'],
+    pairs: ['baseline', 'launch'],
+    goals: ['reassure-exec', 'show-early-momentum']
+  },
+  baseline: {
+    emoji: '⚓',
+    code: 'Baseline',
+    name: 'Baseline Survey Insights',
+    phases: ['early'],
+    types: ['insight'],
+    exec: true,
+    repeats: false,
+    expansion: false,
+    desc: 'Show where participants are starting from. Begin the narrative arc that pays off in Delta. Establish which focus areas matter most to the sponsor.',
+    agenda: [
+      { title: 'Competency Snapshot', detail: 'Participant & manager ratings across focus areas' },
+      { title: 'Where the Gaps Are', detail: 'Lowest-scoring areas and what they mean' },
+      { title: 'Manager vs. Participant View', detail: 'Where perspectives align and diverge' }
+    ],
+    questions: [
+      'Do these baseline results match what you expected, or are there any surprises?',
+      'Which of these focus areas are most important to your leadership?',
+      'Are there any gaps between manager and participant ratings that concern you?'
+    ],
+    clientAgendaTitle: 'Baseline Survey Results',
+    clientAgendaItems: ['Participant and manager competency ratings across focus areas', 'Key gaps and areas of focus', 'Manager vs. participant perspective comparison'],
+    pairs: ['pulse', 'delta'],
+    goals: ['understand-starting-point', 'insight']
+  },
+  ledger: {
+    emoji: '📋',
+    code: 'Ledger',
+    name: 'Activity Field Report',
+    phases: ['mid', 'closing'],
+    types: ['operational'],
+    exec: false,
+    repeats: true,
+    expansion: false,
+    desc: 'Give the sponsor direct access to raw activity data — filterable, explorable, theirs to use between meetings.',
+    agenda: [
+      { title: 'Orientation', detail: 'Walk through filters and column meanings (first time only)' },
+      { title: 'Anything jumping out', detail: 'Give the sponsor 60 seconds to flag what they want to discuss' },
+      { title: 'Hand it off', detail: 'Confirm they have the link and know how to use it' }
+    ],
+    questions: [
+      'Is there anyone in here you want to talk about?',
+      'Anything look different from what you\'d expect?'
+    ],
+    clientAgendaTitle: 'Activity Data — Open Access',
+    clientAgendaItems: ['Live activity report shared for your reference', 'Filter by manager, activity type, or outcome', 'Yours to explore anytime'],
+    pairs: ['themes', 'coach', 'delta'],
+    goals: ['share-data', 'operational']
+  },
+  coach: {
+    emoji: '🤖',
+    code: 'Coach',
+    name: 'The Role of the AI Coach',
+    phases: ['mid'],
+    types: ['insight'],
+    exec: false,
+    repeats: true,
+    expansion: false,
+    desc: 'Demonstrate that the platform is actively learning and responding — not just delivering activities. Give sponsors insight into their workforce they couldn\'t get elsewhere.',
+    agenda: [
+      { title: 'Coach Focus Areas', detail: 'What is it consistently addressing?' },
+      { title: 'Participant–Coach Dynamics', detail: 'How are people responding across roles and levels?' },
+      { title: 'What the Coach Is Teaching Us', detail: 'Knowledge gaps, resistance, and where value is found' }
+    ],
+    questions: [
+      'Does what the coach is focusing on match what you\'d expect given your knowledge of this workforce?',
+      'Are there roles or business units where the coach dynamic looks meaningfully different?',
+      'Is there anything the coach is surfacing that you want to dig into further with your team?'
+    ],
+    clientAgendaTitle: 'The Role of the AI Coach',
+    clientAgendaItems: ['What the coach is consistently focusing on across participants', 'How participants are engaging with and responding to the coach', 'What coach interactions are revealing about your workforce'],
+    pairs: ['themes', 'ledger'],
+    goals: ['insight', 'showcase-ai']
+  },
+  themes: {
+    emoji: '🎯',
+    code: 'Themes',
+    name: 'Emerging Themes from Activity Data',
+    phases: ['mid'],
+    types: ['insight'],
+    exec: true,
+    repeats: true,
+    expansion: false,
+    desc: 'Move the conversation from activity counts to real organizational intelligence. Surface patterns the sponsor recognizes from their own experience leading this workforce.',
+    agenda: [
+      { title: 'Top Themes', detail: 'Most frequent topics across feedback' },
+      { title: 'Obstacles to Excellence', detail: 'Where participants are consistently stuck' },
+      { title: 'Bright Spots', detail: 'Strong outcomes and unexpected wins' }
+    ],
+    questions: [
+      'Do these themes match what you\'ve been hearing or observing on the ground?',
+      'Are any of these obstacles something your organization has tried to address before? What happened?',
+      'Which of these themes is most important for us to keep tracking as we move through the initiative?'
+    ],
+    clientAgendaTitle: 'Emerging Themes from the Field',
+    clientAgendaItems: ['Top recurring themes across participant activity feedback', 'Key obstacles and where participants are getting stuck', 'Bright spots and early wins'],
+    pairs: ['coach', 'northstar'],
+    goals: ['insight', 'org-intelligence']
+  },
+  northstar: {
+    emoji: '🧭',
+    code: 'North Star',
+    name: 'Tying Data to Strategic Goals',
+    phases: ['mid'],
+    types: ['strategic'],
+    exec: true,
+    repeats: true,
+    expansion: false,
+    desc: 'Elevate from metrics to impact. Give sponsors language and data they can use to report up internally — and confidence that the investment is delivering.',
+    agenda: [
+      { title: 'Goals Recap', detail: 'Stated objectives at initiative start' },
+      { title: 'Evidence of Progress', detail: 'Data tied directly to those goals' },
+      { title: 'Gaps & Risks', detail: 'Where we may fall short of the vision' }
+    ],
+    questions: [
+      'How are you currently reporting on this initiative\'s progress to your leadership?',
+      'Are the goals we defined at the start still the right ones, or has anything shifted?',
+      'What would you need to see in the data to feel confident telling your leadership this initiative is succeeding?'
+    ],
+    clientAgendaTitle: 'Progress Against Strategic Goals',
+    clientAgendaItems: ['Review of initiative objectives', 'Data and evidence of progress toward goals', 'Gaps and areas of focus for the remainder of the initiative'],
+    pairs: ['themes', 'excavate'],
+    goals: ['strategic-alignment', 'exec-reporting']
+  },
+  excavate: {
+    emoji: '🔍',
+    code: 'Excavate',
+    name: 'Root Cause & Opportunity Analysis',
+    phases: ['late'],
+    types: ['insight', 'strategic'],
+    exec: true,
+    repeats: false,
+    expansion: false,
+    desc: 'Deliver insight the sponsor couldn\'t generate on their own. Show that the platform reveals why behavior was stuck, not just whether it changed.',
+    agenda: [
+      { title: 'Primary Blockers', detail: 'Systemic obstacles to adoption' },
+      { title: 'Underlying Root Causes', detail: 'Environment, culture, capability gaps' },
+      { title: 'Highest-Leverage Opportunities', detail: 'Where intervention matters most' }
+    ],
+    questions: [
+      'Do these root causes match your intuition, or is anything here surprising?',
+      'Are any of these blockers things your organization has the ability to address directly?',
+      'How does this analysis compare to what your L&D or HR team has been telling you about this workforce?'
+    ],
+    clientAgendaTitle: 'Root Cause & Opportunity Analysis',
+    clientAgendaItems: ['Primary blockers to behavior change', 'Underlying root causes and organizational factors', 'Highest-leverage opportunities going forward'],
+    pairs: ['northstar', 'horizon'],
+    goals: ['root-cause', 'deep-insight']
+  },
+  horizon: {
+    emoji: '🌅',
+    code: 'Horizon',
+    name: 'Program Expansion & Next Initiatives',
+    phases: ['late'],
+    types: ['strategic'],
+    exec: true,
+    repeats: false,
+    expansion: true,
+    desc: 'Shift the sponsor from "running a pilot" to "building a program." Use this initiative\'s data as the springboard for a longer-term partnership conversation.',
+    agenda: [
+      { title: 'Version 2.0', detail: 'What should we do differently next run?' },
+      { title: 'Adjacent Initiatives', detail: 'Natural next steps in this program area' },
+      { title: 'Broader Program Vision', detail: 'What does the full program look like?' }
+    ],
+    questions: [
+      'If we ran this initiative again tomorrow with a new cohort, what\'s the one thing you\'d want us to do differently?',
+      'What other behaviors or skill areas are on your radar that a future initiative could address?',
+      'Who else in your organization should be seeing what we\'ve built together here?'
+    ],
+    clientAgendaTitle: 'Looking Ahead — Program Vision & Next Steps',
+    clientAgendaItems: ['Lessons learned and version 2.0 considerations', 'Adjacent initiatives and natural next steps', 'Broader program vision for your organization'],
+    pairs: ['excavate', 'delta'],
+    goals: ['expansion', 'strategic-alignment']
+  },
+  delta: {
+    emoji: '📊',
+    code: 'Delta',
+    name: 'Behavior Change Results',
+    phases: ['closing'],
+    types: ['insight'],
+    exec: true,
+    repeats: false,
+    expansion: false,
+    desc: 'The definitive proof of impact. Give sponsors data they can stand behind — and the confidence to present it upward and make the case for continued investment.',
+    agenda: [
+      { title: 'Participant Self-Report Delta', detail: 'Baseline to follow-up shift in ratings' },
+      { title: 'Manager Assessment Delta', detail: 'How managers rate the change' },
+      { title: 'Headline Results', detail: 'The one-sentence story this data tells' }
+    ],
+    questions: [
+      'Do these results match what you were hoping for? What were you expecting?',
+      'Are there specific results here you want to highlight when you share this with your leadership?',
+      'Based on everything we\'ve seen over these 12 weeks, what feels like the most important thing we accomplished together?'
+    ],
+    clientAgendaTitle: 'Program Results — Behavior Change Report',
+    clientAgendaItems: ['Participant self-reported behavior change from baseline to follow-up', 'Manager assessment of participant behavior change', 'Headline results and key takeaways'],
+    pairs: ['horizon', 'ledger'],
+    goals: ['prove-impact', 'closing']
+  }
+};
+
+const GOALS_BY_PHASE = {
+  early: [
+    { id: 'confirm-launch', label: 'Confirm the initiative is live and enrollment is on track', modules: ['launch'] },
+    { id: 'reassure-exec', label: 'Give an executive sponsor early confidence and green shoots', modules: ['pulse'] },
+    { id: 'show-early-momentum', label: 'Show early participant momentum with real examples', modules: ['pulse'] },
+    { id: 'understand-starting-point', label: 'Establish where participants are starting from (survey data)', modules: ['baseline'] }
+  ],
+  mid: [
+    { id: 'insight', label: 'Share meaningful insight about what\'s emerging in the data', modules: ['themes', 'coach'] },
+    { id: 'org-intelligence', label: 'Surface organizational patterns the sponsor recognizes', modules: ['themes'] },
+    { id: 'showcase-ai', label: 'Demonstrate the depth and intelligence of the AI coach', modules: ['coach'] },
+    { id: 'strategic-alignment', label: 'Connect initiative progress to the sponsor\'s strategic goals', modules: ['northstar'] },
+    { id: 'exec-reporting', label: 'Give the sponsor language to report up to their leadership', modules: ['northstar'] },
+    { id: 'share-data', label: 'Share raw activity data and orient the sponsor to it', modules: ['ledger'] }
+  ],
+  late: [
+    { id: 'root-cause', label: 'Show why behavior was stuck, not just whether it changed', modules: ['excavate'] },
+    { id: 'deep-insight', label: 'Deliver deep organizational insight from cumulative data', modules: ['excavate'] },
+    { id: 'expansion', label: 'Open a conversation about what comes next and version 2.0', modules: ['horizon'] }
+  ],
+  closing: [
+    { id: 'prove-impact', label: 'Deliver the definitive proof of behavior change', modules: ['delta'] },
+    { id: 'closing', label: 'Close the initiative and set up the renewal conversation', modules: ['delta', 'horizon'] }
+  ]
+};
+
+// State
+let selectedPhase = null;
+let selectedGoal = null;
+
+function switchTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.textContent.toLowerCase() === tab || (tab === 'guide' && b.textContent === 'Guide') || (tab === 'browse' && b.textContent === 'Browse')) {
+      b.classList.add('active');
+    }
+  });
+  if (tab === 'browse') buildBrowseGrid();
+}
+
+function selectPhase(phase) {
+  selectedPhase = phase;
+  selectedGoal = null;
+  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('phase-' + phase).classList.add('selected');
+  document.getElementById('step-num-1').classList.add('done');
+
+  const goals = GOALS_BY_PHASE[phase];
+  const gl = document.getElementById('goal-list');
+  gl.innerHTML = goals.map(g =>
+    `<button class="goal-btn" id="goal-${g.id}" onclick="selectGoal('${g.id}')">${g.label}</button>`
+  ).join('');
+  updateRecBtn();
+  document.getElementById('recommendation').style.display = 'none';
+}
+
+function selectGoal(goalId) {
+  selectedGoal = goalId;
+  document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('goal-' + goalId).classList.add('selected');
+  document.getElementById('step-num-2').classList.add('done');
+  updateRecBtn();
+  document.getElementById('recommendation').style.display = 'none';
+}
+
+function updateRecBtn() {
+  document.getElementById('rec-btn').disabled = !(selectedPhase && selectedGoal);
+}
+
+function getUsedModules() {
+  return Array.from(document.querySelectorAll('.used-cb:checked')).map(c => c.value);
+}
+
+function recommend() {
+  if (!selectedPhase || !selectedGoal) return;
+  const goals = GOALS_BY_PHASE[selectedPhase];
+  const goalObj = goals.find(g => g.id === selectedGoal);
+  if (!goalObj) return;
+
+  const used = getUsedModules();
+  let candidates = goalObj.modules.slice();
+
+  // Prefer unused
+  const unused = candidates.filter(m => !used.includes(m));
+  const primary = unused.length > 0 ? unused[0] : candidates[0];
+  const alreadyUsed = used.includes(primary);
+
+  const mod = MODULES[primary];
+
+  // Alternates: same phase, not primary, not used
+  const phaseModules = Object.keys(MODULES).filter(k =>
+    k !== primary && MODULES[k].phases.includes(selectedPhase) && !used.includes(k)
+  );
+  const alts = phaseModules.slice(0, 2);
+
+  // Pairs
+  const pairKeys = (mod.pairs || []).filter(p => !used.includes(p));
+
+  let html = `
+    <div class="rec-header">
+      <div class="rec-emoji">${mod.emoji}</div>
+      <div>
+        <div class="rec-eyebrow">${alreadyUsed ? 'Already used — best available match' : 'Recommended module'}</div>
+        <div class="rec-title">${mod.code} — ${mod.name}</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-section">
+        <div class="rec-section-label">Why this fits right now</div>
+        <div class="fit-text">${mod.desc}</div>
+      </div>
+      <div class="rec-section">
+        <div class="rec-section-label">Agenda items</div>
+        <ul class="agenda-list">
+          ${mod.agenda.map(a => `<li><strong>${a.title}</strong> — ${a.detail}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="rec-section">
+        <div class="rec-section-label">Questions to drive the conversation</div>
+        <ul class="questions-list">
+          ${mod.questions.map(q => `<li>${q}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="rec-section">
+        <div class="rec-section-label">Client-facing agenda copy</div>
+        <div class="client-agenda">
+          <p>${mod.clientAgendaTitle}</p>
+          <ul>${mod.clientAgendaItems.map(i => `<li>${i}</li>`).join('')}</ul>
+        </div>
+      </div>
+      ${pairKeys.length > 0 ? `
+      <div class="rec-section">
+        <div class="rec-section-label">Pairs well with</div>
+        <div class="pairs-row">
+          ${pairKeys.map(p => `<button class="pair-chip" onclick="switchTab('browse'); setTimeout(() => scrollToModule('${p}'), 100)">${MODULES[p].emoji} ${MODULES[p].code}</button>`).join('')}
+        </div>
+      </div>` : ''}
+    </div>
+  `;
+
+  if (alts.length > 0) {
+    html += `<div class="alt-label">Other options for this phase</div>
+    <div class="alt-row">
+      ${alts.map(k => `
+        <div class="alt-card" onclick="switchTab('browse'); setTimeout(() => scrollToModule('${k}'), 100)">
+          <div class="alt-card-header">
+            <div class="alt-card-emoji">${MODULES[k].emoji}</div>
+            <div class="alt-card-name">${MODULES[k].code}</div>
+          </div>
+          <div class="alt-card-title">${MODULES[k].name}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  }
+
+  const rec = document.getElementById('recommendation');
+  rec.innerHTML = html;
+  rec.style.display = 'block';
+  rec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetGuide() {
+  selectedPhase = null;
+  selectedGoal = null;
+  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.used-cb').forEach(c => c.checked = false);
+  document.getElementById('step-num-1').classList.remove('done');
+  document.getElementById('step-num-2').classList.remove('done');
+  document.getElementById('step-num-3').classList.remove('done');
+  document.getElementById('goal-list').innerHTML = '<div style="font-size:13px; color:var(--muted); font-style:italic;">Select a phase above to see goal options.</div>';
+  document.getElementById('recommendation').style.display = 'none';
+  updateRecBtn();
+}
+
+// ===== BROWSE =====
+let activeFilters = { phase: new Set(), type: new Set() };
+
+let browseBuilt = false;
+
+function buildBrowseGrid() {
+  if (browseBuilt) return;
+  browseBuilt = true;
+  const grid = document.getElementById('module-grid');
+  grid.innerHTML = '';
+
+  const ORDER = ['launch','pulse','baseline','ledger','coach','themes','northstar','excavate','horizon','delta'];
+
+  ORDER.forEach(key => {
+    const m = MODULES[key];
+    const tags = [];
+    if (m.phases.includes('early')) tags.push({ label: 'Early', cls: '' });
+    if (m.phases.includes('mid')) tags.push({ label: 'Mid', cls: '' });
+    if (m.phases.includes('late')) tags.push({ label: 'Late', cls: '' });
+    if (m.phases.includes('closing')) tags.push({ label: 'Closing', cls: '' });
+    if (m.repeats) tags.push({ label: 'Repeats', cls: 'repeat' });
+    if (m.exec) tags.push({ label: 'Executive', cls: 'exec' });
+    if (m.expansion) tags.push({ label: 'Expansion', cls: 'expansion' });
+    m.types.forEach(t => {
+      const label = t.charAt(0).toUpperCase() + t.slice(1);
+      tags.push({ label, cls: '' });
+    });
+
+    const phaseSet = m.phases.join(',');
+    const typeSet = m.types.join(',') + (m.exec ? ',exec' : '') + (m.repeats ? ',repeats' : '') + (m.expansion ? ',expansion' : '');
+
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    card.id = 'browse-' + key;
+    card.dataset.phases = phaseSet;
+    card.dataset.types = typeSet;
+
+    card.innerHTML = `
+      <div class="module-card-top">
+        <div class="module-card-header">
+          <div class="module-emoji">${m.emoji}</div>
+          <div>
+            <span class="module-codename">${m.code}</span>
+            <div class="module-name">${m.name}</div>
+          </div>
+        </div>
+        <div class="module-tags">
+          ${tags.map(t => `<span class="tag ${t.cls}">${t.label}</span>`).join('')}
+        </div>
+        <div class="module-desc">${m.desc}</div>
+      </div>
+      <button class="expand-toggle" onclick="toggleDrawer('${key}', this)">
+        <span>Details</span>
+        <span class="expand-icon">▾</span>
+      </button>
+      <div class="module-drawer" id="drawer-${key}">
+        <div class="drawer-section">
+          <div class="drawer-label">Agenda</div>
+          <ul class="drawer-agenda">
+            ${m.agenda.map(a => `<li><strong>${a.title}</strong> — ${a.detail}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-label">Questions to drive the conversation</div>
+          <ul class="drawer-questions">
+            ${m.questions.map(q => `<li>${q}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-label">Client-facing agenda copy</div>
+          <div class="drawer-client">
+            <p>${m.clientAgendaTitle}</p>
+            <ul>${m.clientAgendaItems.map(i => `<li>${i}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function toggleDrawer(key, btn) {
+  const drawer = document.getElementById('drawer-' + key);
+  const isOpen = drawer.classList.contains('open');
+  drawer.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+function scrollToModule(key) {
+  buildBrowseGrid();
+  const card = document.getElementById('browse-' + key);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.style.outline = '2px solid var(--accent)';
+    setTimeout(() => card.style.outline = '', 1800);
+    // auto-open drawer
+    const drawer = document.getElementById('drawer-' + key);
+    if (drawer && !drawer.classList.contains('open')) {
+      const btn = card.querySelector('.expand-toggle');
+      toggleDrawer(key, btn);
+    }
+  }
+}
+
+function toggleFilter(group, value, btn) {
+  const set = activeFilters[group];
+  if (set.has(value)) {
+    set.delete(value);
+    btn.classList.remove('active');
+  } else {
+    set.add(value);
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+function clearFilters() {
+  activeFilters = { phase: new Set(), type: new Set() };
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  applyFilters();
+}
+
+function applyFilters() {
+  buildBrowseGrid();
+  const cards = document.querySelectorAll('.module-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const phases = card.dataset.phases ? card.dataset.phases.split(',') : [];
+    const types = card.dataset.types ? card.dataset.types.split(',') : [];
+
+    const phaseOk = activeFilters.phase.size === 0 || [...activeFilters.phase].some(f => phases.includes(f));
+    const typeOk = activeFilters.type.size === 0 || [...activeFilters.type].some(f => types.includes(f));
+
+    if (phaseOk && typeOk) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  const empty = document.getElementById('empty-state');
+  empty.classList.toggle('show', visible === 0);
+}
+</script>
+</body>
+</html>
