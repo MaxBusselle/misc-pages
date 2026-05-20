@@ -28,9 +28,9 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 
 /* NAV */
 .nav {
-  position: sticky; top: 0;
-  height: 56px; background: var(--white); border-bottom: 1px solid var(--rule);
-  display: flex; align-items: center; padding: 0 32px; justify-content: space-between; z-index: 100;
+  position: sticky; top: 0; height: 56px; background: var(--white);
+  border-bottom: 1px solid var(--rule); display: flex; align-items: center;
+  padding: 0 32px; justify-content: space-between; z-index: 100;
 }
 .nav-left { display: flex; align-items: center; gap: 12px; }
 .nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); font-weight: 500; letter-spacing: 0.03em; }
@@ -39,7 +39,7 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 .nav-date { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
 
 /* PAGE */
-.page { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+.page { max-width: 1140px; margin: 0 auto; padding: 40px 40px 80px; }
 
 /* SECTION HEADER */
 .section-header { margin-bottom: 24px; }
@@ -61,9 +61,9 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 .progress-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
 .progress-title { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); font-weight: 500; }
 .progress-pct { font-family: 'Libre Baskerville', serif; font-size: 20px; font-weight: 700; color: var(--green); }
-.progress-track { height: 10px; background: var(--rule); border-radius: 5px; position: relative; }
-.progress-fill { height: 100%; border-radius: 5px; background: var(--green); transition: width 0.8s ease; }
-.progress-goal-marker { position: absolute; top: -3px; width: 2px; height: 16px; background: var(--accent); border-radius: 1px; left: 70%; }
+.progress-track { height: 10px; background: var(--rule); border-radius: 5px; position: relative; overflow: visible; }
+.progress-fill { height: 100%; border-radius: 5px; background: var(--green); }
+.progress-goal-marker { position: absolute; top: -4px; width: 2px; height: 18px; background: var(--accent); border-radius: 1px; left: 70%; }
 .progress-goal-label { position: absolute; top: -22px; left: 70%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); white-space: nowrap; }
 
 /* THRESHOLD STRIP */
@@ -73,6 +73,12 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 .t-dot.green { background: var(--green); }
 .t-dot.amber { background: var(--amber); }
 .t-dot.red { background: var(--highlight); }
+
+/* TIER CONTROLS */
+.tier-controls { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.tier-controls label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+.tier-controls select { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; background: var(--white); outline: none; cursor: pointer; }
+.tier-controls select:focus { border-color: var(--accent); }
 
 /* TIER CARDS */
 .tier-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
@@ -85,24 +91,35 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 .tier-badge.amber { background: var(--amber-light); color: var(--amber); }
 .tier-badge.red { background: var(--highlight-light); color: var(--highlight); }
 .tier-name { font-weight: 600; font-size: 14px; }
-.tier-chevron { font-size: 12px; color: var(--muted); transition: transform 0.2s; }
+.tier-chevron { font-size: 12px; color: var(--muted); transition: transform 0.2s; display: inline-block; }
 .tier-chevron.open { transform: rotate(180deg); }
 .tier-body { display: none; border-top: 1px solid var(--rule); }
 .tier-body.open { display: block; }
 
+/* GROUP SECTIONS inside tier */
+.group-section { border-bottom: 1px solid var(--rule); }
+.group-section:last-child { border-bottom: none; }
+.group-header { padding: 8px 20px; background: var(--bg); display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.group-header:hover { background: #efede8; }
+.group-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); }
+.group-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+.group-chevron { font-size: 10px; color: var(--muted); transition: transform 0.15s; display: inline-block; margin-left: auto; }
+.group-chevron.open { transform: rotate(180deg); }
+.group-body { display: block; }
+.group-body.closed { display: none; }
+
 .tier-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tier-table th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 8px 16px; text-align: left; background: var(--bg); border-bottom: 1px solid var(--rule); }
-.tier-table td { padding: 10px 16px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
+.tier-table th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 8px 20px; text-align: left; background: var(--white); border-bottom: 1px solid var(--rule); }
+.tier-table td { padding: 10px 20px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
 .tier-table tr:last-child td { border-bottom: none; }
 .star-col { color: var(--amber); margin-right: 4px; font-size: 12px; }
-.num-col { font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-align: right; }
+.num-col { font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-align: right; padding-right: 24px; }
 
 .day-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; padding: 2px 8px; border-radius: 3px; white-space: nowrap; font-weight: 500; }
 .day-badge.green { background: var(--green-light); color: var(--green); }
 .day-badge.amber { background: var(--amber-light); color: var(--amber); }
 .day-badge.red { background: var(--highlight-light); color: var(--highlight); }
 
-/* TIER FOOTER NOTE */
 .tier-footnote { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); padding: 12px 20px; background: var(--bg); border-top: 1px solid var(--rule); line-height: 1.8; }
 
 /* DIVIDER */
@@ -110,11 +127,7 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 
 /* FILTER BAR */
 .filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; padding: 16px 20px; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; }
-.filter-bar select, .filter-bar input { 
-  font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink);
-  border: 1px solid var(--rule); border-radius: 4px; padding: 7px 10px; background: var(--bg);
-  outline: none; cursor: pointer;
-}
+.filter-bar select, .filter-bar input { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: 7px 10px; background: var(--bg); outline: none; cursor: pointer; }
 .filter-bar select:focus, .filter-bar input:focus { border-color: var(--accent); }
 .filter-bar input { flex: 1; min-width: 160px; }
 .clear-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 4px; background: var(--white); color: var(--muted); cursor: pointer; white-space: nowrap; }
@@ -124,11 +137,7 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 /* ACTIVITY TABLE */
 .table-wrap { background: var(--white); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
 .act-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.act-table th { 
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; 
-  color: var(--muted); padding: 10px 14px; text-align: left; background: var(--bg); 
-  border-bottom: 1px solid var(--rule); white-space: nowrap; cursor: pointer; user-select: none;
-}
+.act-table th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 10px 14px; text-align: left; background: var(--bg); border-bottom: 1px solid var(--rule); white-space: nowrap; cursor: pointer; user-select: none; }
 .act-table th:hover { color: var(--accent); }
 .act-table th.sorted { color: var(--accent); }
 .act-table td { padding: 11px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink); line-height: 1.4; }
@@ -140,11 +149,17 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 .cat-badge.partial { background: var(--amber-light); color: var(--amber); }
 .cat-badge.none { background: var(--tag-bg); color: var(--muted); }
 
+.rating-wrap { display: flex; flex-direction: column; gap: 4px; }
 .rating-dots { display: flex; gap: 2px; align-items: center; }
 .rating-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); }
 .rating-dot.filled { background: var(--accent); }
+.rating-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
 
-.coach-text { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.4; max-width: 320px; }
+/* COACH CELL */
+.coach-cell { display: flex; flex-direction: column; gap: 6px; }
+.exchange-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 3px; white-space: nowrap; width: fit-content; }
+.exchange-icon { font-size: 10px; }
+.coach-moment { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; max-width: 300px; }
 
 .no-results { padding: 32px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
 </style>
@@ -162,7 +177,7 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 
 <div class="page">
 
-  <!-- ── SECTION 1: ENGAGEMENT TRACKER ── -->
+  <!-- SECTION 1: ENGAGEMENT TRACKER -->
   <div class="section-header">
     <div class="section-eyebrow">Section 1 of 2</div>
     <div class="section-title">Initiative Cadence</div>
@@ -174,12 +189,12 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
       <div class="stat-lbl">Total activities<br>completed</div>
     </div>
     <div class="summary-card">
-      <div class="stat-num blue">21</div>
-      <div class="stat-lbl">Active participants<br>(≥1 activity)</div>
+      <div class="stat-num blue">21 <span style="font-size:16px;color:var(--muted);">of 42</span></div>
+      <div class="stat-lbl">Enrolled participants<br>active (≥1 activity)</div>
     </div>
     <div class="summary-card">
-      <div class="stat-num green" id="rate-display">100%</div>
-      <div class="stat-lbl">On-target engagement<br>rate</div>
+      <div class="stat-num green">100%</div>
+      <div class="stat-lbl">On-target engagement<br>rate (active cohort)</div>
     </div>
     <div class="summary-card">
       <div class="stat-num blue">70%</div>
@@ -189,7 +204,7 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 
   <div class="progress-card">
     <div class="progress-label">
-      <span class="progress-title">Engagement Rate vs. 70% Goal</span>
+      <span class="progress-title">Active Participant Engagement Rate vs. 70% Goal</span>
       <span class="progress-pct">100% on target</span>
     </div>
     <div class="progress-track">
@@ -200,81 +215,38 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
   </div>
 
   <div class="threshold-strip">
-    <div class="threshold-pill"><div class="t-dot green"></div>On target — completed ≥ pace, or active within 7 days</div>
+    <div class="threshold-pill"><div class="t-dot green"></div>On target — count ≥ pace, or active within 7 days</div>
     <div class="threshold-pill"><div class="t-dot amber"></div>Slightly behind — 8–14 days since last activity &amp; below pace</div>
     <div class="threshold-pill"><div class="t-dot red"></div>Seriously behind — 15+ days since last activity &amp; below pace</div>
   </div>
 
-  <div class="tier-grid">
-    <!-- ON TARGET -->
-    <div class="tier-card">
-      <div class="tier-header" onclick="toggleTier('tier-on-target', this)">
-        <div class="tier-header-left">
-          <span class="tier-badge green">21</span>
-          <span class="tier-name">On Target</span>
-        </div>
-        <span class="tier-chevron open" id="chev-tier-on-target">▼</span>
-      </div>
-      <div class="tier-body open" id="tier-on-target">
-        <table class="tier-table">
-          <thead><tr>
-            <th>Participant</th>
-            <th>Manager</th>
-            <th style="text-align:right;">Count</th>
-            <th>Last activity</th>
-          </tr></thead>
-          <tbody>
-<tr><td><span class="star-col">&nbsp;</span>Andrew Renn</td><td>Gary Feldman</td><td class="num-col">1</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Andy Speer</td><td>Vikas Kataria</td><td class="num-col">1</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Ashley Teboe</td><td>Jessica Lee</td><td class="num-col">1</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Curt Main</td><td>Robert Kowalczyk</td><td class="num-col">1</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Daniel Ortiz</td><td>Douglas Turner</td><td class="num-col">2</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Darin Shoaf</td><td>Brian Ruble</td><td class="num-col">2</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>David Evans</td><td>Thomas Rogers</td><td class="num-col">1</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Donald Mohammed</td><td>Ann Bercot</td><td class="num-col">2</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Douglas Smith</td><td>Ann Bercot</td><td class="num-col">1</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Dustin Colbert</td><td>Ann Bercot</td><td class="num-col">1</td><td><span class="day-badge green">7d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Greg Hardesty</td><td>Jessica Lee</td><td class="num-col">3</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Janalee Cowens</td><td>Brian Ruble</td><td class="num-col">2</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Jeffrey Adams</td><td>Thomas Rogers</td><td class="num-col">1</td><td><span class="day-badge green">7d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Jeffrey Strickler</td><td>Jessica Lee</td><td class="num-col">2</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Jeremy Chism</td><td>Brian Ruble</td><td class="num-col">1</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Kenneth Weaver</td><td>Thomas Rogers</td><td class="num-col">1</td><td><span class="day-badge amber">8d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Kip Saylor</td><td>Ann Bercot</td><td class="num-col">3</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Michael Wolford</td><td>Douglas Turner</td><td class="num-col">2</td><td><span class="day-badge green">2d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Pat Curtis</td><td>Randall Baker</td><td class="num-col">10</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">&nbsp;</span>Ryan Grove</td><td>Scott Hackman</td><td class="num-col">1</td><td><span class="day-badge green">1d ago</span></td></tr>
-<tr><td><span class="star-col">★</span>Steve Tebbe</td><td>Ann Bercot</td><td class="num-col">2</td><td><span class="day-badge green">1d ago</span></td></tr>
-          </tbody>
-        </table>
-        <div class="tier-footnote">
-          ★ = ahead of pace (count ≥ expected cumulative) &nbsp;·&nbsp;
-          Active denominator = participants with ≥1 completed activity &nbsp;·&nbsp;
-          Pace from initiative start: May 12, 2026 &nbsp;·&nbsp;
-          Recency calculated from May 20, 2026
-        </div>
-      </div>
-    </div>
+  <!-- GROUP BY CONTROL -->
+  <div class="tier-controls">
+    <label>Group by</label>
+    <select id="group-by" onchange="renderTiers()">
+      <option value="manager">Manager</option>
+      <option value="businessUnit">Business Unit</option>
+      <option value="businessSegment">Business Segment</option>
+      <option value="jobTitle">Job Title</option>
+    </select>
+  </div>
+
+  <div class="tier-grid" id="tier-grid">
+    <!-- Rendered by JS -->
   </div>
 
   <hr class="section-divider">
 
-  <!-- ── SECTION 2: ACTIVITY LOG ── -->
+  <!-- SECTION 2: ACTIVITY LOG -->
   <div class="section-header">
     <div class="section-eyebrow">Section 2 of 2</div>
     <div class="section-title">Activity Log</div>
   </div>
 
   <div class="filter-bar">
-    <select id="filter-manager" onchange="applyFilters()">
-      <option value="">All Managers</option>
-    </select>
-    <select id="filter-activity" onchange="applyFilters()">
-      <option value="">All Activities</option>
-    </select>
-    <select id="filter-practice" onchange="applyFilters()">
-      <option value="">All Practices</option>
-    </select>
+    <select id="filter-manager" onchange="applyFilters()"><option value="">All Managers</option></select>
+    <select id="filter-activity" onchange="applyFilters()"><option value="">All Activities</option></select>
+    <select id="filter-practice" onchange="applyFilters()"><option value="">All Practices</option></select>
     <select id="filter-category" onchange="applyFilters()">
       <option value="">All Outcomes</option>
       <option value="Completed with finding">Completed with finding</option>
@@ -293,10 +265,10 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
           <th onclick="sortTable('manager')">Manager ↕</th>
           <th>Job Title</th>
           <th onclick="sortTable('activity')">Activity ↕</th>
-          <th onclick="sortTable('completed')">Completed ↕</th>
-          <th>What Happened</th>
-          <th>Rating</th>
-          <th>Coach Summary</th>
+          <th onclick="sortTable('completedSort')">Completed ↕</th>
+          <th>Outcome</th>
+          <th title="Participant's self-rated confidence on this activity attempt (1–10)">User Confidence ↕</th>
+          <th>Coach Engagement</th>
         </tr>
       </thead>
       <tbody id="act-tbody"></tbody>
@@ -307,13 +279,159 @@ body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: v
 </div>
 
 <script>
-const ACTIVITIES = [{participant:'Curt Main',manager:'Robert Kowalczyk',jobTitle:'Supervisor Maintenance',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',whatHappened:'I gathered the team and addressed damage and violations but didn\'t acknowledge anyone for the PPE practices that were working',rating:5,category:'Completed with finding',coachSummary:'Completed an end-of-shift PPE group check activity, confirming team compliance and gear condition, then received coaching on adding specific positive callouts to reinforce individual behavior.',businessUnit:'Fleetwood'},{participant:'Andrew Renn',manager:'Gary Feldman',jobTitle:'Manager EHS',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',whatHappened:'I tracked what I noticed during the shift, gathered the team for the end-of-shift check, addressed damage and shift violations, and acknowledged team members whose PPE was holding up',rating:9,category:'Completed with finding',coachSummary:'Walked through a completed end-of-shift PPE inspection, covering how violations were addressed as teaching moments, how recognition was delivered with specific examples, and explored the root cause behind widespread safety glasses non-conformance.',businessUnit:'E-One'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',whatHappened:'I verified PPE needs at a transition point and followed up within 10-15 minutes to confirm the team member made the change',rating:6,category:'Completed with finding',coachSummary:'Completed a PPE verification activity by approaching a team member, confirming what PPE was required for the task, and following up within 10-15 minutes to verify compliance.',businessUnit:'Goldshield'},{participant:'Ryan Grove',manager:'Scott Hackman',jobTitle:'Manager Engineering',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 19, 2026',whatHappened:'I picked one prepared team member and called them out by name with what additional PPE they had',rating:5,category:'Completed with finding',coachSummary:'Completed a public PPE recognition activity by calling out a team member by name and specific gear at a morning huddle, then debriefed on how the team received it.',businessUnit:'Ephrata'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',whatHappened:'I publicly acknowledged a team member by name with specific PPE items and task details in front of others',rating:5,category:'Completed with finding',coachSummary:'Identified a team member for public PPE recognition, then confirmed the huddle callout went as expected and marked the activity complete.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Verify PPE Feedback Held Throughout Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',whatHappened:'I checked on earlier feedback and responded appropriately whether it held or lapsed',rating:6,category:'Completed with finding',coachSummary:'Confirmed completion of a PPE feedback verification activity, covering notebook tracking practices and whether corrective feedback held over a multi-hour shift.',businessUnit:'Fleetwood'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',whatHappened:'I stated the PPE requirement and connected it to a specific hazard or injury before the team member continued working',rating:5,category:'Completed with finding',coachSummary:'Identified relevant PPE scenarios for under-vehicle work and fall protection, built consequence-linked safety pairings, then debriefed on applying them directly with a team member.',businessUnit:'Fleetwood'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Acknowledge Good Compliance at End-of-Shift Check',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',whatHappened:'I picked specific habits to watch for, noticed two team members modeling them, and acknowledged each one specifically in front of the team',rating:5,category:'Completed with finding',coachSummary:'Practiced pre-shift PPE observation targeting by identifying ear plugs as a habit to watch, then recognized two employees for specific gear compliance and received coaching on anchoring acknowledgments to concrete observed moments.',businessUnit:'Fleetwood'},{participant:'Jeremy Chism',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',whatHappened:'I gathered the team and addressed damage and violations but didn\'t acknowledge anyone for the PPE practices that were working',rating:6,category:'Completed with finding',coachSummary:'Walked through an end-of-shift PPE check activity, covering how to address violations observed during the shift and reinforcing the importance of acknowledging specific examples of correct PPE compliance.',businessUnit:'Goldshield'},{participant:'Andy Speer',manager:'Vikas Kataria',jobTitle:'Supervisor Engineering I',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',whatHappened:'I checked PPE individually as I caught issues during the shift but didn\'t gather the team for a structured end-of-shift check',rating:null,category:'Partial / no new items',coachSummary:'Adapted an end-of-shift PPE check activity for an engineering supervisor without a direct production team, mapping the steps onto existing daily floor walkthroughs and supervisor check-ins.',businessUnit:'Capacity'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',whatHappened:'I verified PPE needs at a transition point and followed up within 10-15 minutes to confirm the team member made the change',rating:6,category:'Completed with finding',coachSummary:'Introduced an activity focused on building the habit of committing to follow-up checks after observing PPE gaps during transition points.',businessUnit:'Fleetwood'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',whatHappened:'I asked someone, they demonstrated at the huddle, and the team saw exactly how the setup should look',rating:6,category:'Completed with finding',coachSummary:'Guided a learner through a peer PPE demonstration activity, from identifying and approaching a team member to facilitating her cut-resistant glove setup demo at the morning huddle, then completing the follow-up steps of public and private recognition.',businessUnit:'Fleetwood'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',whatHappened:'I worked a quick task alongside a team member with full PPE and shared a tip that matched what I\'ve seen them do',rating:8,category:'Completed with finding',coachSummary:'Walked through a co-modeling safety activity where cut gloves were worn during a glass-cutting task alongside a teammate, and a visibility tip was shared to reinforce consistent PPE use.',businessUnit:'Goldshield'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',whatHappened:'I picked one prepared team member and called them out by name with what additional PPE they had',rating:8,category:'Completed with finding',coachSummary:'Explored an activity about calling out additional PPE at morning huddles, determined it didn\'t apply to the department\'s setup, and skipped it in favor of a better-fitting alternative.',businessUnit:'Goldshield'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',whatHappened:'I observed active work and corrected violations or acknowledged correct PPE',rating:7,category:'Completed with finding',coachSummary:'Prompted reflection on recognizing correct PPE use in real-time, transitioning from end-of-shift checks to in-the-moment observation.',businessUnit:'Fleetwood'},{participant:'David Evans',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',whatHappened:'I called someone out but stayed general — I didn\'t name the specific PPE they had',rating:5,category:'Partial / no new items',coachSummary:'Practiced spotting and calling out PPE readiness at a morning huddle, then received corrective feedback distinguishing task-specific gear from baseline PPE requirements.',businessUnit:'Ephrata'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',whatHappened:'I publicly acknowledged a team member by name with specific PPE items and task details in front of others',rating:5,category:'Completed with finding',coachSummary:'Practiced publicly recognizing a team member at a morning huddle for consistent PPE use, then debriefed on how the acknowledgment landed with the rest of the team.',businessUnit:'Fleetwood'},{participant:'Ashley Teboe',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',whatHappened:'I walked around different work areas but didn\'t stop anyone to check their PPE',rating:5,category:'Partial / no new items',coachSummary:'Practiced positioning at break transitions to catch PPE gaps, then debriefed on what was observed — including identifying a missed coaching opportunity when employees were seen putting on gloves after arriving at their workstations.',businessUnit:'Fleetwood'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',whatHappened:'I publicly acknowledged a team member by name with specific PPE items and task details in front of others',rating:3,category:'Completed with finding',coachSummary:'Planned and delivered a public recognition moment at a morning huddle, calling out a specific team member by name for consistently wearing bump caps during under-vehicle work without being prompted.',businessUnit:'Fleetwood'},{participant:'Douglas Smith',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',whatHappened:'I called someone out but stayed general — I didn\'t name the specific PPE they had',rating:3,category:'Partial / no new items',coachSummary:'Planned a Monday morning huddle activity to spotlight PPE readiness by identifying a prepared team member and leading a quick gear check.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',whatHappened:'I observed active work and corrected violations or acknowledged correct PPE',rating:6,category:'Completed with finding',coachSummary:'Identified two PPE violations during a floor walkthrough (improper glove use near a saw, ill-fitting face shield), confirmed both were corrected on the spot alongside routine positive reinforcement of compliant PPE use.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',whatHappened:'I tracked what I noticed during the shift, gathered the team for the end-of-shift check, addressed damage and shift violations, and acknowledged team members whose PPE was holding up',rating:6,category:'Completed with finding',coachSummary:'Walked through an end-of-shift PPE check with welders, surfacing a gap in physically inspecting gear versus relying on self-reporting, and reinforced specific recognition of a team member who held the standard.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',whatHappened:'I asked someone, they demonstrated at the huddle, and the team saw exactly how the setup should look',rating:6,category:'Completed with finding',coachSummary:'Recruited an experienced team member to demonstrate proper welding sleeve usage at a morning huddle, then recognized him publicly during the demo and privately afterward.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',whatHappened:'I worked a quick task alongside a team member with full PPE and shared a tip that matched what I\'ve seen them do',rating:6,category:'Completed with finding',coachSummary:'Guided a welder through modeling proper PPE use during tack welding alongside a colleague, then followed up to confirm the behavior held after walking away.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',whatHappened:'I picked one prepared team member and called them out by name with what additional PPE they had',rating:6,category:'Completed with finding',coachSummary:'Guided the execution of a PPE recognition activity, from identifying task-specific gear requirements through completing a pre-weld huddle where a newer team member was publicly acknowledged for proper welding PPE.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'State PPE Requirements Clearly',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',whatHappened:'I stated the complete PPE requirement to a team member and confirmed they had everything before they started',rating:6,category:'Completed with finding',coachSummary:'Practiced stating complete task-specific PPE requirements to welders before they began work, then confirmed compliance by observing them gear up at task start.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',whatHappened:'I stated the PPE requirement clearly but explained it as policy or a rule rather than connecting it to an actual consequence',rating:6,category:'Completed with finding',coachSummary:'Practiced connecting PPE requirements to specific injury consequences with a team member, then debriefed on how the real-world example landed.',businessUnit:'Fleetwood'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',whatHappened:'I tracked what I noticed during the shift, gathered the team for the end-of-shift check, addressed damage and shift violations, and acknowledged team members whose PPE was holding up',rating:6,category:'Completed with finding',coachSummary:'Introduced an end-of-shift PPE check activity and prompted scheduling of the first practice run.',businessUnit:'Fleetwood'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',whatHappened:'I publicly acknowledged a team member by name with specific PPE items and task details in front of others',rating:5,category:'Completed with finding',coachSummary:'Walked through planning a public recognition moment for a crew member\'s PPE habits, then debriefed on how the huddle went and clarified the distinction between baseline and additional PPE.',businessUnit:'Fleetwood'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',whatHappened:'I stopped a team member, asked what PPE they needed, and followed up while they were working to confirm they made the change',rating:6,category:'Completed with finding',coachSummary:'Guided completion of a PPE observation activity at break transitions, including confirming the approach, deploying the task, and debriefing on the outcome.',businessUnit:'Fleetwood'},{participant:'Jeffrey Adams',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',whatHappened:'I picked one prepared team member and called them out by name with what additional PPE they had',rating:5,category:'Completed with finding',coachSummary:'Recounted using public recognition to reinforce PPE readiness, citing a new employee credited for wearing cut gloves while handling raw aluminum on his second day, then completed the activity.',businessUnit:'Ephrata'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 13, 2026',whatHappened:'I stopped a team member and verified what PPE they needed, but didn\'t follow up to check while they were working',rating:5,category:'Completed with finding',coachSummary:'Observed PPE compliance in the cut and grind area, acknowledged a team member for proper face shield use, and received coaching on incorporating direct interaction and the ask-first technique into future walk-throughs.',businessUnit:'Goldshield'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',whatHappened:'I worked a quick task alongside a team member with full PPE and shared a tip that matched what I\'ve seen them do',rating:5,category:'Completed with finding',coachSummary:'Guided the execution of a PPE modeling activity at the chop saw, then debriefed on how the co-modeling approach compared to direct correction.',businessUnit:'Fleetwood'},{participant:'Dustin Colbert',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',whatHappened:'I called someone out but stayed general — I didn\'t name the specific PPE they had',rating:3,category:'Partial / no new items',coachSummary:'Completed a peer modeling activity at a morning huddle, then debriefed on the callout technique — reinforcing task-specific language, prompting gear checks, and handling shy reactions from recognized team members.',businessUnit:'Fleetwood'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',whatHappened:'I stopped a team member, asked what PPE they needed, and followed up while they were working to confirm they made the change',rating:7,category:'Completed with finding',coachSummary:'Practiced catching PPE gaps at break transitions by questioning a team member about face shield requirements at a cut-off saw, then confirmed the behavior held during a follow-up check the next day.',businessUnit:'Fleetwood'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',whatHappened:'I stopped a team member, asked what PPE they needed, and followed up while they were working to confirm they made the change',rating:5,category:'Completed with finding',coachSummary:'Chat 1',businessUnit:'Fleetwood'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 12, 2026',whatHappened:'I picked one prepared team member and called them out by name with what additional PPE they had',rating:5,category:'Completed with finding',coachSummary:'Recounted completing a recognition activity by calling out a team member by name for wearing specific PPE during a task, and reflected on how the team responded.',businessUnit:'Fleetwood'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',whatHappened:'I tracked what I noticed during the shift, gathered the team for the end-of-shift check, addressed damage and shift violations, and acknowledged team members whose PPE was holding up',rating:null,category:'Completed with finding',coachSummary:'Conducted an end-of-shift PPE check with the team, recognizing compliant behavior, addressing a violation, and catching worn-out gear that was replaced on the spot.',businessUnit:'Fleetwood'},{participant:'Kenneth Weaver',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',whatHappened:'I tracked what I noticed during the shift, gathered the team for the end-of-shift check, addressed damage and shift violations, and acknowledged team members whose PPE was holding up',rating:8,category:'Completed with finding',coachSummary:'Completed an end-of-shift PPE check with one team member, acknowledged each piece of equipment individually, and received coaching on connecting shift-long observations to the end-of-shift recognition.',businessUnit:'Ephrata'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',whatHappened:'I stopped a team member, asked what PPE they needed, and followed up while they were working to confirm they made the change',rating:7,category:'Completed with finding',coachSummary:'Practiced a PPE observation technique at break transitions, catching an employee missing ear protection and verifying the correction held during a follow-up check.',businessUnit:'Fleetwood'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',whatHappened:'I stopped a team member and verified what PPE they needed, but didn\'t follow up to check while they were working',rating:5,category:'Completed with finding',coachSummary:'Walked through a PPE break-transition observation activity, confirmed the follow-up check was completed, and reinforced using the ask-first approach even when gear is already in place.',businessUnit:'Fleetwood'}];
+const ON_TARGET = [{name:'Curt Main',manager:'Robert Kowalczyk',jobTitle:'Supervisor Maintenance',count:1,daysSince:1,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Andrew Renn',manager:'Gary Feldman',jobTitle:'Manager EHS',count:1,daysSince:1,ahead:false,businessUnit:'E-One',businessSegment:'Specialty Vehicles'},{name:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',count:2,daysSince:1,ahead:true,businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{name:'Ryan Grove',manager:'Scott Hackman',jobTitle:'Manager Engineering',count:1,daysSince:1,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:2,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',count:10,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',count:3,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:2,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Jeremy Chism',manager:'Brian Ruble',jobTitle:'Production Lead',count:1,daysSince:2,ahead:false,businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{name:'Andy Speer',manager:'Vikas Kataria',jobTitle:'Supervisor Engineering I',count:1,daysSince:2,ahead:false,businessUnit:'Capacity',businessSegment:'Specialty Vehicles'},{name:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:3,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',count:2,daysSince:2,ahead:true,businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{name:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'David Evans',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:2,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Ashley Teboe',manager:'Jessica Lee',jobTitle:'Production Lead',count:1,daysSince:2,ahead:false,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Douglas Smith',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:1,daysSince:2,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Jeffrey Adams',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:7,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Dustin Colbert',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:1,daysSince:7,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Kenneth Weaver',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:8,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'}];
+const SLIGHTLY_BEHIND = [];
+const SERIOUSLY_BEHIND = [];
+
+const ACTIVITIES = [{participant:'Curt Main',manager:'Robert Kowalczyk',jobTitle:'Supervisor Maintenance',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 12:50',rating:5,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'Good — sounds like the end-of-shift check happened. Did you pull the team together as a group, or was it more individual checks as you caught people?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Andrew Renn',manager:'Gary Feldman',jobTitle:'Manager EHS',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 12:18',rating:9,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — sounds like the check happened and you used the violations as teaching moments, which is exactly the right instinct. Two quick things: did you acknowl...',businessUnit:'E-One',businessSegment:'Specialty Vehicles'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 09:17',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Perfect — you already have a rapport with Tyler from last time. Quick clarification before you go: when you verify PPE with a team member, make sure you\'re t...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Ryan Grove',manager:'Scott Hackman',jobTitle:'Manager Engineering',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 19, 2026',completedSort:'2026-05-19 08:56',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'How did the huddle go — did you get a chance to call someone out?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 07:33',rating:5,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Did you get a chance to call out Rita at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Verify PPE Feedback Held Throughout Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 07:33',rating:6,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Good — that\'s exactly what this activity calls for. Make sure you note whether it\'s a first offense or a repeat for each person, since your response should m...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 03:59',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get a chance to have the conversation?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Acknowledge Good Compliance at End-of-Shift Check',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 02:32',rating:5,category:'Completed with finding',coachExchanges:2,coachKeyMoment:'Good that you recognized them. Two quick pushes:  1.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Jeremy Chism',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 11:55',rating:6,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'That\'s a fair point from your team member — and it\'s actually the activity working as intended. The acknowledgment piece is meant to be specific to *addition...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Andy Speer',manager:'Vikas Kataria',jobTitle:'Supervisor Engineering I',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 09:27',rating:null,category:'Partial / no new items',coachExchanges:10,coachKeyMoment:'Did you get a chance to do the full walkthrough — noting what you saw on the floor and then debriefing with the lead?',businessUnit:'Capacity',businessSegment:'Specialty Vehicles'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 09:21',rating:6,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'Good timing — you just ran the break transition observation, and this activity is the natural next step: building the habit of **committing to the follow-up*...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:59',rating:6,category:'Completed with finding',coachExchanges:9,coachKeyMoment:'Did you get a chance to ask Sarah?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:47',rating:8,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'That\'s a perfect setup for this activity — and that tip about keeping gloves visible right next to the glass is exactly the kind of specific, practical tip t...',businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:32',rating:8,category:'Completed with finding',coachExchanges:11,coachKeyMoment:'Who\'d you end up calling out, and what gear did you name?',businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 07:32',rating:7,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get through both zones?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'David Evans',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 07:23',rating:5,category:'Partial / no new items',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the callout at the huddle?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 06:44',rating:5,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Did you get a chance to do it?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Ashley Teboe',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 06:37',rating:5,category:'Partial / no new items',coachExchanges:6,coachKeyMoment:'You can see the full steps anytime in the **Activity Blueprint** button above. Here\'s what you\'re practicing: positioning yourself at a transition point, cat...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 04:08',rating:3,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Planned and delivered a public recognition moment at a morning huddle, calling out a specific team member by name for consistently wearing bump caps during unde',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Douglas Smith',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 03:25',rating:3,category:'Partial / no new items',coachExchanges:3,coachKeyMoment:'Planned a Monday morning huddle activity to spotlight PPE readiness by identifying a prepared team member and leading a quick gear check.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 12:14',rating:6,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'You\'re already doing the core of this. The one thing to be deliberate about today: **pick two specific zones**, plant yourself with sightlines to several ope...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 12:11',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Perfect — you\'re already doing the hardest part. As you go through the shift, just make sure you\'re noting specifics: who, what gear, what the issue or the w...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 12:05',rating:6,category:'Completed with finding',coachExchanges:9,coachKeyMoment:'Nice — you turned it around fast. Did CJ walk through his setup in his own words, or did you end up leading the explanation?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 11:45',rating:6,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Perfect setup. Here\'s what you\'re doing:  Pull Paul in, frame it as working together — not a correction.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 09:06',rating:6,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Nice. Who did you call out, and what specifically did you name — did you get to the gear details (helmet, gloves, sleeves) or did it stay more general?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'State PPE Requirements Clearly',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 08:53',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Good. Did you state the full list up front, or did it turn into more of a spot-check on what they were missing?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 08:32',rating:6,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Full steps are in the **Activity Blueprint** above. This one builds directly on what you\'ve been doing — instead of just stating the PPE requirement, you con...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 05:42',rating:6,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — clean shift. Before I send you out for the end-of-shift gather: did you catch anything worth naming specifically, either a violation pattern or someon...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 04:05',rating:5,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the recognition at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 03:44',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Good — so the gap-identification piece is solid. The one thing I want to make sure is crisp before you head out: we\'re not talking about standard PPE here (s...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Jeffrey Adams',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 13:36',rating:5,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'That works — same principle, different hazard. Public callout, specific behavior, named the person.',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 13, 2026',completedSort:'2026-05-13 07:13',rating:5,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Which area did you walk, and what work was actually happening during the window? Sometimes if it\'s a quiet stretch, the additional-PPE situations just don\'t ...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 05:13',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get a chance to work the task alongside Jon?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Dustin Colbert',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 03:16',rating:3,category:'Partial / no new items',coachExchanges:6,coachKeyMoment:'Did you get a chance to call someone out at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 13:03',rating:7,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'You\'ve got 20+ years running a team — you know these moments exist, they just don\'t always get the deliberate attention they deserve. The full steps are in t...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 12:47',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Hey — you can see the full steps in the **Activity Blueprint** button above this chat. You\'ve got 24 years on the floor, so you\'ve definitely seen PPE gaps a...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 12, 2026',completedSort:'2026-05-12 12:10',rating:5,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — that\'s the activity. A couple quick things to confirm:  Did you name the specific gear and task the way the activity calls for (sounds like you did — ...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',completedSort:'2026-05-12 12:02',rating:null,category:'Completed with finding',coachExchanges:2,coachKeyMoment:'Good start — you hit the two main pieces: recognition for what held up, and addressing a violation. Quick push on one thing: did you actually look at each pe...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kenneth Weaver',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',completedSort:'2026-05-12 12:02',rating:8,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the end-of-shift check?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 11:42',rating:7,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Nice — that\'s the activity working exactly as designed. Paul knowing the answer when you asked is the point; it\'s a different conversation than being told.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 11:42',rating:5,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Hey! I\'ll be walking you through the steps you can find in the **Activity Blueprint** (button above this chat) for the full details.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'}];
 
 let filtered = [...ACTIVITIES];
-let sortCol = 'completed';
+let sortCol = 'completedSort';
 let sortDir = -1;
 
-// Populate dropdowns
+// ── TIER RENDERING ──────────────────────────────────────────────
+
+function getGroupKey(p, groupBy) {
+  switch(groupBy) {
+    case 'manager': return p.manager || 'Unknown';
+    case 'businessUnit': return p.businessUnit || 'Unknown';
+    case 'businessSegment': return p.businessSegment || 'Unknown';
+    case 'jobTitle': return p.jobTitle || 'Unknown';
+    default: return p.manager;
+  }
+}
+
+function buildTierHTML(participants, tierColor, tierId) {
+  if (participants.length === 0) return '';
+  const groupBy = document.getElementById('group-by').value;
+
+  // Group participants
+  const groups = {};
+  participants.forEach(p => {
+    const key = getGroupKey(p, groupBy);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  });
+
+  const sortedGroupKeys = Object.keys(groups).sort();
+
+  let html = '';
+  sortedGroupKeys.forEach((groupKey, gi) => {
+    const members = groups[groupKey].sort((a, b) => a.name.localeCompare(b.name));
+    const groupId = `${tierId}-group-${gi}`;
+    html += `<div class="group-section">
+      <div class="group-header" onclick="toggleGroup('${groupId}')">
+        <span class="group-label">${groupKey}</span>
+        <span class="group-count">${members.length} participant${members.length !== 1 ? 's' : ''}</span>
+        <span class="group-chevron open" id="chev-${groupId}">▼</span>
+      </div>
+      <div class="group-body" id="${groupId}">
+        <table class="tier-table">
+          <thead><tr>
+            <th>Participant</th>
+            <th>${groupBy === 'manager' ? 'Job Title' : 'Manager'}</th>
+            <th style="text-align:right;padding-right:24px;">Count</th>
+            <th>Last activity</th>
+          </tr></thead>
+          <tbody>`;
+    members.forEach(p => {
+      const star = p.ahead ? '<span class="star-col">★</span>' : '<span style="display:inline-block;width:16px;"></span>';
+      const bc = p.daysSince <= 7 ? 'green' : (p.daysSince <= 14 ? 'amber' : 'red');
+      const secondCol = groupBy === 'manager' ? p.jobTitle : p.manager;
+      html += `<tr>
+        <td>${star}${p.name}</td>
+        <td style="font-size:12px;color:var(--muted);">${secondCol}</td>
+        <td class="num-col">${p.count}</td>
+        <td><span class="day-badge ${bc}">${p.daysSince}d ago</span></td>
+      </tr>`;
+    });
+    html += `</tbody></table></div></div>`;
+  });
+  return html;
+}
+
+function renderTiers() {
+  const grid = document.getElementById('tier-grid');
+  let html = '';
+
+  // ON TARGET
+  const onTargetInner = buildTierHTML(ON_TARGET, 'green', 'ot');
+  html += `<div class="tier-card">
+    <div class="tier-header" onclick="toggleTier('tier-ot', this)">
+      <div class="tier-header-left">
+        <span class="tier-badge green">${ON_TARGET.length}</span>
+        <span class="tier-name">On Target</span>
+      </div>
+      <span class="tier-chevron open" id="chev-tier-ot">▼</span>
+    </div>
+    <div class="tier-body open" id="tier-ot">
+      ${onTargetInner}
+      <div class="tier-footnote">
+        ★ = ahead of pace (count ≥ expected cumulative) &nbsp;·&nbsp;
+        Pace from initiative start: May 12, 2026 &nbsp;·&nbsp;
+        Recency calculated from May 20, 2026
+      </div>
+    </div>
+  </div>`;
+
+  // SLIGHTLY BEHIND
+  if (SLIGHTLY_BEHIND.length > 0) {
+    const sbInner = buildTierHTML(SLIGHTLY_BEHIND, 'amber', 'sb');
+    html += `<div class="tier-card">
+      <div class="tier-header" onclick="toggleTier('tier-sb', this)">
+        <div class="tier-header-left">
+          <span class="tier-badge amber">${SLIGHTLY_BEHIND.length}</span>
+          <span class="tier-name">Slightly Behind</span>
+        </div>
+        <span class="tier-chevron open" id="chev-tier-sb">▼</span>
+      </div>
+      <div class="tier-body open" id="tier-sb">
+        ${sbInner}
+        <div class="tier-footnote">8–14 days since last activity and below expected pace.</div>
+      </div>
+    </div>`;
+  }
+
+  // SERIOUSLY BEHIND
+  if (SERIOUSLY_BEHIND.length > 0) {
+    const sbInner2 = buildTierHTML(SERIOUSLY_BEHIND, 'red', 'sr');
+    html += `<div class="tier-card">
+      <div class="tier-header" onclick="toggleTier('tier-sr', this)">
+        <div class="tier-header-left">
+          <span class="tier-badge red">${SERIOUSLY_BEHIND.length}</span>
+          <span class="tier-name">Seriously Behind</span>
+        </div>
+        <span class="tier-chevron open" id="chev-tier-sr">▼</span>
+      </div>
+      <div class="tier-body open" id="tier-sr">
+        ${sbInner2}
+        <div class="tier-footnote">15+ days since last activity and below expected pace.</div>
+      </div>
+    </div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+function toggleTier(id, header) {
+  const body = document.getElementById(id);
+  const chev = document.getElementById('chev-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (chev) chev.classList.toggle('open', !isOpen);
+}
+
+function toggleGroup(id) {
+  const body = document.getElementById(id);
+  const chev = document.getElementById('chev-' + id);
+  if (!body) return;
+  const isOpen = !body.classList.contains('closed');
+  body.classList.toggle('closed', isOpen);
+  if (chev) chev.classList.toggle('open', !isOpen);
+}
+
+// ── ACTIVITY TABLE ──────────────────────────────────────────────
+
 function populate() {
   const managers = [...new Set(ACTIVITIES.map(a => a.manager))].sort();
   const activities = [...new Set(ACTIVITIES.map(a => a.activity))].sort();
@@ -366,8 +484,8 @@ function sortTable(col) {
 
 function renderTable() {
   const sorted = [...filtered].sort((a, b) => {
-    const va = (a[sortCol] || '').toString();
-    const vb = (b[sortCol] || '').toString();
+    const va = (a[sortCol] !== null && a[sortCol] !== undefined) ? String(a[sortCol]) : '';
+    const vb = (b[sortCol] !== null && b[sortCol] !== undefined) ? String(b[sortCol]) : '';
     return va.localeCompare(vb) * sortDir;
   });
 
@@ -384,40 +502,36 @@ function renderTable() {
   tbody.innerHTML = sorted.map(a => {
     const catClass = a.category === 'Completed with finding' ? 'found' : (a.category === 'Partial / no new items' ? 'partial' : 'none');
     const catLabel = a.category === 'Completed with finding' ? 'Done' : (a.category === 'Partial / no new items' ? 'Partial' : 'None');
-    
-    let ratingHtml = '';
+
+    let ratingHtml = '—';
     if (a.rating) {
-      const dots = Array.from({length: 10}, (_, i) => 
+      const dots = Array.from({length: 10}, (_, i) =>
         `<div class="rating-dot${i < a.rating ? ' filled' : ''}"></div>`
       ).join('');
-      ratingHtml = `<div class="rating-dots" title="${a.rating}/10">${dots}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;">${a.rating}/10</div>`;
+      ratingHtml = `<div class="rating-wrap"><div class="rating-dots">${dots}</div><div class="rating-num">${a.rating} / 10</div></div>`;
     }
+
+    const exchangeLabel = a.coachExchanges === 1 ? '1 exchange' : `${a.coachExchanges} exchanges`;
+    const coachHtml = `<div class="coach-cell">
+      <span class="exchange-badge"><span class="exchange-icon">↔</span>${exchangeLabel}</span>
+      ${a.coachKeyMoment ? `<span class="coach-moment">${a.coachKeyMoment}</span>` : ''}
+    </div>`;
 
     return `<tr>
       <td><strong>${a.participant}</strong></td>
       <td>${a.manager}</td>
       <td style="font-size:12px;color:var(--muted);">${a.jobTitle}</td>
-      <td style="max-width:200px;">${a.activity}<br><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">${a.practice}</span></td>
+      <td style="max-width:190px;">${a.activity}<br><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">${a.practice}</span></td>
       <td style="white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:12px;">${a.completed}</td>
-      <td>
-        <span class="cat-badge ${catClass}">${catLabel}</span>
-        ${a.whatHappened ? `<div style="font-size:12.5px;margin-top:6px;color:var(--ink);line-height:1.4;">${a.whatHappened}</div>` : ''}
-      </td>
+      <td><span class="cat-badge ${catClass}">${catLabel}</span></td>
       <td>${ratingHtml}</td>
-      <td class="coach-text">${a.coachSummary}</td>
+      <td>${coachHtml}</td>
     </tr>`;
   }).join('');
 }
 
-function toggleTier(id, header) {
-  const body = document.getElementById(id);
-  const chev = document.getElementById('chev-' + id);
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  if (chev) chev.classList.toggle('open', !isOpen);
-}
-
-// Init
+// ── INIT ──────────────────────────────────────────────────────
+renderTiers();
 populate();
 renderTable();
 </script>
