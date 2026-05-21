@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens Bank · Fresh Eyes — The Role of the AI Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #6b6860;
+    --rule: #ddd9d0;
+    --accent: #1a3a5c;
+    --accent-light: #e8eef5;
+    --highlight: #c84b2f;
+    --highlight-light: #fdf0ec;
+    --green: #2d6a4f;
+    --green-light: #eaf3ee;
+    --tag-bg: #ededea;
+    --nav-h: 52px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 100;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .nav-sep {
+    width: 1px;
+    height: 16px;
+    background: var(--rule);
+    flex-shrink: 0;
+  }
+  .nav-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .nav-tab {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding: 5px 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+  }
+  .nav-tab:hover {
+    color: var(--ink);
+    background: var(--tag-bg);
+  }
+  .nav-tab.active {
+    color: var(--accent);
+    background: var(--accent-light);
+    border-color: rgba(26,58,92,0.15);
+    font-weight: 500;
+  }
+
+  /* ── SLIDES ── */
+  .slide-container {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+  }
+  .slide {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 48px 52px 80px;
+    display: none;
+  }
+  .slide.active { display: block; }
+
+  /* ── SLIDE ANATOMY ── */
+  .slide-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .slide-headline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 680px;
+    margin-bottom: 10px;
+  }
+  .slide-subhead {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 620px;
+    margin-bottom: 24px;
+  }
+  .slide-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 18px 22px;
+    min-width: 160px;
+    flex: 1;
+  }
+  .stat-number {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-number.blue { color: var(--accent); }
+  .stat-number.green { color: var(--green); }
+  .stat-number.red { color: var(--highlight); }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── CARDS ── */
+  .card-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+  .card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .card-body {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .card.blue { border-left: 3px solid var(--accent); }
+  .card.green { border-left: 3px solid var(--green); }
+  .card.red { border-left: 3px solid var(--highlight); }
+
+  /* ── QUOTE BLOCKS ── */
+  .quote-block {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 16px;
+    margin-top: 10px;
+  }
+  .quote-block.green {
+    background: var(--green-light);
+    border-left-color: var(--green);
+  }
+  .quote-block.red {
+    background: var(--highlight-light);
+    border-left-color: var(--highlight);
+  }
+  .quote-text {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 12.5px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .quote-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── PEER VOICE ── */
+  .peer-voice-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .peer-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .peer-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── OPEN QUESTIONS ── */
+  .questions-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .question-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+  .q-mark {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+  .q-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  /* ── DATA FOOTNOTE ── */
+  .data-footnote {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ── SLIDE NAV ── */
+  .slide-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 52px;
+    background: var(--white);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 100;
+  }
+  .slide-nav-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 6px 14px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+  .slide-nav-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+  }
+  .slide-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  .slide-nav-btn:disabled:hover {
+    background: none;
+    color: var(--accent);
+  }
+  .slide-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 4 — SESSION EXAMPLES TABLE
+  ══════════════════════════════════ */
+  .examples-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--white);
+  }
+  .examples-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .examples-table thead tr {
+    background: var(--tag-bg);
+    border-bottom: 2px solid var(--rule);
+  }
+  .examples-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    padding: 11px 14px;
+    text-align: left;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .examples-table td {
+    padding: 14px 14px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+  .examples-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .examples-table tbody tr:hover {
+    background: #faf9f6;
+  }
+  .td-name {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .td-title {
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .td-manager {
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .td-acts {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .td-activity {
+    color: var(--ink);
+    font-size: 12.5px;
+    min-width: 160px;
+  }
+  .td-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .td-exchanges {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: center;
+  }
+  .td-highlight {
+    font-size: 12.5px;
+    color: var(--ink);
+    line-height: 1.55;
+    min-width: 220px;
+  }
+  .view-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid rgba(26,58,92,0.2);
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .view-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  /* ══════════════════════════════
+     SESSION MODAL
+  ══════════════════════════════ */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,28,30,0.55);
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 20px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .modal-backdrop.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .modal {
+    background: var(--white);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 740px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+    overflow: hidden;
+    transform: translateY(12px);
+    transition: transform 0.2s;
+    position: relative;
+  }
+  .modal-backdrop.open .modal {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    padding: 22px 24px 16px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .modal-person {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .modal-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .modal-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .modal-meta {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .modal-activity-badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-top: 4px;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--ink); }
+
+  .modal-quote-block {
+    margin: 0 24px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 4px 4px 0;
+    margin-top: 20px;
+  }
+  .modal-quote-text {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .modal-quote-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .modal-section {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .modal-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .modal-overview-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  /* transcript */
+  .transcript-scroll {
+    max-height: 380px;
+    overflow-y: auto;
+    padding: 0 24px;
+  }
+  .transcript-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 18px 0 10px;
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 2;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+  .turn {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .turn:last-child { border-bottom: none; }
+  .turn-meta {
+    text-align: right;
+    padding-top: 2px;
+  }
+  .turn-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .turn-role.participant {
+    color: var(--muted);
+  }
+  .turn-framing {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.45;
+    font-style: italic;
+  }
+  .turn-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .modal-next-focus {
+    margin: 0 24px 24px;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 20px;
+  }
+  .modal-next-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .modal-next-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--tag-bg);
+    border-top: 1px solid var(--rule);
+  }
+  .modal-footer-activity {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .modal-footer-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* scrollbar */
+  .transcript-scroll::-webkit-scrollbar { width: 4px; }
+  .transcript-scroll::-webkit-scrollbar-track { background: transparent; }
+  .transcript-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-logo">Citizens Bank · Fresh Eyes</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">The Role of the AI Coach — Early Insights</span>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="goTo(0)">Coach Focus Areas</div>
+    <div class="nav-tab" onclick="goTo(1)">Participant Dynamics</div>
+    <div class="nav-tab" onclick="goTo(2)">What the Coach Is Teaching Us</div>
+    <div class="nav-tab" onclick="goTo(3)">Session Examples</div>
+  </div>
+</nav>
+
+<!-- SLIDES -->
+<div class="slide-container">
+
+  <!-- SLIDE 1: Coach Focus Areas -->
+  <div class="slide active">
+    <div class="slide-tag">01 / 04 &nbsp;·&nbsp; Coach Focus Areas</div>
+    <h1 class="slide-headline">What the coach is spending most of its time on</h1>
+    <p class="slide-subhead">Across 62 completed activities, three coaching themes emerged with enough consistency to tell us something real about where the learning is happening.</p>
+    <hr class="slide-rule">
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-number blue">69%</div>
+        <div class="stat-desc">of activities involved coaching around the pre-entry reset habit — starting from the parking lot, not the work order</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number blue">60%</div>
+        <div class="stat-desc">of activities required coaching on documentation specificity — what it is, where exactly, how long it's been there</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number blue">37%</div>
+        <div class="stat-desc">of activities required the coach to redirect participants from exterior-only to the full interior customer route</div>
+      </div>
+    </div>
+    <div class="card-row">
+      <div class="card blue">
+        <div class="card-label">Theme 1 — The Reset Habit</div>
+        <div class="card-title">FMs are arriving at branches and going straight to the work order</div>
+        <div class="card-body">The coach's most consistent focus has been on the moment of arrival — specifically the habit of stopping at the parking lot and mentally resetting into a customer lens before doing anything else. This is the hardest behavior to interrupt because the FM's pull toward their operational purpose is strong.</div>
+        <div class="quote-block">
+          <div class="quote-text">"The reset moment is everything. Start in the parking lot and work your way in as a customer would."</div>
+          <div class="quote-attr">Coach, to Vincent Parrino</div>
+        </div>
+      </div>
+      <div class="card blue">
+        <div class="card-label">Theme 2 — Documentation Quality</div>
+        <div class="card-title">The gap isn't noticing things — it's documenting them specifically enough to act on</div>
+        <div class="card-body">Most participants are finding issues. The coach's recurring challenge has been translating what they see into a 360 entry that's useful. The most common gap: participants log a category ("cleanliness issue") rather than a finding ("cove base separating at teller counter, ~6 feet, not on any open work order").</div>
+        <div class="quote-block">
+          <div class="quote-text">"Always document, even if the information was communicated outside the work order system."</div>
+          <div class="quote-attr">Michael Konczewski, FM — peer tip to colleagues</div>
+        </div>
+      </div>
+    </div>
+    <div class="data-footnote">Data: 62 completed activities · Fresh Eyes initiative · Citizens Bank · May 2026</div>
+  </div>
+
+  <!-- SLIDE 2: Participant–Coach Dynamics -->
+  <div class="slide">
+    <div class="slide-tag">02 / 04 &nbsp;·&nbsp; Participant Dynamics</div>
+    <h1 class="slide-headline">How participants are engaging — and where the friction is</h1>
+    <p class="slide-subhead">The coach interactions reveal a consistent pattern: participants have the right instincts, but hit predictable friction points when translating intent into action.</p>
+    <hr class="slide-rule">
+    <div class="card-row">
+      <div class="card green">
+        <div class="card-label">What's working</div>
+        <div class="card-title">Participants are finding real things</div>
+        <div class="card-body">76% of completed activities resulted in a confirmed 360 entry. The most common customer-visible findings: door frames and hardware (42 activities), ceiling tiles (32), paint condition (16), and landscaping (10).</div>
+        <div class="quote-block green">
+          <div class="quote-text">"One tip I would give the FM is to not hold back — just because you may know what's going on, all things need documentation."</div>
+          <div class="quote-attr">Taeyon Thompson, FM</div>
+        </div>
+      </div>
+      <div class="card red">
+        <div class="card-label">Where friction shows up</div>
+        <div class="card-title">The interior walk is being skipped</div>
+        <div class="card-body">In 37% of activities, participants completed an exterior walkthrough but didn't make it through the full interior customer route — entrance, lobby, teller line, restrooms. Landscape-focused FMs were especially likely to stay outside.</div>
+        <div class="quote-block red">
+          <div class="quote-text">"I focused primarily on the outside."</div>
+          <div class="quote-attr">David Schofield, FM — after completing exterior-only walk</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-row">
+      <div class="card blue">
+        <div class="card-label">Patterns by role</div>
+        <div class="card-title">Experienced FMs show a different friction point</div>
+        <div class="card-body">Senior FMs and Facilities Leads are more likely to find the issue and fix it on the spot — without logging it. Their instinct is to resolve, not document. Newer FMs are more likely to need coaching on <em>what</em> to look for.</div>
+        <div class="quote-block">
+          <div class="quote-text">"The MT completed the work already… good that it got handled fast! But going forward, still log it in 360 even if it's already fixed."</div>
+          <div class="quote-attr">Coach, to Michael Konczewski (SFM)</div>
+        </div>
+      </div>
+      <div class="card red">
+        <div class="card-label">A pattern worth watching</div>
+        <div class="card-title">Photo friction is suppressing documentation quality</div>
+        <div class="card-body">Three participants cited photo friction specifically — file size limits on mobile cameras and 360 upload issues. This may be suppressing completion quality in ways the data alone won't show, since findings without photos are less likely to drive follow-through.</div>
+        <div class="quote-block red">
+          <div class="quote-text">"It's not letting me upload a photo… it's saying the file size is too big."</div>
+          <div class="quote-attr">Brandon Allen, FM — during branch visit</div>
+        </div>
+      </div>
+    </div>
+    <div class="data-footnote">Data: 62 completed activities · Fresh Eyes initiative · Citizens Bank · May 2026</div>
+  </div>
+
+  <!-- SLIDE 3: What the Coach Is Teaching Us -->
+  <div class="slide">
+    <div class="slide-tag">03 / 04 &nbsp;·&nbsp; What the Coach Is Teaching Us</div>
+    <h1 class="slide-headline">What this tells us about your workforce</h1>
+    <p class="slide-subhead">The coaching patterns aren't just about activity completion — they're revealing something about how this team thinks about their role and their relationship to the customer experience.</p>
+    <hr class="slide-rule">
+    <div class="card-row">
+      <div class="card blue">
+        <div class="card-label">What the data suggests</div>
+        <div class="card-title">The customer lens isn't absent — it's competing</div>
+        <div class="card-body">Participants self-rated their customer-mindset awareness at an average of 6.8 out of 10 at baseline. That's not low. But the coach interactions reveal that when participants arrive at a branch, the operational pull is stronger than the customer lens. It's not that they don't care — it's that the FM brain takes over the moment they walk in. The habit the initiative is building is specifically about interrupting that default.</div>
+      </div>
+      <div class="card green">
+        <div class="card-label">Peer voice</div>
+        <div class="card-title">FMs are already articulating the insight themselves</div>
+        <div class="card-body">When asked what tip they'd give a colleague, the responses were notably self-aware:</div>
+        <div class="peer-voice-row" style="margin-top:10px;">
+          <div class="peer-item"><span class="peer-arrow">→</span><span><strong>"Don't be complacent, look at the big picture"</strong> — Tony Petaccio</span></div>
+          <div class="peer-item"><span class="peer-arrow">→</span><span><strong>"Aesthetics matter — not just utility"</strong> — Sean Conroy</span></div>
+          <div class="peer-item"><span class="peer-arrow">→</span><span><strong>"Walk in with fresh eyes and also walk out with fresh eyes — always take a second look"</strong> — Vincent Parrino</span></div>
+          <div class="peer-item"><span class="peer-arrow">→</span><span><strong>"It felt good to cover things from a different perspective"</strong> — Morgan McNary</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card blue" style="margin-bottom:24px;">
+      <div class="card-label">The tension the coach is navigating</div>
+      <div class="card-title">Fix it now vs. document it first</div>
+      <div class="card-body">One of the most consistent dynamics across the coaching conversations is experienced FMs resolving issues on the spot and skipping the documentation step. The coaching challenge is reframing documentation not as paperwork, but as the mechanism that makes the pattern visible across hundreds of locations.</div>
+      <div class="quote-block">
+        <div class="quote-text">"For a guy with your experience, that habit of fixing things immediately is natural — but the fresh-eyes technique is specifically about capturing what you see before you act on it, so there's a record and a pattern over time."</div>
+        <div class="quote-attr">Coach, to James Wright (FML, 20 years experience)</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0; background: var(--bg); border-color: var(--rule);">
+      <div class="card-label">An open question for this meeting</div>
+      <div class="card-title" style="margin-bottom:14px;">What are you hearing from the field?</div>
+      <div class="questions-row">
+        <div class="question-item"><span class="q-mark">?</span><span class="q-text">Are there managers noticing a shift in how FMs are talking about their visits?</span></div>
+        <div class="question-item"><span class="q-mark">?</span><span class="q-text">Is the 360 documentation friction something that's been raised through other channels?</span></div>
+        <div class="question-item"><span class="q-mark">?</span><span class="q-text">Do the roles where we're seeing different patterns — landscape FMs, senior leads — match what you'd expect?</span></div>
+      </div>
+    </div>
+    <div class="data-footnote">Data: 62 completed activities · Fresh Eyes initiative · Citizens Bank · May 2026</div>
+  </div>
+
+  <!-- SLIDE 4: Session Examples -->
+  <div class="slide">
+    <div class="slide-tag">04 / 04 &nbsp;·&nbsp; Session Examples</div>
+    <h1 class="slide-headline">Six coaching conversations worth reading</h1>
+    <p class="slide-subhead">Selected for the quality of the coaching exchange — not just length. Each session shows the coach doing something specific worth noting.</p>
+    <hr class="slide-rule">
+
+    <div class="examples-table-wrap">
+      <table class="examples-table">
+        <thead>
+          <tr>
+            <th>Participant</th>
+            <th>Title</th>
+            <th>Manager</th>
+            <th style="text-align:center;">Activities</th>
+            <th>Activity</th>
+            <th>Completed</th>
+            <th style="text-align:center;">Exchanges</th>
+            <th>Highlight</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="td-name">Leonard Manigbas</div></td>
+            <td><div class="td-title">Facility Manager</div></td>
+            <td><div class="td-manager">Juan Jorge</div></td>
+            <td><div class="td-acts">3</div></td>
+            <td><div class="td-activity">Catch the Repetitive Issue</div></td>
+            <td><div class="td-date">May 12, 2026</div></td>
+            <td><div class="td-exchanges">14</div></td>
+            <td><div class="td-highlight">Coach surgically identifies a vendor gap, drives to a logged action with SLA — tight, complete loop in 14 exchanges.</div></td>
+            <td><button class="view-btn" onclick="openModal('manigbas')">View Session</button></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Eric Kaechelin</div></td>
+            <td><div class="td-title">Senior Facility Manager</div></td>
+            <td><div class="td-manager">Timothy Butvilas</div></td>
+            <td><div class="td-acts">2</div></td>
+            <td><div class="td-activity">Keep Fresh Eyes During a Work Order Visit</div></td>
+            <td><div class="td-date">May 20, 2026</div></td>
+            <td><div class="td-exchanges">15</div></td>
+            <td><div class="td-highlight">Coach surfaces the root cause of a recurring trash accumulation issue — an abandoned dumpster from a former hauler — and turns it into a documented finding.</div></td>
+            <td><button class="view-btn" onclick="openModal('kaechelin')">View Session</button></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Sean Conroy</div></td>
+            <td><div class="td-title">Senior Facility Manager</div></td>
+            <td><div class="td-manager">Timothy Butvilas</div></td>
+            <td><div class="td-acts">3</div></td>
+            <td><div class="td-activity">Review a Long-Open Work Order</div></td>
+            <td><div class="td-date">May 19, 2026</div></td>
+            <td><div class="td-exchanges">15</div></td>
+            <td><div class="td-highlight">Coach catches a closed-but-not-closed work order and reframes it as a queue hygiene issue — Conroy finishes with a 10/10 self-rating and a standout peer tip.</div></td>
+            <td><button class="view-btn" onclick="openModal('conroy')">View Session</button></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Shawn Evans</div></td>
+            <td><div class="td-title">Senior Facility Manager</div></td>
+            <td><div class="td-manager">Timothy Butvilas</div></td>
+            <td><div class="td-acts">8</div></td>
+            <td><div class="td-activity">Spot the Pattern Before You Walk In</div></td>
+            <td><div class="td-date">May 19, 2026</div></td>
+            <td><div class="td-exchanges">23</div></td>
+            <td><div class="td-highlight">Coach pushes back when Evans tries to skip the pre-visit hypothesis step, then recovers to a full diagnostic loop on a recurring HVAC pattern.</div></td>
+            <td><button class="view-btn" onclick="openModal('evans')">View Session</button></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">John Conti</div></td>
+            <td><div class="td-title">Senior Facility Manager</div></td>
+            <td><div class="td-manager">Jessica Ann Kamer</div></td>
+            <td><div class="td-acts">3</div></td>
+            <td><div class="td-activity">Focus on One Zone</div></td>
+            <td><div class="td-date">May 15, 2026</div></td>
+            <td><div class="td-exchanges">25</div></td>
+            <td><div class="td-highlight">Coach catches Conti entering through the wrong door and redirects to the customer path — then navigates 360 photo friction to a fully documented work order.</div></td>
+            <td><button class="view-btn" onclick="openModal('conti')">View Session</button></td>
+          </tr>
+          <tr>
+            <td><div class="td-name">Tony Petaccio</div></td>
+            <td><div class="td-title">Facility Manager</div></td>
+            <td><div class="td-manager">Patricia Zieverink</div></td>
+            <td><div class="td-acts">1</div></td>
+            <td><div class="td-activity">Fresh Eyes Walkthrough</div></td>
+            <td><div class="td-date">May 14, 2026</div></td>
+            <td><div class="td-exchanges">35</div></td>
+            <td><div class="td-highlight">Three-branch session in one exchange — the coach threads the same surfaces-and-finishes prompt across all three visits, turning a multi-stop day into a coherent learning arc.</div></td>
+            <td><button class="view-btn" onclick="openModal('petaccio')">View Session</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="data-footnote">Data: 87 completed activities · Fresh Eyes initiative · Citizens Bank · May 2026</div>
+  </div>
+
+</div><!-- end slide-container -->
+
+<!-- BOTTOM NAV -->
+<div class="slide-nav">
+  <button class="slide-nav-btn" id="btn-prev" onclick="goTo(current-1)" disabled>← Previous</button>
+  <span class="slide-counter" id="counter">1 of 4</span>
+  <button class="slide-nav-btn" id="btn-next" onclick="goTo(current+1)">Next →</button>
+</div>
+
+<!-- MODAL BACKDROP -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="handleBackdropClick(event)">
+  <div class="modal" id="modal-content">
+    <!-- injected by JS -->
+  </div>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const tabs = document.querySelectorAll('.nav-tab');
+
+function goTo(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  tabs[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  tabs[current].classList.add('active');
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === slides.length - 1;
+  document.getElementById('counter').textContent = (current + 1) + ' of ' + slides.length;
+}
+
+document.addEventListener('keydown', e => {
+  if (document.getElementById('modal-backdrop').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') goTo(current + 1);
+  if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeModal();
+}
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+function openModal(key) {
+  const data = sessions[key];
+  if (!data) return;
+  document.getElementById('modal-content').innerHTML = renderModal(data);
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+}
+
+function renderTurns(turns) {
+  return turns.map(t => {
+    const isCoach = t.role === 'coach';
+    return `<div class="turn">
+      <div class="turn-meta">
+        <div class="turn-role ${isCoach ? '' : 'participant'}">${isCoach ? 'Coach' : t.participantName}</div>
+        ${isCoach && t.framing ? `<div class="turn-framing">${t.framing}</div>` : ''}
+      </div>
+      <div class="turn-text">${t.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderModal(d) {
+  return `
+    <div class="modal-header">
+      <div class="modal-person">
+        <div class="modal-avatar">${initials(d.name)}</div>
+        <div>
+          <div class="modal-name">${d.name}</div>
+          <div class="modal-meta">${d.title} &nbsp;·&nbsp; Mgr: ${d.manager}</div>
+          <div class="modal-activity-badge">${d.activity}</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    ${d.quote ? `<div class="modal-quote-block"><div class="modal-quote-text">"${d.quote}"</div><div class="modal-quote-attr">— ${d.name}</div></div>` : ''}
+    <div class="modal-section">
+      <div class="modal-section-label">Session Overview</div>
+      <div class="modal-overview-text">${d.overview}</div>
+    </div>
+    <div class="transcript-scroll">
+      <div class="transcript-section-label">Coaching Interaction</div>
+      ${renderTurns(d.turns.map(t => ({...t, participantName: d.name.split(' ')[0]})))}
+    </div>
+    <div class="modal-next-focus">
+      <div class="modal-next-label">Next Activity Focus</div>
+      <div class="modal-next-text">${d.nextFocus}</div>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-footer-activity">${d.activity}</span>
+      <span class="modal-footer-date">${d.completed}</span>
+    </div>`;
+}
+
+// ── SESSION DATA ──────────────────────────────────────────
+const sessions = {
+
+  manigbas: {
+    name: "Leonard Manigbas",
+    title: "Facility Manager",
+    manager: "Juan Jorge",
+    activity: "Catch the Repetitive Issue",
+    completed: "2026-05-12",
+    quote: "Be aware of the vendor scope and tracking.",
+    overview: "Manigbas identified a persistent restroom cleaning issue, correctly categorized it as a vendor gap, and closed the loop with a logged action step and SLA target — all in 14 exchanges.",
+    nextFocus: "Push Manigbas to do the 360 pre-work scan before the visit, not just on-site. He has the diagnostic instinct; the next rep should build the prep habit.",
+    turns: [
+      { role: 'coach', framing: 'Sets up the activity with prior context', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nYou've been building solid fresh-eyes habits. This activity steps it up — instead of just spotting something, you're going to **dig into why an issue keeps coming back** and take a real action step toward fixing it.\n\nWhich branch are you heading to next, and when?" },
+      { role: 'participant', text: "Rancho Park" },
+      { role: 'coach', framing: 'Prompts pre-work scan', text: "When are you heading there?\n\nBefore you go — open 360 for Rancho Park and look for either a work order that's been open a long time, or the same type of issue showing up more than once. What do you see?" },
+      { role: 'participant', text: "I'm there now. There is a restroom cleaning issue that has been happening for a while." },
+      { role: 'coach', framing: 'Diagnoses root cause category', text: "Good find. What's your read on why it keeps coming back — vendor not following through, no one tracking it, something else?" },
+      { role: 'participant', text: "The vendor is not cleaning at the correct frequency per the contract." },
+      { role: 'coach', framing: 'Confirms categorization and drives to action', text: "That's a solid categorization — vendor gap, specific to the restroom. That's exactly the kind of detail that points to a clear resolution path.\n\nNow the last piece: log this in 360 with a specific action step — an owner and a target date. Not just a note. What are you going to log?" },
+      { role: 'participant', text: "I will log it and contact the vendor to address the cleaning frequency and set an SLA." },
+      { role: 'coach', framing: 'Reinforces documentation standard', text: "Perfect. Make sure the SLA target date goes into the 360 note, not just the vendor call. That's what creates accountability you can track.\n\nDid you get a photo of the current state while you were there?" },
+      { role: 'participant', text: "Yes, I took photos and attached them." },
+      { role: 'coach', framing: 'Closes the loop with a forward nudge', text: "That's a complete loop — issue identified, categorized as a vendor gap, logged with a photo and a specific action step tied to an SLA. Solid work.\n\nOne thing to watch going forward: if the same restroom issue comes back after the vendor follow-up, that's your signal to escalate — whether that's a formal contract review or looping in your manager.\n\nMark it complete!" },
+      { role: 'participant', text: "Done." },
+      { role: 'coach', framing: 'Final confirmation', text: "Great work today, Leonard. 👊" },
+      { role: 'participant', text: "Thank you." }
+    ]
+  },
+
+  kaechelin: {
+    name: "Eric Kaechelin",
+    title: "Senior Facility Manager",
+    manager: "Timothy Butvilas",
+    activity: "Keep Fresh Eyes During a Work Order Visit",
+    completed: "2026-05-20",
+    quote: "",
+    overview: "Kaechelin was on-site for a landscaping visit and caught a recurring trash accumulation issue — the coach pushed past the surface complaint to surface the root cause: an abandoned dumpster from a former hauler that no one had removed.",
+    nextFocus: "Kaechelin is ready for the pre-visit 360 scan habit. The next rep should prime him to check for long-open items before arriving so he's walking in with a target, not just open eyes.",
+    turns: [
+      { role: 'coach', framing: 'Opens with activity framing and prior callout', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nThis activity has a specific twist: you're catching fresh-eyes findings *while you're already there for something else*. Not a dedicated walkthrough — a work order visit where you stay alert to what a first-time customer would see.\n\nWhich branch are you heading to next, and when?" },
+      { role: 'participant', text: "Heading to East Brunswick Tuesday for a landscaping visit." },
+      { role: 'coach', framing: 'Sets up the dual-purpose visit frame', text: "Good instinct on signage — that's exactly the kind of thing that degrades gradually and stops registering.\n\nHere's your focus for Tuesday: while you're walking to the landscaping areas, keep your eyes open for anything a first-time customer would notice — signage, entrance condition, anything along the path. If you spot something unrelated to the landscaping work, photo and log it.\n\nCome back after the visit." },
+      { role: 'participant', text: "I'm back. I found a trash accumulation issue near the side entrance that keeps coming back. There's an old dumpster that was left behind by a previous hauler." },
+      { role: 'coach', framing: 'Surfaces the root cause', text: "That's a strong find — and the dumpster is the *why*, not just the symptom. Trash keeps accumulating because the old container is still there acting as a magnet.\n\nDid you get a photo of it, and is this something you can initiate a removal on?" },
+      { role: 'participant', text: "Yes, I took a photo. I'll need to coordinate with facilities management to arrange pickup." },
+      { role: 'coach', framing: 'Drives to a logged action with owner and date', text: "Good. Log it in 360 with the photo attached — note that it's a root cause issue (abandoned dumpster, former hauler) and add a specific action step with an owner and target date for removal. That's what turns a recurring complaint into a resolved item.\n\nDid you catch anything else on the customer-side walk?" },
+      { role: 'participant', text: "The entrance signage had some fading. I logged a work order for that too." },
+      { role: 'coach', framing: 'Closes with affirmation and forward tip', text: "That's a complete rep — unrelated finding, photo attached, logged in 360 by you. And you diagnosed why the trash accumulation issue was persisting. Solid work.\n\nOne tip for next time: before you arrive, do a quick scan of 360 for anything that's been open unusually long. That old dumpster finding suggests there may be other 'inherited' issues sitting in the queue.\n\nMark it complete!" },
+      { role: 'participant', text: "Completed." },
+      { role: 'coach', framing: 'Final wrap', text: "Nice work today, Eric. 👊" },
+      { role: 'participant', text: "Thanks." },
+      { role: 'coach', framing: '', text: "See you on the next one!" },
+      { role: 'participant', text: "👍" },
+      { role: 'coach', framing: '', text: "Great." }
+    ]
+  },
+
+  conroy: {
+    name: "Sean Conroy",
+    title: "Senior Facility Manager",
+    manager: "Timothy Butvilas",
+    activity: "Review a Long-Open Work Order",
+    completed: "2026-05-19",
+    quote: "Always review open work orders before arriving at any branch for any reason — to catch stale work orders early.",
+    overview: "Conroy arrived at a branch expecting an open work order and discovered it had actually been completed but never closed in the system. The coach reframed this as a queue hygiene issue, not just a data error — and Conroy finished with a 10/10 self-rating.",
+    nextFocus: "Conroy's pre-visit 360 habit is strong. The next rep should push him toward vendor accountability — specifically, whether he's building the escalation pattern when the same vendor issue recurs.",
+    turns: [
+      { role: 'coach', framing: 'Opens with prior work context', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nThis activity is about going beyond spotting the issue — you're identifying a long-open item *and* taking a concrete action toward resolving it before you leave. Not just logging a plan.\n\nWhich branch are you visiting next, and when?" },
+      { role: 'participant', text: "Heading to Parma today." },
+      { role: 'coach', framing: 'Prompts pre-work scan', text: "Before you head out — open 360 for Parma and sort by open date. What's sitting 30 days or more?" },
+      { role: 'participant', text: "There's a work order for an exterior repair that's been open for 45 days." },
+      { role: 'coach', framing: 'Builds hypothesis before visit', text: "Good candidate. What's your read on why it's been sitting — vendor hasn't scheduled, approvals stuck, something else?\n\nSee you after Parma! 👍" },
+      { role: 'participant', text: "I'm back. The work was actually done — the vendor completed it but never closed the work order in 360." },
+      { role: 'coach', framing: 'Reframes as a systemic issue, not just a data error', text: "Good catch — and that's worth flagging as more than a data entry miss. An open work order that's actually closed is cluttering your queue and hiding what's genuinely still unresolved. That's a pattern worth pushing back on with vendors.\n\nDid you close it out in 360 and document what you found?" },
+      { role: 'participant', text: "Yes, I updated it with the completed date and attached a photo of the finished work." },
+      { role: 'coach', framing: 'Drives toward vendor accountability framing', text: "Perfect — that's the documentation that protects everyone. Completed work, photo attached, 360 updated. Clean record.\n\nGood instinct catching a closed-but-open work order — that's exactly the kind of thing that clutters your queue and hides what's actually still unresolved. One thing to build on: when this happens again, note the vendor name in 360. If it's the same vendor repeatedly not closing work orders, that's your escalation trigger.\n\nMark it complete!" },
+      { role: 'participant', text: "Done. This was a good reminder to always check 360 before heading out." },
+      { role: 'coach', framing: 'Affirms and reinforces', text: "That's the habit. Pre-visit 360 scan is the move that makes every visit more productive, not just the dedicated review activities.\n\nGreat work today, Sean. 👊" },
+      { role: 'participant', text: "Thanks. I gave it a 10 — felt like a clean, useful rep." },
+      { role: 'coach', framing: '', text: "That's what we're going for. See you on the next one!" },
+      { role: 'participant', text: "👍" },
+      { role: 'coach', framing: '', text: "Nice work." }
+    ]
+  },
+
+  evans: {
+    name: "Shawn Evans",
+    title: "Senior Facility Manager",
+    manager: "Timothy Butvilas",
+    activity: "Spot the Pattern Before You Walk In",
+    completed: "2026-05-19",
+    quote: "",
+    overview: "Evans tried to skip the pre-visit hypothesis step by jumping straight to the branch manager for answers — the coach redirected him to form his own read first, then guided a complete diagnostic loop on a recurring HVAC pattern.",
+    nextFocus: "Evans has the instincts but moves too fast. The next rep should slow him down on the pre-work step and push him to build vendor escalation documentation before the issue reopens.",
+    turns: [
+      { role: 'coach', framing: 'References prior work, sets up the activity', text: "Hey! Full steps in the **Activity Blueprint** above.\n\nLast time at Smithfield Avenue you caught cobwebs in the vestibule and got them logged — solid work. And the tip about sorting by reopened work orders is exactly what this next activity builds on.\n\nThis time we're going a step further: **before you arrive**, find a pattern in 360 and form a hypothesis about *why* it keeps coming back. Then confirm it on site.\n\nWhich branch are you visiting next, and when?" },
+      { role: 'participant', text: "Heading to my Charles Street branch now." },
+      { role: 'coach', framing: 'Drives the pre-work scan', text: "Pull up 360 for Charles Street right now. Look for either a work order open 60+ days, or the same type of issue opened more than once in the past 90 days.\n\nWhat do you see?" },
+      { role: 'participant', text: "HVAC issues." },
+      { role: 'coach', framing: 'Presses for hypothesis before visit', text: "Good find. Before you walk in — what's your hypothesis on why it hasn't been resolved? Vendor not following through, no one pushing it, something else?" },
+      { role: 'participant', text: "I will speak with the branch manager to see if the issue has been addressed." },
+      { role: 'coach', framing: 'Redirects — pushes Evans to form his own read first', text: "That's a good instinct, but try to form your own read first — before talking to the branch manager. Look at the work order details: How long has it been open? Any updates logged? Signs of a service visit?\n\nWhat does the work order history show you?" },
+      { role: 'participant', text: "It is not open. You asked to check if there was a same-issue WO in the past 90 days and I stated HVAC. The WO has been completed and the BM confirms it." },
+      { role: 'coach', framing: 'Acknowledges the clarification, keeps the thread going', text: "Got it — so the HVAC issue has been recurring. Same type of work order opened more than once in the past 90 days, but the current one is closed.\n\nThat's actually a useful pattern. What's your read on why it keeps coming back?" },
+      { role: 'participant', text: "My take is that it was not addressed the first time the vendor came out." },
+      { role: 'coach', framing: 'Validates hypothesis, sends to site', text: "Solid hypothesis — vendor didn't fix it right the first time, so it came back.\n\nGo confirm it on site. Look for evidence: signs of a previous repair attempt, or no signs at all. Snap a photo of the current state of the HVAC unit.\n\nI'll be here when you're back!" },
+      { role: 'participant', text: "I'm done. No access — unit is on the roof. Citizens has contracts with licensed vendors to address HVAC. As an FM you are only to touch something you are licensed to do." },
+      { role: 'coach', framing: 'Adapts to scope constraint, keeps the finding alive', text: "Totally fair — HVAC is a licensed trade. Good call not going up there.\n\nBased on what you could observe from inside — did you see any signs the issue is still present? Airflow, temperature, noise, anything visible at the diffusers?" },
+      { role: 'participant', text: "Branch interior temp is at our standard set point." },
+      { role: 'coach', framing: 'Reframes the value of the pattern documentation', text: "Good observation. So the current WO is closed and the branch is at set point — that tracks.\n\nThe key finding here is still the pattern: same HVAC issue reopened within 90 days, and your hypothesis is the vendor didn't fix it properly the first time. That's worth documenting even if it's currently resolved.\n\nLog it in 360 — note the recurring pattern, your hypothesis about the vendor fix not holding, and an action step — like flagging the vendor for follow-up if it reopens.\n\nI'll be here when you're back!" },
+      { role: 'participant', text: "I'm done." },
+      { role: 'coach', framing: 'Confirms close', text: "Did you get it logged in 360?" },
+      { role: 'participant', text: "Yes." },
+      { role: 'coach', framing: 'Closes with a forward-looking insight', text: "Nice work. Full loop here — spotted the pattern before arriving, formed a hypothesis, confirmed on site within your scope, and logged it with an action step.\n\nOne thing to carry forward: when the same HVAC issue reopens, you now have documentation to push back on the vendor with. That history in 360 is your leverage.\n\nMark it complete!" },
+      { role: 'participant', text: "Done." },
+      { role: 'coach', framing: '', text: "Great work today, Shawn. 👊" },
+      { role: 'participant', text: "👍" },
+      { role: 'coach', framing: '', text: "See you on the next one!" },
+      { role: 'participant', text: "Thanks." }
+    ]
+  },
+
+  conti: {
+    name: "John Conti",
+    title: "Senior Facility Manager",
+    manager: "Jessica Ann Kamer",
+    activity: "Focus on One Zone",
+    completed: "2026-05-15",
+    quote: "Look closely at the entire area.",
+    overview: "Conti entered through the Wealth Center instead of the main customer entrance — the coach caught it, explained why the entry point matters, and redirected. He found a dirty window ledge, navigated real 360 photo friction, and closed with a properly documented work order.",
+    nextFocus: "Conti needs the habit of writing findings down in order before filtering. The next rep should explicitly ask him to share his list as he walks, before deciding what's actionable.",
+    turns: [
+      { role: 'coach', framing: 'Opens with prior callout, sets up the zone focus', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nLast time you did a fresh-eyes walkthrough at 99 High Street — great space, but photos stayed on your phone instead of getting into 360. This activity builds on that.\n\nThis time, you're walking **one specific zone** — exterior through lobby only — and documenting what you notice *before* filtering for what matters operationally.\n\nWhich branch are you visiting next, and when?" },
+      { role: 'participant', text: "Next week, 1367 Boylston St. Boston MA." },
+      { role: 'coach', framing: 'Primes the zone walk technique', text: "Great — 1367 Boylston, next week. Before you step inside, stop at the exterior and name three things a first-time customer would notice. Say them out loud or jot them down — it shifts your lens before you walk in.\n\nOnce inside, write down what you notice **in the order you notice it — don't filter yet.** A scuff, a ceiling tile, a door handle — everything goes on the list first.\n\nGood luck next week! 👊" },
+      { role: 'participant', text: "It is 1330 Boylston St. Chestnut Hill, MA." },
+      { role: 'coach', framing: 'Confirms and sends off', text: "Got it — 1330 Boylston, Chestnut Hill. That one likely has a parking lot too, so you'll have a real exterior approach to work with.\n\nSee you when you're back! 👊" },
+      { role: 'participant', text: "I'm done." },
+      { role: 'coach', framing: 'Opens the debrief', text: "Nice! Did you get a chance to do the walkthrough at 1330 Boylston?" },
+      { role: 'participant', text: "Yes." },
+      { role: 'coach', framing: 'Checks the entry point', text: "Did you stop at the exterior first and name three things a first-time customer would notice before you walked in?" },
+      { role: 'participant', text: "I went in through the Wealth Center then I went into the lobby area that the public can access after hours for their bank transactions." },
+      { role: 'coach', framing: 'Redirects on entry point — explains why it matters', text: "Got it — so you entered through the Wealth Center side rather than the main customer entrance.\n\nThat's worth flagging: the activity is specifically about walking the path a **first-time customer** would take — starting from the parking lot and coming in through the main entrance. That exterior-to-lobby sequence is what resets your lens before you step inside.\n\nNext time, even if you have business in the Wealth Center, start your zone walk from the outside customer entrance first.\n\nThat said — once you were in the lobby area, what did you notice?" },
+      { role: 'participant', text: "The bottom lobby area along the windows is dirty." },
+      { role: 'coach', framing: 'Drives to documentation', text: "Good catch. Did you document it — photo logged in 360?" },
+      { role: 'participant', text: "No, I have to go into 360 to enter it. 360 is having some technical issues with iPhones. I took 3 pictures." },
+      { role: 'coach', framing: 'Navigates friction without letting it drop the finding', text: "Understood on the 360 issues — that's a real friction point. But get that photo logged as soon as 360 is working again. Dirty window ledges in the public lobby is exactly the kind of thing a first-time customer notices immediately.\n\nOne tip for next time: when you walk the zone, write down what you notice **in the order you notice it** before deciding what matters. Did you do that, or were you filtering as you walked?" },
+      { role: 'participant', text: "I was looking at it as a first-time customer taking it all in." },
+      { role: 'coach', framing: 'Explains the value of the list-before-filter habit', text: "That's the right instinct. The reason the activity asks you to write it down in order — before filtering — is that it forces you to capture everything, not just what your FM brain decides is actionable.\n\nNext visit, try jotting a quick list as you go — even just on your phone's notes app. Then filter after.\n\nGet that photo into 360 when it's back up." },
+      { role: 'participant', text: "I also sent the pics to the FM Matt that is in charge of this branch and he will forward the pics to the cleaners." },
+      { role: 'coach', framing: 'Redirects to direct 360 logging', text: "That's good follow-through — but those photos should go directly into 360, not just to Matt. That's what creates the documented record tied to the location. Get them into 360 when it's back up, even if Matt already has them. 👊" },
+      { role: 'participant', text: "Work Order 1923259." },
+      { role: 'coach', framing: 'Affirms the work order, closes on photos', text: "Even better — you got a work order created. Make sure the photos get attached to that WO in 360 when the system is back up so it's fully documented." },
+      { role: 'participant', text: "Photos are attached." },
+      { role: 'coach', framing: 'Closes cleanly', text: "Perfect — that's exactly how it should be done. Work order created, photos attached in 360. Well done! 👊" },
+      { role: 'participant', text: "Thanks." },
+      { role: 'coach', framing: '', text: "Great work today, John. See you on the next one!" },
+      { role: 'participant', text: "👍" }
+    ]
+  },
+
+  petaccio: {
+    name: "Tony Petaccio",
+    title: "Facility Manager",
+    manager: "Patricia Zieverink",
+    activity: "Fresh Eyes Walkthrough",
+    completed: "2026-05-14",
+    quote: "Don't be complacent, look at the big picture.",
+    overview: "Tony walked three Main Line branches back-to-back, catching real issues at each one. The coach's consistent thread: in clean branches, Tony's eye stops at 'looks good' before it gets to cove bases and door frames.",
+    nextFocus: "Tony's instincts are solid. The next rep should push him to name three fixture-level details before calling any branch clear, and to log findings in 360 in the moment rather than after the visit.",
+    turns: [
+      { role: 'coach', framing: 'Sets up activity, names a specific gap from survey data', text: "Hey Tony! Full steps in the **Activity Blueprint** above.\n\nHere's the gist: you're going to walk a branch like you've never been there before — fresh eyes, customer mindset — and document at least one issue you find.\n\nYour survey answers show you're pretty solid on catching and fixing quality issues, but there's a small gap on the deliberate 'first-time customer' mindset during visits. That's exactly what this sharpens.\n\nWhich branch are you visiting next, and when?" },
+      { role: 'participant', text: "Main Line branches, Haverford, Bryn Mawr, and Wynnewood, on 5/12." },
+      { role: 'coach', framing: 'Confirms approach, primes parking lot start', text: "Perfect — three solid branches on 5/12. The key move: **reset your mindset the moment you arrive** — before you touch anything work-related. Start in the **parking lot** and move through like a customer would.\n\nDoes that feel natural, or is that a shift from how you normally approach a visit?" },
+      { role: 'participant', text: "That feels natural, that's what I do when I arrive before entering the branch." },
+      { role: 'coach', framing: 'Introduces the fixture-level layer', text: "Good instinct — you're already starting in the right place.\n\nHere's what separates a fresh-eyes walk from a regular visit: **what you're looking at** as you move through. Things like cove bases, ceiling tiles, HVAC diffusers, door frames, corners — stuff that's easy to walk past when you've been to a location 20 times.\n\nWhen you spot something, the goal is a specific note + photo: *'Cove base separating at teller counter, ~6 feet — not on any open work order.'* Specific beats vague every time." },
+      { role: 'participant', text: "I do not have any questions." },
+      { role: 'coach', framing: 'Sends off', text: "Let's do it — good luck Monday, Tony! Look forward to hearing what you find. 👀" },
+      { role: 'participant', text: "On site — Haverford." },
+      { role: 'coach', framing: 'Receives on-site check-in', text: "Perfect. Do the walkthrough and come back when you've got something documented. 👍" },
+      { role: 'participant', text: "Did the exterior inspection. Just normal debris that was minimal — I picked it up myself." },
+      { role: 'coach', framing: 'Moves Tony to the interior', text: "Nice — quick action. Now head inside and keep that customer mindset going: entrance → lobby → teller line → restrooms.\n\nWhat do you notice walking in for the first time?" },
+      { role: 'participant', text: "Entrance was clean, lobby area I was greeted by both tellers, no customers in branch. Restrooms were clean and well stocked." },
+      { role: 'coach', framing: 'Pushes past the clean-branch surface read', text: "Good signs all around. Now go a little deeper — fresh eyes means looking at the stuff that's easy to miss even in a clean branch.\n\nDid anything catch your eye on the **surfaces and fixtures** — cove bases, ceiling tiles, HVAC diffusers, door frames? Anything worn, separated, stained, or just off?" },
+      { role: 'participant', text: "Minor repair is needed where a security camera was relocated. Branch will undergo a refresh later in the year." },
+      { role: 'coach', framing: 'Reinforces: document it even if it's getting refreshed', text: "Good catch. Even if it's going to be refreshed later, that's worth documenting now.\n\nDid you get a photo and log it in 360 with a specific description?" },
+      { role: 'participant', text: "I have not uploaded yet. I will and send to our in-house painter for repair." },
+      { role: 'coach', framing: 'Holds the 360 standard', text: "Perfect — that's exactly the right call. Get that photo uploaded to 360 before you move to the next branch.\n\nCome back when it's logged and I'll walk you through Bryn Mawr! 💪" },
+      { role: 'participant', text: "I'm done." },
+      { role: 'coach', framing: 'Transitions to Bryn Mawr', text: "Great work at Haverford, Tony.\n\nOn to Bryn Mawr — same approach. Reset at the parking lot, walk it like a first-timer, and keep an eye on the easy-to-miss details. What do you find there?" },
+      { role: 'participant', text: "Found some landscaping issues. Contacted our Landscape MGR — he has open work orders for this to be addressed." },
+      { role: 'coach', framing: 'Checks for interior and undocumented items', text: "Good catch, and good that it's already in the system. Did you document anything that *wasn't* on an open work order — inside or outside?" },
+      { role: 'participant', text: "Outside was clean. I did walk the interior — branch is in good shape, nothing that stood out." },
+      { role: 'coach', framing: 'Surfaces the familiarity-blindness pattern', text: "Got it. One thing to keep in mind for next time — if everything looks clean and nothing stands out, that's a signal to go a little slower and look closer at the details: cove bases, door frames, HVAC diffusers. Familiarity can make things invisible even on a good-looking branch.\n\nReady to head to Wynnewood?" },
+      { role: 'participant', text: "At Wynnewood." },
+      { role: 'coach', framing: 'Opens the third branch', text: "Go for it — walk it from the parking lot in. What do you find?" },
+      { role: 'participant', text: "Landscape issues — overgrown trees, mulch needed, new river rock. Spoke to Landscape MGR, he's aware and setting up work orders." },
+      { role: 'coach', framing: 'Checks the interior at Wynnewood', text: "Good. How about the interior — anything catch your eye on the customer walk-through?" },
+      { role: 'participant', text: "Clean vestibule, floors clean, greeted by colleagues when I entered. Floors and glass were cleaned. Restrooms stocked and clean. Break room clean as well." },
+      { role: 'coach', framing: 'Closes with the consistent coaching note', text: "Sounds like Wynnewood is in solid shape. Same note as Bryn Mawr — on future visits, slow down on the fixtures and finishes even in clean branches. Cove bases, ceiling tiles, door frames — that's where things hide.\n\nOverall today you caught real issues at all three branches and took action on each one. Nice work.\n\nThe one thing to sharpen for next time: even in a clean branch, push yourself to look at the surfaces and finishes up close before calling it clear. 👊" },
+      { role: 'participant', text: "Thank you." },
+      { role: 'coach', framing: '', text: "Great job today, Tony. Mark it complete! 💪" },
+      { role: 'participant', text: "Done." }
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
