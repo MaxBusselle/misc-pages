@@ -958,9 +958,9 @@
 
 <!-- BOTTOM NAV -->
 <div class="slide-nav">
-  <button class="slide-nav-btn" id="btn-prev" onclick="goTo(current-1)" disabled>← Previous</button>
+  <button class="slide-nav-btn" id="btn-prev" onclick="goPrev()" disabled>← Previous</button>
   <span class="slide-counter" id="counter">1 of 4</span>
-  <button class="slide-nav-btn" id="btn-next" onclick="goTo(current+1)">Next →</button>
+  <button class="slide-nav-btn" id="btn-next" onclick="goNext()">Next →</button>
 </div>
 
 <!-- MODAL BACKDROP -->
@@ -971,26 +971,41 @@
 </div>
 
 <script>
-let current = 0;
-const slides = document.querySelectorAll('.slide');
-const tabs = document.querySelectorAll('.nav-tab');
+var current = 0;
+var slides, tabs;
+
+document.addEventListener('DOMContentLoaded', function() {
+  slides = document.querySelectorAll('.slide');
+  tabs = document.querySelectorAll('.nav-tab');
+  updateNav();
+});
 
 function goTo(n) {
+  if (!slides) slides = document.querySelectorAll('.slide');
+  if (!tabs) tabs = document.querySelectorAll('.nav-tab');
   if (n < 0 || n >= slides.length) return;
   slides[current].classList.remove('active');
   tabs[current].classList.remove('active');
   current = n;
   slides[current].classList.add('active');
   tabs[current].classList.add('active');
+  updateNav();
+}
+
+function goPrev() { goTo(current - 1); }
+function goNext() { goTo(current + 1); }
+
+function updateNav() {
+  if (!slides) return;
   document.getElementById('btn-prev').disabled = current === 0;
   document.getElementById('btn-next').disabled = current === slides.length - 1;
   document.getElementById('counter').textContent = (current + 1) + ' of ' + slides.length;
 }
 
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (document.getElementById('modal-backdrop').classList.contains('open')) return;
-  if (e.key === 'ArrowRight') goTo(current + 1);
-  if (e.key === 'ArrowLeft') goTo(current - 1);
+  if (e.key === 'ArrowRight') goNext();
+  if (e.key === 'ArrowLeft') goPrev();
 });
 
 function handleBackdropClick(e) {
@@ -1055,213 +1070,709 @@ function renderModal(d) {
     </div>`;
 }
 
-// ── SESSION DATA ──────────────────────────────────────────
 const sessions = {
-
-  manigbas: {
-    name: "Leonard Manigbas",
-    title: "Facility Manager",
-    manager: "Juan Jorge",
-    activity: "Catch the Repetitive Issue",
-    completed: "2026-05-12",
-    quote: "Be aware of the vendor scope and tracking.",
-    overview: "Manigbas identified a persistent restroom cleaning issue, correctly categorized it as a vendor gap, and closed the loop with a logged action step and SLA target — all in 14 exchanges.",
-    nextFocus: "Push Manigbas to do the 360 pre-work scan before the visit, not just on-site. He has the diagnostic instinct; the next rep should build the prep habit.",
-    turns: [
-      { role: 'coach', framing: 'Sets up the activity with prior context', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nYou've been building solid fresh-eyes habits. This activity steps it up — instead of just spotting something, you're going to **dig into why an issue keeps coming back** and take a real action step toward fixing it.\n\nWhich branch are you heading to next, and when?" },
-      { role: 'participant', text: "Rancho Park" },
-      { role: 'coach', framing: 'Prompts pre-work scan', text: "When are you heading there?\n\nBefore you go — open 360 for Rancho Park and look for either a work order that's been open a long time, or the same type of issue showing up more than once. What do you see?" },
-      { role: 'participant', text: "I'm there now. There is a restroom cleaning issue that has been happening for a while." },
-      { role: 'coach', framing: 'Diagnoses root cause category', text: "Good find. What's your read on why it keeps coming back — vendor not following through, no one tracking it, something else?" },
-      { role: 'participant', text: "The vendor is not cleaning at the correct frequency per the contract." },
-      { role: 'coach', framing: 'Confirms categorization and drives to action', text: "That's a solid categorization — vendor gap, specific to the restroom. That's exactly the kind of detail that points to a clear resolution path.\n\nNow the last piece: log this in 360 with a specific action step — an owner and a target date. Not just a note. What are you going to log?" },
-      { role: 'participant', text: "I will log it and contact the vendor to address the cleaning frequency and set an SLA." },
-      { role: 'coach', framing: 'Reinforces documentation standard', text: "Perfect. Make sure the SLA target date goes into the 360 note, not just the vendor call. That's what creates accountability you can track.\n\nDid you get a photo of the current state while you were there?" },
-      { role: 'participant', text: "Yes, I took photos and attached them." },
-      { role: 'coach', framing: 'Closes the loop with a forward nudge', text: "That's a complete loop — issue identified, categorized as a vendor gap, logged with a photo and a specific action step tied to an SLA. Solid work.\n\nOne thing to watch going forward: if the same restroom issue comes back after the vendor follow-up, that's your signal to escalate — whether that's a formal contract review or looping in your manager.\n\nMark it complete!" },
-      { role: 'participant', text: "Done." },
-      { role: 'coach', framing: 'Final confirmation', text: "Great work today, Leonard. 👊" },
-      { role: 'participant', text: "Thank you." }
+  "manigbas": {
+    "name": "Leonard Manigbas",
+    "title": "Facility Manager",
+    "manager": "Juan Jorge",
+    "activity": "Catch the Repetitive Issue",
+    "completed": "2026-05-12",
+    "quote": "Be aware of the vendor scope and tracking.",
+    "overview": "Manigbas identified a persistent restroom cleaning issue, correctly categorized it as a vendor gap, and closed the loop with a logged action step and SLA target — all in 14 exchanges.",
+    "nextFocus": "Push Manigbas to do the 360 pre-work scan before the visit, not just on-site. He has the diagnostic instinct; the next rep should build the prep habit.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "Sets up the activity with prior context",
+        "text": "Hey, welcome back! Full steps in the Activity Blueprint above.\n\nYou've been building solid fresh-eyes habits. This activity steps it up — instead of just spotting something, you're going to dig into why an issue keeps coming back and take a real action step toward fixing it.\n\nWhich branch are you heading to next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Rancho Park"
+      },
+      {
+        "role": "coach",
+        "framing": "Prompts pre-work scan",
+        "text": "When are you heading there?\n\nBefore you go — open 360 for Rancho Park and look for either a work order that's been open a long time, or the same type of issue showing up more than once. What do you see?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm there now. There is a restroom cleaning issue that has been happening for a while."
+      },
+      {
+        "role": "coach",
+        "framing": "Diagnoses root cause category",
+        "text": "Good find. What's your read on why it keeps coming back — vendor not following through, no one tracking it, something else?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "The vendor is not cleaning at the correct frequency per the contract."
+      },
+      {
+        "role": "coach",
+        "framing": "Confirms categorization and drives to action",
+        "text": "That's a solid categorization — vendor gap, specific to the restroom. That's exactly the kind of detail that points to a clear resolution path.\n\nNow the last piece: log this in 360 with a specific action step — an owner and a target date. Not just a note. What are you going to log?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I will log it and contact the vendor to address the cleaning frequency and set an SLA."
+      },
+      {
+        "role": "coach",
+        "framing": "Reinforces documentation standard",
+        "text": "Perfect. Make sure the SLA target date goes into the 360 note, not just the vendor call. That's what creates accountability you can track.\n\nDid you get a photo of the current state while you were there?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Yes, I took photos and attached them."
+      },
+      {
+        "role": "coach",
+        "framing": "Closes the loop with a forward nudge",
+        "text": "That's a complete loop — issue identified, categorized as a vendor gap, logged with a photo and a specific action step tied to an SLA. Solid work.\n\nOne thing to watch going forward: if the same restroom issue comes back after the vendor follow-up, that's your signal to escalate — whether that's a formal contract review or looping in your manager.\n\nMark it complete!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Done."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Great work today, Leonard. 👊"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thank you."
+      }
     ]
   },
-
-  kaechelin: {
-    name: "Eric Kaechelin",
-    title: "Senior Facility Manager",
-    manager: "Timothy Butvilas",
-    activity: "Keep Fresh Eyes During a Work Order Visit",
-    completed: "2026-05-20",
-    quote: "",
-    overview: "Kaechelin was on-site for a landscaping visit and caught a recurring trash accumulation issue — the coach pushed past the surface complaint to surface the root cause: an abandoned dumpster from a former hauler that no one had removed.",
-    nextFocus: "Kaechelin is ready for the pre-visit 360 scan habit. The next rep should prime him to check for long-open items before arriving so he's walking in with a target, not just open eyes.",
-    turns: [
-      { role: 'coach', framing: 'Opens with activity framing and prior callout', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nThis activity has a specific twist: you're catching fresh-eyes findings *while you're already there for something else*. Not a dedicated walkthrough — a work order visit where you stay alert to what a first-time customer would see.\n\nWhich branch are you heading to next, and when?" },
-      { role: 'participant', text: "Heading to East Brunswick Tuesday for a landscaping visit." },
-      { role: 'coach', framing: 'Sets up the dual-purpose visit frame', text: "Good instinct on signage — that's exactly the kind of thing that degrades gradually and stops registering.\n\nHere's your focus for Tuesday: while you're walking to the landscaping areas, keep your eyes open for anything a first-time customer would notice — signage, entrance condition, anything along the path. If you spot something unrelated to the landscaping work, photo and log it.\n\nCome back after the visit." },
-      { role: 'participant', text: "I'm back. I found a trash accumulation issue near the side entrance that keeps coming back. There's an old dumpster that was left behind by a previous hauler." },
-      { role: 'coach', framing: 'Surfaces the root cause', text: "That's a strong find — and the dumpster is the *why*, not just the symptom. Trash keeps accumulating because the old container is still there acting as a magnet.\n\nDid you get a photo of it, and is this something you can initiate a removal on?" },
-      { role: 'participant', text: "Yes, I took a photo. I'll need to coordinate with facilities management to arrange pickup." },
-      { role: 'coach', framing: 'Drives to a logged action with owner and date', text: "Good. Log it in 360 with the photo attached — note that it's a root cause issue (abandoned dumpster, former hauler) and add a specific action step with an owner and target date for removal. That's what turns a recurring complaint into a resolved item.\n\nDid you catch anything else on the customer-side walk?" },
-      { role: 'participant', text: "The entrance signage had some fading. I logged a work order for that too." },
-      { role: 'coach', framing: 'Closes with affirmation and forward tip', text: "That's a complete rep — unrelated finding, photo attached, logged in 360 by you. And you diagnosed why the trash accumulation issue was persisting. Solid work.\n\nOne tip for next time: before you arrive, do a quick scan of 360 for anything that's been open unusually long. That old dumpster finding suggests there may be other 'inherited' issues sitting in the queue.\n\nMark it complete!" },
-      { role: 'participant', text: "Completed." },
-      { role: 'coach', framing: 'Final wrap', text: "Nice work today, Eric. 👊" },
-      { role: 'participant', text: "Thanks." },
-      { role: 'coach', framing: '', text: "See you on the next one!" },
-      { role: 'participant', text: "👍" },
-      { role: 'coach', framing: '', text: "Great." }
+  "kaechelin": {
+    "name": "Eric Kaechelin",
+    "title": "Senior Facility Manager",
+    "manager": "Timothy Butvilas",
+    "activity": "Keep Fresh Eyes During a Work Order Visit",
+    "completed": "2026-05-20",
+    "quote": "",
+    "overview": "Kaechelin was on-site for a landscaping visit and caught a recurring trash accumulation issue — the coach pushed past the surface complaint to surface the root cause: an abandoned dumpster from a former hauler that no one had removed.",
+    "nextFocus": "Kaechelin is ready for the pre-visit 360 scan habit. The next rep should prime him to check for long-open items before arriving so he's walking in with a target, not just open eyes.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "Opens with activity framing",
+        "text": "Hey, welcome back! Full steps in the Activity Blueprint above.\n\nThis activity has a specific twist: you're catching fresh-eyes findings while you're already there for something else. Not a dedicated walkthrough — a work order visit where you stay alert to what a first-time customer would see.\n\nWhich branch are you heading to next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Heading to East Brunswick Tuesday for a landscaping visit."
+      },
+      {
+        "role": "coach",
+        "framing": "Sets up the dual-purpose visit frame",
+        "text": "Good setup for this. While you walk to the landscaping areas, keep your eyes open for anything a first-time customer would notice — signage, entrance condition, anything along the path. If you spot something unrelated to the landscaping work, photo and log it.\n\nCome back after the visit."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm back. I found a trash accumulation issue near the side entrance that keeps coming back. There's an old dumpster that was left behind by a previous hauler."
+      },
+      {
+        "role": "coach",
+        "framing": "Surfaces the root cause",
+        "text": "That's a strong find — and the dumpster is the why, not just the symptom. Trash keeps accumulating because the old container is still there acting as a magnet.\n\nDid you get a photo of it, and is this something you can initiate a removal on?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Yes, I took a photo. I'll need to coordinate with facilities management to arrange pickup."
+      },
+      {
+        "role": "coach",
+        "framing": "Drives to a logged action with owner and date",
+        "text": "Good. Log it in 360 with the photo attached — note that it's a root cause issue (abandoned dumpster, former hauler) and add a specific action step with an owner and target date for removal.\n\nDid you catch anything else on the customer-side walk?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "The entrance signage had some fading. I logged a work order for that too."
+      },
+      {
+        "role": "coach",
+        "framing": "Closes with affirmation and forward tip",
+        "text": "That's a complete rep — unrelated finding, photo attached, logged in 360 by you. And you diagnosed why the trash accumulation issue was persisting.\n\nOne tip for next time: before you arrive, do a quick scan of 360 for anything that's been open unusually long. That old dumpster finding suggests there may be other inherited issues sitting in the queue.\n\nMark it complete!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Completed."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Nice work today, Eric. 👊"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thanks."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "See you on the next one!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "👍"
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Great."
+      }
     ]
   },
-
-  conroy: {
-    name: "Sean Conroy",
-    title: "Senior Facility Manager",
-    manager: "Timothy Butvilas",
-    activity: "Review a Long-Open Work Order",
-    completed: "2026-05-19",
-    quote: "Always review open work orders before arriving at any branch for any reason — to catch stale work orders early.",
-    overview: "Conroy arrived at a branch expecting an open work order and discovered it had actually been completed but never closed in the system. The coach reframed this as a queue hygiene issue, not just a data error — and Conroy finished with a 10/10 self-rating.",
-    nextFocus: "Conroy's pre-visit 360 habit is strong. The next rep should push him toward vendor accountability — specifically, whether he's building the escalation pattern when the same vendor issue recurs.",
-    turns: [
-      { role: 'coach', framing: 'Opens with prior work context', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nThis activity is about going beyond spotting the issue — you're identifying a long-open item *and* taking a concrete action toward resolving it before you leave. Not just logging a plan.\n\nWhich branch are you visiting next, and when?" },
-      { role: 'participant', text: "Heading to Parma today." },
-      { role: 'coach', framing: 'Prompts pre-work scan', text: "Before you head out — open 360 for Parma and sort by open date. What's sitting 30 days or more?" },
-      { role: 'participant', text: "There's a work order for an exterior repair that's been open for 45 days." },
-      { role: 'coach', framing: 'Builds hypothesis before visit', text: "Good candidate. What's your read on why it's been sitting — vendor hasn't scheduled, approvals stuck, something else?\n\nSee you after Parma! 👍" },
-      { role: 'participant', text: "I'm back. The work was actually done — the vendor completed it but never closed the work order in 360." },
-      { role: 'coach', framing: 'Reframes as a systemic issue, not just a data error', text: "Good catch — and that's worth flagging as more than a data entry miss. An open work order that's actually closed is cluttering your queue and hiding what's genuinely still unresolved. That's a pattern worth pushing back on with vendors.\n\nDid you close it out in 360 and document what you found?" },
-      { role: 'participant', text: "Yes, I updated it with the completed date and attached a photo of the finished work." },
-      { role: 'coach', framing: 'Drives toward vendor accountability framing', text: "Perfect — that's the documentation that protects everyone. Completed work, photo attached, 360 updated. Clean record.\n\nGood instinct catching a closed-but-open work order — that's exactly the kind of thing that clutters your queue and hides what's actually still unresolved. One thing to build on: when this happens again, note the vendor name in 360. If it's the same vendor repeatedly not closing work orders, that's your escalation trigger.\n\nMark it complete!" },
-      { role: 'participant', text: "Done. This was a good reminder to always check 360 before heading out." },
-      { role: 'coach', framing: 'Affirms and reinforces', text: "That's the habit. Pre-visit 360 scan is the move that makes every visit more productive, not just the dedicated review activities.\n\nGreat work today, Sean. 👊" },
-      { role: 'participant', text: "Thanks. I gave it a 10 — felt like a clean, useful rep." },
-      { role: 'coach', framing: '', text: "That's what we're going for. See you on the next one!" },
-      { role: 'participant', text: "👍" },
-      { role: 'coach', framing: '', text: "Nice work." }
+  "conroy": {
+    "name": "Sean Conroy",
+    "title": "Senior Facility Manager",
+    "manager": "Timothy Butvilas",
+    "activity": "Review a Long-Open Work Order",
+    "completed": "2026-05-19",
+    "quote": "Always review open work orders before arriving at any branch for any reason — to catch stale work orders early.",
+    "overview": "Conroy arrived expecting an open work order and discovered it had been completed but never closed in 360. The coach reframed it as a queue hygiene issue, not just a data error — Conroy finished with a 10/10 self-rating.",
+    "nextFocus": "Conroy's pre-visit 360 habit is strong. The next rep should push him toward vendor accountability — specifically, building the escalation pattern when the same vendor repeatedly fails to close work orders.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "Opens with prior work context",
+        "text": "Hey, welcome back! Full steps in the Activity Blueprint above.\n\nThis activity is about going beyond spotting the issue — you're identifying a long-open item and taking a concrete action toward resolving it before you leave. Not just logging a plan.\n\nWhich branch are you visiting next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Heading to Parma today."
+      },
+      {
+        "role": "coach",
+        "framing": "Prompts pre-work scan",
+        "text": "Before you head out — open 360 for Parma and sort by open date. What's sitting 30 days or more?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "There's a work order for an exterior repair that's been open for 45 days."
+      },
+      {
+        "role": "coach",
+        "framing": "Builds hypothesis before visit",
+        "text": "Good candidate. What's your read on why it's been sitting — vendor hasn't scheduled, approvals stuck, something else?\n\nSee you after Parma! 👍"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm back. The work was actually done — the vendor completed it but never closed the work order in 360."
+      },
+      {
+        "role": "coach",
+        "framing": "Reframes as a systemic issue, not just a data error",
+        "text": "Good catch — and that's worth flagging as more than a data entry miss. An open work order that's actually closed is cluttering your queue and hiding what's genuinely still unresolved. That's a pattern worth pushing back on with vendors.\n\nDid you close it out in 360 and document what you found?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Yes, I updated it with the completed date and attached a photo of the finished work."
+      },
+      {
+        "role": "coach",
+        "framing": "Drives toward vendor accountability framing",
+        "text": "Perfect — that's the documentation that protects everyone. Completed work, photo attached, 360 updated. Clean record.\n\nOne thing to build on: when this happens again, note the vendor name in 360. If it's the same vendor repeatedly not closing work orders, that's your escalation trigger.\n\nMark it complete!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Done. This was a good reminder to always check 360 before heading out."
+      },
+      {
+        "role": "coach",
+        "framing": "Affirms and reinforces",
+        "text": "That's the habit. Pre-visit 360 scan is the move that makes every visit more productive.\n\nGreat work today, Sean. 👊"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thanks. I gave it a 10 — felt like a clean, useful rep."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "That's what we're going for. See you on the next one!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "👍"
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Nice work."
+      }
     ]
   },
-
-  evans: {
-    name: "Shawn Evans",
-    title: "Senior Facility Manager",
-    manager: "Timothy Butvilas",
-    activity: "Spot the Pattern Before You Walk In",
-    completed: "2026-05-19",
-    quote: "",
-    overview: "Evans tried to skip the pre-visit hypothesis step by jumping straight to the branch manager for answers — the coach redirected him to form his own read first, then guided a complete diagnostic loop on a recurring HVAC pattern.",
-    nextFocus: "Evans has the instincts but moves too fast. The next rep should slow him down on the pre-work step and push him to build vendor escalation documentation before the issue reopens.",
-    turns: [
-      { role: 'coach', framing: 'References prior work, sets up the activity', text: "Hey! Full steps in the **Activity Blueprint** above.\n\nLast time at Smithfield Avenue you caught cobwebs in the vestibule and got them logged — solid work. And the tip about sorting by reopened work orders is exactly what this next activity builds on.\n\nThis time we're going a step further: **before you arrive**, find a pattern in 360 and form a hypothesis about *why* it keeps coming back. Then confirm it on site.\n\nWhich branch are you visiting next, and when?" },
-      { role: 'participant', text: "Heading to my Charles Street branch now." },
-      { role: 'coach', framing: 'Drives the pre-work scan', text: "Pull up 360 for Charles Street right now. Look for either a work order open 60+ days, or the same type of issue opened more than once in the past 90 days.\n\nWhat do you see?" },
-      { role: 'participant', text: "HVAC issues." },
-      { role: 'coach', framing: 'Presses for hypothesis before visit', text: "Good find. Before you walk in — what's your hypothesis on why it hasn't been resolved? Vendor not following through, no one pushing it, something else?" },
-      { role: 'participant', text: "I will speak with the branch manager to see if the issue has been addressed." },
-      { role: 'coach', framing: 'Redirects — pushes Evans to form his own read first', text: "That's a good instinct, but try to form your own read first — before talking to the branch manager. Look at the work order details: How long has it been open? Any updates logged? Signs of a service visit?\n\nWhat does the work order history show you?" },
-      { role: 'participant', text: "It is not open. You asked to check if there was a same-issue WO in the past 90 days and I stated HVAC. The WO has been completed and the BM confirms it." },
-      { role: 'coach', framing: 'Acknowledges the clarification, keeps the thread going', text: "Got it — so the HVAC issue has been recurring. Same type of work order opened more than once in the past 90 days, but the current one is closed.\n\nThat's actually a useful pattern. What's your read on why it keeps coming back?" },
-      { role: 'participant', text: "My take is that it was not addressed the first time the vendor came out." },
-      { role: 'coach', framing: 'Validates hypothesis, sends to site', text: "Solid hypothesis — vendor didn't fix it right the first time, so it came back.\n\nGo confirm it on site. Look for evidence: signs of a previous repair attempt, or no signs at all. Snap a photo of the current state of the HVAC unit.\n\nI'll be here when you're back!" },
-      { role: 'participant', text: "I'm done. No access — unit is on the roof. Citizens has contracts with licensed vendors to address HVAC. As an FM you are only to touch something you are licensed to do." },
-      { role: 'coach', framing: 'Adapts to scope constraint, keeps the finding alive', text: "Totally fair — HVAC is a licensed trade. Good call not going up there.\n\nBased on what you could observe from inside — did you see any signs the issue is still present? Airflow, temperature, noise, anything visible at the diffusers?" },
-      { role: 'participant', text: "Branch interior temp is at our standard set point." },
-      { role: 'coach', framing: 'Reframes the value of the pattern documentation', text: "Good observation. So the current WO is closed and the branch is at set point — that tracks.\n\nThe key finding here is still the pattern: same HVAC issue reopened within 90 days, and your hypothesis is the vendor didn't fix it properly the first time. That's worth documenting even if it's currently resolved.\n\nLog it in 360 — note the recurring pattern, your hypothesis about the vendor fix not holding, and an action step — like flagging the vendor for follow-up if it reopens.\n\nI'll be here when you're back!" },
-      { role: 'participant', text: "I'm done." },
-      { role: 'coach', framing: 'Confirms close', text: "Did you get it logged in 360?" },
-      { role: 'participant', text: "Yes." },
-      { role: 'coach', framing: 'Closes with a forward-looking insight', text: "Nice work. Full loop here — spotted the pattern before arriving, formed a hypothesis, confirmed on site within your scope, and logged it with an action step.\n\nOne thing to carry forward: when the same HVAC issue reopens, you now have documentation to push back on the vendor with. That history in 360 is your leverage.\n\nMark it complete!" },
-      { role: 'participant', text: "Done." },
-      { role: 'coach', framing: '', text: "Great work today, Shawn. 👊" },
-      { role: 'participant', text: "👍" },
-      { role: 'coach', framing: '', text: "See you on the next one!" },
-      { role: 'participant', text: "Thanks." }
+  "evans": {
+    "name": "Shawn Evans",
+    "title": "Senior Facility Manager",
+    "manager": "Timothy Butvilas",
+    "activity": "Spot the Pattern Before You Walk In",
+    "completed": "2026-05-19",
+    "quote": "",
+    "overview": "Evans tried to skip the pre-visit hypothesis step by jumping straight to the branch manager for answers — the coach redirected him to form his own read first, then guided a complete diagnostic loop on a recurring HVAC pattern.",
+    "nextFocus": "Evans moves too fast through the pre-work step. The next rep should slow him down on forming his own hypothesis before engaging anyone on-site, and push him to build vendor escalation documentation proactively.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "References prior work, sets up the activity",
+        "text": "Hey! Full steps in the Activity Blueprint above.\n\nLast time at Smithfield Avenue you caught cobwebs in the vestibule and got them logged — solid work. The tip about sorting by reopened work orders is exactly what this next activity builds on.\n\nThis time: before you arrive, find a pattern in 360 and form a hypothesis about why it keeps coming back. Then confirm it on site.\n\nWhich branch are you visiting next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Heading to my Charles Street branch now."
+      },
+      {
+        "role": "coach",
+        "framing": "Drives the pre-work scan",
+        "text": "Pull up 360 for Charles Street right now. Look for either a work order open 60+ days, or the same type of issue opened more than once in the past 90 days.\n\nWhat do you see?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "HVAC issues."
+      },
+      {
+        "role": "coach",
+        "framing": "Presses for hypothesis before visit",
+        "text": "Good find. Before you walk in — what's your hypothesis on why it hasn't been resolved? Vendor not following through, no one pushing it, something else?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I will speak with the branch manager to see if the issue has been addressed."
+      },
+      {
+        "role": "coach",
+        "framing": "Redirects — pushes Evans to form his own read first",
+        "text": "That's a good instinct, but try to form your own read first — before talking to the branch manager. Look at the work order details: How long has it been open? Any updates logged? Signs of a service visit?\n\nWhat does the work order history show you?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "It is not open. You asked to check if there was a same-issue WO in the past 90 days and I stated HVAC. The WO has been completed and the BM confirms it."
+      },
+      {
+        "role": "coach",
+        "framing": "Acknowledges the clarification, keeps the thread going",
+        "text": "Got it — so the HVAC issue has been recurring. Same type of work order opened more than once in the past 90 days, but the current one is closed.\n\nThat's actually a useful pattern. What's your read on why it keeps coming back?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "My take is that it was not addressed the first time the vendor came out."
+      },
+      {
+        "role": "coach",
+        "framing": "Validates hypothesis, sends to site",
+        "text": "Solid hypothesis — vendor didn't fix it right the first time, so it came back.\n\nGo confirm it on site. Look for evidence: signs of a previous repair attempt, or no signs at all. Snap a photo of the current state of the HVAC unit."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm done. No access — unit is on the roof. Citizens has contracts with licensed vendors to address HVAC. As an FM you are only to touch something you are licensed to do."
+      },
+      {
+        "role": "coach",
+        "framing": "Adapts to scope constraint, keeps the finding alive",
+        "text": "Totally fair — HVAC is a licensed trade. Good call not going up there.\n\nBased on what you could observe from inside — did you see any signs the issue is still present? Airflow, temperature, noise, anything visible at the diffusers?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Branch interior temp is at our standard set point."
+      },
+      {
+        "role": "coach",
+        "framing": "Reframes the value of pattern documentation",
+        "text": "Good observation. So the current WO is closed and the branch is at set point — that tracks.\n\nThe key finding here is still the pattern: same HVAC issue reopened within 90 days, your hypothesis is the vendor didn't fix it properly the first time. That's worth documenting even if it's currently resolved.\n\nLog it in 360 — note the recurring pattern, your hypothesis, and an action step like flagging the vendor for follow-up if it reopens."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm done."
+      },
+      {
+        "role": "coach",
+        "framing": "Confirms close",
+        "text": "Did you get it logged in 360?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Yes."
+      },
+      {
+        "role": "coach",
+        "framing": "Closes with a forward-looking insight",
+        "text": "Nice work. Full loop here — spotted the pattern before arriving, formed a hypothesis, confirmed on site within your scope, and logged it with an action step.\n\nOne thing to carry forward: when the same HVAC issue reopens, you now have documentation to push back on the vendor with. That history in 360 is your leverage.\n\nMark it complete!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Done."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Great work today, Shawn. 👊"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "👍"
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "See you on the next one!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thanks."
+      }
     ]
   },
-
-  conti: {
-    name: "John Conti",
-    title: "Senior Facility Manager",
-    manager: "Jessica Ann Kamer",
-    activity: "Focus on One Zone",
-    completed: "2026-05-15",
-    quote: "Look closely at the entire area.",
-    overview: "Conti entered through the Wealth Center instead of the main customer entrance — the coach caught it, explained why the entry point matters, and redirected. He found a dirty window ledge, navigated real 360 photo friction, and closed with a properly documented work order.",
-    nextFocus: "Conti needs the habit of writing findings down in order before filtering. The next rep should explicitly ask him to share his list as he walks, before deciding what's actionable.",
-    turns: [
-      { role: 'coach', framing: 'Opens with prior callout, sets up the zone focus', text: "Hey, welcome back! Full steps in the **Activity Blueprint** above.\n\nLast time you did a fresh-eyes walkthrough at 99 High Street — great space, but photos stayed on your phone instead of getting into 360. This activity builds on that.\n\nThis time, you're walking **one specific zone** — exterior through lobby only — and documenting what you notice *before* filtering for what matters operationally.\n\nWhich branch are you visiting next, and when?" },
-      { role: 'participant', text: "Next week, 1367 Boylston St. Boston MA." },
-      { role: 'coach', framing: 'Primes the zone walk technique', text: "Great — 1367 Boylston, next week. Before you step inside, stop at the exterior and name three things a first-time customer would notice. Say them out loud or jot them down — it shifts your lens before you walk in.\n\nOnce inside, write down what you notice **in the order you notice it — don't filter yet.** A scuff, a ceiling tile, a door handle — everything goes on the list first.\n\nGood luck next week! 👊" },
-      { role: 'participant', text: "It is 1330 Boylston St. Chestnut Hill, MA." },
-      { role: 'coach', framing: 'Confirms and sends off', text: "Got it — 1330 Boylston, Chestnut Hill. That one likely has a parking lot too, so you'll have a real exterior approach to work with.\n\nSee you when you're back! 👊" },
-      { role: 'participant', text: "I'm done." },
-      { role: 'coach', framing: 'Opens the debrief', text: "Nice! Did you get a chance to do the walkthrough at 1330 Boylston?" },
-      { role: 'participant', text: "Yes." },
-      { role: 'coach', framing: 'Checks the entry point', text: "Did you stop at the exterior first and name three things a first-time customer would notice before you walked in?" },
-      { role: 'participant', text: "I went in through the Wealth Center then I went into the lobby area that the public can access after hours for their bank transactions." },
-      { role: 'coach', framing: 'Redirects on entry point — explains why it matters', text: "Got it — so you entered through the Wealth Center side rather than the main customer entrance.\n\nThat's worth flagging: the activity is specifically about walking the path a **first-time customer** would take — starting from the parking lot and coming in through the main entrance. That exterior-to-lobby sequence is what resets your lens before you step inside.\n\nNext time, even if you have business in the Wealth Center, start your zone walk from the outside customer entrance first.\n\nThat said — once you were in the lobby area, what did you notice?" },
-      { role: 'participant', text: "The bottom lobby area along the windows is dirty." },
-      { role: 'coach', framing: 'Drives to documentation', text: "Good catch. Did you document it — photo logged in 360?" },
-      { role: 'participant', text: "No, I have to go into 360 to enter it. 360 is having some technical issues with iPhones. I took 3 pictures." },
-      { role: 'coach', framing: 'Navigates friction without letting it drop the finding', text: "Understood on the 360 issues — that's a real friction point. But get that photo logged as soon as 360 is working again. Dirty window ledges in the public lobby is exactly the kind of thing a first-time customer notices immediately.\n\nOne tip for next time: when you walk the zone, write down what you notice **in the order you notice it** before deciding what matters. Did you do that, or were you filtering as you walked?" },
-      { role: 'participant', text: "I was looking at it as a first-time customer taking it all in." },
-      { role: 'coach', framing: 'Explains the value of the list-before-filter habit', text: "That's the right instinct. The reason the activity asks you to write it down in order — before filtering — is that it forces you to capture everything, not just what your FM brain decides is actionable.\n\nNext visit, try jotting a quick list as you go — even just on your phone's notes app. Then filter after.\n\nGet that photo into 360 when it's back up." },
-      { role: 'participant', text: "I also sent the pics to the FM Matt that is in charge of this branch and he will forward the pics to the cleaners." },
-      { role: 'coach', framing: 'Redirects to direct 360 logging', text: "That's good follow-through — but those photos should go directly into 360, not just to Matt. That's what creates the documented record tied to the location. Get them into 360 when it's back up, even if Matt already has them. 👊" },
-      { role: 'participant', text: "Work Order 1923259." },
-      { role: 'coach', framing: 'Affirms the work order, closes on photos', text: "Even better — you got a work order created. Make sure the photos get attached to that WO in 360 when the system is back up so it's fully documented." },
-      { role: 'participant', text: "Photos are attached." },
-      { role: 'coach', framing: 'Closes cleanly', text: "Perfect — that's exactly how it should be done. Work order created, photos attached in 360. Well done! 👊" },
-      { role: 'participant', text: "Thanks." },
-      { role: 'coach', framing: '', text: "Great work today, John. See you on the next one!" },
-      { role: 'participant', text: "👍" }
+  "conti": {
+    "name": "John Conti",
+    "title": "Senior Facility Manager",
+    "manager": "Jessica Ann Kamer",
+    "activity": "Focus on One Zone",
+    "completed": "2026-05-15",
+    "quote": "Look closely at the entire area.",
+    "overview": "Conti entered through the Wealth Center instead of the main customer entrance — the coach caught it, explained why the entry point matters, and redirected. He found a dirty window ledge, navigated real 360 photo friction, and closed with a fully documented work order.",
+    "nextFocus": "Conti needs the habit of writing findings down in order before filtering. The next rep should explicitly ask him to share his running list as he walks, before deciding what's actionable.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "Opens with prior callout, sets up the zone focus",
+        "text": "Hey, welcome back! Full steps in the Activity Blueprint above.\n\nLast time you did a fresh-eyes walkthrough at 99 High Street — great space, but photos stayed on your phone instead of getting into 360. This activity builds on that.\n\nThis time, you're walking one specific zone — exterior through lobby only — and documenting what you notice before filtering for what matters operationally.\n\nWhich branch are you visiting next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Next week, 1367 Boylston St. Boston MA."
+      },
+      {
+        "role": "coach",
+        "framing": "Primes the zone walk technique",
+        "text": "Great — 1367 Boylston, next week. Before you step inside, stop at the exterior and name three things a first-time customer would notice. Say them out loud or jot them down — it shifts your lens before you walk in.\n\nOnce inside, write down what you notice in the order you notice it — don't filter yet. A scuff, a ceiling tile, a door handle — everything goes on the list first.\n\nGood luck next week!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "It is 1330 Boylston St. Chestnut Hill, MA."
+      },
+      {
+        "role": "coach",
+        "framing": "Confirms and sends off",
+        "text": "Got it — 1330 Boylston, Chestnut Hill. That one likely has a parking lot too, so you'll have a real exterior approach to work with.\n\nSee you when you're back!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm done."
+      },
+      {
+        "role": "coach",
+        "framing": "Opens the debrief",
+        "text": "Nice! Did you get a chance to do the walkthrough at 1330 Boylston?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Yes."
+      },
+      {
+        "role": "coach",
+        "framing": "Checks the entry point",
+        "text": "Did you stop at the exterior first and name three things a first-time customer would notice before you walked in?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I went in through the Wealth Center then I went into the lobby area that the public can access after hours for their bank transactions."
+      },
+      {
+        "role": "coach",
+        "framing": "Redirects on entry point — explains why it matters",
+        "text": "Got it — so you entered through the Wealth Center side rather than the main customer entrance.\n\nThat's worth flagging: the activity is specifically about walking the path a first-time customer would take — starting from the parking lot and coming in through the main entrance. That exterior-to-lobby sequence is what resets your lens.\n\nNext time, even if you have business in the Wealth Center, start your zone walk from the outside customer entrance first.\n\nThat said — once you were in the lobby area, what did you notice?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "The bottom lobby area along the windows is dirty."
+      },
+      {
+        "role": "coach",
+        "framing": "Drives to documentation",
+        "text": "Good catch. Did you document it — photo logged in 360?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "No, I have to go into 360 to enter it. 360 is having some technical issues with iPhones. I took 3 pictures."
+      },
+      {
+        "role": "coach",
+        "framing": "Navigates friction without letting it drop the finding",
+        "text": "Understood on the 360 issues — that's a real friction point. Get that photo logged as soon as 360 is working again. Dirty window ledges in the public lobby is exactly the kind of thing a first-time customer notices immediately.\n\nOne tip for next time: write down what you notice in the order you notice it before deciding what matters. Did you do that, or were you filtering as you walked?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I was looking at it as a first-time customer taking it all in."
+      },
+      {
+        "role": "coach",
+        "framing": "Explains the value of the list-before-filter habit",
+        "text": "That's the right instinct. Writing it down in order — before filtering — forces you to capture everything, not just what your FM brain decides is actionable.\n\nNext visit, try jotting a quick list as you go — even just on your phone's notes app. Then filter after.\n\nGet that photo into 360 when it's back up."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I also sent the pics to the FM Matt that is in charge of this branch and he will forward the pics to the cleaners."
+      },
+      {
+        "role": "coach",
+        "framing": "Redirects to direct 360 logging",
+        "text": "That's good follow-through — but those photos should go directly into 360, not just to Matt. That's what creates the documented record tied to the location. Get them into 360 when it's back up, even if Matt already has them."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Work Order 1923259."
+      },
+      {
+        "role": "coach",
+        "framing": "Affirms the work order, closes on photos",
+        "text": "Even better — you got a work order created. Make sure the photos get attached to that WO in 360 when the system is back up so it's fully documented."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Photos are attached."
+      },
+      {
+        "role": "coach",
+        "framing": "Closes cleanly",
+        "text": "Perfect — that's exactly how it should be done. Work order created, photos attached in 360. Well done! 👊"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thanks."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Great work today, John. See you on the next one!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "👍"
+      }
     ]
   },
-
-  petaccio: {
-    name: "Tony Petaccio",
-    title: "Facility Manager",
-    manager: "Patricia Zieverink",
-    activity: "Fresh Eyes Walkthrough",
-    completed: "2026-05-14",
-    quote: "Don't be complacent, look at the big picture.",
-    overview: "Tony walked three Main Line branches back-to-back, catching real issues at each one. The coach's consistent thread: in clean branches, Tony's eye stops at 'looks good' before it gets to cove bases and door frames.",
-    nextFocus: "Tony's instincts are solid. The next rep should push him to name three fixture-level details before calling any branch clear, and to log findings in 360 in the moment rather than after the visit.",
-    turns: [
-      { role: 'coach', framing: 'Sets up activity, names a specific gap from survey data', text: "Hey Tony! Full steps in the **Activity Blueprint** above.\n\nHere's the gist: you're going to walk a branch like you've never been there before — fresh eyes, customer mindset — and document at least one issue you find.\n\nYour survey answers show you're pretty solid on catching and fixing quality issues, but there's a small gap on the deliberate 'first-time customer' mindset during visits. That's exactly what this sharpens.\n\nWhich branch are you visiting next, and when?" },
-      { role: 'participant', text: "Main Line branches, Haverford, Bryn Mawr, and Wynnewood, on 5/12." },
-      { role: 'coach', framing: 'Confirms approach, primes parking lot start', text: "Perfect — three solid branches on 5/12. The key move: **reset your mindset the moment you arrive** — before you touch anything work-related. Start in the **parking lot** and move through like a customer would.\n\nDoes that feel natural, or is that a shift from how you normally approach a visit?" },
-      { role: 'participant', text: "That feels natural, that's what I do when I arrive before entering the branch." },
-      { role: 'coach', framing: 'Introduces the fixture-level layer', text: "Good instinct — you're already starting in the right place.\n\nHere's what separates a fresh-eyes walk from a regular visit: **what you're looking at** as you move through. Things like cove bases, ceiling tiles, HVAC diffusers, door frames, corners — stuff that's easy to walk past when you've been to a location 20 times.\n\nWhen you spot something, the goal is a specific note + photo: *'Cove base separating at teller counter, ~6 feet — not on any open work order.'* Specific beats vague every time." },
-      { role: 'participant', text: "I do not have any questions." },
-      { role: 'coach', framing: 'Sends off', text: "Let's do it — good luck Monday, Tony! Look forward to hearing what you find. 👀" },
-      { role: 'participant', text: "On site — Haverford." },
-      { role: 'coach', framing: 'Receives on-site check-in', text: "Perfect. Do the walkthrough and come back when you've got something documented. 👍" },
-      { role: 'participant', text: "Did the exterior inspection. Just normal debris that was minimal — I picked it up myself." },
-      { role: 'coach', framing: 'Moves Tony to the interior', text: "Nice — quick action. Now head inside and keep that customer mindset going: entrance → lobby → teller line → restrooms.\n\nWhat do you notice walking in for the first time?" },
-      { role: 'participant', text: "Entrance was clean, lobby area I was greeted by both tellers, no customers in branch. Restrooms were clean and well stocked." },
-      { role: 'coach', framing: 'Pushes past the clean-branch surface read', text: "Good signs all around. Now go a little deeper — fresh eyes means looking at the stuff that's easy to miss even in a clean branch.\n\nDid anything catch your eye on the **surfaces and fixtures** — cove bases, ceiling tiles, HVAC diffusers, door frames? Anything worn, separated, stained, or just off?" },
-      { role: 'participant', text: "Minor repair is needed where a security camera was relocated. Branch will undergo a refresh later in the year." },
-      { role: 'coach', framing: 'Reinforces: document it even if it's getting refreshed', text: "Good catch. Even if it's going to be refreshed later, that's worth documenting now.\n\nDid you get a photo and log it in 360 with a specific description?" },
-      { role: 'participant', text: "I have not uploaded yet. I will and send to our in-house painter for repair." },
-      { role: 'coach', framing: 'Holds the 360 standard', text: "Perfect — that's exactly the right call. Get that photo uploaded to 360 before you move to the next branch.\n\nCome back when it's logged and I'll walk you through Bryn Mawr! 💪" },
-      { role: 'participant', text: "I'm done." },
-      { role: 'coach', framing: 'Transitions to Bryn Mawr', text: "Great work at Haverford, Tony.\n\nOn to Bryn Mawr — same approach. Reset at the parking lot, walk it like a first-timer, and keep an eye on the easy-to-miss details. What do you find there?" },
-      { role: 'participant', text: "Found some landscaping issues. Contacted our Landscape MGR — he has open work orders for this to be addressed." },
-      { role: 'coach', framing: 'Checks for interior and undocumented items', text: "Good catch, and good that it's already in the system. Did you document anything that *wasn't* on an open work order — inside or outside?" },
-      { role: 'participant', text: "Outside was clean. I did walk the interior — branch is in good shape, nothing that stood out." },
-      { role: 'coach', framing: 'Surfaces the familiarity-blindness pattern', text: "Got it. One thing to keep in mind for next time — if everything looks clean and nothing stands out, that's a signal to go a little slower and look closer at the details: cove bases, door frames, HVAC diffusers. Familiarity can make things invisible even on a good-looking branch.\n\nReady to head to Wynnewood?" },
-      { role: 'participant', text: "At Wynnewood." },
-      { role: 'coach', framing: 'Opens the third branch', text: "Go for it — walk it from the parking lot in. What do you find?" },
-      { role: 'participant', text: "Landscape issues — overgrown trees, mulch needed, new river rock. Spoke to Landscape MGR, he's aware and setting up work orders." },
-      { role: 'coach', framing: 'Checks the interior at Wynnewood', text: "Good. How about the interior — anything catch your eye on the customer walk-through?" },
-      { role: 'participant', text: "Clean vestibule, floors clean, greeted by colleagues when I entered. Floors and glass were cleaned. Restrooms stocked and clean. Break room clean as well." },
-      { role: 'coach', framing: 'Closes with the consistent coaching note', text: "Sounds like Wynnewood is in solid shape. Same note as Bryn Mawr — on future visits, slow down on the fixtures and finishes even in clean branches. Cove bases, ceiling tiles, door frames — that's where things hide.\n\nOverall today you caught real issues at all three branches and took action on each one. Nice work.\n\nThe one thing to sharpen for next time: even in a clean branch, push yourself to look at the surfaces and finishes up close before calling it clear. 👊" },
-      { role: 'participant', text: "Thank you." },
-      { role: 'coach', framing: '', text: "Great job today, Tony. Mark it complete! 💪" },
-      { role: 'participant', text: "Done." }
+  "petaccio": {
+    "name": "Tony Petaccio",
+    "title": "Facility Manager",
+    "manager": "Patricia Zieverink",
+    "activity": "Fresh Eyes Walkthrough",
+    "completed": "2026-05-14",
+    "quote": "Don't be complacent, look at the big picture.",
+    "overview": "Tony walked three Main Line branches back-to-back, catching real issues at each one. The coach's consistent thread: in clean branches, Tony's eye stops at looks good before getting to cove bases and door frames.",
+    "nextFocus": "Tony's instincts are solid. The next rep should push him to name three fixture-level details before calling any branch clear, and to log findings in 360 in the moment rather than after the visit.",
+    "turns": [
+      {
+        "role": "coach",
+        "framing": "Sets up the activity, names a gap from survey data",
+        "text": "Hey Tony! Full steps in the Activity Blueprint above.\n\nYou're going to walk a branch like you've never been there before — fresh eyes, customer mindset — and document at least one issue you find.\n\nYour survey answers show a small gap on the deliberate first-time customer mindset during visits. That's exactly what this sharpens.\n\nWhich branch are you visiting next, and when?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Main Line branches, Haverford, Bryn Mawr, and Wynnewood, on 5/12."
+      },
+      {
+        "role": "coach",
+        "framing": "Confirms approach, primes parking lot start",
+        "text": "Perfect — three solid branches on 5/12. The key move: reset your mindset the moment you arrive — before you touch anything work-related. Start in the parking lot and move through like a customer would.\n\nDoes that feel natural, or is that a shift from how you normally approach a visit?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "That feels natural, that's what I do when I arrive before entering the branch."
+      },
+      {
+        "role": "coach",
+        "framing": "Introduces the fixture-level layer",
+        "text": "Good instinct — you're already starting in the right place.\n\nHere's what separates a fresh-eyes walk from a regular visit: what you're looking at as you move through. Things like cove bases, ceiling tiles, HVAC diffusers, door frames, corners — stuff that's easy to walk past when you've been to a location 20 times.\n\nWhen you spot something, the goal is a specific note and photo: Cove base separating at teller counter, 6 feet — not on any open work order. Specific beats vague every time."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I do not have any questions."
+      },
+      {
+        "role": "coach",
+        "framing": "Sends off",
+        "text": "Let's do it — good luck Monday, Tony! Look forward to hearing what you find. 👀"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "On site — Haverford."
+      },
+      {
+        "role": "coach",
+        "framing": "Receives on-site check-in",
+        "text": "Perfect. Do the walkthrough and come back when you've got something documented. 👍"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Did the exterior inspection. Just normal debris that was minimal — I picked it up myself."
+      },
+      {
+        "role": "coach",
+        "framing": "Moves Tony to the interior",
+        "text": "Nice — quick action. Now head inside and keep that customer mindset going: entrance, lobby, teller line, restrooms.\n\nWhat do you notice walking in for the first time?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Entrance was clean, lobby area I was greeted by both tellers, no customers in branch. Restrooms were clean and well stocked."
+      },
+      {
+        "role": "coach",
+        "framing": "Pushes past the clean-branch surface read",
+        "text": "Good signs all around. Now go a little deeper — fresh eyes means looking at the stuff that's easy to miss even in a clean branch.\n\nDid anything catch your eye on the surfaces and fixtures — cove bases, ceiling tiles, HVAC diffusers, door frames? Anything worn, separated, stained, or just off?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Minor repair is needed where a security camera was relocated. Branch will undergo a refresh later in the year."
+      },
+      {
+        "role": "coach",
+        "framing": "Reinforces: document it even if a refresh is coming",
+        "text": "Good catch. Even if it's going to be refreshed later, that's worth documenting now.\n\nDid you get a photo and log it in 360 with a specific description?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I have not uploaded yet. I will and send to our in-house painter for repair."
+      },
+      {
+        "role": "coach",
+        "framing": "Holds the 360 standard",
+        "text": "Perfect — that's exactly the right call. Get that photo uploaded to 360 before you move to the next branch.\n\nCome back when it's logged and I'll walk you through Bryn Mawr!"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "I'm done."
+      },
+      {
+        "role": "coach",
+        "framing": "Transitions to Bryn Mawr",
+        "text": "Great work at Haverford, Tony.\n\nOn to Bryn Mawr — same approach. Reset at the parking lot, walk it like a first-timer, and keep an eye on the easy-to-miss details. What do you find there?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Found some landscaping issues. Contacted our Landscape MGR — he has open work orders for this to be addressed."
+      },
+      {
+        "role": "coach",
+        "framing": "Checks for interior and undocumented items",
+        "text": "Good catch, and good that it's already in the system. Did you document anything that wasn't on an open work order — inside or outside?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Outside was clean. I did walk the interior — branch is in good shape, nothing that stood out."
+      },
+      {
+        "role": "coach",
+        "framing": "Surfaces the familiarity-blindness pattern",
+        "text": "Got it. One thing to keep in mind for next time — if everything looks clean and nothing stands out, that's a signal to go a little slower and look closer at the details: cove bases, door frames, HVAC diffusers. Familiarity can make things invisible even on a good-looking branch.\n\nReady to head to Wynnewood?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "At Wynnewood."
+      },
+      {
+        "role": "coach",
+        "framing": "Opens the third branch",
+        "text": "Go for it — walk it from the parking lot in. What do you find?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Landscape issues — overgrown trees, mulch needed, new river rock. Spoke to Landscape MGR, he's aware and setting up work orders."
+      },
+      {
+        "role": "coach",
+        "framing": "Checks the interior at Wynnewood",
+        "text": "Good. How about the interior — anything catch your eye on the customer walk-through?"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Clean vestibule, floors clean, greeted by colleagues when I entered. Floors and glass were cleaned. Restrooms stocked and clean. Break room clean as well."
+      },
+      {
+        "role": "coach",
+        "framing": "Closes with the consistent coaching note across all three branches",
+        "text": "Sounds like Wynnewood is in solid shape. Same note as Bryn Mawr — on future visits, slow down on the fixtures and finishes even in clean branches. Cove bases, ceiling tiles, door frames — that's where things hide.\n\nOverall today you caught real issues at all three branches and took action on each one. Nice work.\n\nThe one thing to sharpen for next time: even in a clean branch, push yourself to look at the surfaces and finishes up close before calling it clear."
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Thank you."
+      },
+      {
+        "role": "coach",
+        "framing": "",
+        "text": "Great job today, Tony. Mark it complete! 💪"
+      },
+      {
+        "role": "participant",
+        "framing": "",
+        "text": "Done."
+      }
     ]
   }
-
 };
 </script>
 </body>
