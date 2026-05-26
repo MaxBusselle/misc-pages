@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flint × Gate Group — Partnership Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gg-navy:#0B0C3D;--gg-navy-mid:#10124A;
+  --fl-dark:#080A28;--fl-dark-mid:#0E1038;--fl-dark-card:#161848;--fl-dark-deep:#050720;
+  --fl-border:rgba(255,255,255,0.07);--fl-border-light:rgba(255,255,255,0.12);
+  --acc:#3BB8B0;--acc-light:#5CCEC7;--acc-pale:rgba(59,184,176,0.12);
+  --gold:#E8A84C;--gold-pale:rgba(232,168,76,0.10);--gold-border:rgba(232,168,76,0.25);
+  --orange:#F08030;
+  --green:#22C55E;--green-pale:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.25);
+  --warn:#E06070;--warn-pale:rgba(224,96,112,0.08);--warn-border:rgba(224,96,112,0.25);
+  --blue:#60A5FA;--blue-pale:rgba(96,165,250,0.10);--blue-border:rgba(96,165,250,0.30);
+  --ss:#C084FC;--ss-pale:rgba(192,132,252,0.10);--ss-border:rgba(192,132,252,0.25);
+  --white:#F4F0EB;--white-dim:rgba(244,240,235,0.65);--white-muted:rgba(244,240,235,0.40);
+  --radius:10px;--radius-lg:14px;
+}
+html,body{height:100%;}
+body{font-family:'DM Sans',sans-serif;background:var(--fl-dark);color:var(--white);line-height:1.55;overflow:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shimmer{0%,100%{opacity:.55;}50%{opacity:1;}}
+.anim{opacity:0;}.page.active .anim{animation:fadeUp .5s ease-out both;}
+.page.active .anim.d1{animation-delay:.08s;}.page.active .anim.d2{animation-delay:.16s;}.page.active .anim.d3{animation-delay:.24s;}.page.active .anim.d4{animation-delay:.32s;}.page.active .anim.d5{animation-delay:.40s;}.page.active .anim.d6{animation-delay:.48s;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:100;display:flex;align-items:center;gap:10px;padding:0 24px;background:rgba(8,10,40,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--fl-border);}
+.nav-co{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:var(--white-muted);}
+.nav-co strong{color:var(--orange);font-weight:800;}
+.nav-sep{width:1px;height:18px;background:var(--fl-border);}
+.nav-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--white-dim);}
+/* Section tabs (replaces dots) */
+.nav-sections{display:flex;gap:4px;margin-left:auto;align-items:stretch;height:100%;}
+.ns-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:6px 10px;position:relative;min-width:58px;gap:5px;}
+.ns-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color .2s,border-color .2s;line-height:1;padding-bottom:3px;border-bottom:1.5px solid transparent;}
+.ns-tab:hover .ns-label{color:rgba(255,255,255,0.7);}
+.ns-tab.active .ns-label{color:var(--gold);border-bottom-color:var(--gold);}
+.ns-indicator{visibility:hidden;display:flex;align-items:center;gap:5px;font-family:'Plus Jakarta Sans',sans-serif;font-size:9.5px;font-weight:600;color:rgba(232,168,76,0.85);letter-spacing:0.8px;}
+.ns-tab.active .ns-indicator{visibility:visible;}
+.ns-dot{width:4px;height:4px;border-radius:50%;background:rgba(232,168,76,0.30);}
+.ns-dot.active{background:var(--gold);}
+.ns-count{margin-left:1px;}
+.nav-arrows{display:flex;gap:4px;}.na{width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:var(--white-dim);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;}.na:hover{background:rgba(255,255,255,0.1);}
+.nav-prog{position:fixed;top:60px;left:0;height:2px;background:linear-gradient(90deg,var(--acc),var(--gold));z-index:101;transition:width .4s ease-out;}
+.nav-count{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:var(--white-muted);letter-spacing:1px;}
+
+/* PAGE LAYOUT — strict viewport */
+.page{display:none;position:fixed;top:60px;left:0;right:0;bottom:0;overflow:hidden;}
+.page.active{display:flex;flex-direction:column;}
+.frame{flex:1;padding:20px clamp(20px,3vw,40px) 18px;display:flex;flex-direction:column;min-height:0;overflow:auto;}
+
+/* TYPOGRAPHY */
+.ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--acc);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.ey::before{content:'';width:24px;height:1px;background:var(--acc);}
+.pt{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(33px,4.2vw,51px);font-weight:800;line-height:1.1;letter-spacing:-0.5px;color:var(--white);margin-bottom:8px;}
+.pt .em{color:var(--acc-light);}.pt .em-g{color:var(--gold);}
+.ps{font-size:clamp(20px,1.88vw,22px);color:var(--white-dim);line-height:1.55;max-width:900px;margin-bottom:10px;}
+
+/* PILOT-FREE BADGE */
+.free-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:100px;background:rgba(34,197,94,0.10);border:1px solid var(--green-border);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);}
+.free-badge::before{content:'$0';font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:var(--green);background:rgba(34,197,94,0.15);padding:1px 6px;border-radius:6px;font-size:15px;letter-spacing:0;}
+
+/* SECTION EYEBROW — for in-slide section labels */
+.sect-eye{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--white-muted);margin-bottom:8px;}
+
+/* SLIDE 1 — WHAT FLINT IS (intro) */
+.intro-chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-bottom:14px;}
+.intro-chain-box{padding:12px 14px;border-radius:10px;background:rgba(59,184,176,0.06);border:1.5px solid rgba(59,184,176,0.30);display:flex;flex-direction:column;justify-content:flex-start;}
+.intro-chain-box.outcome{background:rgba(232,168,76,0.05);border-color:rgba(232,168,76,0.30);}
+.intro-chain-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--acc);margin-bottom:4px;line-height:1.2;}
+.intro-chain-box.outcome .intro-chain-label{color:var(--gold);}
+.intro-chain-sub{font-size:26px;color:var(--white-dim);line-height:1.4;}
+.intro-chain-arrow{display:flex;align-items:center;justify-content:center;color:var(--white-muted);font-size:27px;font-weight:700;}
+
+.intro-bottom-row{display:grid;grid-template-columns:1fr 1.05fr;gap:14px;margin-bottom:12px;}
+.intro-card-hdr{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--white-muted);margin-bottom:10px;}
+
+.intro-focus-card{padding:14px 16px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);display:flex;flex-direction:column;gap:10px;}
+.intro-focus-card-wide{padding:16px 20px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);}
+.intro-focus-audiences{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.intro-focus-row{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.02);border-left:3px solid var(--acc);}
+.intro-focus-row + .intro-focus-row{border-left-color:var(--gold);}
+.intro-focus-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:var(--acc);margin-bottom:3px;}
+.intro-focus-row + .intro-focus-row .intro-focus-label{color:var(--gold);}
+.intro-focus-items{font-size:18px;color:var(--white-dim);line-height:1.5;}
+
+.reveal-btn{margin-top:12px;padding:7px 14px;border-radius:100px;background:rgba(59,184,176,0.10);border:1px solid rgba(59,184,176,0.30);color:var(--acc);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s;align-self:flex-start;}
+.reveal-btn:hover{background:rgba(59,184,176,0.18);border-color:var(--acc);}
+.reveal-btn .reveal-arrow{font-size:20px;transition:transform .25s;display:inline-block;}
+.reveal-btn.open .reveal-arrow{transform:rotate(180deg);}
+
+.intro-activity-reveal{overflow:hidden;max-height:0;transition:max-height .35s ease-out,margin-top .35s ease-out;margin-top:0;}
+.intro-activity-reveal.open{max-height:620px;margin-top:12px;}
+#chainReveal.open{max-height:300px !important;margin-top:12px;}
+.intro-focus-reveal{overflow:hidden;max-height:0;transition:max-height .4s ease-out,margin-top .4s ease-out;margin-top:0;}
+.intro-focus-reveal.open{max-height:800px;margin-top:14px;}
+
+.intro-activity-card{padding:14px 16px;border-radius:var(--radius-lg);background:rgba(59,184,176,0.04);border:1px solid rgba(59,184,176,0.20);}
+.intro-act-tag{display:inline-block;padding:3px 9px;border-radius:100px;background:rgba(59,184,176,0.12);border:1px solid rgba(59,184,176,0.30);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--acc);margin-bottom:8px;}
+.intro-act-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;color:var(--white);margin-bottom:6px;line-height:1.25;}
+.intro-act-body{font-size:17px;color:var(--white-dim);line-height:1.45;margin-bottom:8px;}
+.intro-act-step{display:flex;gap:8px;align-items:flex-start;font-size:16px;color:var(--white-dim);line-height:1.4;margin-bottom:4px;}
+.intro-act-num{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(59,184,176,0.15);border:1px solid rgba(59,184,176,0.30);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--acc);display:flex;align-items:center;justify-content:center;}
+
+
+/* SMS PILLAR MAPPING TABLE */
+.pillar-map{display:flex;flex-direction:column;gap:8px;width:100%;}
+.pillar-map-header{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--white-muted);margin-bottom:4px;padding-bottom:8px;border-bottom:1px solid var(--fl-border);}
+.pillar-row{display:flex;gap:12px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);border-left:3px solid;}
+.pillar-row.p1{border-left-color:var(--blue);}
+.pillar-row.p2{border-left-color:var(--acc);}
+.pillar-row.p3{border-left-color:var(--gold);}
+.pillar-row.p4{border-left-color:var(--ss);}
+.pillar-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;letter-spacing:1px;flex-shrink:0;width:56px;line-height:1.4;padding-top:1px;}
+.pillar-row.p1 .pillar-num{color:var(--blue);}
+.pillar-row.p2 .pillar-num{color:var(--acc);}
+.pillar-row.p3 .pillar-num{color:var(--gold);}
+.pillar-row.p4 .pillar-num{color:var(--ss);}
+.pillar-text{font-size:19px;color:var(--white-dim);line-height:1.45;flex:1;}
+.pillar-text strong{color:var(--white);font-weight:700;}
+.builds-on-band{margin-top:16px;padding:18px 28px;border-radius:var(--radius);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.25);font-size:22px;font-family:'DM Sans',sans-serif;color:var(--white);line-height:1.35;text-align:center;}
+.builds-on-band strong{color:var(--acc-light);font-weight:700;}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.stat-card{padding:18px 16px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);position:relative;overflow:hidden;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat-card.c1::before{background:var(--acc);}.stat-card.c2::before{background:var(--gold);}.stat-card.c3::before{background:var(--ss);}.stat-card.c4::before{background:var(--green);}
+.stat-eye{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:6px;line-height:1.3;min-height:24px;}
+.stat-card.c1 .stat-eye{color:var(--acc);}.stat-card.c2 .stat-eye{color:var(--gold);}.stat-card.c3 .stat-eye{color:var(--ss);}.stat-card.c4 .stat-eye{color:var(--green);}
+.stat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(33px,3.6vw,45px);font-weight:800;color:var(--white);line-height:1;letter-spacing:-0.5px;}
+.stat-sub{font-size:16px;color:var(--white-dim);margin-top:4px;line-height:1.35;}
+
+/* QUOTES */
+.qrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.qc{padding:12px 14px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-left:3px solid var(--acc);}
+.qc.gold{border-left-color:var(--gold);}.qc.ss-c{border-left-color:var(--ss);}.qc.green{border-left-color:var(--green);}
+.qtx{font-size:20px;color:var(--white);font-style:italic;line-height:1.5;}
+.qa{font-size:15px;color:var(--white-muted);margin-top:6px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;}
+.qa .role{color:var(--acc);}.qc.gold .qa .role{color:var(--gold);}.qc.ss-c .qa .role{color:var(--ss);}.qc.green .qa .role{color:var(--green);}
+
+/* ACTION COUNT STRIP */
+.action-strip{display:flex;gap:0;border-radius:var(--radius);background:rgba(255,255,255,0.02);border:1px solid var(--fl-border);overflow:hidden;}
+.action-cell{flex:1;padding:10px 12px;text-align:center;border-right:1px solid var(--fl-border);}
+.action-cell:last-child{border-right:none;}
+.action-n{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(33px,3.6vw,45px);font-weight:800;line-height:1;}
+.action-cell.n1 .action-n{color:var(--green);}.action-cell.n2 .action-n{color:var(--acc);}.action-cell.n3 .action-n{color:var(--gold);}.action-cell.n4 .action-n{color:var(--ss);}
+.action-l{font-size:15px;color:var(--white-muted);margin-top:4px;line-height:1.3;font-weight:600;letter-spacing:0.4px;}
+
+/* RESULTS ACCORDION */
+.res-accordion{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.acc-item{border-radius:var(--radius);border:1px solid var(--fl-border);background:var(--fl-dark-card);overflow:hidden;transition:border-color .2s;}
+.acc-item.open{border-color:var(--acc);}
+.acc-header{width:100%;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;background:transparent;border:none;color:inherit;font-family:'DM Sans',sans-serif;text-align:left;transition:background .2s;}
+.acc-header:hover{background:rgba(59,184,176,0.04);}
+.acc-item.open .acc-header{background:rgba(59,184,176,0.07);}
+.acc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:var(--white-dim);flex:1;}
+.acc-item.open .acc-title{color:var(--acc);}
+.acc-sub{font-size:13px;font-weight:600;color:var(--white-muted);letter-spacing:0.5px;text-transform:uppercase;}
+.acc-chevron{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid var(--fl-border);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white-muted);transition:transform .25s,color .2s,border-color .2s;}
+.acc-item.open .acc-chevron{transform:rotate(180deg);color:var(--acc);border-color:var(--acc);}
+.acc-body{overflow:hidden;max-height:0;transition:max-height .35s ease-out;}
+.acc-item.open .acc-body{max-height:520px;}
+.acc-body-inner{padding:0 16px 16px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+/* FOOTER STRIP */
+.foot-strip{display:flex;gap:24px;justify-content:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--fl-border);border-radius:var(--radius);font-size:24px;color:var(--white-muted);margin-top:14px;}
+.foot-strip strong{color:var(--white);font-weight:700;}
+
+/* SLIDE 3 STEP SEQUENCE */
+.fit-stepper{display:flex;align-items:stretch;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--fl-border);margin-bottom:14px;}
+.fit-step{flex:1;padding:13px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;background:var(--fl-dark-card);border:none;color:inherit;font-family:'DM Sans',sans-serif;text-align:left;transition:all .2s;position:relative;border-right:1px solid var(--fl-border);}
+.fit-step:last-child{border-right:none;}
+.fit-step:hover:not(.active){background:rgba(255,255,255,0.02);}
+.fit-step.active{background:rgba(59,184,176,0.08);}
+.fit-step[data-view="sms"].active{background:rgba(96,165,250,0.08);}
+.fit-step::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:transparent;transition:background .2s;}
+.fit-step.active::after{background:var(--acc);}
+.fit-step[data-view="sms"].active::after{background:var(--blue);}
+.fit-step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--white-muted);background:rgba(255,255,255,0.04);transition:all .2s;}
+.fit-step.active .fit-step-num{border-color:var(--acc);background:rgba(59,184,176,0.18);color:var(--acc);}
+.fit-step[data-view="sms"].active .fit-step-num{border-color:var(--blue);background:rgba(96,165,250,0.18);color:var(--blue);}
+.fit-step-info{flex:1;}
+.fit-step-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;color:var(--white-dim);line-height:1.2;transition:color .2s;}
+.fit-step.active .fit-step-label{color:var(--acc);}
+.fit-step[data-view="sms"].active .fit-step-label{color:var(--blue);}
+.fit-step-sub{font-size:13px;color:var(--white-muted);margin-top:2px;line-height:1.3;}
+.fit-panel{animation:fadeIn .25s ease-out both;}
+.fit-panel.hidden{display:none;}
+
+/* PAGE 2 — STRATEGY PILLARS */
+.strat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.strat-card{padding:14px 16px;border-radius:var(--radius-lg);position:relative;overflow:hidden;}
+.strat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.strat-card.s1{background:rgba(59,184,176,0.08);border:1px solid rgba(59,184,176,0.25);}.strat-card.s1::before{background:var(--acc);}
+.strat-card.s2{background:var(--gold-pale);border:1px solid var(--gold-border);}.strat-card.s2::before{background:var(--gold);}
+.strat-card.s3{background:var(--ss-pale);border:1px solid var(--ss-border);}.strat-card.s3::before{background:var(--ss);}
+.strat-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;margin-bottom:4px;}
+.strat-card.s1 .strat-name{color:var(--acc);}.strat-card.s2 .strat-name{color:var(--gold);}.strat-card.s3 .strat-name{color:var(--ss);}
+.strat-line{font-size:27px;color:var(--white-dim);line-height:1.45;}
+.strat-line strong{color:var(--white);font-weight:700;}
+
+/* SMS TEMPLE — compact for slide 2 */
+.sms-temple-wrap{display:flex;justify-content:center;align-items:center;}
+.sms-temple-svg{width:100%;max-width:720px;height:auto;display:block;}
+.flint-dot-svg{animation:shimmer 2.4s ease-in-out infinite;transform-origin:center;}
+.flint-dot-svg.fd1{animation-delay:0s;}.flint-dot-svg.fd2{animation-delay:.6s;}.flint-dot-svg.fd3{animation-delay:1.2s;}.flint-dot-svg.fd4{animation-delay:1.8s;}
+
+/* CAPABILITIES MINI */
+.cap-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.cap-mini{padding:10px 12px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-top:2px solid var(--acc);}
+.cap-mini-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.2px;color:var(--acc);margin-bottom:4px;}
+.cap-mini-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);line-height:1.3;}
+
+/* PAGE 3 — DEMAND CARDS */
+.dom-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.dom-card{padding:14px 16px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);position:relative;}
+.dom-card.d1{border-top:3px solid var(--acc);}.dom-card.d2{border-top:3px solid var(--gold);}.dom-card.d3{border-top:3px solid var(--ss);}
+.dom-tag{position:absolute;top:14px;right:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;padding:3px 8px;border-radius:100px;}
+.dom-card.d1 .dom-tag{color:var(--acc);background:rgba(59,184,176,0.12);border:1px solid rgba(59,184,176,0.35);}
+.dom-card.d2 .dom-tag{color:var(--gold);background:rgba(232,168,76,0.12);border:1px solid rgba(232,168,76,0.35);}
+.dom-card.d3 .dom-tag{color:var(--ss);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.35);}
+.dom-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:41px;font-weight:800;margin:8px 0 12px;}
+.dom-card.d1 .dom-name{color:var(--acc);}.dom-card.d2 .dom-name{color:var(--gold);}.dom-card.d3 .dom-name{color:var(--ss);}
+.dom-line{font-size:29px;color:var(--white-dim);line-height:1.5;margin-bottom:10px;}
+.dom-line strong{color:var(--white);font-weight:700;}
+.dom-line .lbl{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white-muted);display:block;margin-bottom:2px;}
+
+/* PAGE 4 — CHAIN + ROI */
+.s4-cols{display:flex;flex-direction:column;gap:18px;min-height:0;}
+.chain{display:flex;flex-direction:column;gap:6px;}
+/* Horizontal chain for ROI */
+.chain-horiz{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:8px;align-items:stretch;}
+.chain-horiz .chain-box{padding:14px 16px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+.chain-horiz .chain-arrow{display:flex;align-items:center;justify-content:center;font-size:24px;}
+.chain-divider{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;}
+.chain-divider > div{padding:6px 10px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-align:center;}
+.chain-divider .leading{color:var(--acc);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.20);}
+.chain-divider .lagging{color:var(--gold);background:rgba(232,168,76,0.06);border:1px solid rgba(232,168,76,0.20);}
+.chain-section{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin:4px 0 2px;}
+.chain-section.leading{color:var(--acc);}
+.chain-section.lagging{color:var(--gold);}
+.chain-box{padding:11px 14px;border-radius:var(--radius);text-align:center;}
+.chain-box.b1{background:rgba(59,184,176,0.10);border:1.5px solid rgba(59,184,176,0.40);}
+.chain-box.b2{background:rgba(96,165,250,0.10);border:1.5px solid rgba(96,165,250,0.40);}
+.chain-box.b3{background:rgba(192,132,252,0.06);border:1.5px dashed rgba(192,132,252,0.50);}
+.chain-box.b4{background:rgba(34,197,94,0.06);border:1.5px dashed rgba(34,197,94,0.50);}
+.chain-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;line-height:1.2;}
+.chain-box.b1 .chain-title{color:var(--acc);}.chain-box.b2 .chain-title{color:var(--blue);}.chain-box.b3 .chain-title{color:var(--ss);}.chain-box.b4 .chain-title{color:var(--green);}
+.chain-desc{font-size:24px;color:var(--white-dim);margin-top:3px;line-height:1.35;}
+.chain-arrow{text-align:center;color:var(--white-muted);font-size:21px;line-height:1;}
+
+/* CALCULATOR */
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.calc-card{padding:16px 18px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);position:relative;}
+.calc-eye{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:700;letter-spacing:1.2px;color:var(--white-muted);margin-bottom:3px;}
+.calc-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:27px;font-weight:800;color:var(--white);margin-bottom:8px;line-height:1.25;}
+.calc-row{display:flex;align-items:center;gap:10px;}
+.calc-slider{flex:1;-webkit-appearance:none;appearance:none;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;outline:none;}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--acc);cursor:pointer;border:none;box-shadow:0 0 0 3px rgba(59,184,176,0.2);}
+.calc-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--acc);cursor:pointer;border:none;}
+.calc-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);min-width:80px;text-align:right;}
+.calc-note{font-size:16px;color:var(--white-muted);line-height:1.4;margin-top:6px;}
+.calc-note strong{color:var(--white-dim);}
+
+/* ROI Tooltip on assumption cards */
+.calc-info{position:absolute;top:12px;right:14px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--fl-border);color:var(--white-muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:help;transition:all .2s;font-style:italic;}
+.calc-info:hover{background:rgba(59,184,176,0.15);border-color:var(--acc);color:var(--acc);}
+.calc-tip{position:absolute;top:42px;right:14px;width:280px;padding:12px 14px;border-radius:8px;background:#0F1E2E;border:1px solid var(--acc);box-shadow:0 8px 24px rgba(0,0,0,0.5);font-size:14px;color:var(--white-dim);line-height:1.45;opacity:0;pointer-events:none;transform:translateY(-4px);transition:all .2s;z-index:20;}
+.calc-tip strong{color:var(--white);}
+.calc-tip::before{content:'';position:absolute;top:-6px;right:18px;width:10px;height:10px;background:#0F1E2E;border-left:1px solid var(--acc);border-top:1px solid var(--acc);transform:rotate(45deg);}
+.calc-info:hover + .calc-tip,.calc-tip:hover{opacity:1;transform:translateY(0);pointer-events:auto;}
+
+.calc-output{padding:14px 18px;border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(59,184,176,0.10),rgba(232,168,76,0.05));border:1px solid rgba(59,184,176,0.30);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.calc-math{font-family:'Plus Jakarta Sans',sans-serif;font-size:33px;color:var(--white-dim);}
+.calc-math .calc-mathv{color:var(--white);font-weight:700;}
+.calc-result{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(33px,3.6vw,45px);font-weight:800;color:var(--acc);line-height:1;}
+.calc-result-lbl{font-size:21px;color:var(--white-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:4px;text-align:right;}
+
+/* PAGE 5 — ASK / NEXT */
+.s5-cols{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;flex:1;min-height:0;}
+.step{padding:12px 14px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);position:relative;border-left:3px solid var(--acc);display:flex;gap:24px;align-items:flex-start;}
+.step-n{font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--acc);flex-shrink:0;width:32px;line-height:1;}
+.step-content{flex:1;}
+.step-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;color:var(--white);margin-bottom:3px;line-height:1.25;}
+.step-desc{font-size:18px;color:var(--white-dim);line-height:1.45;}
+.step.done{border-left-color:var(--white-muted);opacity:0.7;}
+.step.done .step-n{color:var(--green);}
+.step.done .step-title{color:var(--white-dim);}
+
+.cost-card{padding:18px;border-radius:var(--radius-lg);background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(59,184,176,0.04));border:1px solid rgba(34,197,94,0.25);display:flex;flex-direction:column;gap:14px;}
+.cost-line{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--fl-border);}
+.cost-line:last-child{border-bottom:none;padding-bottom:0;}
+.cost-lbl{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white-muted);}
+.cost-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;}
+.cost-val.free{color:var(--green);}
+.cost-val.ask{color:var(--acc);}
+
+.timing-card{padding:14px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);border:1px solid var(--fl-border);}
+.timing-row{display:flex;gap:14px;align-items:center;padding:6px 0;font-size:29px;color:var(--white-dim);}
+.timing-row:not(:last-child){border-bottom:1px solid var(--fl-border);}
+.timing-q{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;letter-spacing:1px;color:var(--gold);min-width:80px;}
+.timing-row strong{color:var(--white);font-weight:700;}
+
+/* HELPERS */
+.flex-spacer{flex:1;}
+.gap-sm{margin-top:10px;}.gap-md{margin-top:14px;}.gap-lg{margin-top:18px;}
+
+/* ═══ AGENDA SLIDE ═══ */
+.agenda-frame{flex:1;padding:48px clamp(40px,6vw,96px);display:flex;flex-direction:column;justify-content:center;min-height:0;}
+.agenda-ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--acc);margin-bottom:14px;display:flex;align-items:center;gap:14px;}
+.agenda-ey::before{content:'';width:32px;height:1px;background:var(--acc);}
+.agenda-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(40px,5vw,60px);font-weight:800;line-height:1.05;letter-spacing:-0.5px;color:var(--white);margin-bottom:38px;}
+.agenda-title .em-g{color:var(--gold);}
+.agenda-list{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:14px 36px;}
+.agenda-item{display:flex;align-items:baseline;gap:18px;padding:14px 4px;border-bottom:1px solid var(--fl-border);cursor:pointer;transition:border-color .2s,background .2s;}
+.agenda-item:hover{border-bottom-color:var(--acc);background:rgba(59,184,176,0.05);}
+.agenda-item:hover .agenda-num{color:var(--gold);}
+.agenda-item:hover .agenda-text{color:var(--white);}
+.agenda-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--acc);min-width:54px;letter-spacing:-0.5px;}
+.agenda-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:31px;font-weight:600;color:var(--white);line-height:1.3;}
+
+/* ═══ DIVIDER SLIDES ═══ */
+.divider-frame{flex:1;padding:48px clamp(40px,6vw,96px);display:flex;flex-direction:column;justify-content:center;min-height:0;background:linear-gradient(160deg,var(--fl-dark),var(--fl-dark-mid) 60%,var(--gg-navy-mid));}
+.divider-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:800;letter-spacing:3px;color:var(--acc);margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.divider-num::before{content:'';width:60px;height:1px;background:var(--acc);}
+.divider-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(54px,7vw,84px);font-weight:800;line-height:1.05;letter-spacing:-1px;color:var(--white);margin-bottom:24px;max-width:1100px;}
+.divider-title .em-g{color:var(--gold);}
+.divider-title .em{color:var(--acc-light);}
+.divider-preview{font-family:'DM Sans',sans-serif;font-size:28px;color:var(--white-dim);line-height:1.5;max-width:900px;font-style:italic;}
+.divider-stat{display:flex;align-items:baseline;gap:16px;margin-top:8px;padding:14px 22px;background:rgba(232,168,76,0.08);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:var(--radius);width:100%;max-width:820px;}
+.divider-stat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:60px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-1px;}
+.divider-stat-lbl{font-size:22px;color:var(--white-dim);line-height:1.4;}
+
+/* ═══ CONSOLIDATED RESULTS VIEW (no accordion) ═══ */
+.results-consolidated{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;}
+.results-block{padding:18px 20px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);}
+.results-block-hdr{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--white-muted);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--fl-border);}
+.results-stat{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;}
+.results-stat + .results-stat{border-top:1px solid var(--fl-border);}
+.results-stat-lbl{font-size:20px;color:var(--white-dim);line-height:1.35;flex:1;}
+.results-stat-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--white);line-height:1;letter-spacing:-0.5px;flex-shrink:0;}
+.results-block.improvements .results-stat-val{color:var(--acc-light);}
+.results-block.actions .results-stat-val{color:var(--gold);}
+
+/* ═══ INTRO CHAIN SCALED UP (for slimmed What Flint Is slide) ═══ */
+.intro-chain-lg{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:18px;align-items:stretch;margin-top:32px;}
+.intro-chain-lg .intro-chain-box{padding:32px 28px;border-radius:16px;border-width:2px;}
+.intro-chain-lg .intro-chain-label{font-size:42px;margin-bottom:12px;margin-top:14px;}
+.intro-chain-lg .intro-chain-sub{font-size:26px;line-height:1.45;}
+.intro-chain-lg .intro-chain-arrow{font-size:54px;font-weight:900;color:var(--white-dim);text-shadow:0 0 12px rgba(244,240,235,0.15);}
+
+/* PDCA pills on chain cards */
+.pdca-pill{display:inline-block;padding:6px 14px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.pdca-pill.p-plan{background:rgba(59,184,176,0.15);border:1.5px solid rgba(59,184,176,0.50);color:var(--acc);}
+.pdca-pill.p-do{background:rgba(59,184,176,0.15);border:1.5px solid rgba(59,184,176,0.50);color:var(--acc);}
+.pdca-pill.p-check{background:rgba(59,184,176,0.15);border:1.5px solid rgba(59,184,176,0.50);color:var(--acc);}
+.pdca-pill.p-act{background:rgba(232,168,76,0.15);border:1.5px solid rgba(232,168,76,0.55);color:var(--gold);}
+
+/* Pilot Overview slide layout */
+.pilot-overview-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:14px;}
+.pilot-overview-stat-card{padding:24px 26px;border-radius:var(--radius-lg);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.25);display:flex;flex-direction:column;justify-content:center;gap:8px;}
+.pilot-overview-stat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:72px;font-weight:800;color:var(--acc);line-height:1;letter-spacing:-1px;}
+.pilot-overview-stat-lbl{font-size:24px;color:var(--white);line-height:1.4;}
+.pilot-overview-meta{display:flex;flex-direction:column;gap:12px;}
+.pilot-overview-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:100px;background:rgba(34,197,94,0.10);border:1px solid var(--green-border);font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);align-self:flex-start;}
+.pilot-overview-pill::before{content:'$0';font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:var(--green);background:rgba(34,197,94,0.20);padding:2px 8px;border-radius:6px;font-size:17px;letter-spacing:0;}
+.pilot-overview-band{display:flex;gap:24px;justify-content:center;align-items:center;padding:14px 18px;background:rgba(255,255,255,0.02);border:1px solid var(--fl-border);border-radius:var(--radius);font-size:22px;color:var(--white-dim);flex-wrap:wrap;}
+.pilot-overview-band strong{color:var(--white);font-weight:700;}
+.pilot-overview-band .sep{color:var(--white-muted);}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-co">powered by <strong>FLiNT</strong></div>
+  <div class="nav-sep"></div>
+  <div class="nav-title">Partnership Proposal · Gate Group · May 2026</div>
+  <div class="nav-sections" id="nS"></div>
+  <div class="nav-count" id="nC">1 / 17</div>
+  <div class="nav-arrows">
+    <div class="na" onclick="prev()">&#8592;</div>
+    <div class="na" onclick="next()">&#8594;</div>
+  </div>
+</div>
+<div class="nav-prog" id="nP" style="width:5.88%;"></div>
+
+<!-- ════════════════════ SLIDE 1: BRIEFING OVERVIEW (AGENDA) ════════════════════ -->
+<div class="page active" data-label="Overview" data-pg="1" data-kind="agenda">
+<div class="agenda-frame">
+
+  <div class="agenda-ey anim d1">Overview</div>
+  <div class="agenda-title anim d2">Flint × gategroup — <span class="em-g">partnership proposal.</span></div>
+
+  <div class="agenda-list anim d3">
+    <div class="agenda-item" onclick="go(1)"><div class="agenda-num">01</div><div class="agenda-text">What Flint is</div></div>
+    <div class="agenda-item" onclick="go(3)"><div class="agenda-num">02</div><div class="agenda-text">Ramp safety pilot overview</div></div>
+    <div class="agenda-item" onclick="go(5)"><div class="agenda-num">03</div><div class="agenda-text">Pilot results</div></div>
+    <div class="agenda-item" onclick="go(7)"><div class="agenda-num">04</div><div class="agenda-text">How Flint fits existing systems and processes</div></div>
+    <div class="agenda-item" onclick="go(9)"><div class="agenda-num">05</div><div class="agenda-text">Cross-function demand</div></div>
+    <div class="agenda-item" onclick="go(11)"><div class="agenda-num">06</div><div class="agenda-text">Projected value (ramp safety example)</div></div>
+    <div class="agenda-item" onclick="go(13)"><div class="agenda-num">07</div><div class="agenda-text">Next Steps</div></div>
+    <div class="agenda-item" onclick="go(15)"><div class="agenda-num">08</div><div class="agenda-text">Investment &amp; rollout</div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 2: DIVIDER — WHAT FLINT IS ════════════════════ -->
+<div class="page" data-label="Flint" data-pg="2" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">01</div>
+  <div class="divider-title anim d2">What Flint is.</div>
+  <div class="divider-preview anim d3">Weekly supervisor activities that build a Just Safety Culture &mdash; in under 9 minutes/week.</div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 3: CONTENT — WHAT FLINT IS ════════════════════ -->
+<div class="page" data-label="·" data-pg="3" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-top:14px;margin-bottom:24px;">Behavior change in the flow of work <span class="em-g">for ISO 45001 conformance.</span></div>
+
+  <!-- HORIZONTAL CHAIN: How It Works — scaled up, PDCA pills above each card -->
+  <div class="intro-chain intro-chain-lg anim d4">
+    <div class="intro-chain-box">
+      <div class="pdca-pill p-plan">PLAN</div>
+      <div class="intro-chain-label">FLiNT Activity</div>
+      <div class="intro-chain-sub">Supervisor gets a targeted, behavior-specific task</div>
+    </div>
+    <div class="intro-chain-arrow">&rarr;</div>
+    <div class="intro-chain-box">
+      <div class="pdca-pill p-do">DO</div>
+      <div class="intro-chain-label">On-the-ground action</div>
+      <div class="intro-chain-sub">They go observe, coach, or follow through</div>
+    </div>
+    <div class="intro-chain-arrow">&rarr;</div>
+    <div class="intro-chain-box">
+      <div class="pdca-pill p-check">CHECK</div>
+      <div class="intro-chain-label">Log + manager validates</div>
+      <div class="intro-chain-sub">Documented, reviewed, coaching provided</div>
+    </div>
+    <div class="intro-chain-arrow">&rarr;</div>
+    <div class="intro-chain-box outcome">
+      <div class="pdca-pill p-act">ACT</div>
+      <div class="intro-chain-label">Behavior changes</div>
+      <div class="intro-chain-sub">For supervisors, and their teams</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 4: DIVIDER — RAMP SAFETY PILOT OVERVIEW ════════════════════ -->
+<div class="page" data-label="Pilot" data-pg="4" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">02</div>
+  <div class="divider-title anim d2">Ramp safety pilot overview.</div>
+  <div class="anim d3" style="display:flex;gap:32px;margin-top:8px;padding:18px 28px;background:rgba(232,168,76,0.08);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:var(--radius);align-self:flex-start;align-items:baseline;">
+    <div style="display:flex;align-items:baseline;gap:12px;"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-1px;line-height:1;">8</span><span style="font-size:22px;color:var(--white-dim);">units</span></div>
+    <div style="color:var(--white-muted);font-size:28px;">·</div>
+    <div style="display:flex;align-items:baseline;gap:12px;"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-1px;line-height:1;">2</span><span style="font-size:22px;color:var(--white-dim);">regions</span></div>
+    <div style="color:var(--white-muted);font-size:28px;">·</div>
+    <div style="display:flex;align-items:baseline;gap:12px;"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-1px;line-height:1;">10</span><span style="font-size:22px;color:var(--white-dim);">weeks</span></div>
+    <div style="color:var(--white-muted);font-size:28px;">·</div>
+    <div style="display:flex;align-items:baseline;gap:12px;"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:54px;font-weight:800;color:var(--green);letter-spacing:-1px;line-height:1;">$0</span><span style="font-size:22px;color:var(--white-dim);">cost</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 5: CONTENT — RAMP SAFETY PILOT OVERVIEW ════════════════════ -->
+<div class="page" data-label="·" data-pg="5" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-top:14px;margin-bottom:18px;">Where the pilot focused &mdash; <span class="em">and why.</span></div>
+
+  <!-- Full-width 54% stat card — inline row -->
+  <div class="anim d4">
+    <div class="pilot-overview-stat-card" style="width:100%;flex-direction:row;align-items:center;gap:24px;">
+      <div class="pilot-overview-stat-num" style="flex-shrink:0;">54%</div>
+      <div class="pilot-overview-stat-lbl" style="font-size:26px;">of gategroup's damages on the ramp trace to human behavior &mdash; what Supervisors and Safety Specialists shape.</div>
+    </div>
+  </div>
+
+  <!-- Focus card -->
+  <div class="anim d5" style="margin-top:16px;">
+    <div class="intro-focus-card-wide">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);margin-bottom:18px;line-height:1.2;">Tailored to role specifics</div>
+      <div class="intro-focus-audiences">
+        <div class="intro-focus-row" style="text-align:center;">
+          <div class="intro-focus-label" style="font-size:29px;margin-bottom:10px;">Supervisors</div>
+          <ul class="intro-focus-items" style="font-size:27px;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;align-items:center;">
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--acc);flex-shrink:0;">&bull;</span><span>Targeted ramp observations</span></li>
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--acc);flex-shrink:0;">&bull;</span><span>Behavior-focused briefings</span></li>
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--acc);flex-shrink:0;">&bull;</span><span>Progressive discipline follow-through</span></li>
+          </ul>
+        </div>
+        <div class="intro-focus-row" style="text-align:center;">
+          <div class="intro-focus-label" style="font-size:29px;margin-bottom:10px;">Safety Specialists</div>
+          <ul class="intro-focus-items" style="font-size:27px;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;align-items:center;">
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--gold);flex-shrink:0;">&bull;</span><span>Identifying priority drivers</span></li>
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--gold);flex-shrink:0;">&bull;</span><span>Cross-functional coordination</span></li>
+            <li style="display:flex;gap:10px;align-items:baseline;"><span style="color:var(--gold);flex-shrink:0;">&bull;</span><span>Coaching for improvement</span></li>
+          </ul>
+        </div>
+      </div>
+      <button class="reveal-btn" id="revealBtn" onclick="toggleSnapshot()" style="font-size:22px;padding:10px 20px;">
+        See an example activity <span class="reveal-arrow">↓</span>
+      </button>
+    </div>
+
+    <div class="intro-activity-reveal" id="actSnap">
+      <div class="intro-activity-card" style="padding:22px 26px;">
+        <div class="intro-act-tag" style="font-size:21px;padding:5px 14px;">Activity Snapshot &middot; Supervisor Practice</div>
+        <div class="intro-act-title" style="font-size:32px;margin-bottom:10px;">Targeted Ramp Observation: Priority Driver</div>
+        <div class="intro-act-body" style="font-size:26px;margin-bottom:14px;">Before heading airside, identify one driver from your SQOR log with a repeat at-risk behavior. Plan your observation around their next flight.</div>
+        <div class="intro-act-step" style="font-size:24px;margin-bottom:8px;"><div class="intro-act-num" style="width:28px;height:28px;font-size:22px;">1</div><div>Review SQOR log; flag a driver with 2+ recorded observations for the same behavior.</div></div>
+        <div class="intro-act-step" style="font-size:24px;margin-bottom:8px;"><div class="intro-act-num" style="width:28px;height:28px;font-size:22px;">2</div><div>Position to observe during their next ground operation; note whether the behavior recurs.</div></div>
+        <div class="intro-act-step" style="font-size:24px;margin-bottom:8px;"><div class="intro-act-num" style="width:28px;height:28px;font-size:22px;">3</div><div>If it does: deliver a verbal warning referencing the prior flags. Log the interaction.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 6: DIVIDER — PILOT RESULTS ════════════════════ -->
+<div class="page" data-label="Results" data-pg="6" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">03</div>
+  <div class="divider-title anim d2">Pilot results.</div>
+  <div class="divider-stat anim d3">
+    <div class="divider-stat-num">407</div>
+    <div class="divider-stat-lbl"><strong style="color:var(--white);">activities</strong> &middot; leading indicators moved across every unit</div>
+  </div>
+  <div class="anim d4" style="margin-top:20px;max-width:820px;padding:16px 24px;border-radius:var(--radius-lg);background:rgba(59,184,176,0.07);border:1px solid rgba(59,184,176,0.30);border-left:4px solid var(--acc);display:flex;align-items:center;gap:20px;">
+    <div style="font-size:72px;line-height:1;color:var(--acc);opacity:0.4;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0;">&ldquo;</div>
+    <div style="flex:1;">
+      <div style="font-size:24px;font-style:italic;color:var(--white);line-height:1.55;">There's quite a lot of potential for us to achieve real behavior change and a culture shift, a strengthening of our safety culture with Flint.</div>
+      <div style="margin-top:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--acc);">HSSE Manager &middot; GRU</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 7: CONTENT — PILOT RESULTS ════════════════════ -->
+<div class="page" data-label="·" data-pg="7" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-top:14px;margin-bottom:18px;">Leading indicators moved. <span class="em-g">Lagging indicators come next.</span></div>
+
+  <!-- Results cards FIRST (above the <9 min) -->
+  <div class="anim d4" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-bottom:14px;">
+    <!-- Manager-validated improvements card with Before/After columns -->
+    <div style="padding:20px 22px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-top:3px solid var(--green);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);margin-bottom:18px;line-height:1.2;">Manager-validated improvements</div>
+      <!-- Column headers -->
+      <div style="display:grid;grid-template-columns:1fr 110px 44px 110px;gap:10px;align-items:end;padding-bottom:10px;border-bottom:1px solid var(--fl-border);margin-bottom:12px;">
+        <div></div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--white-muted);text-align:center;">Before</div>
+        <div></div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);text-align:center;">After</div>
+      </div>
+      <!-- Row 1 -->
+      <div style="display:grid;grid-template-columns:1fr 110px 44px 110px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">Supervisors treat SQORs as more than a checkbox</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--white-muted);text-align:center;line-height:1;">17%</div>
+        <div style="text-align:center;color:var(--white-muted);font-size:38px;font-weight:600;line-height:1;">&rarr;</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--green);text-align:center;line-height:1;">83%</div>
+      </div>
+      <!-- Row 2 -->
+      <div style="display:grid;grid-template-columns:1fr 110px 44px 110px;gap:10px;align-items:center;padding:10px 0;">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">SS and supervisors coordinate effectively</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--white-muted);text-align:center;line-height:1;">0%</div>
+        <div style="text-align:center;color:var(--white-muted);font-size:38px;font-weight:600;line-height:1;">&rarr;</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--green);text-align:center;line-height:1;">75%</div>
+      </div>
+    </div>
+
+    <!-- Actions tracked card -->
+    <div style="padding:20px 22px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-top:3px solid var(--acc);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);margin-bottom:18px;line-height:1.2;">Actions tracked</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">PDCA Cycles completed</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--acc);line-height:1;">76</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">Verbal Warnings Delivered</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--acc);line-height:1;">43</div>
+      </div>
+      <div style="font-size:20px;color:var(--white-muted);font-style:italic;text-align:center;margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);">and many more</div>
+    </div>
+
+    <!-- Gaps surfaced card -->
+    <div style="padding:20px 22px;border-radius:var(--radius-lg);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-top:3px solid var(--gold);">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);margin-bottom:18px;line-height:1.2;">Gaps surfaced</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">Data not used to target</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--gold);line-height:1;flex-shrink:0;">20</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;">
+        <div style="font-size:22px;color:var(--white-dim);line-height:1.4;">Improper placement for observation</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:800;color:var(--gold);line-height:1;flex-shrink:0;">14</div>
+      </div>
+      <div style="font-size:20px;color:var(--white-muted);font-style:italic;text-align:center;margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);">+ 3 more surfaced</div>
+    </div>
+  </div>
+
+  <!-- Large feature card: <9 min/week with clock icon — now BELOW the results -->
+  <div class="anim d5" style="display:flex;align-items:center;gap:24px;padding:20px 28px;border-radius:var(--radius-lg);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.30);">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <div style="display:flex;align-items:baseline;gap:18px;flex:1;">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:64px;font-weight:800;color:var(--acc);line-height:1;letter-spacing:-1.5px;">&lt;9 min</div>
+      <div style="font-size:24px;color:var(--white-dim);line-height:1.35;">per week per supervisor &mdash; activities sized to fit the flow of work, not interrupt it.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 8: DIVIDER — HOW FLINT FITS ════════════════════ -->
+<div class="page" data-label="Fit" data-pg="8" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">04</div>
+  <div class="divider-title anim d2">How Flint fits <span class="em">existing systems and processes.</span></div>
+  <div class="divider-preview anim d3">Amplifies SQORs, FMTs, GEMBA walks, and gatePerform &mdash; supporting ISO 45001 conformance.</div>
+  <div class="anim d4" style="margin-top:20px;max-width:820px;padding:16px 24px;border-radius:var(--radius-lg);background:rgba(192,132,252,0.07);border:1px solid var(--ss-border);border-left:4px solid var(--ss);display:flex;align-items:center;gap:20px;">
+    <div style="font-size:72px;line-height:1;color:var(--ss);opacity:0.4;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0;">&ldquo;</div>
+    <div style="flex:1;">
+      <div style="font-size:24px;font-style:italic;color:var(--white);line-height:1.55;">Flint came as that link &mdash; the missing piece&hellip; that actually guides you and gives you real daily coaching.</div>
+      <div style="margin-top:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ss);">Supervisor &middot; GIG</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 9: CONTENT — HOW FLINT FITS ════════════════════ -->
+<div class="page" data-label="·" data-pg="9" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-bottom:18px;">Plugs into the <span class="em-g">SMS.</span> Builds on <span class="em-g">existing tools.</span> Advances <span class="em">global strategy.</span></div>
+
+  <!-- Step sequence switcher: 3 views -->
+  <div class="fit-stepper anim d4">
+    <button class="fit-step active" data-view="sms" onclick="setFitView('sms')">
+      <div class="fit-step-num">1</div>
+      <div class="fit-step-info">
+        <div class="fit-step-label">Plugs into the SMS</div>
+      </div>
+    </button>
+    <button class="fit-step" data-view="tools" onclick="setFitView('tools')">
+      <div class="fit-step-num">2</div>
+      <div class="fit-step-info">
+        <div class="fit-step-label">Builds on existing tools</div>
+      </div>
+    </button>
+    <button class="fit-step" data-view="strategy" onclick="setFitView('strategy')">
+      <div class="fit-step-num">3</div>
+      <div class="fit-step-info">
+        <div class="fit-step-label">Aligns with gategroup strategic pillars</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- VIEW 1: SMS (default visible) -->
+  <div class="fit-panel anim d5" id="fitSms" data-view="sms">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;">
+      <div class="sms-temple-wrap">
+        <svg class="sms-temple-svg" viewBox="0 0 520 305" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <polygon points="260,16 64,80 456,80" fill="rgba(96,165,250,0.10)" stroke="rgba(96,165,250,0.45)" stroke-width="1.5" stroke-linejoin="round"/>
+          <text x="260" y="64" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="800" fill="#5CCEC7" letter-spacing="3">SMS</text>
+          <rect x="64" y="80" width="392" height="7" fill="rgba(96,165,250,0.40)" rx="2"/>
+          <rect x="64" y="92" width="392" height="120" fill="rgba(255,255,255,0.02)" rx="2"/>
+          <rect x="76" y="94" width="86" height="116" fill="rgba(255,255,255,0.05)" stroke="rgba(96,165,250,0.55)" stroke-width="1" rx="3"/>
+          <rect x="76" y="94" width="86" height="3" fill="#60A5FA" rx="1"/>
+          <text text-anchor="middle" transform="rotate(-90 119 155)" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="rgba(244,240,235,0.85)" letter-spacing="0.4"><tspan x="119" y="148">Policies &amp;</tspan><tspan x="119" dy="14">Objectives</tspan></text>
+          <rect x="174" y="94" width="86" height="116" fill="rgba(255,255,255,0.05)" stroke="rgba(59,184,176,0.55)" stroke-width="1" rx="3"/>
+          <rect x="174" y="94" width="86" height="3" fill="#3BB8B0" rx="1"/>
+          <text x="217" y="155" text-anchor="middle" transform="rotate(-90 217 155)" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="rgba(244,240,235,0.85)" letter-spacing="0.4">Risk Management</text>
+          <rect x="272" y="94" width="86" height="116" fill="rgba(255,255,255,0.05)" stroke="rgba(232,168,76,0.55)" stroke-width="1" rx="3"/>
+          <rect x="272" y="94" width="86" height="3" fill="#E8A84C" rx="1"/>
+          <text x="315" y="155" text-anchor="middle" transform="rotate(-90 315 155)" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="rgba(244,240,235,0.85)" letter-spacing="0.4">Assurance</text>
+          <rect x="370" y="94" width="86" height="116" fill="rgba(255,255,255,0.05)" stroke="rgba(192,132,252,0.55)" stroke-width="1" rx="3"/>
+          <rect x="370" y="94" width="86" height="3" fill="#C084FC" rx="1"/>
+          <text x="413" y="155" text-anchor="middle" transform="rotate(-90 413 155)" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="rgba(244,240,235,0.85)" letter-spacing="0.4">Promotion</text>
+          <rect x="58" y="214" width="404" height="5" fill="rgba(96,165,250,0.35)" rx="2"/>
+          <!-- Foundation layer: JSC principle + SQuAD program, taller and paired -->
+          <rect x="40" y="222" width="440" height="50" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.40)" stroke-width="1" rx="4"/>
+          <text x="160" y="244" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700" fill="rgba(34,197,94,0.65)" letter-spacing="2">PRINCIPLE</text>
+          <text x="160" y="261" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800" fill="#22C55E" letter-spacing="1.2">JUST SAFETY CULTURE</text>
+          <line x1="305" y1="230" x2="305" y2="264" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+          <rect x="312" y="228" width="160" height="38" fill="#0a0a0a" stroke="#FCD34D" stroke-width="1.2" rx="3"/>
+          <text x="392" y="243" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="8" font-weight="700" fill="rgba(252,211,77,0.65)" letter-spacing="2">PROGRAM</text>
+          <text x="392" y="260" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800" fill="#FCD34D" letter-spacing="1">RAMP SQuAD</text>
+          <!-- Sub-foundation: top-level commitment -->
+          <rect x="40" y="278" width="440" height="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1" rx="3"/>
+          <text x="260" y="292" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="rgba(244,240,235,0.55)" letter-spacing="2">TOP LEVEL COMMITMENT</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="sect-eye" style="color:var(--acc);margin-bottom:4px;font-size:23px;">What Flint does for each pillar</div>
+        <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(96,165,250,0.06);border:1px solid rgba(96,165,250,0.30);border-left:3px solid #60A5FA;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgba(96,165,250,0.85);margin-bottom:3px;">Pillar I &middot; Policies &amp; Objectives</div>
+          <div style="font-size:23px;color:var(--white);line-height:1.4;"><strong style="color:#60A5FA;">Operationalizes</strong> standards into daily supervisor activities.</div>
+        </div>
+        <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.30);border-left:3px solid #3BB8B0;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgba(59,184,176,0.85);margin-bottom:3px;">Pillar II &middot; Risk Management</div>
+          <div style="font-size:23px;color:var(--white);line-height:1.4;"><strong style="color:#3BB8B0;">Surfaces</strong> risk where it lies &mdash; São Paulo targeted drivers from Flint data.</div>
+        </div>
+        <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(232,168,76,0.06);border:1px solid rgba(232,168,76,0.30);border-left:3px solid #E8A84C;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgba(232,168,76,0.85);margin-bottom:3px;">Pillar III &middot; Assurance</div>
+          <div style="font-size:23px;color:var(--white);line-height:1.4;"><strong style="color:#E8A84C;">Measures</strong> whether standards are met &mdash; and surfaces system causes behind gaps.</div>
+        </div>
+        <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.30);border-left:3px solid #C084FC;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgba(192,132,252,0.85);margin-bottom:3px;">Pillar IV &middot; Promotion</div>
+          <div style="font-size:23px;color:var(--white);line-height:1.4;"><strong style="color:#C084FC;">Reinforces</strong> safety messaging into daily practice and recognition.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Full-width SQuAD foundation band below temple + pillars -->
+    <div style="margin-top:14px;padding:16px 22px;border-radius:var(--radius);background:#0a0a0a;border:1.5px solid #FCD34D;display:flex;align-items:center;gap:22px;">
+      <div style="flex-shrink:0;text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgba(252,211,77,0.7);margin-bottom:2px;">Foundation</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:#FCD34D;line-height:1.1;letter-spacing:0.5px;">Ramp SQuAD</div>
+      </div>
+      <div style="width:1px;background:rgba(252,211,77,0.30);align-self:stretch;"></div>
+      <div style="flex:1;font-size:23px;color:var(--white);line-height:1.45;">
+        <strong style="color:#FCD34D;">Ramp SQuAD, operationalized.</strong> Weekly supervisor practice in <em>causes, not people</em> &mdash; <span style="color:#22C55E;">Just Safety Culture</span> made habit.
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: BUILDS ON EXISTING TOOLS -->
+  <div class="fit-panel hidden anim d5" id="fitTools" data-view="tools">
+    <!-- Full-width unified header -->
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:24px;text-align:center;max-width:1000px;margin-left:auto;margin-right:auto;white-space:nowrap;">Flint puts <span style="color:var(--acc);">documentation, training, and floor walks</span> to work.</div>
+    <!-- Four parallel rows mapping tool → improvement (centered, matches header width) -->
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:1000px;margin:0 auto;width:100%;">
+      <!-- Row 1: SQORs -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;">
+        <div style="padding:14px 18px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-left:3px solid var(--acc);display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:33px;font-weight:800;color:var(--white);">SQORs</div>
+        </div>
+        <div style="padding:14px 18px;border-radius:var(--radius);background:rgba(59,184,176,0.06);border:1px solid rgba(59,184,176,0.30);display:flex;align-items:center;gap:12px;">
+          <div style="color:var(--acc);font-size:22px;font-weight:700;flex-shrink:0;">&rarr;</div>
+          <div style="font-size:24px;color:var(--white);line-height:1.4;">From checkbox to <strong style="color:var(--green);">coaching tool</strong></div>
+        </div>
+      </div>
+      <!-- Row 2: FMTs -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;">
+        <div style="padding:14px 18px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-left:3px solid var(--gold);display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:33px;font-weight:800;color:var(--white);">FMTs</div>
+        </div>
+        <div style="padding:14px 18px;border-radius:var(--radius);background:rgba(232,168,76,0.06);border:1px solid var(--gold-border);display:flex;align-items:center;gap:12px;">
+          <div style="color:var(--gold);font-size:22px;font-weight:700;flex-shrink:0;">&rarr;</div>
+          <div style="font-size:24px;color:var(--white);line-height:1.4;">From learned to <strong style="color:var(--green);">reinforced</strong></div>
+        </div>
+      </div>
+      <!-- Row 3: GEMBA walks -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;">
+        <div style="padding:14px 18px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-left:3px solid var(--ss);display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:33px;font-weight:800;color:var(--white);">GEMBA walks</div>
+        </div>
+        <div style="padding:14px 18px;border-radius:var(--radius);background:rgba(192,132,252,0.06);border:1px solid var(--ss-border);display:flex;align-items:center;gap:12px;">
+          <div style="color:var(--ss);font-size:22px;font-weight:700;flex-shrink:0;">&rarr;</div>
+          <div style="font-size:24px;color:var(--white);line-height:1.4;">From observed to <strong style="color:var(--green);">followed-through</strong></div>
+        </div>
+      </div>
+      <!-- Row 4: gatePerform -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;">
+        <div style="padding:14px 18px;border-radius:var(--radius);background:var(--fl-dark-card);border:1px solid var(--fl-border);border-left:3px solid var(--blue);display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:33px;font-weight:800;color:var(--white);">gatePerform</div>
+        </div>
+        <div style="padding:14px 18px;border-radius:var(--radius);background:rgba(96,165,250,0.06);border:1px solid var(--blue-border);display:flex;align-items:center;gap:12px;">
+          <div style="color:var(--blue);font-size:22px;font-weight:700;flex-shrink:0;">&rarr;</div>
+          <div style="font-size:24px;color:var(--white);line-height:1.4;">From recorded to <strong style="color:var(--green);">actioned</strong></div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom callout: PDCA → ISO 45001 -->
+    <div style="margin-top:18px;padding:20px 28px;border-radius:var(--radius);background:rgba(232,168,76,0.08);border:1px solid var(--gold-border);border-left:4px solid var(--gold);font-size:22px;color:var(--white);line-height:1.4;text-align:center;max-width:1000px;margin-left:auto;margin-right:auto;white-space:nowrap;">
+      Together, these <strong style="color:var(--gold);">operationalize PDCA</strong> &mdash; supporting <strong style="color:var(--gold);">ISO 45001</strong> conformance.
+    </div>
+  </div>
+
+  <!-- VIEW 3: STRATEGY -->
+  <div class="fit-panel hidden anim d5" id="fitStrategy" data-view="strategy">
+    <div class="strat-row">
+      <div class="strat-card s1">
+        <div class="strat-name">Data-Driven Decisions</div>
+        <div class="strat-line">Generates operational data managers act on &mdash; by cause, not by name.</div>
+      </div>
+      <div class="strat-card s2">
+        <div class="strat-name">Innovation</div>
+        <div class="strat-line">New way of reinforcing habits and surfacing where the system is breaking down before it becomes an incident.</div>
+      </div>
+      <div class="strat-card s3">
+        <div class="strat-name">Empowering Middle Management</div>
+        <div class="strat-line">Built into work supervisors already do, helping them do it better.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 10: DIVIDER — CROSS-FUNCTION DEMAND ════════════════════ -->
+<div class="page" data-label="Demand" data-pg="10" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">05</div>
+  <div class="divider-title anim d2">Cross-function demand.</div>
+  <div class="divider-preview anim d3">The same approach can be leveraged for <strong style="color:var(--white);font-style:normal;">Quality</strong>, <strong style="color:var(--white);font-style:normal;">Security</strong>, <strong style="color:var(--white);font-style:normal;">Food Safety</strong>, and <strong style="color:var(--white);font-style:normal;">Employee H&amp;S</strong>.</div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 11: CONTENT — CROSS-FUNCTION DEMAND ════════════════════ -->
+<div class="page" data-label="·" data-pg="11" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-bottom:18px;">Three other functions <span class="em">are already asking.</span></div>
+
+  <div class="dom-row anim d3">
+    <div class="dom-card d1">
+      <div class="dom-tag">CONFIRMED</div>
+      <div class="dom-name">Quality</div>
+      <div class="dom-line"><strong>Final holding checks</strong> &mdash; ensuring issues are caught and properly resolved before reaching customers.</div>
+      <div class="dom-line" style="margin-top:8px;font-size:20px;color:var(--white-muted);">Working with Carles Vilaro and Stephan Baier.</div>
+    </div>
+
+    <div class="dom-card d2">
+      <div class="dom-tag">DISCOVERING</div>
+      <div class="dom-name">Food Safety</div>
+      <div class="dom-line"><strong>Temperature checks</strong> at receiving &amp; dispatch; monitoring cold storage compliance.</div>
+    </div>
+
+    <div class="dom-card d3">
+      <div class="dom-tag">EXPLORING</div>
+      <div class="dom-name">Security</div>
+      <div class="dom-line">Active exploration of use cases and integration.</div>
+      <div class="dom-line" style="margin-top:8px;font-size:20px;color:var(--white-muted);">Exploring with Robert Strauss.</div>
+    </div>
+  </div>
+
+  <div class="anim d5" style="margin-top:20px;padding:20px 24px;background:rgba(59,184,176,0.04);border:1px solid rgba(59,184,176,0.20);border-radius:var(--radius);font-size:26px;color:var(--white-dim);line-height:1.55;">
+    <strong style="color:var(--acc);">Additional areas:</strong> <strong style="color:var(--white);">Culinary</strong>, <strong style="color:var(--white);">Cleaning &amp; Sanitization</strong>, and <strong style="color:var(--white);">Employee H&amp;S</strong>.
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 12: DIVIDER — PROJECTED VALUE ════════════════════ -->
+<div class="page" data-label="ROI" data-pg="12" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">06</div>
+  <div class="divider-title anim d2">Projected value.</div>
+  <div class="divider-stat anim d3">
+    <div class="divider-stat-num" id="dividerROI">$2.1M</div>
+    <div class="divider-stat-lbl">projected annual global savings from just <strong style="color:var(--white);">Ramp Safety</strong></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 13: CONTENT — PROJECTED VALUE (ROI) ════════════════════ -->
+<div class="page" data-label="·" data-pg="13" data-kind="content">
+<div class="frame" style="justify-content:center;">
+
+  <div class="pt anim d2" style="margin-bottom:18px;">Leading indicators are <span class="em">confirmed.</span> Lagging indicators <span class="em-g">follow with practice and scale.</span></div>
+
+  <div class="s4-cols">
+
+    <!-- CALCULATOR (full width, top) -->
+    <div class="anim d4" style="display:flex;flex-direction:column;gap:12px;">
+
+      <div class="calc-grid">
+        <div class="calc-card">
+          <div class="calc-eye">ASSUMPTION A</div>
+          <div class="calc-title">Ramp Safety annual cost (NA baseline)</div>
+          <div class="calc-row">
+            <input type="range" class="calc-slider" id="sA" min="4" max="10" step="0.1" value="7.0">
+            <div class="calc-val" id="vA">$7.0M</div>
+          </div>
+          <div class="calc-info" tabindex="0">i</div>
+          <div class="calc-tip"><strong>Internal cost analysis floor: $7M+.</strong> Includes aircraft damage, equipment, injuries, delays, crew, reputational, insurance.</div>
+        </div>
+
+        <div class="calc-card">
+          <div class="calc-eye">ASSUMPTION B</div>
+          <div class="calc-title">% of incidents that are preventable</div>
+          <div class="calc-row">
+            <input type="range" class="calc-slider" id="sB" min="40" max="80" step="1" value="60">
+            <div class="calc-val" id="vB">60%</div>
+          </div>
+          <div class="calc-info" tabindex="0">i</div>
+          <div class="calc-tip"><strong>Conservative subset of preventable incidents.</strong> All incidents are preventable in principle; this 60&ndash;80% reflects the share where behavior change drives the prevention.</div>
+        </div>
+
+        <div class="calc-card">
+          <div class="calc-eye">ASSUMPTION C</div>
+          <div class="calc-title">Incident reduction from program</div>
+          <div class="calc-row">
+            <input type="range" class="calc-slider" id="sC" min="10" max="40" step="1" value="20">
+            <div class="calc-val" id="vC">20%</div>
+          </div>
+          <div class="calc-info" tabindex="0">i</div>
+          <div class="calc-tip"><strong>Conservative base case</strong> from cost analysis. 20% reduction in preventable incidents.</div>
+        </div>
+
+        <div class="calc-card">
+          <div class="calc-eye">ASSUMPTION D</div>
+          <div class="calc-title">Global multiplier (NA → worldwide)</div>
+          <div class="calc-row">
+            <input type="range" class="calc-slider" id="sD" min="1.0" max="3.0" step="0.1" value="2.5">
+            <div class="calc-val" id="vD">2.5×</div>
+          </div>
+          <div class="calc-info" tabindex="0">i</div>
+          <div class="calc-tip"><strong>NA is the largest region.</strong> $2M NA ≈ $5M globally. 2.5× is mid-range estimate.</div>
+        </div>
+      </div>
+
+      <div class="calc-output">
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--white-muted);margin-bottom:4px;">Live Calculation</div>
+          <div class="calc-math"><span class="calc-mathv" id="mA">$7.0M</span> × <span class="calc-mathv" id="mB">60%</span> × <span class="calc-mathv" id="mC">20%</span> × <span class="calc-mathv" id="mD">2.5×</span></div>
+        </div>
+        <div style="text-align:right;">
+          <div class="calc-result" id="result">$2.1M</div>
+          <div class="calc-result-lbl">Projected annual global savings (Ramp Safety)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HORIZONTAL CHAIN — click to reveal -->
+    <div class="anim d5">
+      <button class="reveal-btn" id="chainRevealBtn" onclick="toggleChain()" style="margin-top:0;margin-bottom:0;">
+        See how activities flow to outcomes <span class="reveal-arrow">↓</span>
+      </button>
+      <div id="chainReveal" class="intro-activity-reveal" style="max-height:0;padding-bottom:0;">
+        <div style="padding-top:12px;padding-bottom:24px;">
+          <div class="chain-divider">
+            <div class="leading">Leading Indicators &middot; Measured in Pilot</div>
+            <div class="lagging">Lagging Indicators &middot; Expected to Follow</div>
+          </div>
+          <div class="chain-horiz">
+            <div class="chain-box b1">
+              <div class="chain-title">FLiNT Activities</div>
+              <div class="chain-desc">Targeted behaviors practiced. Every activity generates execution data.</div>
+            </div>
+            <div class="chain-arrow">&rarr;</div>
+            <div class="chain-box b2">
+              <div class="chain-title">Supervisor Habits Form</div>
+              <div class="chain-desc">Observation, enforcement, and follow-through become consistent.</div>
+            </div>
+            <div class="chain-arrow">&rarr;</div>
+            <div class="chain-box b3">
+              <div class="chain-title">Driver Behavior Improves</div>
+              <div class="chain-desc">At-risk behaviors addressed; repeat offenders managed.</div>
+            </div>
+            <div class="chain-arrow">&rarr;</div>
+            <div class="chain-box b4">
+              <div class="chain-title">Reduced Incidents</div>
+              <div class="chain-desc">Fewer aircraft damages, lower AVOP infractions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 14: DIVIDER — NEXT STEPS ════════════════════ -->
+<div class="page" data-label="Steps" data-pg="14" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">07</div>
+  <div class="divider-title anim d2">Next Steps.</div>
+  <div class="divider-preview anim d3">From Council alignment to phased deployment.</div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 15: CONTENT — NEXT STEPS ════════════════════ -->
+<div class="page" data-label="·" data-pg="15" data-kind="content">
+<div class="frame" style="justify-content:center;background:linear-gradient(160deg,var(--fl-dark),var(--fl-dark-mid) 60%,var(--gg-navy-mid));">
+
+  <div class="pt anim d2" style="margin-bottom:22px;">Path to <span class="em">deployment.</span></div>
+
+  <div class="anim d4" style="display:flex;flex-direction:column;gap:14px;width:100%;">
+
+    <div class="step done" style="padding:18px 22px;gap:32px;">
+      <div class="step-n" style="font-size:54px;width:48px;">✓</div>
+      <div class="step-content">
+        <div class="step-title" style="font-size:32px;margin-bottom:0;">Ramp Safety Council alignment</div>
+      </div>
+    </div>
+
+    <div class="step done" style="padding:18px 22px;gap:32px;">
+      <div class="step-n" style="font-size:54px;width:48px;">✓</div>
+      <div class="step-content">
+        <div class="step-title" style="font-size:32px;margin-bottom:0;">IT intake complete; technical readiness confirmed, GDPR compliant</div>
+      </div>
+    </div>
+
+    <div class="step" style="padding:18px 22px;gap:32px;">
+      <div class="step-n" style="font-size:54px;width:48px;">01</div>
+      <div class="step-content">
+        <div class="step-title" style="font-size:32px;margin-bottom:0;">Prioritize rollout areas</div>
+      </div>
+    </div>
+
+    <div class="step" style="padding:18px 22px;gap:32px;">
+      <div class="step-n" style="font-size:54px;width:48px;">02</div>
+      <div class="step-content">
+        <div class="step-title" style="font-size:32px;margin-bottom:0;">EMB approval of investment &amp; plan</div>
+      </div>
+    </div>
+
+    <div class="step" style="padding:18px 22px;gap:32px;">
+      <div class="step-n" style="font-size:54px;width:48px;">03</div>
+      <div class="step-content">
+        <div class="step-title" style="font-size:32px;margin-bottom:0;">Phased deployment starting Q3 2026</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 16: DIVIDER — INVESTMENT & ROLLOUT ════════════════════ -->
+<div class="page" data-label="Invest" data-pg="16" data-kind="divider">
+<div class="divider-frame">
+  <div class="divider-num anim d1">08</div>
+  <div class="divider-title anim d2">Investment &amp; rollout.</div>
+  <div class="divider-stat anim d3">
+    <div class="divider-stat-num">$200K</div>
+    <div class="divider-stat-lbl">for quarterly program rollouts &mdash; pilot delivered at <strong style="color:var(--green);">$0</strong></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════ SLIDE 17: CONTENT — INVESTMENT & ROLLOUT ════════════════════ -->
+<div class="page" data-label="·" data-pg="17" data-kind="content">
+<div class="frame" style="justify-content:center;background:linear-gradient(160deg,var(--fl-dark),var(--fl-dark-mid) 60%,var(--gg-navy-mid));">
+
+  <div class="pt anim d2" style="margin-bottom:22px;">From pilot to <span class="em">tailored programs.</span></div>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:22px;width:100%;">
+
+    <div class="anim d4">
+      <div class="cost-card" style="padding:24px;gap:20px;">
+        <div class="cost-line" style="padding-bottom:18px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+              <div class="cost-lbl" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);line-height:1.2;text-transform:none;letter-spacing:normal;margin:0;">10-Week Pilot</div>
+              <div style="display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.45);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);">Complete</div>
+            </div>
+            <div style="font-size:27px;color:var(--white-dim);">8 locations · 39 supervisors and safety specialists · 407 activities</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="cost-val free" style="font-size:54px;">$0</div>
+            <div style="font-size:22px;color:var(--white-muted);margin-top:4px;">Delivered at no cost</div>
+          </div>
+        </div>
+        <div class="cost-line">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+              <div class="cost-lbl" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:45px;font-weight:800;color:var(--white);line-height:1.2;text-transform:none;letter-spacing:normal;margin:0;">Quarterly Program Rollouts</div>
+              <div style="display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(232,168,76,0.15);border:1px solid rgba(232,168,76,0.50);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);">Next</div>
+            </div>
+            <div style="font-size:27px;color:var(--white-dim);">1 year term &middot; Ramp Safety + Quality (Holding Checks) + Security &middot; uncapped users, localization included</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="cost-val ask" style="font-size:54px;">$200K USD</div>
+            <div style="font-size:22px;color:var(--white-muted);margin-top:4px;">EMB approval requested</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="anim d5">
+      <div class="timing-card" style="padding:18px 22px;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--white-muted);margin-bottom:10px;">Deployment Schedule</div>
+        <div class="timing-row" style="font-size:30px;padding:10px 0;">
+          <div class="timing-q" style="font-size:30px;min-width:120px;">Q3 2026</div>
+          <div>Updated <strong>Ramp Safety</strong> program deploys</div>
+        </div>
+        <div class="timing-row" style="font-size:30px;padding:10px 0;">
+          <div class="timing-q" style="font-size:30px;min-width:120px;">Late Q3</div>
+          <div><strong>Quality</strong> program &mdash; final holding checks</div>
+        </div>
+        <div class="timing-row" style="font-size:30px;padding:10px 0;">
+          <div class="timing-q" style="font-size:30px;min-width:120px;">Q4 2026</div>
+          <div><strong>Security</strong> program deploys</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<script>
+const P=document.querySelectorAll('.page'),NS=document.getElementById('nS'),NC=document.getElementById('nC'),NP=document.getElementById('nP');let C=0;
+// Sections (start index is 0-based page index)
+const SECTIONS=[
+  {label:'Overview',start:0,count:1},
+  {label:'Flint',   start:1,count:2},
+  {label:'Pilot',   start:3,count:2},
+  {label:'Results', start:5,count:2},
+  {label:'Fit',     start:7,count:2},
+  {label:'Demand',  start:9,count:2},
+  {label:'ROI',     start:11,count:2},
+  {label:'Steps',   start:13,count:2},
+  {label:'Invest',  start:15,count:2},
+];
+SECTIONS.forEach((s,i)=>{
+  const tab=document.createElement('div');
+  tab.className='ns-tab';
+  tab.innerHTML='<div class="ns-label">'+s.label+'</div><div class="ns-indicator"></div>';
+  tab.onclick=()=>go(s.start);
+  NS.appendChild(tab);
+});
+function updateNav(){
+  let active=0;
+  for(let i=SECTIONS.length-1;i>=0;i--){if(C>=SECTIONS[i].start){active=i;break;}}
+  const tabs=NS.querySelectorAll('.ns-tab');
+  tabs.forEach((t,i)=>{
+    t.classList.toggle('active',i===active);
+    const ind=t.querySelector('.ns-indicator');
+    if(i===active){
+      const s=SECTIONS[i];
+      const pos=C-s.start;
+      let html='';
+      for(let j=0;j<s.count;j++){html+='<div class="ns-dot'+(j===pos?' active':'')+'"></div>';}
+      html+='<div class="ns-count">'+(pos+1)+' / '+s.count+'</div>';
+      ind.innerHTML=html;
+    }else{
+      ind.innerHTML='';
+    }
+  });
+}
+function go(i){
+  if(i<0||i>=P.length)return;
+  P[C].classList.remove('active');
+  C=i;
+  P[C].classList.add('active');
+  NC.textContent=(C+1)+' / '+P.length;
+  NP.style.width=((C+1)/P.length*100)+'%';
+  updateNav();
+}
+updateNav();
+function next(){
+  // If the current slide has multi-view fit-steps and we're not on the last view, cycle view forward.
+  const cur=P[C];
+  const steps=cur.querySelectorAll('.fit-step');
+  if(steps.length>0){
+    const arr=Array.from(steps);
+    const idx=arr.findIndex(s=>s.classList.contains('active'));
+    if(idx>-1&&idx<arr.length-1){setFitView(arr[idx+1].dataset.view);return;}
+  }
+  go(C+1);
+}
+function prev(){
+  // If current slide has multi-view fit-steps and we're not on the first view, cycle view backward.
+  const cur=P[C];
+  const steps=cur.querySelectorAll('.fit-step');
+  if(steps.length>0){
+    const arr=Array.from(steps);
+    const idx=arr.findIndex(s=>s.classList.contains('active'));
+    if(idx>0){setFitView(arr[idx-1].dataset.view);return;}
+  }
+  go(C-1);
+}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev();});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>60){d>0?next():prev();}},{passive:true});
+
+// ROI Calculator
+function fmtDollar(v){
+  if(v>=1000000){return '$'+(v/1000000).toFixed(1)+'M';}
+  if(v>=1000){return '$'+Math.round(v/1000)+'K';}
+  return '$'+Math.round(v);
+}
+function updateROI(){
+  const a=parseFloat(document.getElementById('sA').value); // millions
+  const b=parseFloat(document.getElementById('sB').value); // %
+  const c=parseFloat(document.getElementById('sC').value); // %
+  const d=parseFloat(document.getElementById('sD').value); // multiplier
+  document.getElementById('vA').textContent='$'+a.toFixed(1)+'M';
+  document.getElementById('vB').textContent=b+'%';
+  document.getElementById('vC').textContent=c+'%';
+  document.getElementById('vD').textContent=d.toFixed(1)+'×';
+  document.getElementById('mA').textContent='$'+a.toFixed(1)+'M';
+  document.getElementById('mB').textContent=b+'%';
+  document.getElementById('mC').textContent=c+'%';
+  document.getElementById('mD').textContent=d.toFixed(1)+'×';
+  const result=a*1000000*(b/100)*(c/100)*d;
+  const formatted=fmtDollar(result);
+  document.getElementById('result').textContent=formatted;
+  // Mirror to the ROI section divider
+  const divEl=document.getElementById('dividerROI');
+  if(divEl)divEl.textContent=formatted;
+}
+['sA','sB','sC','sD'].forEach(id=>document.getElementById(id).addEventListener('input',updateROI));
+
+// Fit slide view toggle
+function setFitView(view){
+  document.querySelectorAll('.fit-step').forEach(b=>{
+    b.classList.toggle('active',b.dataset.view===view);
+  });
+  document.querySelectorAll('.fit-panel').forEach(p=>{
+    p.classList.toggle('hidden',p.dataset.view!==view);
+  });
+}
+
+// ROI chain reveal toggle
+function toggleChain(){
+  const rev=document.getElementById('chainReveal');
+  const btn=document.getElementById('chainRevealBtn');
+  if(!rev||!btn)return;
+  const isOpen=rev.classList.contains('open');
+  rev.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.querySelector('.reveal-arrow').textContent=isOpen?'↓':'↑';
+  btn.childNodes[0].textContent=isOpen?'See how activities flow to outcomes ':'Hide the outcomes flow ';
+}
+
+// Activity snapshot toggle (on the Pilot Overview slide)
+function toggleSnapshot(){
+  const snap=document.getElementById('actSnap');
+  const btn=document.getElementById('revealBtn');
+  if(!snap||!btn)return;
+  const isOpen=snap.classList.contains('open');
+  snap.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.querySelector('.reveal-arrow').textContent=isOpen?'↓':'↑';
+  btn.childNodes[0].textContent=isOpen?'See an example activity ':'Hide example activity ';
+}
+
+updateROI();
+
+// ═══ EXPLICIT DEFAULT-STATE INITIALIZER ═══
+function setDeckDefaults(){
+  // FIT slide: ensure SMS view is the visible default
+  document.querySelectorAll('.fit-step').forEach(b=>{
+    b.classList.toggle('active', b.dataset.view==='sms');
+  });
+  document.querySelectorAll('.fit-panel').forEach(p=>{
+    p.classList.toggle('hidden', p.dataset.view!=='sms');
+  });
+}
+setDeckDefaults();
+window.addEventListener('DOMContentLoaded', setDeckDefaults);
+setTimeout(setDeckDefaults, 50);
+setTimeout(setDeckDefaults, 500);
+</script>
+</body>
+</html>
