@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flint Asset Index</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:      253 252 250;
+  --color-surface:    255 255 255;
+  --color-ink:        28 42 56;
+  --color-muted-ink:  74 88 104;
+  --color-accent:     232 77 40;
+  --color-success:    72 114 76;
+  --color-cool-grey:  154 166 176;
+  --color-light-grey: 200 205 210;
+  --color-pale-grey:  235 229 220;
+  --color-warm-line:  197 187 166;
+  --color-shadow-warm: 96 80 50;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+}
+
+/* ── Header ── */
+.site-header {
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  padding: 28px 40px 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-left h1 {
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  color: rgb(var(--color-ink));
+}
+
+.header-left .subtitle {
+  font-size: 0.82rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.accent-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgb(var(--color-accent));
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.header-count {
+  margin-left: auto;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.8rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  align-self: center;
+}
+
+#visible-count {
+  font-weight: 700;
+  color: rgb(var(--color-ink));
+}
+
+/* ── Controls ── */
+.controls {
+  padding: 20px 40px;
+  background: rgb(var(--color-surface));
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px -2px rgb(var(--color-shadow-warm) / 0.08);
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(var(--color-cool-grey));
+  pointer-events: none;
+}
+
+#search {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 6px;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.875rem;
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  transition: border-color 200ms, box-shadow 200ms;
+  outline: none;
+}
+
+#search:focus {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 3px rgb(var(--color-accent) / 0.12);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--color-muted-ink));
+  white-space: nowrap;
+}
+
+select {
+  padding: 8px 28px 8px 10px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 6px;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.85rem;
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A5868' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 200ms;
+}
+
+select:focus {
+  border-color: rgb(var(--color-accent));
+}
+
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 6px;
+  background: rgb(var(--color-paper));
+  font-family: 'Sen', sans-serif;
+  font-size: 0.8rem;
+  color: rgb(var(--color-muted-ink));
+  cursor: pointer;
+  transition: all 150ms;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sort-btn:hover {
+  border-color: rgb(var(--color-accent));
+  color: rgb(var(--color-ink));
+}
+
+.sort-btn.active {
+  border-color: rgb(var(--color-accent));
+  color: rgb(var(--color-accent));
+  background: rgb(var(--color-accent) / 0.05);
+}
+
+.sort-btn svg { flex-shrink: 0; }
+
+/* ── Tag filter pills ── */
+.tag-pills {
+  padding: 14px 40px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  background: rgb(var(--color-paper));
+}
+
+.tag-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  font-size: 0.75rem;
+  font-family: 'Sen', sans-serif;
+  cursor: pointer;
+  transition: all 150ms;
+  color: rgb(var(--color-muted-ink));
+  background: transparent;
+  letter-spacing: 0.06em;
+}
+
+.tag-pill:hover {
+  border-color: rgb(var(--color-accent) / 0.5);
+  color: rgb(var(--color-accent));
+}
+
+.tag-pill.active {
+  background: rgb(var(--color-accent));
+  border-color: rgb(var(--color-accent));
+  color: rgb(var(--color-surface));
+}
+
+/* ── Table ── */
+.table-wrap {
+  padding: 0 40px 60px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+  table-layout: fixed;
+}
+
+colgroup .col-date   { width: 100px; }
+colgroup .col-title  { width: auto; }
+colgroup .col-client { width: 180px; }
+colgroup .col-tags   { width: 280px; }
+colgroup .col-link   { width: 64px; }
+
+thead th {
+  text-align: left;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--color-muted-ink));
+  padding: 10px 14px 10px 0;
+  border-bottom: 2px solid rgb(var(--color-ink) / 0.1);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+thead th:hover { color: rgb(var(--color-ink)); }
+
+thead th .sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  opacity: 0.4;
+  font-size: 0.65rem;
+}
+
+thead th.sorted .sort-icon { opacity: 1; color: rgb(var(--color-accent)); }
+
+tbody tr {
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  transition: background-color 150ms;
+}
+
+tbody tr:hover {
+  background-color: rgb(var(--color-pale-grey) / 0.4);
+}
+
+tbody td {
+  padding: 14px 14px 14px 0;
+  vertical-align: top;
+  font-size: 0.875rem;
+}
+
+.td-date {
+  font-family: 'Sen', monospace;
+  font-size: 0.78rem;
+  color: rgb(var(--color-muted-ink));
+  white-space: nowrap;
+  padding-top: 16px;
+}
+
+.td-title a {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.975rem;
+  color: rgb(var(--color-ink));
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 150ms;
+}
+
+.td-title a:hover {
+  color: rgb(var(--color-accent));
+}
+
+.td-desc {
+  font-size: 0.8rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.5;
+}
+
+.td-client {
+  font-size: 0.82rem;
+  color: rgb(var(--color-ink));
+  font-weight: 700;
+  padding-top: 16px;
+}
+
+.td-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 14px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  font-size: 0.7rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.05em;
+  background: transparent;
+  cursor: pointer;
+  transition: all 120ms;
+  white-space: nowrap;
+}
+
+.tag:hover, .tag.active {
+  background: rgb(var(--color-accent) / 0.1);
+  border-color: rgb(var(--color-accent) / 0.4);
+  color: rgb(var(--color-accent));
+}
+
+.td-link {
+  padding-top: 14px;
+  text-align: center;
+}
+
+.td-link a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  color: rgb(var(--color-muted-ink));
+  text-decoration: none;
+  transition: all 150ms;
+}
+
+.td-link a:hover {
+  border-color: rgb(var(--color-accent));
+  color: rgb(var(--color-accent));
+  background: rgb(var(--color-accent) / 0.06);
+}
+
+/* ── No results ── */
+#no-results {
+  display: none;
+  padding: 60px 40px;
+  text-align: center;
+  color: rgb(var(--color-muted-ink));
+  font-family: 'Andada Pro', serif;
+  font-size: 1.1rem;
+}
+
+/* ── Group headers ── */
+.group-header td {
+  padding: 24px 0 8px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgb(var(--color-accent));
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  border-bottom: none !important;
+  background: transparent !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .site-header { padding: 20px 20px 16px; }
+  .controls { padding: 14px 20px; }
+  .tag-pills { padding: 12px 20px; }
+  .table-wrap { padding: 0 20px 40px; }
+  colgroup .col-client, colgroup .col-tags { display: none; }
+  .td-client, .td-tags { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+  <div class="header-left">
+    <h1><span class="accent-dot"></span>Flint Asset Index</h1>
+    <p class="subtitle">maxbusselle.github.io/misc-pages — client &amp; sales assets</p>
+  </div>
+  <div class="header-count">
+    <span id="visible-count">0</span> of <span id="total-count">0</span> assets
+  </div>
+</header>
+
+<!-- ── Controls ── -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="search" placeholder="Search titles, clients, descriptions…" autocomplete="off" />
+  </div>
+
+  <div class="filter-group">
+    <label>Client</label>
+    <select id="filter-client">
+      <option value="">All clients</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Sort by</label>
+    <select id="sort-by">
+      <option value="date-desc">Date (newest)</option>
+      <option value="date-asc">Date (oldest)</option>
+      <option value="client">Client A–Z</option>
+      <option value="title">Title A–Z</option>
+    </select>
+  </div>
+</div>
+
+<!-- ── Tag filter pills ── -->
+<div class="tag-pills" id="tag-filter-row">
+  <!-- populated by JS -->
+</div>
+
+<!-- ── Table ── -->
+<div class="table-wrap">
+  <div id="no-results">No assets match your filters.</div>
+  <table id="asset-table">
+    <colgroup>
+      <col class="col-date">
+      <col class="col-title">
+      <col class="col-client">
+      <col class="col-tags">
+      <col class="col-link">
+    </colgroup>
+    <thead>
+      <tr>
+        <th data-col="date">Date <span class="sort-icon">↕</span></th>
+        <th data-col="title">Title &amp; Description <span class="sort-icon">↕</span></th>
+        <th data-col="client">Client <span class="sort-icon">↕</span></th>
+        <th>Tags</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
+
+<script>
+const BASE = 'https://maxbusselle.github.io/misc-pages/';
+
+const ASSETS = [
+  {
+    file: 'Flint Overview.html',
+    date: '2026-02-10',
+    title: 'Flint Strategic Overview',
+    client: 'Flint Internal',
+    desc: 'High-level overview of the Flint platform philosophy — driving standards in the flow of work through procedure reinforcement and on-the-job activities.',
+    tags: ['Overview', 'Sales']
+  },
+  {
+    file: 'brochure.html',
+    date: '2026-02-11',
+    title: 'Flint Brochure',
+    client: 'Flint Internal',
+    desc: 'Printable sales brochure summarizing the Flint value proposition for prospect outreach.',
+    tags: ['Overview', 'Sales']
+  },
+  {
+    file: 'manufacturing-excellence-triad.html',
+    date: '2026-02-11',
+    title: 'The Manufacturing Excellence Triad',
+    client: 'Flint Internal',
+    desc: 'Conceptual framework showing how safety, quality, and productivity reinforce each other — positions Flint as the connective tissue for all three.',
+    tags: ['Manufacturing', 'Overview', 'Sales']
+  },
+  {
+    file: 'BMS_Equipment_Cleaning_Behaviors_Initiative.html',
+    date: '2026-02-10',
+    title: 'BMS Equipment Cleaning Behaviors — Initiative Proposal',
+    client: 'Bristol Myers Squibb',
+    desc: 'Pilot initiative proposal for a cell therapy facility covering equipment cleaning and sanitization compliance. 80 associates, 10-week design, FDA/GMP context.',
+    tags: ['Pharma', 'Compliance', 'Demo Asset', 'Pilot Proposal']
+  },
+  {
+    file: "Chris's qmsr_presentation_v3.html",
+    date: '2026-02-10',
+    title: 'QMSR in Action — Presentation',
+    client: 'QMSR / Medical Device',
+    desc: 'Sales-ready presentation showing how Flint addresses the QMSR regulatory shift for medical device manufacturers — framed as problem/solution.',
+    tags: ['Compliance', 'Medical Device', 'Demo Asset']
+  },
+  {
+    file: 'qmsr_iso_certified_companies.html',
+    date: '2026-02-10',
+    title: 'QMSR Context Change for ISO 13485 Companies',
+    client: 'QMSR / Medical Device',
+    desc: 'Reference document explaining how QMSR changes the compliance landscape for ISO 13485 certified companies, including updated investigation mechanics.',
+    tags: ['Compliance', 'Medical Device']
+  },
+  {
+    file: 'qmsr_material_additions.html',
+    date: '2026-02-10',
+    title: 'QMSR Material Additions Beyond ISO 13485',
+    client: 'QMSR / Medical Device',
+    desc: 'Detailed breakdown of QMSR requirements that go beyond ISO 13485 — control of records and other additions relevant to device manufacturers.',
+    tags: ['Compliance', 'Medical Device']
+  },
+  {
+    file: 'QMSR_FAQ_Document_v2.html',
+    date: '2026-02-11',
+    title: 'QMSR FAQ Document',
+    client: 'QMSR / Medical Device',
+    desc: 'Frequently asked questions document for the QMSR regulatory transition — useful for prospect education in the medical device vertical.',
+    tags: ['Compliance', 'Medical Device']
+  },
+  {
+    file: 'Citizens Program Overview.html',
+    date: '2026-02-13',
+    title: 'Citizens REO — Program Roadmap',
+    client: 'Citizens Bank',
+    desc: 'Multi-program strategic roadmap for the Citizens Real Estate Operations engagement, showing how See It Own It Fix It fits into a broader initiative architecture.',
+    tags: ['Financial Services', 'Program Overview', 'Demo Asset']
+  },
+  {
+    file: 'Citizens_Pod_Strategy_Initiative.html',
+    date: '2026-02-13',
+    title: 'Citizens REO — Pod Strategy Initiative',
+    client: 'Citizens Bank',
+    desc: 'Initiative overview for the Pod Strategy program — focused on executing cross-functional team coordination practices in the REO division.',
+    tags: ['Financial Services', 'Initiative Overview']
+  },
+  {
+    file: 'Citizens_See_It_Own_It_Fix_It_Initiative.html',
+    date: '2026-02-13',
+    title: 'Citizens REO — See It, Own It, Fix It Initiative',
+    client: 'Citizens Bank',
+    desc: 'Core initiative overview for the flagship Citizens program — 50 Facility Managers, 12-week structure, three practices with Basic/Intermediate/Advanced milestones.',
+    tags: ['Financial Services', 'Initiative Overview', 'Demo Asset']
+  },
+  {
+    file: 'rev-culture-deepdive (1).html',
+    date: '2026-03-05',
+    title: 'REV Group — Culture Change Deep Dive',
+    client: 'REV Group',
+    desc: 'In-depth analysis of manager intervention patterns and participant response data for the REV Group PPE program — includes full coaching journey for one manager.',
+    tags: ['Manufacturing', 'Safety', 'Coaching', 'Culture']
+  },
+  {
+    file: 'rev-group-ppe-insights (3).html',
+    date: '2026-03-05',
+    title: 'REV Group — PPE Initiative Insights',
+    client: 'REV Group',
+    desc: 'Field data analysis for the REV Group PPE initiative — covers eye protection compliance illusion and hearing protection reset patterns.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Data']
+  },
+  {
+    file: 'PPE Phase 1 - The What.html',
+    date: '2026-04-22',
+    title: 'TEREX — PPE Challenge Analysis (The What)',
+    client: 'Terex',
+    desc: 'Phase 1 analysis of PPE compliance data across 689 activities — applies the Habit/Knowledge/System gap framework to identify root patterns in non-compliance.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Data', 'Demo Asset']
+  },
+  {
+    file: 'Terek raw data.html',
+    date: '2026-04-22',
+    title: 'TEREX — PPE Field Activity Data',
+    client: 'Terex',
+    desc: 'Raw activity data dashboard for the Terex PPE initiative — field-level observations and activity completions across supervisors.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Data']
+  },
+  {
+    file: 'terex-so-what.html',
+    date: '2026-04-22',
+    title: 'TEREX — Making Sense of the Data (So What)',
+    client: 'Terex',
+    desc: 'Interpretive layer on the PPE field data — surfaces that workers know the rules but lack automatic behavior, and flags incomplete information as a root cause.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Data']
+  },
+  {
+    file: 'terex-now-what.html',
+    date: '2026-04-22',
+    title: 'TEREX — Phase 2 Planning (Now What)',
+    client: 'Terex',
+    desc: 'Forward-looking planning document translating the PPE data findings into Phase 2 initiative design decisions.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Planning']
+  },
+  {
+    file: 'Boyd Safety.html',
+    date: '2026-04-27',
+    title: 'Boyd Gaming — See the Hazard, Own the Standard Initiative',
+    client: 'Boyd Gaming',
+    desc: 'Initiative overview for a safety behavior program targeting hazard recognition and accountability standards across Boyd Gaming properties.',
+    tags: ['Safety', 'Hospitality', 'Initiative Overview']
+  },
+  {
+    file: 'flint_use_case_finder.html',
+    date: '2026-04-27',
+    title: 'Flint Use Case Finder',
+    client: 'Flint Internal',
+    desc: 'Internal tool for matching prospect profiles to relevant Flint use cases and demo assets during sales conversations.',
+    tags: ['Sales', 'Internal Tool']
+  },
+  {
+    file: 'citizens_onboarding.html',
+    date: '2026-04-30',
+    title: 'Citizens Skills Coach — Onboarding Guide',
+    client: 'Citizens Bank',
+    desc: 'Participant onboarding page for the Citizens Fresh Eyes initiative — welcomes new users to the Skills Coach and sets expectations for the program.',
+    tags: ['Financial Services', 'Onboarding']
+  },
+  {
+    file: 'boyd_university_mockup.html',
+    date: '2026-05-05',
+    title: 'Boyd University × FLiNT Mockup',
+    client: 'Boyd Gaming',
+    desc: 'Visual mockup of a FLiNT integration with Boyd University — showing how behavior reinforcement could extend their existing learning infrastructure.',
+    tags: ['Hospitality', 'Mockup', 'Demo Asset']
+  },
+  {
+    file: 'HEICO_Overview.html',
+    date: '2026-05-04',
+    title: 'HEICO — Client Overview',
+    client: 'HEICO',
+    desc: 'Sales-facing overview of the HEICO engagement — three target sales behaviors across aviation MRO business units, used as a demo asset for sales performance prospects.',
+    tags: ['Aviation MRO', 'Sales Performance', 'Demo Asset']
+  },
+  {
+    file: 'Heico_Apr_20_report.html',
+    date: '2026-05-04',
+    title: 'HEICO — Mid-Pilot Report (Apr 20)',
+    client: 'HEICO',
+    desc: 'Mid-pilot results report for the HEICO Strategic Customer Understanding initiative — 89 sessions, 163 workplace actions, 18 reps across 3 business units.',
+    tags: ['Aviation MRO', 'Sales Performance', 'Mid-Pilot Report']
+  },
+  {
+    file: 'HEICO_Assessment_Results.html',
+    date: '2026-05-04',
+    title: 'HEICO — Assessment Results',
+    client: 'HEICO',
+    desc: 'Assessment outcome data for the HEICO initiative — +1.4 average score improvement, with 2-in-3 target behaviors reaching the goal threshold.',
+    tags: ['Aviation MRO', 'Sales Performance', 'Assessment', 'Demo Asset']
+  },
+  {
+    file: 'gategroup overview 5-4-26.html',
+    date: '2026-05-04',
+    title: 'GateGroup — Ramp Safety End-of-Pilot Report',
+    client: 'GateGroup',
+    desc: 'End-of-pilot report and program proposal for the GateGroup Ramp Safety initiative — summarizes learner outcomes and outlines the path to full deployment.',
+    tags: ['Aviation', 'Ramp Safety', 'End-of-Pilot Report']
+  },
+  {
+    file: 'rev_group_proposal 5-4-26.html',
+    date: '2026-05-04',
+    title: 'REV Group — Change Management Architecture Proposal',
+    client: 'REV Group',
+    desc: 'Full program proposal for REV Group framing Flint as a change management architecture — positions behavior change at every organizational level.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Proposal']
+  },
+  {
+    file: 'copilot-hr-use-case.html',
+    date: '2026-05-06',
+    title: 'Copilot AI Adoption — HR Department Use Case',
+    client: 'USA Today / Gannett',
+    desc: '247 activities, 31 HR professionals, 86% improvement in AI tool usage. Covers five domains and shows where Copilot gained traction vs. where it pushed back.',
+    tags: ['AI Adoption', 'Knowledge Work', 'Demo Asset']
+  },
+  {
+    file: 'simpson_strong_tie_mockup.html',
+    date: '2026-05-06',
+    title: 'Simpson Strong-Tie — Program Mockup',
+    client: 'Simpson Strong-Tie',
+    desc: 'Visual mockup of a proposed Flint program for Simpson Strong-Tie — used in early prospect conversations to illustrate what a deployment could look like.',
+    tags: ['Manufacturing', 'Safety', 'Mockup']
+  },
+  {
+    file: 'terex-ppe-initiative-overview.html',
+    date: '2026-05-07',
+    title: 'TEREX × FLiNT — PPE Leadership Initiative Overview',
+    client: 'Terex',
+    desc: 'Full initiative overview positioning front-line managers as the engine of safety culture — covers Terex background, strategic rationale, and program design.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Initiative Overview']
+  },
+  {
+    file: 'terex-program-portfolio.html',
+    date: '2026-05-07',
+    title: 'Terex — Program Portfolio Overview',
+    client: 'Terex',
+    desc: 'Five parallel Flint programs running simultaneously at Terex — each cycling initiatives quarterly. Best demo asset for showing scale and multi-program deployment.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Program Overview', 'Demo Asset']
+  },
+  {
+    file: 'terex-ppe-progression-report.html',
+    date: '2026-05-07',
+    title: 'TEREX PPE — Learner Progression Report',
+    client: 'Terex',
+    desc: 'Baseline to follow-up comparison showing practice-level movement across the PPE initiative — every practice improved, with breakdown of where lift came from.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Progression Report']
+  },
+  {
+    file: 'Citizens early insights 05-12.html',
+    date: '2026-05-12',
+    title: 'Fresh Eyes — Early Results (May 12)',
+    client: 'Citizens Bank',
+    desc: 'Early results report for the Citizens Fresh Eyes initiative — highlights behavioral shift data and initial coaching patterns from the first weeks of the program.',
+    tags: ['Financial Services', 'Early Results', 'Coaching']
+  },
+  {
+    file: 'TEREX REV PPE W2 Day 1 coaching.html',
+    date: '2026-05-13',
+    title: 'REV Group — PPE Wave 2 Coaching Interactions',
+    client: 'REV Group',
+    desc: 'Coaching interaction data from Day 1 of PPE Wave 2 — shows how the AI coach engaged participants at the start of the second program wave.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Coaching']
+  },
+  {
+    file: 'terex_ppe_wave1_final_report.html',
+    date: '2026-05-18',
+    title: 'TEREX × FLiNT — PPE Wave 1 Final Report',
+    client: 'Terex',
+    desc: '12-week Wave 1 final report: 76 supervisors, 641 floor activities. Includes field voices, initiative summary, and outcome data.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Final Report', 'Demo Asset']
+  },
+  {
+    file: 'Gallatin_Pilot_Infographics.html',
+    date: '2026-05-19',
+    title: 'Gallatin Pilot — Voiceover Infographics',
+    client: 'Simpson Strong-Tie',
+    desc: 'Infographic slides for the Simpson Strong-Tie Gallatin facility pilot — designed with voiceover walkthrough for stakeholder presentations.',
+    tags: ['Manufacturing', 'Safety', 'Infographics']
+  },
+  {
+    file: 'gallatin supervisor pilot overview.html',
+    date: '2026-05-19',
+    title: 'Simpson Strong-Tie Gallatin — Supervisor Pilot Overview',
+    client: 'Simpson Strong-Tie',
+    desc: 'Pilot overview for the Gallatin facility supervisor program — outlines the initiative structure for building operational excellence from the floor up.',
+    tags: ['Manufacturing', 'Safety', 'Pilot Overview']
+  },
+  {
+    file: 'citizens_activity_report_5-19.html',
+    date: '2026-05-19',
+    title: 'Fresh Eyes — Activity Report (May 19)',
+    client: 'Citizens Bank',
+    desc: 'Activity-level engagement report for the Citizens Fresh Eyes initiative as of May 19 — tracks completion patterns and learner activity across the cohort.',
+    tags: ['Financial Services', 'Activity Report']
+  },
+  {
+    file: 'citizens_baseline_insights_5-19.html',
+    date: '2026-05-19',
+    title: 'Fresh Eyes — Baseline Survey Insights (May 19)',
+    client: 'Citizens Bank',
+    desc: 'Baseline survey analysis identifying starting conditions and key movement areas — highlights the gap between manager and participant perceptions.',
+    tags: ['Financial Services', 'Baseline Survey']
+  },
+  {
+    file: 'citizens_coach_insights_5-19.html',
+    date: '2026-05-19',
+    title: 'Fresh Eyes — AI Coach Report (May 19)',
+    client: 'Citizens Bank',
+    desc: 'Analysis of what the AI coach is spending most of its time on — covers engagement patterns, friction points, and what the coaching data reveals about the workforce.',
+    tags: ['Financial Services', 'Coaching', 'AI Coach']
+  },
+  {
+    file: 'citizens_ledger_2026_05-18.html',
+    date: '2026-05-19',
+    title: 'Fresh Eyes — Ledger (May 18)',
+    client: 'Citizens Bank',
+    desc: 'Program ledger for the Citizens Fresh Eyes initiative as of May 18 — cumulative activity and participant engagement tracking.',
+    tags: ['Financial Services', 'Ledger']
+  },
+  {
+    file: 'cs_meeting_modules_reference.html',
+    date: '2026-05-19',
+    title: 'CS Meeting Modules — Quick Reference',
+    client: 'Flint Internal',
+    desc: 'Quick reference guide for all Flint CS meeting module types — Launch, Pulse, Baseline, Ledger, Coach, Themes, North Star, Excavate, Horizon, and Delta.',
+    tags: ['Internal Tool', 'CS', 'Meeting Modules']
+  },
+  {
+    file: 'REV_PPE_Paul_Antonino.html',
+    date: '2026-05-20',
+    title: 'REV Group · PPE Leadership Initiative — Paul Antonino',
+    client: 'REV Group',
+    desc: 'Individual manager coaching report for the REV Group PPE initiative — detailed view of Paul Antonino\'s program interactions and behavioral coaching data.',
+    tags: ['Manufacturing', 'Safety', 'PPE', 'Coaching']
+  },
+  {
+    file: 'citizens_baseline_comparison_2026_05.html',
+    date: '2026-05-20',
+    title: 'Citizens · Fresh Eyes — Baseline Survey Comparison',
+    client: 'Citizens Bank',
+    desc: 'Side-by-side comparison of baseline survey results across participant segments — designed for sponsor review in the May 2026 program update.',
+    tags: ['Financial Services', 'Baseline Survey']
+  },
+  {
+    file: 'citizens_ledger_2026_05.html',
+    date: '2026-05-20',
+    title: 'Citizens · Fresh Eyes — Ledger (May 2026)',
+    client: 'Citizens Bank',
+    desc: 'Updated program ledger for the Fresh Eyes initiative — May 2026 snapshot of cumulative activity, participation, and engagement metrics.',
+    tags: ['Financial Services', 'Ledger']
+  },
+  {
+    file: 'meeting_modules_selector.html',
+    date: '2026-05-20',
+    title: 'Module Selector — Flint CS',
+    client: 'Flint Internal',
+    desc: 'Interactive decision tool for CS teams — select the right meeting module for the current stage of a client engagement.',
+    tags: ['Internal Tool', 'CS', 'Meeting Modules']
+  },
+  {
+    file: 'revgroup_ledger_2026_05.html',
+    date: '2026-05-20',
+    title: 'REV Group · PPE Initiative — Ledger (May 2026)',
+    client: 'REV Group',
+    desc: 'Program ledger for the REV Group PPE initiative as of May 2026 — cumulative activity tracking across the full cohort.',
+    tags: ['Manufacturing', 'Safety', 'Ledger']
+  },
+  {
+    file: 'revgroup_ledger_w2_coaching.html',
+    date: '2026-05-20',
+    title: 'REV Group · PPE Initiative — Wave 2 Coaching Ledger',
+    client: 'REV Group',
+    desc: 'Wave 2 coaching-focused ledger for REV Group — breaks out coaching interactions alongside activity data to show the manager engagement layer.',
+    tags: ['Manufacturing', 'Safety', 'Ledger', 'Coaching']
+  },
+  {
+    file: 'terex-hub.html',
+    date: '2026-05-20',
+    title: 'Terex Skills Coach — Resource Hub',
+    client: 'Terex',
+    desc: 'Navigation hub for all Terex Skills Coach assets — centralizes links to initiative overviews, reports, and coaching resources for the client relationship.',
+    tags: ['Manufacturing', 'Safety', 'Hub', 'Navigation']
+  },
+  {
+    file: 'citizens_coach_2026_05.html',
+    date: '2026-05-21',
+    title: 'Citizens Bank · Fresh Eyes — AI Coach Report (May 2026)',
+    client: 'Citizens Bank',
+    desc: 'Updated AI coach analysis for May 2026 — what the coach is focusing on, how participants are engaging, and what patterns are emerging across the workforce.',
+    tags: ['Financial Services', 'Coaching', 'AI Coach']
+  },
+  {
+    file: 'intake-questionnaire.html',
+    date: '2026-05-21',
+    title: 'Initiative Intake — Flint Learning Solutions',
+    client: 'Flint Internal',
+    desc: 'Prospect intake questionnaire for new initiative scoping — collects challenge context, stakeholder info, and business goals to guide program design.',
+    tags: ['Internal Tool', 'Sales', 'Intake']
+  },
+  {
+    file: 'GateGroup_Ramp_Safety.html',
+    date: '2026-05-26',
+    title: 'Flint × GateGroup — Ramp Safety Partnership Proposal',
+    client: 'GateGroup',
+    desc: 'Full partnership proposal for the GateGroup Ramp Safety program — outlines initiative design, behavior targets, and deployment approach for aviation ground operations.',
+    tags: ['Aviation', 'Ramp Safety', 'Proposal']
+  },
+  {
+    file: 'citizens_ledger_2026_05_26.html',
+    date: '2026-05-26',
+    title: 'Citizens · Fresh Eyes — Ledger Update (May 26)',
+    client: 'Citizens Bank',
+    desc: 'Most recent ledger update for the Citizens Fresh Eyes initiative — May 26 snapshot reflecting the latest activity completions and program participation.',
+    tags: ['Financial Services', 'Ledger']
+  },
+  {
+    file: 'sam-update.html',
+    date: '2026-04-23',
+    title: 'Sam\'s Update',
+    client: 'Flint Internal',
+    desc: 'Internal stakeholder update page — a brief program status communication sent to a key contact.',
+    tags: ['Internal']
+  },
+  {
+    file: 'citizens first activities results.html',
+    date: '2026-05-06',
+    title: 'Fresh Eyes — Early Activity Experiences',
+    client: 'Citizens Bank',
+    desc: 'Qualitative highlights from the first Fresh Eyes activities — individual learner spotlights showing how Facility Managers are engaging with the Skills Coach.',
+    tags: ['Financial Services', 'Coaching', 'Early Results']
+  }
+];
+
+// ── Populate tag filter pills ──
+const allTags = [...new Set(ASSETS.flatMap(a => a.tags))].sort();
+const tagRow = document.getElementById('tag-filter-row');
+let activeTag = null;
+
+const allPill = document.createElement('button');
+allPill.className = 'tag-pill active';
+allPill.textContent = 'All';
+allPill.dataset.tag = '';
+tagRow.appendChild(allPill);
+
+allTags.forEach(tag => {
+  const pill = document.createElement('button');
+  pill.className = 'tag-pill';
+  pill.textContent = tag;
+  pill.dataset.tag = tag;
+  tagRow.appendChild(pill);
+});
+
+tagRow.addEventListener('click', e => {
+  const pill = e.target.closest('.tag-pill');
+  if (!pill) return;
+  tagRow.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  activeTag = pill.dataset.tag || null;
+  render();
+});
+
+// ── Populate client dropdown ──
+const clients = [...new Set(ASSETS.map(a => a.client))].sort();
+const clientSel = document.getElementById('filter-client');
+clients.forEach(c => {
+  const opt = document.createElement('option');
+  opt.value = c;
+  opt.textContent = c;
+  clientSel.appendChild(opt);
+});
+
+// ── Sorting ──
+let sortBy = 'date-desc';
+document.getElementById('sort-by').addEventListener('change', e => {
+  sortBy = e.target.value;
+  render();
+});
+
+// ── Column header sorting ──
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    const sel = document.getElementById('sort-by');
+    if (col === 'date') {
+      sortBy = sortBy === 'date-desc' ? 'date-asc' : 'date-desc';
+      sel.value = sortBy;
+    } else if (col === 'client') {
+      sortBy = 'client'; sel.value = 'client';
+    } else if (col === 'title') {
+      sortBy = 'title'; sel.value = 'title';
+    }
+    render();
+  });
+});
+
+// ── Search ──
+document.getElementById('search').addEventListener('input', render);
+clientSel.addEventListener('change', render);
+
+// ── Render ──
+function render() {
+  const query = document.getElementById('search').value.toLowerCase().trim();
+  const clientFilter = document.getElementById('filter-client').value;
+  const tbody = document.getElementById('table-body');
+
+  let data = ASSETS.filter(a => {
+    const matchQ = !query || 
+      a.title.toLowerCase().includes(query) ||
+      a.client.toLowerCase().includes(query) ||
+      a.desc.toLowerCase().includes(query) ||
+      a.tags.some(t => t.toLowerCase().includes(query));
+    const matchC = !clientFilter || a.client === clientFilter;
+    const matchT = !activeTag || a.tags.includes(activeTag);
+    return matchQ && matchC && matchT;
+  });
+
+  // Sort
+  data = [...data].sort((a, b) => {
+    if (sortBy === 'date-desc') return b.date.localeCompare(a.date);
+    if (sortBy === 'date-asc')  return a.date.localeCompare(b.date);
+    if (sortBy === 'client')    return a.client.localeCompare(b.client) || b.date.localeCompare(a.date);
+    if (sortBy === 'title')     return a.title.localeCompare(b.title);
+    return 0;
+  });
+
+  tbody.innerHTML = '';
+  document.getElementById('visible-count').textContent = data.length;
+  document.getElementById('total-count').textContent = ASSETS.length;
+
+  const noResults = document.getElementById('no-results');
+  const table = document.getElementById('asset-table');
+
+  if (data.length === 0) {
+    noResults.style.display = 'block';
+    table.style.display = 'none';
+    return;
+  }
+  noResults.style.display = 'none';
+  table.style.display = '';
+
+  // Group headers for client sort
+  let lastGroup = null;
+
+  data.forEach(asset => {
+    if (sortBy === 'client' && asset.client !== lastGroup) {
+      lastGroup = asset.client;
+      const groupRow = document.createElement('tr');
+      groupRow.className = 'group-header';
+      groupRow.innerHTML = `<td colspan="5">${asset.client}</td>`;
+      tbody.appendChild(groupRow);
+    }
+
+    const [yr, mo, dy] = asset.date.split('-');
+    const dateStr = `${mo}/${dy}/${yr.slice(2)}`;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-date">${dateStr}</td>
+      <td class="td-title">
+        <a href="${BASE}${encodeURIComponent(asset.file)}" target="_blank" rel="noopener">${asset.title}</a>
+        <div class="td-desc">${asset.desc}</div>
+      </td>
+      <td class="td-client">${asset.client}</td>
+      <td class="td-tags">
+        ${asset.tags.map(t => `<span class="tag${activeTag===t?' active':''}" data-tag="${t}">${t}</span>`).join('')}
+      </td>
+      <td class="td-link">
+        <a href="${BASE}${encodeURIComponent(asset.file)}" target="_blank" rel="noopener" title="Open">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Click tag in row → filter
+  tbody.querySelectorAll('.tag').forEach(t => {
+    t.addEventListener('click', e => {
+      e.stopPropagation();
+      const tag = t.dataset.tag;
+      activeTag = activeTag === tag ? null : tag;
+      tagRow.querySelectorAll('.tag-pill').forEach(p => {
+        p.classList.toggle('active', (!activeTag && p.dataset.tag === '') || p.dataset.tag === activeTag);
+      });
+      render();
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>
