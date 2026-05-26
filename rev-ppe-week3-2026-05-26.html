@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Better PPE Habits — Week 3 — REV Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:#F7F6F3;color:#1C1C1A;font-size:14px}
+/* Header */
+.hdr{background:#223f55;color:#fff;padding:18px 28px 16px;position:relative;min-height:72px}
+.hdr-title{font-size:17px;font-weight:700;letter-spacing:.01em}
+.hdr-meta{font-size:12px;opacity:.75;margin-top:3px}
+.hdr-pull{font-size:11px;opacity:.55;margin-top:2px}
+.hdr-logo{position:absolute;top:50%;right:28px;transform:translateY(-50%)}
+.hdr-logo img{height:36px;opacity:.9}
+/* Tabs */
+.tab-bar{background:#fff;border-bottom:1px solid #E2E0DA;padding:0 28px;display:flex;gap:0}
+.tab{padding:13px 18px;font-size:13px;font-weight:500;color:#6B6B67;cursor:pointer;border-bottom:3px solid transparent;user-select:none;white-space:nowrap}
+.tab.active{color:#223f55;border-bottom-color:#36679F;font-weight:600}
+.tab:hover:not(.active){color:#223f55}
+/* Panels */
+.panel{display:none;padding:24px 28px}
+.panel.active{display:block}
+/* Wnote */
+.wnote{background:#EBF2FA;border-left:4px solid #36679F;padding:12px 16px;border-radius:4px;font-size:13px;color:#223f55;margin-bottom:20px;line-height:1.5}
+/* KPI tiles */
+.kpi-row{display:flex;gap:16px;margin-bottom:24px}
+.kpi{background:#fff;border:1px solid #E2E0DA;border-radius:8px;padding:18px 20px;flex:1;text-align:center}
+.kpi-val{font-size:32px;font-weight:700;color:#223f55;line-height:1}
+.kpi-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B6B67;margin-top:6px}
+.kpi-sub{font-size:11px;color:#A0A09A;margin-top:4px}
+/* Section heading */
+.sec-heading{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B6B67;margin-bottom:12px;margin-top:24px}
+/* Leaderboard */
+.lb-table{width:100%;border-collapse:collapse}
+.lb-table tr{border-bottom:1px solid #F0EFE9}
+.lb-table td{padding:10px 8px;vertical-align:middle}
+.rank-cell{width:28px;font-weight:700;color:#A0A09A;font-size:13px}
+.bu-name{font-size:14px;font-weight:600;color:#223f55;min-width:140px}
+.learner-ct{font-size:11px;color:#A0A09A;font-weight:400;margin-left:4px}
+.bar-cell{padding-left:12px;padding-right:12px}
+.lb-bar{height:8px;background:#36679F;border-radius:4px;min-width:4px}
+.metric-cell{text-align:right;font-size:13px;font-weight:600;color:#223f55;white-space:nowrap;width:90px}
+/* Activities */
+.acts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:8px}
+.act-card{background:#fff;border:1px solid #E2E0DA;border-radius:8px;padding:14px 16px;text-align:center}
+.act-name{font-size:12px;font-weight:600;color:#223f55;line-height:1.35;margin-bottom:6px}
+.act-desc{font-size:11px;color:#6B6B67;line-height:1.4;margin-bottom:10px}
+.act-count{font-size:26px;font-weight:700;color:#36679F}
+/* Milestone bar */
+.milestone-bar-wrap{display:flex;border-radius:6px;overflow:hidden;height:28px;margin-bottom:10px}
+.ms-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;overflow:hidden;transition:width .3s}
+.ms-basic{background:#EBF2FA;color:#1B5FA3}
+.ms-inter{background:#FEF3E2;color:#93520A}
+.ms-adv{background:#EAF3DE;color:#3B6D11}
+.ms-ns{background:#EEECEA;color:#A0A09A}
+.ms-legend{display:flex;gap:20px;font-size:11px;color:#6B6B67;margin-top:6px}
+.ms-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+/* Roster */
+.mkt-block{margin-bottom:8px}
+.mkt-hdr{background:#223f55;color:#fff;padding:11px 16px;border-radius:6px 6px 0 0;display:flex;align-items:center;cursor:pointer;user-select:none}
+.mkt-hdr-name{font-weight:600;font-size:14px;flex:1}
+.mkt-hdr-meta{font-size:12px;opacity:.7;margin-right:16px}
+.mkt-hdr-right{display:flex;align-items:center;gap:12px}
+.export-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:11px;font-weight:500;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Poppins',sans-serif}
+.export-btn:hover{background:rgba(255,255,255,.25)}
+.chevron{font-size:14px;opacity:.7;transition:transform .2s}
+.mkt-block.open .chevron{transform:rotate(180deg)}
+.mkt-body{display:none;background:#fff;border:1px solid #E2E0DA;border-top:none;border-radius:0 0 6px 6px;overflow:hidden}
+.mkt-block.open .mkt-body{display:block}
+.roster-table{width:100%;border-collapse:collapse}
+.roster-table th{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#A0A09A;padding:8px 10px;border-bottom:1px solid #E2E0DA;text-align:left;background:#fafaf8}
+.roster-table th.num{text-align:right}
+.roster-table td{padding:9px 10px;border-bottom:1px solid #F5F4F0;vertical-align:middle}
+.roster-table tr:last-child td{border-bottom:none}
+.r-name{font-weight:500;color:#1C1C1A}
+.r-mgr{font-size:11px;color:#A0A09A}
+.r-title{font-size:11px;color:#6B6B67}
+.r-num{text-align:right;font-weight:600;color:#223f55}
+.r-week{text-align:right}
+.r-week.has{font-weight:700;color:#223f55}
+.r-week.none{color:#A0A09A}
+.r-pace{text-align:right;color:#6B6B67;font-size:12px}
+.r-action{text-align:center;min-width:100px}
+.pill{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600;cursor:default;position:relative}
+.pill-nudge{background:#FDECEA;color:#A02020}
+.pill-slow{background:#EEEDFE;color:#3C3489}
+.pill-streak{background:#FEF9E7;color:#7D6008}
+/* Spacer col */
+.spacer{flex:1}
+/* Survey tab */
+.sv-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.sv-table th{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#A0A09A;padding:8px 10px;border-bottom:1px solid #E2E0DA;text-align:left;background:#fafaf8}
+.sv-table th:not(:first-child){text-align:right}
+.sv-table td{padding:10px 10px;border-bottom:1px solid #F5F4F0;vertical-align:middle}
+.sv-table tr:last-child td{border-bottom:none}
+.sv-bu{font-weight:500;color:#1C1C1A}
+.sv-enrolled,.sv-done{text-align:right;font-weight:500;color:#223f55}
+.sv-bar-cell{text-align:right;width:180px;padding-left:16px}
+.sv-bar-wrap{background:#E2E0DA;border-radius:4px;height:8px;overflow:hidden}
+.sv-bar{background:#3B6D11;height:100%;border-radius:4px}
+.total-row td{font-weight:600;background:#F7F6F3;border-top:2px solid #E2E0DA}
+.pending-section{margin-top:20px}
+.pending-heading{font-size:12px;font-weight:600;color:#223f55;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.pending-ct{background:#FDECEA;color:#A02020;font-size:11px;padding:2px 8px;border-radius:10px}
+.pending-table{width:100%;border-collapse:collapse}
+.pending-table td{padding:8px 10px;border-bottom:1px solid #F5F4F0;font-size:13px}
+.pending-table tr:last-child td{border-bottom:none}
+.p-name{font-weight:500;color:#1C1C1A}
+.p-status{color:#A0A09A;font-size:11px;text-align:right}
+/* Tooltip */
+.tt{position:fixed;background:#1C1C1A;color:#fff;padding:10px 13px;border-radius:6px;font-size:12px;line-height:1.45;max-width:260px;z-index:9999;pointer-events:none;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.info-icon{font-size:11px;color:#A0A09A;margin-left:4px;cursor:default;vertical-align:middle}
+/* Previous reports tab */
+.prev-list{list-style:none;padding:0}
+.prev-list li{padding:10px 0;border-bottom:1px solid #F5F4F0;font-size:13px}
+.prev-list li:last-child{border-bottom:none}
+.prev-list a{color:#36679F;text-decoration:none}
+.prev-list a:hover{text-decoration:underline}
+.prev-current{font-weight:600;color:#223f55}
+/* Footer */
+.footer{text-align:center;padding:28px 0 36px;color:#A0A09A;font-size:11px;border-top:1px solid #E2E0DA;margin-top:32px}
+.footer strong{color:#36679F}
+/* Responsive */
+@media(max-width:700px){
+  .kpi-row{flex-direction:column}
+  .acts-grid{grid-template-columns:1fr 1fr}
+  .roster-table .r-title,.roster-table .r-mgr{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">Build Better PPE Habits with Your Team</div>
+  <div class="hdr-meta">Week 3 &middot; May 26, 2026 &middot; 26 supervisors across 5 business units</div>
+  <div class="hdr-pull">Data pulled May 26, 2026 at 12:00 PM ET &mdash; figures reflect completions recorded at that time</div>
+  <div class="hdr-logo"><img src="https://client.flintls.com/2dot0/logos/REVlogo.png" alt="REV Group"></div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="sw(0)">What&rsquo;s Happening</div>
+  <div class="tab" onclick="sw(1)">Full Roster</div>
+  <div class="tab" onclick="sw(2)">Survey Completion</div>
+  <div class="tab" onclick="sw(3)">Previous Reports</div>
+</div>
+
+<!-- TAB 0: What's Happening -->
+<div class="panel active" id="p0">
+  <div class="wnote">
+    <strong>Week 3 &middot; Baseline window open.</strong> Priority this week: make sure every supervisor completes their baseline survey before the window closes. <strong>33 of 41 done</strong> &mdash; 8 still pending. This is the last week of the baseline window; reach out to anyone who hasn&rsquo;t completed it yet.
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val">26</div>
+      <div class="kpi-label">Participating Supervisors</div>
+      <div class="kpi-sub">across 5 business units</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">59</div>
+      <div class="kpi-label">Total Activities Logged</div>
+      <div class="kpi-sub">26 this week</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">2</div>
+      <div class="kpi-label">Median Activities / Supervisor</div>
+      <div class="kpi-sub">among active supervisors</div>
+    </div>
+  </div>
+
+  <div class="sec-heading">Business Unit Leaderboard — Activities this week</div>
+  <div style="background:#fff;border:1px solid #E2E0DA;border-radius:8px;padding:8px 16px;margin-bottom:24px">
+    <table class="lb-table">
+      <tr><td class="rank-cell">1</td><td class="bu-name">Fleetwood <span class="learner-ct">(12 supervisors)</span></td><td class="bar-cell"><div class="lb-bar" style="width:100%"></div></td><td class="metric-cell">12 this wk</td></tr>
+      <tr><td class="rank-cell">2</td><td class="bu-name">Ephrata <span class="learner-ct">(8 supervisors)</span></td><td class="bar-cell"><div class="lb-bar" style="width:58%"></div></td><td class="metric-cell">7 this wk</td></tr>
+      <tr><td class="rank-cell">3</td><td class="bu-name">Goldshield <span class="learner-ct">(4 supervisors)</span></td><td class="bar-cell"><div class="lb-bar" style="width:50%"></div></td><td class="metric-cell">6 this wk</td></tr>
+      <tr><td class="rank-cell">4</td><td class="bu-name">E-One <span class="learner-ct">(1 supervisors)</span></td><td class="bar-cell"><div class="lb-bar" style="width:8%"></div></td><td class="metric-cell">1 this wk</td></tr>
+      <tr><td class="rank-cell">5</td><td class="bu-name">Capacity <span class="learner-ct">(1 supervisors)</span></td><td class="bar-cell"><div class="lb-bar" style="width:0%"></div></td><td class="metric-cell">0 this wk</td></tr>
+    </table>
+  </div>
+
+  <div class="sec-heading">Most-Practiced Activities</div>
+  <div class="acts-grid">
+    <div class="act-card"><div class="act-name">Use Prepared Team Member to Model PPE Readiness at Morning Huddle</div><div class="act-desc">Leverage your most prepared team member to model good PPE habits for others at the start of the shift.</div><div class="act-count">11</div></div>
+    <div class="act-card"><div class="act-name">Check Team PPE at End-of-Shift</div><div class="act-desc">Make sure your team stayed protected during the shift and is ready for the next one.</div><div class="act-count">11</div></div>
+    <div class="act-card"><div class="act-name">Call Out PPE Requirements at Break Transitions</div><div class="act-desc">Reinforce PPE expectations when team members return from breaks and move between different work areas.</div><div class="act-count">9</div></div>
+    <div class="act-card"><div class="act-name">Correct PPE Violations During Operations</div><div class="act-desc">Observe team PPE compliance during active work and provide immediate correction when you spot violations.</div><div class="act-count">5</div></div>
+    <div class="act-card"><div class="act-name">Stay Protected During Quick Tasks</div><div class="act-desc">Maintain full PPE protection during quick tasks where you might skip safety steps to save time.</div><div class="act-count">4</div></div>
+    <div class="act-card"><div class="act-name">Publicly Acknowledge Consistent PPE Compliance</div><div class="act-desc">Recognize a team member's consistent PPE practices in front of others to reinforce the standard.</div><div class="act-count">4</div></div>
+  </div>
+
+  <div class="sec-heading">Where Supervisors Are in the Practice</div>
+  <div style="background:#fff;border:1px solid #E2E0DA;border-radius:8px;padding:16px 20px;margin-bottom:8px">
+    <div class="milestone-bar-wrap">
+      <div class="ms-seg ms-basic" style="width:62%">62%</div>
+      <div class="ms-seg ms-inter" style="width:27%">27%</div>
+      <div class="ms-seg ms-adv" style="width:12%">12%</div>
+    </div>
+    <div class="ms-legend">
+      <span><span class="ms-dot" style="background:#EBF2FA;border:1px solid #1B5FA3"></span>Basic &mdash; 16 supervisors</span>
+      <span><span class="ms-dot" style="background:#FEF3E2;border:1px solid #93520A"></span>Intermediate &mdash; 7 supervisors</span>
+      <span><span class="ms-dot" style="background:#EAF3DE;border:1px solid #3B6D11"></span>Advanced &mdash; 3 supervisors</span>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 1: Full Roster -->
+<div class="panel" id="p1">
+  <p style="font-size:12px;color:#A0A09A;margin-bottom:16px">Roster grouped by business unit. Total = all-time activities completed. Avg Days/Activity = days since launch ÷ total completions.</p>
+  <div class="mkt-block open" id="mkt0">
+    <div class="mkt-hdr" onclick="tog(0)">
+      <span class="mkt-hdr-name">Fleetwood</span>
+      <div class="mkt-hdr-right">
+        <span class="mkt-hdr-meta">12 supervisors &middot; 3.1 avg activities</span>
+        <button class="export-btn" onclick="event.stopPropagation();exportCSV('Fleetwood')">&#8595; Export CSV</button>
+        <span class="chevron">&#9660;</span>
+      </div>
+    </div>
+    <div class="mkt-body">
+      <table class="roster-table">
+        <thead><tr>
+          <th>Supervisor</th>
+          <th>Title / Manager</th>
+          <th class="num">Total</th>
+          <th class="num">This Wk</th>
+          <th class="num">Avg Days/Act</th>
+          <th style="text-align:center">In-person action <span class="info-icon" onmouseenter="showTT(event,'Actions are meant for your team huddles — not digital messages. A brief, direct conversation is more effective than a notification.')" onmouseleave="hideTT()">&#9432;</span></th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="r-name">Ashley Teboe</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Jessica Lee</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Curt Main</td>
+          <td><div class="r-title">Supervisor Maintenance</div><div class="r-mgr">Mgr: Robert Kowalczyk
+</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">2</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Daniel Ortiz</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Douglas Turner</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Donald Mohammed</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Ann Bercot</div></td>
+          <td class="r-num">3</td>
+          <td class="r-week has">2</td>
+          <td class="r-pace">6</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Douglas Smith</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Ann Bercot</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Dustin Colbert</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Ann Bercot</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Greg Hardesty</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Jessica Lee</div></td>
+          <td class="r-num">4</td>
+          <td class="r-week has">2</td>
+          <td class="r-pace">5</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Jeffrey Strickler</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Jessica Lee</div></td>
+          <td class="r-num">3</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">6</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Kip Saylor</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Ann Bercot</div></td>
+          <td class="r-num">5</td>
+          <td class="r-week has">2</td>
+          <td class="r-pace">4</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Michael Wolford</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Douglas Turner</div></td>
+          <td class="r-num">3</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">6</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Pat Curtis</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Randall Baker</div></td>
+          <td class="r-num">10</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">2</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Steve Tebbe</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Ann Bercot</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mkt-block open" id="mkt1">
+    <div class="mkt-hdr" onclick="tog(1)">
+      <span class="mkt-hdr-name">Ephrata</span>
+      <div class="mkt-hdr-right">
+        <span class="mkt-hdr-meta">8 supervisors &middot; 1.2 avg activities</span>
+        <button class="export-btn" onclick="event.stopPropagation();exportCSV('Ephrata')">&#8595; Export CSV</button>
+        <span class="chevron">&#9660;</span>
+      </div>
+    </div>
+    <div class="mkt-body">
+      <table class="roster-table">
+        <thead><tr>
+          <th>Supervisor</th>
+          <th>Title / Manager</th>
+          <th class="num">Total</th>
+          <th class="num">This Wk</th>
+          <th class="num">Avg Days/Act</th>
+          <th style="text-align:center">In-person action <span class="info-icon" onmouseenter="showTT(event,'Actions are meant for your team huddles — not digital messages. A brief, direct conversation is more effective than a notification.')" onmouseleave="hideTT()">&#9432;</span></th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="r-name">Brent Salmi</td>
+          <td><div class="r-title">Manager Inventory Control</div><div class="r-mgr">Mgr: Scott Hackman</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">David Evans</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Thomas Rogers</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Jeffrey Adams</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Thomas Rogers</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Juan Bryant</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Thomas Rogers</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Kendrick Weaver</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Thomas Rogers</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Kenneth Weaver</td>
+          <td><div class="r-title">Supervisor Production</div><div class="r-mgr">Mgr: Thomas Rogers</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Ryan Grove</td>
+          <td><div class="r-title">Manager Engineering</div><div class="r-mgr">Mgr: Scott Hackman</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">2</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Thomas Rogers</td>
+          <td><div class="r-title">Manager Production</div><div class="r-mgr">Mgr: Scott Hackman</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mkt-block open" id="mkt2">
+    <div class="mkt-hdr" onclick="tog(2)">
+      <span class="mkt-hdr-name">Goldshield</span>
+      <div class="mkt-hdr-right">
+        <span class="mkt-hdr-meta">4 supervisors &middot; 2.5 avg activities</span>
+        <button class="export-btn" onclick="event.stopPropagation();exportCSV('Goldshield')">&#8595; Export CSV</button>
+        <span class="chevron">&#9660;</span>
+      </div>
+    </div>
+    <div class="mkt-body">
+      <table class="roster-table">
+        <thead><tr>
+          <th>Supervisor</th>
+          <th>Title / Manager</th>
+          <th class="num">Total</th>
+          <th class="num">This Wk</th>
+          <th class="num">Avg Days/Act</th>
+          <th style="text-align:center">In-person action <span class="info-icon" onmouseenter="showTT(event,'Actions are meant for your team huddles — not digital messages. A brief, direct conversation is more effective than a notification.')" onmouseleave="hideTT()">&#9432;</span></th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="r-name">Darin Shoaf</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Brian Ruble</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">David Goodwin</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Brian Ruble</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Janalee Cowens</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Brian Ruble</div></td>
+          <td class="r-num">5</td>
+          <td class="r-week has">3</td>
+          <td class="r-pace">4</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        <tr>
+          <td class="r-name">Jeremy Chism</td>
+          <td><div class="r-title">Production Lead</div><div class="r-mgr">Mgr: Brian Ruble</div></td>
+          <td class="r-num">2</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">10</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mkt-block open" id="mkt3">
+    <div class="mkt-hdr" onclick="tog(3)">
+      <span class="mkt-hdr-name">E-One</span>
+      <div class="mkt-hdr-right">
+        <span class="mkt-hdr-meta">1 supervisors &middot; 1.0 avg activities</span>
+        <button class="export-btn" onclick="event.stopPropagation();exportCSV('E-One')">&#8595; Export CSV</button>
+        <span class="chevron">&#9660;</span>
+      </div>
+    </div>
+    <div class="mkt-body">
+      <table class="roster-table">
+        <thead><tr>
+          <th>Supervisor</th>
+          <th>Title / Manager</th>
+          <th class="num">Total</th>
+          <th class="num">This Wk</th>
+          <th class="num">Avg Days/Act</th>
+          <th style="text-align:center">In-person action <span class="info-icon" onmouseenter="showTT(event,'Actions are meant for your team huddles — not digital messages. A brief, direct conversation is more effective than a notification.')" onmouseleave="hideTT()">&#9432;</span></th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="r-name">Andrew Renn</td>
+          <td><div class="r-title">Manager EHS</div><div class="r-mgr">Mgr: Gary Feldman</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week has">1</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span style="color:#A0A09A">—</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mkt-block open" id="mkt4">
+    <div class="mkt-hdr" onclick="tog(4)">
+      <span class="mkt-hdr-name">Capacity</span>
+      <div class="mkt-hdr-right">
+        <span class="mkt-hdr-meta">1 supervisors &middot; 1.0 avg activities</span>
+        <button class="export-btn" onclick="event.stopPropagation();exportCSV('Capacity')">&#8595; Export CSV</button>
+        <span class="chevron">&#9660;</span>
+      </div>
+    </div>
+    <div class="mkt-body">
+      <table class="roster-table">
+        <thead><tr>
+          <th>Supervisor</th>
+          <th>Title / Manager</th>
+          <th class="num">Total</th>
+          <th class="num">This Wk</th>
+          <th class="num">Avg Days/Act</th>
+          <th style="text-align:center">In-person action <span class="info-icon" onmouseenter="showTT(event,'Actions are meant for your team huddles — not digital messages. A brief, direct conversation is more effective than a notification.')" onmouseleave="hideTT()">&#9432;</span></th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="r-name">Andy Speer</td>
+          <td><div class="r-title">Supervisor Engineering I</div><div class="r-mgr">Mgr: Vikas Kataria</div></td>
+          <td class="r-num">1</td>
+          <td class="r-week none">—</td>
+          <td class="r-pace">19</td>
+          <td class="r-action"><span class="pill pill-nudge" onmouseenter="showTT(event,'Bring this up at your next team huddle. A quick, encouraging check-in — ask how their last activity went and what they're planning to try next.')" onmouseleave="hideTT()">nudge</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: Survey Completion -->
+<div class="panel" id="p2">
+  <div class="wnote">
+    <strong>Week 3 &middot; Baseline window open.</strong> Baseline surveys close at end of Week 3. Reach out directly to anyone still pending &mdash; email is the fastest path.
+  </div>
+  <div class="sec-heading">Baseline Survey &mdash; By Business Unit</div>
+  <div style="background:#fff;border:1px solid #E2E0DA;border-radius:8px;overflow:hidden;margin-bottom:20px">
+  <table class="sv-table">
+    <thead><tr>
+      <th>Business Unit</th>
+      <th style="text-align:right">Enrolled</th>
+      <th style="text-align:right">Completed</th>
+      <th style="text-align:right;padding-left:16px">Progress</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="sv-bu">Fleetwood</td>
+        <td class="sv-enrolled">12</td>
+        <td class="sv-done">12</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td class="sv-bu">Ephrata</td>
+        <td class="sv-enrolled">8</td>
+        <td class="sv-done">8</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td class="sv-bu">Goldshield</td>
+        <td class="sv-enrolled">4</td>
+        <td class="sv-done">4</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td class="sv-bu">E-One</td>
+        <td class="sv-enrolled">1</td>
+        <td class="sv-done">1</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td class="sv-bu">Capacity</td>
+        <td class="sv-enrolled">1</td>
+        <td class="sv-done">1</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td class="sv-bu" style="color:#A0A09A;font-style:italic">Not yet assigned</td>
+        <td class="sv-enrolled">15</td>
+        <td class="sv-done">7</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:47%"></div></div></td>
+      </tr>
+      <tr class="total-row">
+        <td>All Supervisors</td>
+        <td>41</td>
+        <td>33</td>
+        <td class="sv-bar-cell"><div class="sv-bar-wrap"><div class="sv-bar" style="width:80%"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="pending-section">
+    <div class="pending-heading">Pending — not yet started or incomplete <span class="pending-ct">8 pending</span>
+      <button onclick="copyEmails(this, [])" style="background:#EBF2FA;border:1px solid #36679F;color:#36679F;font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;font-family:Poppins,sans-serif;margin-left:8px">Copy emails</button>
+    </div>
+    <table class="pending-table">
+      <tr><td class="p-name">Ever Reyes</td><td class="p-status">In progress</td></tr>
+      <tr><td class="p-name">Jarell Coleman</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Alejandro Reyes</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Alexis Hernandez</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Danals Dunavan</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Daniel Cato</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Cory Patch</td><td class="p-status">Not started</td></tr>
+      <tr><td class="p-name">Robert Ulery</td><td class="p-status">Not started</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 3: Previous Reports -->
+<div class="panel" id="p3">
+  <div class="sec-heading">Previous Reports</div>
+  <ul class="prev-list">
+    <li><span class="prev-current">Week 3 &mdash; May 26, 2026</span> <span style="font-size:11px;color:#A0A09A;margin-left:6px">(this report)</span></li>
+    <li><em style="color:#A0A09A;font-size:12px">No previous reports yet.</em></li>
+  </ul>
+</div>
+
+<!-- Tooltip -->
+<div class="tt" id="tt"></div>
+
+<!-- Footer -->
+<div class="footer">
+  Powered by your partners at <strong>Flint Learning Solutions</strong>
+</div>
+
+<script>
+const ROSTER = [{"bu": "Capacity", "name": "Andy Speer", "email": "andy.speer@capacitytrucks.com", "mgr": "Vikas Kataria", "title": "Supervisor Engineering I", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "E-One", "name": "Andrew Renn", "email": "andrew.renn@revgroup.com", "mgr": "Gary Feldman", "title": "Manager EHS", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "Brent Salmi", "email": "brent.salmi@spartanmotors.com", "mgr": "Scott Hackman", "title": "Manager Inventory Control", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "David Evans", "email": "david.evansjr@spartanmotors.com", "mgr": "Thomas Rogers", "title": "Supervisor Production", "total": 2, "week": 1, "action": "", "milestone": "Basic", "pace": 10}, {"bu": "Ephrata", "name": "Jeffrey Adams", "email": "jeffrey.adams@spartanmotors.com", "mgr": "Thomas Rogers", "title": "Supervisor Production", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "Juan Bryant", "email": "juan.bryant@spartanmotors.com", "mgr": "Thomas Rogers", "title": "Supervisor Production", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "Kendrick Weaver", "email": "kendrick.weaver@spartanmotors.com", "mgr": "Thomas Rogers", "title": "Supervisor Production", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "Kenneth Weaver", "email": "kenneth.weaver@spartanmotors.com", "mgr": "Thomas Rogers", "title": "Supervisor Production", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "Ephrata", "name": "Ryan Grove", "email": "ryan.grove@spartanmotors.com", "mgr": "Scott Hackman", "title": "Manager Engineering", "total": 2, "week": 2, "action": "", "milestone": "Intermediate", "pace": 10}, {"bu": "Ephrata", "name": "Thomas Rogers", "email": "thomas.rogers@spartanmotors.com", "mgr": "Scott Hackman", "title": "Manager Production", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Fleetwood", "name": "Ashley Teboe", "email": "ashley.teboe@revrvgroup.com", "mgr": "Jessica Lee", "title": "Production Lead", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "Fleetwood", "name": "Curt Main", "email": "curt.main@revrvgroup.com", "mgr": "Robert Kowalczyk\n", "title": "Supervisor Maintenance", "total": 2, "week": 2, "action": "", "milestone": "Intermediate", "pace": 10}, {"bu": "Fleetwood", "name": "Daniel Ortiz", "email": "daniel.ortiz@revrvgroup.com", "mgr": "Douglas Turner", "title": "Supervisor Production", "total": 2, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 10}, {"bu": "Fleetwood", "name": "Donald Mohammed", "email": "donald.mohammed@revrvgroup.com", "mgr": "Ann Bercot", "title": "Supervisor Production", "total": 3, "week": 2, "action": "", "milestone": "Intermediate", "pace": 6}, {"bu": "Fleetwood", "name": "Douglas Smith", "email": "doug.smith@revrvgroup.com", "mgr": "Ann Bercot", "title": "Supervisor Production", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "Fleetwood", "name": "Dustin Colbert", "email": "dustin.colbert@revrvgroup.com", "mgr": "Ann Bercot", "title": "Supervisor Production", "total": 1, "week": 0, "action": "nudge", "milestone": "Basic", "pace": 19}, {"bu": "Fleetwood", "name": "Greg Hardesty", "email": "greg.hardesty@revrvgroup.com", "mgr": "Jessica Lee", "title": "Production Lead", "total": 4, "week": 2, "action": "", "milestone": "Basic", "pace": 5}, {"bu": "Fleetwood", "name": "Jeffrey Strickler", "email": "jeff.strickler@revrvgroup.com", "mgr": "Jessica Lee", "title": "Production Lead", "total": 3, "week": 1, "action": "", "milestone": "Advanced", "pace": 6}, {"bu": "Fleetwood", "name": "Kip Saylor", "email": "kip.saylor@revrvgroup.com", "mgr": "Ann Bercot", "title": "Supervisor Production", "total": 5, "week": 2, "action": "", "milestone": "Intermediate", "pace": 4}, {"bu": "Fleetwood", "name": "Michael Wolford", "email": "mike.wolford@revrvgroup.com", "mgr": "Douglas Turner", "title": "Supervisor Production", "total": 3, "week": 1, "action": "", "milestone": "Advanced", "pace": 6}, {"bu": "Fleetwood", "name": "Pat Curtis", "email": "pat.curtis@revrvgroup.com", "mgr": "Randall Baker", "title": "Supervisor Production", "total": 10, "week": 1, "action": "", "milestone": "Advanced", "pace": 2}, {"bu": "Fleetwood", "name": "Steve Tebbe", "email": "steven.tebbe@revrvgroup.com", "mgr": "Ann Bercot", "title": "Supervisor Production", "total": 2, "week": 1, "action": "", "milestone": "Intermediate", "pace": 10}, {"bu": "Goldshield", "name": "Darin Shoaf", "email": "darin.shoaf@goldshield.com", "mgr": "Brian Ruble", "title": "Production Lead", "total": 2, "week": 1, "action": "", "milestone": "Basic", "pace": 10}, {"bu": "Goldshield", "name": "David Goodwin", "email": "david.goodwin@goldshield.com", "mgr": "Brian Ruble", "title": "Production Lead", "total": 1, "week": 1, "action": "", "milestone": "Basic", "pace": 19}, {"bu": "Goldshield", "name": "Janalee Cowens", "email": "jcowans1@revgroup.com", "mgr": "Brian Ruble", "title": "Production Lead", "total": 5, "week": 3, "action": "", "milestone": "Intermediate", "pace": 4}, {"bu": "Goldshield", "name": "Jeremy Chism", "email": "jeremy.chism@goldshield.com", "mgr": "Brian Ruble", "title": "Production Lead", "total": 2, "week": 1, "action": "", "milestone": "Intermediate", "pace": 10}];
+
+function sw(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+}
+function tog(i){
+  const b=document.getElementById('mkt'+i);
+  b.classList.toggle('open');
+}
+function showTT(e,msg){
+  const t=document.getElementById('tt');
+  t.innerText=msg;
+  t.style.display='block';
+  t.style.left=(e.clientX+12)+'px';
+  t.style.top=(e.clientY+12)+'px';
+}
+function hideTT(){document.getElementById('tt').style.display='none'}
+document.addEventListener('mousemove',function(e){
+  const t=document.getElementById('tt');
+  if(t.style.display==='block'){
+    t.style.left=(e.clientX+12)+'px';
+    t.style.top=(e.clientY+12)+'px';
+  }
+});
+function exportCSV(bu){
+  const rows=ROSTER.filter(r=>r.bu===bu);
+  const hdr='Business Unit,Supervisor,Email,Title,Manager,Total,This Week,Avg Days/Activity,Action';
+  const body=rows.map(r=>[
+    r.bu, r.name, r.email, r.title, r.mgr, r.total, r.week,
+    r.pace||'', r.action||''
+  ].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob([hdr+'\n'+body],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='REV-PPE-'+bu.replace(/\s+/g,'-')+'-Week3.csv';
+  a.click();
+}
+function copyEmails(btn,emails){
+  const str=emails.filter(Boolean).join(';');
+  navigator.clipboard.writeText(str).then(()=>{
+    const orig=btn.innerText;
+    btn.innerText='✓ Copied';
+    setTimeout(()=>btn.innerText=orig,2000);
+  });
+}
+</script>
+</body>
+</html>
