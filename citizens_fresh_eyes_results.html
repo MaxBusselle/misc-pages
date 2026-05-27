@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fresh Eyes — Strong Early Indicators</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:       253 252 250;
+  --color-surface:     255 255 255;
+  --color-ink:         28 42 56;
+  --color-muted-ink:   74 88 104;
+  --color-accent:      232 77 40;
+  --color-success:     72 114 76;
+  --color-cool-grey:   154 166 176;
+  --color-light-grey:  200 205 210;
+  --color-pale-grey:   235 229 220;
+  --color-warm-line:   197 187 166;
+  --color-shadow-warm: 96 80 50;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 76px 0 60px;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+}
+.eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--color-accent));
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  letter-spacing: -0.03em;
+  color: rgb(var(--color-ink));
+  max-width: 680px;
+  margin-bottom: 18px;
+}
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgb(var(--color-muted-ink));
+  max-width: 540px;
+  line-height: 1.65;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+}
+.section:last-child { border-bottom: none; padding-bottom: 96px; }
+
+.section-label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 24px;
+}
+.section h2 {
+  font-size: clamp(1.65rem, 3.5vw, 2.3rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+}
+.section p {
+  font-size: 0.95rem;
+  color: rgb(var(--color-muted-ink));
+  max-width: 620px;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+.section p + p { margin-top: 10px; }
+
+/* ── PULL QUOTE ── */
+.pull-quote {
+  margin-top: 32px;
+  padding: 24px 28px;
+  border-left: 3px solid rgb(var(--color-accent));
+  background: rgb(var(--color-surface));
+  border-radius: 0 8px 8px 0;
+}
+.pull-quote p {
+  font-family: 'Andada Pro', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: rgb(var(--color-ink));
+  line-height: 1.6;
+  margin: 0;
+  max-width: 100%;
+}
+.pull-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgb(var(--color-cool-grey));
+  font-style: normal;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 36px;
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(var(--color-pale-grey));
+}
+.stat-cell {
+  background: rgb(var(--color-surface));
+  padding: 24px 20px;
+}
+.stat-num {
+  font-family: 'Andada Pro', serif;
+  font-size: 2.4rem;
+  letter-spacing: -0.04em;
+  color: rgb(var(--color-ink));
+  line-height: 1;
+}
+.stat-num sup {
+  font-size: 1.1rem;
+  color: rgb(var(--color-accent));
+  vertical-align: super;
+}
+.stat-desc {
+  font-size: 0.78rem;
+  color: rgb(var(--color-muted-ink));
+  margin-top: 6px;
+  line-height: 1.45;
+}
+
+/* ── WEEK BARS ── */
+.week-chart { margin-top: 44px; }
+.week-chart-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 16px;
+}
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 88px;
+  padding-bottom: 32px;
+  position: relative;
+}
+.bars::after {
+  content: '';
+  position: absolute;
+  bottom: 32px; left: 0; right: 0;
+  height: 1px;
+  background: rgb(var(--color-pale-grey));
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.bar-fill {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  background: rgb(var(--color-ink) / 0.1);
+  position: relative; z-index: 1;
+}
+.bar-fill.hi { background: rgb(var(--color-accent)); }
+.bar-n {
+  position: absolute;
+  top: -20px;
+  font-family: 'Andada Pro', serif;
+  font-size: 0.85rem;
+  color: rgb(var(--color-muted-ink));
+}
+.bar-n.hi { color: rgb(var(--color-accent)); }
+.bar-wk {
+  position: absolute;
+  bottom: -24px;
+  font-size: 0.68rem;
+  color: rgb(var(--color-cool-grey));
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.bar-note {
+  font-size: 0.73rem;
+  color: rgb(var(--color-cool-grey));
+  margin-top: 10px;
+}
+
+/* ── ACTIVITY LADDER ── */
+.ladder {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ladder-rung {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 18px 20px;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 7px;
+  transition: box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+}
+.ladder-rung:hover {
+  box-shadow: 0 6px 20px -6px rgb(var(--color-shadow-warm) / 0.18);
+}
+.rung-n {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.95rem;
+  color: rgb(var(--color-accent));
+  padding-top: 2px;
+}
+.rung-title {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.95rem;
+  color: rgb(var(--color-ink));
+  margin-bottom: 3px;
+}
+.rung-desc {
+  font-size: 0.82rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.5;
+}
+
+/* ── FIELD CHANGE SECTION ── */
+.change-intro {
+  margin-top: 0;
+}
+.change-lead {
+  font-family: 'Andada Pro', serif;
+  font-size: 1.15rem;
+  color: rgb(var(--color-ink));
+  line-height: 1.55;
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+
+.change-splits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+.change-card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 24px 22px;
+}
+.change-stat {
+  font-family: 'Andada Pro', serif;
+  font-size: 2.2rem;
+  letter-spacing: -0.04em;
+  color: rgb(var(--color-accent));
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.change-stat span {
+  font-size: 1rem;
+  color: rgb(var(--color-ink) / 0.5);
+  letter-spacing: 0;
+}
+.change-desc {
+  font-size: 0.85rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+}
+
+/* ── OUTCOME CHART ── */
+.outcome-chart {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.oc-row { display: flex; flex-direction: column; gap: 5px; }
+.oc-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.oc-label {
+  font-size: 0.83rem;
+  color: rgb(var(--color-ink));
+  line-height: 1.4;
+  flex: 1;
+}
+.oc-val {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.95rem;
+  color: rgb(var(--color-accent));
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.oc-val.muted { color: rgb(var(--color-cool-grey)); }
+.oc-track {
+  height: 5px;
+  background: rgb(var(--color-pale-grey));
+  border-radius: 99px;
+  overflow: hidden;
+}
+.oc-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: rgb(var(--color-accent));
+}
+.oc-fill.muted { background: rgb(var(--color-light-grey)); }
+.oc-divider {
+  height: 1px;
+  background: rgb(var(--color-pale-grey));
+  margin: 2px 0;
+}
+
+/* ── COACH EXCHANGES ── */
+.exchanges {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.exchange-card {
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(var(--color-surface));
+  transition: box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+}
+.exchange-card:hover {
+  box-shadow: 0 8px 24px -8px rgb(var(--color-shadow-warm) / 0.16);
+}
+.exchange-header {
+  padding: 13px 20px 11px;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  background: rgb(var(--color-paper));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.exchange-badge {
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-accent));
+  background: rgb(var(--color-accent) / 0.08);
+  padding: 3px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.exchange-summary {
+  font-size: 0.78rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.4;
+}
+.exchange-body {
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgb(var(--color-paper) / 0.5);
+}
+/* Bubble row — controls left/right alignment */
+.bubble-row {
+  display: flex;
+  flex-direction: column;
+}
+.bubble-row.fm-row { align-items: flex-end; }
+.bubble-row.coach-row { align-items: flex-start; }
+
+/* The bubble itself */
+.bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+/* Coach — left, ink-tinted background */
+.bubble.coach-bubble {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  color: rgb(var(--color-ink));
+  border-bottom-left-radius: 4px;
+}
+/* FM — right, accent-tinted */
+.bubble.fm-bubble {
+  background: rgb(var(--color-accent) / 0.09);
+  border: 1px solid rgb(var(--color-accent) / 0.18);
+  color: rgb(var(--color-ink));
+  border-bottom-right-radius: 4px;
+}
+/* Role label above bubble */
+.bubble-role {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  padding: 0 4px;
+}
+.coach-row .bubble-role { color: rgb(var(--color-accent)); }
+.fm-row .bubble-role    { color: rgb(var(--color-cool-grey)); }
+
+/* ── FM VOICE ── */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin-top: 36px;
+}
+.voice-card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+}
+.voice-card:hover {
+  box-shadow: 0 8px 24px -8px rgb(var(--color-shadow-warm) / 0.18);
+}
+.voice-mark {
+  font-family: 'Andada Pro', serif;
+  font-size: 1.8rem;
+  color: rgb(var(--color-accent) / 0.3);
+  line-height: 1;
+}
+.voice-text {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgb(var(--color-ink));
+  line-height: 1.6;
+  flex: 1;
+}
+.voice-byline {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-cool-grey));
+  padding-top: 10px;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+}
+
+/* ── FOOTER ── */
+.page-footer {
+  padding: 28px 0;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footer-co {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.9rem;
+  color: rgb(var(--color-muted-ink));
+}
+.footer-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  color: rgb(var(--color-cool-grey));
+}
+
+@media (max-width: 620px) {
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .change-splits { grid-template-columns: 1fr; }
+  .voice-grid { grid-template-columns: 1fr; }
+  .hero { padding: 52px 0 44px; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="eyebrow">Citizens Real Estate Operations · Fresh Eyes Initiative</span>
+    <h1>Strong Early Indicators<br>That the System Is Working.</h1>
+    <p class="hero-sub">A look at engagement, field outcomes, and what the coaching data shows about behavior change across our branches.</p>
+  </section>
+
+  <!-- 01 THE CHALLENGE -->
+  <section class="section">
+    <span class="section-label">01 — The Challenge</span>
+    <h2>"Repeat Blindness"</h2>
+    <p>Our people are in branches every day. Familiarity is the enemy — issues that have always been there stop being seen by the people best positioned to fix them.</p>
+    <div class="pull-quote">
+      <p>The problem isn't that our people don't care. It's that the eyes adjust. We need a way to reset that — so our people are seeing what's there with fresh eyes.</p>
+      <cite>— Chris Caso, SVP Head of Real Estate Operations</cite>
+    </div>
+  </section>
+
+  <!-- 02 THE INITIATIVE -->
+  <section class="section">
+    <span class="section-label">02 — The Initiative</span>
+    <h2>Fresh Eyes: Seeing What Needs Attention</h2>
+    <p>Short, on-the-job activities — done inside visits FMs are already making. Each one is coached individually and builds on the last. The progression moves from basic to more advanced skills.</p>
+    <div class="ladder">
+      <div class="ladder-rung">
+        <div class="rung-n">I</div>
+        <div>
+          <div class="rung-title">Observe &amp; Document</div>
+          <div class="rung-desc">Walk a branch zone like a first-time customer. Log what you find in 360.</div>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <div class="rung-n">II</div>
+        <div>
+          <div class="rung-title">Stay Alert on Work Order Visits</div>
+          <div class="rung-desc">Don't just close the ticket you came for. Document what you find beyond it.</div>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <div class="rung-n">III</div>
+        <div>
+          <div class="rung-title">Prepare Before You Arrive</div>
+          <div class="rung-desc">Review 360 first. Arrive knowing which issues are aging and what to look for.</div>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <div class="rung-n">IV</div>
+        <div>
+          <div class="rung-title">Diagnose the Recurring Issue</div>
+          <div class="rung-desc">Find what keeps coming back. Identify why. Assign an owner and resolution date before you leave.</div>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <div class="rung-n">V</div>
+        <div>
+          <div class="rung-title">Complete the Customer-Path Audit</div>
+          <div class="rung-desc">Walk the full location exterior-to-exit. Rank findings by customer impact. P1s actioned before you leave.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 THE NUMBERS -->
+  <section class="section">
+    <span class="section-label">03 — Engagement</span>
+    <h2>The Numbers</h2>
+    <div class="stat-row">
+      <div class="stat-cell">
+        <div class="stat-num">107</div>
+        <div class="stat-desc">Completed activities</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">41</div>
+        <div class="stat-desc">Facility managers actively participating</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">88<sup>%</sup></div>
+        <div class="stat-desc">Of activities produced a documented finding or proactive action</div>
+      </div>
+    </div>
+
+    <div class="week-chart">
+      <div class="week-chart-label">Completions by week</div>
+      <div class="bars">
+        <div class="bar-col">
+          <div class="bar-n">20</div>
+          <div class="bar-fill" style="height:44px;"></div>
+          <div class="bar-wk">Week 1</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-n">34</div>
+          <div class="bar-fill" style="height:75px;"></div>
+          <div class="bar-wk">Week 2</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-n hi">40</div>
+          <div class="bar-fill hi" style="height:88px;"></div>
+          <div class="bar-wk">Week 3</div>
+        </div>
+        <div class="bar-col">
+          <div class="bar-fill" style="height:28px; background: rgb(var(--color-ink)/0.06); border: 1px dashed rgb(var(--color-light-grey));"></div>
+          <div class="bar-wk">Current</div>
+        </div>
+      </div>
+      <div class="bar-note">Current week is on pace to meet or exceed Week 3.</div>
+    </div>
+  </section>
+
+  <!-- 04 WHAT'S CHANGING IN THE FIELD -->
+  <section class="section">
+    <span class="section-label">04 — What's Changing in the Field</span>
+    <h2>Two Behaviors Showing Up Consistently</h2>
+
+    <div class="change-splits">
+      <div class="change-card">
+        <div class="change-stat">56 <span>activities</span></div>
+        <div class="change-desc">FMs documented findings they weren't specifically looking for — either during a walkthrough or beyond the scope of a work order they came to close.</div>
+      </div>
+      <div class="change-card">
+        <div class="change-stat">7 <span>activities</span></div>
+        <div class="change-desc">FMs identified a recurring issue, diagnosed the root cause, and logged a concrete resolution step with an owner before leaving the location.</div>
+      </div>
+    </div>
+
+    <div class="outcome-chart">
+      <div class="oc-row">
+        <div class="oc-header">
+          <span class="oc-label">Walkthrough completed — new issue documented in 360</span>
+          <span class="oc-val">39</span>
+        </div>
+        <div class="oc-track"><div class="oc-fill" style="width:41%;"></div></div>
+      </div>
+      <div class="oc-row">
+        <div class="oc-header">
+          <span class="oc-label">Work order visit — found and logged something <em>beyond</em> the original ticket</span>
+          <span class="oc-val">17</span>
+        </div>
+        <div class="oc-track"><div class="oc-fill" style="width:18%;"></div></div>
+      </div>
+      <div class="oc-row">
+        <div class="oc-header">
+          <span class="oc-label">Recurring issue identified — root cause diagnosed</span>
+          <span class="oc-val">7</span>
+        </div>
+        <div class="oc-track"><div class="oc-fill" style="width:7%;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 THE COACH -->
+  <section class="section">
+    <span class="section-label">05 — The Coach at Work</span>
+    <h2>Meeting Each FM Where They Are</h2>
+    <p>The coach knows each FM's history — which branches they've visited, what they've found, where they've struggled. Every session picks up where the last one left off.</p>
+
+    <div class="exchanges">
+
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Builds on prior visits</span>
+          <span class="exchange-summary">Coach references specific prior branches by name. FM surfaces a real recurring issue. Activity completes in the field.</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">You've been building solid fresh-eyes habits — catching the streak at Plum, the scuff marks at North Plaza. This activity takes it a step further: find an issue that's been sitting unresolved, figure out why it hasn't been fixed, and log a concrete action step with an owner and a deadline. Which location are you heading to next, and when?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">North Plaza branch has glue coming up beneath the carpet. The floor guys and I were out twice to clean it up. The carpet is so old it needs replacing.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">That's a perfect candidate — recurring issue, known history, clear pattern. That's exactly what this activity is built for. Have you got a work order open for it, or is it undocumented right now?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">I let the retail FM know. He has it being approved for a capex for new flooring. Created a work order, added pictures, and noted it needs replacing.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">Good — you've already got documentation and a path forward. Now categorize why it persisted and log a specific action step with an owner and target date. That closes the loop.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Already on site</span>
+          <span class="exchange-summary">FM is already at the location when they open the app. Coach pivots immediately to real-time guidance using live 360 data.</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">Last time you spotted the recurring HVAC pattern at Charles Street, formed a hypothesis before you arrived, and got it logged. Good foundation. This time: same idea, but you leave having actually moved it forward — a repair made, a vendor contacted, a work order opened. Which branch are you visiting next, and when?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">Westwood Back Office.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">When are you heading there?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">Already arrived.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">Perfect timing. Pull up 360 for Westwood Back Office right now and look for either a work order open 60+ days, or the same type of issue opened more than once in the past 90 days. What do you find?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Knows the FM's background</span>
+          <span class="exchange-summary">Coach uses baseline survey context to frame the activity and acknowledge what the FM already brings to it.</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">You've got 30 years in facilities — so you know how fast familiarity makes problems invisible. This activity is about deliberately breaking that habit: walking a branch like a first-time customer and documenting what you find. Which branch are you hitting next, and when?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">Today, 5/7 — I'll be visiting our Boca Raton location.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">Perfect timing. Quick prep question: when you arrive, what's your plan for the walkthrough route?</div>
+          </div>
+          <div class="bubble-row fm-row">
+            <span class="bubble-role">FM</span>
+            <div class="bubble fm-bubble">This is a back office, but it doesn't change how I inspect. There are customers who visit this location. I check in with the POC and any colleagues I see, and ask if there are issues they've noticed.</div>
+          </div>
+          <div class="bubble-row coach-row">
+            <span class="bubble-role">Coach</span>
+            <div class="bubble coach-bubble">That's a solid approach. One layer to add today: after your check-in, reset at the front entrance and walk it purely as a customer would — no assumptions, fresh start. What do you notice that you might have stopped seeing?</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 06 FM VOICE -->
+  <section class="section">
+    <span class="section-label">06 — In Their Words</span>
+    <h2>What FMs Are Saying</h2>
+    <p>After each activity, FMs leave a tip for the next person. Unedited.</p>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-mark">"</div>
+        <div class="voice-text">Walk the branch and speak with the colleagues. Treat it as your own home. Would the condition be acceptable in your home?</div>
+        <div class="voice-byline">Facilities Manager Lead</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-mark">"</div>
+        <div class="voice-text">Always review open work orders before arriving at any branch for any reason — to catch stale work orders and avoid duplication of items already in queue.</div>
+        <div class="voice-byline">Senior Facility Manager</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-mark">"</div>
+        <div class="voice-text">Vendor escorts have a lot of downtime. Take advantage of it to walk around and document items for correction.</div>
+        <div class="voice-byline">Facility Manager</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-mark">"</div>
+        <div class="voice-text">I would suggest looking at everything top to bottom. Aesthetics matter — not just utility.</div>
+        <div class="voice-byline">Senior Facility Manager</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="footer-co">Citizens Real Estate Operations</div>
+    <div class="footer-date">Fresh Eyes Initiative · Pilot Report · May 2026</div>
+  </footer>
+
+</div>
+</body>
+</html>
