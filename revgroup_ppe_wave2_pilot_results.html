@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group · PPE Wave 2 · Pilot Results</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:      253 252 250;
+  --color-surface:    255 255 255;
+  --color-ink:        28 42 56;
+  --color-muted-ink:  74 88 104;
+  --color-accent:     232 77 40;
+  --color-success:    72 114 76;
+  --color-cool-grey:  154 166 176;
+  --color-light-grey: 200 205 210;
+  --color-pale-grey:  235 229 220;
+  --color-warm-line:  197 187 166;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+}
+
+/* ─── LAYOUT ─────────────────────────────────── */
+.page-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+section {
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  padding: 72px 0;
+}
+
+section:last-of-type { border-bottom: none; }
+
+/* ─── EYEBROW ─────────────────────────────────── */
+.eyebrow {
+  font-family: 'Sen', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 28px;
+  display: block;
+}
+
+.eyebrow-accent {
+  color: rgb(var(--color-accent));
+}
+
+/* ─── HERO ────────────────────────────────────── */
+.hero {
+  padding: 88px 0 72px;
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 32px;
+}
+
+.hero h1 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: rgb(var(--color-ink));
+  max-width: 800px;
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: rgb(var(--color-muted-ink));
+}
+
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgb(var(--color-muted-ink));
+  max-width: 620px;
+}
+
+/* ─── SECTION HEADERS ──────────────────────────── */
+.section-h2 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: rgb(var(--color-ink));
+}
+
+.section-lead {
+  font-size: 16px;
+  color: rgb(var(--color-muted-ink));
+  max-width: 620px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* ─── PULL QUOTE ──────────────────────────────── */
+.pull-quote {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-left: 3px solid rgb(var(--color-accent));
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin-top: 32px;
+}
+
+.pull-quote blockquote {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.5;
+  color: rgb(var(--color-ink));
+  margin-bottom: 14px;
+}
+
+.pull-quote cite {
+  font-family: 'Sen', sans-serif;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--color-cool-grey));
+}
+
+/* ─── ACTIVITY LADDER ─────────────────────────── */
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 8px;
+}
+
+.ladder-rung {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 20px 0;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+}
+
+.ladder-rung:last-child { border-bottom: 1px solid rgb(var(--color-pale-grey)); }
+
+.rung-num {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: rgb(var(--color-accent) / 0.5);
+  line-height: 1.4;
+  padding-top: 2px;
+}
+
+.rung-title {
+  font-family: 'Andada Pro', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(var(--color-ink));
+  margin-bottom: 4px;
+}
+
+.rung-desc {
+  font-size: 14px;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+}
+
+/* ─── STAT GRID ───────────────────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgb(var(--color-pale-grey));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.stat-cell {
+  background: rgb(var(--color-surface));
+  padding: 32px 28px;
+}
+
+.stat-number {
+  font-family: 'Andada Pro', serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgb(var(--color-ink));
+  margin-bottom: 8px;
+}
+
+.stat-number sup {
+  font-size: 22px;
+  color: rgb(var(--color-accent));
+  vertical-align: top;
+  margin-top: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 6px;
+}
+
+.stat-note {
+  font-size: 13px;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.45;
+}
+
+/* ─── WEEKLY CHART ────────────────────────────── */
+.chart-wrap {
+  margin-bottom: 8px;
+}
+
+.chart-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--color-cool-grey));
+  margin-bottom: 16px;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 120px;
+  padding-bottom: 32px;
+  position: relative;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  min-height: 4px;
+}
+
+.bar-label-top {
+  font-family: 'Andada Pro', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgb(var(--color-ink));
+}
+
+.bar-label-bottom {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: rgb(var(--color-cool-grey));
+  text-align: center;
+}
+
+.bar-current {
+  border: 2px dashed rgb(var(--color-accent) / 0.5);
+  background: transparent !important;
+}
+
+.chart-note {
+  font-size: 13px;
+  color: rgb(var(--color-muted-ink));
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ─── CALLOUT CARDS ───────────────────────────── */
+.callout-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.callout-card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  padding: 28px;
+}
+
+.callout-number {
+  font-family: 'Andada Pro', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgb(var(--color-accent));
+  margin-bottom: 10px;
+}
+
+.callout-number span {
+  font-size: 22px;
+  vertical-align: top;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.callout-desc {
+  font-size: 15px;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+}
+
+/* ─── OUTCOME BARS ────────────────────────────── */
+.outcome-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.outcome-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 36px;
+  gap: 14px;
+  align-items: center;
+}
+
+.outcome-label {
+  font-size: 13px;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.4;
+  text-align: right;
+}
+
+.outcome-bar-track {
+  height: 10px;
+  background: rgb(var(--color-pale-grey));
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.outcome-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: rgb(var(--color-ink) / 0.25);
+  transition: width 0.6s ease;
+}
+
+.outcome-bar-fill.accent {
+  background: rgb(var(--color-accent));
+}
+
+.outcome-count {
+  font-family: 'Andada Pro', serif;
+  font-size: 17px;
+  color: rgb(var(--color-ink));
+  text-align: right;
+}
+
+/* ─── COACH CARDS ─────────────────────────────── */
+.coach-section-lead {
+  font-size: 16px;
+  color: rgb(var(--color-muted-ink));
+  max-width: 580px;
+  margin-bottom: 40px;
+}
+
+.exchange-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.exchange-card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.exchange-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exchange-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: rgb(var(--color-accent) / 0.1);
+  color: rgb(var(--color-accent));
+  border: 1px solid rgb(var(--color-accent) / 0.2);
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.exchange-summary {
+  font-size: 14px;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.4;
+}
+
+.exchange-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bubble-row {
+  display: flex;
+}
+
+.bubble-row.coach { justify-content: flex-start; }
+.bubble-row.learner { justify-content: flex-end; }
+
+.bubble-wrap {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bubble-role {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.bubble-row.coach .bubble-role { color: rgb(var(--color-accent)); }
+.bubble-row.learner .bubble-role { color: rgb(var(--color-cool-grey)); text-align: right; }
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bubble-row.coach .bubble {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-bottom-left-radius: 3px;
+  color: rgb(var(--color-ink));
+}
+
+.bubble-row.learner .bubble {
+  background: rgb(var(--color-accent) / 0.07);
+  border: 1px solid rgb(var(--color-accent) / 0.15);
+  border-bottom-right-radius: 3px;
+  color: rgb(var(--color-ink));
+}
+
+/* ─── VOICE CARDS ─────────────────────────────── */
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.voice-card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.voice-mark {
+  font-family: 'Andada Pro', serif;
+  font-size: 48px;
+  line-height: 1;
+  color: rgb(var(--color-accent) / 0.2);
+  font-style: normal;
+}
+
+.voice-quote {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgb(var(--color-ink));
+  flex: 1;
+}
+
+.voice-byline {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--color-cool-grey));
+}
+
+/* ─── FOOTER ──────────────────────────────────── */
+footer {
+  padding: 32px 0;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left {
+  font-family: 'Andada Pro', serif;
+  font-size: 15px;
+  color: rgb(var(--color-muted-ink));
+}
+
+.footer-right {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(var(--color-cool-grey));
+}
+
+@media (max-width: 680px) {
+  .page-inner { padding: 0 20px; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .callout-row { grid-template-columns: 1fr; }
+  .voice-grid { grid-template-columns: 1fr; }
+  .outcome-row { grid-template-columns: 140px 1fr 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─────────────────────────────────── -->
+<div class="page-inner">
+  <div class="hero">
+    <p class="hero-eyebrow">REV Group · Build PPE Habits with Your Team — Wave 2</p>
+    <h1>Strong Early Evidence <em>the Habits Are Taking Root.</em></h1>
+    <p class="hero-sub">Wave 2 launched with 41 supervisors across seven business units — all new to the program. These are the early results: what they're doing, what's changing on the floor, and what it sounds like in their own words.</p>
+  </div>
+</div>
+
+<!-- ─── 01 THE CHALLENGE ──────────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">01 —</span> The Challenge</span>
+    <h2 class="section-h2">The Gap Between Knowing the Rule and Wearing the Gear</h2>
+    <p class="section-lead">Wave 1 data confirmed what the field already suspected: most PPE gaps at REV Group aren't about knowledge of the requirement. They're about the habit — the automatic, unsupervised, every-time behavior that compliance depends on but that rules alone can't produce. Wave 2 was designed to build that.</p>
+    <div class="pull-quote">
+      <blockquote>"This is a great opportunity for you to develop the habits and some of those skills that maybe you don't have. Maybe you just need to refine them over the next 12 weeks."</blockquote>
+      <cite>Paul Antoneau · Senior Director, Health & Safety</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 02 THE INITIATIVE ─────────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">02 —</span> The Initiative</span>
+    <h2 class="section-h2">Build PPE Habits with Your Team</h2>
+    <p class="section-lead">Supervisors develop as active PPE leaders across three practice areas — modeling the standard, communicating it clearly, and monitoring it throughout the shift. Structured activities progress from the most accessible to the most demanding.</p>
+    <div class="ladder">
+      <div class="ladder-rung">
+        <span class="rung-num">i</span>
+        <div>
+          <p class="rung-title">Show what ready looks like</p>
+          <p class="rung-desc">Use a prepared team member at the morning huddle as a live peer example — specific gear, specific task, before assignments go out.</p>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <span class="rung-num">ii</span>
+        <div>
+          <p class="rung-title">Name the expectation explicitly</p>
+          <p class="rung-desc">Call out PPE requirements at break transitions and connect each requirement to its specific hazard — not the rule, but the injury it prevents.</p>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <span class="rung-num">iii</span>
+        <div>
+          <p class="rung-title">Correct violations in real time</p>
+          <p class="rung-desc">Walk two work zones during active operations — correct what's missing on the spot, acknowledge what's right in the moment. Both directions matter.</p>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <span class="rung-num">iv</span>
+        <div>
+          <p class="rung-title">Recognize consistently</p>
+          <p class="rung-desc">Publicly acknowledge team members by name with specific gear and task details — giving the whole team a concrete picture of the standard.</p>
+        </div>
+      </div>
+      <div class="ladder-rung">
+        <span class="rung-num">v</span>
+        <div>
+          <p class="rung-title">Verify the change held</p>
+          <p class="rung-desc">Track feedback through the shift, circle back hours later, and respond specifically to what you find — turning one-time corrections into durable behavior.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 03 ENGAGEMENT ─────────────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">03 —</span> Engagement</span>
+    <h2 class="section-h2">The Numbers</h2>
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-number">67</div>
+        <div class="stat-label">Completed Activities</div>
+        <div class="stat-note">Across 13 distinct activity types in the first two weeks</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">27</div>
+        <div class="stat-label">Supervisors Active</div>
+        <div class="stat-note">66% of the enrolled cohort completing at least one activity</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">80<sup>%</sup></div>
+        <div class="stat-label">Full Execution Rate</div>
+        <div class="stat-note">Of completions resulted in the target behavior fully executed on the floor</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <p class="chart-title">Completions by Week</p>
+      <div class="bar-chart">
+        <!-- Week 20: 21 completions, Week 21: 36 completions (peak), Week 22: 10 (current) -->
+        <!-- Heights: 21/36=58%, 36/36=100%, current dashed -->
+        <div class="bar-group">
+          <div class="bar-label-top">21</div>
+          <div class="bar" style="height:70px; background:rgb(var(--color-ink)/0.2);"></div>
+          <div class="bar-label-bottom">Week 1<br>May 12</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-top">36</div>
+          <div class="bar" style="height:100px; background:rgb(var(--color-accent));"></div>
+          <div class="bar-label-bottom">Week 2<br>May 19</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label-top" style="color:rgb(var(--color-cool-grey))">—</div>
+          <div class="bar bar-current" style="height:60px;"></div>
+          <div class="bar-label-bottom" style="color:rgb(var(--color-accent))">Current<br>May 26</div>
+        </div>
+      </div>
+      <p class="chart-note">Current week in progress. Week 2 marked the highest single-week completion volume in the program so far.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 04 WHAT'S CHANGING ─────────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">04 —</span> What's Changing in the Field</span>
+    <h2 class="section-h2">Two Behaviors Showing Up Consistently</h2>
+    <div class="callout-row">
+      <div class="callout-card">
+        <div class="callout-number">8<span>×</span></div>
+        <p class="callout-desc">Supervisors gathered their teams for a structured end-of-shift PPE check — tracking what they'd seen during the shift and naming specific compliance moments alongside violations.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-number">80<span>%</span></div>
+        <p class="callout-desc">Of all completed activities resulted in the target behavior fully executed — supervisors not just attempting the activity, but closing the loop on the floor.</p>
+      </div>
+    </div>
+
+    <div class="outcome-chart">
+      <div class="outcome-row">
+        <span class="outcome-label">End-of-shift check with acknowledgment</span>
+        <div class="outcome-bar-track"><div class="outcome-bar-fill accent" style="width:100%"></div></div>
+        <span class="outcome-count">8</span>
+      </div>
+      <div class="outcome-row">
+        <span class="outcome-label">Break transition — asked, followed up</span>
+        <div class="outcome-bar-track"><div class="outcome-bar-fill accent" style="width:87%"></div></div>
+        <span class="outcome-count">7</span>
+      </div>
+      <div class="outcome-row">
+        <span class="outcome-label">Corrected violations &amp; recognized compliant PPE</span>
+        <div class="outcome-bar-track"><div class="outcome-bar-fill accent" style="width:87%"></div>
+        </div>
+        <span class="outcome-count">7</span>
+      </div>
+      <div class="outcome-row">
+        <span class="outcome-label">Called out prepared team member by name &amp; gear</span>
+        <div class="outcome-bar-track"><div class="outcome-bar-fill" style="width:75%"></div></div>
+        <span class="outcome-count">6</span>
+      </div>
+      <div class="outcome-row">
+        <span class="outcome-label">Public acknowledgment — specific behavior &amp; task</span>
+        <div class="outcome-bar-track"><div class="outcome-bar-fill" style="width:62%"></div></div>
+        <span class="outcome-count">5</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 05 THE COACH AT WORK ──────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">05 —</span> The Coach at Work</span>
+    <h2 class="section-h2">Meeting Each Supervisor Where They Are</h2>
+    <p class="coach-section-lead">Every conversation is built around what that supervisor is working on that day — their crew, their zone, their challenge. Three exchanges from the field.</p>
+    <div class="exchange-cards">
+
+      <!-- Exchange 1: Consequence framing -->
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Consequence Framing</span>
+          <span class="exchange-summary">Coach prepares a supervisor to connect PPE requirements to specific hazards — not the rule, but the injury</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">Before you head out — let me sharpen the hazard connection for each pairing so you're not improvising in the moment. Bump caps under the coach: head impacts on chassis components, lacerations and concussions. Gloves when using knives: lacerations from blade contact or slip. Which of these comes up most often on your floor?</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Supervisor Production</span>
+              <div class="bubble">No gloves when using knives.</div>
+            </div>
+          </div>
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">That's your best spot. When you see someone grab a knife without gloves: "You need cut-resistant gloves for that — a knife slip on that material will put you in the ER with a laceration before you know what happened." Specific gear, specific consequence.</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Supervisor Production</span>
+              <div class="bubble">He was under the assumption that since we have some exempt areas from cut gloves that we all were. I told him that wasn't the case and if he is doing anything outside the exempt task, cut gloves must be worn to prevent lacerations.</div>
+            </div>
+          </div>
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">Solid — you named the requirement and connected it to the consequence. The exempt-area confusion is exactly the kind of thing that creates gaps, so clearing that up matters. Did he put the gloves on before continuing?</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Supervisor Production</span>
+              <div class="bubble">He thanked me for sharing the info and said he will do it from now on.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exchange 2: Peer modeling - peer observation technique -->
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Peer Observation</span>
+          <span class="exchange-summary">Supervisor uses a compliant operator as a live model — walks the violation to see it rather than hear it</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">When you approached the operator without the face shield, what did you say — and did you stay until they actually had it on?</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Production Lead</span>
+              <div class="bubble">I asked him to take a walk, and we observed the operator wearing his face shield while grinding. I said you know wearing a face shield is a standard practice and for your safety.</div>
+            </div>
+          </div>
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">Good instinct taking him to see it in person. Did he put the face shield on before he went back to work? And did you acknowledge the operator who was wearing it, in the moment?</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Production Lead</span>
+              <div class="bubble">Yes. I asked the operator what the benefits were of wearing a face shield while grinding. He said his personal safety is his responsibility — the company has standards, but it's on him to go home the same way he left. This seemed to hit home. He asked me to get him a brand-new face shield, which I did, and he's been wearing it.</div>
+            </div>
+          </div>
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">That's a strong outcome — getting him to say it himself lands harder than telling him. And getting him a new shield on the spot removed every excuse to skip it.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exchange 3: Verify feedback held -->
+      <div class="exchange-card">
+        <div class="exchange-header">
+          <span class="exchange-badge">Loop Closed</span>
+          <span class="exchange-summary">Supervisor tracks a first-time correction, circles back hours later, and delivers specific recognition when it holds</span>
+        </div>
+        <div class="exchange-body">
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">The tracking piece is what supervisors usually skip. You'll need to jot down name, PPE item, location, and whether it's a first offense or repeat. Do you have a quick way to capture that during your shift?</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Production Lead</span>
+              <div class="bubble">Yes, I can make the notes.</div>
+            </div>
+          </div>
+          <div class="bubble-row learner">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Production Lead</span>
+              <div class="bubble">I had a follow-up conversation with Darlene today about keeping safety glasses over her eyes at all times. Yesterday she had temporarily removed them while working in a tight space — first time issue. I checked back a few times during the shift and safety glasses were always in proper place. I also complimented her on the correct PPE and her positive attitude with my feedback.</div>
+            </div>
+          </div>
+          <div class="bubble-row coach">
+            <div class="bubble-wrap">
+              <span class="bubble-role">Coach</span>
+              <div class="bubble">That's the full loop — correction, follow-up, and specific recognition. Well done. One thing worth noting: when you complimented her, did you name the specific behavior? "Darlene, glasses have been on all shift — that's exactly what I needed to see" lands harder than a general compliment.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── 06 IN THEIR WORDS ──────────────────────── -->
+<section>
+  <div class="page-inner">
+    <span class="eyebrow"><span class="eyebrow-accent">06 —</span> In Their Words</span>
+    <h2 class="section-h2">What Supervisors Are Saying</h2>
+    <p class="section-lead">After each activity, supervisors leave a tip for the next person. Unedited.</p>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div>
+          <div class="voice-mark">"</div>
+          <p class="voice-quote">Don't go into it expecting to catch someone doing something wrong. The biggest thing is just being visible during the transition and paying attention to the task-specific PPE once people actually get to their work area.</p>
+        </div>
+        <span class="voice-byline">Production Lead</span>
+      </div>
+      <div class="voice-card">
+        <div>
+          <div class="voice-mark">"</div>
+          <p class="voice-quote">Continuous acknowledgment of the good can help reinforce PPE usage — don't just wait for the violations.</p>
+        </div>
+        <span class="voice-byline">Manager, Inventory Control</span>
+      </div>
+      <div class="voice-card">
+        <div>
+          <div class="voice-mark">"</div>
+          <p class="voice-quote">Ask what they need and let the team member explain what is needed. When they say it themselves, it sticks.</p>
+        </div>
+        <span class="voice-byline">Supervisor Production</span>
+      </div>
+      <div class="voice-card">
+        <div>
+          <div class="voice-mark">"</div>
+          <p class="voice-quote">Make sure to prepare your associate — don't call on them on the spot for a peer demo. When they're ready, they do it right, and the team watches.</p>
+        </div>
+        <span class="voice-byline">Production Lead</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer>
+  <div class="page-inner">
+    <div class="footer-inner">
+      <span class="footer-left">REV Group</span>
+      <span class="footer-right">PPE Wave 2 · Pilot Report · May 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
