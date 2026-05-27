@@ -3,788 +3,905 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REV Group · PPE Initiative — Ledger</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>REV Group — Build Better PPE Habits with Your Team · Week 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f7f5f0;
-  --white: #ffffff;
-  --ink: #1c1c1e;
-  --muted: #6b6860;
-  --rule: #ddd9d0;
-  --accent: #1a3a5c;
-  --accent-light: #e8eef5;
-  --highlight: #c84b2f;
-  --highlight-light: #fdf0ec;
-  --green: #2d6a4f;
-  --green-light: #eaf3ee;
-  --tag-bg: #ededea;
-  --amber: #b45309;
-  --amber-light: #fef3c7;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); font-family: 'IBM Plex Sans', sans-serif; color: var(--ink); }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sen',sans-serif;background:rgb(253 252 250);color:rgb(28 42 56);font-size:14px;-webkit-font-smoothing:antialiased}
+::selection{background-color:rgb(232 77 40);color:rgb(253 252 250)}
 
-/* NAV */
-.nav {
-  position: sticky; top: 0; height: 56px; background: var(--white);
-  border-bottom: 1px solid var(--rule); display: flex; align-items: center;
-  padding: 0 32px; justify-content: space-between; z-index: 100;
-}
-.nav-left { display: flex; align-items: center; gap: 12px; }
-.nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); font-weight: 500; letter-spacing: 0.03em; }
-.nav-sep { width: 1px; height: 20px; background: var(--rule); }
-.nav-title { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
-.nav-date { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+.page{max-width:1040px;margin:0 auto;padding:0 0 72px}
 
-/* PAGE */
-.page { max-width: 1140px; margin: 0 auto; padding: 40px 40px 80px; }
+/* ── HEADER ── */
+.report-header{background:rgb(28 42 56);padding:24px 36px 0;position:relative}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:18px}
+.header-titles{color:#fff}
+.report-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.report-title{font-family:'Andada Pro',serif;font-size:22px;font-weight:400;color:#fff;line-height:1.25;max-width:520px}
+.report-meta{font-size:12px;color:rgba(255,255,255,.55);margin-top:5px;letter-spacing:.02em}
+.rev-logo{height:44px;width:auto;display:block;opacity:.95}
 
-/* SECTION HEADER */
-.section-header { margin-bottom: 24px; }
-.section-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
-.section-title { font-family: 'Libre Baskerville', serif; font-size: 22px; font-weight: 700; color: var(--ink); }
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;align-items:flex-end}
+.tab{padding:11px 22px;font-size:13px;font-weight:700;color:rgba(255,255,255,.55);cursor:pointer;border-radius:8px 8px 0 0;border:none;background:transparent;font-family:'Sen',sans-serif;transition:all .18s;white-space:nowrap;letter-spacing:.01em}
+.tab:hover:not(.active){background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.tab.active{background:rgb(253 252 250);color:rgb(28 42 56);font-weight:700}
 
-/* SUMMARY CARDS */
-.summary-row { display: flex; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
-.summary-card { background: var(--white); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; flex: 1; min-width: 160px; }
-.stat-num { font-family: 'Libre Baskerville', serif; font-size: 30px; font-weight: 700; margin-bottom: 4px; }
-.stat-num.blue { color: var(--accent); }
-.stat-num.green { color: var(--green); }
-.stat-num.amber { color: var(--amber); }
-.stat-num.red { color: var(--highlight); }
-.stat-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.4; }
+/* ── PANELS ── */
+.panel-wrap{padding:28px 36px}
+.panel{display:none}.panel.active{display:block}
 
-/* PROGRESS BAR */
-.progress-card { background: var(--white); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; margin-bottom: 20px; }
-.progress-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
-.progress-title { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); font-weight: 500; }
-.progress-pct { font-family: 'Libre Baskerville', serif; font-size: 20px; font-weight: 700; color: var(--green); }
-.progress-track { height: 10px; background: var(--rule); border-radius: 5px; position: relative; overflow: visible; }
-.progress-fill { height: 100%; border-radius: 5px; background: var(--green); }
-.progress-goal-marker { position: absolute; top: -4px; width: 2px; height: 18px; background: var(--accent); border-radius: 1px; left: 70%; }
-.progress-goal-label { position: absolute; top: -22px; left: 70%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); white-space: nowrap; }
+/* ── SECTION LABEL ── */
+.sh{font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgb(74 88 104);margin:0 0 14px}
 
-/* THRESHOLD STRIP */
-.threshold-strip { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
-.threshold-pill { display: flex; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--rule); border-radius: 20px; padding: 5px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); }
-.t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.t-dot.green { background: var(--green); }
-.t-dot.amber { background: var(--amber); }
-.t-dot.red { background: var(--highlight); }
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.kpi{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.kpi-label{font-size:11px;color:rgb(74 88 104);margin-bottom:6px;line-height:1.4;letter-spacing:.01em}
+.kpi-value{font-family:'Andada Pro',serif;font-size:30px;font-weight:400;color:rgb(28 42 56);line-height:1}
+.kpi-sub{font-size:11px;color:rgb(154 166 176);margin-top:4px}
+.kpi-accent{color:rgb(232 77 40)}
 
-/* TIER CONTROLS */
-.tier-controls { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.tier-controls label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
-.tier-controls select { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; background: var(--white); outline: none; cursor: pointer; }
-.tier-controls select:focus { border-color: var(--accent); }
+/* ── CALLOUT ── */
+.callout{background:rgb(255 248 244);border:1px solid rgb(232 77 40 / 0.25);border-left:3px solid rgb(232 77 40);border-radius:8px;padding:14px 18px;margin-bottom:26px;display:flex;gap:12px;align-items:flex-start}
+.callout-body{font-size:13px;color:rgb(28 42 56);line-height:1.65}
+.callout-body strong{font-weight:700}
 
-/* TIER CARDS */
-.tier-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
-.tier-card { background: var(--white); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
-.tier-header { padding: 14px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; transition: background 0.15s; }
-.tier-header:hover { background: var(--bg); }
-.tier-header-left { display: flex; align-items: center; gap: 10px; }
-.tier-badge { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; }
-.tier-badge.green { background: var(--green-light); color: var(--green); }
-.tier-badge.amber { background: var(--amber-light); color: var(--amber); }
-.tier-badge.red { background: var(--highlight-light); color: var(--highlight); }
-.tier-name { font-weight: 600; font-size: 14px; }
-.tier-chevron { font-size: 12px; color: var(--muted); transition: transform 0.2s; display: inline-block; }
-.tier-chevron.open { transform: rotate(180deg); }
-.tier-body { display: none; border-top: 1px solid var(--rule); }
-.tier-body.open { display: block; }
+/* ── FEATURED STORY ── */
+.featured-story{background:#fff;border:1px solid rgb(235 229 220);border-left:4px solid rgb(232 77 40);border-radius:10px;padding:24px 26px;margin-bottom:28px;position:relative;overflow:hidden}
+.fs-eyebrow{font-size:10px;font-weight:700;letter-spacing:.10em;color:rgb(232 77 40);text-transform:uppercase;margin-bottom:10px}
+.fs-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:16px}
+.fs-name{font-family:'Andada Pro',serif;font-size:18px;font-weight:400;color:rgb(28 42 56)}
+.fs-meta{font-size:12px;color:rgb(74 88 104);margin-top:3px}
+.fs-badge{font-size:12px;padding:5px 13px;border-radius:20px;background:rgb(232 77 40 / 0.1);color:rgb(180 50 18);white-space:nowrap;flex-shrink:0;font-weight:700;letter-spacing:.01em}
+.fs-desc{font-size:13.5px;line-height:1.75;color:rgb(74 88 104);margin-bottom:16px}
+.fs-q{font-size:13.5px;line-height:1.75;color:rgb(28 42 56);border-left:3px solid rgb(235 229 220);padding-left:16px;font-style:italic;font-family:'Andada Pro',serif}
 
-/* GROUP SECTIONS inside tier */
-.group-section { border-bottom: 1px solid var(--rule); }
-.group-section:last-child { border-bottom: none; }
-.group-header { padding: 8px 20px; background: var(--bg); display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
-.group-header:hover { background: #efede8; }
-.group-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); }
-.group-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
-.group-chevron { font-size: 10px; color: var(--muted); transition: transform 0.15s; display: inline-block; margin-left: auto; }
-.group-chevron.open { transform: rotate(180deg); }
-.group-body { display: block; }
-.group-body.closed { display: none; }
+/* ── STORY GRID ── */
+.story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+.sc{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:18px 20px}
+.sc-eyebrow{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgb(154 166 176);margin-bottom:6px}
+.sc-name{font-family:'Andada Pro',serif;font-size:15px;font-weight:400;color:rgb(28 42 56);margin-bottom:2px}
+.sc-meta{font-size:11px;color:rgb(74 88 104);margin-bottom:8px}
+.sc-badge{display:inline-block;font-size:11px;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:9px;letter-spacing:.01em}
+.sc-desc{font-size:12.5px;line-height:1.65;color:rgb(74 88 104);margin-bottom:10px}
+.sc-q{font-size:12.5px;line-height:1.65;color:rgb(28 42 56);border-left:2px solid rgb(235 229 220);padding-left:12px;font-style:italic;font-family:'Andada Pro',serif}
 
-.tier-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tier-table th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 8px 20px; text-align: left; background: var(--white); border-bottom: 1px solid var(--rule); }
-.tier-table td { padding: 10px 20px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
-.tier-table tr:last-child td { border-bottom: none; }
-.star-col { color: var(--amber); margin-right: 4px; font-size: 12px; }
-.num-col { font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-align: right; padding-right: 24px; }
+/* ── PEER TIPS ── */
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.tip-card{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.tip-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgb(154 166 176);margin-bottom:7px}
+.tip-text{font-size:13px;line-height:1.65;color:rgb(28 42 56);font-style:italic;font-family:'Andada Pro',serif;margin-bottom:8px}
+.tip-attr{font-size:11px;color:rgb(74 88 104);font-weight:700}
 
-.day-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; padding: 2px 8px; border-radius: 3px; white-space: nowrap; font-weight: 500; }
-.day-badge.green { background: var(--green-light); color: var(--green); }
-.day-badge.amber { background: var(--amber-light); color: var(--amber); }
-.day-badge.red { background: var(--highlight-light); color: var(--highlight); }
+/* ── BASELINE SCORES ── */
+.scores-wrap{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.scores-hdr{padding:14px 18px;border-bottom:1px solid rgb(235 229 220);display:flex;justify-content:space-between;align-items:center}
+.scores-hdr-left{font-size:12px;font-weight:700;color:rgb(28 42 56)}
+.scores-hdr-right{font-size:11px;color:rgb(154 166 176)}
+.score-row{display:flex;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid rgb(235 229 220 / 0.7)}
+.score-row:last-child{border-bottom:none}
+.score-label{font-size:12px;color:rgb(28 42 56);flex:1;line-height:1.45}
+.score-bar-wrap{width:160px;height:6px;background:rgb(235 229 220);border-radius:3px;overflow:hidden;flex-shrink:0}
+.score-bar{height:100%;border-radius:3px;background:rgb(28 42 56);transition:width .5s}
+.score-bar.low{background:rgb(232 77 40)}
+.score-bar.mid{background:rgb(197 187 166)}
+.score-bar.good{background:rgb(72 114 76)}
+.score-val{font-family:'Geist Mono',monospace;font-size:12px;font-weight:500;color:rgb(28 42 56);width:34px;text-align:right;flex-shrink:0}
 
-.tier-footnote { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); padding: 12px 20px; background: var(--bg); border-top: 1px solid var(--rule); line-height: 1.8; }
+/* ── PRACTICE CARDS ── */
+.prac-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.prac-card{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.prac-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:9px}
+.tag-p1{background:rgb(232 77 40 / 0.1);color:rgb(180 50 18)}
+.tag-p2{background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)}
+.tag-p3{background:rgb(72 114 76 / 0.12);color:rgb(50 90 54)}
+.prac-name{font-size:12px;color:rgb(74 88 104);line-height:1.4;margin-bottom:8px}
+.prac-n{font-family:'Andada Pro',serif;font-size:32px;font-weight:400;color:rgb(28 42 56);line-height:1}
+.prac-unit{font-size:12px;color:rgb(154 166 176);margin-left:4px}
 
-/* DIVIDER */
-.section-divider { border: none; border-top: 2px solid var(--rule); margin: 40px 0 32px; }
+/* ── LEADERBOARD ── */
+.ldr{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.ldr-hdr{padding:13px 18px;border-bottom:1px solid rgb(235 229 220);display:flex;justify-content:space-between;align-items:center}
+.ldr-hdr-left{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgb(74 88 104)}
+.ldr-hdr-right{font-size:11px;color:rgb(154 166 176)}
+.ldr-row{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid rgb(235 229 220 / 0.6)}
+.ldr-row:last-child{border-bottom:none}
+.ldr-rank{font-family:'Geist Mono',monospace;font-size:12px;color:rgb(154 166 176);width:20px;text-align:right;flex-shrink:0}
+.ldr-name{font-size:13px;font-weight:700;color:rgb(28 42 56);flex:1}
+.ldr-sub{font-size:11px;color:rgb(154 166 176);font-weight:400;margin-left:6px}
+.ldr-bw{width:180px;height:6px;background:rgb(235 229 220);border-radius:3px;overflow:hidden;flex-shrink:0}
+.ldr-b{height:100%;border-radius:3px;background:rgb(28 42 56)}
+.ldr-v{font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;width:46px;text-align:right;flex-shrink:0;color:rgb(28 42 56)}
 
-/* FILTER BAR */
-.filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; padding: 16px 20px; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; }
-.filter-bar select, .filter-bar input { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: 7px 10px; background: var(--bg); outline: none; cursor: pointer; }
-.filter-bar select:focus, .filter-bar input:focus { border-color: var(--accent); }
-.filter-bar input { flex: 1; min-width: 160px; }
-.clear-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 4px; background: var(--white); color: var(--muted); cursor: pointer; white-space: nowrap; }
-.clear-btn:hover { border-color: var(--accent); color: var(--accent); }
-.results-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); padding: 0 4px; }
+/* ── ROSTER ── */
+.wnote{font-size:12px;color:rgb(74 88 104);background:rgb(235 229 220 / 0.5);border-radius:8px;padding:10px 14px;margin-bottom:18px;line-height:1.6}
+.mkt-block{margin-bottom:8px;border:1px solid rgb(235 229 220);border-radius:10px;overflow:visible;background:#fff}
+.mkt-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:rgb(28 42 56);cursor:pointer;user-select:none;gap:12px;border-radius:10px 10px 0 0}
+.mkt-hd.collapsed{border-radius:10px}
+.mkt-left{display:flex;align-items:center;flex:1;min-width:0}
+.mkt-nm{font-size:13px;font-weight:700;color:#fff}
+.mkt-mt{font-size:12px;color:rgba(255,255,255,.5);margin-left:12px}
+.mkt-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.export-btn{font-size:11px;font-weight:700;color:rgb(28 42 56);background:rgba(255,255,255,.9);border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-family:'Sen',sans-serif;white-space:nowrap;transition:background .15s}
+.export-btn:hover{background:#fff}
+.chevron::after{content:'›';display:inline-block;transform:rotate(90deg);transition:transform .2s;font-size:18px;color:rgba(255,255,255,.6);line-height:1}
+.chevron.open::after{transform:rotate(270deg)}
+.mkt-body{display:none;overflow:visible}
+.mkt-body.open{display:block}
 
-/* ACTIVITY TABLE */
-.table-wrap { background: var(--white); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
-.act-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.act-table th { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 10px 14px; text-align: left; background: var(--bg); border-bottom: 1px solid var(--rule); white-space: nowrap; cursor: pointer; user-select: none; }
-.act-table th:hover { color: var(--accent); }
-.act-table th.sorted { color: var(--accent); }
-.act-table td { padding: 11px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; color: var(--ink); line-height: 1.4; }
-.act-table tr:last-child td { border-bottom: none; }
-.act-table tr:hover td { background: #fafaf8; }
+.rt{width:100%;border-collapse:collapse;font-size:12px}
+.rt th{text-align:left;padding:8px 13px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.06em;background:rgb(253 252 250)}
+.rt td{padding:8px 13px;border-bottom:1px solid rgb(235 229 220 / 0.6);vertical-align:middle}
+.rt tr:last-child td{border-bottom:none}
+.rt tr:hover td{background:rgb(235 229 220 / 0.25)}
+.loc-cell{color:rgb(74 88 104);font-size:11px;max-width:155px;line-height:1.35}
+.seg-cell{font-size:11px;color:rgb(154 166 176)}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.03em}
+.p-rv{background:rgb(232 77 40 / 0.1);color:rgb(180 50 18)}
+.p-sv{background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)}
+.week-cell{font-weight:700;color:rgb(28 42 56);font-family:'Geist Mono',monospace;font-size:12px}
+.week-cell.zero{color:rgb(200 205 210);font-weight:400}
+.total-cell{font-family:'Geist Mono',monospace;font-size:12px;color:rgb(74 88 104)}
 
-.cat-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
-.cat-badge.found { background: var(--green-light); color: var(--green); }
-.cat-badge.partial { background: var(--amber-light); color: var(--amber); }
-.cat-badge.none { background: var(--tag-bg); color: var(--muted); }
+/* ── ACTION PILLS ── */
+.action-wrap{position:relative;display:inline-block}
+.p-nudge{background:rgb(253 230 220);color:rgb(180 50 18);cursor:help}
+.p-streak{font-size:14px;cursor:help;display:inline-block;line-height:1}
+.action-tooltip{display:none;position:fixed;background:rgb(28 42 56);color:#fff;font-size:11px;font-weight:400;line-height:1.55;padding:9px 13px;border-radius:7px;width:230px;white-space:normal;z-index:9999;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.3)}
 
-.rating-wrap { display: flex; flex-direction: column; gap: 4px; }
-.rating-dots { display: flex; gap: 2px; align-items: center; }
-.rating-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); }
-.rating-dot.filled { background: var(--accent); }
-.rating-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+/* ── SURVEY TAB ── */
+.sv-wrap{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.sv-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sv-tbl th{text-align:left;padding:10px 16px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.06em;background:rgb(253 252 250)}
+.sv-tbl td{padding:10px 16px;border-bottom:1px solid rgb(235 229 220 / 0.6);vertical-align:middle}
+.sv-tbl tr:last-child td{border-bottom:none;font-weight:700;color:rgb(28 42 56);background:rgb(235 229 220 / 0.25)}
+.pgbar{height:6px;border-radius:3px;background:rgb(235 229 220);overflow:hidden;width:90px;display:inline-block;vertical-align:middle;margin-right:8px}
+.pg-fill{height:100%;border-radius:3px;background:rgb(72 114 76)}
+.pg-warn{background:rgb(232 77 40)}
+.pct-good{font-weight:700;color:rgb(72 114 76)}
+.pct-warn{font-weight:700;color:rgb(232 77 40)}
 
-/* COACH CELL */
-.coach-cell { display: flex; flex-direction: column; gap: 6px; }
-.exchange-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 3px; white-space: nowrap; width: fit-content; }
-.exchange-icon { font-size: 10px; }
-.coach-moment { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; max-width: 300px; }
+.pending-block{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:18px 20px;margin-bottom:12px}
+.pending-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.pending-title{font-size:13px;font-weight:700;color:rgb(28 42 56)}
+.pending-sub{font-size:11px;color:rgb(74 88 104);margin-top:2px}
+.copy-btn{background:rgb(235 229 220 / 0.7);color:rgb(28 42 56);border:none;font-size:11px;font-weight:700;border-radius:5px;padding:5px 12px;cursor:pointer;font-family:'Sen',sans-serif;transition:all .15s}
+.copy-btn:hover{background:rgb(197 187 166)}
+.copy-btn.copied{color:rgb(72 114 76);background:rgb(72 114 76 / 0.12)}
+.pending-tbl{width:100%;border-collapse:collapse}
+.pending-tbl th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgb(154 166 176);padding:6px 10px;border-bottom:1px solid rgb(235 229 220);text-align:left}
+.pending-tbl td{padding:7px 10px;border-bottom:1px solid rgb(235 229 220 / 0.5);font-size:12px}
+.pending-tbl tr:last-child td{border-bottom:none}
 
-.no-results { padding: 32px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
-
-/* ─── FEATURED ROW HIGHLIGHT ────────────────────────────────── */
-tr.featured-row td { background: #f0f4fa !important; }
-tr.featured-row:hover td { background: #e4ecf7 !important; }
-tr.featured-row .coach-cell { cursor: pointer; }
-.session-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-top: 6px;
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  color: var(--white); background: var(--accent);
-  padding: 3px 10px; border-radius: 3px;
-  border: none; cursor: pointer;
-  transition: background 0.15s;
-  white-space: nowrap;
-}
-.session-btn:hover { background: #0e2a45; }
-
-/* ─── MODAL OVERLAY ─────────────────────────────────────────── */
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(10,20,35,0.75);
-  z-index: 1000; align-items: center; justify-content: center;
-  padding: 24px; backdrop-filter: blur(3px);
-}
-.modal-overlay.open { display: flex; }
-
-.modal {
-  background: var(--white); border-radius: 10px;
-  width: 100%; max-width: 760px; max-height: 90vh;
-  display: flex; flex-direction: column; overflow: hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.3);
-  position: relative;
-}
-
-/* CLOSE */
-.modal-close {
-  position: absolute; top: 14px; right: 18px;
-  background: none; border: none; font-size: 18px;
-  color: var(--muted); cursor: pointer; padding: 4px 8px;
-  border-radius: 4px; z-index: 10; line-height: 1;
-}
-.modal-close:hover { background: var(--bg); color: var(--ink); }
-
-/* PARTICIPANT CARD */
-.modal-header { padding: 24px 28px 0; flex-shrink: 0; }
-.participant-card { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
-.participant-avatar {
-  width: 46px; height: 46px; border-radius: 50%;
-  background: var(--accent); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Libre Baskerville', serif; font-size: 17px; font-weight: 700;
-  flex-shrink: 0;
-}
-.participant-name { font-family: 'Libre Baskerville', serif; font-size: 19px; font-weight: 700; margin-bottom: 2px; }
-.participant-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.8; }
-.participant-activity {
-  margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  background: var(--accent-light); color: var(--accent);
-  display: inline-block; padding: 3px 10px; border-radius: 4px;
-}
-.participant-practice { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 3px; }
-
-/* FRAMING QUOTE */
-.modal-framing-quote {
-  margin: 16px 28px 0; padding: 13px 16px;
-  border-left: 3px solid var(--highlight); background: var(--highlight-light);
-  font-family: 'Libre Baskerville', serif; font-size: 14px; font-style: italic;
-  color: var(--ink); line-height: 1.6; flex-shrink: 0;
-}
-.modal-framing-quote cite {
-  display: block; font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; font-style: normal; color: var(--muted); margin-top: 5px;
-}
-
-/* SYNTHESIS */
-.modal-synthesis {
-  margin: 14px 28px 0; padding: 13px 16px;
-  background: var(--bg); border-radius: 6px;
-  font-size: 13px; color: var(--ink); line-height: 1.65; flex-shrink: 0;
-}
-.modal-synthesis-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 5px;
-}
-
-/* SCROLLABLE TRANSCRIPT */
-.modal-body { flex: 1; overflow-y: auto; padding: 18px 28px 24px; }
-
-.transcript-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px;
-}
-
-/* TURNS */
-.turn { display: grid; grid-template-columns: 86px 1fr; gap: 0 16px; }
-.turn + .turn { margin-top: 0; }
-.turn + .turn::before {
-  content: ''; display: block; grid-column: 1 / -1;
-  height: 1px; background: var(--rule); margin: 11px 0;
-}
-.turn-meta { text-align: right; padding-top: 2px; }
-.turn-role {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-}
-.turn-role.coach { color: var(--accent); }
-.turn-role.supervisor { color: var(--highlight); }
-.turn-annotation {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  color: var(--muted); margin-top: 3px; font-style: italic; line-height: 1.4;
-}
-.turn-content { font-size: 13px; line-height: 1.65; color: var(--ink); }
-.turn-content strong { font-weight: 600; }
-.turn-content em { font-style: italic; }
-
-/* KEY MOMENT */
-.turn.key-moment .turn-content {
-  background: #fffbee; border-left: 2px solid var(--amber);
-  padding: 8px 12px; border-radius: 0 4px 4px 0;
-}
-.turn.key-moment .turn-role.supervisor::after {
-  content: ' · key moment'; font-size: 9px; color: var(--amber);
-  font-style: italic; font-weight: 400; letter-spacing: 0; text-transform: none;
-}
-
-/* NEXT ACTIVITY FOCUS */
-.modal-next-focus {
-  margin: 0 28px; padding: 13px 16px;
-  border-left: 3px solid var(--green); background: var(--green-light);
-  flex-shrink: 0;
-}
-.modal-next-focus-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 5px;
-}
-.modal-next-focus-text { font-size: 13px; color: var(--ink); line-height: 1.65; }
-
-/* MODAL FOOTER */
-.modal-footer {
-  padding: 14px 28px; border-top: 1px solid var(--rule);
-  display: flex; justify-content: space-between; align-items: center;
-  flex-shrink: 0; background: var(--bg);
-}
-.modal-footer-meta { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+/* ── FOOTER ── */
+.report-footer{display:flex;align-items:center;justify-content:center;gap:14px;padding:32px 36px 0;border-top:1px solid rgb(235 229 220);margin-top:32px}
+.footer-text{font-size:11px;color:rgb(154 166 176)}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-left">
-    <span class="nav-logo">REV Group · PPE Initiative — Wave 2</span>
-    <div class="nav-sep" style="width:1px;height:20px;background:var(--rule);"></div>
-    <span class="nav-title">📋 Ledger — Activity Field Report</span>
-  </div>
-  <span class="nav-date">As of May 20, 2026</span>
-</nav>
-
 <div class="page">
 
-  <!-- SECTION 1: ENGAGEMENT TRACKER -->
-  <div class="section-header">
-    <div class="section-eyebrow">Section 1 of 2</div>
-    <div class="section-title">Initiative Cadence</div>
-  </div>
-
-  <div class="summary-row">
-    <div class="summary-card">
-      <div class="stat-num blue">41</div>
-      <div class="stat-lbl">Total activities<br>completed</div>
+  <!-- ══ HEADER ══ -->
+  <div class="report-header">
+    <div class="header-top">
+      <div class="header-titles">
+        <div class="report-eyebrow">REV Group · Safety Initiative</div>
+        <div class="report-title">Build Better PPE Habits with Your Team</div>
+        <div class="report-meta">Week 3 &nbsp;·&nbsp; Initiative launched May 7, 2026 &nbsp;·&nbsp; 41 supervisors · 2 business segments</div>
+      </div>
+      <img src="https://client.flintls.com/2dot0/logos/REVlogo.png" alt="REV Group" class="rev-logo">
     </div>
-    <div class="summary-card">
-      <div class="stat-num blue">21 <span style="font-size:16px;color:var(--muted);">of 42</span></div>
-      <div class="stat-lbl">Enrolled participants<br>active (≥1 activity)</div>
-    </div>
-    <div class="summary-card">
-      <div class="stat-num green">100%</div>
-      <div class="stat-lbl">On-target engagement<br>rate (active cohort)</div>
-    </div>
-    <div class="summary-card">
-      <div class="stat-num blue">70%</div>
-      <div class="stat-lbl">Program goal<br>(on-target rate)</div>
+    <div class="tabs">
+      <div class="tab active" onclick="sw(0)">What's happening</div>
+      <div class="tab" onclick="sw(1)">Full roster</div>
+      <div class="tab" onclick="sw(2)">Baseline surveys</div>
+      <div class="tab" onclick="sw(3)">Needs a nudge</div>
     </div>
   </div>
 
-  <div class="progress-card">
-    <div class="progress-label">
-      <span class="progress-title">Active Participant Engagement Rate vs. 70% Goal</span>
-      <span class="progress-pct">100% on target</span>
+  <div class="panel-wrap">
+
+  <!-- ══════════════════════════════════════
+       TAB 1 — WHAT'S HAPPENING
+  ══════════════════════════════════════ -->
+  <div class="panel active" id="p0">
+
+    <div class="callout">
+      <div class="callout-body">
+        <strong>Three weeks in, and supervisors are already changing behavior on the floor.</strong> Across Specialty and Recreational Vehicles, 26 supervisors have logged 60 practice completions — using peer demos, public recognition, and in-the-moment correction in ways many haven't done systematically before. The stories below are real, from the floor, this week.
+      </div>
     </div>
-    <div class="progress-track">
-      <div class="progress-goal-label">Goal: 70%</div>
-      <div class="progress-goal-marker"></div>
-      <div class="progress-fill" style="width: 100%;"></div>
+
+    <!-- KPIs -->
+    <div class="sh">Program snapshot</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Supervisors enrolled</div>
+        <div class="kpi-value">41</div>
+        <div class="kpi-sub">Across 7 business units</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Completed ≥1 activity</div>
+        <div class="kpi-value kpi-accent">26</div>
+        <div class="kpi-sub">63% participation (26 of 41)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total activities logged</div>
+        <div class="kpi-value kpi-accent">60</div>
+        <div class="kpi-sub">Across all 3 practices</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Avg per active supervisor</div>
+        <div class="kpi-value">2.3</div>
+        <div class="kpi-sub">Top performer: 10</div>
+      </div>
     </div>
+
+    <!-- Featured story -->
+    <div class="sh">Story of the week</div>
+    <div class="featured-story">
+      <div class="fs-eyebrow">Monitoring PPE During Shifts &nbsp;·&nbsp; Fleetwood — Recreational Vehicles</div>
+      <div class="fs-head">
+        <div>
+          <div class="fs-name">Pat Curtis</div>
+          <div class="fs-meta">Manager: Randall Baker &nbsp;·&nbsp; Fleetwood</div>
+        </div>
+        <div class="fs-badge">10 activities completed</div>
+      </div>
+      <div class="fs-desc">Pat has gone deeper into this program than anyone — completing activities across all three practices in three weeks. On the floor, Pat identified two PPE violations during a walkthrough (improper glove use near a saw, an ill-fitting face shield) and corrected both on the spot. Pat then recruited a well-respected team member named Paul to demonstrate proper welding sleeve usage at the morning huddle — and recognized him publicly during the demo and privately afterward. Asked what advice to give the next supervisor, Pat's answer was direct: <em>"Find someone well respected. Be enthusiastic. Don't beat around the bush — get right to it."</em></div>
+      <div class="fs-q">"Pick someone who's new and help include them in a group setting. They appreciate being called out by name in front of the team."</div>
+    </div>
+
+    <!-- Story grid -->
+    <div class="sh">From the floor this week</div>
+    <div class="story-grid">
+
+      <div class="sc">
+        <div class="sc-eyebrow">Modeling Proper PPE Habits &nbsp;·&nbsp; Ephrata</div>
+        <div class="sc-name">Ryan Grove</div>
+        <div class="sc-meta">Manager: Scott Hackman</div>
+        <span class="sc-badge" style="background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)">Co-modeled at under-vehicle inspection</span>
+        <div class="sc-desc">Ryan worked a quick task alongside a team member — wearing full PPE — and verbalized why he was wearing it as they worked. His debrief produced one of the program's sharpest insights so far.</div>
+        <div class="sc-q">"Make sure you verbally sound out why you are wearing the PPE. Don't lead by example alone — that's not good enough."</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-eyebrow">Setting PPE Expectations &nbsp;·&nbsp; E-One</div>
+        <div class="sc-name">Andrew Renn</div>
+        <div class="sc-meta">Manager: Gary Feldman &nbsp;·&nbsp; 15+ yrs EHS experience</div>
+        <span class="sc-badge" style="background:rgb(72 114 76 / 0.12);color:rgb(50 90 54)">Turned violations into teaching moments</span>
+        <div class="sc-desc">Andrew ran an end-of-shift PPE check in Plant 2, addressing multiple non-conformances as teaching opportunities — explaining why each item mattered rather than just issuing corrections.</div>
+        <div class="sc-q">"Don't get sucked into a debate about the requirements; they're black and white. Acknowledge circumstances, but put the ball back in their court by stating that you need their help to understand how to fix it."</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-eyebrow">Monitoring PPE During Shifts &nbsp;·&nbsp; Goldshield</div>
+        <div class="sc-name">Janalee Cowens</div>
+        <div class="sc-meta">Manager: Brian Ruble &nbsp;·&nbsp; 5 activities</div>
+        <span class="sc-badge" style="background:rgb(232 77 40 / 0.1);color:rgb(180 50 18)">Gel booth respirator + end-of-shift recognition</span>
+        <div class="sc-desc">Janalee walked the gel booth crew through respirator filter maintenance and storage habits at end-of-shift — and specifically recognized a team member for maintaining the standard throughout the shift.</div>
+        <div class="sc-q">"Make sure the geller is wearing his respirator at all times. And when someone gets it right consistently, say so by name."</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-eyebrow">Setting PPE Expectations &nbsp;·&nbsp; Fleetwood — Specialty</div>
+        <div class="sc-name">Ashley Teboe</div>
+        <div class="sc-meta">Manager: Jessica Lee &nbsp;·&nbsp; Quality Lead</div>
+        <span class="sc-badge" style="background:rgb(197 187 166 / 0.4);color:rgb(74 88 104)">Honest reflection, real learning</span>
+        <div class="sc-desc">Ashley observed her break transition but didn't stop anyone — and reported it honestly in her debrief. Her reflection produced advice that will help every supervisor who does this activity next.</div>
+        <div class="sc-q">"Don't go into it expecting to 'catch' someone doing something wrong. The biggest thing is just being visible during the transition and paying attention to task-specific PPE once people get to their work area."</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-eyebrow">Monitoring PPE During Shifts &nbsp;·&nbsp; Fleetwood — Specialty</div>
+        <div class="sc-name">Jeffrey Strickler</div>
+        <div class="sc-meta">Manager: Jessica Lee &nbsp;·&nbsp; 39 years on the floor</div>
+        <span class="sc-badge" style="background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)">Closed the loop — verified corrections held</span>
+        <div class="sc-desc">Jeffrey went back hours later to check whether earlier corrections had stuck. His observation after the activity: recognition doesn't just correct behavior — it actually lands well with associates.</div>
+        <div class="sc-q">"Correction, follow-up, and recognition seems to be appreciated by most associates."</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-eyebrow">Modeling Proper PPE Habits &nbsp;·&nbsp; Fleetwood — RV</div>
+        <div class="sc-name">Kip Saylor</div>
+        <div class="sc-meta">Manager: Ann Bercot &nbsp;·&nbsp; 35 years on the floor</div>
+        <span class="sc-badge" style="background:rgb(72 114 76 / 0.12);color:rgb(50 90 54)">Peer demo at the chop saw — cut gloves</span>
+        <div class="sc-desc">Kip arranged for a team member to demonstrate proper cut-resistant glove setup at the morning huddle. The shift from showing to asking — having someone else model it — changed how the team received the standard.</div>
+        <div class="sc-q">"Just do it, don't think about it. Know what you want to say before the meeting."</div>
+      </div>
+
+    </div>
+
+    <!-- Peer tips -->
+    <div class="sh">Wisdom from the floor — supervisor tips</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-label">On modeling</div>
+        <div class="tip-text">"Verbally sound out why you're wearing the PPE. Leading by example alone is not good enough."</div>
+        <div class="tip-attr">— Ryan Grove, Ephrata</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">On correction</div>
+        <div class="tip-text">"Don't get sucked into a debate. The requirements are black and white — put the ball back in their court."</div>
+        <div class="tip-attr">— Andrew Renn, E-One</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">On recognition</div>
+        <div class="tip-text">"Continuous acknowledgement of the good helps reinforce PPE usage — don't only show up when things need to change."</div>
+        <div class="tip-attr">— Brent Salmi, Ephrata</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">On transitions</div>
+        <div class="tip-text">"Be visible during the transition and pay attention to task-specific PPE. Don't go in to catch someone doing something wrong."</div>
+        <div class="tip-attr">— Ashley Teboe, Fleetwood</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">On follow-through</div>
+        <div class="tip-text">"Go do it. Don't be afraid to address someone directly. Make time for your rounds and take notes."</div>
+        <div class="tip-attr">— Pat Curtis, Fleetwood</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">On mindset</div>
+        <div class="tip-text">"You have to go in with the mindset that you are always looking for safety opportunities with every conversation you have on the floor."</div>
+        <div class="tip-attr">— Michael Wolford, Fleetwood</div>
+      </div>
+    </div>
+
+    <!-- Practice breakdown -->
+    <div class="sh">Activities by practice</div>
+    <div class="prac-row">
+      <div class="prac-card">
+        <div><span class="prac-tag tag-p1">Practice 1</span></div>
+        <div class="prac-name">Setting and Communicating PPE Expectations</div>
+        <div class="prac-n">20<span class="prac-unit">activities</span></div>
+      </div>
+      <div class="prac-card">
+        <div><span class="prac-tag tag-p2">Practice 2</span></div>
+        <div class="prac-name">Modeling Proper Additional PPE Habits</div>
+        <div class="prac-n">19<span class="prac-unit">activities</span></div>
+      </div>
+      <div class="prac-card">
+        <div><span class="prac-tag tag-p3">Practice 3</span></div>
+        <div class="prac-name">Monitoring Additional PPE During Shifts</div>
+        <div class="prac-n">21<span class="prac-unit">activities</span></div>
+      </div>
+    </div>
+
+    <!-- Leaderboard by BU -->
+    <div class="sh">Activity pace by business unit</div>
+    <div class="ldr">
+      <div class="ldr-hdr">
+        <span class="ldr-hdr-left">Business Unit</span>
+        <span class="ldr-hdr-right">Total activities</span>
+      </div>
+      <div class="ldr-row">
+        <div class="ldr-rank">1</div>
+        <div class="ldr-name">Fleetwood <span class="ldr-sub">12 supervisors · 3.1 avg</span></div>
+        <div class="ldr-bw"><div class="ldr-b" style="width:100%;background:rgb(232 77 40)"></div></div>
+        <div class="ldr-v" style="color:rgb(232 77 40)">37</div>
+      </div>
+      <div class="ldr-row">
+        <div class="ldr-rank">2</div>
+        <div class="ldr-name">Goldshield <span class="ldr-sub">4 supervisors · 2.8 avg</span></div>
+        <div class="ldr-bw"><div class="ldr-b" style="width:30%"></div></div>
+        <div class="ldr-v">11</div>
+      </div>
+      <div class="ldr-row">
+        <div class="ldr-rank">3</div>
+        <div class="ldr-name">Ephrata <span class="ldr-sub">8 supervisors · 1.2 avg</span></div>
+        <div class="ldr-bw"><div class="ldr-b" style="width:27%"></div></div>
+        <div class="ldr-v">10</div>
+      </div>
+      <div class="ldr-row">
+        <div class="ldr-rank">4</div>
+        <div class="ldr-name">Capacity <span class="ldr-sub">1 supervisor</span></div>
+        <div class="ldr-bw"><div class="ldr-b" style="width:3%"></div></div>
+        <div class="ldr-v">1</div>
+      </div>
+      <div class="ldr-row">
+        <div class="ldr-rank">5</div>
+        <div class="ldr-name">E-One <span class="ldr-sub">1 supervisor</span></div>
+        <div class="ldr-bw"><div class="ldr-b" style="width:3%"></div></div>
+        <div class="ldr-v">1</div>
+      </div>
+    </div>
+
+    <!-- Baseline score context -->
+    <div class="sh">Where the group started — baseline self-assessment</div>
+    <div class="scores-wrap">
+      <div class="scores-hdr">
+        <div class="scores-hdr-left">Learner self-assessment · 1–10 scale · 33 responses</div>
+        <div class="scores-hdr-right">Higher scores = stronger starting habit</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I model full PPE on quick or low-risk tasks, even when no one is watching</div>
+        <div class="score-bar-wrap"><div class="score-bar good" style="width:68%"></div></div>
+        <div class="score-val">6.8</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I actively observe my team and correct PPE violations on the spot</div>
+        <div class="score-bar-wrap"><div class="score-bar good" style="width:59%"></div></div>
+        <div class="score-val">5.9</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Without fail, I verify PPE for the task and follow up until gaps are fixed</div>
+        <div class="score-bar-wrap"><div class="score-bar good" style="width:59%"></div></div>
+        <div class="score-val">5.9</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I connect PPE requirements to a specific injury or near-miss when I explain them</div>
+        <div class="score-bar-wrap"><div class="score-bar mid" style="width:57%"></div></div>
+        <div class="score-val">5.7</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I circle back after feedback to verify the change held</div>
+        <div class="score-bar-wrap"><div class="score-bar mid" style="width:54%"></div></div>
+        <div class="score-val">5.4</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Feedback on PPE leads to lasting change, not the same violations recurring</div>
+        <div class="score-bar-wrap"><div class="score-bar mid" style="width:52%"></div></div>
+        <div class="score-val">5.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Every shift, I check PPE condition, address violations, and recognize what's right</div>
+        <div class="score-bar-wrap"><div class="score-bar low" style="width:49%"></div></div>
+        <div class="score-val">4.9</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I publicly recognize team members with specific details to reinforce the standard</div>
+        <div class="score-bar-wrap"><div class="score-bar low" style="width:49%"></div></div>
+        <div class="score-val">4.9</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I consistently name specific gear at shift start to show what good looks like</div>
+        <div class="score-bar-wrap"><div class="score-bar low" style="width:48%"></div></div>
+        <div class="score-val">4.8</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">I routinely use peer demonstrations to show proper PPE setup</div>
+        <div class="score-bar-wrap"><div class="score-bar low" style="width:48%"></div></div>
+        <div class="score-val">4.8</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Recognition for using PPE happens regularly, not just when things go wrong</div>
+        <div class="score-bar-wrap"><div class="score-bar low" style="width:47%"></div></div>
+        <div class="score-val">4.7</div>
+      </div>
+    </div>
+
+  </div><!-- /panel 0 -->
+
+
+  <!-- ══════════════════════════════════════
+       TAB 2 — FULL ROSTER
+  ══════════════════════════════════════ -->
+  <div class="panel" id="p1">
+    <div class="wnote">
+      Supervisors are grouped by business unit. <strong>Total</strong> = all activities completed to date.
+      Hover any action tag for details. Use the ↓ Export CSV button to pull a unit's roster.
+    </div>
+    <div id="roster-wrap"></div>
   </div>
 
-  <div class="threshold-strip">
-    <div class="threshold-pill"><div class="t-dot green"></div>On target — count ≥ pace, or active within 7 days</div>
-    <div class="threshold-pill"><div class="t-dot amber"></div>Slightly behind — 8–14 days since last activity &amp; below pace</div>
-    <div class="threshold-pill"><div class="t-dot red"></div>Seriously behind — 15+ days since last activity &amp; below pace</div>
+
+  <!-- ══════════════════════════════════════
+       TAB 3 — BASELINE SURVEYS
+  ══════════════════════════════════════ -->
+  <div class="panel" id="p2">
+
+    <div class="sh">Baseline survey completion</div>
+    <div class="sv-wrap">
+      <table class="sv-tbl">
+        <thead><tr>
+          <th>Survey</th>
+          <th>Assigned</th>
+          <th>Completed</th>
+          <th>Completion rate</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>Learner baseline self-assessment</td>
+            <td>41</td>
+            <td>33</td>
+            <td>
+              <div class="pgbar"><div class="pg-fill" style="width:80%"></div></div>
+              <span class="pct-good">80%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Manager baseline assessment</td>
+            <td>31</td>
+            <td>24</td>
+            <td>
+              <div class="pgbar"><div class="pg-fill" style="width:77%"></div></div>
+              <span class="pct-good">77%</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Combined</strong></td>
+            <td><strong>72</strong></td>
+            <td><strong>57</strong></td>
+            <td>
+              <div class="pgbar"><div class="pg-fill" style="width:79%"></div></div>
+              <span class="pct-good"><strong>79%</strong></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sh" style="margin-top:24px">Learner baseline pending — 8 not yet complete</div>
+    <div class="pending-block">
+      <div class="pending-hdr">
+        <div>
+          <div class="pending-title">Pending learner baselines</div>
+          <div class="pending-sub">7 not started · 1 incomplete</div>
+        </div>
+        <button class="copy-btn" id="copy-pending-btn" onclick="copyPending()">Copy names</button>
+      </div>
+      <table class="pending-tbl">
+        <thead><tr>
+          <th>Name</th>
+          <th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Ever Reyes</td><td><span style="color:rgb(154 166 176);font-size:11px">Incomplete</span></td></tr>
+          <tr><td>Jarell Coleman</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Alejandro Reyes</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Alexis Hernandez</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Danals Dunavan</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Daniel Cato</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Cory Patch</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+          <tr><td>Robert Ulery</td><td><span style="color:rgb(154 166 176);font-size:11px">Not started</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Baseline score context summary -->
+    <div class="sh" style="margin-top:24px">What the baseline data tells us</div>
+    <div style="background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:20px 22px;margin-bottom:20px">
+      <p style="font-size:13px;line-height:1.75;color:rgb(74 88 104);margin-bottom:12px">
+        The learner baseline (33 complete) and manager baseline (24 complete) give us a clear picture of where this group started. Supervisors rated themselves <strong style="color:rgb(28 42 56)">highest on personal modeling</strong> — wearing their own PPE (6.8/10) and observing/correcting violations (5.9/10). These are habits they've built over years on the floor.
+      </p>
+      <p style="font-size:13px;line-height:1.75;color:rgb(74 88 104);margin-bottom:12px">
+        The biggest gaps were in <strong style="color:rgb(28 42 56)">recognition and peer modeling</strong> — using public acknowledgment consistently (4.7/10), naming specific gear in front of the team (4.8/10), and running peer demonstrations (4.8/10). These are precisely the behaviors the initiative is targeting.
+      </p>
+      <p style="font-size:13px;line-height:1.75;color:rgb(74 88 104)">
+        Managers scored their supervisors somewhat higher than supervisors scored themselves — particularly on whether PPE expectations are clear (6.1/10). This modest gap suggests managers may not yet see all the places where standards slip in practice. The initiative is designed to surface exactly those moments.
+      </p>
+    </div>
+
+  </div><!-- /panel 2 -->
+
+
+
+  <!-- ══════════════════════════════════════
+       TAB 4 — NEEDS A NUDGE
+  ══════════════════════════════════════ -->
+  <div class="panel" id="p3">
+
+    <div class="callout">
+      <div class="callout-body">
+        <strong>12 supervisors need a manager touch-point.</strong> Eight haven't submitted their baseline survey — that data won't be captured at endline if it's missing now. Four completed the survey and received their first AI coaching message, but never replied. A brief word from their manager is the right next move for both groups.
+      </div>
+    </div>
+
+    <!-- Group A: No survey -->
+    <div class="sh">Baseline survey not completed — 8 supervisors</div>
+    <div style="background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:11px 18px;border-bottom:1px solid rgb(235 229 220);background:rgb(253 252 250);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;font-weight:700;color:rgb(28 42 56)">These supervisors haven't submitted their baseline self-assessment</span>
+        <span style="font-size:11px;color:rgb(154 166 176)">Baseline data is needed before endline comparison is possible</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:rgb(253 252 250)">
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Supervisor</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Business Unit</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Manager</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Survey status</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Suggested nudge</th>
+          </tr>
+        </thead>
+        <tbody id="nudge-survey-body">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group B: Got intro, never replied -->
+    <div class="sh">Received first AI message — never replied — 4 supervisors</div>
+    <div style="background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:11px 18px;border-bottom:1px solid rgb(235 229 220);background:rgb(253 252 250);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;font-weight:700;color:rgb(28 42 56)">Survey complete, but AI coaching hasn't started</span>
+        <span style="font-size:11px;color:rgb(154 166 176)">They opened the door but didn't walk through</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead>
+          <tr style="background:rgb(253 252 250)">
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Supervisor</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Business Unit</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Manager</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Incomplete practice</th>
+            <th style="text-align:left;padding:8px 14px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.07em">Suggested nudge</th>
+          </tr>
+        </thead>
+        <tbody id="nudge-noreply-body">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Manager summary -->
+    <div class="sh">Nudge targets by manager</div>
+    <div style="background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:11px 18px;border-bottom:1px solid rgb(235 229 220);background:rgb(253 252 250)">
+        <span style="font-size:12px;font-weight:700;color:rgb(28 42 56)">Some managers have multiple direct reports who need a nudge</span>
+      </div>
+      <div id="nudge-mgr-wrap" style="padding:14px 18px;display:flex;flex-direction:column;gap:12px">
+      </div>
+    </div>
+
+  </div><!-- /panel 3 -->
+
+  </div><!-- /panel-wrap -->
+
+  <div class="report-footer">
+    <span class="footer-text">Powered by Flint &nbsp;·&nbsp; Build Better PPE Habits with Your Team &nbsp;·&nbsp; Week 3 Report</span>
   </div>
 
-  <!-- GROUP BY CONTROL -->
-  <div class="tier-controls">
-    <label>Group by</label>
-    <select id="group-by" onchange="renderTiers()">
-      <option value="manager">Manager</option>
-      <option value="businessUnit">Business Unit</option>
-      <option value="businessSegment">Business Segment</option>
-      <option value="jobTitle">Job Title</option>
-    </select>
-  </div>
-
-  <div class="tier-grid" id="tier-grid">
-    <!-- Rendered by JS -->
-  </div>
-
-  <hr class="section-divider">
-
-  <!-- SECTION 2: ACTIVITY LOG -->
-  <div class="section-header">
-    <div class="section-eyebrow">Section 2 of 2</div>
-    <div class="section-title">Activity Log</div>
-  </div>
-
-  <div class="filter-bar">
-    <select id="filter-manager" onchange="applyFilters()"><option value="">All Managers</option></select>
-    <select id="filter-activity" onchange="applyFilters()"><option value="">All Activities</option></select>
-    <select id="filter-practice" onchange="applyFilters()"><option value="">All Practices</option></select>
-    <select id="filter-category" onchange="applyFilters()">
-      <option value="">All Outcomes</option>
-      <option value="Completed with finding">Completed with finding</option>
-      <option value="Partial / no new items">Partial / no new items</option>
-    </select>
-    <input type="text" id="filter-search" placeholder="Search participant..." oninput="applyFilters()">
-    <span class="results-count" id="results-count"></span>
-    <button class="clear-btn" onclick="clearFilters()">Clear filters</button>
-  </div>
-
-  <div class="table-wrap">
-    <table class="act-table" id="act-table">
-      <thead>
-        <tr>
-          <th onclick="sortTable('participant')">Participant ↕</th>
-          <th onclick="sortTable('manager')">Manager ↕</th>
-          <th>Job Title</th>
-          <th onclick="sortTable('activity')">Activity ↕</th>
-          <th onclick="sortTable('completedSort')">Completed ↕</th>
-          <th>Outcome</th>
-          <th title="Participant's self-rated confidence on this activity attempt (1–10)">User Confidence ↕</th>
-          <th>Coach Engagement</th>
-        </tr>
-      </thead>
-      <tbody id="act-tbody"></tbody>
-    </table>
-    <div class="no-results" id="no-results" style="display:none;">No matching activities.</div>
-  </div>
-
-</div>
+</div><!-- /page -->
 
 <script>
-const ON_TARGET = [{name:'Curt Main',manager:'Robert Kowalczyk',jobTitle:'Supervisor Maintenance',count:1,daysSince:1,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Andrew Renn',manager:'Gary Feldman',jobTitle:'Manager EHS',count:1,daysSince:1,ahead:false,businessUnit:'E-One',businessSegment:'Specialty Vehicles'},{name:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',count:2,daysSince:1,ahead:true,businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{name:'Ryan Grove',manager:'Scott Hackman',jobTitle:'Manager Engineering',count:1,daysSince:1,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:2,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',count:10,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',count:3,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:2,daysSince:1,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Jeremy Chism',manager:'Brian Ruble',jobTitle:'Production Lead',count:1,daysSince:2,ahead:false,businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{name:'Andy Speer',manager:'Vikas Kataria',jobTitle:'Supervisor Engineering I',count:1,daysSince:2,ahead:false,businessUnit:'Capacity',businessSegment:'Specialty Vehicles'},{name:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:3,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',count:2,daysSince:2,ahead:true,businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{name:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'David Evans',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:2,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Ashley Teboe',manager:'Jessica Lee',jobTitle:'Production Lead',count:1,daysSince:2,ahead:false,businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{name:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',count:2,daysSince:2,ahead:true,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Douglas Smith',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:1,daysSince:2,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Jeffrey Adams',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:7,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{name:'Dustin Colbert',manager:'Ann Bercot',jobTitle:'Supervisor Production',count:1,daysSince:7,ahead:false,businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{name:'Kenneth Weaver',manager:'Thomas Rogers',jobTitle:'Supervisor Production',count:1,daysSince:8,ahead:false,businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'}];
-const SLIGHTLY_BEHIND = [];
-const SERIOUSLY_BEHIND = [];
-
-const ACTIVITIES = [{participant:'Curt Main',manager:'Robert Kowalczyk',jobTitle:'Supervisor Maintenance',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 12:50',rating:5,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'Good — sounds like the end-of-shift check happened. Did you pull the team together as a group, or was it more individual checks as you caught people?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Andrew Renn',manager:'Gary Feldman',jobTitle:'Manager EHS',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 12:18',rating:9,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — sounds like the check happened and you used the violations as teaching moments, which is exactly the right instinct. Two quick things: did you acknowl...',businessUnit:'E-One',businessSegment:'Specialty Vehicles'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 09:17',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Perfect — you already have a rapport with Tyler from last time. Quick clarification before you go: when you verify PPE with a team member, make sure you\'re t...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Ryan Grove',manager:'Scott Hackman',jobTitle:'Manager Engineering',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 19, 2026',completedSort:'2026-05-19 08:56',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'How did the huddle go — did you get a chance to call someone out?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 07:33',rating:5,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Did you get a chance to call out Rita at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Verify PPE Feedback Held Throughout Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 07:33',rating:6,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Good — that\'s exactly what this activity calls for. Make sure you note whether it\'s a first offense or a repeat for each person, since your response should m...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 19, 2026',completedSort:'2026-05-19 03:59',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get a chance to have the conversation?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Acknowledge Good Compliance at End-of-Shift Check',practice:'Monitoring Additional PPE During Shifts',completed:'May 19, 2026',completedSort:'2026-05-19 02:32',rating:5,category:'Completed with finding',coachExchanges:2,coachKeyMoment:'Good that you recognized them. Two quick pushes:  1.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Jeremy Chism',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 11:55',rating:6,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'That\'s a fair point from your team member — and it\'s actually the activity working as intended. The acknowledgment piece is meant to be specific to *addition...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Andy Speer',manager:'Vikas Kataria',jobTitle:'Supervisor Engineering I',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 09:27',rating:null,category:'Partial / no new items',coachExchanges:10,coachKeyMoment:'Did you get a chance to do the full walkthrough — noting what you saw on the floor and then debriefing with the lead?',businessUnit:'Capacity',businessSegment:'Specialty Vehicles'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Close the Loop on PPE Changes',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 09:21',rating:6,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'Good timing — you just ran the break transition observation, and this activity is the natural next step: building the habit of **committing to the follow-up*...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:59',rating:6,category:'Completed with finding',coachExchanges:9,coachKeyMoment:'Did you get a chance to ask Sarah?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:47',rating:8,category:'Completed with finding',coachExchanges:3,coachKeyMoment:'That\'s a perfect setup for this activity — and that tip about keeping gloves visible right next to the glass is exactly the kind of specific, practical tip t...',businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{participant:'Janalee Cowens',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 08:32',rating:8,category:'Completed with finding',coachExchanges:11,coachKeyMoment:'Who\'d you end up calling out, and what gear did you name?',businessUnit:'Goldshield',businessSegment:'Specialty Vehicles'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 18, 2026',completedSort:'2026-05-18 07:32',rating:7,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get through both zones?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'David Evans',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 07:23',rating:5,category:'Partial / no new items',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the callout at the huddle?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 06:44',rating:5,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Did you get a chance to do it?',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Ashley Teboe',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 06:37',rating:5,category:'Partial / no new items',coachExchanges:6,coachKeyMoment:'You can see the full steps anytime in the **Activity Blueprint** button above. Here\'s what you\'re practicing: positioning yourself at a transition point, cat...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 18, 2026',completedSort:'2026-05-18 04:08',rating:3,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Planned and delivered a public recognition moment at a morning huddle, calling out a specific team member by name for consistently wearing bump caps during unde',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Douglas Smith',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 18, 2026',completedSort:'2026-05-18 03:25',rating:3,category:'Partial / no new items',coachExchanges:3,coachKeyMoment:'Planned a Monday morning huddle activity to spotlight PPE readiness by identifying a prepared team member and leading a quick gear check.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Correct PPE Violations During Operations',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 12:14',rating:6,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'You\'re already doing the core of this. The one thing to be deliberate about today: **pick two specific zones**, plant yourself with sightlines to several ope...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 12:11',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Perfect — you\'re already doing the hardest part. As you go through the shift, just make sure you\'re noting specifics: who, what gear, what the issue or the w...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Ask Team Member to Demonstrate Proper PPE Setup',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 12:05',rating:6,category:'Completed with finding',coachExchanges:9,coachKeyMoment:'Nice — you turned it around fast. Did CJ walk through his setup in his own words, or did you end up leading the explanation?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 11:45',rating:6,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Perfect setup. Here\'s what you\'re doing:  Pull Paul in, frame it as working together — not a correction.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 14, 2026',completedSort:'2026-05-14 09:06',rating:6,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Nice. Who did you call out, and what specifically did you name — did you get to the gear details (helmet, gloves, sleeves) or did it stay more general?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'State PPE Requirements Clearly',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 08:53',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Good. Did you state the full list up front, or did it turn into more of a spot-check on what they were missing?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Connect PPE Requirements to Specific Safety Consequences',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 08:32',rating:6,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Full steps are in the **Activity Blueprint** above. This one builds directly on what you\'ve been doing — instead of just stating the PPE requirement, you con...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Jeffrey Strickler',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 14, 2026',completedSort:'2026-05-14 05:42',rating:6,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — clean shift. Before I send you out for the end-of-shift gather: did you catch anything worth naming specifically, either a violation pattern or someon...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Publicly Acknowledge Consistent PPE Compliance',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 04:05',rating:5,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the recognition at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Greg Hardesty',manager:'Jessica Lee',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 14, 2026',completedSort:'2026-05-14 03:44',rating:6,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'Good — so the gap-identification piece is solid. The one thing I want to make sure is crisp before you head out: we\'re not talking about standard PPE here (s...',businessUnit:'Fleetwood',businessSegment:'Specialty Vehicles'},{participant:'Jeffrey Adams',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 13:36',rating:5,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'That works — same principle, different hazard. Public callout, specific behavior, named the person.',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Darin Shoaf',manager:'Brian Ruble',jobTitle:'Production Lead',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 13, 2026',completedSort:'2026-05-13 07:13',rating:5,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Which area did you walk, and what work was actually happening during the window? Sometimes if it\'s a quiet stretch, the additional-PPE situations just don\'t ...',businessUnit:'Goldshield',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Stay Protected During Quick Tasks',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 05:13',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Did you get a chance to work the task alongside Jon?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Dustin Colbert',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 13, 2026',completedSort:'2026-05-13 03:16',rating:3,category:'Partial / no new items',coachExchanges:6,coachKeyMoment:'Did you get a chance to call someone out at the huddle?',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Steve Tebbe',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 13:03',rating:7,category:'Completed with finding',coachExchanges:7,coachKeyMoment:'You\'ve got 20+ years running a team — you know these moments exist, they just don\'t always get the deliberate attention they deserve. The full steps are in t...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Michael Wolford',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 12:47',rating:5,category:'Completed with finding',coachExchanges:8,coachKeyMoment:'Hey — you can see the full steps in the **Activity Blueprint** button above this chat. You\'ve got 24 years on the floor, so you\'ve definitely seen PPE gaps a...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kip Saylor',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Use Prepared Team Member to Model PPE Readiness at Morning Huddle',practice:'Modeling Proper Additional PPE Habits',completed:'May 12, 2026',completedSort:'2026-05-12 12:10',rating:5,category:'Completed with finding',coachExchanges:4,coachKeyMoment:'Good — that\'s the activity. A couple quick things to confirm:  Did you name the specific gear and task the way the activity calls for (sounds like you did — ...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Donald Mohammed',manager:'Ann Bercot',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',completedSort:'2026-05-12 12:02',rating:null,category:'Completed with finding',coachExchanges:2,coachKeyMoment:'Good start — you hit the two main pieces: recognition for what held up, and addressing a violation. Quick push on one thing: did you actually look at each pe...',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Kenneth Weaver',manager:'Thomas Rogers',jobTitle:'Supervisor Production',activity:'Check Team PPE at End-of-Shift',practice:'Monitoring Additional PPE During Shifts',completed:'May 12, 2026',completedSort:'2026-05-12 12:02',rating:8,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Did you get a chance to do the end-of-shift check?',businessUnit:'Ephrata',businessSegment:'Specialty Vehicles'},{participant:'Pat Curtis',manager:'Randall Baker',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 11:42',rating:7,category:'Completed with finding',coachExchanges:5,coachKeyMoment:'Nice — that\'s the activity working exactly as designed. Paul knowing the answer when you asked is the point; it\'s a different conversation than being told.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'},{participant:'Daniel Ortiz',manager:'Douglas Turner',jobTitle:'Supervisor Production',activity:'Call Out PPE Requirements at Break Transitions',practice:'Setting and Communicating PPE Expectations',completed:'May 12, 2026',completedSort:'2026-05-12 11:42',rating:5,category:'Completed with finding',coachExchanges:6,coachKeyMoment:'Hey! I\'ll be walking you through the steps you can find in the **Activity Blueprint** (button above this chat) for the full details.',businessUnit:'Fleetwood',businessSegment:'Recreational Vehicles'}];
-
-let filtered = [...ACTIVITIES];
-let sortCol = 'completedSort';
-let sortDir = -1;
-
-// ── TIER RENDERING ──────────────────────────────────────────────
-
-function getGroupKey(p, groupBy) {
-  switch(groupBy) {
-    case 'manager': return p.manager || 'Unknown';
-    case 'businessUnit': return p.businessUnit || 'Unknown';
-    case 'businessSegment': return p.businessSegment || 'Unknown';
-    case 'jobTitle': return p.jobTitle || 'Unknown';
-    default: return p.manager;
-  }
+// ── TAB SWITCH ──
+function sw(i){
+  document.querySelectorAll(".tab").forEach((t,j)=>t.classList.toggle("active",i===j));
+  document.querySelectorAll(".panel").forEach((p,j)=>p.classList.toggle("active",i===j));
 }
 
-function buildTierHTML(participants, tierColor, tierId) {
-  if (participants.length === 0) return '';
-  const groupBy = document.getElementById('group-by').value;
+// ── TOOLTIP CONSTANTS ──
+const STREAK_TIP = "Active every week — this supervisor is building real momentum. Consider recognizing them publicly or asking them to share what's working with their peers.";
+const SURVEY_NUDGE_TIP = "This supervisor hasn't completed their baseline survey yet. A nudge from their manager at this stage of the initiative would help ensure their data is captured before the endline.";
+const NOREPLY_NUDGE_TIP = "This supervisor completed their baseline survey and received their first AI coaching message, but hasn't replied yet. A brief word from their manager could be all it takes to get them started.";
 
-  // Group participants
-  const groups = {};
-  participants.forEach(p => {
-    const key = getGroupKey(p, groupBy);
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(p);
+// ── ROSTER DATA ──
+const ROSTER = [
+  // Capacity
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Andy Speer",          mgr:"Vikas Kataria",    total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Alexis Hernandez",    mgr:"Hylen Jackson",    total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Danals Dunavan",      mgr:"Micah Rucker",     total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Daniel Cato",         mgr:"Hylen Jackson",    total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Jarell Coleman",      mgr:"Hylen Jackson",    total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Jonathan Windham",    mgr:"Nick Deering",     total:0,  survey:"complete",  engage:"no_reply"},
+  // E-One
+  {unit:"E-One",         seg:"Specialty Vehicles",    name:"Andrew Renn",         mgr:"Gary Feldman",     total:1,  survey:"complete",  engage:"active"},
+  {unit:"E-One",         seg:"Specialty Vehicles",    name:"Sean Brown",          mgr:"Andrew Renn",      total:0,  survey:"complete",  engage:"no_reply"},
+  // Ephrata
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Brent Salmi",         mgr:"Scott Hackman",    total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"David Evans",         mgr:"Thomas Rogers",    total:2,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Jeffrey Adams",       mgr:"Thomas Rogers",    total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Juan Bryant",         mgr:"Thomas Rogers",    total:1,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Kendrick Weaver",     mgr:"Thomas Rogers",    total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Kenneth Weaver",      mgr:"Thomas Rogers",    total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Michael Thompson",    mgr:"Thomas Rogers",    total:0,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Ryan Grove",          mgr:"Scott Hackman",    total:2,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Thomas Rogers",       mgr:"Scott Hackman",    total:1,  survey:"complete",  engage:"active"},
+  // Fleetwood
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Ashley Teboe",        mgr:"Jessica Lee",      total:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Cory Patch",          mgr:"Paul Montey",      total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Curt Main",           mgr:"Robert Kowalczyk", total:2,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Daniel Ortiz",        mgr:"Douglas Turner",   total:2,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Donald Mohammed",     mgr:"Ann Bercot",       total:3,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Douglas Smith",       mgr:"Ann Bercot",       total:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Dustin Colbert",      mgr:"Ann Bercot",       total:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Greg Hardesty",       mgr:"Jessica Lee",      total:4,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Jeffrey Strickler",   mgr:"Jessica Lee",      total:3,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Jessica Lee",         mgr:"Joshua Hileman",   total:0,  survey:"complete",  engage:"active_prep"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Kip Saylor",          mgr:"Ann Bercot",       total:5,  survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Michael Wolford",     mgr:"Douglas Turner",   total:3,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Pat Curtis",          mgr:"Randall Baker",    total:10, survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Steve Tebbe",         mgr:"Ann Bercot",       total:2,  survey:"complete",  engage:"active"},
+  // Goldshield
+  {unit:"Goldshield",    seg:"Recreational Vehicles", name:"Darin Shoaf",         mgr:"Brian Ruble",      total:3,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Specialty Vehicles",    name:"David Goodwin",       mgr:"Brian Ruble",      total:1,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Specialty Vehicles",    name:"Janalee Cowens",      mgr:"Brian Ruble",      total:5,  survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Goldshield",    seg:"Recreational Vehicles", name:"Jeremy Chism",        mgr:"Brian Ruble",      total:2,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Specialty Vehicles",    name:"Robert Ulery",        mgr:"Brian Ruble",      total:0,  survey:"not_started", engage:"no_engagement"},
+  // Holden
+  {unit:"Holden",        seg:"Specialty Vehicles",    name:"Jeremy Dehnel",       mgr:"Roland Lester",    total:0,  survey:"complete",  engage:"active_prep"},
+  // LEV
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Alejandro Reyes",     mgr:"Jose Suarez",      total:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Chris Olemeda",       mgr:"Jose Suarez",      total:0,  survey:"complete",  engage:"no_reply"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Ever Reyes",          mgr:"Jose Suarez",      total:0,  survey:"incomplete", engage:"no_engagement"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Itzel Jimenez Cruz",  mgr:"Jose Suarez",      total:0,  survey:"complete",  engage:"no_reply"},
+];
+
+const MAX_TOTAL = 10;
+const UNIT_ORDER = ["Fleetwood","Goldshield","Ephrata","E-One","Capacity","Holden","LEV"];
+
+function segPill(s){
+  const cl = s==="Recreational Vehicles"?"p-rv":"p-sv";
+  const short = s==="Recreational Vehicles"?"Rec. Vehicles":"Spec. Vehicles";
+  return `<span class="pill ${cl}">${short}</span>`;
+}
+function totalCell(t){
+  return `<span class="week-cell${t===0?" zero":""}">${t}</span>`;
+}
+function actionCell(t, action, survey, engage){
+  if(action==="streak") return `<span class="action-wrap"><span class="p-streak">⭐</span><span class="action-tooltip">${STREAK_TIP}</span></span>`;
+  if(survey && survey !== "complete") return `<span class="action-wrap"><span class="pill p-nudge">nudge</span><span class="action-tooltip">${SURVEY_NUDGE_TIP}</span></span>`;
+  if(engage === "no_reply" && t === 0) return `<span class="action-wrap"><span class="pill p-nudge">nudge</span><span class="action-tooltip">${NOREPLY_NUDGE_TIP}</span></span>`;
+  return `<span style="color:rgb(200 205 210);font-size:12px">—</span>`;
+}
+function exportCSV(unit){
+  const rows = ROSTER.filter(r=>r.unit===unit);
+  const header = ["Business Unit","Segment","Learner","Manager","Total Activities","Survey","Engagement","Action"];
+  const lines = [header.join(",")];
+  rows.forEach(r=>{
+    const needsNudge = (r.survey && r.survey!=="complete") ? "survey nudge" : (r.engage==="no_reply"&&r.total===0?"engagement nudge":(r.action==="streak"?"streak":"—"));
+    lines.push([`"${r.unit}"`,`"${r.seg}"`,`"${r.name}"`,`"${r.mgr}"`,r.total,`"${r.survey||"complete"}"`,`"${r.engage||""}"`,`"${needsNudge}"`].join(","));
   });
-
-  const sortedGroupKeys = Object.keys(groups).sort();
-
-  let html = '';
-  sortedGroupKeys.forEach((groupKey, gi) => {
-    const members = groups[groupKey].sort((a, b) => a.name.localeCompare(b.name));
-    const groupId = `${tierId}-group-${gi}`;
-    html += `<div class="group-section">
-      <div class="group-header" onclick="toggleGroup('${groupId}')">
-        <span class="group-label">${groupKey}</span>
-        <span class="group-count">${members.length} participant${members.length !== 1 ? 's' : ''}</span>
-        <span class="group-chevron open" id="chev-${groupId}">▼</span>
-      </div>
-      <div class="group-body" id="${groupId}">
-        <table class="tier-table">
-          <thead><tr>
-            <th>Participant</th>
-            <th>${groupBy === 'manager' ? 'Job Title' : 'Manager'}</th>
-            <th style="text-align:right;padding-right:24px;">Count</th>
-            <th>Last activity</th>
-          </tr></thead>
-          <tbody>`;
-    members.forEach(p => {
-      const star = p.ahead ? '<span class="star-col">★</span>' : '<span style="display:inline-block;width:16px;"></span>';
-      const bc = p.daysSince <= 7 ? 'green' : (p.daysSince <= 14 ? 'amber' : 'red');
-      const secondCol = groupBy === 'manager' ? p.jobTitle : p.manager;
-      html += `<tr>
-        <td>${star}${p.name}</td>
-        <td style="font-size:12px;color:var(--muted);">${secondCol}</td>
-        <td class="num-col">${p.count}</td>
-        <td><span class="day-badge ${bc}">${p.daysSince}d ago</span></td>
-      </tr>`;
-    });
-    html += `</tbody></table></div></div>`;
-  });
-  return html;
+  const blob = new Blob([lines.join("\n")],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `REV-PPE-roster-${unit.replace(/\s+/g,"-")}.csv`;
+  a.click();
 }
 
-function renderTiers() {
-  const grid = document.getElementById('tier-grid');
-  let html = '';
-
-  // ON TARGET
-  const onTargetInner = buildTierHTML(ON_TARGET, 'green', 'ot');
-  html += `<div class="tier-card">
-    <div class="tier-header" onclick="toggleTier('tier-ot', this)">
-      <div class="tier-header-left">
-        <span class="tier-badge green">${ON_TARGET.length}</span>
-        <span class="tier-name">On Target</span>
-      </div>
-      <span class="tier-chevron open" id="chev-tier-ot">▼</span>
-    </div>
-    <div class="tier-body open" id="tier-ot">
-      ${onTargetInner}
-      <div class="tier-footnote">
-        ★ = ahead of pace (count ≥ expected cumulative) &nbsp;·&nbsp;
-        Pace from initiative start: May 12, 2026 &nbsp;·&nbsp;
-        Recency calculated from May 20, 2026
-      </div>
-    </div>
-  </div>`;
-
-  // SLIGHTLY BEHIND
-  if (SLIGHTLY_BEHIND.length > 0) {
-    const sbInner = buildTierHTML(SLIGHTLY_BEHIND, 'amber', 'sb');
-    html += `<div class="tier-card">
-      <div class="tier-header" onclick="toggleTier('tier-sb', this)">
-        <div class="tier-header-left">
-          <span class="tier-badge amber">${SLIGHTLY_BEHIND.length}</span>
-          <span class="tier-name">Slightly Behind</span>
-        </div>
-        <span class="tier-chevron open" id="chev-tier-sb">▼</span>
-      </div>
-      <div class="tier-body open" id="tier-sb">
-        ${sbInner}
-        <div class="tier-footnote">8–14 days since last activity and below expected pace.</div>
-      </div>
-    </div>`;
-  }
-
-  // SERIOUSLY BEHIND
-  if (SERIOUSLY_BEHIND.length > 0) {
-    const sbInner2 = buildTierHTML(SERIOUSLY_BEHIND, 'red', 'sr');
-    html += `<div class="tier-card">
-      <div class="tier-header" onclick="toggleTier('tier-sr', this)">
-        <div class="tier-header-left">
-          <span class="tier-badge red">${SERIOUSLY_BEHIND.length}</span>
-          <span class="tier-name">Seriously Behind</span>
-        </div>
-        <span class="tier-chevron open" id="chev-tier-sr">▼</span>
-      </div>
-      <div class="tier-body open" id="tier-sr">
-        ${sbInner2}
-        <div class="tier-footnote">15+ days since last activity and below expected pace.</div>
-      </div>
-    </div>`;
-  }
-
-  grid.innerHTML = html;
-}
-
-function toggleTier(id, header) {
-  const body = document.getElementById(id);
-  const chev = document.getElementById('chev-' + id);
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  if (chev) chev.classList.toggle('open', !isOpen);
-}
-
-function toggleGroup(id) {
-  const body = document.getElementById(id);
-  const chev = document.getElementById('chev-' + id);
-  if (!body) return;
-  const isOpen = !body.classList.contains('closed');
-  body.classList.toggle('closed', isOpen);
-  if (chev) chev.classList.toggle('open', !isOpen);
-}
-
-// ── ACTIVITY TABLE ──────────────────────────────────────────────
-
-function populate() {
-  const managers = [...new Set(ACTIVITIES.map(a => a.manager))].sort();
-  const activities = [...new Set(ACTIVITIES.map(a => a.activity))].sort();
-  const practices = [...new Set(ACTIVITIES.map(a => a.practice))].sort();
-
-  const mSel = document.getElementById('filter-manager');
-  managers.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; mSel.appendChild(o); });
-
-  const aSel = document.getElementById('filter-activity');
-  activities.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; aSel.appendChild(o); });
-
-  const pSel = document.getElementById('filter-practice');
-  practices.forEach(p => { const o = document.createElement('option'); o.value = p; o.textContent = p; pSel.appendChild(o); });
-}
-
-function applyFilters() {
-  const mgr = document.getElementById('filter-manager').value;
-  const act = document.getElementById('filter-activity').value;
-  const prac = document.getElementById('filter-practice').value;
-  const cat = document.getElementById('filter-category').value;
-  const search = document.getElementById('filter-search').value.toLowerCase();
-
-  filtered = ACTIVITIES.filter(a => {
-    if (mgr && a.manager !== mgr) return false;
-    if (act && a.activity !== act) return false;
-    if (prac && a.practice !== prac) return false;
-    if (cat && a.category !== cat) return false;
-    if (search && !a.participant.toLowerCase().includes(search)) return false;
-    return true;
-  });
-
-  renderTable();
-}
-
-function clearFilters() {
-  document.getElementById('filter-manager').value = '';
-  document.getElementById('filter-activity').value = '';
-  document.getElementById('filter-practice').value = '';
-  document.getElementById('filter-category').value = '';
-  document.getElementById('filter-search').value = '';
-  filtered = [...ACTIVITIES];
-  renderTable();
-}
-
-function sortTable(col) {
-  if (sortCol === col) sortDir *= -1;
-  else { sortCol = col; sortDir = 1; }
-  renderTable();
-}
-
-function renderTable() {
-  const sorted = [...filtered].sort((a, b) => {
-    const va = (a[sortCol] !== null && a[sortCol] !== undefined) ? String(a[sortCol]) : '';
-    const vb = (b[sortCol] !== null && b[sortCol] !== undefined) ? String(b[sortCol]) : '';
-    return va.localeCompare(vb) * sortDir;
-  });
-
-  const tbody = document.getElementById('act-tbody');
-  document.getElementById('results-count').textContent = `${sorted.length} result${sorted.length !== 1 ? 's' : ''}`;
-
-  if (sorted.length === 0) {
-    tbody.innerHTML = '';
-    document.getElementById('no-results').style.display = 'block';
-    return;
-  }
-  document.getElementById('no-results').style.display = 'none';
-
-  // Featured session indices (0-based in ACTIVITIES array)
-  const FEATURED_IDXS = new Set([39, 9, 32, 33, 1]);
-
-  tbody.innerHTML = sorted.map(a => {
-    const origIdx = ACTIVITIES.indexOf(a);
-    const isFeatured = FEATURED_IDXS.has(origIdx);
-
-    const catClass = a.category === 'Completed with finding' ? 'found' : (a.category === 'Partial / no new items' ? 'partial' : 'none');
-    const catLabel = a.category === 'Completed with finding' ? 'Done' : (a.category === 'Partial / no new items' ? 'Partial' : 'None');
-
-    let ratingHtml = '—';
-    if (a.rating) {
-      const dots = Array.from({length: 10}, (_, i) =>
-        `<div class="rating-dot${i < a.rating ? ' filled' : ''}"></div>`
-      ).join('');
-      ratingHtml = `<div class="rating-wrap"><div class="rating-dots">${dots}</div><div class="rating-num">${a.rating} / 10</div></div>`;
-    }
-
-    const exchangeLabel = a.coachExchanges === 1 ? '1 exchange' : `${a.coachExchanges} exchanges`;
-    const coachHtml = `<div class="coach-cell">
-      <span class="exchange-badge"><span class="exchange-icon">↔</span>${exchangeLabel}</span>
-      ${a.coachKeyMoment ? `<span class="coach-moment">${a.coachKeyMoment}</span>` : ''}
-      ${isFeatured ? `<button class="session-btn" onclick="openSessionModal(${origIdx})">▶ View session</button>` : ''}
-    </div>`;
-
-    const rowClass = isFeatured ? ' class="featured-row"' : '';
-    return `<tr${rowClass}>
-      <td><strong>${a.participant}</strong></td>
-      <td>${a.manager}</td>
-      <td style="font-size:12px;color:var(--muted);">${a.jobTitle}</td>
-      <td style="max-width:190px;">${a.activity}<br><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">${a.practice}</span></td>
-      <td style="white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:12px;">${a.completed}</td>
-      <td><span class="cat-badge ${catClass}">${catLabel}</span></td>
-      <td>${ratingHtml}</td>
-      <td>${coachHtml}</td>
+const wrap = document.getElementById("roster-wrap");
+UNIT_ORDER.forEach((unit,ui)=>{
+  const rows = ROSTER.filter(r=>r.unit===unit);
+  const n = rows.length;
+  const avg = n?(rows.reduce((s,r)=>s+r.total,0)/n).toFixed(1):"0";
+  let trs = "";
+  rows.sort((a,b)=>b.total-a.total).forEach(r=>{
+    trs+=`<tr>
+      <td style="font-size:13px;font-weight:600;color:rgb(28 42 56)">${r.name}</td>
+      <td>${segPill(r.seg)}</td>
+      <td style="color:rgb(74 88 104);font-size:11px">${r.mgr}</td>
+      <td style="text-align:center">${totalCell(r.total)}</td>
+      <td>${actionCell(r.total,r.action||"",r.survey,r.engage)}</td>
     </tr>`;
-  }).join('');
-}
-
-// ── INIT ──────────────────────────────────────────────────────
-renderTiers();
-populate();
-renderTable();
-
-// ─── FEATURED SESSION DATA (static, pre-annotated) ────────────
-const FEATURED = {"39": {"idx": 39, "name": "Pat Curtis", "title": "Supervisor Production", "manager": "Randall Baker", "bu": "Fleetwood", "segment": "Recreational Vehicles", "activity": "Call Out PPE Requirements at Break Transitions", "practice": "Setting and Communicating PPE Expectations", "completed": "2026-05-12", "rating": 2, "summary": "Practiced a PPE observation technique at break transitions, catching an employee missing ear protection and verifying the correction held during a follow-up check.", "turns": [{"role": "assistant", "text": "Quick heads up \u2014 the full steps are in the **Activity Blueprint** button above this chat if you want to reference them.\n\nThis activity is about catching PPE gaps at break transitions: positioning yourself at a transition point, asking team members to identify what they need (rather than just telling them), and following up to confirm the change actually stuck.\n\nWith 25 years in the building, you've probably had plenty of these moments. How intentional have you been about the *ask first, then tell* approach \u2014 letting the team member name the missing gear before you do?"}, {"role": "user", "text": "Not so great at that.  I usually just tell them to put their PPE on.  I'll try it this afternoon."}, {"role": "assistant", "text": "Good \u2014 that's exactly what this activity is built to change. The \"ask first\" move does two things: it puts the thinking on them, and it surfaces whether they actually know the requirement or are just nodding along.\n\nBefore you head out \u2014 quick check on **additional PPE**. We're not talking safety glasses or hearing protection here. We mean the task-specific gear: face shield for grinding or tack welding, bump cap for under-vehicle work, cut-resistant gloves for sharp stamped parts. That's where the gaps usually show up at transitions. Clear on what to watch for?"}, {"role": "user", "text": "Yes.  I have many welders who work for me.  I was a welder for a long time so I take pride in keeping the welders aware of their PPE requirements."}, {"role": "assistant", "text": "That background is an asset \u2014 you know exactly what the hazards are, which makes the \"why\" land harder when you have the conversation.\n\nOne thing to nail today: when you spot someone without their face shield or gloves, **ask** before you tell. \"What do you need before you start tacking?\" instead of \"go get your face shield.\" Then circle back 10-15 minutes later to confirm they actually made the change \u2014 not just that they said they would.\nHead out and give it a shot \u2014 come back and let me know how it went."}, {"role": "user", "text": "I busted one of my welders, Paul Cline, without ear protection.  He knew right away when I asked what PPE he was missing.  My \"circle back\" discovered he still had them in."}, {"role": "assistant", "text": "Nice \u2014 that's the activity working exactly as designed. Paul knowing the answer when you asked is the point; it's a different conversation than being told.\n\nDid you find the \"ask first\" approach felt any different than your usual move, or was it pretty natural given your background?"}, {"role": "user", "text": "Honestly, it felt too nice for him.  He's a tough guy who can take criticism.  I'll try it on someone else."}, {"role": "assistant", "text": "That's fair \u2014 and worth noting that the ask-first approach isn't about being nice, it's about making them own the standard. Even tough guys benefit from naming it themselves rather than just being told.\n\nThat said, did you circle back and actually see the ear protection in, or did Paul tell you he still had them in?"}, {"role": "user", "text": "Yes, he had it in during the circle back."}, {"role": "assistant", "text": "Good \u2014 that's the loop closed. You did the activity as designed.\nMarked complete. You'll have a couple of quick follow-up questions from the platform. Next time, try the ask-first approach on someone you'd normally just correct directly \u2014 see if it lands differently."}], "annotation": {"framing_quote": "Honestly, it felt too nice for him. He's a tough guy who can take criticism.", "session_synthesis": "Curtis ran a clean rep \u2014 identified Paul Cline without gear, used the ask-first technique correctly, and confirmed the fix on circle-back. The revealing moment came after: he filed the technique as 'soft,' not as a discipline tool. With 25 years in welding, he defaults to direct correction because it's faster and he trusts his credibility. The coach held that reframe without letting the activity close as fully resolved.", "next_activity_focus": "Curtis needs a rep where he tries ask-first on someone he'd normally correct directly \u2014 ideally someone tougher or more experienced than Paul. The question is whether 'felt too nice' persists across personalities or was specific to that relationship. Until he runs it on a skeptic and it works, the technique stays in the 'for softer guys' bucket.", "turns": [{"role": "assistant", "text": "Quick heads up \u2014 the full steps are in the **Activity Blueprint** button above this chat if you want to reference them.\n\nThis activity is about catching PPE gaps at break transitions: positioning yourself at a transition point, asking team members to identify what they need (rather than just telling them), and following up to confirm the change actually stuck.\n\nWith 25 years in the building, you've probably had plenty of these moments. How intentional have you been about the *ask first, then tell* approach \u2014 letting the team member name the missing gear before you do?", "annotation": "Opens with blueprint reference, no warm-up \u2014 activity framing only.", "is_key_moment": false}, {"role": "user", "text": "Not so great at that.  I usually just tell them to put their PPE on.  I'll try it this afternoon.", "annotation": "Immediate self-disclosure: names his default and commits to change.", "is_key_moment": false}, {"role": "assistant", "text": "Good \u2014 that's exactly what this activity is built to change. The \"ask first\" move does two things: it puts the thinking on them, and it surfaces whether they actually know the requirement or are just nodding along.\n\nBefore you head out \u2014 quick check on **additional PPE**. We're not talking safety glasses or hearing protection here. We mean the task-specific gear: face shield for grinding or tack welding, bump cap for under-vehicle work, cut-resistant gloves for sharp stamped parts. That's where the gaps usually show up at transitions. Clear on what to watch for?", "annotation": "Validates the candor, explains the two-part mechanic before sending out.", "is_key_moment": false}, {"role": "user", "text": "Yes.  I have many welders who work for me.  I was a welder for a long time so I take pride in keeping the welders aware of their PPE requirements.", "annotation": "Establishes credibility \u2014 welder background, pride in the standard.", "is_key_moment": false}, {"role": "assistant", "text": "That background is an asset \u2014 you know exactly what the hazards are, which makes the \"why\" land harder when you have the conversation.\n\nOne thing to nail today: when you spot someone without their face shield or gloves, **ask** before you tell. \"What do you need before you start tacking?\" instead of \"go get your face shield.\" Then circle back 10-15 minutes later to confirm they actually made the change \u2014 not just that they said they would.\nHead out and give it a shot \u2014 come back and let me know how it went.", "annotation": "Activates his expertise as an asset, reinforces the ask-first framing.", "is_key_moment": false}, {"role": "user", "text": "I busted one of my welders, Paul Cline, without ear protection.  He knew right away when I asked what PPE he was missing.  My \"circle back\" discovered he still had them in.", "annotation": "Full cycle returned: caught, asked, self-identified, circle-back confirmed.", "is_key_moment": false}, {"role": "assistant", "text": "Nice \u2014 that's the activity working exactly as designed. Paul knowing the answer when you asked is the point; it's a different conversation than being told.\n\nDid you find the \"ask first\" approach felt any different than your usual move, or was it pretty natural given your background?", "annotation": "Validates the execution, probes for reflection \u2014 sets up the key moment.", "is_key_moment": false}, {"role": "user", "text": "Honestly, it felt too nice for him.  He's a tough guy who can take criticism.  I'll try it on someone else.", "annotation": "Key moment: files ask-first as 'nice,' not as a discipline tool.", "is_key_moment": true}, {"role": "assistant", "text": "That's fair \u2014 and worth noting that the ask-first approach isn't about being nice, it's about making them own the standard. Even tough guys benefit from naming it themselves rather than just being told.\n\nThat said, did you circle back and actually see the ear protection in, or did Paul tell you he still had them in?", "annotation": "Holds the reframe on technique purpose; checks whether the loop was physically confirmed.", "is_key_moment": false}, {"role": "user", "text": "Yes, he had it in during the circle back.", "annotation": "Loop confirmed \u2014 saw it himself.", "is_key_moment": false}, {"role": "assistant", "text": "Good \u2014 that's the loop closed. You did the activity as designed.\nMarked complete. You'll have a couple of quick follow-up questions from the platform. Next time, try the ask-first approach on someone you'd normally just correct directly \u2014 see if it lands differently.", "annotation": "Closes cleanly; surfaces follow-up questions to sustain the habit.", "is_key_moment": false}]}}, "9": {"idx": 9, "name": "Andy Speer", "title": "Supervisor Engineering I", "manager": "Vikas Kataria", "bu": "Capacity", "segment": "Specialty Vehicles", "activity": "Check Team PPE at End-of-Shift", "practice": "Monitoring Additional PPE During Shifts", "completed": "2026-05-18", "rating": 2, "summary": "Adapted an end-of-shift PPE check activity for an engineering supervisor without a direct production team, mapping the steps onto existing daily floor walkthroughs and supervisor check-ins.", "turns": [{"role": "assistant", "text": "Quick heads up \u2014 the full steps are in the **Activity Blueprint** button above this chat if you want to reference them.\n\nThis activity is about running a structured PPE check with your team right before end-of-shift \u2014 checking gear condition, addressing what you noticed during the day, and recognizing what held up.\n\nYou're an engineering supervisor supporting production, so this is a bit outside your usual lane. Have you done an end-of-shift PPE check with a production team before, or is this new territory?"}, {"role": "user", "text": "This is new territory, I don't have a production team"}, {"role": "assistant", "text": "Got it. Since you're supporting production rather than supervising a crew directly, let's figure out the right fit here.\n\nDo you have any regular touchpoints with production team members \u2014 floor walks, project check-ins, anything where you're observing people doing hands-on work?"}, {"role": "user", "text": "Yes, I check in with production team supervisors and leads daily for any new issues or to follow up on product changes"}, {"role": "assistant", "text": "That works. You can run a scaled-down version of this \u2014 instead of gathering a whole crew, you're doing the PPE check as part of your daily floor walkthrough when you're already checking in with those supervisors and leads.\n\nBefore you head out \u2014 quick check on what counts as \"additional PPE\" here. We're not talking safety glasses or hearing protection. We mean task-specific gear: face shields for grinding or tack welding, bump caps for under-vehicle work, cut-resistant gloves for handling sharp stamped parts. That's where the gaps usually show up. Does that track with what you typically see on the floor?"}, {"role": "user", "text": "Yes that tracks"}, {"role": "assistant", "text": "Good. Here's what you're doing on your next floor walkthrough. As you move through the shift, make a quick mental note of anything worth flagging \u2014 damaged gear, a violation you didn't have time to address, or someone modeling the standard well. Got that part?"}, {"role": "user", "text": "Got it"}, {"role": "assistant", "text": "Good. Then at the end of your walkthrough, take a few minutes with one of the supervisors or leads you're already checking in with. Have them show you their team's PPE condition, call out any specific damage or wear you see, and bring in what you noted during the walk \u2014 violations by pattern, recognition by name.\n\nWhen's your next floor walkthrough?"}, {"role": "user", "text": "Tomorrow morning"}, {"role": "assistant", "text": "Perfect. Go do it then \u2014 here's your handoff.\nCome back after your walkthrough and let me know how it went."}, {"role": "user", "text": "How can I review the Teams PPE condition if all the team members are scattered across the production line working when I go out?"}, {"role": "assistant", "text": "Good question. You're not pulling the whole team together \u2014 that's the supervisor's job. Your version is simpler: as you walk the line, observe what you see on the people already working. Note what's missing or damaged, and note who's doing it right. Then when you check in with the supervisor or lead, share what you observed. That's your \"review\" \u2014 eyes on the floor, then a quick debrief with the person who owns that team.\n\nDoes that make more sense?"}, {"role": "user", "text": "I reviewed PPE and spoke with the production lead this morning"}, {"role": "assistant", "text": "Did you get a chance to do the full walkthrough \u2014 noting what you saw on the floor and then debriefing with the lead?"}, {"role": "user", "text": "Yes, I noted guys wearing Face shields for grinding processes and guys wearing bump caps when working under units.  I noticed one guy that didn't have a bump cap on, who wasn't directly under the unit, but was very close.  We discussed the bump cap requirements and making sure guys know when they need to where them"}, {"role": "assistant", "text": "Good catch on the borderline situation \u2014 \"close to\" is exactly where the habit needs to be solid, because the line between close and under can shift fast.\n\nWhen you talked it through with the lead, did you connect the bump cap requirement to what could actually happen \u2014 or did it stay more at the policy level?"}, {"role": "user", "text": "We made the connection, he gave an example of a semi-recent incident that could have been prevented with a bump cap, especially with people who are not experienced around our machines.  Then we discussed other common areas of the machine and functions in the work cells where you are more likely to bump your head, and confirmed that the bump caps are available to each of those cells and required for certain activities.  I noticed the lead was wearing his bump cap even through we wasn't activiley under the machine and pointed it out to him, but i could have done a better job at commending him for his example to the team."}, {"role": "assistant", "text": "That's a solid walkthrough \u2014 the incident connection, the zone-by-zone review, confirming gear availability. Those are the pieces that make the requirement stick rather than just being a rule.\n\nOn the lead \u2014 you noticed it, which is the hard part. Next time, name it in front of whoever's around: *\"You've got your bump cap on even when you're not under it \u2014 that's exactly the habit I want the team to see.\"* Takes five seconds and lands harder than a private comment.\n\nWhat was the trickiest part of the conversation with the lead?"}, {"role": "user", "text": "I don't think I would describe the conversation as tricky.  There were things I didn't think of during the moment."}, {"role": "assistant", "text": "Fair enough. Let's get this one marked complete.\nNice work \u2014 you adapted the activity to fit your role and still hit the key pieces. The recognition habit is the one to build on next time."}], "annotation": {"framing_quote": "This is new territory, I don't have a production team.", "session_synthesis": "Speer is a support engineer embedded with production \u2014 no direct crew. The coach adapted the activity in real time rather than dismissing the constraint, designing a scaled-down version built around his existing supervisor check-ins. What emerged was a genuine floor walkthrough with a meaningful moment: a lead connected a bump-cap near-miss to a specific past incident. Speer's closing note \u2014 'there were things I didn't think of during the moment' \u2014 is the most honest self-assessment in the dataset.", "next_activity_focus": "The adaptation worked once; the question is whether it becomes repeatable. Speer should run this again with more deliberate pre-framing \u2014 deciding ahead of time what he's looking for and which supervisor he'll debrief with. The 'didn't think of it in the moment' gap is exactly what deliberate pre-loading addresses.", "turns": [{"role": "assistant", "text": "Quick heads up \u2014 the full steps are in the **Activity Blueprint** button above this chat if you want to reference them.\n\nThis activity is about running a structured PPE check with your team right before end-of-shift \u2014 checking gear condition, addressing what you noticed during the day, and recognizing what held up.\n\nYou're an engineering supervisor supporting production, so this is a bit outside your usual lane. Have you done an end-of-shift PPE check with a production team before, or is this new territory?", "annotation": "Opens with blueprint reference; no role context yet.", "is_key_moment": false}, {"role": "user", "text": "This is new territory, I don't have a production team", "annotation": "Names the structural constraint immediately \u2014 no production team.", "is_key_moment": false}, {"role": "assistant", "text": "Got it. Since you're supporting production rather than supervising a crew directly, let's figure out the right fit here.\n\nDo you have any regular touchpoints with production team members \u2014 floor walks, project check-ins, anything where you're observing people doing hands-on work?", "annotation": "Pivots to adapt rather than redirect; asks how he interfaces with production.", "is_key_moment": false}, {"role": "user", "text": "Yes, I check in with production team supervisors and leads daily for any new issues or to follow up on product changes", "annotation": "Confirms daily touchpoints with supervisors \u2014 the adaptation anchor.", "is_key_moment": false}, {"role": "assistant", "text": "That works. You can run a scaled-down version of this \u2014 instead of gathering a whole crew, you're doing the PPE check as part of your daily floor walkthrough when you're already checking in with those supervisors and leads.\n\nBefore you head out \u2014 quick check on what counts as \"additional PPE\" here. We're not talking safety glasses or hearing protection. We mean task-specific gear: face shields for grinding or tack welding, bump caps for under-vehicle work, cut-resistant gloves for handling sharp stamped parts. That's where the gaps usually show up. Does that track with what you typically see on the floor?", "annotation": "Builds a scaled version of the activity fitted to his actual role.", "is_key_moment": false}, {"role": "user", "text": "Yes that tracks", "annotation": "Accepts the adaptation without friction.", "is_key_moment": false}, {"role": "assistant", "text": "Good. Here's what you're doing on your next floor walkthrough. As you move through the shift, make a quick mental note of anything worth flagging \u2014 damaged gear, a violation you didn't have time to address, or someone modeling the standard well. Got that part?", "annotation": "Sets up the walkthrough handoff; sends him out with specific steps.", "is_key_moment": false}, {"role": "user", "text": "Got it", "annotation": "Commits to tomorrow morning.", "is_key_moment": false}, {"role": "assistant", "text": "Good. Then at the end of your walkthrough, take a few minutes with one of the supervisors or leads you're already checking in with. Have them show you their team's PPE condition, call out any specific damage or wear you see, and bring in what you noted during the walk \u2014 violations by pattern, recognition by name.\n\nWhen's your next floor walkthrough?", "annotation": "Sends him out; will debrief on return.", "is_key_moment": false}, {"role": "user", "text": "Tomorrow morning", "annotation": "Mid-activity question: how do you observe a scattered team?", "is_key_moment": false}, {"role": "assistant", "text": "Perfect. Go do it then \u2014 here's your handoff.\nCome back after your walkthrough and let me know how it went.", "annotation": "Clarifies the scope \u2014 his version is observational, not supervisory.", "is_key_moment": false}, {"role": "user", "text": "How can I review the Teams PPE condition if all the team members are scattered across the production line working when I go out?", "annotation": "Returns with results: face shields, bump caps, one borderline situation.", "is_key_moment": false}, {"role": "assistant", "text": "Good question. You're not pulling the whole team together \u2014 that's the supervisor's job. Your version is simpler: as you walk the line, observe what you see on the people already working. Note what's missing or damaged, and note who's doing it right. Then when you check in with the supervisor or lead, share what you observed. That's your \"review\" \u2014 eyes on the floor, then a quick debrief with the person who owns that team.\n\nDoes that make more sense?", "annotation": "Validates the borderline catch \u2014 that's exactly where the habit matters.", "is_key_moment": false}, {"role": "user", "text": "I reviewed PPE and spoke with the production lead this morning", "annotation": "Key moment: lead connects a near-miss incident to the bump cap standard.", "is_key_moment": true}, {"role": "assistant", "text": "Did you get a chance to do the full walkthrough \u2014 noting what you saw on the floor and then debriefing with the lead?", "annotation": "Closes the activity; names the three things that made it a real walkthrough.", "is_key_moment": false}, {"role": "user", "text": "Yes, I noted guys wearing Face shields for grinding processes and guys wearing bump caps when working under units.  I noticed one guy that didn't have a bump cap on, who wasn't directly under the unit, but was very close.  We discussed the bump cap requirements and making sure guys know when they need to where them", "annotation": "Honest self-assessment: things I didn't think of in the moment.", "is_key_moment": false}, {"role": "assistant", "text": "Good catch on the borderline situation \u2014 \"close to\" is exactly where the habit needs to be solid, because the line between close and under can shift fast.\n\nWhen you talked it through with the lead, did you connect the bump cap requirement to what could actually happen \u2014 or did it stay more at the policy level?", "annotation": "Accepts the reflection at face value; marks complete without inflating it.", "is_key_moment": false}]}}, "32": {"idx": 32, "name": "Kip Saylor", "title": "Supervisor Production", "manager": "Ann Bercot", "bu": "Fleetwood", "segment": "Recreational Vehicles", "activity": "Stay Protected During Quick Tasks", "practice": "Modeling Proper Additional PPE Habits", "completed": "2026-05-13", "rating": 5, "summary": "Guided the execution of a PPE modeling activity at the chop saw, then debriefed on how the co-modeling approach compared to direct correction.", "turns": [{"role": "assistant", "text": "You've done the public callout at huddle \u2014 this one builds on that. Instead of calling out PPE in front of the group, you're working a quick task *alongside* a team member who tends to skip gear, modeling it in the moment.\n\nFull steps are in the **Activity Blueprint** above.\n\nYou've got 35 associates across 5 cells \u2014 who's the first person that comes to mind when you think \"tends to skip PPE on quick tasks\"?"}, {"role": "user", "text": "Jon Costello"}, {"role": "assistant", "text": "Good. Now think about what quick tasks are coming up today that would call for additional gear \u2014 tack welding, under-vehicle work, sharp material handling, grinding. Anything on Jon's plate that fits?"}, {"role": "user", "text": "No, I just need him to be in the department at 6:00 so he can be involved in the morning meeting. he has clocked in at 5:59 all week."}, {"role": "assistant", "text": "That's a separate issue from this activity. For this one, I need you to think about a quick task that calls for additional PPE \u2014 something you could work alongside Jon (or another team member who tends to skip gear) today. Tack welds, cutting, under-vehicle work, anything with sharp materials.\n\nIs there anything coming up on the floor today that fits that description?"}, {"role": "user", "text": "Cutting molding on the chop saw but I don't expect them to wear his face shield at the morning meeting. The face shield is at the saw so he can put it on when he is running the saw."}, {"role": "assistant", "text": "That's the perfect task. Jon at the chop saw \u2014 that's your moment.\n\nBefore you head out: the activity is built around you working the task *with* him, not just telling him to gear up. You'll put your own face shield on alongside him and name what you're both putting on and why \u2014 makes it collaborative, not corrective.\nWhen you're back, let me know how it went."}, {"role": "user", "text": "I'm back"}, {"role": "assistant", "text": "Did you get a chance to work the task alongside Jon?"}, {"role": "user", "text": "Yes, everything went well."}, {"role": "assistant", "text": "Good. Did you get a chance to share a specific tip with him \u2014 something practical about how to keep the face shield accessible so it's not a hassle on quick tasks?"}, {"role": "user", "text": "Yes, it is always at the chop saw."}, {"role": "assistant", "text": "Nice \u2014 keeping it stationed at the saw is exactly the kind of tip that sticks. Did you circle back with Jon later in the shift to see if he was still using it?"}, {"role": "user", "text": "Yes, I did and all is good."}, {"role": "assistant", "text": "Solid \u2014 you hit all the key pieces. What was it like working alongside him versus just telling him to put it on?"}, {"role": "user", "text": "Normal, it was just like we trained him."}, {"role": "assistant", "text": "Fair enough. Let's get this one marked complete.\nGood work. The co-modeling approach \u2014 doing it alongside them instead of just correcting \u2014 is the piece that makes it land differently. You've been doing this long enough it felt natural, which means it probably came across that way to Jon too."}], "annotation": {"framing_quote": "Normal, it was just like we trained him.", "session_synthesis": "Saylor ran the activity cleanly \u2014 worked alongside Jon at the chop saw, face shield on together, shared a practical tip, confirmed circle-back. The behaviorally interesting moment came at the close: the coach asked what it felt like compared to his usual approach, and Saylor said it felt normal, like training. That's either a sign the habit is already internalized, or that he's underrating the technique because it aligned too easily with his existing style. The attendance tangent early in the session \u2014 Saylor redirected to a real scheduling issue before the coach held the frame \u2014 is the clearest signal of where his attention naturally goes.", "next_activity_focus": "Saylor's execution was clean enough that the real next question is durability: does 'felt normal' mean he'll do this automatically, or does it mean he hasn't consciously adopted it yet? The Jon attendance issue \u2014 clocking in at 5:59 all week \u2014 is a separate thread worth surfacing to Ann Bercot. It shouldn't drift back into PPE coaching sessions as a workaround.", "turns": [{"role": "assistant", "text": "You've done the public callout at huddle \u2014 this one builds on that. Instead of calling out PPE in front of the group, you're working a quick task *alongside* a team member who tends to skip gear, modeling it in the moment.\n\nFull steps are in the **Activity Blueprint** above.\n\nYou've got 35 associates across 5 cells \u2014 who's the first person that comes to mind when you think \"tends to skip PPE on quick tasks\"?", "annotation": "Opens by connecting to prior huddle work; sets up the co-modeling difference.", "is_key_moment": false}, {"role": "user", "text": "Jon Costello", "annotation": "Names Jon immediately \u2014 specific and ready.", "is_key_moment": false}, {"role": "assistant", "text": "Good. Now think about what quick tasks are coming up today that would call for additional gear \u2014 tack welding, under-vehicle work, sharp material handling, grinding. Anything on Jon's plate that fits?", "annotation": "Moves to task identification; anchors in his 35 associates.", "is_key_moment": false}, {"role": "user", "text": "No, I just need him to be in the department at 6:00 so he can be involved in the morning meeting. he has clocked in at 5:59 all week.", "annotation": "Detour: real attendance issue surfaces \u2014 not a PPE question.", "is_key_moment": false}, {"role": "assistant", "text": "That's a separate issue from this activity. For this one, I need you to think about a quick task that calls for additional PPE \u2014 something you could work alongside Jon (or another team member who tends to skip gear) today. Tack welds, cutting, under-vehicle work, anything with sharp materials.\n\nIs there anything coming up on the floor today that fits that description?", "annotation": "Clean redirect: parks the issue, re-centers without friction.", "is_key_moment": false}, {"role": "user", "text": "Cutting molding on the chop saw but I don't expect them to wear his face shield at the morning meeting. The face shield is at the saw so he can put it on when he is running the saw.", "annotation": "Back on task; identifies the chop saw, notes where the face shield lives.", "is_key_moment": false}, {"role": "assistant", "text": "That's the perfect task. Jon at the chop saw \u2014 that's your moment.\n\nBefore you head out: the activity is built around you working the task *with* him, not just telling him to gear up. You'll put your own face shield on alongside him and name what you're both putting on and why \u2014 makes it collaborative, not corrective.\nWhen you're back, let me know how it went.", "annotation": "Confirms the task; reinforces the co-modeling mechanic before sending out.", "is_key_moment": false}, {"role": "user", "text": "I'm back", "annotation": "Returns; minimal signal.", "is_key_moment": false}, {"role": "assistant", "text": "Did you get a chance to work the task alongside Jon?", "annotation": "Confirms execution happened.", "is_key_moment": false}, {"role": "user", "text": "Yes, everything went well.", "annotation": "All three checkpoints confirmed without friction.", "is_key_moment": false}, {"role": "assistant", "text": "Good. Did you get a chance to share a specific tip with him \u2014 something practical about how to keep the face shield accessible so it's not a hassle on quick tasks?", "annotation": "Follows up on tip specificity.", "is_key_moment": false}, {"role": "user", "text": "Yes, it is always at the chop saw.", "annotation": "Practical tip confirmed: shield is always stationed at the saw.", "is_key_moment": false}, {"role": "assistant", "text": "Nice \u2014 keeping it stationed at the saw is exactly the kind of tip that sticks. Did you circle back with Jon later in the shift to see if he was still using it?", "annotation": "Validates tip quality; confirms circle-back.", "is_key_moment": false}, {"role": "user", "text": "Yes, I did and all is good.", "annotation": "Circle-back confirmed.", "is_key_moment": false}, {"role": "assistant", "text": "Solid \u2014 you hit all the key pieces. What was it like working alongside him versus just telling him to put it on?", "annotation": "Reflective close \u2014 probes whether co-modeling felt different from default.", "is_key_moment": false}, {"role": "user", "text": "Normal, it was just like we trained him.", "annotation": "Key moment: co-modeling felt normal \u2014 technique aligned with existing style.", "is_key_moment": true}, {"role": "assistant", "text": "Fair enough. Let's get this one marked complete.\nGood work. The co-modeling approach \u2014 doing it alongside them instead of just correcting \u2014 is the piece that makes it land differently. You've been doing this long enough it felt natural, which means it probably came across that way to Jon too.", "annotation": "Closes without overreading; notes the technique was designed to feel natural.", "is_key_moment": false}]}}, "33": {"idx": 33, "name": "Dustin Colbert", "title": "Supervisor Production", "manager": "Ann Bercot", "bu": "Fleetwood", "segment": "Recreational Vehicles", "activity": "Use Prepared Team Member to Model PPE Readiness at Morning Huddle", "practice": "Modeling Proper Additional PPE Habits", "completed": "2026-05-13", "rating": 2, "summary": "Completed a peer modeling activity at a morning huddle, then debriefed on the callout technique \u2014 reinforcing task-specific language, prompting gear checks, and handling shy reactions from recognized team members.", "turns": [{"role": "assistant", "text": "Hey! You can see the full steps anytime in the **Activity Blueprint** button above this chat.\n\nThis one's about using a prepared team member to set the standard at your morning huddle \u2014 calling out specific gear by name so the rest of the team sees what ready looks like.\n\nYou've got 13 years at REV and 6 as a supervisor, so you've definitely seen how huddles can set the tone. Looks like peer modeling at the huddle is an area you're still building the habit on \u2014 does that track?\n\nQuick check before you head out: when you call someone out, the key is being **specific** \u2014 not \"nice work, Marcus\" but \"Marcus has his cut-resistant gloves clipped to his belt \u2014 that's what we need for sheet metal today.\" Generic praise doesn't show the rest of the team what to copy.\n\nWhat time's your next morning huddle, and which crew will be there?"}, {"role": "user", "text": "6 am tomorrow morning and whole team will be there"}, {"role": "assistant", "text": "Perfect. Tonight or first thing tomorrow, scan the team as they arrive and pick whoever shows up with additional PPE ready \u2014 face shield, cut gloves, bump cap, whatever fits what you're working on that day.\n\nThen when you kick off the huddle, call them out by name with the specific gear before you hand out assignments.\nSee you after the huddle \u2014 come back and let me know how it went."}, {"role": "user", "text": "I'm back"}, {"role": "assistant", "text": "Did you get a chance to call someone out at the huddle?"}, {"role": "user", "text": "Yes, I called out Keith for having his gloves ready and all his ppe on"}, {"role": "assistant", "text": "Nice \u2014 Keith by name, specific gear. Did you mention what task the gloves were for, or was it more of a general callout?"}, {"role": "user", "text": "Just a general call out"}, {"role": "assistant", "text": "Got it. Next time, tie it to the task \u2014 something like \"Keith's got his cut gloves ready for sheet metal work today \u2014 that's what we need from everyone on that line.\" One sentence, and now the whole team knows exactly what to copy and why.\n\nDid you have the team do a quick gear check after you called Keith out?"}, {"role": "user", "text": "No but I think after I mentioned something they were all looking around to see"}, {"role": "assistant", "text": "That counts \u2014 you created the moment without forcing it. The formal \"take ten seconds and check your own gear\" step is worth trying next time, but the team noticing on their own is a good sign the callout landed.\n\nHow did Keith react to being called out in front of everyone?"}, {"role": "user", "text": "Was a little shy about it"}, {"role": "assistant", "text": "That's pretty common. Some guys aren't used to being recognized publicly. As long as he didn't seem bothered by it, that's fine \u2014 and the team still saw the example.\n\nOne thing worth knowing: if you've got someone who you know hates the spotlight, a quick heads-up the day before (\"hey, I'm going to call you out tomorrow, just so you know\") can make it land smoother for them.\nGood work today \u2014 you did the thing, and you've got two easy upgrades for next time: tie the callout to the task, and give the team a quick gear check moment after. Mark it complete above."}], "annotation": {"framing_quote": "Just a general call out.", "session_synthesis": "Colbert did the hard part \u2014 he named Keith publicly in front of the whole team at the huddle. But the specificity that makes peer modeling actionable was missing: no task tie, no gear-to-work connection. The self-reported confidence score of 3 is honest; he knows something was missing even if he can't fully name it. The detail that Keith was 'a little shy about it' is worth monitoring \u2014 public recognition lands differently on introverted team members, and a heads-up the day before is a practical workaround.", "next_activity_focus": "Two clear checkpoints for next rep: did he use task-specific language ('Keith's cut gloves for sheet metal today'), and did he run a ten-second gear-check moment after the callout? The team self-directing their own scan \u2014 looking around after the callout \u2014 shows the moment was created even without the formal prompt. That's the instinct to build on.", "turns": [{"role": "assistant", "text": "Hey! You can see the full steps anytime in the **Activity Blueprint** button above this chat.\n\nThis one's about using a prepared team member to set the standard at your morning huddle \u2014 calling out specific gear by name so the rest of the team sees what ready looks like.\n\nYou've got 13 years at REV and 6 as a supervisor, so you've definitely seen how huddles can set the tone. Looks like peer modeling at the huddle is an area you're still building the habit on \u2014 does that track?\n\nQuick check before you head out: when you call someone out, the key is being **specific** \u2014 not \"nice work, Marcus\" but \"Marcus has his cut-resistant gloves clipped to his belt \u2014 that's what we need for sheet metal today.\" Generic praise doesn't show the rest of the team what to copy.\n\nWhat time's your next morning huddle, and which crew will be there?", "annotation": "Opens with blueprint reference; explains the prepared-team-member mechanic.", "is_key_moment": false}, {"role": "user", "text": "6 am tomorrow morning and whole team will be there", "annotation": "Commits to 6am with full team \u2014 strong setup.", "is_key_moment": false}, {"role": "assistant", "text": "Perfect. Tonight or first thing tomorrow, scan the team as they arrive and pick whoever shows up with additional PPE ready \u2014 face shield, cut gloves, bump cap, whatever fits what you're working on that day.\n\nThen when you kick off the huddle, call them out by name with the specific gear before you hand out assignments.\nSee you after the huddle \u2014 come back and let me know how it went.", "annotation": "Confirms timing; gives the pre-scan instruction and the language model.", "is_key_moment": false}, {"role": "user", "text": "I'm back", "annotation": "Returns after the huddle.", "is_key_moment": false}, {"role": "assistant", "text": "Did you get a chance to call someone out at the huddle?", "annotation": "Confirms callout happened; probes immediately for specificity.", "is_key_moment": false}, {"role": "user", "text": "Yes, I called out Keith for having his gloves ready and all his ppe on", "annotation": "Named Keith \u2014 but no task tie.", "is_key_moment": false}, {"role": "assistant", "text": "Nice \u2014 Keith by name, specific gear. Did you mention what task the gloves were for, or was it more of a general callout?", "annotation": "Validates the name; flags the missing element without dwelling.", "is_key_moment": false}, {"role": "user", "text": "Just a general call out", "annotation": "Key moment: did the hard part, missed the specificity that makes it actionable.", "is_key_moment": true}, {"role": "assistant", "text": "Got it. Next time, tie it to the task \u2014 something like \"Keith's got his cut gloves ready for sheet metal work today \u2014 that's what we need from everyone on that line.\" One sentence, and now the whole team knows exactly what to copy and why.\n\nDid you have the team do a quick gear check after you called Keith out?", "annotation": "Doesn't dwell; gives corrected language model, moves to gear-check step.", "is_key_moment": false}, {"role": "user", "text": "No but I think after I mentioned something they were all looking around to see", "annotation": "Skipped formal check \u2014 but team self-directed their own scan.", "is_key_moment": false}, {"role": "assistant", "text": "That counts \u2014 you created the moment without forcing it. The formal \"take ten seconds and check your own gear\" step is worth trying next time, but the team noticing on their own is a good sign the callout landed.\n\nHow did Keith react to being called out in front of everyone?", "annotation": "Validates the organic moment; names two specific upgrades for next rep.", "is_key_moment": false}, {"role": "user", "text": "Was a little shy about it", "annotation": "Notes Keith's shyness \u2014 practical detail about the team member.", "is_key_moment": false}, {"role": "assistant", "text": "That's pretty common. Some guys aren't used to being recognized publicly. As long as he didn't seem bothered by it, that's fine \u2014 and the team still saw the example.\n\nOne thing worth knowing: if you've got someone who you know hates the spotlight, a quick heads-up the day before (\"hey, I'm going to call you out tomorrow, just so you know\") can make it land smoother for them.\nGood work today \u2014 you did the thing, and you've got two easy upgrades for next time: tie the callout to the task, and give the team a quick gear check moment after. Mark it complete above.", "annotation": "Normalizes shyness; offers heads-up-the-day-before as a workaround.", "is_key_moment": false}]}}, "1": {"idx": 1, "name": "Andrew Renn", "title": "Manager EHS", "manager": "Gary Feldman", "bu": "E-One", "segment": "Specialty Vehicles", "activity": "Check Team PPE at End-of-Shift", "practice": "Monitoring Additional PPE During Shifts", "completed": "2026-05-19", "rating": 2, "summary": "Walked through a completed end-of-shift PPE inspection, covering how violations were addressed as teaching moments, how recognition was delivered with specific examples, and explored the root cause behind widespread safety glasses non-conformance.", "turns": [{"role": "assistant", "text": "You're working on **Check Team PPE at End-of-Shift** \u2014 gathering your team for a quick PPE check before they head out, covering damage, shift violations, and what held up well.\n\nFull steps are in the **Activity Blueprint** button above this chat.\n\nWith 15+ years in EHS, you've probably run end-of-shift checks in some form before. What tends to slip for you \u2014 is it the gathering (team disperses fast), remembering specifics from the shift, or the balance between calling out violations vs. recognizing what's working?"}, {"role": "user", "text": "Reviewed PPE with Team Members in Plant 2 immediately prior to the end of shift.  Addressed several non-conformances.  Used non-conformances as teaching opportunities to educate employees on why it is important to wear PPE until you are no longer in the work area.  The biggest offense was by-far Safety Glasses."}, {"role": "assistant", "text": "Good \u2014 sounds like the check happened and you used the violations as teaching moments, which is exactly the right instinct.\n\nTwo quick things: did you acknowledge anyone *by name* for what they got right, not just address the violations? And did you make mental or written notes on what you saw *during* the shift, or were you working mostly from memory at the end?"}, {"role": "user", "text": "Yes.  Called out instances of proper adherence to PPE as well as non-conformances."}, {"role": "assistant", "text": "Good \u2014 both sides covered. Did the recognition get specific, or was it more general (\"good job with your PPE today\")?"}, {"role": "user", "text": "Specific examples were used."}, {"role": "assistant", "text": "That's the activity done right. What made the safety glasses violation so widespread today \u2014 task-specific, or just a general drift?"}, {"role": "user", "text": "Many employees have toolboxes / lockers at their workstation, and they leave their glasses there when they leave for the day.  However, there were several employees who had removed their glasses several minutes ahead of the end of shift."}, {"role": "assistant", "text": "That's a common drift point \u2014 glasses come off when the toolbox is in sight. The \"you're protected until you're out of the work area\" framing you used is exactly the right counter to that habit.\n\nLet's get this marked complete.\nDone. Nice work \u2014 specific violations, specific recognition, and a clear rationale tied to actual risk. That's the standard."}], "annotation": {"framing_quote": "Many employees have toolboxes at their workstation, and they leave their glasses there when they leave for the break room.", "session_synthesis": "Renn ran a thorough check \u2014 violations addressed as teaching moments, recognition delivered with specific examples, both sides of the ledger covered. What makes this session stand out is the root-cause question at the end: the coach didn't close after the compliance work was confirmed, but pushed on why the safety glasses violation was so widespread. Renn's answer is a real operational insight: glasses come off when the toolbox is visible on the way out. That's an environmental design problem, not a compliance problem.", "next_activity_focus": "The glasses drift issue Renn surfaced \u2014 toolboxes visible near exit routes \u2014 is worth escalating as a design question, not just a coaching one. If the toolbox is in sight, glasses will come off. Renn is positioned to make this a systems recommendation, not just a recurring coaching note. The next rep should include a follow-up on whether that finding went anywhere.", "turns": [{"role": "assistant", "text": "You're working on **Check Team PPE at End-of-Shift** \u2014 gathering your team for a quick PPE check before they head out, covering damage, shift violations, and what held up well.\n\nFull steps are in the **Activity Blueprint** button above this chat.\n\nWith 15+ years in EHS, you've probably run end-of-shift checks in some form before. What tends to slip for you \u2014 is it the gathering (team disperses fast), remembering specifics from the shift, or the balance between calling out violations vs. recognizing what's working?", "annotation": "Opens with context and experience acknowledgment; names the common friction points.", "is_key_moment": false}, {"role": "user", "text": "Reviewed PPE with Team Members in Plant 2 immediately prior to the end of shift.  Addressed several non-conformances.  Used non-conformances as teaching opportunities to educate employees on why it is important to wear PPE until you are no longer in the work area.  The biggest offense was by-far Safety Glasses.", "annotation": "Returns with results: check done, violations used as teaching moments, big compliance gap identified.", "is_key_moment": false}, {"role": "assistant", "text": "Good \u2014 sounds like the check happened and you used the violations as teaching moments, which is exactly the right instinct.\n\nTwo quick things: did you acknowledge anyone *by name* for what they got right, not just address the violations? And did you make mental or written notes on what you saw *during* the shift, or were you working mostly from memory at the end?", "annotation": "Validates and immediately probes both missing elements: recognition specificity and during-shift tracking.", "is_key_moment": false}, {"role": "user", "text": "Yes.  Called out instances of proper adherence to PPE as well as non-conformances.", "annotation": "Confirms recognition happened; both sides covered.", "is_key_moment": false}, {"role": "assistant", "text": "Good \u2014 both sides covered. Did the recognition get specific, or was it more general (\"good job with your PPE today\")?", "annotation": "Validates completeness; shifts to the root-cause question on glasses.", "is_key_moment": false}, {"role": "user", "text": "Specific examples were used.", "annotation": "Key moment: names the environmental trigger \u2014 toolboxes visible on the way out.", "is_key_moment": true}, {"role": "assistant", "text": "That's the activity done right. What made the safety glasses violation so widespread today \u2014 task-specific, or just a general drift?", "annotation": "Reframes the insight as a design problem; closes the activity.", "is_key_moment": false}, {"role": "user", "text": "Many employees have toolboxes / lockers at their workstation, and they leave their glasses there when they leave for the day.  However, there were several employees who had removed their glasses several minutes ahead of the end of shift.", "annotation": "Additional detail on glasses removal pattern.", "is_key_moment": false}, {"role": "assistant", "text": "That's a common drift point \u2014 glasses come off when the toolbox is in sight. The \"you're protected until you're out of the work area\" framing you used is exactly the right counter to that habit.\n\nLet's get this marked complete.\nDone. Nice work \u2014 specific violations, specific recognition, and a clear rationale tied to actual risk. That's the standard.", "annotation": "Closes with the systems framing intact; marks complete.", "is_key_moment": false}]}}};
-
-function openSessionModal(idx) {
-  const s = FEATURED[idx];
-  if (!s) return;
-  const a = s.annotation;
-  const overlay = document.getElementById('session-modal');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Participant card
-  const initials = s.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
-  document.getElementById('modal-pcard').innerHTML = `
-    <div class="participant-avatar">${initials}</div>
-    <div>
-      <div class="participant-name">${s.name}</div>
-      <div class="participant-sub">${s.title} &nbsp;·&nbsp; Mgr: ${s.manager}<br>${s.bu} · ${s.segment}</div>
-      <div class="participant-activity">${s.activity}</div>
-      <div class="participant-practice">${s.practice}</div>
-    </div>`;
-
-  // Framing quote
-  const fq = document.getElementById('modal-fquote');
-  if (a.framing_quote) {
-    fq.innerHTML = `"${a.framing_quote}" <cite>— ${s.name}</cite>`;
-    fq.style.display = 'block';
-  } else fq.style.display = 'none';
-
-  // Synthesis
-  const syn = document.getElementById('modal-syn');
-  if (a.session_synthesis) {
-    syn.innerHTML = `<div class="modal-synthesis-label">Session Overview</div>${a.session_synthesis}`;
-    syn.style.display = 'block';
-  } else syn.style.display = 'none';
-
-  // Transcript
-  let html = '<div class="transcript-label">Coaching Interaction</div>';
-  (a.turns || s.turns).forEach(t => {
-    const isCoach = t.role === 'assistant';
-    const roleClass = isCoach ? 'coach' : 'supervisor';
-    const roleLabel = isCoach ? 'Coach' : s.name.split(' ')[0];
-    const keyClass = t.is_key_moment ? ' key-moment' : '';
-    const content = (t.text||'')
-      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g,'<em>$1</em>')
-      .replace(/\n/g,'<br>');
-    html += `<div class="turn${keyClass}">
-      <div class="turn-meta">
-        <div class="turn-role ${roleClass}">${roleLabel}</div>
-        ${t.annotation ? `<div class="turn-annotation">${t.annotation}</div>` : ''}
+  });
+  const block = document.createElement("div");
+  block.className="mkt-block";
+  block.style.marginBottom="8px";
+  block.innerHTML=`
+    <div class="mkt-hd" id="hd${ui}">
+      <div class="mkt-left" onclick="tog(${ui})">
+        <span class="mkt-nm">${unit}</span>
+        <span class="mkt-mt">${n} supervisor${n===1?"":"s"} &nbsp;·&nbsp; ${avg} avg activities</span>
       </div>
-      <div class="turn-content">${content}</div>
+      <div class="mkt-actions">
+        <button class="export-btn" onclick="exportCSV('${unit}')">↓ Export CSV</button>
+        <span class="chevron" id="ch${ui}" onclick="tog(${ui})"></span>
+      </div>
+    </div>
+    <div class="mkt-body" id="mb${ui}">
+      <table class="rt">
+        <thead><tr>
+          <th style="min-width:160px">Supervisor</th>
+          <th style="width:130px">Segment</th>
+          <th style="width:150px">Manager</th>
+          <th style="width:80px;text-align:center">Total</th>
+          <th style="width:100px">Status <span style="color:rgb(154 166 176);cursor:help;font-size:11px" title="Hover action tags for details">ⓘ</span></th>
+        </tr></thead>
+        <tbody>${trs}</tbody>
+      </table>
+    </div>`;
+  wrap.appendChild(block);
+});
+
+// ── TOOLTIP POSITIONING ──
+document.addEventListener('mousemove', function(e){
+  document.querySelectorAll('.action-tooltip.visible').forEach(tip=>{
+    tip.style.left = Math.min(e.clientX - 115, window.innerWidth - 250) + 'px';
+    tip.style.top  = (e.clientY - tip.offsetHeight - 14) + 'px';
+  });
+});
+document.addEventListener('mouseover', function(e){
+  const w = e.target.closest('.action-wrap');
+  if(w){ const t=w.querySelector('.action-tooltip'); if(t){t.classList.add('visible');t.style.display='block';} }
+});
+document.addEventListener('mouseout', function(e){
+  const w = e.target.closest('.action-wrap');
+  if(w){ const t=w.querySelector('.action-tooltip'); if(t){t.classList.remove('visible');t.style.display='none';} }
+});
+
+
+// ── NUDGE TAB DATA ──
+const NUDGE_SURVEY = [
+  {name:"Alexis Hernandez",  unit:"Capacity",   mgr:"Hylen Jackson", survey:"Not started"},
+  {name:"Danals Dunavan",    unit:"Capacity",   mgr:"Micah Rucker",  survey:"Not started"},
+  {name:"Daniel Cato",       unit:"Capacity",   mgr:"Hylen Jackson", survey:"Not started"},
+  {name:"Jarell Coleman",    unit:"Capacity",   mgr:"Hylen Jackson", survey:"Not started"},
+  {name:"Cory Patch",        unit:"Fleetwood",  mgr:"Paul Montey",   survey:"Not started"},
+  {name:"Robert Ulery",      unit:"Goldshield", mgr:"Brian Ruble",   survey:"Not started"},
+  {name:"Alejandro Reyes",   unit:"LEV",        mgr:"Jose Suarez",   survey:"Not started"},
+  {name:"Ever Reyes",        unit:"LEV",        mgr:"Jose Suarez",   survey:"Started but not submitted"},
+];
+
+const NUDGE_NOREPLY = [
+  {name:"Jonathan Windham",  unit:"Capacity",   mgr:"Nick Deering",  practice:"Modeling Proper Additional PPE Habits"},
+  {name:"Sean Brown",        unit:"E-One",      mgr:"Andrew Renn",   practice:"Setting and Communicating PPE Expectations"},
+  {name:"Chris Olemeda",     unit:"LEV",        mgr:"Jose Suarez",   practice:"Modeling Proper Additional PPE Habits"},
+  {name:"Itzel Jimenez Cruz",unit:"LEV",        mgr:"Jose Suarez",   practice:"Modeling Proper Additional PPE Habits"},
+];
+
+(function buildNudgeTab(){
+  // Survey table
+  const surveyBody = document.getElementById("nudge-survey-body");
+  NUDGE_SURVEY.forEach(r => {
+    const statusColor = r.survey === "Started but not submitted" ? "rgb(197 140 60)" : "rgb(154 166 176)";
+    surveyBody.innerHTML += `<tr>
+      <td style="padding:9px 14px;font-size:13px;font-weight:600;color:rgb(28 42 56);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.name}</td>
+      <td style="padding:9px 14px;font-size:11px;color:rgb(74 88 104);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.unit}</td>
+      <td style="padding:9px 14px;font-size:11px;color:rgb(74 88 104);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.mgr}</td>
+      <td style="padding:9px 14px;border-bottom:1px solid rgb(235 229 220 / 0.6)"><span style="font-size:11px;color:${statusColor};font-weight:600">${r.survey}</span></td>
+      <td style="padding:9px 14px;font-size:11.5px;color:rgb(74 88 104);line-height:1.5;border-bottom:1px solid rgb(235 229 220 / 0.6)">Ask ${r.mgr} to remind ${r.name.split(" ")[0]} to complete their baseline survey — their self-assessment data won't be available for the endline comparison without it.</td>
+    </tr>`;
+  });
+
+  // No-reply table
+  const noreplyBody = document.getElementById("nudge-noreply-body");
+  NUDGE_NOREPLY.forEach(r => {
+    noreplyBody.innerHTML += `<tr>
+      <td style="padding:9px 14px;font-size:13px;font-weight:600;color:rgb(28 42 56);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.name}</td>
+      <td style="padding:9px 14px;font-size:11px;color:rgb(74 88 104);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.unit}</td>
+      <td style="padding:9px 14px;font-size:11px;color:rgb(74 88 104);border-bottom:1px solid rgb(235 229 220 / 0.6)">${r.mgr}</td>
+      <td style="padding:9px 14px;font-size:11px;color:rgb(74 88 104);border-bottom:1px solid rgb(235 229 220 / 0.6);line-height:1.4">${r.practice}</td>
+      <td style="padding:9px 14px;font-size:11.5px;color:rgb(74 88 104);line-height:1.5;border-bottom:1px solid rgb(235 229 220 / 0.6)">Ask ${r.mgr} to check in with ${r.name.split(" ")[0]} — their first coaching message was sent but hasn't gotten a reply. A brief word from their manager is often all it takes to get someone started.</td>
+    </tr>`;
+  });
+
+  // Manager summary
+  const allNudge = [
+    ...NUDGE_SURVEY.map(r=>({...r, reason:"Baseline survey not completed"})),
+    ...NUDGE_NOREPLY.map(r=>({...r, reason:"Received AI message, never replied"})),
+  ];
+  const byMgr = {};
+  allNudge.forEach(r => {
+    if(!byMgr[r.mgr]) byMgr[r.mgr] = [];
+    byMgr[r.mgr].push(r);
+  });
+  const mgrWrap = document.getElementById("nudge-mgr-wrap");
+  Object.entries(byMgr).sort((a,b)=>b[1].length-a[1].length).forEach(([mgr, reports]) => {
+    const names = reports.map(r=>`<span style="display:inline-block;background:rgb(235 229 220 / 0.6);border-radius:4px;padding:2px 8px;font-size:11px;margin:2px 3px 2px 0;color:rgb(28 42 56)">${r.name} <span style="color:rgb(154 166 176);font-size:10px">${r.reason}</span></span>`).join("");
+    mgrWrap.innerHTML += `<div style="padding:12px 14px;border:1px solid rgb(235 229 220);border-radius:8px">
+      <div style="font-size:13px;font-weight:700;color:rgb(28 42 56);margin-bottom:6px">${mgr} <span style="font-weight:400;color:rgb(154 166 176);font-size:11px">${reports.length} direct report${reports.length>1?"s":""} need${reports.length===1?"s":""} a nudge</span></div>
+      <div style="line-height:1.8">${names}</div>
     </div>`;
   });
-  document.getElementById('modal-body').innerHTML = html;
+})();
 
-  // Next activity focus
-  const nf = document.getElementById('modal-nf');
-  if (a.next_activity_focus) {
-    nf.innerHTML = `<div class="modal-next-focus-label">Next Activity Focus</div>
-      <div class="modal-next-focus-text">${a.next_activity_focus}</div>`;
-    nf.style.display = 'block';
-  } else nf.style.display = 'none';
-
-  document.getElementById('modal-act').textContent = s.activity;
-  document.getElementById('modal-date').textContent = s.completed;
+// ── TOGGLE ──
+function tog(i){
+  const b=document.getElementById("mb"+i),c=document.getElementById("ch"+i),h=document.getElementById("hd"+i);
+  const open=b.classList.contains("open");
+  b.classList.toggle("open",!open);
+  c.classList.toggle("open",!open);
+  h.classList.toggle("collapsed",open);
 }
+// Open Fleetwood by default
+tog(0);
 
-function closeModal() {
-  document.getElementById('session-modal').classList.remove('open');
-  document.body.style.overflow = '';
+// ── COPY PENDING ──
+function copyPending(){
+  const names = ["Ever Reyes","Jarell Coleman","Alejandro Reyes","Alexis Hernandez","Danals Dunavan","Daniel Cato","Cory Patch","Robert Ulery"];
+  const text = names.join(", ");
+  const btn = document.getElementById("copy-pending-btn");
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent="✓ Copied"; btn.classList.add("copied");
+    setTimeout(()=>{btn.textContent="Copy names"; btn.classList.remove("copied");},2000);
+  }).catch(()=>{
+    const ta=document.createElement("textarea");
+    ta.value=text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); document.body.removeChild(ta);
+    btn.textContent="✓ Copied"; btn.classList.add("copied");
+    setTimeout(()=>{btn.textContent="Copy names"; btn.classList.remove("copied");},2000);
+  });
 }
-
-function closeModalOverlay(e) {
-  if (e.target === document.getElementById('session-modal')) closeModal();
-}
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
 </script>
-
-<div class="modal-overlay" id="session-modal" onclick="closeModalOverlay(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-header">
-      <div class="participant-card" id="modal-pcard"></div>
-    </div>
-    <div id="modal-fquote" class="modal-framing-quote" style="display:none"></div>
-    <div id="modal-syn" class="modal-synthesis" style="display:none"></div>
-    <div class="modal-body" id="modal-body"></div>
-    <div id="modal-nf" class="modal-next-focus" style="display:none;margin-bottom:0"></div>
-    <div class="modal-footer">
-      <span class="modal-footer-meta" id="modal-act"></span>
-      <span class="modal-footer-meta" id="modal-date"></span>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
