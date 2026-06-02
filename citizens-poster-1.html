@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens Fresh Eyes — Pushing One Level Deeper</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f0ede8; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
+.poster {
+  background: #f7f5f0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  padding: 48px 52px 52px;
+  width: 680px;
+  max-width: 100%;
+}
+.series-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #999590;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.series-tag::after { content: ''; flex: 1; height: 0.5px; background: #ddd9d0; }
+.headline {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1c1c1e;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.subhead {
+  font-size: 13px;
+  color: #888680;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin-bottom: 36px;
+}
+.funnel-wrap { position: relative; margin-bottom: 32px; }
+.funnel-layer { display: flex; align-items: stretch; margin-bottom: 2px; position: relative; }
+.funnel-shape {
+  flex: 1;
+  padding: 16px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.layer-0 .funnel-shape { background: #e8eef5; border-radius: 4px 4px 0 0; }
+.layer-1 .funnel-shape { background: #d4e2f0; }
+.layer-2 .funnel-shape { background: #b3cbea; border-radius: 0 0 4px 4px; }
+.layer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.layer-0 .layer-label { color: #185FA5; }
+.layer-1 .layer-label { color: #0c5090; }
+.layer-2 .layer-label { color: #083870; }
+.layer-content { font-size: 14px; font-weight: 400; color: #1c1c1e; line-height: 1.45; }
+.layer-quote { font-size: 13px; color: #3d5c7a; font-style: italic; line-height: 1.4; margin-top: 2px; }
+.side-label { width: 92px; flex-shrink: 0; display: flex; align-items: center; padding-left: 14px; }
+.side-text { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #aaa8a0; line-height: 1.3; }
+.arrow-connector { display: flex; align-items: center; height: 20px; padding: 0 0 0 2px; margin-bottom: 2px; }
+.outcome-box {
+  background: #1a3a5c;
+  border-radius: 4px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.outcome-icon {
+  width: 32px; height: 32px; background: #c84b2f; border-radius: 2px;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.outcome-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b9ac4; margin-bottom: 5px; }
+.outcome-quote { font-family: 'Libre Baskerville', serif; font-size: 14px; color: #e8f0f8; line-height: 1.5; font-style: italic; }
+.outcome-attr { font-size: 11px; color: #6b9ac4; margin-top: 6px; font-family: 'IBM Plex Sans', sans-serif; }
+.footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; padding-top: 16px; border-top: 0.5px solid #ddd9d0; }
+.footer-program { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #aaa8a0; letter-spacing: 0.08em; text-transform: uppercase; }
+.footer-num { font-family: 'Libre Baskerville', serif; font-size: 22px; color: #ddd9d0; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="series-tag">Citizens Fresh Eyes &middot; Coach behavior series &middot; 01 of 03</div>
+  <div class="headline">Pushing one level deeper</div>
+  <div class="subhead">How the coach moves from surface observation to root cause</div>
+
+  <div class="funnel-wrap">
+    <div class="funnel-layer layer-0">
+      <div class="funnel-shape">
+        <div class="layer-label">Surface answer</div>
+        <div class="layer-content">The learner names what they can see</div>
+        <div class="layer-quote">&ldquo;It is a busy branch and carpets get dirty with traffic.&rdquo;</div>
+      </div>
+      <div class="side-label"><div class="side-text">Learner&rsquo;s first response</div></div>
+    </div>
+
+    <div class="arrow-connector">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0 L10 14 M4 8 L10 14 L16 8" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="funnel-layer layer-1" style="margin-left:20px;margin-right:20px;">
+      <div class="funnel-shape">
+        <div class="layer-label">Coach move</div>
+        <div class="layer-content">Acknowledge, then press</div>
+        <div class="layer-quote">&ldquo;That&rsquo;s a reasonable starting point, but push it one level deeper &mdash; is the issue that cleaning frequency isn&rsquo;t keeping up with the traffic?&rdquo;</div>
+      </div>
+      <div class="side-label"><div class="side-text">Coach challenges the frame</div></div>
+    </div>
+
+    <div class="arrow-connector" style="padding-left:22px;">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0 L10 14 M4 8 L10 14 L16 8" stroke="#0c5090" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="funnel-layer layer-2" style="margin-left:40px;margin-right:40px;">
+      <div class="funnel-shape">
+        <div class="layer-label">Root cause</div>
+        <div class="layer-content">The real, actionable diagnosis</div>
+        <div class="layer-quote">&ldquo;Cleaning frequency needs to match the traffic level at this branch.&rdquo;</div>
+      </div>
+      <div class="side-label"><div class="side-text">Learner now owns the hypothesis</div></div>
+    </div>
+  </div>
+
+  <div class="outcome-box">
+    <div class="outcome-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8 L6.5 11.5 L13 4.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <div class="outcome-label">The shift</div>
+      <div class="outcome-quote">&ldquo;Without a why, there&rsquo;s no clear path to a fix.&rdquo;</div>
+      <div class="outcome-attr">Activity: Spot the Pattern Before You Walk In &middot; John Conti, SFM</div>
+    </div>
+  </div>
+
+  <div class="footer-row">
+    <div class="footer-program">Fresh Eyes: Facilities Services Excellence</div>
+    <div class="footer-num">01</div>
+  </div>
+</div>
+</body>
+</html>
