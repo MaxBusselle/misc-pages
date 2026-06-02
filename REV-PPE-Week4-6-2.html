@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group — Build Better PPE Habits with Your Team · Week 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sen',sans-serif;background:rgb(253 252 250);color:rgb(28 42 56);font-size:14px;-webkit-font-smoothing:antialiased}
+::selection{background-color:rgb(232 77 40);color:rgb(253 252 250)}
+
+.page{max-width:1040px;margin:0 auto;padding:0 0 72px}
+
+/* ── HEADER ── */
+.report-header{background:rgb(28 42 56);padding:24px 36px 0;position:relative}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:18px}
+.header-titles{color:#fff}
+.report-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.report-title{font-family:'Andada Pro',serif;font-size:22px;font-weight:400;color:#fff;line-height:1.25;max-width:520px}
+.report-meta{font-size:12px;color:rgba(255,255,255,.55);margin-top:5px;letter-spacing:.02em}
+.rev-logo{height:44px;width:auto;display:block;opacity:.95}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;align-items:flex-end}
+.tab{padding:11px 22px;font-size:13px;font-weight:700;color:rgba(255,255,255,.55);cursor:pointer;border-radius:8px 8px 0 0;border:none;background:transparent;font-family:'Sen',sans-serif;transition:all .18s;white-space:nowrap;letter-spacing:.01em}
+.tab:hover:not(.active){background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.tab.active{background:rgb(253 252 250);color:rgb(28 42 56);font-weight:700}
+
+/* ── PANELS ── */
+.panel-wrap{padding:28px 36px}
+.panel{display:none}.panel.active{display:block}
+
+/* ── SECTION LABEL ── */
+.sh{font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgb(74 88 104);margin:0 0 14px}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.kpi{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.kpi-label{font-size:11px;color:rgb(74 88 104);margin-bottom:6px;line-height:1.4;letter-spacing:.01em}
+.kpi-value{font-family:'Andada Pro',serif;font-size:30px;font-weight:400;color:rgb(28 42 56);line-height:1}
+.kpi-sub{font-size:11px;color:rgb(154 166 176);margin-top:4px}
+.kpi-accent{color:rgb(232 77 40)}
+
+/* ── CALLOUT ── */
+.callout{background:rgb(255 248 244);border:1px solid rgb(232 77 40 / 0.25);border-left:3px solid rgb(232 77 40);border-radius:8px;padding:14px 18px;margin-bottom:26px;display:flex;gap:12px;align-items:flex-start}
+.callout-body{font-size:13px;color:rgb(28 42 56);line-height:1.65}
+.callout-body strong{font-weight:700}
+
+/* ── FEATURED STORY ── */
+.featured-story{background:#fff;border:1px solid rgb(235 229 220);border-left:4px solid rgb(232 77 40);border-radius:10px;padding:24px 26px;margin-bottom:28px;position:relative;overflow:hidden}
+.fs-eyebrow{font-size:10px;font-weight:700;letter-spacing:.10em;color:rgb(232 77 40);text-transform:uppercase;margin-bottom:10px}
+.fs-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:16px}
+.fs-name{font-family:'Andada Pro',serif;font-size:18px;font-weight:400;color:rgb(28 42 56)}
+.fs-meta{font-size:12px;color:rgb(74 88 104);margin-top:3px}
+.fs-badge{font-size:12px;padding:5px 13px;border-radius:20px;background:rgb(232 77 40 / 0.1);color:rgb(180 50 18);white-space:nowrap;flex-shrink:0;font-weight:700;letter-spacing:.01em}
+.fs-desc{font-size:13.5px;line-height:1.75;color:rgb(74 88 104);margin-bottom:16px}
+.fs-q{font-size:13.5px;line-height:1.75;color:rgb(28 42 56);border-left:3px solid rgb(235 229 220);padding-left:16px;font-style:italic;font-family:'Andada Pro',serif}
+
+/* ── STORY GRID ── */
+.story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+.sc{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:18px 20px}
+.sc-eyebrow{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgb(154 166 176);margin-bottom:6px}
+.sc-name{font-family:'Andada Pro',serif;font-size:15px;font-weight:400;color:rgb(28 42 56);margin-bottom:2px}
+.sc-meta{font-size:11px;color:rgb(74 88 104);margin-bottom:8px}
+.sc-badge{display:inline-block;font-size:11px;font-weight:700;border-radius:20px;padding:3px 10px;margin-bottom:9px;letter-spacing:.01em}
+.sc-desc{font-size:12.5px;line-height:1.65;color:rgb(74 88 104);margin-bottom:10px}
+.sc-q{font-size:12.5px;line-height:1.65;color:rgb(28 42 56);border-left:2px solid rgb(235 229 220);padding-left:12px;font-style:italic;font-family:'Andada Pro',serif}
+
+/* ── PEER TIPS ── */
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.tip-card{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.tip-label{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgb(154 166 176);margin-bottom:7px}
+.tip-text{font-size:13px;line-height:1.65;color:rgb(28 42 56);font-style:italic;font-family:'Andada Pro',serif;margin-bottom:8px}
+.tip-attr{font-size:11px;color:rgb(74 88 104);font-weight:700}
+
+/* ── BASELINE SCORES ── */
+.scores-wrap{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.scores-hdr{padding:14px 18px;border-bottom:1px solid rgb(235 229 220);display:flex;justify-content:space-between;align-items:center}
+.scores-hdr-left{font-size:12px;font-weight:700;color:rgb(28 42 56)}
+.scores-hdr-right{font-size:11px;color:rgb(154 166 176)}
+.score-row{display:flex;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid rgb(235 229 220 / 0.7)}
+.score-row:last-child{border-bottom:none}
+.score-label{font-size:12px;color:rgb(28 42 56);flex:1;line-height:1.45}
+.score-bar-wrap{width:160px;height:6px;background:rgb(235 229 220);border-radius:3px;overflow:hidden;flex-shrink:0}
+.score-bar{height:100%;border-radius:3px;background:rgb(28 42 56);transition:width .5s}
+.score-bar.low{background:rgb(232 77 40)}
+.score-bar.mid{background:rgb(197 187 166)}
+.score-bar.good{background:rgb(72 114 76)}
+.score-val{font-family:'Geist Mono',monospace;font-size:12px;font-weight:500;color:rgb(28 42 56);width:34px;text-align:right;flex-shrink:0}
+
+/* ── PRACTICE CARDS ── */
+.prac-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.prac-card{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:16px 18px}
+.prac-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:9px}
+.tag-p1{background:rgb(232 77 40 / 0.1);color:rgb(180 50 18)}
+.tag-p2{background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)}
+.tag-p3{background:rgb(72 114 76 / 0.12);color:rgb(50 90 54)}
+.prac-name{font-size:12px;color:rgb(74 88 104);line-height:1.4;margin-bottom:8px}
+.prac-n{font-family:'Andada Pro',serif;font-size:32px;font-weight:400;color:rgb(28 42 56);line-height:1}
+.prac-unit{font-size:12px;color:rgb(154 166 176);margin-left:4px}
+
+/* ── LEADERBOARD ── */
+.ldr{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.ldr-hdr{padding:13px 18px;border-bottom:1px solid rgb(235 229 220);display:flex;justify-content:space-between;align-items:center}
+.ldr-hdr-left{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgb(74 88 104)}
+.ldr-hdr-right{font-size:11px;color:rgb(154 166 176)}
+.ldr-row{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid rgb(235 229 220 / 0.6)}
+.ldr-row:last-child{border-bottom:none}
+.ldr-rank{font-family:'Geist Mono',monospace;font-size:12px;color:rgb(154 166 176);width:20px;text-align:right;flex-shrink:0}
+.ldr-name{font-size:13px;font-weight:700;color:rgb(28 42 56);flex:1}
+.ldr-sub{font-size:11px;color:rgb(154 166 176);font-weight:400;margin-left:6px}
+.ldr-bw{width:180px;height:6px;background:rgb(235 229 220);border-radius:3px;overflow:hidden;flex-shrink:0}
+.ldr-b{height:100%;border-radius:3px;background:rgb(28 42 56)}
+.ldr-v{font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;width:46px;text-align:right;flex-shrink:0;color:rgb(28 42 56)}
+
+/* ── ROSTER ── */
+.wnote{font-size:12px;color:rgb(74 88 104);background:rgb(235 229 220 / 0.5);border-radius:8px;padding:10px 14px;margin-bottom:18px;line-height:1.6}
+.mkt-block{margin-bottom:8px;border:1px solid rgb(235 229 220);border-radius:10px;overflow:visible;background:#fff}
+.mkt-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:rgb(28 42 56);cursor:pointer;user-select:none;gap:12px;border-radius:10px 10px 0 0}
+.mkt-hd.collapsed{border-radius:10px}
+.mkt-left{display:flex;align-items:center;flex:1;min-width:0}
+.mkt-nm{font-size:13px;font-weight:700;color:#fff}
+.mkt-mt{font-size:12px;color:rgba(255,255,255,.5);margin-left:12px}
+.mkt-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.export-btn{font-size:11px;font-weight:700;color:rgb(28 42 56);background:rgba(255,255,255,.9);border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-family:'Sen',sans-serif;white-space:nowrap;transition:background .15s}
+.export-btn:hover{background:#fff}
+.chevron::after{content:'›';display:inline-block;transform:rotate(90deg);transition:transform .2s;font-size:18px;color:rgba(255,255,255,.6);line-height:1}
+.chevron.open::after{transform:rotate(270deg)}
+.mkt-body{display:none;overflow:visible}
+.mkt-body.open{display:block}
+
+.rt{width:100%;border-collapse:collapse;font-size:12px}
+.rt th{text-align:left;padding:8px 13px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.06em;background:rgb(253 252 250)}
+.rt td{padding:8px 13px;border-bottom:1px solid rgb(235 229 220 / 0.6);vertical-align:middle}
+.rt tr:last-child td{border-bottom:none}
+.rt tr:hover td{background:rgb(235 229 220 / 0.25)}
+.loc-cell{color:rgb(74 88 104);font-size:11px;max-width:155px;line-height:1.35}
+.seg-cell{font-size:11px;color:rgb(154 166 176)}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.03em}
+.p-rv{background:rgb(232 77 40 / 0.1);color:rgb(180 50 18)}
+.p-sv{background:rgb(28 42 56 / 0.08);color:rgb(28 42 56)}
+.week-cell{font-weight:700;color:rgb(28 42 56);font-family:'Geist Mono',monospace;font-size:12px}
+.week-cell.zero{color:rgb(200 205 210);font-weight:400}
+.total-cell{font-family:'Geist Mono',monospace;font-size:12px;color:rgb(74 88 104)}
+
+/* ── ACTION PILLS ── */
+.action-wrap{position:relative;display:inline-block}
+.p-nudge{background:rgb(253 230 220);color:rgb(180 50 18);cursor:help}
+.p-streak{font-size:14px;cursor:help;display:inline-block;line-height:1}
+.action-tooltip{display:none;position:fixed;background:rgb(28 42 56);color:#fff;font-size:11px;font-weight:400;line-height:1.55;padding:9px 13px;border-radius:7px;width:230px;white-space:normal;z-index:9999;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.p-engaged{background:rgb(72 114 76 / 0.12);color:rgb(50 90 54);cursor:help}
+.p-no-baseline{background:rgb(197 140 60 / 0.15);color:rgb(160 100 30);cursor:help}
+.p-no-chat{background:rgb(232 77 40 / 0.12);color:rgb(180 50 18);cursor:help}
+.p-falling-behind{background:rgb(154 166 176 / 0.15);color:rgb(90 105 118);cursor:help}
+.p-in-progress{background:rgb(59 107 178 / 0.1);color:rgb(40 75 145);cursor:help}
+
+/* ── SURVEY TAB ── */
+.sv-wrap{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.sv-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sv-tbl th{text-align:left;padding:10px 16px;font-size:10px;font-weight:700;color:rgb(154 166 176);border-bottom:1px solid rgb(235 229 220);text-transform:uppercase;letter-spacing:.06em;background:rgb(253 252 250)}
+.sv-tbl td{padding:10px 16px;border-bottom:1px solid rgb(235 229 220 / 0.6);vertical-align:middle}
+.sv-tbl tr:last-child td{border-bottom:none;font-weight:700;color:rgb(28 42 56);background:rgb(235 229 220 / 0.25)}
+.pgbar{height:6px;border-radius:3px;background:rgb(235 229 220);overflow:hidden;width:90px;display:inline-block;vertical-align:middle;margin-right:8px}
+.pg-fill{height:100%;border-radius:3px;background:rgb(72 114 76)}
+.pg-warn{background:rgb(232 77 40)}
+.pct-good{font-weight:700;color:rgb(72 114 76)}
+.pct-warn{font-weight:700;color:rgb(232 77 40)}
+
+.pending-block{background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:18px 20px;margin-bottom:12px}
+.pending-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.pending-title{font-size:13px;font-weight:700;color:rgb(28 42 56)}
+.pending-sub{font-size:11px;color:rgb(74 88 104);margin-top:2px}
+.copy-btn{background:rgb(235 229 220 / 0.7);color:rgb(28 42 56);border:none;font-size:11px;font-weight:700;border-radius:5px;padding:5px 12px;cursor:pointer;font-family:'Sen',sans-serif;transition:all .15s}
+.copy-btn:hover{background:rgb(197 187 166)}
+.copy-btn.copied{color:rgb(72 114 76);background:rgb(72 114 76 / 0.12)}
+.pending-tbl{width:100%;border-collapse:collapse}
+.pending-tbl th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgb(154 166 176);padding:6px 10px;border-bottom:1px solid rgb(235 229 220);text-align:left}
+.pending-tbl td{padding:7px 10px;border-bottom:1px solid rgb(235 229 220 / 0.5);font-size:12px}
+.pending-tbl tr:last-child td{border-bottom:none}
+
+/* ── FOOTER ── */
+.report-footer{display:flex;align-items:center;justify-content:center;gap:14px;padding:32px 36px 0;border-top:1px solid rgb(235 229 220);margin-top:32px}
+.footer-text{font-size:11px;color:rgb(154 166 176)}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <div class="report-header">
+    <div class="header-top">
+      <div class="header-titles">
+        <div class="report-eyebrow">REV Group · Safety Initiative</div>
+        <div class="report-title">Build Better PPE Habits with Your Team</div>
+        <div class="report-meta">Week 4 &nbsp;·&nbsp; Initiative launched May 7, 2026 &nbsp;·&nbsp; 41 supervisors · 7 business units</div>
+      </div>
+      <img src="https://client.flintls.com/2dot0/logos/REVlogo.png" alt="REV Group" class="rev-logo">
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="sw(0)">What's happening</div>
+      <div class="tab" onclick="sw(1)">How's My Business Unit Doing?</div>
+    </div>
+  </div>
+
+  <div class="panel-wrap">
+
+  <!-- ══════════════════════════════════════
+       TAB 1 — WHAT'S HAPPENING
+  ══════════════════════════════════════ -->
+  <div class="panel active" id="p0">
+
+    <!-- KPIs -->
+    <div class="sh">Program snapshot</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Supervisors enrolled</div>
+        <div class="kpi-value">41</div>
+        <div class="kpi-sub">Across 7 business units</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total activities logged</div>
+        <div class="kpi-value kpi-accent">95</div>
+        <div class="kpi-sub">28 completed this week</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Avg per active supervisor</div>
+        <div class="kpi-value">3.1</div>
+        <div class="kpi-sub">Top performer: 11</div>
+      </div>
+    </div>
+
+    <!-- Featured story -->
+    <div class="sh">Story of the week</div>
+    <div class="featured-story">
+      <div class="fs-eyebrow">Modeling Proper PPE Habits &nbsp;·&nbsp; Fleetwood — Recreational Vehicles</div>
+      <div class="fs-head">
+        <div>
+          <div class="fs-name">Supervisor, Fleetwood RV</div>
+          <div class="fs-meta">Recreational Vehicles &nbsp;·&nbsp; Fleetwood</div>
+        </div>
+        <div class="fs-badge">3 activities this week</div>
+      </div>
+      <div class="fs-desc">This supervisor handed the demo to a team member instead of doing it themselves. They identified someone who was reliably on it, made the ask privately with specifics, let them own the morning huddle walkthrough, recognized them in front of the crew, then circled back privately after shift. The team member was happy to be called out — and the crew saw exactly how the setup should look.</div>
+      <div class="fs-q">"Pick someone that wouldn't expect it."</div>
+    </div>
+
+    <!-- Leaderboard by BU -->
+    <div class="sh">Engaged &amp; on track by business unit</div>
+    <div style="font-size:12px;color:rgb(74 88 104);margin-bottom:14px;line-height:1.6">"Engaged &amp; on track" = completed at least one activity this week, or averaging at least one activity per week since the program launched.</div>
+    <div id="bu-leaderboard"></div>
+
+
+    <!-- Milestone States -->
+    <div class="sh">Where supervisors are in the journey</div>
+    <div id="milestone-chart"></div>
+
+  </div><!-- /panel 0 -->
+
+
+  <!-- ══════════════════════════════════════
+       TAB 2 — FULL ROSTER
+  ══════════════════════════════════════ -->
+  <div class="panel" id="p1">
+    <div class="wnote">
+      Supervisors are grouped by business unit. <strong>Total</strong> = all activities to date. <strong>This Week</strong> = Week 4 (May 28–Jun 3). <strong>Avg/wk</strong> = total ÷ 4 weeks.
+      Hover any action tag for details. Use the ↓ Export CSV button to pull a unit's roster.
+    </div>
+    <div id="roster-wrap"></div>
+  </div>
+
+
+  </div><!-- /panel-wrap -->
+
+  <div class="report-footer">
+    <span class="footer-text">Powered by Flint &nbsp;·&nbsp; Build Better PPE Habits with Your Team &nbsp;·&nbsp; Week 4 Report</span>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// ── TAB SWITCH ──
+function sw(i){
+  document.querySelectorAll(".tab").forEach((t,j)=>t.classList.toggle("active",i===j));
+  document.querySelectorAll(".panel").forEach((p,j)=>p.classList.toggle("active",i===j));
+}
+
+// ── TOOLTIP CONSTANTS ──
+
+// ── ROSTER DATA ──
+const ROSTER = [
+  // Capacity
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Daniel Cato",         mgr:"Hylen Jackson",    total:1,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Alexis Hernandez",    mgr:"Hylen Jackson",    total:1,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Andy Speer",          mgr:"Vikas Kataria",    total:1,  week4:0,  survey:"complete",  engage:"active_prep"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Danals Dunavan",      mgr:"Micah Rucker",     total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Jonathan Windham",    mgr:"Nick Deering",     total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  {unit:"Capacity",      seg:"Specialty Vehicles",    name:"Jarell Coleman",      mgr:"Hylen Jackson",    total:0,  week4:0,  survey:"not_started", engage:"no_engagement"},
+  // E-One
+  {unit:"E-One",         seg:"Specialty Vehicles",    name:"Andrew Renn",         mgr:"Gary Feldman",     total:2,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"E-One",         seg:"Specialty Vehicles",    name:"Sean Brown",          mgr:"Andrew Renn",      total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  // Ephrata
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Ryan Grove",          mgr:"Scott Hackman",    total:4,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Kenneth Weaver",      mgr:"Thomas Rogers",    total:3,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Brent Salmi",         mgr:"Scott Hackman",    total:2,  week4:1,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"David Evans",         mgr:"Thomas Rogers",    total:2,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Juan Bryant",         mgr:"Thomas Rogers",    total:1,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Kendrick Weaver",     mgr:"Thomas Rogers",    total:1,  week4:0,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Thomas Rogers",       mgr:"Scott Hackman",    total:1,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Jeffrey Adams",       mgr:"Thomas Rogers",    total:1,  week4:0,  survey:"complete",  engage:"active_prep"},
+  {unit:"Ephrata",       seg:"Specialty Vehicles",    name:"Michael Thompson",    mgr:"Thomas Rogers",    total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  // Fleetwood
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Pat Curtis",          mgr:"Randall Baker",    total:11, week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Kip Saylor",          mgr:"Ann Bercot",       total:7,  week4:2,  survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Greg Hardesty",       mgr:"Jessica Lee",      total:5,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Michael Wolford",     mgr:"Douglas Turner",   total:4,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Curt Main",           mgr:"Robert Kowalczyk", total:4,  week4:2,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Donald Mohammed",     mgr:"Ann Bercot",       total:4,  week4:1,  survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Douglas Smith",       mgr:"Ann Bercot",       total:4,  week4:3,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Steve Tebbe",         mgr:"Ann Bercot",       total:4,  week4:2,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Jeffrey Strickler",   mgr:"Jessica Lee",      total:4,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Ashley Teboe",        mgr:"Jessica Lee",      total:3,  week4:2,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Daniel Ortiz",        mgr:"Douglas Turner",   total:3,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Cory Patch",          mgr:"Paul Montey",      total:1,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Recreational Vehicles", name:"Dustin Colbert",      mgr:"Ann Bercot",       total:1,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Fleetwood",     seg:"Specialty Vehicles",    name:"Jessica Lee",         mgr:"Joshua Hileman",   total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  // Goldshield
+  {unit:"Goldshield",    seg:"Recreational Vehicles", name:"Janalee Cowens",      mgr:"Brian Ruble",      total:10, week4:3,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Recreational Vehicles", name:"Darin Shoaf",         mgr:"Brian Ruble",      total:4,  week4:1,  survey:"complete",  engage:"active",    action:"streak"},
+  {unit:"Goldshield",    seg:"Recreational Vehicles", name:"Jeremy Chism",        mgr:"Brian Ruble",      total:3,  week4:0,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Specialty Vehicles",    name:"Robert Ulery",        mgr:"Brian Ruble",      total:1,  week4:1,  survey:"complete",  engage:"active"},
+  {unit:"Goldshield",    seg:"Specialty Vehicles",    name:"David Goodwin",       mgr:"Brian Ruble",      total:2,  week4:1,  survey:"complete",  engage:"active"},
+  // Holden
+  {unit:"Holden",        seg:"Specialty Vehicles",    name:"Jeremy Dehnel",       mgr:"Paul Antonneau",   total:1,  week4:0,  survey:"complete",  engage:"active"},
+  // LEV
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Chris Olemeda",       mgr:"Jose Suarez",      total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Itzel Jimenez Cruz",  mgr:"Jose Suarez",      total:0,  week4:0,  survey:"complete",  engage:"in_progress"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Alejandro Reyes",     mgr:"Jose Suarez",      total:0,  week4:0,  survey:"not_started", engage:"no_engagement"},
+  {unit:"LEV",           seg:"Specialty Vehicles",    name:"Ever Reyes",          mgr:"Jose Suarez",      total:0,  week4:0,  survey:"incomplete", engage:"no_engagement"},
+];
+
+const MAX_TOTAL = 11;
+const UNIT_ORDER = ["Fleetwood","Goldshield","Ephrata","E-One","Capacity","Holden","LEV"];
+
+function segPill(s){
+  const cl = s==="Recreational Vehicles"?"p-rv":"p-sv";
+  const short = s==="Recreational Vehicles"?"Rec. Vehicles":"Spec. Vehicles";
+  return `<span class="pill ${cl}">${short}</span>`;
+}
+function totalCell(t){
+  return `<span class="week-cell${t===0?" zero":""}">${t}</span>`;
+}
+function week4Cell(w4){
+  if(w4===0) return `<span class="week-cell zero">—</span>`;
+  return `<span class="week-cell" style="color:rgb(72 114 76)">${w4}</span>`;
+}
+function avgCell(total){
+  const avg = (total/4).toFixed(1);
+  if(total===0) return `<span class="week-cell zero">0.0</span>`;
+  return `<span class="total-cell">${avg}</span>`;
+}
+function statusCell(total, week4, survey, engage){
+  const pills = [];
+  // Engaged: activity this week OR avg ≥ 1/wk
+  if(week4 > 0 || total / 4 >= 1.0){
+    pills.push(`<span class="action-wrap"><span class="pill p-engaged">engaged</span><span class="action-tooltip">Completed an activity this week, or averaging at least 1 activity per week overall.</span></span>`);
+  }
+  // No baseline survey
+  if(survey && survey !== "complete"){
+    pills.push(`<span class="action-wrap"><span class="pill p-no-baseline">no baseline</span><span class="action-tooltip">Has not completed the baseline survey — self-assessment data won't be available for the endline comparison.</span></span>`);
+  }
+  // Completed baseline but no AI coach response
+  if(survey === "complete" && (engage === "no_reply" || engage === "no_engagement" || (engage === "active_prep" && total === 0))){
+    pills.push(`<span class="action-wrap"><span class="pill p-no-chat">no chat</span><span class="action-tooltip">Completed the baseline survey but has not responded to the AI coach at all.</span></span>`);
+  }
+  // In progress: currently working through first activity
+  if(engage === "in_progress"){
+    pills.push(`<span class="action-wrap"><span class="pill p-in-progress">in progress</span><span class="action-tooltip">Currently working through their first activity with the AI coach — hasn't completed it yet.</span></span>`);
+  }
+  // Falling behind: no other status
+  if(pills.length === 0){
+    pills.push(`<span class="action-wrap"><span class="pill p-falling-behind">falling behind</span><span class="action-tooltip">Has not done an activity this week.</span></span>`);
+  }
+  return pills.join(" ");
+}
+function exportCSV(unit){
+  const rows = ROSTER.filter(r=>r.unit===unit);
+  const header = ["Business Unit","Segment","Learner","Manager","Total Activities","This Week","Avg Per Week","Survey","Engagement","Status"];
+  const lines = [header.join(",")];
+  rows.forEach(r=>{
+    const statuses = [];
+    if(r.week4 > 0 || r.total/4 >= 1.0) statuses.push("engaged");
+    if(r.survey && r.survey !== "complete") statuses.push("no baseline");
+    if(r.survey === "complete" && (r.engage === "no_reply" || r.engage === "no_engagement" || (r.engage === "active_prep" && r.total === 0))) statuses.push("no chat");
+    if(r.engage === "in_progress") statuses.push("in progress");
+    if(statuses.length === 0) statuses.push("falling behind");
+    lines.push([`"${r.unit}"`,`"${r.seg}"`,`"${r.name}"`,`"${r.mgr}"`,r.total,r.week4||0,(r.total/4).toFixed(1),`"${r.survey||"complete"}"`,`"${r.engage||""}"`,`"${statuses.join("; ")}"`].join(","));
+  });
+  const blob = new Blob([lines.join("\n")],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `REV-PPE-W4-roster-${unit.replace(/\s+/g,"-")}.csv`;
+  a.click();
+}
+
+const wrap = document.getElementById("roster-wrap");
+UNIT_ORDER.forEach((unit,ui)=>{
+  const rows = ROSTER.filter(r=>r.unit===unit);
+  const n = rows.length;
+  const totalActs = rows.reduce((s,r)=>s+r.total,0);
+  const avg = n?(totalActs/n).toFixed(1):"0";
+  const w4sum = rows.reduce((s,r)=>s+(r.week4||0),0);
+  let trs = "";
+  rows.sort((a,b)=>b.total-a.total).forEach(r=>{
+    trs+=`<tr>
+      <td style="font-size:13px;font-weight:600;color:rgb(28 42 56)">${r.name}</td>
+      <td>${segPill(r.seg)}</td>
+      <td style="color:rgb(74 88 104);font-size:11px">${r.mgr}</td>
+      <td style="text-align:center">${totalCell(r.total)}</td>
+      <td style="text-align:center">${week4Cell(r.week4||0)}</td>
+      <td style="text-align:center">${avgCell(r.total)}</td>
+      <td>${statusCell(r.total,r.week4||0,r.survey,r.engage)}</td>
+    </tr>`;
+  });
+  const block = document.createElement("div");
+  block.className="mkt-block";
+  block.style.marginBottom="8px";
+  block.innerHTML=`
+    <div class="mkt-hd" id="hd${ui}">
+      <div class="mkt-left" onclick="tog(${ui})">
+        <span class="mkt-nm">${unit}</span>
+        <span class="mkt-mt">${n} supervisor${n===1?"":"s"} &nbsp;·&nbsp; ${avg} avg · ${w4sum} this week</span>
+      </div>
+      <div class="mkt-actions">
+        <button class="export-btn" onclick="exportCSV('${unit}')">↓ Export CSV</button>
+        <span class="chevron" id="ch${ui}" onclick="tog(${ui})"></span>
+      </div>
+    </div>
+    <div class="mkt-body" id="mb${ui}">
+      <table class="rt">
+        <thead><tr>
+          <th style="min-width:160px">Supervisor</th>
+          <th style="width:130px">Segment</th>
+          <th style="width:150px">Manager</th>
+          <th style="width:70px;text-align:center">Total</th>
+          <th style="width:80px;text-align:center">This Week</th>
+          <th style="width:70px;text-align:center">Avg/wk</th>
+          <th style="width:130px">Status <span style="color:rgb(154 166 176);cursor:help;font-size:11px" title="Hover any tag for its definition">ⓘ</span></th>
+        </tr></thead>
+        <tbody>${trs}</tbody>
+      </table>
+    </div>`;
+  wrap.appendChild(block);
+});
+
+// ── BU ENGAGED LEADERBOARD ──
+(function(){
+  const buStats = UNIT_ORDER
+    .filter(u => ROSTER.some(r => r.unit === u))
+    .map(unit => {
+      const rows = ROSTER.filter(r => r.unit === unit);
+      const n = rows.length;
+      const engaged = rows.filter(r => r.week4 > 0 || r.total / 4 >= 1.0).length;
+      return { unit, n, engaged, pct: n ? engaged / n : 0 };
+    })
+    .sort((a, b) => b.pct - a.pct);
+
+  const maxPct = buStats[0] ? buStats[0].pct : 1;
+  let rank = 1;
+  let html = `<div class="ldr">
+    <div class="ldr-hdr">
+      <span class="ldr-hdr-left">Business Unit</span>
+      <span class="ldr-hdr-right">% engaged &amp; on track</span>
+    </div>`;
+  buStats.forEach((bu, i) => {
+    if (i > 0 && bu.pct < buStats[i - 1].pct) rank = i + 1;
+    const pctStr = Math.round(bu.pct * 100) + '%';
+    const barWidth = maxPct > 0 ? Math.round(bu.pct / maxPct * 100) : 0;
+    const isTop = i === 0;
+    html += `<div class="ldr-row">
+      <div class="ldr-rank">${rank}</div>
+      <div class="ldr-name">${bu.unit} <span class="ldr-sub">${bu.n} supervisor${bu.n === 1 ? '' : 's'} · ${bu.engaged} of ${bu.n}</span></div>
+      <div class="ldr-bw"><div class="ldr-b" style="width:${barWidth}%;${isTop ? 'background:rgb(232 77 40)' : ''}"></div></div>
+      <div class="ldr-v"${isTop ? ' style="color:rgb(232 77 40)"' : ''}>${pctStr}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('bu-leaderboard').innerHTML = html;
+})();
+
+// ── TOOLTIP POSITIONING ──
+document.addEventListener('mousemove', function(e){
+  document.querySelectorAll('.action-tooltip.visible').forEach(tip=>{
+    tip.style.left = Math.min(e.clientX - 115, window.innerWidth - 250) + 'px';
+    tip.style.top  = (e.clientY - tip.offsetHeight - 14) + 'px';
+  });
+});
+document.addEventListener('mouseover', function(e){
+  const w = e.target.closest('.action-wrap');
+  if(w){ const t=w.querySelector('.action-tooltip'); if(t){t.classList.add('visible');t.style.display='block';} }
+});
+document.addEventListener('mouseout', function(e){
+  const w = e.target.closest('.action-wrap');
+  if(w){ const t=w.querySelector('.action-tooltip'); if(t){t.classList.remove('visible');t.style.display='none';} }
+});
+
+
+
+// ── MILESTONE CHART ──
+(function(){
+  // Milestone state per learner, derived from highest completed activity level in the CSV.
+  // Basic   = completed activities at the Basic tier only (verifying PPE at transitions,
+  //           end-of-shift checks, using a team member to model at huddle)
+  // Intermediate = highest completed activity is at Intermediate tier (public recognition,
+  //           modeling during quick tasks, correcting violations during operations)
+  // Advanced = highest completed activity is at Advanced tier (connecting PPE to consequences,
+  //           peer demonstrations, verifying corrections held across shift)
+  const MILESTONES = {
+    'Advanced':     ['Curt Main','Darin Shoaf','David Goodwin','Donald Mohammed','Douglas Smith',
+                     'Greg Hardesty','Janalee Cowens','Jeffrey Strickler','Kenneth Weaver',
+                     'Kip Saylor','Michael Wolford','Pat Curtis','Ryan Grove','Steve Tebbe'],
+    'Intermediate': ['Andrew Renn','Brent Salmi','Daniel Ortiz','David Evans','Jeremy Chism'],
+  };
+  const advancedSet     = new Set(MILESTONES['Advanced']);
+  const intermediateSet = new Set(MILESTONES['Intermediate']);
+
+  const n = ROSTER.length;
+  let advanced = 0, intermediate = 0, basic = 0;
+  ROSTER.forEach(r => {
+    if (advancedSet.has(r.name))     advanced++;
+    else if (intermediateSet.has(r.name)) intermediate++;
+    else                              basic++;
+  });
+
+  const states = [
+    { label: 'Advanced',     sub: 'Connecting PPE to consequences, peer demos, verifying corrections hold', count: advanced,     color: 'rgb(72 114 76)' },
+    { label: 'Intermediate', sub: 'Public recognition, modeling during tasks, correcting violations',       count: intermediate, color: 'rgb(59 107 178)' },
+    { label: 'Basic',        sub: 'Transition checks, end-of-shift reviews, morning huddle modeling',       count: basic,        color: 'rgb(197 187 166)' },
+  ];
+
+  const barSegs = states
+    .filter(s => s.count > 0)
+    .map(s => `<div style="flex:${s.count};background:${s.color}"></div>`)
+    .join('');
+
+  const statCards = states.map(s => `
+    <div style="flex:1;min-width:0">
+      <div style="font-family:'Andada Pro',serif;font-size:26px;font-weight:400;color:rgb(28 42 56);line-height:1">${s.count}</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:5px">
+        <div style="width:8px;height:8px;border-radius:50%;background:${s.color};flex-shrink:0"></div>
+        <div style="font-size:12px;font-weight:700;color:rgb(28 42 56)">${s.label}</div>
+      </div>
+      <div style="font-size:11px;color:rgb(154 166 176);margin-top:3px;line-height:1.5">${s.sub}</div>
+    </div>`
+  ).join('');
+
+  document.getElementById('milestone-chart').innerHTML = `
+    <div style="background:#fff;border:1px solid rgb(235 229 220);border-radius:10px;padding:20px 24px;margin-bottom:28px">
+      <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin-bottom:20px">${barSegs}</div>
+      <div style="display:flex;gap:24px">${statCards}</div>
+    </div>`;
+})();
+
+// ── TOGGLE ──
+function tog(i){
+  const b=document.getElementById("mb"+i),c=document.getElementById("ch"+i),h=document.getElementById("hd"+i);
+  const open=b.classList.contains("open");
+  b.classList.toggle("open",!open);
+  c.classList.toggle("open",!open);
+  h.classList.toggle("collapsed",open);
+}
+// Open Fleetwood by default
+tog(0);
+
+</script>
+</body>
+</html>
