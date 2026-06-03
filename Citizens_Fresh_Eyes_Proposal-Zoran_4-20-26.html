@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens REO — Facilities Services Excellence</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cl-primary:#1A7D37;--cl-secondary:#14612B;--cl-accent:#0E4A20;
+  --fl-dark:#0F1A2E;--fl-dark-mid:#132035;--fl-dark-card:#1B2740;--fl-dark-deep:#0A1220;
+  --fl-orange:#F08030;--fl-orange-light:#F5A05C;--fl-orange-pale:rgba(240,128,48,0.12);
+  --fl-amber:#FBB130;--fl-teal:#2DD4BF;--fl-blue:#60A5FA;
+  --fl-white:#FFFFFF;--fl-white-dim:rgba(255,255,255,0.65);--fl-white-muted:rgba(255,255,255,0.35);
+  --fl-border:rgba(255,255,255,0.07);--fl-border-light:rgba(255,255,255,0.12);
+  --p1:#2DD4BF;--p1-pale:rgba(45,212,191,0.12);--p1-border:rgba(45,212,191,0.25);
+  --p2:#60A5FA;--p2-pale:rgba(96,165,250,0.12);--p2-border:rgba(96,165,250,0.25);
+  --p3:#C084FC;--p3-pale:rgba(192,132,252,0.12);--p3-border:rgba(192,132,252,0.25);
+  --ms-basic:#78C6A3;--ms-basic-pale:rgba(120,198,163,0.10);--ms-basic-border:rgba(120,198,163,0.30);
+  --ms-inter:#E8B44C;--ms-inter-pale:rgba(232,180,76,0.10);--ms-inter-border:rgba(232,180,76,0.30);
+  --ms-adv:#E07868;--ms-adv-pale:rgba(224,120,104,0.10);--ms-adv-border:rgba(224,120,104,0.30);
+  --signal:#7AC4D4;--leading:#F5A05C;--business:#E06070;
+  --acc-line:#E06070;--acc-above:rgba(224,96,112,0.08);--acc-below:rgba(45,212,191,0.04);
+  --green:#22C55E;--green-pale:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.25);
+  --radius:10px;--radius-lg:16px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--fl-dark);color:var(--fl-white);line-height:1.55;overflow:hidden;height:100vh;width:100vw;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.anim{opacity:0;}.slide.active .anim{animation:fadeUp .5s ease-out both;}
+.slide.active .anim.d1{animation-delay:.08s;}.slide.active .anim.d2{animation-delay:.16s;}.slide.active .anim.d3{animation-delay:.24s;}.slide.active .anim.d4{animation-delay:.32s;}.slide.active .anim.d5{animation-delay:.40s;}.slide.active .anim.d6{animation-delay:.48s;}.slide.active .anim.d7{animation-delay:.56s;}.slide.active .anim.d8{animation-delay:.64s;}
+
+/* ─── NAV ─── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:6px;padding:12px 28px;background:rgba(15,26,46,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--fl-border);}
+.nav-brand{display:flex;align-items:center;gap:10px;margin-right:10px;}.nav-brand img{height:28px;}
+.nav-sep{width:1px;height:16px;background:var(--fl-border);margin:0 4px;}
+.nav-cobrand{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--fl-white-muted);letter-spacing:.5px;}.nav-cobrand img{height:16px;opacity:.5;}
+.nav-dots{display:flex;gap:4px;align-items:center;}
+.nav-dot{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.12);background:transparent;cursor:pointer;transition:all .25s;font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;}
+.nav-dot:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5);}
+.nav-dot.active{background:var(--fl-orange);border-color:var(--fl-orange);color:var(--fl-dark);}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-left:auto;white-space:nowrap;}
+.nav-arrows{display:flex;gap:5px;margin-left:12px;}
+.nav-arrow{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:var(--fl-white-dim);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}.nav-arrow:hover{background:rgba(255,255,255,0.1);}
+
+/* ─── SLIDES ─── */
+.slide{position:fixed;top:0;left:0;right:0;bottom:0;padding:64px 48px 36px;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}.slide.active{display:flex;}.slide>*{flex-shrink:0;}
+.eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:8px;}
+.slide-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3.2vw,46px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:8px;color:var(--fl-white);flex-shrink:0;}
+.slide-title .em{color:var(--fl-orange);}
+.slide-sub{font-size:18px;font-weight:400;color:var(--fl-white-dim);line-height:1.55;max-width:90%;margin-bottom:16px;flex-shrink:0;}
+.slide-hero{background:linear-gradient(150deg,var(--fl-dark-deep) 0%,var(--fl-dark) 50%,var(--fl-dark-mid) 100%);justify-content:center;overflow-y:hidden;}
+.slide-hero::before{content:'';position:absolute;top:-20%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(240,128,48,0.06) 0%,transparent 60%);border-radius:50%;pointer-events:none;}
+.hero-kicker{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--fl-orange);margin-bottom:16px;display:flex;align-items:center;gap:10px;}.hero-kicker::before{content:'';display:block;width:28px;height:1px;background:var(--fl-orange);}
+.hero-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.0;letter-spacing:-2px;color:var(--fl-white);margin-bottom:16px;max-width:90%;}
+.hero-desc{font-size:20px;color:var(--fl-white-dim);max-width:700px;line-height:1.6;margin-bottom:20px;}
+.hero-rule{width:50px;height:2px;background:linear-gradient(90deg,var(--fl-orange),transparent);margin:16px 0;}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+.hero-pill{padding:6px 16px;border-radius:100px;font-size:14px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--fl-white-dim);}
+.hero-pill.primary{background:rgba(45,212,191,0.1);border-color:rgba(45,212,191,0.25);color:var(--fl-teal);}
+
+/* ─── CARDS ─── */
+.card{background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius-lg);padding:22px 26px;position:relative;overflow:hidden;}
+.card-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:6px;}
+.card-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:var(--fl-white);margin-bottom:6px;}
+.card-body{font-size:16px;color:var(--fl-white-dim);line-height:1.55;}
+.practice-card{border-radius:var(--radius-lg);padding:22px 26px;position:relative;overflow:hidden;transition:all .4s;}.practice-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.practice-card.p1{background:var(--p1-pale);border:1px solid var(--p1-border);}.practice-card.p1::before{background:var(--p1);}
+.practice-card.p2{background:var(--p2-pale);border:1px solid var(--p2-border);}.practice-card.p2::before{background:var(--p2);}
+.practice-card.p3{background:var(--p3-pale);border:1px solid var(--p3-border);}.practice-card.p3::before{background:var(--p3);}
+.pc-badge{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}.p1 .pc-badge{color:var(--p1);}.p2 .pc-badge{color:var(--p2);}.p3 .pc-badge{color:var(--p3);}
+.pc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--fl-white);margin-bottom:4px;}
+.pc-desc{font-size:15px;color:var(--fl-white-dim);line-height:1.5;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+
+/* ─── TABS ─── */
+.tab-bar{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,0.03);padding:4px;border-radius:var(--radius);border:1px solid var(--fl-border);}
+.tab-btn{padding:8px 18px;border-radius:8px;border:none;background:transparent;color:var(--fl-white-muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .25s;white-space:nowrap;}.tab-btn:hover{color:var(--fl-white-dim);background:rgba(255,255,255,0.05);}
+.tab-btn.active{background:var(--fl-dark-card);color:var(--fl-white);box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.tab-btn.tp1.active{color:var(--p1);border-bottom:2px solid var(--p1);}
+.tab-btn.tp2.active{color:var(--p2);border-bottom:2px solid var(--p2);}
+.tab-btn.tp3.active{color:var(--p3);border-bottom:2px solid var(--p3);}
+.tab-content{display:none;}.tab-content.active{display:block;}
+
+/* ─── MILESTONES ─── */
+.ms-row{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius);margin-bottom:10px;transition:all .3s;}.ms-row:hover{border-color:var(--fl-border-light);}
+.ms-badge{display:inline-flex;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+.ms-badge.basic{background:var(--ms-basic-pale);color:var(--ms-basic);border:1px solid var(--ms-basic-border);}
+.ms-badge.inter{background:var(--ms-inter-pale);color:var(--ms-inter);border:1px solid var(--ms-inter-border);}
+.ms-badge.adv{background:var(--ms-adv-pale);color:var(--ms-adv);border:1px solid var(--ms-adv-border);}
+.ms-statement{flex:1;font-size:16px;color:var(--fl-white-dim);line-height:1.45;}
+.ms-detail-btn{padding:6px 14px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--fl-white-muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0;}.ms-detail-btn:hover{background:rgba(255,255,255,0.1);color:var(--fl-white);}
+
+/* ─── ACTIVITY CARDS ─── */
+.act-card{background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius-lg);padding:20px 24px;cursor:pointer;transition:all .3s;}.act-card:hover{border-color:var(--fl-border-light);transform:translateY(-2px);}
+.act-diff{display:inline-flex;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.act-diff.d2{background:var(--ms-basic-pale);color:var(--ms-basic);border:1px solid var(--ms-basic-border);}
+.act-diff.d5{background:var(--ms-inter-pale);color:var(--ms-inter);border:1px solid var(--ms-inter-border);}
+.act-diff.d8{background:var(--ms-adv-pale);color:var(--ms-adv);border:1px solid var(--ms-adv-border);}
+.act-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;color:var(--fl-white);margin-bottom:4px;}
+.act-obj{font-size:14px;color:var(--fl-white-dim);line-height:1.45;}
+
+/* ─── MEASUREMENT ─── */
+.meas-section{margin-bottom:20px;}
+.meas-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.meas-label.signal{color:var(--signal);}.meas-label.leading{color:var(--leading);}.meas-label.trendline{color:var(--fl-teal);}.meas-label.business{color:var(--business);}
+.meas-item{padding:12px 18px;background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius);margin-bottom:8px;}
+.meas-item-ref{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:2px;}
+.meas-item-title{font-size:16px;font-weight:600;color:var(--fl-white);margin-bottom:2px;}
+.meas-item-desc{font-size:14px;color:var(--fl-white-dim);line-height:1.45;}
+.meas-item-ops{font-size:13px;color:var(--fl-amber);margin-top:4px;font-style:italic;}
+.acc-line-visual{margin:20px 0;text-align:center;}
+.acc-zone{padding:16px 24px;border-radius:var(--radius);margin-bottom:2px;}
+.acc-zone.below{background:var(--acc-below);border:1px solid rgba(45,212,191,0.15);}
+.acc-zone.above{background:var(--acc-above);border:1px solid rgba(224,96,112,0.15);}
+.acc-zone-label{font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.acc-zone.below .acc-zone-label{color:var(--fl-teal);}.acc-zone.above .acc-zone-label{color:var(--acc-line);}
+.acc-zone-desc{font-size:15px;color:var(--fl-white-dim);margin-top:4px;}
+.acc-divider{height:3px;background:linear-gradient(90deg,var(--fl-teal),var(--acc-line));border-radius:2px;margin:4px 40px;}
+.acc-divider-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fl-white-muted);text-align:center;margin:6px 0;}
+
+/* ─── ROI ─── */
+.roi-card{background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius-lg);padding:22px 26px;margin-bottom:14px;}
+.roi-indicator{font-size:16px;font-weight:600;color:var(--fl-white);margin-bottom:8px;}
+.roi-estimate{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--fl-teal);margin-bottom:4px;}
+.roi-reasoning{font-size:15px;color:var(--fl-white-dim);line-height:1.5;margin-bottom:6px;}
+.roi-confidence{font-size:13px;font-weight:600;padding:4px 12px;border-radius:100px;display:inline-flex;}
+.roi-confidence.high{background:var(--green-pale);color:var(--green);border:1px solid var(--green-border);}
+.roi-confidence.rough{background:var(--ms-inter-pale);color:var(--ms-inter);border:1px solid var(--ms-inter-border);}
+.roi-confidence.none{background:rgba(255,255,255,0.05);color:var(--fl-white-muted);border:1px solid var(--fl-border);}
+
+/* ─── SURVEY PROMPTS ─── */
+.prompt-card{padding:14px 18px;background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius);margin-bottom:8px;}
+.prompt-type{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.prompt-type.learner{color:var(--fl-teal);}.prompt-type.manager{color:var(--p3);}
+.prompt-text{font-size:15px;color:var(--fl-white);line-height:1.5;font-style:italic;}
+.prompt-scale{font-size:12px;color:var(--fl-white-muted);margin-top:4px;}
+
+/* ─── VALIDATION ─── */
+.gate-row{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--fl-dark-card);border:1px solid var(--fl-border);border-radius:var(--radius);margin-bottom:10px;}
+.gate-level{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--fl-white);min-width:100px;}
+.gate-desc{font-size:14px;color:var(--fl-white-dim);flex:1;line-height:1.45;}
+.gate-mode{padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+.gate-mode.gate{background:var(--fl-amber);color:var(--fl-dark);}.gate-mode.sendback{background:rgba(251,177,48,0.15);color:var(--fl-amber);border:1px solid rgba(251,177,48,0.3);}
+.gate-mode.off{background:rgba(255,255,255,0.05);color:var(--fl-white-muted);border:1px solid var(--fl-border);}
+
+/* ─── BARS (reporting) ─── */
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-label{font-size:14px;color:var(--fl-white-dim);min-width:160px;text-align:right;}
+.bar-track{flex:1;height:20px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden;}
+.bar-seg{height:100%;border-radius:4px;transition:width .6s ease;}
+.bar-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--fl-white);min-width:40px;}
+.quote-card{padding:14px 20px;background:rgba(255,255,255,0.03);border:1px solid var(--fl-border);border-radius:var(--radius);}.quote-text{font-size:15px;color:var(--fl-white-dim);font-style:italic;line-height:1.5;}.quote-attr{font-size:13px;color:var(--fl-white-muted);margin-top:6px;}
+.score-block{margin-bottom:12px;}.score-label{font-size:14px;color:var(--fl-white-dim);margin-bottom:4px;font-style:italic;}
+.score-bar-row{display:flex;align-items:center;gap:8px;}.score-bar-wrap{flex:1;height:16px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden;display:flex;}.score-bar-bl{height:100%;background:rgba(45,212,191,0.2);}.score-bar-delta{height:100%;background:var(--fl-teal);}
+.score-num{font-size:13px;font-weight:700;min-width:24px;}.score-num.bl{color:var(--fl-white-muted);}.score-num.fu{color:var(--fl-teal);}
+.score-delta{font-size:13px;font-weight:700;color:var(--green);min-width:36px;}
+
+/* ─── TIMELINE ─── */
+.tl-track{display:flex;align-items:center;gap:0;margin:20px 0;height:56px;position:relative;}
+.tl-block{height:100%;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;}
+.tl-block.i1{background:var(--p1-pale);border:1px solid var(--p1-border);flex:3;}
+.tl-block.i2{background:var(--p2-pale);border:1px solid var(--p2-border);flex:3;}
+.tl-block.i3{background:var(--p3-pale);border:1px solid var(--p3-border);flex:3;}
+.tl-block.maint{background:rgba(251,177,48,0.06);border:1px dashed rgba(251,177,48,0.25);flex:1;}
+.tl-block-name{font-size:13px;font-weight:700;color:var(--fl-white);}.tl-block-sub{font-size:11px;color:var(--fl-white-muted);}
+.tl-marker{position:absolute;top:-28px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fl-orange);white-space:nowrap;}
+.tl-marker-dot{position:absolute;top:-8px;width:8px;height:8px;border-radius:50%;background:var(--fl-orange);}
+
+/* ─── MODAL ─── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,18,32,0.85);z-index:200;justify-content:center;align-items:center;padding:40px;}.modal-overlay.open{display:flex;}
+.modal-content{background:var(--fl-dark-mid);border:1px solid var(--fl-border-light);border-radius:var(--radius-lg);max-width:700px;width:100%;max-height:80vh;overflow-y:auto;position:relative;}
+.modal-header{padding:20px 26px;border-bottom:1px solid var(--fl-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--fl-dark-mid);z-index:1;}
+.modal-header h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:var(--fl-white);}
+.modal-close{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--fl-white-dim);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}.modal-close:hover{background:var(--acc-line);color:var(--fl-white);border-color:var(--acc-line);}
+.modal-body{padding:22px 26px;}
+.modal-section{margin-bottom:18px;}.modal-section-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:6px;}.modal-section-content{font-size:15px;color:var(--fl-white-dim);line-height:1.55;}
+.modal-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.modal-col{padding:14px 18px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid var(--fl-border);}
+.modal-col-title{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}.modal-col.behav .modal-col-title{color:var(--fl-teal);}.modal-col.ext .modal-col-title{color:var(--fl-amber);}
+.modal-pattern{font-size:14px;color:var(--fl-white-dim);margin-bottom:6px;padding-left:12px;border-left:2px solid var(--fl-border);}
+.modal-pattern.success{border-color:var(--green);}.modal-pattern.partial{border-color:var(--ms-inter);}.modal-pattern.struggle{border-color:var(--acc-line);}
+.modal-pattern.good{border-color:var(--green);}.modal-pattern.mixed{border-color:var(--ms-inter);}.modal-pattern.poor{border-color:var(--acc-line);}
+.modal-pattern-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.modal-pattern.success .modal-pattern-label{color:var(--green);}.modal-pattern.partial .modal-pattern-label{color:var(--ms-inter);}.modal-pattern.struggle .modal-pattern-label{color:var(--acc-line);}
+.modal-pattern.good .modal-pattern-label{color:var(--green);}.modal-pattern.mixed .modal-pattern-label{color:var(--ms-inter);}.modal-pattern.poor .modal-pattern-label{color:var(--acc-line);}
+.selector-group{margin-top:12px;}.selector-label{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}.selector-label.behav{color:var(--fl-teal);}.selector-label.ext{color:var(--fl-amber);}
+.selector-option{padding:10px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--fl-border);border-radius:var(--radius);margin-bottom:6px;font-size:14px;color:var(--fl-white-dim);}
+.freeform-preview{padding:10px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--fl-border);border-radius:var(--radius);font-size:14px;color:var(--fl-white-muted);font-style:italic;}
+.section-hdr{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fl-white-muted);margin:16px 0 10px;}
+.pill{display:inline-flex;padding:4px 12px;border-radius:100px;font-size:13px;font-weight:600;}
+
+/* ─── RESPONSIVE ─── */
+html{font-size:clamp(15px, 1.1vw + 9px, 21px);}
+body{font-size:1rem;}
+.slide{padding:64px 48px 36px;}
+.card-body,.pc-desc,.ms-statement,.meas-item-desc,.modal-section-content,.selector-option,.freeform-preview,.prompt-text,.score-label,.bar-label{font-size:1rem;}
+.card-title,.pc-name,.act-name,.meas-item-title{font-size:1.15rem;}
+.slide-sub,.hero-desc,.acc-zone-desc{font-size:1.1rem;}
+.card-label,.pc-badge,.meas-label,.meas-item-ref,.act-diff,.eyebrow,.section-hdr,.prompt-type,.selector-label,.modal-section-label,.modal-pattern-label,.modal-col-title{font-size:0.78rem;}
+
+@media(max-width:1100px){
+  .grid-3{grid-template-columns:1fr 1fr;}
+  .grid-2{grid-template-columns:1fr;}
+  .modal-two-col{grid-template-columns:1fr;}
+  .slide{padding:56px 28px 28px;}
+  .nav-label{display:none;}
+  .tl-track{flex-direction:column;}
+  .tl-block{min-width:0;}
+}
+@media(max-width:700px){
+  .grid-3{grid-template-columns:1fr;}
+  .slide{padding:52px 14px 20px;}
+  .nav{padding:10px 14px;}
+  .tab-bar{flex-wrap:wrap;}
+  .hero-title{font-size:clamp(28px,5vw,48px);}
+  .slide-title{font-size:clamp(22px,3.5vw,38px);}
+}
+
+/* ─── CLICK-REVEAL DETAIL ─── */
+.reveal-btn{display:inline-flex;align-items:center;gap:8px;margin-top:clamp(14px,2vh,20px);padding:10px 22px;background:rgba(240,128,48,0.08);border:1px solid rgba(240,128,48,0.25);border-radius:100px;color:var(--fl-orange);font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(13px,1.3vw,15px);font-weight:600;cursor:pointer;transition:all .25s;flex-shrink:0;}
+.reveal-btn:hover{background:rgba(240,128,48,0.16);border-color:rgba(240,128,48,0.45);}
+.reveal-btn .btn-arrow{transition:transform .3s;}
+.reveal-btn.open .btn-arrow{transform:rotate(90deg);}
+.reveal-detail{display:none;border-top:1px solid var(--fl-border);margin-top:20px;padding-top:20px;}
+.reveal-detail.open{display:block;}
+/* ─── FEEDBACK ─── */
+.fb-toggle{position:fixed;bottom:80px;right:0;width:32px;padding:14px 0;background:var(--fl-dark);color:#fff;border:none;border-radius:6px 0 0 6px;cursor:pointer;z-index:2000;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:-2px 2px 10px rgba(0,0,0,0.3);transition:background 0.2s,right 0.3s ease;}
+.fb-toggle:hover{background:#2a3245;}
+.fb-toggle.active{right:380px;}
+.fb-toggle-label{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff;user-select:none;}
+.fb-toggle-arrow{font-size:10px;color:rgba(255,255,255,0.7);transition:transform 0.3s ease;line-height:1;}
+.fb-toggle.active .fb-toggle-arrow{transform:rotate(180deg);}
+.fb-count{position:absolute;top:6px;right:4px;background:#FA0060;color:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;}
+.fb-panel{position:fixed;right:-400px;top:0;bottom:0;width:380px;background:#fff;box-shadow:-2px 0 24px rgba(0,0,0,0.12);z-index:1999;transition:right 0.3s ease;display:flex;flex-direction:column;}
+.fb-panel.open{right:0;}
+.fb-panel-header{background:var(--fl-dark);color:#fff;padding:20px;font-size:1rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.2px;}
+.fb-panel-header span{font-weight:400;font-size:0.82rem;opacity:0.65;display:block;margin-top:2px;}
+.fb-list{flex:1;overflow-y:auto;padding:16px;}
+.fb-empty{text-align:center;color:#888;padding:40px 20px;font-size:0.9rem;font-style:italic;}
+.fb-comment{background:#f7f8fc;border-left:4px solid #E8630A;padding:14px;margin-bottom:14px;border-radius:6px;}
+.fb-comment-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.fb-comment-author{font-weight:700;color:#181d2a;font-size:0.88rem;}
+.fb-comment-slide{font-size:0.68rem;color:#fff;background:#E8630A;padding:2px 8px;border-radius:10px;margin-top:3px;display:inline-block;}
+.fb-comment-time{font-size:0.72rem;color:#888;}
+.fb-comment-text{color:#3d4455;font-size:0.87rem;line-height:1.5;margin-bottom:6px;}
+.fb-comment-del{background:none;border:none;color:#aaa;cursor:pointer;font-size:0.75rem;padding:4px 8px;border-radius:4px;transition:all 0.2s;}
+.fb-comment-del:hover{background:rgba(192,57,43,0.1);color:#c0392b;}
+.fb-form-wrap{border-top:2px solid #e8eaf0;padding:18px;background:#f7f8fc;}
+.fb-info{font-size:0.73rem;color:#888;text-align:center;margin-bottom:12px;line-height:1.4;}
+.fb-export-btn{width:100%;padding:11px;background:#E8630A;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin-bottom:8px;transition:all 0.2s;font-family:inherit;font-size:0.88rem;}
+.fb-export-btn:hover{background:#c9520a;}
+.fb-copy-btn{width:100%;padding:11px;background:#2c3e50;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin-bottom:12px;transition:all 0.2s;font-family:inherit;font-size:0.88rem;}
+.fb-copy-btn:hover{background:#1a252f;}
+.fb-group{margin-bottom:12px;}
+.fb-group label{display:block;font-size:0.78rem;font-weight:700;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.fb-group input,.fb-group textarea{width:100%;padding:9px 10px;border:1px solid #dde1ea;border-radius:6px;font-size:0.87rem;color:#3d4455;font-family:inherit;box-sizing:border-box;}
+.fb-group textarea{height:90px;resize:vertical;}
+.fb-actions{display:flex;gap:8px;}
+.fb-btn{flex:1;padding:10px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.88rem;transition:all 0.2s;}
+.fb-btn-primary{background:#E8630A;color:#fff;}
+.fb-btn-primary:hover{background:#c9520a;}
+.fb-btn-secondary{background:#e8eaf0;color:#555;}
+.fb-btn-secondary:hover{background:#d0d3de;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-brand"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjE1IiBoZWlnaHQ9IjM2IiB2aWV3Qm94PSIwIDAgMjE1IDM2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0ZXh0IHg9IjAiIHk9IjI4IiBmb250LXNpemU9IjI4IiBmb250LWZhbWlseT0iQXJpYWwiIGZpbGw9IiNGRkYiIGZvbnQtd2VpZ2h0PSI4MDAiPkNpdGl6ZW5zPC90ZXh0Pjwvc3ZnPg==" alt="Citizens REO"></div>
+  <div class="nav-sep"></div>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-label" id="navLabel">Program Proposal</div>
+  <div class="nav-arrows"><div class="nav-arrow" onclick="prevSlide()">‹</div><div class="nav-arrow" onclick="nextSlide()">›</div></div>
+  <div class="nav-sep"></div>
+  <div class="nav-cobrand"><span>powered by</span><img src="https://app.flintls.com/logo.png" alt="FLiNT"></div>
+</div>
+
+<!-- ═══ SLIDE 1: HERO ═══ -->
+<div class="slide slide-hero active" data-label="Program Proposal">
+  <div class="hero-kicker anim d1">Citizens REO</div>
+  <div class="hero-title anim d2">Facilities Services Excellence</div>
+  <div class="hero-desc anim d3">Building the daily habit of deliberate quality observation across your retail branch portfolio — so small problems are caught before customers or executives notice them.</div>
+  <div class="hero-rule anim d4"></div>
+  <div class="hero-pills anim d5">
+    <span class="hero-pill primary">Program Proposal</span>
+    <span class="hero-pill">Retail Facility Managers &amp; FM Leads</span>
+    <span class="hero-pill">Performance Program</span>
+    <span class="hero-pill">~1 Year (3 Initiatives)</span>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2: PROGRAM OVERVIEW ═══ -->
+<div class="slide" data-label="Overview">
+  <div class="eyebrow anim d1">Program Overview</div>
+  <div class="slide-title anim d2">The challenge, the audience, and <span class="em">three practices.</span></div>
+  <div class="grid-2 anim d3" style="margin-bottom:16px;">
+    <div class="card"><div class="card-label">The Challenge</div><div class="card-body">FMs visit their branches regularly, but not daily. And yet even on FM visits, the same stained ceiling tile or dirty diffuser gets walked past — not because FMs don't know better, but because familiarity makes things invisible. It's a habit gap, not a knowledge gap. Quality control (QC) data confirms it: cigarette receptacles (64% pass rate), exterior windows (66%), restroom floors (74%).</div></div>
+    <div class="card"><div class="card-label">The Audience</div><div class="card-title">Retail Facility Managers &amp; FM Leads</div><div class="card-body">~41 frontline leaders across four eastern U.S. regions. Each manages 40–60 branches, a dispersed team of MTs and janitors, and coordinates vendor work through FAMIS 360. Reactive work dominates their time — proactive quality observation is the habit to build.</div></div>
+  </div>
+  <div class="grid-3 anim d4" style="margin-bottom:14px;">
+    <div class="practice-card p1"><div class="pc-badge">Practice 1</div><div class="pc-name">Fresh Eyes — Seeing What Needs Attention</div><div class="pc-desc">Walk branches with deliberate <strong>fresh-eye awareness</strong> — see what familiarity has made invisible, document it, act on it through 360.</div><div style="margin-top:8px;font-size:13px;color:var(--p1);font-weight:600;">Initiative 1 — the pilot.</div></div>
+    <div class="practice-card p2"><div class="pc-badge">Practice 2</div><div class="pc-name">Building Your Team's Quality Eye</div><div class="pc-desc">Use on-site moments and huddles to get your team noticing and flagging issues on their own — without you having to point out everything.</div><div style="margin-top:8px;font-size:13px;color:var(--p2);font-weight:600;">Initiative 2 — extends the habit to the team.</div></div>
+    <div class="practice-card p3"><div class="pc-badge">Practice 3</div><div class="pc-name">Keeping Vendors Accountable</div><div class="pc-desc">Review vendor work order documentation before accepting the close — verify photos, notes, and completion quality meet standard, and follow through when they don't.</div><div style="margin-top:8px;font-size:13px;color:var(--p3);font-weight:600;">Initiative 3 — closes the vendor gap.</div></div>
+  </div>
+  <div class="card anim d5"><div class="card-label">Why This Sequence</div><div style="display:flex;align-items:center;gap:12px;"><span class="pill" style="background:var(--p1-pale);color:var(--p1);border:1px solid var(--p1-border);">1. Fresh Eyes</span><span style="color:var(--fl-white-muted);">→</span><span class="pill" style="background:var(--p2-pale);color:var(--p2);border:1px solid var(--p2-border);">2. Team Quality Eye</span><span style="color:var(--fl-white-muted);">→</span><span class="pill" style="background:var(--p3-pale);color:var(--p3);border:1px solid var(--p3-border);">3. Vendor Accountability</span></div></div>
+</div>
+
+<!-- ═══ SLIDE 3: MILESTONE PROGRESSION ═══ -->
+<div class="slide" data-label="Milestones">
+  <div class="eyebrow anim d1">Milestone Progression</div>
+  <div class="slide-title anim d2">Three levels of technique — <span class="em">per practice.</span></div>
+  <div class="slide-sub anim d3">Each practice has a Basic, Intermediate, and Advanced level. Each one is harder — and builds on the one before it.</div>
+  <div class="anim d4" style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+    <div class="ms-row" style="border-left:3px solid var(--p1);"><span class="ms-badge basic">Basic</span><span class="ms-statement" style="flex:1;">Walk a branch with <strong>fresh-eye awareness</strong> — see what familiarity has made invisible, document it, act on it.</span></div>
+    <div class="ms-row" style="border-left:3px solid var(--ms-inter);"><span class="ms-badge inter">Intermediate</span><span class="ms-statement" style="flex:1;">Find a repetitive issue that hasn't been resolved — figure out why it's persisted, and take one specific documented action step.</span></div>
+    <div class="ms-row" style="border-left:3px solid var(--ms-adv);"><span class="ms-badge adv">Advanced</span><span class="ms-statement" style="flex:1;">Walk the full customer path, rank findings by customer impact, resolve top items, build a written plan for the rest, and document the work order numbers opened as a result.</span></div>
+  </div>
+  <button class="reveal-btn anim d5" onclick="toggleReveal(this,'ms-detail')">See all three practices <span class="btn-arrow">›</span></button>
+  <div class="reveal-detail" id="ms-detail">
+    <div class="tab-bar" id="msTabs">
+      <button class="tab-btn tp1 active" onclick="switchTab('msTabs','msContent','ms-p1')">Fresh Eyes</button>
+      <button class="tab-btn tp2" onclick="switchTab('msTabs','msContent','ms-p2')">Team Quality Eye</button>
+      <button class="tab-btn tp3" onclick="switchTab('msTabs','msContent','ms-p3')">Vendor Accountability</button>
+    </div>
+    <div class="tab-content active" id="ms-p1" data-group="msContent">
+      <div class="ms-row"><span class="ms-badge basic">Basic</span><span class="ms-statement">Walk a location with deliberate <strong>fresh-eye awareness</strong> — approach as a first-time visitor and document issues that have become invisible through familiarity.</span><button class="ms-detail-btn" onclick="openModal('ms-p1-b')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge inter">Intermediate</span><span class="ms-statement">Identify a repetitive issue that has persisted without resolution, categorize why it has persisted, and take a specific documented action step toward resolution.</span><button class="ms-detail-btn" onclick="openModal('ms-p1-i')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge adv">Advanced</span><span class="ms-statement">Conduct a full quality walkthrough from the customer's perspective — rank all findings by customer impact, resolve top items immediately, build a written resolution plan for the rest, and document the work order numbers opened as a result.</span><button class="ms-detail-btn" onclick="openModal('ms-p1-a')">Detail →</button></div>
+    </div>
+    <div class="tab-content" id="ms-p2" data-group="msContent">
+      <div class="ms-row"><span class="ms-badge basic">Basic</span><span class="ms-statement">During an on-site moment with a team member, point out one quality issue and explain what "good" looks like for that item.</span><button class="ms-detail-btn" onclick="openModal('ms-p2-b')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge inter">Intermediate</span><span class="ms-statement">Use a team huddle to set a specific quality observation focus for the week — then follow up on what they found.</span><button class="ms-detail-btn" onclick="openModal('ms-p2-i')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge adv">Advanced</span><span class="ms-statement">When a team member finds an issue on their own, coach them through diagnosing and resolving it — building their judgment, not just compliance.</span><button class="ms-detail-btn" onclick="openModal('ms-p2-a')">Detail →</button></div>
+    </div>
+    <div class="tab-content" id="ms-p3" data-group="msContent">
+      <div class="ms-row"><span class="ms-badge basic">Basic</span><span class="ms-statement">Before accepting a vendor work order close, review the documentation — photos, notes, and completion quality in Lucernex and 360 — to verify the work meets standard, not just that it's marked done.</span><button class="ms-detail-btn" onclick="openModal('ms-p3-b')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge inter">Intermediate</span><span class="ms-statement">Document a recurring vendor performance pattern across locations and bring specific evidence to the next check-in or Quarterly Business Review (QBR).</span><button class="ms-detail-btn" onclick="openModal('ms-p3-i')">Detail →</button></div>
+      <div class="ms-row"><span class="ms-badge adv">Advanced</span><span class="ms-statement">Use documented vendor data to hold a structured accountability conversation — specific gaps, expected standards, agreed corrective actions with timelines.</span><button class="ms-detail-btn" onclick="openModal('ms-p3-a')">Detail →</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4: CORE ACTIVITY PREVIEWS ═══ -->
+<div class="slide" data-label="Activities">
+  <div class="eyebrow anim d1">Sample Activities</div>
+  <div class="slide-title anim d2">What FMs <span class="em">actually do.</span></div>
+  <div class="slide-sub anim d3">Three sample activities from Practice 1 — one per level. Click any card to see the full detail.</div>
+  <div class="anim d4"><div class="grid-3">
+    <div class="act-card" onclick="openModal('act-p1-d2')"><div class="act-diff d2">Basic</div><div class="act-name">Fresh Eyes Walkthrough</div><div class="act-obj">Walk a branch as if you've never been there before — document at least three issues you've been walking past.</div></div>
+    <div class="act-card" onclick="openModal('act-p1-d5')"><div class="act-diff d5">Intermediate</div><div class="act-name">Catch the Repetitive Issue</div><div class="act-obj">Find one issue that's persisted without resolution — figure out why, and take one specific action step.</div></div>
+    <div class="act-card" onclick="openModal('act-p1-d8')"><div class="act-diff d8">Advanced</div><div class="act-name">Customer-Eye Audit</div><div class="act-obj">Walk the full customer path — rank findings by customer impact and build a written resolution plan.</div></div>
+  </div></div>
+  <button class="reveal-btn anim d5" onclick="toggleReveal(this,'act-detail')">See activities for all three practices <span class="btn-arrow">›</span></button>
+  <div class="reveal-detail" id="act-detail">
+    <div class="tab-bar" id="actTabs">
+      <button class="tab-btn tp1 active" onclick="switchTab('actTabs','actContent','act-p1')">Fresh Eyes</button>
+      <button class="tab-btn tp2" onclick="switchTab('actTabs','actContent','act-p2')">Team Quality Eye</button>
+      <button class="tab-btn tp3" onclick="switchTab('actTabs','actContent','act-p3')">Vendor Accountability</button>
+    </div>
+    <div class="tab-content active" id="act-p1" data-group="actContent"><div class="grid-3">
+      <div class="act-card" onclick="openModal('act-p1-d2')"><div class="act-diff d2">Basic</div><div class="act-name">Fresh Eyes Walkthrough</div><div class="act-obj">Walk a branch as if you've never been there before — document at least three issues you've been walking past.</div></div>
+      <div class="act-card" onclick="openModal('act-p1-d5')"><div class="act-diff d5">Intermediate</div><div class="act-name">Catch the Repetitive Issue</div><div class="act-obj">Find one issue that's persisted without resolution — figure out why, and take one specific action step.</div></div>
+      <div class="act-card" onclick="openModal('act-p1-d8')"><div class="act-diff d8">Advanced</div><div class="act-name">Customer-Eye Audit</div><div class="act-obj">Walk the full customer path — rank findings by customer impact and build a written resolution plan.</div></div>
+    </div></div>
+    <div class="tab-content" id="act-p2" data-group="actContent"><div class="grid-3">
+      <div class="act-card" onclick="openModal('act-p2-d2')"><div class="act-diff d2">Basic</div><div class="act-name">Point Out One Thing</div><div class="act-obj">During an on-site moment with a team member, point out one quality issue and explain the standard.</div></div>
+      <div class="act-card" onclick="openModal('act-p2-d5')"><div class="act-diff d5">Intermediate</div><div class="act-name">Set a Quality Focus for the Week</div><div class="act-obj">Use a huddle to set a specific quality focus — then follow up on what the team found.</div></div>
+      <div class="act-card" onclick="openModal('act-p2-d8')"><div class="act-diff d8">Advanced</div><div class="act-name">Coach Through a Finding</div><div class="act-obj">When a team member finds an issue on their own, coach them through diagnosing and resolving it.</div></div>
+    </div></div>
+    <div class="tab-content" id="act-p3" data-group="actContent"><div class="grid-3">
+      <div class="act-card" onclick="openModal('act-p3-d2')"><div class="act-diff d2">Basic</div><div class="act-name">Review Before You Accept</div><div class="act-obj">Before accepting a vendor work order close, review the documentation to verify the work meets standard — not just that it's marked done.</div></div>
+      <div class="act-card" onclick="openModal('act-p3-d5')"><div class="act-diff d5">Intermediate</div><div class="act-name">Build the Vendor Evidence File</div><div class="act-obj">Identify a recurring vendor gap across locations and prepare documented evidence.</div></div>
+      <div class="act-card" onclick="openModal('act-p3-d8')"><div class="act-diff d8">Advanced</div><div class="act-name">The Accountability Conversation</div><div class="act-obj">Hold a structured vendor accountability conversation using documented performance data.</div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5: MEASUREMENT ARCHITECTURE ═══ -->
+<div class="slide" data-label="Measurement">
+  <div class="eyebrow anim d1">How We Prove It Works</div>
+  <div class="slide-title anim d2">Early signs. Then behavior change. <span class="em">Then business results.</span></div>
+  <div class="slide-sub anim d3">Three levels of evidence — building from activity outputs to real-world outcomes.</div>
+  <div class="anim d4" style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+    <div class="card" style="border-left:3px solid var(--signal);"><div class="card-label" style="color:var(--signal);">Early Patterns</div><div class="card-body">What shows up in the first few weeks — issues surfaced per walkthrough, repetitive issues categorized and actioned, customer-ranked findings with resolution plans. Direct output of the activities.</div></div>
+    <div class="card" style="border-left:3px solid var(--leading);"><div class="card-label" style="color:var(--leading);">Behavior Change</div><div class="card-body">FMs proactively surfacing issues SFMs didn't know about. FM-initiated 360 entries increasing in specificity and frequency. These are the signals that the habit is forming.</div></div>
+    <div class="card" style="border-left:3px solid var(--business);"><div class="card-label" style="color:var(--business);">Business Results</div><div class="card-body">quality control (QC) pass rates, customer complaints, executive escalations, vendor performance scores. These are your metrics — we prove the behavior changed, you connect it to your results.</div></div>
+  </div>
+  <button class="reveal-btn anim d5" onclick="toggleReveal(this,'meas-detail')">See full measurement breakdown <span class="btn-arrow">›</span></button>
+  <div class="reveal-detail" id="meas-detail">
+    <div class="tab-bar" id="measTabs">
+      <button class="tab-btn tp1 active" onclick="switchTab('measTabs','measContent','meas-p1')">Fresh Eyes</button>
+      <button class="tab-btn tp2" onclick="switchTab('measTabs','measContent','meas-p2')">Team Quality Eye</button>
+      <button class="tab-btn tp3" onclick="switchTab('measTabs','measContent','meas-p3')">Vendor Accountability</button>
+      <button class="tab-btn" onclick="switchTab('measTabs','measContent','meas-program')" style="border-left:1px solid var(--fl-border);margin-left:4px;">Full Program</button>
+    </div>
+    <!-- P1 -->
+    <div class="tab-content active" id="meas-p1" data-group="measContent">
+      <div class="meas-section"><div class="meas-label signal">Early Patterns — Fresh Eyes</div>
+        <div class="meas-item"><div class="meas-item-title">Issues surfaced per walkthrough</div><div class="meas-item-desc">Previously-unnoticed issues documented during a deliberate <strong>fresh-eye walkthrough</strong>. Baseline expectation: at least one previously-unnoticed issue surfaced per site per walkthrough — every location has something.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Repetitive issues categorized with action steps</div><div class="meas-item-desc">Persisting issues categorized by type with a logged action step and resolution date in 360.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Customer-impact-ranked findings with resolution plans</div><div class="meas-item-desc">Findings ranked by customer impact — top items resolved within 48 hours, written plan for the rest.</div></div>
+      </div>
+      <div class="meas-section"><div class="meas-label leading">Behavior Change — Fresh Eyes</div>
+        <div class="meas-item"><div class="meas-item-title">FMs surfacing issues SFMs didn't know about</div><div class="meas-item-desc">SFMs receive quality findings from FMs based on deliberate observation — not just quality control (QC) inspections or complaints. Corroborated by FAMIS 360: FM-initiated vs. reactive work orders, and SFM survey responses.</div></div>
+        <div class="meas-item"><div class="meas-item-title">FM-initiated 360 entries increasing</div><div class="meas-item-desc">360 usage shifts — FMs generating entries from their own observations rather than just reacting to incoming work orders. Corroborated by 360 entry analysis: volume, specificity, and source type over time.</div></div>
+      </div>
+    </div>
+    <!-- P2 -->
+    <div class="tab-content" id="meas-p2" data-group="measContent">
+      <div class="meas-section"><div class="meas-label signal">Early Patterns — Team Quality Eye</div>
+        <div class="meas-item"><div class="meas-item-title">Coaching moments used during co-location visits</div><div class="meas-item-desc">On-site moments where the FM pointed out a quality issue and explained the standard.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Quality focus areas set and followed up</div><div class="meas-item-desc">Times the FM set a specific quality focus in a huddle and followed up on what the team found.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Team members coached through diagnosis</div><div class="meas-item-desc">Times the FM coached a team member through diagnosing and resolving an issue they found independently.</div></div>
+      </div>
+      <div class="meas-section"><div class="meas-label leading">Behavior Change — Team Quality Eye</div>
+        <div class="meas-item"><div class="meas-item-title">Team members independently flagging issues</div><div class="meas-item-desc">MTs and janitors start reporting quality observations proactively — evidence the coaching is taking hold. <span class="meas-item-ops">Provisional — validated during Initiative 2 scoping.</span></div></div>
+        <div class="meas-item"><div class="meas-item-title">Quality a standing topic in huddles</div><div class="meas-item-desc">Quality becomes a standing topic in team check-ins — not an occasional mention. <span class="meas-item-ops">Provisional — validated during Initiative 2 scoping.</span></div></div>
+      </div>
+    </div>
+    <!-- P3 -->
+    <div class="tab-content" id="meas-p3" data-group="measContent">
+      <div class="meas-section"><div class="meas-label signal">Early Patterns — Vendor Accountability</div>
+        <div class="meas-item"><div class="meas-item-title">Vendor work order closures reviewed before acceptance</div><div class="meas-item-desc">Times the FM reviewed work order documentation — photos, notes, completion quality — before accepting the close in 360 or Lucernex.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Cross-location vendor patterns documented</div><div class="meas-item-desc">Recurring vendor gaps documented across locations, evidence prepared for vendor conversations.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Structured vendor accountability conversations held</div><div class="meas-item-desc">Vendor conversations where documented data led to agreed corrective actions with timelines.</div></div>
+      </div>
+      <div class="meas-section"><div class="meas-label leading">Behavior Change — Vendor Accountability</div>
+        <div class="meas-item"><div class="meas-item-title">Vendor work order closures reviewed before acceptance as standard practice</div><div class="meas-item-desc">FMs review documentation before accepting vendor work order closes — rather than confirming completion at face value. <span class="meas-item-ops">Provisional — validated during Initiative 3 scoping.</span></div></div>
+        <div class="meas-item"><div class="meas-item-title">Quarterly Business Review (QBR)s supported by documented evidence</div><div class="meas-item-desc">Quarterly Business Review (QBR) conversations shift from anecdotal to evidence-based — documented 360 patterns instead of general complaints. <span class="meas-item-ops">Provisional — validated during Initiative 3 scoping.</span></div></div>
+      </div>
+    </div>
+    <!-- Full Program -->
+    <div class="tab-content" id="meas-program" data-group="measContent">
+      <div class="meas-section"><div class="meas-label leading">Behavior Change — All Practices</div>
+        <div class="grid-3">
+          <div class="meas-item" style="border-left:3px solid var(--p1);"><div class="meas-item-ref">Fresh Eyes</div><div class="meas-item-title" style="font-size:14px;">FMs surfacing issues SFMs didn't know about</div><div class="meas-item-title" style="font-size:14px;">FM-initiated 360 entries increasing</div></div>
+          <div class="meas-item" style="border-left:3px solid var(--p2);"><div class="meas-item-ref">Team Quality Eye</div><div class="meas-item-title" style="font-size:14px;">Team members independently flagging issues</div><div class="meas-item-title" style="font-size:14px;">Quality a standing huddle topic</div></div>
+          <div class="meas-item" style="border-left:3px solid var(--p3);"><div class="meas-item-ref">Vendor Accountability</div><div class="meas-item-title" style="font-size:14px;">Vendor work order closures reviewed before acceptance</div><div class="meas-item-title" style="font-size:14px;">Quarterly Business Review (QBR)s evidence-based</div></div>
+        </div>
+      </div>
+      <div class="meas-section"><div class="meas-label trendline">Compound Effect — Across All Three Practices</div>
+        <div class="meas-item"><div class="meas-item-title">The quality gap is narrowing</div><div class="meas-item-desc">Repetitive issues caught and resolved before they accumulate. The gap between "acceptable" and "excellent" is shrinking. Corroborated by quality control (QC) pass rates trending up on the lowest-scored items.</div></div>
+        <div class="meas-item"><div class="meas-item-title">Quality is driven proactively, not reactively</div><div class="meas-item-desc">REO's posture shifts from reacting to complaints and executive visits to catching issues early. Corroborated by reduced escalations, fewer complaints, and a shift in 360 composition from reactive to proactive.</div></div>
+      </div>
+      <div class="acc-line-visual">
+        <div class="acc-zone below"><div class="acc-zone-label">↑ We prove this</div><div class="acc-zone-desc">Behavior change — measured across all three practices. Early patterns within weeks. Practice-level evidence within each initiative. Compound effect across the program year.</div></div>
+        <div class="acc-divider"></div><div class="acc-divider-label">The Accountability Line</div>
+        <div class="acc-zone above"><div class="acc-zone-label">↓ Your results to connect</div><div class="acc-zone-desc">quality control (QC) pass rates · Customer complaint volume · Executive escalation frequency · Vendor performance scores — your metrics, in your systems. We prove the behaviors changed; you connect them to your results.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7: SURVEY QUESTIONS ═══ -->
+<div class="slide" data-label="Surveys">
+  <div class="eyebrow anim d1">Survey Questions</div>
+  <div class="slide-title anim d2">The questions we'll ask — <span class="em">for your review.</span></div>
+  <div class="slide-sub anim d3">FMs rate themselves. SFMs rate their FMs. All scored 0–10. Here are the Practice 1 prompts.</div>
+  <div class="anim d4" style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px;">
+    <div class="prompt-card"><div class="prompt-type learner">FM — Basic</div><div class="prompt-text">When I visit a branch, I always deliberately look for quality issues I might normally walk past — beyond whatever brought me there that day.</div><div class="prompt-scale">0 = Room for growth · 5 = As good as I need to be · 10 = Very good at this</div></div>
+    <div class="prompt-card"><div class="prompt-type manager">SFM — Basic</div><div class="prompt-text">[Name] tends to proactively surface quality issues at their locations that weren't already flagged through work orders or quality control (QC) inspections.</div><div class="prompt-scale">0 = Room for growth · 5 = Meets expectations · 10 = Exceeds expectations</div></div>
+  </div>
+  <button class="reveal-btn anim d5" onclick="toggleReveal(this,'surv-detail')">See all survey prompts <span class="btn-arrow">›</span></button>
+  <div class="reveal-detail" id="surv-detail">
+    <div class="tab-bar" id="survTabs">
+      <button class="tab-btn tp1 active" onclick="switchTab('survTabs','survContent','surv-p1')">Fresh Eyes</button>
+      <button class="tab-btn tp2" onclick="switchTab('survTabs','survContent','surv-p2')">Team Quality Eye</button>
+      <button class="tab-btn tp3" onclick="switchTab('survTabs','survContent','surv-p3')">Vendor Accountability</button>
+      <button class="tab-btn" onclick="switchTab('survTabs','survContent','surv-program')" style="border-left:1px solid var(--fl-border);margin-left:4px;">Program</button>
+    </div>
+    <!-- P1 prompts -->
+    <div class="tab-content active" id="surv-p1" data-group="survContent">
+      <div class="section-hdr">FM Self-Rating</div>
+      <div class="prompt-card"><div class="prompt-type learner">Basic</div><div class="prompt-text">When I visit a branch location, I always deliberately look for quality issues that I might normally walk past — beyond whatever brought me there that day.</div><div class="prompt-scale">0 = Room for growth · 5 = As good as I need to be · 10 = Very good at this</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Intermediate</div><div class="prompt-text">When I find a quality issue that has been persisting at a location, I always categorize why it has persisted and take a specific, documented action step to move it toward resolution — not just note it mentally.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Advanced</div><div class="prompt-text">When I walk a location, I always evaluate quality from the customer's perspective — prioritizing what a first-time visitor would notice over what's operationally convenient to address.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Leading Indicator 1</div><div class="prompt-text">Quality issues at my locations are being caught and addressed before they become visible to customers or trigger complaints — not after.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Leading Indicator 2</div><div class="prompt-text">My 360 entries reflect what I'm proactively finding during visits — not just work orders that came to me from someone else.</div></div>
+      <div class="section-hdr">SFM Rating</div>
+      <div class="prompt-card"><div class="prompt-type manager">Basic</div><div class="prompt-text">#{learner} tends to proactively surface quality issues at their locations that weren't already flagged through work orders or quality control (QC) inspections.</div><div class="prompt-scale">0 = Room for growth · 5 = Meets expectations · 10 = Exceeds expectations</div></div>
+      <div class="prompt-card"><div class="prompt-type manager">Intermediate</div><div class="prompt-text">#{learner} tends to document quality findings with enough specificity — including photos, descriptions, and action steps — that I can review them in 360 without needing to follow up for details.</div></div>
+      <div class="prompt-card"><div class="prompt-type manager">Leading Indicator</div><div class="prompt-text">#{learner} proactively brings me quality findings from their locations that I wouldn't have known about from quality control (QC) reports or work order data alone.</div></div>
+    </div>
+    <!-- P2 prompts -->
+    <div class="tab-content" id="surv-p2" data-group="survContent">
+      <div class="section-hdr">FM Self-Rating</div>
+      <div class="prompt-card"><div class="prompt-type learner">Basic</div><div class="prompt-text">When I'm on-site with a team member, I always use the moment to point out quality issues and explain what "good" looks like — not just assign tasks.</div><div class="prompt-scale">0 = Room for growth · 5 = As good as I need to be · 10 = Very good at this</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Intermediate</div><div class="prompt-text">I regularly set a specific quality observation focus for my team during check-ins — and follow up on what they found.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Advanced</div><div class="prompt-text">When a team member identifies a quality issue on their own, I coach them through diagnosing the root cause and deciding the right action — rather than just telling them what to do.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Leading Indicator</div><div class="prompt-text">My team members are starting to flag quality issues on their own — without me having to point things out every time.</div></div>
+      <div class="section-hdr">SFM Rating</div>
+      <div class="prompt-card"><div class="prompt-type manager">Basic</div><div class="prompt-text">#{learner} uses on-site co-location moments to coach team members on quality standards — not just to assign work.</div><div class="prompt-scale">0 = Room for growth · 5 = Meets expectations · 10 = Exceeds expectations</div></div>
+      <div class="prompt-card"><div class="prompt-type manager">Leading Indicator</div><div class="prompt-text">#{learner}'s team members are independently identifying and reporting quality issues — not just waiting to be told what to fix.</div></div>
+    </div>
+    <!-- P3 prompts -->
+    <div class="tab-content" id="surv-p3" data-group="survContent">
+      <div class="section-hdr">FM Self-Rating</div>
+      <div class="prompt-card"><div class="prompt-type learner">Basic</div><div class="prompt-text">When a vendor work order is closed at one of my locations, I always review the documentation — photos, notes, and completion quality in Lucernex or 360 — before accepting it, rather than just confirming it's marked done.</div><div class="prompt-scale">0 = Room for growth · 5 = As good as I need to be · 10 = Very good at this</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Intermediate</div><div class="prompt-text">I track vendor performance patterns across my locations using 360 data — and bring specific documented evidence to vendor conversations.</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Leading Indicator</div><div class="prompt-text">Vendor work at my locations is consistently documented and closed correctly — because I review before accepting, not because I assume it's done right.</div></div>
+      <div class="section-hdr">SFM Rating</div>
+      <div class="prompt-card"><div class="prompt-type manager">Basic</div><div class="prompt-text">#{learner} reviews vendor work order documentation before accepting closures — not just confirming completion status.</div><div class="prompt-scale">0 = Room for growth · 5 = Meets expectations · 10 = Exceeds expectations</div></div>
+      <div class="prompt-card"><div class="prompt-type manager">Leading Indicator</div><div class="prompt-text">#{learner} consistently reviews vendor work order documentation before accepting closes and follows through when quality or documentation gaps are found — rather than rubber-stamping closures.</div></div>
+    </div>
+    <!-- Program prompts -->
+    <div class="tab-content" id="surv-program" data-group="survContent">
+      <div class="section-hdr">FM Self-Rating</div>
+      <div class="prompt-card"><div class="prompt-type learner">Trendline 1</div><div class="prompt-text">Repetitive quality issues at my locations — the kind that used to persist for months — are being caught and resolved before they accumulate.</div><div class="prompt-scale">0 = Room for growth · 5 = As good as I need to be · 10 = Very good at this</div></div>
+      <div class="prompt-card"><div class="prompt-type learner">Trendline 2</div><div class="prompt-text">The overall quality standard across my portfolio is consistently maintained — not just when an inspection or executive visit is coming.</div></div>
+      <div class="section-hdr">SFM Rating</div>
+      <div class="prompt-card"><div class="prompt-type manager">Trendline</div><div class="prompt-text">#{learner}'s locations show fewer repetitive quality issues persisting over time — the gap between "acceptable" and "excellent" is narrowing.</div><div class="prompt-scale">0 = Room for growth · 5 = Meets expectations · 10 = Exceeds expectations</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8: MANAGER VALIDATION (conditional) ═══ -->
+<div class="slide" data-label="Validation" id="slideValidation">
+  <div class="eyebrow anim d1">Manager Validation</div>
+  <div class="slide-title anim d2">SFMs review FM submissions <span class="em">at each milestone.</span></div>
+  <div class="slide-sub anim d3">SFMs are well-positioned to validate FM quality observations — they have 360 visibility, field experience, and direct management relationships. Send-back mode recommended for Initiative 1.</div>
+  <div class="anim d4" style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+    <div class="grid-2">
+      <div class="card" style="border-left:3px solid var(--fl-amber);"><div class="card-label" style="color:var(--fl-amber);">Gate Mode</div><div class="card-body">FM waits for SFM approval before advancing.</div></div>
+      <div class="card" style="border-left:3px solid var(--fl-white-muted);"><div class="card-label">Send-Back Mode <span style="color:var(--fl-orange);font-size:11px;font-weight:700;margin-left:6px;">← Recommended for Initiative 1</span></div><div class="card-body">SFM can send back for more practice. Progress continues without being blocked.</div></div>
+    </div>
+  </div>
+  <button class="reveal-btn anim d5" onclick="toggleReveal(this,'val-detail')">See validation gates and sample data <span class="btn-arrow">›</span></button>
+  <div class="reveal-detail" id="val-detail">
+    <div class="tab-bar" id="valTabs">
+      <button class="tab-btn active" onclick="switchTab('valTabs','valContent','val-gates')">Validation Gates</button>
+      <button class="tab-btn" onclick="switchTab('valTabs','valContent','val-report')">Weekly Report Preview</button>
+    </div>
+    <!-- Gates tab -->
+    <div class="tab-content active" id="val-gates" data-group="valContent">
+      <div style="font-size:15px;color:var(--fl-white-dim);margin-bottom:14px;line-height:1.55;">At each milestone, the SFM reviews what the FM submitted and decides: advance or send back.</div>
+      <div class="gate-row"><div class="gate-level" style="color:var(--p1);">Initiative 1</div><div class="gate-desc">Fresh Eyes — SFMs review documentation quality, specificity of findings, and appropriateness of action steps.</div><div class="gate-mode sendback">Send-Back</div></div>
+      <div class="gate-row"><div class="gate-level" style="color:var(--p2);">Initiative 2</div><div class="gate-desc">Building Your Team's Quality Eye — To be configured during Initiative 2 scoping.</div><div class="gate-mode off">TBD</div></div>
+      <div class="gate-row"><div class="gate-level" style="color:var(--p3);">Initiative 3</div><div class="gate-desc">Keeping Vendors Accountable — To be configured during Initiative 3 scoping.</div><div class="gate-mode off">TBD</div></div>
+    </div>
+    <!-- Validation report preview tab -->
+    <div class="tab-content" id="val-report" data-group="valContent">
+      <div style="font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Weekly Validation Activity — Fresh Eyes (sample data)</div>
+      <div style="display:flex;gap:6px;align-items:flex-end;height:140px;margin-bottom:6px;">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:8%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:30%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:5%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:45%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:10%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:55%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:8%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:65%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:5%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:75%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--fl-amber);height:3%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:82%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;opacity:.3;"><div style="background:var(--fl-amber);height:3%;border-radius:3px 3px 0 0;min-height:2px;"></div><div style="background:var(--green);height:88%;border-radius:0 0 3px 3px;min-height:2px;"></div></div>
+      </div>
+      <div style="display:flex;gap:4px;margin-bottom:12px;"><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk1</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk2</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk3</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk4</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk5</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-orange);font-weight:700;">Wk6</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);opacity:.3;">Wk7</div></div>
+      <div style="display:flex;gap:16px;margin-bottom:16px;"><span style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--fl-white-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--green);"></span>Approved</span><span style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--fl-white-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--fl-amber);"></span>Sent Back</span></div>
+      <div class="grid-3">
+        <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--green);">47</div><div style="font-size:14px;color:var(--fl-white-muted);">approved</div></div>
+        <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--fl-amber);">8</div><div style="font-size:14px;color:var(--fl-white-muted);">sent back</div></div>
+        <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--fl-white);">1.8</div><div style="font-size:14px;color:var(--fl-white-muted);">avg days to review</div></div>
+      </div>
+      <div style="font-size:14px;color:var(--fl-white-muted);margin-top:12px;font-style:italic;">Sample data — illustrates what you'll see each week once the program is running.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9: REPORTING PREVIEW ═══ -->
+<div class="slide" data-label="Reporting">
+  <div class="eyebrow anim d1">What You'll See</div>
+  <div class="slide-title anim d2">Your people are building the <span class="em">technique.</span></div>
+  <div class="slide-sub anim d3">Sample data — what you'll see once activities are running.</div>
+  <!-- Execution trend -->
+  <div class="anim d4">
+    <div style="font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Weekly Execution by Milestone Level — Fresh Eyes — Seeing What Needs Attention</div>
+    <div style="display:flex;gap:6px;align-items:flex-end;height:140px;margin-bottom:6px;">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:5%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:15%;min-height:1px;"></div><div style="background:var(--ms-basic);height:80%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:10%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:25%;min-height:1px;"></div><div style="background:var(--ms-basic);height:65%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:18%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:32%;min-height:1px;"></div><div style="background:var(--ms-basic);height:50%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:25%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:35%;min-height:1px;"></div><div style="background:var(--ms-basic);height:40%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:33%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:37%;min-height:1px;"></div><div style="background:var(--ms-basic);height:30%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;"><div style="background:var(--ms-adv);height:42%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:35%;min-height:1px;"></div><div style="background:var(--ms-basic);height:23%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;opacity:.3;"><div style="background:var(--ms-adv);height:52%;border-radius:3px 3px 0 0;min-height:1px;"></div><div style="background:var(--ms-inter);height:33%;min-height:1px;"></div><div style="background:var(--ms-basic);height:15%;border-radius:0 0 3px 3px;min-height:1px;"></div></div>
+    </div>
+    <div style="display:flex;gap:4px;margin-bottom:10px;"><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk1</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk2</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk3</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk4</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);">Wk5</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-orange);font-weight:700;">Wk6</div><div style="flex:1;text-align:center;font-size:12px;color:var(--fl-white-muted);opacity:.3;">Wk7</div></div>
+    <div style="display:flex;gap:16px;margin-bottom:12px;"><span style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--fl-white-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--ms-basic);"></span>Basic</span><span style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--fl-white-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--ms-inter);"></span>Intermediate</span><span style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--fl-white-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--ms-adv);"></span>Advanced</span></div>
+  </div>
+  <!-- Barriers + quotes -->
+  <div class="anim d5">
+    <div style="font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Most Common Execution Gaps</div>
+    <div class="bar-row"><div class="bar-label">Documentation too vague to act on</div><div class="bar-track"><div class="bar-seg" style="width:55%;background:var(--ms-inter);"></div></div><div class="bar-val">18×</div></div>
+    <div class="bar-row"><div class="bar-label">Reverted to normal visit routine</div><div class="bar-track"><div class="bar-seg" style="width:35%;background:var(--ms-inter);"></div></div><div class="bar-val">11×</div></div>
+  </div>
+  <!-- Survey movement -->
+  <div class="anim d6" style="margin-top:14px;">
+    <div style="font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--fl-white-muted);margin-bottom:8px;">Baseline vs. Follow-Up</div>
+    <div class="score-block"><div class="score-label">When I visit a branch, I always deliberately look for quality issues I might normally walk past</div><div class="score-bar-row"><div class="score-bar-wrap"><div class="score-bar-bl" style="width:45%;"></div><div class="score-bar-delta" style="width:20%;"></div></div><div class="score-num bl">4.5</div><div class="score-num fu">6.5</div><div class="score-delta">+2.0</div></div></div>
+    <div class="score-block"><div class="score-label">Quality issues at my locations are being caught before they become visible to customers</div><div class="score-bar-row"><div class="score-bar-wrap"><div class="score-bar-bl" style="width:55%;"></div><div class="score-bar-delta" style="width:15%;"></div></div><div class="score-num bl">5.5</div><div class="score-num fu">7.0</div><div class="score-delta">+1.5</div></div></div>
+  </div>
+  <div class="anim d7" style="padding:14px 22px;background:var(--green-pale);border:1px solid var(--green-border);border-radius:var(--radius-lg);margin-top:12px;"><div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:2px;">You have enough to decide.</div><div style="font-size:15px;color:var(--fl-white-dim);">Execution trends, barrier patterns, survey movement.</div></div>
+</div>
+
+<!-- ═══ SLIDE 10: PILOT STRUCTURE & TIMELINE ═══ -->
+<div class="slide" data-label="Timeline">
+  <div class="eyebrow anim d1">Pilot Structure &amp; Timeline</div>
+  <div class="slide-title anim d2">First initiative is 8 weeks.</div>
+  <div class="anim d3" style="margin:24px 0;">
+    <div class="tl-track">
+      <div class="tl-block i1"><div class="tl-block-name">Fresh Eyes</div><div class="tl-block-sub">Initiative 1 · 8 weeks</div></div>
+      <div class="tl-block maint"><div class="tl-block-sub" style="color:var(--fl-amber);font-size:10px;font-weight:600;">Maintenance</div></div>
+      <div class="tl-block i2"><div class="tl-block-name">Team Quality Eye</div><div class="tl-block-sub">Initiative 2 · ~10 weeks</div></div>
+      <div class="tl-block maint"><div class="tl-block-sub" style="color:var(--fl-amber);font-size:10px;font-weight:600;">Maintenance</div></div>
+      <div class="tl-block i3"><div class="tl-block-name">Keeping Vendors Accountable</div><div class="tl-block-sub">Initiative 3 · ~10 weeks</div></div>
+    </div>
+  </div>
+  <!-- Maintenance mode callout -->
+  <div class="card anim d4" style="border-left:3px solid var(--fl-amber);margin-bottom:16px;display:flex;flex-direction:column;justify-content:center;min-height:80px;">
+    <div class="card-label" style="color:var(--fl-amber);margin-bottom:6px;">Maintenance Mode (Cooldown) · 2 weeks</div>
+    <div class="card-body">2 weeks between initiatives — no new activities, but prior habits continue. Enough time to consolidate without losing momentum.</div>
+  </div>
+  <!-- Pilot commitment -->
+  <div class="anim d5" style="padding:18px 24px;background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);border-radius:var(--radius-lg);text-align:center;margin-bottom:16px;">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--fl-teal);">Initiative 1 is the pilot.</div>
+    <div style="font-size:17px;color:var(--fl-white-dim);margin-top:4px;">You'll have data on whether behavior is changing. If it's working, the program continues. If not, we stop. Your call.</div>
+  </div>
+  <div class="section-hdr anim d6">What Happens Next</div>
+  <div class="grid-3 anim d7">
+    <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--fl-orange);">1</div><div class="card-title">FM List &amp; Launch Date</div><div class="card-body">Confirm the final list of ~41 retail FMs and FM Leads by region. Lock the launch date — target May 5, 2026, after the Percipio program wraps April 30.</div></div>
+    <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--fl-orange);">2</div><div class="card-title">SFM Baseline Surveys</div><div class="card-body">Brief the 4 retail SFMs on their role as survey respondents. SFM baseline surveys go out before the first activity launches — so we have the "before" picture from the manager's perspective.</div></div>
+    <div class="card" style="text-align:center;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--fl-orange);">3</div><div class="card-title">Launch Call &amp; Go Live</div><div class="card-body">Chris Caso opens with 2 minutes on why this matters. We walk participants through the platform and they complete their baseline survey on the call. First activity goes out the same week.</div></div>
+  </div>
+  <div class="anim d8" style="margin-top:14px;padding:16px 24px;background:var(--fl-orange-pale);border:1px solid rgba(240,128,48,0.25);border-radius:var(--radius-lg);text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--fl-orange);">Initiative 1 is the pilot. You'll have execution trend data, barrier patterns, and baseline-vs-follow-up survey movement — enough evidence to decide whether to continue with the full program. If the data shows behavior is changing, the program continues to Initiative 2. If not, we stop. Your call.</div></div>
+</div>
+
+<!-- ═══ MILESTONE DETAIL MODALS (9) ═══ -->
+<!-- P1 B/I/A -->
+<div class="modal-overlay" id="modal-ms-p1-b"><div class="modal-content"><div class="modal-header"><h3>Fresh Eyes — Seeing What Needs Attention — Basic</h3><button class="modal-close" onclick="closeModal('ms-p1-b')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Walk a location with deliberate <strong>fresh-eye awareness</strong> — approach as a first-time visitor and document issues that have become invisible through familiarity.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Scheduled branch visit (learner-initiated, weekly+) — the primary and most reliable hook. Reactive work order visit (on-site, daily+) — secondary, FM is already there.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">The FM identifies and documents issues at a location that were previously being walked past. Evidence: documented findings with photos and descriptions entered into FAMIS 360.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM starts from the customer entrance, works systematically, finds 3+ persisting issues with specific documentation.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM did the walkthrough but documentation was vague — "general cleanliness" rather than specific findings with photos.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM reverted to their normal routine — couldn't put down the work order list and see the space as a first-time visitor would.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>The walkthrough surfaced repetitive issues that were being walked past. Findings are specific enough to act on.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Location was well-maintained or issues were already on open work orders — technique applied but nothing truly new surfaced.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>Branch closed, FM pulled to an emergency, or visit too rushed for a deliberate scan.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p1-i"><div class="modal-content"><div class="modal-header"><h3>Fresh Eyes — Seeing What Needs Attention — Intermediate</h3><button class="modal-close" onclick="closeModal('ms-p1-i')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Identify a repetitive issue that has persisted without resolution, categorize why it has persisted, and take a specific documented action step toward resolution.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Scheduled branch visit (weekly+) — primary. Reactive work order visit — secondary.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">FM identifies a repetitive issue, categorizes why it persisted, and logs a specific action step with a resolution date in 360.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM identifies a real repetitive issue, categorizes it correctly, and logs a specific action step with a timeline.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM found and documented the issue but the action step is vague — no owner, no date.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM couldn't identify a repetitive issue — nothing came to mind, or issues felt too minor. Calibration on what "repetitive" means needs work.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Action step started a real resolution — vendor contacted, work order opened, timeline set.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Action taken but resolution is unclear — vendor hasn't responded or the issue needs escalation.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>External factors blocked action — vendor dispute, budget freeze, or the issue needs escalation.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p1-a"><div class="modal-content"><div class="modal-header"><h3>Fresh Eyes — Seeing What Needs Attention — Advanced</h3><button class="modal-close" onclick="closeModal('ms-p1-a')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Conduct a full quality walkthrough from the customer's perspective — rank all findings by customer impact, resolve top items immediately, build a written resolution plan for the rest, and document the work order numbers opened as a result.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Scheduled branch visit (weekly+) or FM inspection cycle — both are natural moments for a full audit.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Findings list ranked by customer impact, top items resolved within 48 hours, written plan with owners and dates for the rest — all logged in 360, including the work order numbers opened as a result of the walkthrough.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM walks the full customer path, ranks findings by what a customer would notice, resolves top items, builds a written plan, and documents the work order numbers opened as a result of the walkthrough.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM did the walkthrough but prioritized by operational convenience rather than customer impact.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM couldn't shift out of the operations lens — kept seeing it as a maintenance problem rather than a customer experience.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Audit surfaced customer-visible findings, prioritization was solid, resolution is underway.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Location was in good condition or resolution hit external barriers — vendor, budget, or branch priorities.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>FM couldn't complete the full walkthrough — time pressure, branch operations, or an emergency.</div></div></div></div></div></div>
+<!-- P2 B/I/A -->
+<div class="modal-overlay" id="modal-ms-p2-b"><div class="modal-content"><div class="modal-header"><h3>Building Your Team's Quality Eye — Basic</h3><button class="modal-close" onclick="closeModal('ms-p2-b')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">During an on-site co-location moment, point out one quality issue to a team member and explain what "good" looks like for that specific item.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Team member on-site co-location (several times per week).</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Team member understands what the standard looks like and knows what to do when it falls short.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM found a teachable moment, pointed out the issue, and explained the standard.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM pointed out the issue but just said to fix it — didn't explain the standard.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM was on-site but didn't use the moment — stayed on task assignments only.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Team member engaged — asked questions or showed they could spot similar issues.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Team member acknowledged it but seemed uncertain — hard to tell if it landed.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>No co-location moment this week.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p2-i"><div class="modal-content"><div class="modal-header"><h3>Building Your Team's Quality Eye — Intermediate</h3><button class="modal-close" onclick="closeModal('ms-p2-i')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Use a team check-in or huddle to set a specific quality observation focus for the team — then follow up on what they found.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Team huddle (weekly) — primary. On-site co-location — secondary for follow-up.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Team members report back observations based on the focus — evidence they're starting to look proactively.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM set a clear focus, followed up, and discussed what the team found. Structured, not a passing mention.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM set the focus but didn't follow up.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM couldn't identify a quality focus or defaulted to task direction.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Team members brought back specific observations — the focus guided them.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Some team members engaged, others didn't.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>No team check-in this week.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p2-a"><div class="modal-content"><div class="modal-header"><h3>Building Your Team's Quality Eye — Advanced</h3><button class="modal-close" onclick="closeModal('ms-p2-a')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Coach a team member through diagnosing and resolving a quality issue they identified on their own — building their judgment, not just their compliance.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Team member on-site (several times per week) — when a team member brings a finding they found themselves.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Team member demonstrates judgment — understands root cause and appropriate action, not just flagging.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM coached the team member through diagnosing why it persists and deciding the right path — building judgment, not just compliance.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM jumped to the answer rather than coaching through the diagnosis.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>No team member independently identified a quality issue this week — prerequisite didn't arise.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Team member showed improved judgment — reasonable diagnosis, specific action plan.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Team member's diagnosis was partially correct but missed key factors.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>Team member's finding was trivial or misidentified — independent observation hasn't matured enough yet.</div></div></div></div></div></div>
+<!-- P3 B/I/A -->
+<div class="modal-overlay" id="modal-ms-p3-b"><div class="modal-content"><div class="modal-header"><h3>Keeping Vendors Accountable — Basic</h3><button class="modal-close" onclick="closeModal('ms-p3-b')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Before accepting a vendor work order close, review the documentation — photos, notes, and completion quality in Lucernex or 360 — to verify the work meets standard, not just that it's marked done.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">At desk review of 360 or Lucernex — when a vendor work order is submitted for close.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">FM reviews documentation before accepting the close — photos present, notes adequate, completion quality verified. Gaps flagged in 360 or Lucernex before the work order is accepted.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM reviewed documentation before accepting — checked photos, notes, and completion quality, and flagged any gaps rather than accepting at face value.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM noticed documentation gaps but accepted the close anyway — acknowledged it mentally, no record created.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM accepted the work order close without reviewing documentation — confirmed it was marked done, not whether it was done correctly.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Documentation gaps found and flagged before acceptance — FM caught something that would otherwise have been accepted without record.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Documentation was complete and quality met standard — review applied correctly, nothing to flag.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>No vendor work orders closed at FM locations this period.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p3-i"><div class="modal-content"><div class="modal-header"><h3>Keeping Vendors Accountable — Intermediate</h3><button class="modal-close" onclick="closeModal('ms-p3-i')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Document a pattern of vendor performance gaps across multiple locations and bring specific evidence to the next vendor check-in or Quarterly Business Review (QBR).</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">360 and Lucernex review at desk — identify the pattern. Vendor check-in or Quarterly Business Review (QBR) — bring the evidence.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Documented pattern across locations, evidence ready for the next vendor conversation.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM reviewed 360 data, identified a recurring pattern, documented examples, prepared evidence.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM identified a pattern but relied on memory rather than 360 data.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM couldn't identify a cross-location pattern — not enough data or issues too scattered.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Evidence was compelling — vendor acknowledged the pattern and agreed to corrective action.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Vendor pushed back or pattern wasn't clear enough to drive specific commitments.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>Evidence prepared but no vendor meeting yet.</div></div></div></div></div></div>
+<div class="modal-overlay" id="modal-ms-p3-a"><div class="modal-content"><div class="modal-header"><h3>Keeping Vendors Accountable — Advanced</h3><button class="modal-close" onclick="closeModal('ms-p3-a')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The skill</div><div class="modal-section-content">Use documented vendor performance data to hold a structured accountability conversation — with specific gaps, expected standards, and agreed corrective actions with timelines.</div></div><div class="modal-section"><div class="modal-section-label">When this happens in daily work</div><div class="modal-section-content">Vendor visit or Quarterly Business Review (QBR) — the structured meeting is the natural venue. Prep via 360 review beforehand.</div></div><div class="modal-section"><div class="modal-section-label">What success looks like</div><div class="modal-section-content">Vendor accountability conversation resulting in agreed corrective actions with timelines — documented.</div></div><div class="modal-two-col"><div class="modal-col behav"><div class="modal-col-title">What the FM does</div><div class="modal-pattern success"><div class="modal-pattern-label">Successful</div>FM held a structured conversation using documented data — specific gaps, expected standards, agreed actions with timelines.</div><div class="modal-pattern partial"><div class="modal-pattern-label">Partial</div>FM raised issues but conversation was unstructured — no specific actions or timelines agreed.</div><div class="modal-pattern struggle"><div class="modal-pattern-label">Struggle</div>FM avoided the conversation despite having evidence — discomfort with confrontation.</div></div><div class="modal-col ext"><div class="modal-col-title">What happens in the field</div><div class="modal-pattern good"><div class="modal-pattern-label">Good</div>Vendor agreed to specific actions with timelines — documented plan both parties committed to.</div><div class="modal-pattern mixed"><div class="modal-pattern-label">Mixed</div>Vendor acknowledged issues but commitments were vague — no specific timelines.</div><div class="modal-pattern poor"><div class="modal-pattern-label">Poor</div>Vendor was defensive or dismissive — no commitments. May need escalation.</div></div></div></div></div></div>
+
+<!-- ═══ ACTIVITY DETAIL MODALS (9) ═══ -->
+<!-- P1 -->
+<div class="modal-overlay" id="modal-act-p1-d2"><div class="modal-content"><div class="modal-header"><h3>Fresh Eyes Walkthrough</h3><button class="modal-close" onclick="closeModal('act-p1-d2')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">On your next branch visit, walk the location as if you've never been there before — and document at least three issues you find that have been there a while.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>Before:</strong> Pick a location you visit regularly. Leave your work order list in your pocket for 15 minutes.<br><br><strong>During:</strong> Start from the parking lot like a customer would. Work through: lobby → teller line → restrooms → back-of-house. Look at ceilings, cove bases, diffusers — the things your eye has learned to skip. Photograph each finding with a one-line description.<br><br><strong>After:</strong> Enter each finding in 360. Three documented findings minimum.</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I walked the location with fresh eyes and documented at least three issues I'd been walking past</div><div class="selector-option">⚠️ I completed the walkthrough but found fewer than three issues, or my findings were too vague to act on</div><div class="selector-option">❌ I wasn't able to approach the location differently from my usual visit — I kept reverting to my normal routine</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 My walkthrough surfaced issues that were genuinely persisting unnoticed — the findings are specific enough to act on</div><div class="selector-option">🔀 I found some things but most were already known or on open work orders — not much was truly new</div><div class="selector-option">👎 I wasn't able to complete a full walkthrough — time pressure, branch operations, or other factors cut it short</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">Describe the location you walked and the most significant thing you found that you'd been missing.</div><div class="freeform-preview" style="margin-top:6px;">What did you document and enter into 360?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p1-d5"><div class="modal-content"><div class="modal-header"><h3>Catch the Repetitive Issue</h3><button class="modal-close" onclick="closeModal('act-p1-d5')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">Identify one issue that has been present at a location for an extended period without being resolved — categorize why it has persisted, and take a specific, documented action step to move it toward resolution.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>Identifying:</strong> What condition have you seen multiple times that never gets resolved? Categorize it: vendor gap, deferred maintenance, or standards gap.<br><br><strong>During visit:</strong> Document with a photo — what it is, how long it's been there, what the customer impact is. Make one specific decision about what happens next: who, what, and by when.<br><br><strong>After:</strong> Log the issue and action step in 360.</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I identified a repetitive issue, categorized why it persists, documented it, and took a specific logged action step toward resolution</div><div class="selector-option">⚠️ I identified and documented the issue, but my action step was vague or I'm not sure what the right resolution path is</div><div class="selector-option">❌ I had trouble identifying a repetitive issue — either nothing came to mind or the issues I found felt too minor to count</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 The action step initiated a real resolution process — vendor contacted, work order opened, or repair scheduled with a date</div><div class="selector-option">🔀 I took action but the resolution path is unclear — waiting on a response or the timeline is uncertain</div><div class="selector-option">👎 External factors blocked my action — vendor dispute, budget issue, or the problem requires escalation beyond my authority</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">Describe the issue you found — what it is, how long it's been there, and what category it falls into (vendor, maintenance, or standards).</div><div class="freeform-preview" style="margin-top:6px;">What specific action did you take and what's your target resolution date?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p1-d8"><div class="modal-content"><div class="modal-header"><h3>Customer-Eye Audit</h3><button class="modal-close" onclick="closeModal('act-p1-d8')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">Walk a location entirely from the customer's perspective — rank all findings by customer impact, resolve top items immediately, and build a written resolution plan for the rest.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>Before:</strong> Pick a location. Plan 20–30 minutes focused on the quality walk.<br><br><strong>At location:</strong> Walk the exact customer path: parking lot → entrance → lobby → teller → ATM → restrooms → exit. Start the exterior before you step inside — check landscaping condition, signage visibility (clear of brush and readable), exterior lighting, parking lines, and curbing. For every issue, ask: would a customer notice this? Sort findings by customer impact.<br><br><strong>After:</strong> Resolve top-priority items within 48 hours. Build a written plan for the rest — each item gets an owner and a target date. Log everything in 360, including the work order numbers opened as a result of the walkthrough.</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I walked the location from the customer's perspective, ranked findings by customer impact, resolved top items, and built a written plan for the rest</div><div class="selector-option">⚠️ I completed the walkthrough and documented findings, but struggled to prioritize by customer impact — kept defaulting to operational priorities</div><div class="selector-option">❌ I found it difficult to separate the customer perspective from my usual FM lens — I kept defaulting to operational priorities rather than what the customer would notice</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 The audit surfaced genuinely customer-visible findings and the resolution actions are underway</div><div class="selector-option">🔀 Location was in good condition or resolution plan hit external barriers — vendor availability, budget, or competing priorities</div><div class="selector-option">👎 I wasn't able to complete the full walkthrough due to time pressure or being pulled to a higher-priority issue</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">Walk me through the location you audited — what did you find, and what did you resolve or schedule immediately?</div><div class="freeform-preview" style="margin-top:6px;">What's the highest customer-impact item you found, and what's the plan for it?</div><div class="freeform-preview" style="margin-top:6px;">What work order numbers did you open as a result of this walkthrough?</div></div></div></div></div>
+<!-- P2 -->
+<div class="modal-overlay" id="modal-act-p2-d2"><div class="modal-content"><div class="modal-header"><h3>Point Out One Thing</h3><button class="modal-close" onclick="closeModal('act-p2-d2')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">During your next on-site co-location moment with a team member, point out one quality issue and explain what the standard looks like for that specific item — so they know what to watch for.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>When you're at a branch with a team member:</strong> Find one quality issue that's visible right now. Point it out. Explain what the standard is — not just "fix this" but "here's what good looks like for this."</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I pointed out a quality issue to a team member on-site and explained what the standard looks like</div><div class="selector-option">⚠️ I pointed out the issue but told them to fix it without explaining the standard</div><div class="selector-option">❌ I was on-site with a team member but didn't use the moment to coach on quality</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 The team member engaged — asked questions or showed they understood the standard</div><div class="selector-option">🔀 The team member acknowledged it but seemed uncertain or disengaged</div><div class="selector-option">👎 No co-location moment occurred this week</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">What quality issue did you point out, and how did you explain the standard?</div><div class="freeform-preview" style="margin-top:6px;">How did the team member respond?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p2-d5"><div class="modal-content"><div class="modal-header"><h3>Set a Quality Focus for the Week</h3><button class="modal-close" onclick="closeModal('act-p2-d5')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">During your next team check-in or huddle, set a specific quality observation focus for the week — then follow up within the week on what your team found.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>At the huddle:</strong> Name one specific quality area for the team to watch for this week (e.g., cove bases, restroom floors, exterior signage). Explain what to look for and what to do when they find something.<br><br><strong>Follow up:</strong> Before the next huddle, check in — what did they find?</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I set a clear quality focus for the team and followed up on what they found</div><div class="selector-option">⚠️ I set the focus but didn't follow up within the week</div><div class="selector-option">❌ I couldn't identify a specific quality focus to set or defaulted to task direction</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 Team members brought back specific observations based on the focus I set</div><div class="selector-option">🔀 Some team members engaged but others didn't — partial uptake</div><div class="selector-option">👎 No team check-in happened this week</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">What quality focus did you set, and how did you communicate it?</div><div class="freeform-preview" style="margin-top:6px;">What did your team find when you followed up?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p2-d8"><div class="modal-content"><div class="modal-header"><h3>Coach Through a Finding</h3><button class="modal-close" onclick="closeModal('act-p2-d8')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">When a team member identifies a quality issue independently, coach them through diagnosing why it's there and deciding the right resolution path — building their judgment, not just their compliance.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>When a team member brings you a finding:</strong> Don't jump to the answer. Ask them: Why do you think this is happening? What category does it fall into? What would you do about it? Guide their thinking, then help them refine their action plan.</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I coached a team member through diagnosing and resolving an issue they found — building their judgment rather than giving them the answer</div><div class="selector-option">⚠️ I reviewed their finding but jumped to providing the answer rather than coaching them through the diagnosis</div><div class="selector-option">❌ No team member brought me a finding this week — the prerequisite condition didn't arise</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 The team member showed improved judgment — reasonable diagnosis, specific action plan, growing independence</div><div class="selector-option">🔀 The team member's diagnosis was partially correct but missed key factors</div><div class="selector-option">👎 The team member's finding was misidentified or trivial — independent observations haven't matured enough</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">What did the team member find, and how did you coach them through diagnosing it?</div><div class="freeform-preview" style="margin-top:6px;">What action plan did they develop, and what would you have done differently?</div></div></div></div></div>
+<!-- P3 -->
+<div class="modal-overlay" id="modal-act-p3-d2"><div class="modal-content"><div class="modal-header"><h3>Review Before You Accept</h3><button class="modal-close" onclick="closeModal('act-p3-d2')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">Before accepting a vendor work order close at one of your locations, review the documentation — photos uploaded, notes complete, quality of completion adequate — and flag any gaps before accepting.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>When a vendor work order is submitted for close:</strong> Open it in 360 or Lucernex. Review what was documented — are photos present? Are notes specific? Does the completion record reflect the standard?<br><br><strong>If documentation is adequate:</strong> Accept the close.<br><br><strong>If gaps exist:</strong> Flag them before accepting — add a note in 360 or Lucernex and follow up with the vendor or Senior Maintenance Technician (SMT).</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I reviewed vendor work order documentation before accepting the close — checked photos, notes, and completion quality, and flagged any gaps</div><div class="selector-option">⚠️ I noticed documentation gaps but accepted the close anyway — acknowledged the issue but didn't create a record</div><div class="selector-option">❌ I accepted the work order close without reviewing documentation — confirmed it was marked done, not whether it was done correctly</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 I found documentation or quality gaps before accepting — they're now flagged in 360 or Lucernex</div><div class="selector-option">🔀 Documentation was complete and quality met standard — review applied correctly, nothing to flag</div><div class="selector-option">👎 No vendor work orders were closed at my locations this period</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">What vendor work order did you review, and what did the documentation show?</div><div class="freeform-preview" style="margin-top:6px;">If you found gaps, what did you flag — and in which system?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p3-d5"><div class="modal-content"><div class="modal-header"><h3>Build the Vendor Evidence File</h3><button class="modal-close" onclick="closeModal('act-p3-d5')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">Review your 360 data across locations to identify a recurring vendor performance pattern — document specific examples and prepare evidence for your next vendor conversation.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>At your desk:</strong> Pull up 360 and Lucernex data for locations where the same vendor operates. Look for patterns — the same type of documentation gap or quality shortfall recurring across multiple sites. Document 3+ specific examples with dates, locations, and descriptions. Prepare this as evidence for your next vendor check-in or Quarterly Business Review (QBR).</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I identified a cross-location vendor pattern, documented specific examples, and prepared evidence for a vendor conversation</div><div class="selector-option">⚠️ I identified a pattern but documentation was anecdotal — relying on memory rather than 360 data</div><div class="selector-option">❌ I couldn't identify a cross-location vendor pattern — not enough data or issues felt too scattered</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 The evidence was compelling enough to drive a specific conversation with the vendor</div><div class="selector-option">🔀 Evidence was prepared but the vendor conversation hasn't happened yet</div><div class="selector-option">👎 No vendor meeting happened this period</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">What vendor performance pattern did you identify, and across how many locations?</div><div class="freeform-preview" style="margin-top:6px;">What specific examples did you document as evidence?</div></div></div></div></div>
+<div class="modal-overlay" id="modal-act-p3-d8"><div class="modal-content"><div class="modal-header"><h3>The Accountability Conversation</h3><button class="modal-close" onclick="closeModal('act-p3-d8')">✕</button></div><div class="modal-body"><div class="modal-section"><div class="modal-section-label">The ask</div><div class="modal-section-content">Use documented vendor performance data to hold a structured accountability conversation — with specific gaps, expected standards, and agreed corrective actions with timelines.</div></div><div class="modal-section"><div class="modal-section-label">How to do it</div><div class="modal-section-content"><strong>Before the meeting:</strong> Organize your evidence — specific gaps, locations, dates, photos. Know the standard the work should meet.<br><br><strong>During:</strong> Present the pattern, not individual complaints. State the expected standard. Get agreement on corrective actions with specific timelines. Document the agreements.<br><br><strong>After:</strong> Log the agreements in 360 with follow-up dates.</div></div><div class="selector-group"><div class="selector-label behav">After the activity — What did you do?</div><div class="selector-option">✅ I held a structured accountability conversation using documented data — got agreed corrective actions with timelines</div><div class="selector-option">⚠️ I raised performance issues but the conversation was unstructured — no specific corrective actions or timelines agreed</div><div class="selector-option">❌ I avoided the conversation despite having evidence — discomfort with confrontation or uncertainty about my authority</div></div><div class="selector-group"><div class="selector-label ext">After the activity — What happened?</div><div class="selector-option">👍 Vendor agreed to specific corrective actions with timelines — documented plan in place</div><div class="selector-option">🔀 Vendor acknowledged issues but commitments were vague — partial accountability</div><div class="selector-option">👎 Vendor was defensive or dismissive — may require escalation</div></div><div class="modal-section" style="margin-top:14px;"><div class="modal-section-label">Report back</div><div class="freeform-preview">Describe the conversation — what evidence did you present and how did the vendor respond?</div><div class="freeform-preview" style="margin-top:6px;">What corrective actions were agreed and what are the timelines?</div></div></div></div></div>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+const slides=document.querySelectorAll('[data-label]'),navDots=document.getElementById('navDots'),navLabel=document.getElementById('navLabel');
+let current=0;
+
+// Build nav dots only for visible slides
+const visibleSlides=[];
+slides.forEach((s,i)=>{
+  // Skip hidden conditional slides (validation slide when display:none)
+  if(s.style.display==='none'&&s.id==='slideValidation')return;
+  // But also handle the case where the raw template hasn't been populated yet
+  if(s.style.display==='flex;')s.style.display='none';
+  visibleSlides.push({el:s,idx:i});
+});
+// Re-index: create dots for all slides, skip hidden ones at runtime
+slides.forEach((s,i)=>{const d=document.createElement('div');d.className='nav-dot'+(i===0?' active':'');d.textContent=i+1;d.addEventListener('click',()=>goTo(i));navDots.appendChild(d);});
+
+function resetAnims(s){s.querySelectorAll('.anim').forEach(e=>{e.style.animation='none';e.offsetHeight;e.style.animation='';});}
+function goTo(n){slides[current].classList.remove('active');current=n;slides[current].classList.add('active');resetAnims(slides[current]);document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===current));navLabel.textContent=slides[current].dataset.label||'';if(typeof updateFBSlide==='function')updateFBSlide(n);}
+function nextSlide(){
+  let n=current+1;
+  while(n<slides.length&&slides[n].style.display==='none')n++;
+  if(n<slides.length)goTo(n);
+}
+function prevSlide(){
+  let n=current-1;
+  while(n>=0&&slides[n].style.display==='none')n--;
+  if(n>=0)goTo(n);
+}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;if(document.querySelector('.modal-overlay.open')){if(e.key==='Escape')document.querySelector('.modal-overlay.open').classList.remove('open');return;}if(e.key==='ArrowRight'){e.preventDefault();nextSlide();}if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();}});
+
+function switchTab(tabBarId,groupName,targetId){const bar=document.getElementById(tabBarId);bar.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));event.currentTarget.classList.add('active');document.querySelectorAll('[data-group="'+groupName+'"]').forEach(c=>c.classList.remove('active'));document.getElementById(targetId).classList.add('active');}
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
+
+function toggleReveal(btn, detailId) {
+  const det = document.getElementById(detailId);
+  const isOpen = det.classList.contains('open');
+  det.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.querySelector('.btn-arrow').textContent = isOpen ? '›' : '‹';
+  if (!isOpen) {
+    setTimeout(() => det.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+  }
+}
+</script>
+<!-- ═══ FEEDBACK BUTTON & PANEL ═══ -->
+<button class="fb-toggle" id="fbToggle" title="Feedback">
+  <span class="fb-count" id="fbCount" style="display:none;">0</span>
+  <span class="fb-toggle-arrow">&#9664;</span>
+  <span class="fb-toggle-label">Feedback</span>
+</button>
+
+<div class="fb-panel" id="fbPanel">
+  <div class="fb-panel-header">
+    Feedback &amp; Comments
+    <span>Comments are saved in your browser</span>
+  </div>
+  <div class="fb-list" id="fbList">
+    <div class="fb-empty">No comments yet. Add the first one!</div>
+  </div>
+  <div class="fb-form-wrap">
+    <div class="fb-info">💡 Use the button below to send all comments to FLiNT</div>
+    <button class="fb-export-btn" id="fbExport">📧 Email Feedback to FLiNT</button>
+    <button class="fb-copy-btn" id="fbCopy">📋 Copy to Clipboard</button>
+    <form id="fbForm">
+      <div class="fb-group">
+        <label for="fbAuthor">Your Name</label>
+        <input type="text" id="fbAuthor" required placeholder="Enter your name">
+      </div>
+      <div class="fb-group">
+        <label>Slide</label>
+        <div id="fbSlideDisplay" style="padding:9px 10px;border:1px solid #dde1ea;border-radius:6px;font-size:0.87rem;color:#3d4455;background:#f0f2f7;font-family:inherit;"></div>
+        <input type="hidden" id="fbSlide">
+      </div>
+      <div class="fb-group">
+        <label for="fbText">Comment</label>
+        <textarea id="fbText" required placeholder="Share your feedback or suggestions..."></textarea>
+      </div>
+      <div class="fb-actions">
+        <button type="button" class="fb-btn fb-btn-secondary" id="fbCancel">Cancel</button>
+        <button type="submit" class="fb-btn fb-btn-primary">Add Comment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ═══════ FEEDBACK SYSTEM ═══════
+const FB_SLIDE_MAP=['1-proposal','2-overview','3-milestones','4-activities','5-measurement','6-surveys','7-validation','8-reporting','9-timeline'];
+const FB_SLIDE_LABELS={'1-proposal':'Slide 1 — Program Proposal','2-overview':'Slide 2 — Overview','3-milestones':'Slide 3 — Milestones','4-activities':'Slide 4 — Activities','5-measurement':'Slide 5 — Measurement','6-surveys':'Slide 6 — Surveys','7-validation':'Slide 7 — Validation','8-reporting':'Slide 8 — Reporting','9-timeline':'Slide 9 — Timeline'};
+
+function updateFBSlide(n){const v=FB_SLIDE_MAP[n]||'general';document.getElementById('fbSlide').value=v;const disp=document.getElementById('fbSlideDisplay');if(disp)disp.textContent=FB_SLIDE_LABELS[v]||'General Feedback';}
+
+const fbToggle=document.getElementById('fbToggle');
+const fbPanel=document.getElementById('fbPanel');
+const fbForm=document.getElementById('fbForm');
+const fbList=document.getElementById('fbList');
+const fbCount=document.getElementById('fbCount');
+const fbCancel=document.getElementById('fbCancel');
+const fbExport=document.getElementById('fbExport');
+const fbCopy=document.getElementById('fbCopy');
+const FB_KEY='citizens_reo_proposal_feedback';
+
+function loadFB(){try{return JSON.parse(localStorage.getItem(FB_KEY))||[];}catch{return[];}}
+function saveFB(d){localStorage.setItem(FB_KEY,JSON.stringify(d));}
+
+function slideLabel(v){return FB_SLIDE_LABELS[v]||v;}
+function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+function fmtDate(ts){const d=new Date(ts),n=new Date(),m=Math.floor((n-d)/60000);if(m<1)return'Just now';if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';const dy=Math.floor(h/24);if(dy<7)return dy+'d ago';return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+
+function renderFB(){
+  const data=loadFB();
+  if(data.length===0){fbList.innerHTML='<div class="fb-empty">No comments yet. Add the first one!</div>';fbCount.style.display='none';}
+  else{
+    fbCount.style.display='flex';fbCount.textContent=data.length;
+    fbList.innerHTML=data.map((f,i)=>`
+      <div class="fb-comment">
+        <div class="fb-comment-top">
+          <div><div class="fb-comment-author">${esc(f.author)}</div><span class="fb-comment-slide">${slideLabel(f.slide)}</span></div>
+          <button class="fb-comment-del" onclick="delFB(${i})">🗑️</button>
+        </div>
+        <div class="fb-comment-text">${esc(f.text)}</div>
+        <div class="fb-comment-time">${fmtDate(f.timestamp)}</div>
+      </div>`).join('');
+  }
+}
+
+window.delFB=function(i){if(!confirm('Delete this comment?'))return;const d=loadFB();d.splice(i,1);saveFB(d);renderFB();};
+
+fbForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const author=document.getElementById('fbAuthor').value.trim();
+  const slide=document.getElementById('fbSlide').value;
+  const text=document.getElementById('fbText').value.trim();
+  if(!author||!text)return;
+  localStorage.setItem('citizens_fb_author',author);
+  const d=loadFB();d.unshift({author,slide,text,timestamp:Date.now()});saveFB(d);renderFB();
+  document.getElementById('fbText').value='';
+  const btn=fbForm.querySelector('button[type="submit"]');const orig=btn.textContent;
+  btn.textContent='✓ Added!';btn.style.background='#2ecc71';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';},2000);
+});
+
+fbCancel.addEventListener('click',()=>{
+  const saved=localStorage.getItem('citizens_fb_author')||'';
+  fbForm.reset();document.getElementById('fbAuthor').value=saved;
+  fbPanel.classList.remove('open');fbToggle.classList.remove('active');
+});
+
+fbToggle.addEventListener('click',()=>{fbPanel.classList.toggle('open');fbToggle.classList.toggle('active');});
+
+function buildFBText(data){
+  let t='CITIZENS REO — FACILITIES SERVICES EXCELLENCE\nProgram Proposal — Feedback & Comments\n'+'='.repeat(50)+'\n';
+  t+=`Generated: ${new Date().toLocaleString()}\nTotal Comments: ${data.length}\n${'='.repeat(50)}\n\n`;
+  data.forEach((f,i)=>{t+=`COMMENT #${i+1}\nAuthor: ${f.author}\nSlide: ${slideLabel(f.slide)}\nDate: ${new Date(f.timestamp).toLocaleString()}\nComment:\n${f.text}\n${'-'.repeat(50)}\n\n`;});
+  return t;
+}
+
+fbExport.addEventListener('click',()=>{
+  const data=loadFB();
+  if(data.length===0){alert('No comments yet. Add some first!');return;}
+  const body=encodeURIComponent(buildFBText(data));
+  const sub=encodeURIComponent('Citizens REO Program Proposal — Feedback');
+  window.location.href=`mailto:zoran.vranjes@flintls.com?subject=${sub}&body=${body}`;
+  const orig=fbExport.textContent;fbExport.textContent='✓ Opening Email...';fbExport.style.background='#2ecc71';
+  setTimeout(()=>{fbExport.textContent=orig;fbExport.style.background='';},3000);
+});
+
+fbCopy.addEventListener('click',async()=>{
+  const data=loadFB();
+  if(data.length===0){alert('No comments yet. Add some first!');return;}
+  const txt=buildFBText(data);
+  try{await navigator.clipboard.writeText(txt);}
+  catch{const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch{}document.body.removeChild(ta);}
+  const orig=fbCopy.textContent;fbCopy.textContent='✓ Copied!';fbCopy.style.background='#2ecc71';
+  setTimeout(()=>{fbCopy.textContent=orig;fbCopy.style.background='';},2000);
+});
+
+
+
+// Restore saved author name
+const savedFBAuthor=localStorage.getItem('citizens_fb_author');
+if(savedFBAuthor)document.getElementById('fbAuthor').value=savedFBAuthor;
+
+updateFBSlide(0);
+renderFB();
+</script>
+</body>
+</html>
