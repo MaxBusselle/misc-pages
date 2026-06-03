@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group — Participant Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,700;1,400&family=Sen:wght@400;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:      rgb(253,252,250);
+    --surface:    rgb(255,255,255);
+    --ink:        rgb(28,42,56);
+    --muted:      rgb(74,88,104);
+    --accent:     rgb(232,77,40);
+    --pale:       rgb(235,229,220);
+    --warm-line:  rgb(197,187,166);
+    --cool:       rgb(154,166,176);
+    --success:    rgb(72,114,76);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Sen', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 400;
+  }
+
+  /* Page */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* Page header */
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--pale);
+  }
+  .page-header .eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cool);
+    margin-bottom: 6px;
+  }
+  .page-header h1 {
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .page-header .page-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* Story card */
+  .story-card {
+    background: var(--surface);
+    border: 1px solid var(--pale);
+    border-radius: 10px;
+    padding: 28px 28px 32px;
+    margin-bottom: 48px;
+  }
+
+  /* Card header */
+  .card-header {
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    margin-bottom: 18px;
+  }
+  .card-header h2 {
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .card-header .card-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* TLDR */
+  .tldr {
+    font-family: 'Andada Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    background: var(--paper);
+    border: 1px solid var(--pale);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cool);
+  }
+
+  /* Baseline section */
+  .baseline-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .baseline-intro-left { flex: 1; }
+  .baseline-subtext {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .baseline-subtext strong { color: var(--ink); font-weight: 700; }
+  .scale-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .scale-legend span {
+    font-size: 10px;
+    color: var(--cool);
+    white-space: nowrap;
+  }
+  .scale-legend span b {
+    font-family: 'Andada Pro', serif;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .scale-legend .target b { color: var(--success); }
+
+  .baseline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 540px) { .baseline-grid { grid-template-columns: 1fr; } }
+
+  .score-row {
+    background: var(--paper);
+    border: 1px solid var(--pale);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .score-label {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .score-badge {
+    font-family: 'Andada Pro', serif;
+    font-size: 26px;
+    color: var(--accent);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--pale);
+    margin: 24px 0;
+  }
+
+  /* Timeline */
+  .timeline { margin-top: 14px; }
+
+  .act {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0 16px;
+  }
+  .act-date {
+    font-size: 11px;
+    color: var(--cool);
+    text-align: right;
+    padding-top: 4px;
+    font-family: 'Geist Mono', monospace;
+  }
+  .act-body {
+    padding-bottom: 24px;
+    border-left: 1px solid var(--pale);
+    padding-left: 18px;
+    position: relative;
+  }
+  .act-body::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .act-body.last {
+    border-left: none;
+    padding-bottom: 0;
+  }
+
+  .act-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .act-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .outcome-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .outcome-pill.done {
+    background: rgba(72,114,76,.12);
+    color: var(--success);
+  }
+  .outcome-pill.partial {
+    background: rgba(232,77,40,.10);
+    color: var(--accent);
+  }
+
+  .rating-callout {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+  .rating-from {
+    font-family: 'Andada Pro', serif;
+    font-size: 13px;
+    color: var(--cool);
+    text-decoration: line-through;
+  }
+  .rating-arrow { font-size: 11px; color: var(--cool); }
+  .rating-to {
+    font-family: 'Andada Pro', serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .rating-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    align-self: center;
+  }
+
+  /* Exchanges */
+  .exchanges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .exchange { font-size: 12px; line-height: 1.6; }
+  .who {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-right: 4px;
+  }
+  .exchange.coach .who { color: var(--cool); }
+  .exchange.coach .text { color: var(--muted); }
+  .exchange.user .who { color: var(--accent); }
+  .exchange.user .text { color: var(--ink); }
+
+  blockquote {
+    border-left: 2px solid var(--pale);
+    padding-left: 10px;
+    font-family: 'Andada Pro', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--cool);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .page-footer {
+    border-top: 1px solid var(--pale);
+    padding-top: 16px;
+    font-size: 11px;
+    color: var(--cool);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</div>
+    <h1>Participant Stories</h1>
+    <div class="page-meta">Baseline self-assessment paired with in-program activity &amp; coaching &nbsp;·&nbsp; June 3, 2026</div>
+  </div>
+
+  <!-- STORY CARD: STEVE T. -->
+  <div class="story-card">
+
+    <div class="card-header">
+      <h2>Steve T.</h2>
+      <div class="card-meta">Production Supervisor, Assembly Final Finish &nbsp;·&nbsp; 20+ yrs supervision &nbsp;·&nbsp; 25 direct reports &nbsp;·&nbsp; 4 activities completed</div>
+    </div>
+
+    <div class="tldr">A 20-year supervisor who knew his team's PPE gaps but wasn't yet doing public recognition with the specificity that makes it stick — four activities later, he's naming people, gear, and consequences by name in front of the team.</div>
+
+    <!-- Baseline -->
+    <div class="baseline-intro">
+      <div class="baseline-intro-left">
+        <div class="section-label">Baseline self-assessment — questions scored below target</div>
+        <div class="baseline-subtext">Steve rated himself on each behavior before the program began. <strong>5 = "as good as I need to be."</strong> All scores below are under that threshold.</div>
+      </div>
+      <div class="scale-legend">
+        <span><b>1</b> &nbsp;not doing this</span>
+        <span class="target"><b>5</b> &nbsp;as good as I need to be</span>
+        <span><b>10</b> &nbsp;best possible</span>
+      </div>
+    </div>
+
+    <div class="baseline-grid">
+      <div class="score-row">
+        <div class="score-label">Whenever a team member consistently uses their additional PPE, I publicly recognize them with specific details to reinforce the standard for the team.</div>
+        <div class="score-badge">2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Every shift, I check my team's PPE condition, address any wear, damage, or violations, and recognize what people got right.</div>
+        <div class="score-badge">2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Recognition for using additional PPE happens regularly on my team, not just feedback when things need to change.</div>
+        <div class="score-badge">2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Without fail, I verify my team has the right PPE for their task and follow up until any gaps are fixed.</div>
+        <div class="score-badge">3</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Activities -->
+    <div class="section-label">Activities &amp; coaching</div>
+    <div class="timeline">
+
+      <!-- Activity 1 -->
+      <div class="act">
+        <div class="act-date">May 12</div>
+        <div class="act-body">
+          <div class="act-name">Call Out PPE Requirements at Break Transitions</div>
+          <div class="act-meta">
+            <span class="outcome-pill done">Full loop completed</span>
+            <div class="rating-callout">
+              <span class="rating-from">3</span>
+              <span class="rating-arrow">→</span>
+              <span class="rating-to">7</span>
+              <span class="rating-label">self-rating</span>
+            </div>
+          </div>
+          <div class="exchanges">
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">Ask before you tell — "What do you need before heading into that area?" not "You're missing your cut gloves."</span></div>
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Asked a team member at the cut-off saw what PPE they needed. They were holding their face shield when they answered.</span></div>
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">Did you circle back to confirm they had it on while working?</span></div>
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Came back next day. They were using the face shield.</span></div>
+          </div>
+          <blockquote>"Ask what they need and let the team member explain what is needed."</blockquote>
+        </div>
+      </div>
+
+      <!-- Activity 2 -->
+      <div class="act">
+        <div class="act-date">May 19</div>
+        <div class="act-body">
+          <div class="act-name">Publicly Acknowledge Consistent PPE Compliance</div>
+          <div class="act-meta">
+            <span class="outcome-pill done">Named by name + specific gear</span>
+            <div class="rating-callout">
+              <span class="rating-from">2</span>
+              <span class="rating-arrow">→</span>
+              <span class="rating-to">5</span>
+              <span class="rating-label">self-rating</span>
+            </div>
+          </div>
+          <div class="exchanges">
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">Recognize someone doing it right — publicly, at the morning huddle. Name the person, the gear, the task.</span></div>
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Rita Carter. She always wears her face shield on the saw, daily.</span></div>
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">"Rita — every day I see you on that saw, face shield is on before you start. That's the standard I expect from everyone."</span></div>
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Called her out at next morning huddle. Team responded well.</span></div>
+          </div>
+          <blockquote>"Do it right away."</blockquote>
+        </div>
+      </div>
+
+      <!-- Activity 3 -->
+      <div class="act">
+        <div class="act-date">Jun 1</div>
+        <div class="act-body">
+          <div class="act-name">Connect PPE Requirements to Specific Safety Consequences</div>
+          <div class="act-meta">
+            <span class="outcome-pill partial">Executed — consequence too vague</span>
+            <div class="rating-callout">
+              <span class="rating-to">6</span>
+              <span class="rating-label">self-rating</span>
+            </div>
+          </div>
+          <div class="exchanges">
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Told Jenni W to wear gloves when using a knife "or could get injured."</span></div>
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">"Could get injured" is easy to tune out. Next time: "A knife slip can go straight through to the tendons — cut-resistant gloves are what stands between you and a serious hand injury."</span></div>
+          </div>
+          <blockquote>"Be consistent."</blockquote>
+        </div>
+      </div>
+
+      <!-- Activity 4 -->
+      <div class="act">
+        <div class="act-date">Jun 1</div>
+        <div class="act-body last">
+          <div class="act-name">Use Prepared Team Member to Model PPE Readiness at Morning Huddle</div>
+          <div class="act-meta">
+            <span class="outcome-pill done">Named by name + specific gear</span>
+            <div class="rating-callout">
+              <span class="rating-from">4</span>
+              <span class="rating-arrow">→</span>
+              <span class="rating-to">7</span>
+              <span class="rating-label">self-rating</span>
+            </div>
+          </div>
+          <div class="exchanges">
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Team doesn't wear additional PPE at huddle — it goes on at the station.</span></div>
+            <div class="exchange coach"><span class="who">Coach</span><span class="text">At huddle, name today's task and the required PPE. The first person who responds correctly — that's your callout.</span></div>
+            <div class="exchange user"><span class="who">Steve T.</span><span class="text">Asked Shelly what PPE her sander needs. She said face shield. Called that out in front of the team.</span></div>
+          </div>
+          <blockquote>"Be consistent."</blockquote>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+
+  </div><!-- /story-card -->
+
+  <div class="page-footer">
+    <span>REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</span>
+    <span>Flint Learning Solutions &nbsp;·&nbsp; June 2026</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
