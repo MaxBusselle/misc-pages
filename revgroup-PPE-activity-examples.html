@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group — Activity Cards</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:     rgb(253,252,250);
+  --surface:   rgb(255,255,255);
+  --ink:       rgb(28,42,56);
+  --muted:     rgb(74,88,104);
+  --accent:    rgb(232,77,40);
+  --pale:      rgb(235,229,220);
+  --warm-line: rgb(197,187,166);
+  --cool:      rgb(154,166,176);
+  --success:   rgb(72,114,76);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Sen', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Andada Pro', serif; font-weight: 400; }
+
+/* Page */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pale);
+}
+.page-header .eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cool);
+  margin-bottom: 6px;
+}
+.page-header h1 { font-size: 26px; color: var(--ink); }
+.page-header .page-meta { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+/* Section group */
+.section-group { margin-bottom: 48px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-header h2 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--pale);
+}
+
+/* 2-col grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 620px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--pale);
+  border-radius: 8px;
+  padding: 18px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+
+/* Card title */
+.card-title { border-left: 3px solid var(--accent); padding-left: 10px; }
+.card-title h3 {
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.card-title .descriptor {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--pale); }
+
+/* Section label */
+.slabel {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+.slabel.standard   { background: rgba(28,42,56,.07);  color: rgb(28,42,56); }
+.slabel.coaching   { background: rgba(232,77,40,.10); color: rgb(180,55,25); }
+.slabel.example    { background: rgba(72,114,76,.10); color: rgb(52,90,56); }
+
+/* Bullets */
+.bullets { display: flex; flex-direction: column; gap: 3px; }
+.bullet {
+  display: flex;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.bullet::before {
+  content: '–';
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Example */
+.example {
+  background: var(--paper);
+  border-left: 2px solid var(--pale);
+  padding: 7px 10px;
+  border-radius: 0 4px 4px 0;
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.example strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid var(--pale);
+  color: var(--muted);
+  background: var(--paper);
+}
+.tag.model   { border-color: rgba(72,114,76,.3);  color: var(--success); background: rgba(72,114,76,.06); }
+.tag.correct { border-color: rgba(232,77,40,.3);  color: var(--accent);  background: rgba(232,77,40,.06); }
+.tag.reinforce { border-color: rgba(28,42,56,.2); color: var(--muted);   background: rgba(28,42,56,.04); }
+
+/* Footer */
+.page-footer {
+  border-top: 1px solid var(--pale);
+  padding-top: 16px;
+  font-size: 11px;
+  color: var(--cool);
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</div>
+    <h1>Activity Cards</h1>
+    <div class="page-meta">10 supervisor behaviors — what the program asks, why it matters, and how the AI coach builds the skill &nbsp;·&nbsp; June 2026</div>
+  </div>
+
+  <!-- MODEL -->
+  <div class="section-group">
+    <div class="section-header"><h2>Model</h2></div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Use Prepared Team Member to Model PPE Readiness at Morning Huddle</h3>
+          <div class="descriptor">Before the huddle, identify one team member who will arrive with their additional PPE ready. Call them out by name at the huddle — naming the specific gear and the task. Let the team see what prepared looks like.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Name the person, the gear, and the task — not just "good job on PPE today"</div>
+            <div class="bullet">The callout sets a visible standard for the whole crew, not just recognition for one person</div>
+            <div class="bullet">Know who you're calling out before you walk in</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Specificity — "face shield for the grinder" lands harder than "PPE ready"</div>
+            <div class="bullet">Using recognition as a standard-setting tool, not just positive feedback</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Jeffrey A.</strong> called out a new employee on his second day for wearing cut-resistant gloves handling raw aluminum. The right person to recognize publicly — new employees are watching what gets noticed.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Morning Huddle</span>
+          <span class="tag">Specific Recognition</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Ask Team Member to Demonstrate Proper PPE Setup</h3>
+          <div class="descriptor">At a huddle or team moment, ask one team member to physically demonstrate the correct setup for a specific piece of additional PPE — in front of the group. The peer does the demonstrating; the supervisor sets it up.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Choose someone who knows the setup cold — competence on display, not a test</div>
+            <div class="bullet">The group sees correct technique; watching beats hearing about it</div>
+            <div class="bullet">Supervisor frames it — team member delivers it</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Moving supervisors away from being the sole source of the standard</div>
+            <div class="bullet">Using the team's own expertise to reinforce compliance</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Greg H.</strong> confirmed his team member was comfortable beforehand, ran the demonstration at huddle, and it landed clean. His tip: <em>"Make sure the person is familiar with the process."</em></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Peer-to-Peer</span>
+          <span class="tag">Huddle</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Stay Protected During Quick Tasks</h3>
+          <div class="descriptor">On a task your team considers quick or low-risk, work alongside a team member with full additional PPE on. Name the gear and the task out loud while doing it. Model that the standard has no "just this once" exception.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">The supervisor gears up too — this is modeling, not instructing</div>
+            <div class="bullet">Quick tasks are where the standard erodes first</div>
+            <div class="bullet">Credibility: supervisors who model carry more weight when they correct</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Breaking the "it's only a minute" rationalization before it becomes a pattern</div>
+            <div class="bullet">Making the standard visible on low-risk tasks, not just high-hazard ones</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Brent S.</strong> worked a material pull alongside a team member — both gloved up together. Instead of a tip on gear storage, he shared personal instances he'd seen go wrong. The team member took it to heart.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Quick Tasks</span>
+          <span class="tag">Lead by Example</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CORRECT -->
+  <div class="section-group">
+    <div class="section-header"><h2>Correct</h2></div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Call Out PPE Requirements at Break Transitions</h3>
+          <div class="descriptor">Position at a work area entry as workers return from break. Ask each person to name their required PPE before re-entering. Correct any gaps. Circle back 10–15 min later to visually confirm it held.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Transitions are where compliance slips most — gear comes off, momentum takes over</div>
+            <div class="bullet">Ask before tell: <em>"What do you need before heading back in?"</em></div>
+            <div class="bullet">Loop isn't closed until you've visually confirmed the change held mid-task</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Shifting supervisors from telling to asking — so the team owns the standard</div>
+            <div class="bullet">Closing the follow-up loop — most supervisors stop at the correction</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Donald M.</strong> caught a worker returning from break with earplugs around his neck. Before Donald said a word, the worker said <em>"oh shoot, I forgot."</em> Donald followed up twice — both times, they were in.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Break Transitions</span>
+          <span class="tag">Ask Before Tell</span>
+          <span class="tag">Follow-through Loop</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Correct PPE Violations During Operations</h3>
+          <div class="descriptor">During an active shift, walk two work zones looking for PPE violations. Correct violations on the spot. Acknowledge correct compliance in the same pass. Both happen together — not separately.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Correction and recognition aren't separate activities — they happen in the same pass</div>
+            <div class="bullet">Name the specific gear in both cases: "earplugs" not "PPE"</div>
+            <div class="bullet">Watch the person comply — don't take their word for it</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Pairing correction with recognition so the standard has two sides</div>
+            <div class="bullet">Deliberate walkthroughs — not just catching things incidentally</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Pat C.</strong> spotted someone wearing gloves incorrectly near a saw and someone with an ill-fitting face shield — two zones, two violations, both corrected on the spot. His tip: <em>"Don't be afraid to address someone directly."</em></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Active Shift</span>
+          <span class="tag">Recognition + Correction</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Verify PPE Feedback Held Throughout Shift</h3>
+          <div class="descriptor">After correcting a PPE gap, return to that team member later in the shift. Look — don't ask. Visually confirm the gear is still on during active work. Acknowledge what you see.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">The follow-up is visual, not verbal — walk by and look, don't ask "are you still wearing it?"</div>
+            <div class="bullet">Time the return to when the task is actively happening</div>
+            <div class="bullet">The loop closes with acknowledgment, not just confirmation</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Making follow-through a habit, not an afterthought</div>
+            <div class="bullet">The distinction between asking and looking — verbal check-ins are easy to game</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Juan B.</strong> said remembering to circle back was the hardest part with production pulling in six directions. His solution: set a phone timer right after the conversation. Followed up twice. Both times, compliant.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Follow-through Loop</span>
+          <span class="tag">Shift-long Accountability</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Check Team PPE at End-of-Shift</h3>
+          <div class="descriptor">In the final stretch of the shift, walk your team and assess PPE condition — wear, damage, anything needing attention before tomorrow. Recognize what people got right. Correct what needs correcting.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">End of shift is when fatigue-driven shortcuts are most visible</div>
+            <div class="bullet">Look at gear condition — not just whether it's being worn</div>
+            <div class="bullet">Recognition at end of shift closes the day on the standard, not just the work</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">A closing ritual that reinforces the standard daily — not just when something goes wrong</div>
+            <div class="bullet">Getting supervisors to inspect gear condition, not just presence</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Daniel C.</strong> spotted a team member tacking without a hood during the shift, ran the end-of-shift check, found gear in working condition. The coach's push: next time, name someone who got it right — close the shift on a positive, not just an audit.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">End of Shift</span>
+          <span class="tag">Gear Condition</span>
+          <span class="tag">Closing Ritual</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REINFORCE -->
+  <div class="section-group">
+    <div class="section-header"><h2>Reinforce</h2></div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Publicly Acknowledge Consistent PPE Compliance</h3>
+          <div class="descriptor">Identify a team member who consistently uses their additional PPE correctly. At the next huddle, call them out by name, name the specific gear, name the task. Add one line that sets it as the team standard.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Name the person, the gear, and the task — all three</div>
+            <div class="bullet">Close with: <em>"That's what I need to see from everyone"</em></div>
+            <div class="bullet">Consistency is what gets recognized — not a one-time moment</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Recognition as standard-setting, not just reward</div>
+            <div class="bullet">Making compliance visible to the whole team, not just the individual</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Darin S.</strong> already had Doug in mind before the coach asked — cut-resistant gloves and face shield for cutting and grinding, every time. Called him out at the 7am huddle. Closed with: <em>"I expect the same from everyone."</em></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Public Recognition</span>
+          <span class="tag">Standard-setting</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Connect PPE Requirements to Specific Safety Consequences</h3>
+          <div class="descriptor">When explaining or reinforcing a PPE requirement, connect it to a specific injury or near-miss in that work area — not policy, not general risk. Name the body part, the mechanism, and the gear that prevents it.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Policy they can argue with; a specific injury they can't</div>
+            <div class="bullet"><em>"A knife slip goes straight to the tendons — cut gloves are what stands between you and the ER"</em></div>
+            <div class="bullet">Deliver in front of others when possible — the consequence scales beyond one conversation</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Moving supervisors from policy enforcement to consequence framing</div>
+            <div class="bullet">"Could get injured" is easy to tune out — a named injury is not</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Michael W.</strong> caught a team member using a knife without gloves — the worker assumed he was in an exempt area. Michael named the laceration risk specifically. The worker thanked him for clearing it up and said he'd do it from now on.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Consequence Framing</span>
+          <span class="tag">In the Moment</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <h3>Acknowledge Good Compliance at End-of-Shift Check</h3>
+          <div class="descriptor">At the end of the shift, identify one or two team members who modeled correct additional PPE use. Acknowledge them specifically — by name, by gear — in front of the team. Close the shift on what was done right.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet">Pick specific habits you were watching for — not a general "good job today"</div>
+            <div class="bullet">Name the person and the gear: <em>"I watched you keep that face shield on through the whole grind"</em></div>
+            <div class="bullet">This is separate from correction — the shift ends on what was done right</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet">Making recognition a daily closing ritual, not an occasional event</div>
+            <div class="bullet">Watching for compliance specifically — not just violations</div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Real world example</div>
+          <div class="example"><strong>Curt M.</strong> spotted a technician in a face shield during active grinding — called it out directly: <em>"Thank you for wearing the shield and setting a good example."</em> His tip: <em>"I received twenty-four stitches from a grinding accident without a face shield."</em></div>
+        </div>
+        <div class="tags">
+          <span class="tag">End of Shift</span>
+          <span class="tag">Closing Ritual</span>
+          <span class="tag">Daily Recognition</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</span>
+    <span>Flint Learning Solutions &nbsp;·&nbsp; June 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
