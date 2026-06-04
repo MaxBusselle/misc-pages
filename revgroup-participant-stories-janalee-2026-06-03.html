@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group — Participant Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,700;1,400&family=Sen:wght@400;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:      rgb(253,252,250);
+    --surface:    rgb(255,255,255);
+    --ink:        rgb(28,42,56);
+    --muted:      rgb(74,88,104);
+    --accent:     rgb(232,77,40);
+    --pale:       rgb(235,229,220);
+    --warm-line:  rgb(197,187,166);
+    --cool:       rgb(154,166,176);
+    --success:    rgb(72,114,76);
+    --navy:       rgb(28,42,56);
+    --navy-mid:   rgb(44,62,80);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Sen', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Andada Pro', serif; font-weight: 400; }
+
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--pale);
+  }
+  .page-header .eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cool);
+    margin-bottom: 6px;
+  }
+  .page-header h1 { font-size: 26px; color: var(--ink); line-height: 1.2; }
+  .page-header .page-meta { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* ── Manager story card ── */
+  .story-card {
+    background: var(--surface);
+    border: 1px solid var(--pale);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  /* Dark navy header band */
+  .card-band {
+    background: var(--navy);
+    padding: 20px 28px 18px;
+  }
+  .card-band .manager-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 6px;
+  }
+  .card-band h2 {
+    font-size: 22px;
+    color: rgb(255,255,255);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .card-band .band-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+  }
+  .card-band .subject-line {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+  }
+  .card-band .subject-line strong {
+    color: rgba(255,255,255,.85);
+    font-weight: 700;
+  }
+
+  /* Card body */
+  .card-body { padding: 24px 28px 32px; }
+
+  .tldr {
+    font-family: 'Andada Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    background: var(--paper);
+    border: 1px solid var(--pale);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cool);
+  }
+
+  /* Baseline */
+  .baseline-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .baseline-intro-left { flex: 1; }
+  .baseline-subtext { font-size: 11px; color: var(--muted); line-height: 1.5; margin-top: 4px; }
+  .baseline-subtext strong { color: var(--ink); font-weight: 700; }
+
+  .scale-legend { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+  .scale-legend span { font-size: 10px; color: var(--cool); white-space: nowrap; }
+  .scale-legend span b { font-family: 'Andada Pro', serif; font-size: 13px; font-weight: 400; }
+  .scale-legend .target b { color: var(--success); }
+
+  .baseline-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  @media (max-width: 600px) { .baseline-grid { grid-template-columns: 1fr; } }
+
+  .score-row {
+    background: var(--paper);
+    border: 1px solid var(--pale);
+    border-left: 3px solid var(--navy);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .score-label { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .score-badge {
+    font-family: 'Andada Pro', serif;
+    font-size: 26px;
+    color: var(--navy);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--pale); margin: 24px 0; }
+
+  /* Concern tags */
+  .concern-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .concern-tag.q1 { background: rgba(28,42,56,.08); color: var(--navy); }
+  .concern-tag.q2 { background: rgba(72,114,76,.10); color: var(--success); }
+  .concern-tag.q3 { background: rgba(232,77,40,.09); color: var(--accent); }
+
+  .concern-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+  .concern-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+
+  /* Timeline */
+  .timeline { margin-top: 14px; }
+  .act { display: grid; grid-template-columns: 56px 1fr; gap: 0 16px; }
+  .act-date {
+    font-size: 11px;
+    color: var(--cool);
+    text-align: right;
+    padding-top: 4px;
+    font-family: 'Geist Mono', monospace;
+  }
+  .act-body {
+    padding-bottom: 24px;
+    border-left: 1px solid var(--pale);
+    padding-left: 18px;
+    position: relative;
+  }
+  .act-body::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 5px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--navy);
+  }
+  .act-body.last { border-left: none; padding-bottom: 0; }
+
+  .act-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+
+  .act-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .outcome-pill { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .outcome-pill.done { background: rgba(72,114,76,.12); color: var(--success); }
+  .outcome-pill.partial { background: rgba(232,77,40,.10); color: var(--accent); }
+
+  .exchanges { display: flex; flex-direction: column; gap: 6px; }
+  .exchange { font-size: 12px; line-height: 1.6; }
+  .who { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-right: 4px; }
+  .exchange.coach .who { color: var(--cool); }
+  .exchange.coach .text { color: var(--muted); }
+  .exchange.user .who { color: var(--accent); }
+  .exchange.user .text { color: var(--ink); }
+
+  blockquote {
+    border-left: 2px solid var(--pale);
+    padding-left: 10px;
+    font-family: 'Andada Pro', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--cool);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  .page-footer {
+    border-top: 1px solid var(--pale);
+    padding-top: 16px;
+    font-size: 11px;
+    color: var(--cool);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</div>
+    <h1>Participant Stories</h1>
+    <div class="page-meta">Manager assessment paired with in-program activity &amp; coaching &nbsp;·&nbsp; June 3, 2026</div>
+  </div>
+
+  <div class="story-card">
+
+    <!-- Navy band — Brian leads -->
+    <div class="card-band">
+      <div class="manager-label">Manager perspective</div>
+      <h2>Brian R.</h2>
+      <div class="band-meta">Manager &nbsp;·&nbsp; Goldshield &nbsp;·&nbsp; Assessed his team before the program began</div>
+      <div class="subject-line">Direct report featured: <strong>Janalee C., Group Leader</strong> &nbsp;·&nbsp; 10 activities completed</div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="tldr">Her manager flagged gaps in PPE follow-through and team consistency before the program started — her activities since have been focused on those same concerns.</div>
+
+      <!-- Manager baseline -->
+      <div class="baseline-intro">
+        <div class="baseline-intro-left">
+          <div class="section-label">Brian R.'s assessment of Janalee — before the program</div>
+          <div class="baseline-subtext">Brian rated Janalee on each behavior before the program began. <strong>5 = "as good as she needs to be."</strong> All scores below are under that threshold.</div>
+        </div>
+        <div class="scale-legend">
+          <span><b>1</b> &nbsp;not doing this</span>
+          <span class="target"><b>5</b> &nbsp;as good as she needs to be</span>
+          <span><b>10</b> &nbsp;best possible</span>
+        </div>
+      </div>
+
+      <div class="baseline-grid">
+        <div class="score-row">
+          <div class="score-label">PPE expectations are clear enough on Janalee's team that members consistently use the right additional PPE without confusion or repeated reminders.</div>
+          <div class="score-badge">4</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">On Janalee's team, even quick or low-risk tasks are treated with the same PPE standards as longer operations.</div>
+          <div class="score-badge">4</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">PPE issues on Janalee's team get caught and corrected during shifts, with corrections that hold over time rather than recurring.</div>
+          <div class="score-badge">3</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Activities -->
+      <div class="section-label" style="margin-bottom:10px;">Janalee's activities &amp; coaching</div>
+
+      <div class="concern-legend">
+        <div class="concern-legend-item"><span class="concern-tag q1">expectations</span> PPE clear, consistent use without reminders</div>
+        <div class="concern-legend-item"><span class="concern-tag q2">quick tasks</span> Same standards on quick/low-risk work</div>
+        <div class="concern-legend-item"><span class="concern-tag q3">follow-through</span> Corrections caught and held over time</div>
+      </div>
+
+      <div class="timeline">
+
+        <div class="act">
+          <div class="act-date">May 18</div>
+          <div class="act-body">
+            <div class="act-name">Stay Protected During Quick Tasks <span class="concern-tag q2">quick tasks</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Worked task alongside teammate with full PPE</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Who on your team tends to skip additional gear on quick tasks?</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Tracy and I cut glass to frame a mold — I told her I keep my cut gloves right beside the roll of glass so they're visible and easy to remember.</span></div>
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Did you both have your cut gloves on for the task?</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">We both had cut gloves on for the task.</span></div>
+            </div>
+            <blockquote>"Make sure if you give a task that requires extra PPE you follow through — make sure they are wearing PPE."</blockquote>
+          </div>
+        </div>
+
+        <div class="act">
+          <div class="act-date">May 21</div>
+          <div class="act-body">
+            <div class="act-name">Correct PPE Violations During Operations <span class="concern-tag q3">follow-through</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Two zones walked, violations corrected and PPE acknowledged</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Brad had his safety glasses on but no earplugs. Thanked him for the glasses, told him earplugs need to be in at all times — watched him put them in.</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Chris forgot his steel toe boots but had glasses and earplugs. Had him get his boots on before continuing. Thanked him for the glasses and earplugs.</span></div>
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Correction and recognition in the same interaction — that's exactly how it's supposed to work.</span></div>
+            </div>
+            <blockquote>"Watch for steel toe boots and earplugs."</blockquote>
+          </div>
+        </div>
+
+        <div class="act">
+          <div class="act-date">May 27</div>
+          <div class="act-body">
+            <div class="act-name">Verify PPE Feedback Held Throughout Shift <span class="concern-tag q3">follow-through</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Circled back, confirmed visually, acknowledged compliance</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">When you do the follow-up check, you're doing a visual confirmation — not asking "are you still wearing it?" Walk by, look at the specific item, respond to what you actually see.</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">I seen them — and I thanked them.</span></div>
+            </div>
+            <blockquote>"Let them know what to watch for."</blockquote>
+          </div>
+        </div>
+
+        <div class="act">
+          <div class="act-date">May 27</div>
+          <div class="act-body">
+            <div class="act-name">Call Out PPE Requirements at Break Transitions <span class="concern-tag q3">follow-through</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Full loop — asked, observed, followed up</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Ask the team member what PPE they need — let them name it first, rather than telling them.</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Chop booth at 1:30. Everyone had all the PPE needed — but I still asked if anyone needed anything. Circled back 10–15 minutes later — gear was still on.</span></div>
+            </div>
+            <blockquote>"Just make sure they have the required PPE for every job in the booth."</blockquote>
+          </div>
+        </div>
+
+        <div class="act">
+          <div class="act-date">May 28</div>
+          <div class="act-body">
+            <div class="act-name">Publicly Acknowledge Consistent PPE Compliance <span class="concern-tag q1">expectations</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Named by name + specific gear in front of team</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Thanked Megan in morning meeting for having her respirator on and ready to spray gel coat.</span></div>
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Next time, add one line — "That's what I need to see from all of us — right PPE, every time." Turns the recognition into a standard for the whole crew.</span></div>
+            </div>
+            <blockquote>"Make sure you bring up that all associates be ready like Megan."</blockquote>
+          </div>
+        </div>
+
+        <div class="act">
+          <div class="act-date">May 29</div>
+          <div class="act-body last">
+            <div class="act-name">Connect PPE Requirements to Specific Safety Consequences <span class="concern-tag q1">expectations</span></div>
+            <div class="act-meta">
+              <span class="outcome-pill done">Requirement connected to physical hazard in front of team</span>
+            </div>
+            <div class="exchanges">
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">Policy they can argue with. Permanent hearing damage they can't — that's the kind of consequence that sticks.</span></div>
+              <div class="exchange user"><span class="who">Janalee C.</span><span class="text">Megan was getting ready to roll tooling with rubber gloves on — I thanked her for wearing her gloves so she doesn't burn her hands. Two other associates were there.</span></div>
+              <div class="exchange coach"><span class="who">Coach</span><span class="text">The consequence landed in front of the team, not just one person — that's the activity.</span></div>
+            </div>
+            <blockquote>"Make sure while rolling, rubber gloves are to be worn at all times so they don't burn their skin."</blockquote>
+          </div>
+        </div>
+
+      </div><!-- /timeline -->
+    </div><!-- /card-body -->
+  </div><!-- /story-card -->
+
+  <div class="page-footer">
+    <span>REV Group &nbsp;·&nbsp; Build Better PPE Habits with Your Team</span>
+    <span>Flint Learning Solutions &nbsp;·&nbsp; June 2026</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
