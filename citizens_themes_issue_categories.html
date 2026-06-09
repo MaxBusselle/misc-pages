@@ -1,0 +1,3281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens · Fresh Eyes — Issue Category Breakdown</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:      253 252 250;
+  --color-surface:    255 255 255;
+  --color-ink:        28 42 56;
+  --color-muted-ink:  74 88 104;
+  --color-accent:     232 77 40;
+  --color-success:    72 114 76;
+  --color-cool-grey:  154 166 176;
+  --color-light-grey: 200 205 210;
+  --color-pale-grey:  235 229 220;
+  --color-warm-line:  197 187 166;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
+}
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(var(--color-paper) / 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  padding: 0 32px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-client {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: rgb(var(--color-ink));
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-sep { width: 1px; height: 16px; background: rgb(var(--color-warm-line)); }
+
+.nav-title {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.8125rem;
+  color: rgb(var(--color-muted-ink));
+}
+
+.nav-left { display: flex; align-items: center; gap: 12px; }
+.nav-right {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.75rem;
+  color: rgb(var(--color-muted-ink));
+  white-space: nowrap;
+}
+
+/* ── Page ── */
+.page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 56px 32px 96px;
+}
+
+.page-header { margin-bottom: 48px; }
+
+.page-eyebrow {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--color-accent));
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-family: 'Andada Pro', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: rgb(var(--color-ink));
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.page-subtitle {
+  font-size: 0.9375rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+  max-width: 540px;
+}
+
+.stat-strip {
+  display: flex;
+  gap: 24px;
+  margin-top: 28px;
+  padding: 20px 24px;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+
+.stat-item { display: flex; flex-direction: column; gap: 3px; }
+
+.stat-num {
+  font-family: 'Sen', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: rgb(var(--color-ink));
+  line-height: 1;
+}
+
+.stat-num.accent { color: rgb(var(--color-accent)); }
+
+.stat-label {
+  font-size: 0.75rem;
+  color: rgb(var(--color-muted-ink));
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+}
+
+.stat-divider { width: 1px; background: rgb(var(--color-pale-grey)); align-self: stretch; }
+
+/* ── Category blocks ── */
+.categories { display: flex; flex-direction: column; gap: 8px; }
+
+.category-block {
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  background: rgb(var(--color-surface));
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  transition: box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-block:hover {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+
+.category-block.open {
+  border-color: rgb(var(--color-warm-line));
+}
+
+.category-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 16px;
+  text-align: left;
+  transition: background 150ms ease;
+}
+
+.category-header:hover {
+  background: rgb(var(--color-pale-grey) / 0.4);
+}
+
+.cat-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cat-icon {
+  font-size: 1.125rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.cat-name {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink));
+}
+
+.cat-count {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgb(var(--color-muted-ink));
+  background: rgb(var(--color-pale-grey));
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.cat-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cat-hint {
+  font-size: 0.75rem;
+  color: rgb(var(--color-muted-ink));
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  color: rgb(var(--color-muted-ink));
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.category-block.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Entries panel ── */
+.category-entries {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-block.open .category-entries {
+  grid-template-rows: 1fr;
+}
+
+.entries-inner {
+  overflow: hidden;
+}
+
+.entry-card {
+  padding: 18px 24px;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+  transition: background 150ms ease;
+}
+
+.entry-card:hover {
+  background: rgb(var(--color-pale-grey) / 0.25);
+}
+
+.entry-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.entry-name {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: rgb(var(--color-ink));
+}
+
+.entry-date {
+  font-size: 0.75rem;
+  color: rgb(var(--color-muted-ink));
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.entry-summary {
+  font-size: 0.875rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+}
+
+.entry-status {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgb(var(--color-pale-grey) / 0.5);
+  border-radius: 4px;
+  align-items: flex-start;
+}
+
+.status-label, .tip-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  white-space: nowrap;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+
+.status-label { color: rgb(var(--color-muted-ink)); }
+.tip-label { color: rgb(var(--color-accent)); }
+
+.status-text, .tip-text {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: rgb(var(--color-ink));
+}
+
+.entry-tip {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgb(var(--color-accent) / 0.06);
+  border-left: 2px solid rgb(var(--color-accent) / 0.4);
+  border-radius: 0 4px 4px 0;
+  align-items: flex-start;
+}
+
+/* ── Footer ── */
+.page-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+  font-size: 0.75rem;
+  color: rgb(var(--color-muted-ink));
+}
+
+@media (max-width: 600px) {
+  .page { padding: 32px 16px 64px; }
+  nav { padding: 0 16px; }
+  .cat-hint { display: none; }
+  .stat-strip { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <span class="nav-client">Citizens · Fresh Eyes</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Issue Category Breakdown</span>
+  </div>
+  <div class="nav-right">Last 60 activities · May 27 – Jun 9, 2026</div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Themes Module — Activity Analysis</div>
+    <h1 class="page-title">What Your FMs Are Finding in the Field</h1>
+    <p class="page-subtitle">Patterns surfaced across the 60 most recent activities. Each entry below represents a real coaching session — what the FM found, what they did about it, and what they'd tell a colleague.</p>
+    
+    <div class="stat-strip">
+      <div class="stat-item">
+        <span class="stat-num accent">167</span>
+        <span class="stat-label">Activity references</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">8</span>
+        <span class="stat-label">Issue categories</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">30</span>
+        <span class="stat-label">Participants</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">May 27</span>
+        <span class="stat-label">Window start</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="categories">
+    
+    <div class="category-block" id="vendor-and-landlord-accountability">
+      <button class="category-header" onclick="toggleCategory('vendor-and-landlord-accountability')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">📋</span>
+          <span class="cat-name">Vendor & Landlord Accountability</span>
+          <span class="cat-count">38</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 38 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-vendor-and-landlord-accountability">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Jose Graca</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced reviewing a long-open work order in 360 before a branch visit, then closed out a resolved shred bin issue on-site and logged a newly discovered cobweb finding in the ATM vestibule.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared for a branch visit by identifying a recurring landscaping issue in 360, then confirmed the diagnosis on-site, categorized the root cause as a standards gap, and logged a specific action step with an owner and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a persisting floor grout issue at a branch location, diagnosing the root cause, documenting findings in a work order, and outlining a remediation plan pending equipment arrival.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a capstone end-to-end quality walk at a branch location, confirming a deferred P1 parking lot finding was already scheduled for resolution and verifying all other findings were logged in 360 with photos and work orders.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Taeyon Thompson</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring toilet flush issue at a property location, formed a hypothesis about faulty internal components, then confirmed findings on-site and logged structured action steps with SMT ownership in the tracking system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a candidate in 360 but wasn't sure why it kept coming back until I was standing in front of it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I would tip the FM to look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot. Also be sure to engage you SMT with situation as they may have some back ground on the problem too. Two minds are better than one</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Taeyon Thompson</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring exterior maintenance issue, categorized it as a landlord gap, and logged it in 360 with an assigned owner and target follow-up date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I would instruct the FM to look into their lease through Lucernex as some responsibilities do fall under the tenant and we need to pay extra careful attention with those matters in which we can complete in a timely fashion</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Schofield</span>
+            <span class="entry-date">Jun 05, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-standing work order for a strike plate at a branch location, then walked through diagnosing the issue on-site, ordering the necessary part through a lock shop, documenting with photos, and logging the resolution in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">Jun 05, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a dusty vent as a recurring maintenance issue, cleaned it on the spot with before/after photos, and logged it in 360 as a frequency gap requiring regular scheduling.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Find a frequent problem that has an easy to read reason why it becomes frequent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">William Granville</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified burned-out lobby lights at a branch location, logged the issue in 360 with a photo, owner, and target date, and reinforced the value of pre-visit scanning as a proactive habit.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Guided identification of a recurring exterior paving issue at a branch, established root cause (inadequate patch repairs requiring capital project escalation), and confirmed on-site documentation with ownership assigned to the REO tech team.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring item in 360, thought through why it persists before I arrived, and confirmed it on site</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">To be active and aware of the branch leasing terms to determine what scope can be completed.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Schofield</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-standing unresolved work order for keys at a branch location, diagnosed the root cause (wrong vendor assigned), reassigned it to the appropriate team member with a target completion date, and documented the issue with a photo in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have the work order initiator be more specific in the description.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Joshua Whitlock</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a year-long recurring water pressure issue at a branch, diagnosed it as a vendor gap, and logged an action step in 360 with an assigned owner and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep monitoring the site regularly in between repairs for the issue.  Like with this one, repairs would be made and would help for a short time then the issue would return.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Resolved a lingering shared parking lot ownership dispute by confirming landlord responsibility, securing a repair commitment, and logging the outcome with a work order in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have access to either Blue prints of your site and contact information for the Land Lord available</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a landscaping issue at a property, formed a hypothesis about why it went unaddressed, and confirmed findings on-site by documenting the problem with photos, logging a work order, and securing a vendor commitment for the following day.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The items in 360 didn't point clearly to a pattern — everything looked like a one-off</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Speak to the landscape manager about keeping sharp eyes for weeds. Grass is growing fast so they need to keep on top of it.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Patterson</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified persisting issues during a branch site visit and reinforced the importance of logging findings in 360 with an owner and target date.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Maria Kingsley</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent dumpster placement issue at a location, traced it to the absence of a designated spot, and walked through the steps taken to resolve it — including coordinating with the branch manager, opening a work order, and ensuring the hauler was notified.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Its always good to ask the BM if what you found as an issue is actually happening all the time or was this a one time issue since we FM's usually visit once a month we do not know what is happening in between our visits.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Maria Kingsley</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Traced a recurring water leak to its root cause — a gap on the main roof rather than the vestibule roof itself — and confirmed the repair and documentation were completed in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">look higher</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Anna Mann</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a senior facility manager through a fresh eyes walkthrough activity at a Glen Allen office building, troubleshot a completion status issue, and wrapped up with tips on documentation specificity for future walkthroughs.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Morgan McNary</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring high dusting issue at a facility visit, traced the root cause to a lack of accountability documentation, and guided the creation of a tracked work order in 360 with a named vendor owner and a firm deadline.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Be sure to look into 360 before you visit a site to see if there are any outstanding issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Identified deferred maintenance at a branch location, then coordinated a contractor to address both a confirmed overhang water damage issue and additional at-risk overhangs, logging specifics in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Address the problem and look for other issues that could potentially happen in the future if not addressed now while the contractor is onsite with a bucket truck.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Eric Kaechelin</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring carpet cleaning issue at a branch location, visited the site to assess and resolve it, then reinforced accountability by escalating to a manager and documenting findings in the tracking system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Follow through with coaching to ensure consistency.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared a pre-visit hypothesis about recurring carpet issues at a branch location, verified findings on-site, and reinforced the importance of documenting observations and action steps directly in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring item in 360, thought through why it persists before I arrived, and confirmed it on site</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">The carpet is not stain friendly, inspect the entire carpet area. If the carpet is replaced, they should choose a darker carpet better suited for high traffic.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a previously unflagged sidewalk issue at a branch visit, then walked through the steps taken to document and advance it — photo captured, quote requested, and root cause logged in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a site visit to Melville, reviewed recent network and AC issues, and confirmed that resolutions were logged in 360 with notes on ownership and close-out.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360 but wasn't sure which work order to focus on by the time I got there</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Arrange a meeting with the building engineer and site contacts to help coordinate and address any immediate needs.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Joseph Dudar</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring lighting issue at a branch location, categorized it as a standards gap, and logged it in the tracking system with a specific action step, owner, and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Is it cause by a policy issue.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Tony Petaccio</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persisting maintenance issue (old chairs with no prior work order) during a branch visit, then guided the logging of the finding in 360 with a submitted work order and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">pay attention to the little things, don't be complacent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Scaglia</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Logged a recurring carpet cleanliness issue in 360 with a photo, identified it as a vendor/landlord gap, and documented a concrete resolution action including a work order, named owner, and target completion date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring HVAC issue at a subleased office location before a visit, formed a hypothesis about landlord accountability, then confirmed the issue was resolved on-site and logged findings with context in the facilities system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The items in 360 didn't point clearly to a pattern — everything looked like a one-off</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure to review 360 in advance and create a WO to record the persistent issues that is managed by the landlord</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Richard Hunter</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-open landscaping work order in 360 before a branch visit, then confirmed on-site that the work had been completed and closed out the ticket with documentation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Don't forget to review old open work orders before the visit.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Walked the ATM vestibule and lobby at a branch location, identifying a threshold cleaning issue, assigning it a P4 priority ranking, and documenting it with a work order and photos in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone, ranked findings by customer impact, resolved or initiated action on P1 items, and logged everything before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">As I have stated in the past, please learn to focus on the small details and not focus on the larger issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring gutter leak at a branch, created a work order in the facility management system to replace the gutter and downspout, and resolved a photo upload issue by adding the image as an attachment.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Look at pass work orders before going into the branch and speak with the branch manager and colleagues of issues that arise as they’re always at the branch every day</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent paint issue at a branch location, diagnosed it as a standards gap, and logged it in the work order system with an assigned owner.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">This Wall is easily looked over so make sure you look in high and low places</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">William Granville</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a missing ceiling tile in the safety deposit room at Turtle Creek, logged it in 360 with an owner and target date, and wrapped up with a tip about building a pre-visit 360 check habit.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Look up</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified recurring janitorial vendor performance issues at a branch location, then debriefed the site visit to distinguish between documenting a finding and taking concrete action to resolve it.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue and worked out what's behind it, but I didn't take any action before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Consider further review requirements that are needed with the janitorial vendor.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring parking lot drainage issue at a site, diagnosed the root cause, confirmed completed vendor repairs, and debriefed on logging action steps with specific owners and deadlines in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Investigated a recurring carpet stain issue at a branch location, identified a likely root cause, and documented a re-inspection plan with an owner and target date in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Be open to all options that can be the cause. Do not rule anything out.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">May 27, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring facility issue at a branch location, documented it in the work order system with a category, photo, owner, and target date to complete the full resolution loop.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a documented path of the issues</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="doors-and-entry">
+      <button class="category-header" onclick="toggleCategory('doors-and-entry')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🚪</span>
+          <span class="cat-name">Doors & Entry</span>
+          <span class="cat-count">32</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 32 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-doors-and-entry">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Jose Graca</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced reviewing a long-open work order in 360 before a branch visit, then closed out a resolved shred bin issue on-site and logged a newly discovered cobweb finding in the ATM vestibule.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared for a branch visit by identifying a recurring landscaping issue in 360, then confirmed the diagnosis on-site, categorized the root cause as a standards gap, and logged a specific action step with an owner and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a persisting floor grout issue at a branch location, diagnosing the root cause, documenting findings in a work order, and outlining a remediation plan pending equipment arrival.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a capstone end-to-end quality walk at a branch location, confirming a deferred P1 parking lot finding was already scheduled for resolution and verifying all other findings were logged in 360 with photos and work orders.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Schofield</span>
+            <span class="entry-date">Jun 05, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-standing work order for a strike plate at a branch location, then walked through diagnosing the issue on-site, ordering the necessary part through a lock shop, documenting with photos, and logging the resolution in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Conducted a full customer-path audit of a branch location, ranking findings by customer visibility, then logged all identified issues with photos and assigned owners in a work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Avoid focusing solely on the highly visible area, and look for less obvious issues as well</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Guided identification of a recurring exterior paving issue at a branch, established root cause (inadequate patch repairs requiring capital project escalation), and confirmed on-site documentation with ownership assigned to the REO tech team.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring item in 360, thought through why it persists before I arrived, and confirmed it on site</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">To be active and aware of the branch leasing terms to determine what scope can be completed.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Schofield</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-standing unresolved work order for keys at a branch location, diagnosed the root cause (wrong vendor assigned), reassigned it to the appropriate team member with a target completion date, and documented the issue with a photo in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have the work order initiator be more specific in the description.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Joshua Whitlock</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a year-long recurring water pressure issue at a branch, diagnosed it as a vendor gap, and logged an action step in 360 with an assigned owner and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep monitoring the site regularly in between repairs for the issue.  Like with this one, repairs would be made and would help for a short time then the issue would return.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Hay</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch, walking through exterior and interior zones, logging findings like daytime parking lot lights, ranking items by customer impact, and marking P1 items in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Leaving</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a quality issue (worn lobby chairs) during a post floor care inspection and logged it in a facility management system with a photo and estimated age of the problem.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">spiders</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a branch visit at a new location, capturing first impressions and a maintenance find, then reinforced the importance of switching to the customer lens before entering rather than catching issues on the way out.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I am always in FM mode, not being in this new branch before I was maybe overexcited to see what the inside would be like.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Resolved a lingering shared parking lot ownership dispute by confirming landlord responsibility, securing a repair commitment, and logging the outcome with a work order in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have access to either Blue prints of your site and contact information for the Land Lord available</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Patterson</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified persisting issues during a branch site visit and reinforced the importance of logging findings in 360 with an owner and target date.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Maria Kingsley</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Traced a recurring water leak to its root cause — a gap on the main roof rather than the vestibule roof itself — and confirmed the repair and documentation were completed in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">look higher</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Anna Mann</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a senior facility manager through a fresh eyes walkthrough activity at a Glen Allen office building, troubleshot a completion status issue, and wrapped up with tips on documentation specificity for future walkthroughs.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Isabel Kingsley</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a facility issue during a branch visit, then reinforced the importance of focusing fresh-eyes observations on customer-facing areas.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a work order visit at a new location, spotting and documenting an unrelated sidewalk debris issue with a photo in 360 and a direct call to the technician.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Vincent Parrino</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a branch entrance observation activity, sharing a stain discovery that was photographed and logged, and received guidance on using the full checklist for less obvious issues.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">Nothing on the checklist felt clearly off looking just at the entrance</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">look at all carpets under Desks</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Matthew Ferschke</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a learner through completing a Fresh Eyes Walkthrough at a branch, then prompted reflection on whether the issue spotted — peeling wallpaper — had been previously overlooked.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Spotted weeds along a curb line during a work order visit, took verbal action by contacting a tech, and wrapped up with a reminder to log findings in 360 with a photo next time.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">weeds</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a customer-eye audit walk of a branch, debating how to rank exterior paint findings by customer visibility versus operational urgency when logging in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Slow down</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a previously unflagged sidewalk issue at a branch visit, then walked through the steps taken to document and advance it — photo captured, quote requested, and root cause logged in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a site visit to Melville, reviewed recent network and AC issues, and confirmed that resolutions were logged in 360 with notes on ownership and close-out.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360 but wasn't sure which work order to focus on by the time I got there</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Arrange a meeting with the building engineer and site contacts to help coordinate and address any immediate needs.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Tony Petaccio</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persisting maintenance issue (old chairs with no prior work order) during a branch visit, then guided the logging of the finding in 360 with a submitted work order and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">pay attention to the little things, don't be complacent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through an exterior zone observation activity, clarified role-based scope limitations, skipped the activity as a mismatch for a Landscape Manager, then marked it complete upon the learner's confirmation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">keep eyes open</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Walked the ATM vestibule and lobby at a branch location, identifying a threshold cleaning issue, assigning it a P4 priority ranking, and documenting it with a work order and photos in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone, ranked findings by customer impact, resolved or initiated action on P1 items, and logged everything before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">As I have stated in the past, please learn to focus on the small details and not focus on the larger issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a quality issue (broken bollard) at a branch visit while completing an unrelated work order, building the habit of maintaining fresh-eyes awareness during routine tasks.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep open eyes</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring gutter leak at a branch, created a work order in the facility management system to replace the gutter and downspout, and resolved a photo upload issue by adding the image as an attachment.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Look at pass work orders before going into the branch and speak with the branch manager and colleagues of issues that arise as they’re always at the branch every day</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a branch walkthrough activity, from preparation and visit execution to logging a finding (damaged sidewalk near a handicap ramp) and marking the activity complete.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">What does a customer see.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">May 27, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring facility issue at a branch location, documented it in the work order system with a category, photo, owner, and target date to complete the full resolution loop.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a documented path of the issues</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="carpet-and-flooring">
+      <button class="category-header" onclick="toggleCategory('carpet-and-flooring')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🟫</span>
+          <span class="cat-name">Carpet & Flooring</span>
+          <span class="cat-count">23</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 23 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-carpet-and-flooring">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a persisting floor grout issue at a branch location, diagnosing the root cause, documenting findings in a work order, and outlining a remediation plan pending equipment arrival.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Taeyon Thompson</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring toilet flush issue at a property location, formed a hypothesis about faulty internal components, then confirmed findings on-site and logged structured action steps with SMT ownership in the tracking system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a candidate in 360 but wasn't sure why it kept coming back until I was standing in front of it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I would tip the FM to look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot. Also be sure to engage you SMT with situation as they may have some back ground on the problem too. Two minds are better than one</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a quality issue (worn lobby chairs) during a post floor care inspection and logged it in a facility management system with a photo and estimated age of the problem.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">spiders</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a branch visit at a new location, capturing first impressions and a maintenance find, then reinforced the importance of switching to the customer lens before entering rather than catching issues on the way out.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I am always in FM mode, not being in this new branch before I was maybe overexcited to see what the inside would be like.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Patterson</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified persisting issues during a branch site visit and reinforced the importance of logging findings in 360 with an owner and target date.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Anna Mann</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a senior facility manager through a fresh eyes walkthrough activity at a Glen Allen office building, troubleshot a completion status issue, and wrapped up with tips on documentation specificity for future walkthroughs.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Isabel Kingsley</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a facility issue during a branch visit, then reinforced the importance of focusing fresh-eyes observations on customer-facing areas.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Eric Kaechelin</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring carpet cleaning issue at a branch location, visited the site to assess and resolve it, then reinforced accountability by escalating to a manager and documenting findings in the tracking system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Follow through with coaching to ensure consistency.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a work order visit at a new location, spotting and documenting an unrelated sidewalk debris issue with a photo in 360 and a direct call to the technician.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Vincent Parrino</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a branch entrance observation activity, sharing a stain discovery that was photographed and logged, and received guidance on using the full checklist for less obvious issues.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">Nothing on the checklist felt clearly off looking just at the entrance</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">look at all carpets under Desks</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Matthew Ferschke</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a learner through completing a Fresh Eyes Walkthrough at a branch, then prompted reflection on whether the issue spotted — peeling wallpaper — had been previously overlooked.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared a pre-visit hypothesis about recurring carpet issues at a branch location, verified findings on-site, and reinforced the importance of documenting observations and action steps directly in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring item in 360, thought through why it persists before I arrived, and confirmed it on site</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">The carpet is not stain friendly, inspect the entire carpet area. If the carpet is replaced, they should choose a darker carpet better suited for high traffic.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Tony Petaccio</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persisting maintenance issue (old chairs with no prior work order) during a branch visit, then guided the logging of the finding in 360 with a submitted work order and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">pay attention to the little things, don't be complacent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Scaglia</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Logged a recurring carpet cleanliness issue in 360 with a photo, identified it as a vendor/landlord gap, and documented a concrete resolution action including a work order, named owner, and target completion date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through an exterior zone observation activity, clarified role-based scope limitations, skipped the activity as a mismatch for a Landscape Manager, then marked it complete upon the learner's confirmation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">keep eyes open</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Walked the ATM vestibule and lobby at a branch location, identifying a threshold cleaning issue, assigning it a P4 priority ranking, and documenting it with a work order and photos in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone, ranked findings by customer impact, resolved or initiated action on P1 items, and logged everything before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">As I have stated in the past, please learn to focus on the small details and not focus on the larger issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a branch walkthrough activity, from preparation and visit execution to logging a finding (damaged sidewalk near a handicap ramp) and marking the activity complete.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">What does a customer see.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Morgan McNary</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a walkthrough activity, documented carpet stains with photos in 360, and distinguished between inspection-scope findings versus incidental observations made outside the original work order purpose.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">William Granville</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a missing ceiling tile in the safety deposit room at Turtle Creek, logged it in 360 with an owner and target date, and wrapped up with a tip about building a pre-visit 360 check habit.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Look up</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a branch walk-through at 875 Elm Street, identifying cleaning issues (dusty cove bases and wall marks), pinpointing where on the customer path each finding would be noticed, and assigning priority rankings before logging work orders in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the walk but most things felt like the same level — I couldn't clearly separate P1 from the rest</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a eye on the "details" of the branch</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Investigated a recurring carpet stain issue at a branch location, identified a likely root cause, and documented a re-inspection plan with an owner and target date in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Be open to all options that can be the cause. Do not rule anything out.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">May 27, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring facility issue at a branch location, documented it in the work order system with a category, photo, owner, and target date to complete the full resolution loop.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a documented path of the issues</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="parking-and-exterior-lots">
+      <button class="category-header" onclick="toggleCategory('parking-and-exterior-lots')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🅿️</span>
+          <span class="cat-name">Parking & Exterior Lots</span>
+          <span class="cat-count">21</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 21 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-parking-and-exterior-lots">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared for a branch visit by identifying a recurring landscaping issue in 360, then confirmed the diagnosis on-site, categorized the root cause as a standards gap, and logged a specific action step with an owner and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a capstone end-to-end quality walk at a branch location, confirming a deferred P1 parking lot finding was already scheduled for resolution and verifying all other findings were logged in 360 with photos and work orders.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Taeyon Thompson</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring exterior maintenance issue, categorized it as a landlord gap, and logged it in 360 with an assigned owner and target follow-up date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I would instruct the FM to look into their lease through Lucernex as some responsibilities do fall under the tenant and we need to pay extra careful attention with those matters in which we can complete in a timely fashion</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Conducted a full customer-path audit of a branch location, ranking findings by customer visibility, then logged all identified issues with photos and assigned owners in a work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Avoid focusing solely on the highly visible area, and look for less obvious issues as well</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Hay</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch, walking through exterior and interior zones, logging findings like daytime parking lot lights, ranking items by customer impact, and marking P1 items in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Leaving</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Resolved a lingering shared parking lot ownership dispute by confirming landlord responsibility, securing a repair commitment, and logging the outcome with a work order in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have access to either Blue prints of your site and contact information for the Land Lord available</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Jose Graca</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Explored a recurring-issue identification activity across branch locations, ultimately finding no outstanding work orders or persistent problems at the visited site and completing the activity with guidance to watch for such issues on future visits.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Maria Kingsley</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent dumpster placement issue at a location, traced it to the absence of a designated spot, and walked through the steps taken to resolve it — including coordinating with the branch manager, opening a work order, and ensuring the hauler was notified.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Its always good to ask the BM if what you found as an issue is actually happening all the time or was this a one time issue since we FM's usually visit once a month we do not know what is happening in between our visits.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Anna Mann</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a senior facility manager through a fresh eyes walkthrough activity at a Glen Allen office building, troubleshot a completion status issue, and wrapped up with tips on documentation specificity for future walkthroughs.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Isabel Kingsley</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a facility issue during a branch visit, then reinforced the importance of focusing fresh-eyes observations on customer-facing areas.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a work order visit at a new location, spotting and documenting an unrelated sidewalk debris issue with a photo in 360 and a direct call to the technician.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Matthew Ferschke</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a learner through completing a Fresh Eyes Walkthrough at a branch, then prompted reflection on whether the issue spotted — peeling wallpaper — had been previously overlooked.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Spotted weeds along a curb line during a work order visit, took verbal action by contacting a tech, and wrapped up with a reminder to log findings in 360 with a photo next time.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">weeds</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a customer-eye audit walk of a branch, debating how to rank exterior paint findings by customer visibility versus operational urgency when logging in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Slow down</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a previously unflagged sidewalk issue at a branch visit, then walked through the steps taken to document and advance it — photo captured, quote requested, and root cause logged in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a quality issue (broken bollard) at a branch visit while completing an unrelated work order, building the habit of maintaining fresh-eyes awareness during routine tasks.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep open eyes</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent paint issue at a branch location, diagnosed it as a standards gap, and logged it in the work order system with an assigned owner.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">This Wall is easily looked over so make sure you look in high and low places</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a branch walkthrough activity, from preparation and visit execution to logging a finding (damaged sidewalk near a handicap ramp) and marking the activity complete.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">What does a customer see.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified recurring janitorial vendor performance issues at a branch location, then debriefed the site visit to distinguish between documenting a finding and taking concrete action to resolve it.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue and worked out what's behind it, but I didn't take any action before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Consider further review requirements that are needed with the janitorial vendor.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring parking lot drainage issue at a site, diagnosed the root cause, confirmed completed vendor repairs, and debriefed on logging action steps with specific owners and deadlines in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues.</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="atm-and-vestibule-cleaning">
+      <button class="category-header" onclick="toggleCategory('atm-and-vestibule-cleaning')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🧹</span>
+          <span class="cat-name">ATM & Vestibule Cleaning</span>
+          <span class="cat-count">14</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 14 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-atm-and-vestibule-cleaning">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Jose Graca</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced reviewing a long-open work order in 360 before a branch visit, then closed out a resolved shred bin issue on-site and logged a newly discovered cobweb finding in the ATM vestibule.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a persisting floor grout issue at a branch location, diagnosing the root cause, documenting findings in a work order, and outlining a remediation plan pending equipment arrival.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Argeny Garcia</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Documented cleaning issues found during a branch visit (spider webs and dirty glass in the ATM vestibule), logged a work order in 360 with an owner and target date, and received a tip on scanning for recurring issue patterns before future visits.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a capstone end-to-end quality walk at a branch location, confirming a deferred P1 parking lot finding was already scheduled for resolution and verifying all other findings were logged in 360 with photos and work orders.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Conducted a full customer-path audit of a branch location, ranking findings by customer visibility, then logged all identified issues with photos and assigned owners in a work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Avoid focusing solely on the highly visible area, and look for less obvious issues as well</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Hay</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch, walking through exterior and interior zones, logging findings like daytime parking lot lights, ranking items by customer impact, and marking P1 items in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Leaving</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Maria Kingsley</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Traced a recurring water leak to its root cause — a gap on the main roof rather than the vestibule roof itself — and confirmed the repair and documentation were completed in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">look higher</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Matthew Ferschke</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced maintaining a "fresh eyes" customer perspective during a routine inspection visit, spotting and logging cobwebs in the front windows as a high-visibility issue.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a customer-eye audit walk of a branch, debating how to rank exterior paint findings by customer visibility versus operational urgency when logging in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Slow down</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Tony Petaccio</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persisting maintenance issue (old chairs with no prior work order) during a branch visit, then guided the logging of the finding in 360 with a submitted work order and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">pay attention to the little things, don't be complacent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Scaglia</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Logged a recurring carpet cleanliness issue in 360 with a photo, identified it as a vendor/landlord gap, and documented a concrete resolution action including a work order, named owner, and target completion date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Walked the ATM vestibule and lobby at a branch location, identifying a threshold cleaning issue, assigning it a P4 priority ranking, and documenting it with a work order and photos in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone, ranked findings by customer impact, resolved or initiated action on P1 items, and logged everything before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">As I have stated in the past, please learn to focus on the small details and not focus on the larger issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Knight</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a branch walk-through at 875 Elm Street, identifying cleaning issues (dusty cove bases and wall marks), pinpointing where on the customer path each finding would be noticed, and assigning priority rankings before logging work orders in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the walk but most things felt like the same level — I couldn't clearly separate P1 from the rest</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a eye on the "details" of the branch</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="plumbing-and-hvac">
+      <button class="category-header" onclick="toggleCategory('plumbing-and-hvac')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🔧</span>
+          <span class="cat-name">Plumbing & HVAC</span>
+          <span class="cat-count">14</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 14 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-plumbing-and-hvac">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Taeyon Thompson</span>
+            <span class="entry-date">Jun 08, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring toilet flush issue at a property location, formed a hypothesis about faulty internal components, then confirmed findings on-site and logged structured action steps with SMT ownership in the tracking system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a candidate in 360 but wasn't sure why it kept coming back until I was standing in front of it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I would tip the FM to look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot. Also be sure to engage you SMT with situation as they may have some back ground on the problem too. Two minds are better than one</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">Jun 05, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a dusty vent as a recurring maintenance issue, cleaned it on the spot with before/after photos, and logged it in 360 as a frequency gap requiring regular scheduling.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Find a frequent problem that has an easy to read reason why it becomes frequent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Resolved a lingering shared parking lot ownership dispute by confirming landlord responsibility, securing a repair commitment, and logging the outcome with a work order in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue, worked out what's behind it, and took a concrete action toward fixing it before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have access to either Blue prints of your site and contact information for the Land Lord available</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Anna Mann</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a senior facility manager through a fresh eyes walkthrough activity at a Glen Allen office building, troubleshot a completion status issue, and wrapped up with tips on documentation specificity for future walkthroughs.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Matthew Ferschke</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a learner through completing a Fresh Eyes Walkthrough at a branch, then prompted reflection on whether the issue spotted — peeling wallpaper — had been previously overlooked.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Andrew O'Dell</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a previously unflagged sidewalk issue at a branch visit, then walked through the steps taken to document and advance it — photo captured, quote requested, and root cause logged in the system.</div>
+          
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Tony Petaccio</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persisting maintenance issue (old chairs with no prior work order) during a branch visit, then guided the logging of the finding in 360 with a submitted work order and target resolution date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">pay attention to the little things, don't be complacent</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring HVAC issue at a subleased office location before a visit, formed a hypothesis about landlord accountability, then confirmed the issue was resolved on-site and logged findings with context in the facilities system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The items in 360 didn't point clearly to a pattern — everything looked like a one-off</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure to review 360 in advance and create a WO to record the persistent issues that is managed by the landlord</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Richard Hunter</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-open landscaping work order in 360 before a branch visit, then confirmed on-site that the work had been completed and closed out the ticket with documentation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Don't forget to review old open work orders before the visit.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Guided a branch walkthrough activity, from preparation and visit execution to logging a finding (damaged sidewalk near a handicap ramp) and marking the activity complete.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I did the walkthrough and documented one or more new issues</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">What does a customer see.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Juan Jorge</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified recurring janitorial vendor performance issues at a branch location, then debriefed the site visit to distinguish between documenting a finding and taking concrete action to resolve it.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I found a persisting issue and worked out what's behind it, but I didn't take any action before I left</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Consider further review requirements that are needed with the janitorial vendor.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring parking lot drainage issue at a site, diagnosed the root cause, confirmed completed vendor repairs, and debriefed on logging action steps with specific owners and deadlines in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Kevin Ozmun</span>
+            <span class="entry-date">May 27, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring facility issue at a branch location, documented it in the work order system with a category, photo, owner, and target date to complete the full resolution loop.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep a documented path of the issues</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="landscaping">
+      <button class="category-header" onclick="toggleCategory('landscaping')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">🌿</span>
+          <span class="cat-name">Landscaping</span>
+          <span class="cat-count">13</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 13 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-landscaping">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">Jun 09, 2026</span>
+          </div>
+          <div class="entry-summary">Prepared for a branch visit by identifying a recurring landscaping issue in 360, then confirmed the diagnosis on-site, categorized the root cause as a standards gap, and logged a specific action step with an owner and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">There was no recurring issue</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Conducted a full customer-path audit of a branch location, ranking findings by customer visibility, then logged all identified issues with photos and assigned owners in a work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Avoid focusing solely on the highly visible area, and look for less obvious issues as well</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Hay</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch, walking through exterior and interior zones, logging findings like daytime parking lot lights, ranking items by customer impact, and marking P1 items in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Leaving</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a quality issue (worn lobby chairs) during a post floor care inspection and logged it in a facility management system with a photo and estimated age of the problem.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">spiders</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through a branch visit at a new location, capturing first impressions and a maintenance find, then reinforced the importance of switching to the customer lens before entering rather than catching issues on the way out.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">I am always in FM mode, not being in this new branch before I was maybe overexcited to see what the inside would be like.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a landscaping issue at a property, formed a hypothesis about why it went unaddressed, and confirmed findings on-site by documenting the problem with photos, logging a work order, and securing a vendor commitment for the following day.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The items in 360 didn't point clearly to a pattern — everything looked like a one-off</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Speak to the landscape manager about keeping sharp eyes for weeds. Grass is growing fast so they need to keep on top of it.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Spotted weeds along a curb line during a work order visit, took verbal action by contacting a tech, and wrapped up with a reminder to log findings in 360 with a photo next time.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">weeds</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through an exterior zone observation activity, clarified role-based scope limitations, skipped the activity as a mismatch for a Landscape Manager, then marked it complete upon the learner's confirmation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I walked the zone and documented what I noticed as a customer would</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">keep eyes open</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Richard Hunter</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-open landscaping work order in 360 before a branch visit, then confirmed on-site that the work had been completed and closed out the ticket with documentation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Don't forget to review old open work orders before the visit.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Donald Lucariello</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Practiced spotting and logging a quality issue (broken bollard) at a branch visit while completing an unrelated work order, building the habit of maintaining fresh-eyes awareness during routine tasks.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Keep open eyes</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent paint issue at a branch location, diagnosed it as a standards gap, and logged it in the work order system with an assigned owner.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">This Wall is easily looked over so make sure you look in high and low places</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Conti</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Investigated a recurring carpet stain issue at a branch location, identified a likely root cause, and documented a re-inspection plan with an owner and target date in the work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue but don't yet know why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Be open to all options that can be the cause. Do not rule anything out.</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block" id="lighting">
+      <button class="category-header" onclick="toggleCategory('lighting')" aria-expanded="false">
+        <div class="cat-left">
+          <span class="cat-icon">💡</span>
+          <span class="cat-name">Lighting</span>
+          <span class="cat-count">12</span>
+        </div>
+        <div class="cat-right">
+          <span class="cat-hint">Show all 12 activities</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </button>
+      <div class="category-entries" id="entries-lighting">
+        <div class="entries-inner">
+          
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Conducted a full customer-path audit of a branch location, ranking findings by customer visibility, then logged all identified issues with photos and assigned owners in a work order system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Avoid focusing solely on the highly visible area, and look for less obvious issues as well</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">William Granville</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified burned-out lobby lights at a branch location, logged the issue in 360 with a photo, owner, and target date, and reinforced the value of pre-visit scanning as a proactive habit.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I didn't get to the 360 review before my visit, so I was looking without a specific candidate in mind</span>
+            </div>
+          
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch location, debriefing on interior and exterior findings, confirming work orders were initiated and logged in 360 with photos.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced customer-visible findings and resolution actions have been initiated for P1 items</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Make sure you pay attention to the ground and the roof line</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">David Schofield</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-standing unresolved work order for keys at a branch location, diagnosed the root cause (wrong vendor assigned), reassigned it to the appropriate team member with a target completion date, and documented the issue with a photo in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Have the work order initiator be more specific in the description.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">John Hay</span>
+            <span class="entry-date">Jun 04, 2026</span>
+          </div>
+          <div class="entry-summary">Completed a full customer-eye audit of a branch, walking through exterior and interior zones, logging findings like daytime parking lot lights, ranking items by customer impact, and marking P1 items in the system.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">The audit surfaced things that have already been surfaced — no new P1 items need to be addressed</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Leaving</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Alexander Maxwell</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a quality issue (worn lobby chairs) during a post floor care inspection and logged it in a facility management system with a photo and estimated age of the problem.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">spiders</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">James Wright</span>
+            <span class="entry-date">Jun 03, 2026</span>
+          </div>
+          <div class="entry-summary">Walked through identifying an open exterior lighting work order in 360 before a branch visit, then confirmed, photographed, and logged it on site — wrapping up with a reminder to secure a specific completion date from the GC.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Know your Maintenance Techs skill level and know when to send an electrician.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Sean Flatt</span>
+            <span class="entry-date">Jun 02, 2026</span>
+          </div>
+          <div class="entry-summary">Spotted weeds along a curb line during a work order visit, took verbal action by contacting a tech, and wrapped up with a reminder to log findings in 360 with a photo next time.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I completed the work order and documented at least one finding unrelated to it</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">weeds</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Joseph Dudar</span>
+            <span class="entry-date">Jun 01, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring lighting issue at a branch location, categorized it as a standards gap, and logged it in the tracking system with a specific action step, owner, and target date.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Is it cause by a policy issue.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Richard Hunter</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a long-open landscaping work order in 360 before a branch visit, then confirmed on-site that the work had been completed and closed out the ticket with documentation.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I reviewed 360, found a long-open work order, and arrived at the branch knowing exactly what I was going to look at</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">Don't forget to review old open work orders before the visit.</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Brandon Allen</span>
+            <span class="entry-date">May 29, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a persistent paint issue at a branch location, diagnosed it as a standards gap, and logged it in the work order system with an assigned owner.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">This Wall is easily looked over so make sure you look in high and low places</span>
+            </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-name">Nicholas Velardi</span>
+            <span class="entry-date">May 28, 2026</span>
+          </div>
+          <div class="entry-summary">Identified a recurring parking lot drainage issue at a site, diagnosed the root cause, confirmed completed vendor repairs, and debriefed on logging action steps with specific owners and deadlines in 360.</div>
+          
+            <div class="entry-status">
+              <span class="status-label">Outcome</span>
+              <span class="status-text">I identified a recurring issue and discovered why it persists</span>
+            </div>
+          
+            <div class="entry-tip">
+              <span class="tip-label">Peer tip</span>
+              <span class="tip-text">If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues.</span>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    Data: 60 completed activities · Citizens Fresh Eyes · Jun 2026 · Flint Learning Solutions
+  </div>
+</div>
+
+<script>
+function toggleCategory(id) {
+  const block = document.getElementById(id);
+  const isOpen = block.classList.contains('open');
+  const btn = block.querySelector('.category-header');
+  const hint = block.querySelector('.cat-hint');
+  const count = block.querySelector('.cat-count').textContent;
+  
+  block.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  
+  if (!isOpen) {
+    hint.textContent = 'Hide';
+  } else {
+    hint.textContent = 'Show all ' + count + ' activities';
+  }
+}
+</script>
+</body>
+</html>
