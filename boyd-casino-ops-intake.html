@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-5ZDVEEHR98");
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casino Ops Skills Survey — Boyd Gaming</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --boyd-blue: #003087;
+    --boyd-blue-dark: #002060;
+    --boyd-blue-light: #E8EFF9;
+    --boyd-gold: #B8972A;
+    --boyd-gold-light: #FBF7EC;
+    --gray-50: #F8F8F8;
+    --gray-100: #EEEEEE;
+    --gray-200: #D8D8D8;
+    --gray-400: #9B9B9B;
+    --gray-600: #6B6B6B;
+    --gray-800: #3A3A3A;
+    --gray-900: #1A1A1A;
+    --success: #2D7A4F;
+    --success-light: #EAF5EE;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Layout */
+  .app { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: white;
+    border-right: 1px solid var(--gray-100);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .sidebar-logo {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--boyd-blue);
+  }
+
+  .sidebar-logo img {
+    display: block;
+    height: 36px;
+    width: auto;
+  }
+
+  .sidebar-meta {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--boyd-blue-light);
+  }
+
+  .sidebar-meta .client-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--boyd-blue);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .sidebar-meta .initiative-name {
+    font-size: 12px;
+    color: var(--gray-600);
+  }
+
+  .sidebar-nav { padding: 12px 0; flex: 1; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 8px 20px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--gray-600);
+    position: relative;
+  }
+
+  .nav-item:hover { background: var(--gray-50); color: var(--gray-900); }
+
+  .nav-item.active {
+    background: var(--boyd-blue-light);
+    color: var(--boyd-blue-dark);
+    font-weight: 500;
+  }
+
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 3px;
+    background: var(--boyd-blue);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .nav-item.completed { color: var(--gray-800); }
+
+  .nav-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-200);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-400);
+    transition: all 0.2s;
+  }
+
+  .nav-item.active .nav-dot {
+    background: var(--boyd-blue);
+    border-color: var(--boyd-blue);
+    color: white;
+  }
+
+  .nav-item.completed .nav-dot {
+    background: var(--success-light);
+    border-color: var(--success);
+    color: var(--success);
+  }
+
+  .nav-item.skipped .nav-dot {
+    background: var(--gray-50);
+    border-color: var(--gray-200);
+    color: var(--gray-400);
+    font-size: 9px;
+  }
+
+  .nav-label { line-height: 1.3; }
+
+  .sidebar-progress {
+    padding: 16px 20px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--gray-100);
+    border-radius: 2px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--boyd-blue);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* Main content */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .main-header {
+    background: white;
+    border-bottom: 1px solid var(--gray-100);
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  .step-indicator {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .respondent-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 20px;
+    padding: 5px 12px 5px 6px;
+  }
+
+  .respondent-avatar {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--boyd-blue-light);
+    color: var(--boyd-blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+  }
+
+  .content-area {
+    flex: 1;
+    padding: 52px 48px;
+    max-width: 760px;
+  }
+
+  /* Screens */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* Welcome */
+  .welcome-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--boyd-gold);
+    margin-bottom: 12px;
+  }
+
+  .welcome-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .welcome-desc {
+    font-size: 16px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+
+  .welcome-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+
+  .welcome-callout {
+    background: white;
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .welcome-callout .icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .welcome-callout .label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .welcome-callout .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-800);
+    line-height: 1.35;
+  }
+
+  /* Form elements */
+  .question-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--boyd-gold);
+    margin-bottom: 10px;
+  }
+
+  .question-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.25;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .question-hint {
+    font-size: 14px;
+    color: var(--gray-500, var(--gray-400));
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .field-group { margin-bottom: 20px; }
+
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-800);
+    margin-bottom: 6px;
+  }
+
+  .field-label .required {
+    color: #C53030;
+    margin-left: 3px;
+  }
+
+  .field-optional {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gray-400);
+    margin-left: 4px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--gray-900);
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+    outline: none;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--boyd-blue);
+    box-shadow: 0 0 0 3px rgba(0,48,135,0.10);
+  }
+
+  input.error, textarea.error {
+    border-color: #C53030;
+    box-shadow: 0 0 0 3px rgba(197,48,48,0.10);
+  }
+
+  .error-msg {
+    font-size: 12px;
+    color: #C53030;
+    margin-top: 5px;
+    display: none;
+  }
+
+  .error-msg.visible { display: block; }
+
+  textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .field-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--boyd-blue);
+    color: white;
+  }
+
+  .btn-primary:hover { background: var(--boyd-blue-dark); }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-secondary {
+    background: white;
+    color: var(--gray-800);
+    border: 1px solid var(--gray-200);
+  }
+
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--gray-400);
+    padding: 10px 14px;
+  }
+
+  .btn-ghost:hover { color: var(--gray-600); background: var(--gray-50); }
+
+  .btn-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .btn-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* Review screen */
+  .review-card {
+    background: white;
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .review-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .review-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .review-card-body { padding: 16px 20px; }
+
+  .review-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .review-row:last-child { border-bottom: none; }
+
+  .review-key {
+    font-size: 13px;
+    color: var(--gray-400);
+    font-weight: 500;
+    padding-top: 1px;
+  }
+
+  .review-val {
+    font-size: 14px;
+    color: var(--gray-900);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+  .review-val.skipped {
+    color: var(--gray-400);
+    font-style: italic;
+  }
+
+  .btn-edit-inline {
+    font-size: 12px;
+    color: var(--boyd-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 0;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Success screen */
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--success-light);
+    border: 2px solid var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    color: var(--gray-900);
+    margin-bottom: 12px;
+  }
+
+  .success-desc {
+    font-size: 15px;
+    color: var(--gray-600);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  /* Utility */
+  .divider { height: 1px; background: var(--gray-100); margin: 28px 0; }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--boyd-gold-light);
+    color: var(--boyd-gold);
+  }
+
+  .tag.skipped-tag {
+    background: var(--gray-100);
+    color: var(--gray-400);
+  }
+
+  /* Responsive */
+  @media (max-width: 780px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .content-area { padding: 32px 24px; }
+    .main-header { padding: 16px 24px; }
+    .welcome-callouts { grid-template-columns: 1fr; }
+    .field-grid-2 { grid-template-columns: 1fr; }
+    .welcome-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://www.jcarcamoassociates.com/wp-content/uploads/2018/09/boyd-logo.png" alt="Boyd Gaming" />
+    </div>
+
+    <div class="sidebar-meta">
+      <div class="client-name">Boyd University</div>
+      <div class="initiative-name">Casino Ops Skills Survey</div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Setup</div>
+      <button class="nav-item" id="nav-welcome" onclick="goToScreen('welcome')">
+        <div class="nav-dot" id="dot-welcome">★</div>
+        <span class="nav-label">Welcome</span>
+      </button>
+      <button class="nav-item" id="nav-about" onclick="jumpToStep('about')">
+        <div class="nav-dot" id="dot-about">A</div>
+        <span class="nav-label">About you</span>
+      </button>
+
+      <div class="nav-section-label" style="margin-top:8px;">Questions</div>
+      <button class="nav-item" id="nav-q1" onclick="jumpToStep('q1')">
+        <div class="nav-dot" id="dot-q1">1</div>
+        <span class="nav-label">Business challenge</span>
+      </button>
+      <button class="nav-item" id="nav-q2" onclick="jumpToStep('q2')">
+        <div class="nav-dot" id="dot-q2">2</div>
+        <span class="nav-label">The role</span>
+      </button>
+      <button class="nav-item" id="nav-q3" onclick="jumpToStep('q3')">
+        <div class="nav-dot" id="dot-q3">3</div>
+        <span class="nav-label">Performance gaps</span>
+      </button>
+      <button class="nav-item" id="nav-q4" onclick="jumpToStep('q4')">
+        <div class="nav-dot" id="dot-q4">4</div>
+        <span class="nav-label">Top performer contrast</span>
+      </button>
+      <button class="nav-item" id="nav-q5" onclick="jumpToStep('q5')">
+        <div class="nav-dot" id="dot-q5">5</div>
+        <span class="nav-label">Observable change</span>
+      </button>
+      <button class="nav-item" id="nav-q6" onclick="jumpToStep('q6')">
+        <div class="nav-dot" id="dot-q6">6</div>
+        <span class="nav-label">Success metrics</span>
+      </button>
+      <button class="nav-item" id="nav-q7" onclick="jumpToStep('q7')">
+        <div class="nav-dot" id="dot-q7">7</div>
+        <span class="nav-label">Current tracking</span>
+      </button>
+      <button class="nav-item" id="nav-q8" onclick="jumpToStep('q8')">
+        <div class="nav-dot" id="dot-q8">8</div>
+        <span class="nav-label">A typical shift</span>
+      </button>
+      <button class="nav-item" id="nav-q9" onclick="jumpToStep('q9')">
+        <div class="nav-dot" id="dot-q9">9</div>
+        <span class="nav-label">Property differences</span>
+      </button>
+      <button class="nav-item" id="nav-notes" onclick="jumpToStep('notes')">
+        <div class="nav-dot" id="dot-notes">+</div>
+        <span class="nav-label">Additional notes</span>
+      </button>
+
+      <div class="nav-section-label" style="margin-top:8px;">Finish</div>
+      <button class="nav-item" id="nav-review" onclick="jumpToStep('review')">
+        <div class="nav-dot" id="dot-review">✓</div>
+        <span class="nav-label">Review &amp; submit</span>
+      </button>
+    </div>
+
+    <div class="sidebar-progress">
+      <span id="progressText">0 of 11 completed</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="main-header">
+      <span class="step-indicator" id="stepIndicator">Welcome</span>
+      <div class="respondent-badge" id="respondentBadge" style="display:none;">
+        <div class="respondent-avatar" id="respondentAvatar">?</div>
+        <span id="respondentName">—</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- Welcome Screen -->
+      <div class="screen active" id="screen-welcome">
+        <div class="welcome-eyebrow">Boyd University — Casino Ops</div>
+        <h1 class="welcome-title">Help us build something<br>that actually works.</h1>
+        <p class="welcome-desc">
+          We're designing a skills development program for Casino Operations managers and supervisors — one that goes beyond training materials and builds real habits on the job, at each property, for each person.
+        </p>
+        <p class="welcome-desc" style="margin-top: -16px;">
+          Your answers here will shape exactly what that looks like. There are no right or wrong answers — we need to hear directly from people who know this role. It takes about 10–15 minutes.
+        </p>
+        <div class="welcome-callouts">
+          <div class="welcome-callout">
+            <div class="icon">🕐</div>
+            <div class="label">Time</div>
+            <div class="value">About 10–15 minutes</div>
+          </div>
+          <div class="welcome-callout">
+            <div class="icon">↩</div>
+            <div class="label">Navigation</div>
+            <div class="value">Skip or go back anytime</div>
+          </div>
+          <div class="welcome-callout">
+            <div class="icon">👥</div>
+            <div class="label">Multiple voices</div>
+            <div class="value">Each person fills this out separately</div>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top:0;">
+          <button class="btn btn-primary" onclick="goToScreen('about')">
+            Get started <span class="btn-icon">→</span>
+          </button>
+        </div>
+        <p style="font-size: 13px; color: var(--gray-400); margin-top: 16px;">No preparation required — just answer what you know.</p>
+      </div>
+
+      <!-- About You -->
+      <div class="screen" id="screen-about">
+        <div class="question-eyebrow">About you</div>
+        <h2 class="question-title">Let's start with some<br>context about you.</h2>
+        <p class="question-hint">This helps us understand your perspective and experience. Name, property, and email are required.</p>
+
+        <div class="field-grid-2">
+          <div class="field-group">
+            <label class="field-label" for="f_name">Full name <span class="required">*</span></label>
+            <input type="text" id="f_name" placeholder="Jane Smith" autocomplete="name">
+            <div class="error-msg" id="err_name">Please enter your name.</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f_email">Email address <span class="required">*</span></label>
+            <input type="email" id="f_email" placeholder="jane.smith@boydgaming.com" autocomplete="email">
+            <div class="error-msg" id="err_email">Please enter a valid email.</div>
+          </div>
+        </div>
+
+        <div class="field-grid-2">
+          <div class="field-group">
+            <label class="field-label" for="f_company">Property / location <span class="required">*</span></label>
+            <input type="text" id="f_company" placeholder="e.g. Gold Coast, Sam's Town Las Vegas" autocomplete="organization">
+            <div class="error-msg" id="err_company">Please enter your property.</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f_title">Job title <span class="field-optional">optional</span></label>
+            <input type="text" id="f_title" placeholder="e.g. Casino Ops Manager, Director of Slots" autocomplete="organization-title">
+          </div>
+        </div>
+
+        <div class="field-grid-2">
+          <div class="field-group">
+            <label class="field-label" for="f_dept">Department / area <span class="field-optional">optional</span></label>
+            <input type="text" id="f_dept" placeholder="e.g. Slot Operations, Table Games, Casino Floor">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f_reports_to">Reports to <span class="field-optional">optional</span></label>
+            <input type="text" id="f_reports_to" placeholder="Name or title">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="f_tenure">How long have you been in Casino Operations? <span class="field-optional">optional</span></label>
+          <select id="f_tenure">
+            <option value="">— Select —</option>
+            <option>Less than 2 years</option>
+            <option>2–5 years</option>
+            <option>6–10 years</option>
+            <option>11–20 years</option>
+            <option>More than 20 years</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="f_focus">Your primary area of focus in Casino Ops <span class="field-optional">optional</span></label>
+          <input type="text" id="f_focus" placeholder="e.g. Slots, Table Games, Player Services, Floor Operations">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="f_role_type">Which best describes your role? <span class="field-optional">optional</span></label>
+          <select id="f_role_type">
+            <option value="">— Select —</option>
+            <option>Director / VP</option>
+            <option>Department Manager</option>
+            <option>Assistant Manager / Shift Manager</option>
+            <option>Supervisor / Floor Supervisor</option>
+            <option>L&D / Training</option>
+            <option>HR / People Operations</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="goToScreen('welcome')">← Back</button>
+          <button class="btn btn-primary" onclick="validateAbout()">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="screen" id="screen-q1">
+        <div class="question-eyebrow">Question 1 of 9</div>
+        <h2 class="question-title">What's the biggest challenge<br>in Casino Ops right now?</h2>
+        <p class="question-hint">Think about what's costing you most — guest experience, team performance, consistency, turnover, compliance. If nothing changes, what happens? Be as specific as you can.</p>
+        <div class="field-group">
+          <textarea id="f_q1" placeholder="Describe the core problem and what's at stake if it doesn't get addressed..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q1')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q1')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q1')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="screen" id="screen-q2">
+        <div class="question-eyebrow">Question 2 of 9</div>
+        <h2 class="question-title">Describe the Casino Ops<br>manager role.</h2>
+        <p class="question-hint">What does this person actually do day to day? What are they responsible for, who do they interact with, and what makes the job hard? Include the specific role you're thinking about — slot supervisor, floor manager, shift manager, etc.</p>
+        <div class="field-group">
+          <textarea id="f_q2" placeholder="Walk us through the role — responsibilities, team interactions, typical pressures, and roughly how many people are in this role at your property..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q2')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q2')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q2')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="screen" id="screen-q3">
+        <div class="question-eyebrow">Question 3 of 9</div>
+        <h2 class="question-title">Where do people in this role<br>fall short most often?</h2>
+        <p class="question-hint">What are the behaviors, habits, or skills that are consistently missing or inconsistent? Think about what you see on the floor — not what the training manual says, but what's actually happening.</p>
+        <div class="field-group">
+          <textarea id="f_q3" placeholder="Describe the specific gaps, mistakes, or missing behaviors you see most frequently in this role..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q3')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q3')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q3')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="screen" id="screen-q4">
+        <div class="question-eyebrow">Question 4 of 9</div>
+        <h2 class="question-title">What do your best Casino Ops<br>managers do differently?</h2>
+        <p class="question-hint">Picture the people in this role who just get it — the ones guests notice, that teams respect, that GMs brag about. What are they doing that others aren't? Specific behaviors and habits, not personality traits.</p>
+        <div class="field-group">
+          <textarea id="f_q4" placeholder="Describe the behaviors and habits that set your top performers apart from everyone else..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q4')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q4')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q4')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="screen" id="screen-q5">
+        <div class="question-eyebrow">Question 5 of 9</div>
+        <h2 class="question-title">What would you start noticing<br>if this actually worked?</h2>
+        <p class="question-hint">If behavior genuinely improved a few months in — what would look different on the floor, in team interactions, in guest feedback? What would directors and GMs start seeing?</p>
+        <div class="field-group">
+          <textarea id="f_q5" placeholder="Describe the observable changes you'd expect to see if Casino Ops managers were performing at a higher level..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q5')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q5')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q5')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="screen" id="screen-q6">
+        <div class="question-eyebrow">Question 6 of 9</div>
+        <h2 class="question-title">What does success look like<br>for Casino Ops in a year?</h2>
+        <p class="question-hint">Zoom out twelve months. If this program works the way you hope — what changes? Think in terms of operations, guest experience, team retention, and the business results you're accountable for.</p>
+        <div class="field-group">
+          <textarea id="f_q6" placeholder="Describe what measurable, meaningful improvement would look like across your Casino Ops team over the next year..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q6')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q6')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q6')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="screen" id="screen-q7">
+        <div class="question-eyebrow">Question 7 of 9</div>
+        <h2 class="question-title">What do you already track<br>or measure in this area?</h2>
+        <p class="question-hint">What shows up in your reviews or reports today? Guest satisfaction scores, incident rates, throughput, turnover, audit results — whatever you're already paying attention to that would tell you if this is working.</p>
+        <div class="field-group">
+          <textarea id="f_q7" placeholder="Describe the metrics, reports, or signals you already monitor that relate to Casino Ops manager performance..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q7')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q7')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q7')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="screen" id="screen-q8">
+        <div class="question-eyebrow">Question 8 of 9</div>
+        <h2 class="question-title">Walk us through a typical shift<br>in this role.</h2>
+        <p class="question-hint">What does a Casino Ops manager actually do from the time they walk in to the time they leave? The recurring tasks, the interactions, the decisions, the interruptions. Weekday versus weekend differences matter too.</p>
+        <div class="field-group">
+          <textarea id="f_q8" style="min-height: 160px;" placeholder="Walk us through the rhythm of a typical shift — what they're doing, who they're talking to, what pulls them away, and what they're accountable for by the end..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q8')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q8')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q8')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="screen" id="screen-q9">
+        <div class="question-eyebrow">Question 9 of 9</div>
+        <h2 class="question-title">How does this role differ<br>across properties?</h2>
+        <p class="question-hint">Boyd operates very different properties — from locals casinos to destination resorts to racinos. What changes about what Casino Ops managers need to know or do based on the type or size of property? What's universal versus what's property-specific?</p>
+        <div class="field-group">
+          <textarea id="f_q9" placeholder="Describe what stays the same across all properties versus what varies significantly by location, size, or format..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('q9')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('q9')">Continue →</button>
+          <button class="btn btn-ghost" onclick="skipStep('q9')">Skip this question</button>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="screen" id="screen-notes">
+        <div class="question-eyebrow">Final thoughts</div>
+        <h2 class="question-title">Anything else we should know?</h2>
+        <p class="question-hint">History, context, sensitivities, prior attempts at solving this — anything that would help us design the right program or have a better conversation about it.</p>
+        <div class="field-group">
+          <textarea id="f_notes" style="min-height: 140px;" placeholder="Any additional context, constraints, or things worth knowing before we dig in..."></textarea>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="prevStep('notes')">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep('notes')">Review my answers →</button>
+          <button class="btn btn-ghost" onclick="skipStep('notes')">Skip</button>
+        </div>
+      </div>
+
+      <!-- Review -->
+      <div class="screen" id="screen-review">
+        <div class="question-eyebrow">Review &amp; submit</div>
+        <h2 class="question-title">Take a look before you send.</h2>
+        <p class="question-hint">Review your responses below. Click "Edit" next to any section to go back and change it.</p>
+
+        <div class="review-card" id="review-about">
+          <div class="review-card-header">
+            <span class="review-card-title">About you</span>
+            <button class="btn-edit-inline" onclick="jumpToStep('about')">Edit</button>
+          </div>
+          <div class="review-card-body" id="review-about-body"></div>
+        </div>
+
+        <div id="review-questions-container"></div>
+
+        <div class="btn-group" style="margin-top: 32px;">
+          <button class="btn btn-primary" onclick="submitForm()" id="submitBtn">Submit responses</button>
+          <button class="btn btn-secondary" onclick="prevStep('review')">← Back</button>
+        </div>
+        <p style="font-size: 12px; color: var(--gray-400); margin-top: 14px;">Your responses are sent securely to the Boyd University project team.</p>
+      </div>
+
+      <!-- Success -->
+      <div class="screen" id="screen-success">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">Thank you.</h2>
+        <p class="success-desc">
+          Your responses have been submitted. The team will review what you've shared and use it to shape the Casino Ops skills program.
+        </p>
+        <p style="font-size: 14px; color: var(--gray-400);">You can close this window.</p>
+      </div>
+
+    </div><!-- /content-area -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  // Config
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvzddwje';
+
+  // State
+  const stepOrder = ['welcome','about','q1','q2','q3','q4','q5','q6','q7','q8','q9','notes','review'];
+  const skipped = {};
+  let currentStep = 'welcome';
+
+  const qMeta = {
+    q1:    { label: 'Business challenge' },
+    q2:    { label: 'The role' },
+    q3:    { label: 'Performance gaps' },
+    q4:    { label: 'Top performer contrast' },
+    q5:    { label: 'Observable change' },
+    q6:    { label: 'Success metrics' },
+    q7:    { label: 'Current tracking' },
+    q8:    { label: 'A typical shift' },
+    q9:    { label: 'Property differences' },
+    notes: { label: 'Additional notes' },
+  };
+
+  // Navigation
+  function goToScreen(step) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + step).classList.add('active');
+    currentStep = step;
+    updateSidebar();
+    updateHeader();
+    window.scrollTo(0, 0);
+  }
+
+  function jumpToStep(step) {
+    if (step === 'review') buildReview();
+    goToScreen(step);
+  }
+
+  function nextStep(step) {
+    markCompleted(step);
+    const idx = stepOrder.indexOf(step);
+    if (idx < stepOrder.length - 1) {
+      const next = stepOrder[idx + 1];
+      if (next === 'review') buildReview();
+      goToScreen(next);
+    }
+  }
+
+  function prevStep(step) {
+    const idx = stepOrder.indexOf(step);
+    if (idx > 0) goToScreen(stepOrder[idx - 1]);
+  }
+
+  function skipStep(step) {
+    skipped[step] = true;
+    const el = document.getElementById('f_' + step);
+    if (el) el.value = '';
+    nextStep(step);
+    updateSidebar();
+  }
+
+  function markCompleted(step) {
+    skipped[step] = false;
+    updateSidebar();
+  }
+
+  // Sidebar
+  function updateSidebar() {
+    const allSteps = ['about','q1','q2','q3','q4','q5','q6','q7','q8','q9','notes','review'];
+    let completed = 0;
+
+    allSteps.forEach(s => {
+      const navEl = document.getElementById('nav-' + s);
+      const dotEl = document.getElementById('dot-' + s);
+      if (!navEl) return;
+      navEl.classList.remove('active','completed','skipped');
+
+      if (s === currentStep) {
+        navEl.classList.add('active');
+      } else if (skipped[s]) {
+        navEl.classList.add('skipped');
+        dotEl.textContent = '–';
+      } else if (hasValue(s) || (s === 'about' && aboutFilled())) {
+        navEl.classList.add('completed');
+        dotEl.textContent = '✓';
+        completed++;
+      }
+    });
+
+    const wNav = document.getElementById('nav-welcome');
+    wNav.classList.remove('active','completed');
+    if (currentStep === 'welcome') wNav.classList.add('active');
+
+    const pct = Math.round((completed / 11) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = completed + ' of 11 completed';
+  }
+
+  function hasValue(step) {
+    const el = document.getElementById('f_' + step);
+    return el && el.value.trim().length > 0;
+  }
+
+  function aboutFilled() {
+    return ['f_name','f_email','f_company'].every(id => {
+      const el = document.getElementById(id);
+      return el && el.value.trim().length > 0;
+    });
+  }
+
+  function updateHeader() {
+    const labels = {
+      welcome: 'Welcome',
+      about: 'About you',
+      review: 'Review & submit',
+      success: 'Submitted',
+      notes: 'Additional notes',
+      q1:'Question 1', q2:'Question 2', q3:'Question 3',
+      q4:'Question 4', q5:'Question 5', q6:'Question 6',
+      q7:'Question 7', q8:'Question 8', q9:'Question 9',
+    };
+    document.getElementById('stepIndicator').textContent = labels[currentStep] || '';
+
+    const name = document.getElementById('f_name').value.trim();
+    const badge = document.getElementById('respondentBadge');
+    if (name && currentStep !== 'welcome' && currentStep !== 'about') {
+      badge.style.display = 'flex';
+      const initials = name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+      document.getElementById('respondentAvatar').textContent = initials;
+      document.getElementById('respondentName').textContent = name;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // Validation
+  function validateAbout() {
+    let ok = true;
+
+    const name = document.getElementById('f_name');
+    const email = document.getElementById('f_email');
+    const company = document.getElementById('f_company');
+
+    const errName = document.getElementById('err_name');
+    const errEmail = document.getElementById('err_email');
+    const errCompany = document.getElementById('err_company');
+
+    [name, email, company].forEach(el => el.classList.remove('error'));
+    [errName, errEmail, errCompany].forEach(el => el.classList.remove('visible'));
+
+    if (!name.value.trim()) {
+      name.classList.add('error');
+      errName.classList.add('visible');
+      ok = false;
+    }
+
+    const emailVal = email.value.trim();
+    if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      email.classList.add('error');
+      errEmail.classList.add('visible');
+      ok = false;
+    }
+
+    if (!company.value.trim()) {
+      company.classList.add('error');
+      errCompany.classList.add('visible');
+      ok = false;
+    }
+
+    if (ok) nextStep('about');
+  }
+
+  // Review
+  function buildReview() {
+    const aboutFields = [
+      { key: 'Name', val: v('f_name') },
+      { key: 'Email', val: v('f_email') },
+      { key: 'Property', val: v('f_company') },
+      { key: 'Title', val: v('f_title') || '—' },
+      { key: 'Department', val: v('f_dept') || '—' },
+      { key: 'Reports to', val: v('f_reports_to') || '—' },
+      { key: 'Casino Ops tenure', val: v('f_tenure') || '—' },
+      { key: 'Focus area', val: v('f_focus') || '—' },
+      { key: 'Role type', val: v('f_role_type') || '—' },
+    ];
+    document.getElementById('review-about-body').innerHTML = aboutFields.map(f =>
+      `<div class="review-row"><div class="review-key">${f.key}</div><div class="review-val">${f.val}</div></div>`
+    ).join('');
+
+    const qKeys = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','notes'];
+    const container = document.getElementById('review-questions-container');
+    container.innerHTML = qKeys.map(k => {
+      const meta = qMeta[k];
+      const val = v('f_' + k);
+      const isSkipped = skipped[k] || !val;
+      const displayVal = isSkipped ? '[Skipped]' : val;
+      const cls = isSkipped ? 'skipped' : '';
+      return `<div class="review-card">
+        <div class="review-card-header">
+          <span class="review-card-title">${meta.label}</span>
+          <button class="btn-edit-inline" onclick="jumpToStep('${k}')">Edit</button>
+        </div>
+        <div class="review-card-body">
+          <div class="review-row">
+            <div class="review-val ${cls}" style="grid-column:1/-1">${displayVal.replace(/\n/g,'<br>')}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function v(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  // Submit
+  async function submitForm() {
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    const payload = {
+      _subject: `Boyd Casino Ops Survey: ${v('f_name')} — ${v('f_company')}`,
+      respondent_name: v('f_name'),
+      respondent_email: v('f_email'),
+      respondent_property: v('f_company'),
+      respondent_title: v('f_title') || '[not provided]',
+      respondent_department: v('f_dept') || '[not provided]',
+      respondent_reports_to: v('f_reports_to') || '[not provided]',
+      respondent_casino_ops_tenure: v('f_tenure') || '[not provided]',
+      respondent_focus: v('f_focus') || '[not provided]',
+      respondent_role_type: v('f_role_type') || '[not provided]',
+      client: 'Boyd Gaming',
+      initiative: 'Casino Ops Skills Program',
+      q1_business_challenge: skipped['q1'] ? '[Skipped]' : (v('f_q1') || '[Skipped]'),
+      q2_the_role: skipped['q2'] ? '[Skipped]' : (v('f_q2') || '[Skipped]'),
+      q3_performance_gaps: skipped['q3'] ? '[Skipped]' : (v('f_q3') || '[Skipped]'),
+      q4_top_performers: skipped['q4'] ? '[Skipped]' : (v('f_q4') || '[Skipped]'),
+      q5_observable_change: skipped['q5'] ? '[Skipped]' : (v('f_q5') || '[Skipped]'),
+      q6_success_metrics: skipped['q6'] ? '[Skipped]' : (v('f_q6') || '[Skipped]'),
+      q7_current_tracking: skipped['q7'] ? '[Skipped]' : (v('f_q7') || '[Skipped]'),
+      q8_typical_shift: skipped['q8'] ? '[Skipped]' : (v('f_q8') || '[Skipped]'),
+      q9_property_differences: skipped['q9'] ? '[Skipped]' : (v('f_q9') || '[Skipped]'),
+      additional_notes: skipped['notes'] ? '[Skipped]' : (v('f_notes') || '[Skipped]'),
+    };
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        goToScreen('success');
+      } else {
+        btn.textContent = 'Submit responses';
+        btn.disabled = false;
+        alert('There was a problem submitting. Please try again.');
+      }
+    } catch(e) {
+      btn.textContent = 'Submit responses';
+      btn.disabled = false;
+      alert('Network error. Please check your connection and try again.');
+    }
+  }
+</script>
+</body>
+</html>
