@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REV Group · Emerging Results from Activity Data</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+:root {
+  --paper:      253 252 250;
+  --surface:    255 255 255;
+  --ink:        28 42 56;
+  --muted:      74 88 104;
+  --accent:     232 77 40;
+  --success:    72 114 76;
+  --cool:       154 166 176;
+  --light:      200 205 210;
+  --pale:       235 229 220;
+  --warm-line:  197 187 166;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 { font-family: 'Andada Pro', serif; font-weight: 400; }
+
+::selection { background: rgb(var(--accent)); color: rgb(var(--paper)); }
+
+/* ── NAV ──────────────────────────────────────────────────────────────────── */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(var(--surface) / 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgb(var(--pale));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.nav-brand {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+.nav-module {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgb(var(--ink));
+}
+
+/* ── TABS ─────────────────────────────────────────────────────────────────── */
+.tab-bar {
+  background: rgb(var(--surface));
+  border-bottom: 1px solid rgb(var(--pale));
+  display: flex;
+  padding: 0 32px;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px;
+  height: 48px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  user-select: none;
+}
+
+.tab:hover {
+  background: rgb(var(--pale) / 0.4);
+}
+
+.tab.active {
+  border-bottom-color: rgb(var(--accent));
+}
+
+.tab-number {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgb(var(--cool));
+  transition: color 180ms;
+}
+
+.tab.active .tab-number { color: rgb(var(--accent)); }
+
+.tab-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgb(var(--muted));
+  transition: color 180ms;
+  white-space: nowrap;
+}
+
+.tab.active .tab-label { color: rgb(var(--ink)); }
+
+.tab-hint {
+  font-size: 0.68rem;
+  color: rgb(var(--cool));
+  font-weight: 400;
+  transition: opacity 180ms;
+}
+
+.tab:not(.active):hover .tab-label { color: rgb(var(--ink)); }
+
+/* Pulse animation on inactive tabs to draw attention */
+.tab:not(.active) .tab-label::after {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: rgb(var(--accent) / 0.5);
+  border-radius: 50%;
+  margin-left: 8px;
+  vertical-align: middle;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.3); }
+}
+
+/* ── SLIDE ────────────────────────────────────────────────────────────────── */
+.slide { display: none; flex: 1; }
+.slide.active { display: block; }
+
+.slide-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 32px 64px;
+}
+
+/* ── SLIDE HEADER ─────────────────────────────────────────────────────────── */
+.slide-eyebrow {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+  margin-bottom: 12px;
+}
+
+.slide-headline {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: rgb(var(--ink));
+  margin-bottom: 14px;
+}
+
+.slide-subhead {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgb(var(--muted));
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+
+.slide-rule {
+  border: none;
+  border-top: 1px solid rgb(var(--pale));
+  margin-bottom: 28px;
+}
+
+/* ── STAT ROW ─────────────────────────────────────────────────────────────── */
+.stat-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  flex: 1;
+  min-width: 130px;
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--pale));
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.stat-n {
+  font-family: 'Geist Mono', monospace;
+  font-size: 1.9rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-n.accent  { color: rgb(var(--accent)); }
+.stat-n.success { color: rgb(var(--success)); }
+.stat-n.ink     { color: rgb(var(--ink)); }
+
+.stat-d {
+  font-size: 0.75rem;
+  color: rgb(var(--muted));
+  line-height: 1.4;
+}
+
+/* ── EXECUTION SPLIT ──────────────────────────────────────────────────────── */
+.exec-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.exec-card {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--pale));
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.exec-card.pos { border-top: 3px solid rgb(var(--success)); }
+.exec-card.neg { border-top: 3px solid rgb(var(--accent)); }
+
+.exec-lbl {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+  margin-bottom: 5px;
+}
+
+.exec-n {
+  font-family: 'Geist Mono', monospace;
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.exec-n.green  { color: rgb(var(--success)); }
+.exec-n.accent { color: rgb(var(--accent)); }
+
+.exec-d {
+  font-size: 0.75rem;
+  color: rgb(var(--muted));
+  line-height: 1.4;
+}
+
+/* ── FEATURED QUOTE ───────────────────────────────────────────────────────── */
+.fq {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--pale));
+  border-left: 3px solid rgb(var(--accent));
+  border-radius: 0 8px 8px 0;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+}
+.fq.green { border-left-color: rgb(var(--success)); }
+
+.fq-text {
+  font-family: 'Andada Pro', serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: rgb(var(--ink));
+  margin-bottom: 10px;
+}
+
+.fq-attr {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+/* ── INSIGHT GRID ─────────────────────────────────────────────────────────── */
+.insights-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+  margin-bottom: 12px;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.insight-card {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--pale));
+  border-radius: 8px;
+  padding: 14px 16px;
+  transition: box-shadow 150ms;
+}
+.insight-card:hover {
+  box-shadow: 0 4px 12px -4px rgb(var(--ink) / 0.1);
+}
+
+.insight-text {
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: rgb(var(--ink));
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.insight-attr {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: rgb(var(--muted));
+}
+
+/* ── FOOTNOTE ─────────────────────────────────────────────────────────────── */
+.footnote {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: rgb(var(--cool));
+  padding-top: 20px;
+  border-top: 1px solid rgb(var(--pale));
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <span class="nav-brand">REV Group · Build Better PPE Habits with Your Team</span>
+  <span class="nav-module">Emerging Results from Activity Data</span>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab active" onclick="goTo(0)">
+    <span class="tab-number">01</span>
+    <span class="tab-label">A Culture of Precision</span>
+  </div>
+  <div class="tab" onclick="goTo(1)">
+    <span class="tab-number">02</span>
+    <span class="tab-label">Recognition Over Correction</span>
+  </div>
+  <div class="tab" onclick="goTo(2)">
+    <span class="tab-number">03</span>
+    <span class="tab-label">A Culture of Vigilance</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SLIDE 1 — A Culture of Precision
+     ══════════════════════════════════════════════════════════════════════════ -->
+<div class="slide active">
+  <div class="slide-inner">
+
+    <p style="font-size:0.85rem;line-height:1.6;color:rgb(var(--muted));max-width:640px;margin-bottom:28px;">This document summarizes emerging results from activity and coaching data across the Build Better PPE Habits with Your Team initiative. Click through the three tabs above to explore each result.</p>
+    <div class="slide-eyebrow">Emerging Result</div>
+    <h1 class="slide-headline">A Culture of Precision</h1>
+    <p class="slide-subhead">The activities and coaching are beginning to move supervisors away from general PPE check-ins toward a more deliberate standard — naming the person, the equipment, and the task. Early evidence suggests this orientation is starting to take shape as a shared expectation across the cohort.</p>
+    <hr class="slide-rule">
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-n accent">88%</div>
+        <div class="stat-d">of activities completed with specific, named execution</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n ink">174</div>
+        <div class="stat-d">total activities completed across 37 supervisors</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n success">13</div>
+        <div class="stat-d">supervisors who independently named specificity as the key insight</div>
+      </div>
+    </div>
+
+    <div class="exec-split">
+      <div class="exec-card pos">
+        <div class="exec-lbl">Specific execution</div>
+        <div class="exec-n green">130</div>
+        <div class="exec-d">Activities where supervisors named the person, PPE item, and task — not just the general standard</div>
+      </div>
+      <div class="exec-card neg">
+        <div class="exec-lbl">General execution</div>
+        <div class="exec-n accent">13</div>
+        <div class="exec-d">Activities where supervisors self-reported staying general — not connecting to the specific PPE or task</div>
+      </div>
+    </div>
+
+    <div class="fq">
+      <div class="fq-text">"I would advise them to get the associate to name the specific item in question rather than you telling them."</div>
+      <div class="fq-attr">Production Lead · Goldshield</div>
+    </div>
+
+    <div class="insights-label">What supervisors are sharing about precision</div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-text">"Recognize person by name and in front of the team — be specific, point out the safety gear and why."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Don't assume a PPE gap too quickly. Watch the entire transition from the breakroom to the work area before making a judgment."</div>
+        <div class="insight-attr">Production Lead · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Recognize the specific task in real time and share PPE practices observed."</div>
+        <div class="insight-attr">Supervisor Service · Capacity</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Connect each piece of PPE to the specific task — not just the general standard."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Give specific examples of what could happen if the proper gear and PPE are not worn."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Be specific — call out additional items that are not normal to start a regular day."</div>
+        <div class="insight-attr">Specialist EHS · LEV</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Ensure the employee knows the exact gear they need to be using at all times."</div>
+        <div class="insight-attr">Supervisor Production · Capacity</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Make sure when you recognize someone you also add that this is the standard we expect."</div>
+        <div class="insight-attr">Production Lead · Goldshield</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Ask what additional gear they may need for the day — most employees have it in their toolbox but may not have it on at start of shift."</div>
+        <div class="insight-attr">Supervisor Production · Ephrata</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Highlight specifics — wearing gloves or a different but recognizable trait — to remind the team of expectations and preferred practices."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+    </div>
+
+    <div class="footnote">Data: 174 completed activities · Build Better PPE Habits with Your Team · REV Group · May–Jun 2026</div>
+    <div style="display:flex;justify-content:flex-end;padding-top:24px;">
+      <button onclick="goTo(1)" style="background:none;border:1px solid rgb(var(--pale));border-radius:6px;padding:10px 22px;font-family:'Sen',sans-serif;font-size:0.82rem;font-weight:700;color:rgb(var(--ink));cursor:pointer;" onmouseover="this.style.background='rgb(235 229 220 / 0.5)'" onmouseout="this.style.background='none'">Next →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SLIDE 2 — Recognition Over Correction
+     ══════════════════════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-inner">
+
+    <div class="slide-eyebrow">Emerging Result</div>
+    <h1 class="slide-headline">Recognition Over Correction</h1>
+    <p class="slide-subhead">The activities and coaching are beginning to surface a reorientation in how supervisors approach PPE leadership — catching people doing it right, not just catching violations. It is early, but the pattern is consistent across all three practices and multiple business units.</p>
+    <hr class="slide-rule">
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-n success">68</div>
+        <div class="stat-d">activities where supervisors actively recognized correct PPE behavior</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n accent">8</div>
+        <div class="stat-d">activities that were correction-only — no recognition of what was working</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n ink">29</div>
+        <div class="stat-d">supervisors who independently named recognition as the key insight to share</div>
+      </div>
+    </div>
+
+    <div class="fq green">
+      <div class="fq-text">"Zero tolerance for face shield violations. Call out violators privately and commend adherence openly."</div>
+      <div class="fq-attr">Supervisor Production · Capacity</div>
+    </div>
+
+    <div class="insights-label">What supervisors are sharing about recognition</div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-text">"It helps when you can convince the employee that you care about their safety — then it's a lesson remembered."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Privately reprimand and publicly congratulate."</div>
+        <div class="insight-attr">Supervisor Production · Capacity</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Feedback in a positive manner because you care about the team's safety helps build good PPE practice."</div>
+        <div class="insight-attr">Supervisor Quality · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"The more positive examples and thanks you give the team, the more collaborative they become."</div>
+        <div class="insight-attr">Supervisor Quality · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"More team members will follow good examples that are publicly recognized."</div>
+        <div class="insight-attr">Supervisor Quality · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Observe someone doing it right and take the person not doing it right over to watch — ask what the benefits are of following company PPE standards."</div>
+        <div class="insight-attr">Production Lead · Goldshield</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Keep an eye on safety violations but remember to look out for those in compliance and recognize them as well."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Continuous acknowledgement of the good can help reinforcement of PPE usage."</div>
+        <div class="insight-attr">Manager Inventory Control · Ephrata</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Focus more on the positive habit to open the discussion."</div>
+        <div class="insight-attr">Supervisor Engineering I · Capacity</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Emphasize the interaction and feedback to employees — whether positive or negative, the interaction is the most important part."</div>
+        <div class="insight-attr">Manager EHS · E-One</div>
+      </div>
+    </div>
+
+    <div class="footnote">Data: 174 completed activities · Build Better PPE Habits with Your Team · REV Group · May–Jun 2026</div>
+    <div style="display:flex;justify-content:space-between;padding-top:24px;">
+      <button onclick="goTo(0)" style="background:none;border:1px solid rgb(var(--pale));border-radius:6px;padding:10px 22px;font-family:'Sen',sans-serif;font-size:0.82rem;font-weight:700;color:rgb(var(--ink));cursor:pointer;" onmouseover="this.style.background='rgb(235 229 220 / 0.5)'" onmouseout="this.style.background='none'">← Previous</button>
+      <button onclick="goTo(2)" style="background:none;border:1px solid rgb(var(--pale));border-radius:6px;padding:10px 22px;font-family:'Sen',sans-serif;font-size:0.82rem;font-weight:700;color:rgb(var(--ink));cursor:pointer;" onmouseover="this.style.background='rgb(235 229 220 / 0.5)'" onmouseout="this.style.background='none'">Next →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SLIDE 3 — A Culture of Vigilance
+     ══════════════════════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-inner">
+
+    <div class="slide-eyebrow">Emerging Result</div>
+    <h1 class="slide-headline">A Culture of Vigilance</h1>
+    <p class="slide-subhead">Through repeated activities and coaching, supervisors are beginning to name complacency — not knowledge gaps or missing equipment — as the real obstacle to sustained PPE safety. That shift in how they frame the problem is itself an early sign of growing ownership of the safety standard.</p>
+    <hr class="slide-rule">
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-n accent">21</div>
+        <div class="stat-d">supervisors who independently named complacency or consistency as the real challenge</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n ink">37</div>
+        <div class="stat-d">supervisors actively building the repetition that counters drift</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-n success">3</div>
+        <div class="stat-d">business units represented — Fleetwood, Goldshield, Capacity and more</div>
+      </div>
+    </div>
+
+    <div class="fq">
+      <div class="fq-text">"My team will never get a free pass on grinding safety. I received twenty-four stitches to my face because of a grinding accident without a face shield."</div>
+      <div class="fq-attr">Production Lead · Goldshield</div>
+    </div>
+
+    <div class="insights-label">What supervisors are sharing about vigilance</div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-text">"Everyone gets complacent. Continued review for PPE is needed."</div>
+        <div class="insight-attr">Manager Engineering · Ephrata</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Remind folks that the time in which an injury occurs will be when the team member gets complacent — or left gloves somewhere and didn't want to walk the whole way back."</div>
+        <div class="insight-attr">Manager Inventory Control · Ephrata</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"CONSTANT AWARENESS OF WHAT IS HAPPENING — EASY TO BE COMPLACENT."</div>
+        <div class="insight-attr">Supervisor Production · Ephrata</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Remind people that PPE is required until you leave out the door."</div>
+        <div class="insight-attr">Production Lead · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Some employees always wear all needed PPE — some like to take shortcuts. We need to make them understand there are no shortcuts in safety."</div>
+        <div class="insight-attr">Production Lead · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"You have to go in with the mindset that you are always looking for safety opportunities with every conversation you have on the floor."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Sometimes people tend to cheat when things are difficult — just check back."</div>
+        <div class="insight-attr">Production Lead · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"You need to be looking daily at these issues. Make the effort to look for these items on a daily basis."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Observe your team and identify someone who consistently wears their PPE. Double back and keep checking on them throughout the day and week."</div>
+        <div class="insight-attr">Supervisor Production · Fleetwood</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-text">"Make sure to be consistent with the use of PPE."</div>
+        <div class="insight-attr">Supervisor Maintenance · Fleetwood</div>
+      </div>
+    </div>
+
+    <div class="footnote">Data: 174 completed activities · Build Better PPE Habits with Your Team · REV Group · May–Jun 2026</div>
+    <div style="display:flex;justify-content:flex-start;padding-top:24px;">
+      <button onclick="goTo(1)" style="background:none;border:1px solid rgb(var(--pale));border-radius:6px;padding:10px 22px;font-family:'Sen',sans-serif;font-size:0.82rem;font-weight:700;color:rgb(var(--ink));cursor:pointer;" onmouseover="this.style.background='rgb(235 229 220 / 0.5)'" onmouseout="this.style.background='none'">← Previous</button>
+    </div>
+  </div>
+</div>
+<script>
+let current = 0;
+
+function goTo(n) {
+  const slides = document.querySelectorAll('.slide');
+  const tabs   = document.querySelectorAll('.tab');
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  tabs[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  tabs[current].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(current + 1);
+  if (e.key === 'ArrowLeft')  goTo(current - 1);
+});
+</script>
+</body>
+</html>
