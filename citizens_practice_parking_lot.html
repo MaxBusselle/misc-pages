@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizens Skills Coach — Practice Parking Lot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ctz-green:       #1A7D37;
+      --ctz-green-mid:   #14612B;
+      --ctz-green-dark:  #0D4A1F;
+      --ctz-green-pale:  #EDF7F0;
+      --ctz-green-xpale: #F4FAF6;
+      --pod-blue:        #0F4C8A;
+      --pod-blue-pale:   #EEF4FC;
+      --ic-teal:         #0B6E62;
+      --ic-teal-pale:    #EBF5F3;
+      --amber:           #C27B1A;
+      --amber-pale:      #FDF5E6;
+      --text-dark:       #1A2A1E;
+      --text-body:       #2E3E34;
+      --text-muted:      #5A7060;
+      --bg:              #F5F7F4;
+      --white:           #FFFFFF;
+      --border:          #D8E8DC;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    .page-header {
+      background: linear-gradient(155deg, #0D2E18 0%, #1A4A24 55%, #0E3A1A 100%);
+      padding: 48px 40px 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 50% at 90% 20%, rgba(42,157,74,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 40% at 10% 85%, rgba(26,125,55,.14) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .page-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .page-title span { color: #6FD98A; }
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,.6);
+      max-width: 620px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .page-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.65);
+    }
+    .meta-pill .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .dot-green { background: #6FD98A; }
+    .dot-amber { background: #F5C040; }
+    .dot-gray  { background: rgba(255,255,255,.3); }
+
+    /* ─── LEGEND ─── */
+    .legend-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+    }
+    .legend-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .legend-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .badge-inprogress { background: var(--ctz-green); color: #fff; }
+    .badge-committed  { background: var(--ctz-green-pale); color: var(--ctz-green); border: 1px solid rgba(26,125,55,.25); }
+    .badge-roadmap    { background: #EEF4FC; color: var(--pod-blue); border: 1px solid rgba(15,76,138,.2); }
+    .badge-data       { background: var(--amber-pale); color: var(--amber); border: 1px solid rgba(194,123,26,.25); }
+    .badge-placeholder{ background: #F2F2F0; color: #888; border: 1px dashed #C8C8C4; }
+    .badge-proposed   { background: var(--ic-teal-pale); color: var(--ic-teal); border: 1px solid rgba(11,110,98,.2); }
+
+    /* ─── PAGE BODY ─── */
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* ─── PROGRAM BLOCK ─── */
+    .program-block {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .program-head {
+      padding: 28px 32px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .program-num {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800; font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+    .pnum-fse  { background: var(--ctz-green-pale); color: var(--ctz-green); }
+    .pnum-ic   { background: var(--ic-teal-pale); color: var(--ic-teal); }
+    .pnum-pod  { background: var(--pod-blue-pale); color: var(--pod-blue); }
+
+    .program-head-text { flex: 1; }
+    .program-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .program-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+    .program-tagline {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .tagline-fse { color: var(--ctz-green); }
+    .tagline-ic  { color: var(--ic-teal); }
+    .tagline-pod { color: var(--pod-blue); }
+
+    .program-audience {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+    .aud-fse { background: var(--ctz-green-pale); color: var(--ctz-green); }
+    .aud-ic  { background: var(--ic-teal-pale); color: var(--ic-teal); }
+    .aud-pod { background: var(--pod-blue-pale); color: var(--pod-blue); }
+
+    /* ─── SUBSECTIONS ─── */
+    .section-block {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-block:last-child { border-bottom: none; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-head-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+    .section-head-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── PRACTICE TRACK (In Motion) ─── */
+    .practice-track {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+    .track-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--border);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .practice-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      min-width: 180px;
+      max-width: 220px;
+      flex: 1;
+      position: relative;
+    }
+    .practice-card.active {
+      background: var(--ctz-green-xpale);
+      border-color: rgba(26,125,55,.3);
+    }
+    .practice-card-badge {
+      margin-bottom: 8px;
+    }
+    .practice-card-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .practice-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .practice-card-timing {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ─── PARKING LOT GRID ─── */
+    .parking-lot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .lot-card {
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: var(--white);
+    }
+    .lot-card.data-driven {
+      background: #FFFAF2;
+      border-color: rgba(194,123,26,.22);
+    }
+    .lot-card.placeholder {
+      background: var(--bg);
+      border-style: dashed;
+      border-color: #C8C8C4;
+    }
+    .lot-card-badge { margin-bottom: 8px; }
+    .lot-card-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .lot-card.placeholder .lot-card-name {
+      color: #999;
+    }
+    .lot-card-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .lot-card-source {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      background: var(--amber-pale);
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .lot-card-source.roadmap-source {
+      color: var(--pod-blue);
+      background: #EEF4FC;
+    }
+
+    /* ─── PARKING LOT CONCEPT NOTE ─── */
+    .lot-concept {
+      background: linear-gradient(135deg, #0D2210 0%, #1A3A1E 100%);
+      border-radius: 16px;
+      padding: 22px 26px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .lot-concept-icon {
+      width: 40px; height: 40px;
+      background: var(--ctz-green);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .lot-concept h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .lot-concept p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.65;
+    }
+    .lot-concept-sources {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.6);
+    }
+
+    @media (max-width: 760px) {
+      .page-header, .page-body { padding-left: 20px; padding-right: 20px; }
+      .legend-bar { padding-left: 20px; padding-right: 20px; }
+      .program-head { flex-wrap: wrap; }
+      .program-audience { display: none; }
+      .practice-track { flex-direction: column; }
+      .track-arrow { display: none; }
+      .practice-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ HEADER ══════ -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow">Citizens Skills Coach &mdash; Strategic Planning</div>
+    <h1 class="page-title">Practice <span>Parking Lot</span></h1>
+    <p class="page-subtitle">What's in motion, what the field data suggests, and what we're holding space for — organized by program and ready to prioritize together.</p>
+    <div class="page-meta">
+      <div class="meta-pill"><span class="dot dot-green"></span>193 Fresh Eyes completions · Jun 2026</div>
+      <div class="meta-pill"><span class="dot dot-amber"></span>8 issue categories · 155 field references</div>
+      <div class="meta-pill"><span class="dot dot-gray"></span>144 peer tips analyzed</div>
+      <div class="meta-pill"><span class="dot dot-gray"></span>3 programs · 30+ learners</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ LEGEND ══════ -->
+<div class="legend-bar">
+  <div class="legend-inner">
+    <span class="legend-label">Status</span>
+    <span class="badge badge-inprogress">✓ In Progress</span>
+    <span class="badge badge-committed">✓ Committed</span>
+    <span class="badge badge-roadmap">○ On Roadmap</span>
+    <span class="badge badge-proposed">○ Proposed</span>
+    <span class="badge badge-data">◈ Data-Driven</span>
+    <span class="badge badge-placeholder">— Placeholder</span>
+  </div>
+</div>
+
+<!-- ══════ BODY ══════ -->
+<div class="page-body">
+
+  <!-- Parking Lot concept card -->
+  <div class="lot-concept">
+    <div class="lot-concept-icon">🅿</div>
+    <div>
+      <h3>How the Parking Lot Works</h3>
+      <p>The parking lot is a living list of candidate practices — not a fixed roadmap. Items enter from four sources, get fleshed out collaboratively, and are prioritized based on data and organizational need. Nothing in the lot is committed until Citizens and Flint agree to move it forward.</p>
+      <div class="lot-concept-sources">
+        <span class="source-chip">📊 QC inspection data</span>
+        <span class="source-chip">💬 Fresh Eyes field findings</span>
+        <span class="source-chip">🏢 REO leadership input</span>
+        <span class="source-chip">🤝 Citizens team input</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ PROGRAM 1: FACILITIES MANAGERS ══ -->
+  <div class="program-block">
+    <div class="program-head">
+      <div class="program-num pnum-fse">01</div>
+      <div class="program-head-text">
+        <div class="program-tag">Program 1 &mdash; Launched April 2026</div>
+        <div class="program-name">Facilities Services Excellence</div>
+        <div class="program-tagline tagline-fse">See It &mdash; Own It &mdash; Fix It</div>
+      </div>
+      <div class="program-audience aud-fse">🔧 Facility Managers &amp; FM Leads · ~41 people</div>
+    </div>
+
+    <!-- In Motion -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">In Motion</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="practice-track">
+        <div class="practice-card active">
+          <div class="practice-card-badge"><span class="badge badge-inprogress">✓ In Progress</span></div>
+          <div class="practice-card-name">P1 · Fresh Eyes</div>
+          <div class="practice-card-desc">Seeing What Needs Attention — noticing what familiarity has made invisible.</div>
+          <div class="practice-card-timing">Now</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-committed">✓ Committed</span></div>
+          <div class="practice-card-name">P2 · Building Your Team's Quality Eye</div>
+          <div class="practice-card-desc">Extending quality awareness to MTs, janitors, and field staff.</div>
+          <div class="practice-card-timing">Q3 2026</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-committed">✓ Committed</span></div>
+          <div class="practice-card-name">P3 · Keeping Vendors Accountable</div>
+          <div class="practice-card-desc">Reviewing work order documentation before accepting closes; structured accountability conversations.</div>
+          <div class="practice-card-timing">Q4 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parking Lot -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">Parking Lot</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="parking-lot-grid">
+
+        <!-- On roadmap -->
+        <div class="lot-card">
+          <div class="lot-card-badge"><span class="badge badge-roadmap">○ On Roadmap</span></div>
+          <div class="lot-card-name">Exterior Quality</div>
+          <div class="lot-card-desc">Cigarette receptacles (64% pass), exterior windows (66%), drive-up equipment (74%) — QC's lowest scorers.</div>
+          <div class="lot-card-source roadmap-source">QC data · parking &amp; exterior #4 in field</div>
+        </div>
+
+        <div class="lot-card">
+          <div class="lot-card-badge"><span class="badge badge-roadmap">○ On Roadmap</span></div>
+          <div class="lot-card-name">Carpet &amp; Floor Quality</div>
+          <div class="lot-card-desc">Restroom floors, cove bases, customer entrance surfaces — persistent QC problem areas.</div>
+          <div class="lot-card-source roadmap-source">QC data · #3 issue category · 23 field refs</div>
+        </div>
+
+        <!-- Data-driven from Fresh Eyes -->
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Lease &amp; Landlord Management</div>
+          <div class="lot-card-desc">FMs running into scope confusion between tenant and landlord responsibility. Multiple coaching sessions trace to not knowing the lease.</div>
+          <div class="lot-card-source">Field data · #1 issue category · 38 refs</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Entry &amp; Door Standards</div>
+          <div class="lot-card-desc">Strike plates, keys, bollards, entryway condition — high safety and first-impression stakes. "Open and close all doors" is a repeated peer tip.</div>
+          <div class="lot-card-source">Field data · #2 issue category · 27 refs</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Pre-Visit Preparation</div>
+          <div class="lot-card-desc">14 of 193 completions show FMs arriving without reviewing 360 first. Reviewing 360 before visiting is the single most-repeated peer tip across the cohort.</div>
+          <div class="lot-card-source">Outcome pattern · 193 completions</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Branch Colleague Engagement</div>
+          <div class="lot-card-desc">FMs visit once a month; branch staff are there every day. Multiple FMs independently tip: ask the BM what's been happening between visits.</div>
+          <div class="lot-card-source">Peer tip pattern · 144 tips analyzed</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">ATM &amp; Vestibule Standards</div>
+          <div class="lot-card-desc">Cobwebs, dirty glass, threshold cleaning — high customer visibility, consistently missed. 14 coaching sessions in this category.</div>
+          <div class="lot-card-source">Field data · #5 issue category · 14 refs</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Roof &amp; Overhead Quality</div>
+          <div class="lot-card-desc">"Look higher" appears in peer tips repeatedly and independently. Maria Kingsley traced a persistent water leak to the main roof — not the vestibule roof. Ceiling tiles are the single most-mentioned item in tips.</div>
+          <div class="lot-card-source">Peer tip pattern · "look higher" &amp; "look up"</div>
+        </div>
+
+        <!-- Placeholders -->
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">SOPs in Action</div>
+          <div class="lot-card-desc">Safety walkthroughs, work order procedures, inspection documentation. Keep visible — plumbing/HVAC data points here.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From Fresh Eyes Phase 2 Data</div>
+          <div class="lot-card-desc">To be defined as more activity completions surface patterns in Q3/Q4.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From REO Leadership</div>
+          <div class="lot-card-desc">Chris, Zoran, and the SFM team to identify priority areas from their field perspective.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From Citizens Team</div>
+          <div class="lot-card-desc">Open slot for practices identified by the Citizens team through their own channels.</div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /program 1 -->
+
+
+  <!-- ══ PROGRAM 2: INDIVIDUAL CONTRIBUTORS ══ -->
+  <div class="program-block">
+    <div class="program-head">
+      <div class="program-num pnum-ic">02</div>
+      <div class="program-head-text">
+        <div class="program-tag">Program 2 &mdash; Proposed</div>
+        <div class="program-name">Individual Contributors</div>
+        <div class="program-tagline tagline-ic">See It &mdash; Do It Right &mdash; Say Something</div>
+      </div>
+      <div class="program-audience aud-ic">🧹 Janitors, Landscapers, Technicians</div>
+    </div>
+
+    <!-- Proposed sequence -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">Proposed Sequence</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="practice-track">
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-proposed">○ Proposed</span></div>
+          <div class="practice-card-name">P1 · Fresh Eyes for ICs</div>
+          <div class="practice-card-desc">Fresh Eyes habits adapted for branch-level workers — runs parallel to FM P2.</div>
+          <div class="practice-card-timing">Parallel with FM P2</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-proposed">○ Proposed</span></div>
+          <div class="practice-card-name">P2 · Engaging with Your Leadership</div>
+          <div class="practice-card-desc">Communicating up to FMs effectively — surfacing what you're seeing, flagging what needs attention.</div>
+          <div class="practice-card-timing">TBD</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-proposed">○ Proposed</span></div>
+          <div class="practice-card-name">P3 · Engaging with Branch Staff</div>
+          <div class="practice-card-desc">Working well with the people you share the building with — communication, coordination, quality accountability.</div>
+          <div class="practice-card-timing">TBD</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parking Lot -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">Parking Lot</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="parking-lot-grid">
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Landscaping Standards</div>
+          <div class="lot-card-desc">Landscaping is the #6 issue category in FM data. A landscape manager noted the FM activity was "a mismatch" for his role — a clear signal ICs need their own version. James Wright's tip: "speak to the landscape manager about keeping sharp eyes for weeds."</div>
+          <div class="lot-card-source">Field data · #6 issue category · 13 refs</div>
+        </div>
+
+        <div class="lot-card data-driven">
+          <div class="lot-card-badge"><span class="badge badge-data">◈ Data-Driven</span></div>
+          <div class="lot-card-name">Cleaning Completeness &amp; Standards</div>
+          <div class="lot-card-desc">Carpet stains, cove bases, ATM vestibule cleaning, high dusting — consistently missed by janitorial staff. The gap is between "marked done" and "done to standard." ICs need a practice around what complete actually looks like.</div>
+          <div class="lot-card-source">Field data · carpet #3, ATM #5, peer tips</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From IC Fresh Eyes Data</div>
+          <div class="lot-card-desc">As ICs complete their own Fresh Eyes program, their field findings will surface additional practice ideas.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From Citizens Team</div>
+          <div class="lot-card-desc">Leadership and SFMs have direct visibility into IC performance gaps — open slot for their input.</div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /program 2 -->
+
+
+  <!-- ══ PROGRAM 3: POD MEMBERS ══ -->
+  <div class="program-block">
+    <div class="program-head">
+      <div class="program-num pnum-pod">03</div>
+      <div class="program-head-text">
+        <div class="program-tag">Program 3 &mdash; Launching July 2026</div>
+        <div class="program-name">Pod Strategy Success</div>
+        <div class="program-tagline tagline-pod">Own Your Role &mdash; Collaborate &mdash; Improve</div>
+      </div>
+      <div class="program-audience aud-pod">🏗 All Pod Members · 5 Pods · 6 Roles</div>
+    </div>
+
+    <!-- Committed sequence -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">Committed Sequence</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="practice-track">
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-committed">✓ Committed</span></div>
+          <div class="practice-card-name">P1 · Owning Your Role</div>
+          <div class="practice-card-desc">Executing role expectations consistently, proactive updates, early risk flagging.</div>
+          <div class="practice-card-timing">July 2026</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-committed">✓ Committed</span></div>
+          <div class="practice-card-name">P2 · Collaborating Across Roles</div>
+          <div class="practice-card-desc">Cross-discipline coordination, proactive information sharing, joint decisions.</div>
+          <div class="practice-card-timing">Q4 2026</div>
+        </div>
+        <div class="track-arrow">›</div>
+        <div class="practice-card">
+          <div class="practice-card-badge"><span class="badge badge-committed">✓ Committed</span></div>
+          <div class="practice-card-name">P3 · Driving Continuous Improvement</div>
+          <div class="practice-card-desc">Naming what works, proposing fixes, sharing best practices across pods.</div>
+          <div class="practice-card-timing">Q1 2027</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parking Lot -->
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-head-label">Parking Lot</span>
+        <div class="section-head-line"></div>
+      </div>
+      <div class="parking-lot-grid">
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">Pending Debbie's Updates</div>
+          <div class="lot-card-desc">Debbie is providing updated context on the pod strategy — additional practices to be defined from that input.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From Pod Performance Data</div>
+          <div class="lot-card-desc">As pods complete P1–P3, performance patterns will surface the next highest-leverage practice areas.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From REO Leadership</div>
+          <div class="lot-card-desc">Chris and the REO leadership team to identify where pod behaviors need further reinforcement.</div>
+        </div>
+
+        <div class="lot-card placeholder">
+          <div class="lot-card-badge"><span class="badge badge-placeholder">— Placeholder</span></div>
+          <div class="lot-card-name">From Citizens Team</div>
+          <div class="lot-card-desc">Open slot for practices identified directly by pod members and their managers.</div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /program 3 -->
+
+</div><!-- /page-body -->
+
+</body>
+</html>
