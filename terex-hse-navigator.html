@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terex HSE in Action</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+    :root {
+      --color-paper:      253 252 250;
+      --color-surface:    255 255 255;
+      --color-ink:        28 42 56;
+      --color-muted-ink:  74 88 104;
+      --color-accent:     232 77 40;
+      --color-cool-grey:  154 166 176;
+      --color-light-grey: 200 205 210;
+      --color-pale-grey:  235 229 220;
+      --color-warm-line:  197 187 166;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: rgb(var(--color-paper));
+      color: rgb(var(--color-ink));
+      font-family: 'Sen', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background-color: rgb(var(--color-accent));
+      color: rgb(var(--color-paper));
+    }
+
+    /* ── NAV BAR ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 52px;
+      background-color: rgb(var(--color-paper));
+      border-bottom: 1px solid rgb(var(--color-warm-line));
+      display: flex;
+      align-items: stretch;
+      padding: 0 24px;
+      gap: 0;
+    }
+
+    /* Wordmark / brand */
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-right: 28px;
+      border-right: 1px solid rgb(var(--color-pale-grey));
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgb(var(--color-accent));
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text {
+      font-family: 'Andada Pro', serif;
+      font-weight: 400;
+      font-size: 0.875rem;
+      color: rgb(var(--color-ink));
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    /* Nav tabs */
+    .nav-tabs {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      flex: 1;
+    }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      font-family: 'Sen', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: rgb(var(--color-muted-ink));
+      cursor: pointer;
+      border: none;
+      background: none;
+      position: relative;
+      transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+
+    .nav-tab:hover {
+      color: rgb(var(--color-ink));
+    }
+
+    .nav-tab.active {
+      color: rgb(var(--color-ink));
+      font-weight: 700;
+    }
+
+    /* Active indicator bar */
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 18px;
+      right: 18px;
+      height: 2px;
+      background-color: rgb(var(--color-accent));
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* Tab number badge */
+    .nav-tab-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: rgb(var(--color-pale-grey));
+      color: rgb(var(--color-muted-ink));
+      font-family: 'Sen', sans-serif;
+      font-size: 0.625rem;
+      font-weight: 700;
+      margin-right: 7px;
+      transition: background-color 200ms, color 200ms;
+      flex-shrink: 0;
+    }
+
+    .nav-tab.active .nav-tab-num {
+      background-color: rgb(var(--color-accent) / 0.12);
+      color: rgb(var(--color-accent));
+    }
+
+    /* ── IFRAME WRAPPER ── */
+    .frame-container {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .page-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .page-frame.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Loading indicator */
+    .loading-bar {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: rgb(var(--color-pale-grey));
+      z-index: 99;
+      overflow: hidden;
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: rgb(var(--color-accent));
+      border-radius: 0 2px 2px 0;
+      transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms;
+    }
+
+    .loading-bar-fill.running {
+      width: 75%;
+    }
+
+    .loading-bar-fill.done {
+      width: 100%;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-brand-dot"></div>
+      <span class="nav-brand-text">Terex HSE in Action</span>
+    </div>
+    <div class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" data-index="0" onclick="showPage(0)">
+        <span class="nav-tab-num">1</span>
+        Program Strategy
+      </button>
+      <button class="nav-tab" data-index="1" onclick="showPage(1)">
+        <span class="nav-tab-num">2</span>
+        PPE Activity Examples
+      </button>
+      <button class="nav-tab" data-index="2" onclick="showPage(2)">
+        <span class="nav-tab-num">3</span>
+        Coaching Examples
+      </button>
+      <button class="nav-tab" data-index="3" onclick="showPage(3)">
+        <span class="nav-tab-num">4</span>
+        Improving Culture
+      </button>
+    </div>
+  </nav>
+
+  <div class="loading-bar">
+    <div class="loading-bar-fill" id="loadingBar"></div>
+  </div>
+
+  <div class="frame-container">
+    <iframe
+      class="page-frame visible"
+      id="frame-0"
+      src="https://maxbusselle.github.io/misc-pages/terex-hse-program-strategy.html"
+      title="Program Strategy"
+    ></iframe>
+    <iframe
+      class="page-frame"
+      id="frame-1"
+      src=""
+      data-src="https://maxbusselle.github.io/misc-pages/revgroup-PPE-activity-examples.html"
+      title="PPE Activity Examples"
+    ></iframe>
+    <iframe
+      class="page-frame"
+      id="frame-2"
+      src=""
+      data-src="https://maxbusselle.github.io/misc-pages/revgroup_coach_insights_2026_05.html"
+      title="Coaching Examples"
+    ></iframe>
+    <iframe
+      class="page-frame"
+      id="frame-3"
+      src=""
+      data-src="https://maxbusselle.github.io/misc-pages/revgroup_themes_2026_06.html"
+      title="Improving Culture"
+    ></iframe>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const loaded = new Set([0]); // track which iframes have been loaded
+
+    function showPage(index) {
+      if (index === currentIndex) return;
+
+      const tabs = document.querySelectorAll('.nav-tab');
+      const frames = document.querySelectorAll('.page-frame');
+      const bar = document.getElementById('loadingBar');
+
+      // Update tab states
+      tabs.forEach(t => t.classList.remove('active'));
+      tabs[index].classList.add('active');
+
+      // Hide current frame
+      frames[currentIndex].classList.remove('visible');
+
+      // Lazy-load iframe if not yet loaded
+      const targetFrame = document.getElementById('frame-' + index);
+      if (!loaded.has(index)) {
+        const src = targetFrame.getAttribute('data-src');
+        if (src) {
+          // Show loading bar
+          bar.classList.remove('done');
+          bar.classList.add('running');
+
+          targetFrame.src = src;
+          targetFrame.onload = () => {
+            bar.classList.remove('running');
+            bar.classList.add('done');
+            setTimeout(() => bar.classList.remove('done'), 500);
+          };
+          loaded.add(index);
+        }
+      }
+
+      // Show new frame
+      targetFrame.classList.add('visible');
+      currentIndex = index;
+    }
+
+    // Keyboard navigation: arrow keys / number keys
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentIndex < 3) showPage(currentIndex + 1);
+      if (e.key === 'ArrowLeft' && currentIndex > 0) showPage(currentIndex - 1);
+      if (e.key === '1') showPage(0);
+      if (e.key === '2') showPage(1);
+      if (e.key === '3') showPage(2);
+      if (e.key === '4') showPage(3);
+    });
+  </script>
+
+</body>
+</html>
