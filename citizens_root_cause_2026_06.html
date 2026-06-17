@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens · Fresh Eyes — Root Cause Identification · June 2026</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+:root {
+  --color-paper:       253 252 250;
+  --color-surface:     255 255 255;
+  --color-ink:         28 42 56;
+  --color-muted-ink:   74 88 104;
+  --color-accent:      232 77 40;
+  --color-success:     72 114 76;
+  --color-cool-grey:   154 166 176;
+  --color-light-grey:  200 205 210;
+  --color-pale-grey:   235 229 220;
+  --color-warm-line:   197 187 166;
+  --color-shadow-warm: 96 80 50;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1,h2,h3,h4,h5,h6 { font-family: 'Andada Pro', serif; font-weight: 400; }
+::selection { background: rgb(var(--color-accent)); color: rgb(var(--color-paper)); }
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(var(--color-paper) / 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.nav-client {
+  font-family: 'Sen', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-ink));
+}
+.nav-sep {
+  width: 1px;
+  height: 18px;
+  background: rgb(var(--color-warm-line));
+  flex-shrink: 0;
+}
+.nav-title {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.slide-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(var(--color-light-grey));
+  cursor: pointer;
+  transition: background 200ms, transform 200ms;
+}
+.slide-dot.active {
+  background: rgb(var(--color-accent));
+  transform: scale(1.25);
+}
+
+/* SLIDES */
+.slide { display: none; }
+.slide.active { display: block; }
+
+.slide-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+}
+
+.slide-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.slide-num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.06em;
+}
+.slide-tag {
+  display: inline-block;
+  font-family: 'Sen', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgb(var(--color-pale-grey));
+  color: rgb(var(--color-muted-ink));
+}
+.slide-tag.accent {
+  background: rgb(var(--color-accent) / 0.1);
+  color: rgb(var(--color-accent));
+}
+.slide-tag.green {
+  background: rgb(var(--color-success) / 0.1);
+  color: rgb(var(--color-success));
+}
+
+.slide-headline {
+  font-family: 'Andada Pro', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: rgb(var(--color-ink));
+  margin-bottom: 12px;
+  max-width: 680px;
+}
+
+.slide-subhead {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(var(--color-muted-ink));
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+  margin: 28px 0;
+}
+
+/* STAT ROW */
+.stat-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.stat-box {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 20px 24px;
+  flex: 1;
+  min-width: 140px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+.stat-number {
+  font-family: 'Geist Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: rgb(var(--color-accent));
+}
+.stat-number.green { color: rgb(var(--color-success)); }
+.stat-number.ink   { color: rgb(var(--color-ink)); }
+.stat-desc {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.78rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.4;
+}
+
+/* CARDS */
+.card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media (max-width: 600px) { .card-row { grid-template-columns: 1fr; } }
+
+.card {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 20px 22px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+.card.accent-left { border-left: 3px solid rgb(var(--color-accent)); }
+.card.green-left  { border-left: 3px solid rgb(var(--color-success)); }
+
+.card-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-muted-ink));
+  margin-bottom: 8px;
+}
+.card h4 {
+  font-family: 'Andada Pro', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgb(var(--color-ink));
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+.card p {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.82rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.55;
+}
+
+/* QUOTE BLOCK */
+.quote-block {
+  background: rgb(var(--color-pale-grey) / 0.5);
+  border-left: 3px solid rgb(var(--color-warm-line));
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-top: 10px;
+}
+.quote-block.accent { border-left-color: rgb(var(--color-accent)); }
+.quote-block.green  { border-left-color: rgb(var(--color-success)); }
+.quote-text {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgb(var(--color-ink));
+  margin-bottom: 6px;
+}
+.quote-attr {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  color: rgb(var(--color-muted-ink));
+  letter-spacing: 0.05em;
+}
+
+/* OUTCOME TABLE (slide 3) */
+.outcome-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.outcome-table th {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-muted-ink));
+  text-align: left;
+  padding: 0 12px 10px 0;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+}
+.outcome-table td {
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  vertical-align: top;
+  font-family: 'Sen', sans-serif;
+  color: rgb(var(--color-ink));
+  line-height: 1.4;
+}
+.outcome-table tr:last-child td { border-bottom: none; }
+.outcome-table td.name { font-weight: 700; white-space: nowrap; }
+.outcome-table td.summary { color: rgb(var(--color-muted-ink)); font-size: 0.78rem; }
+
+.badge {
+  display: inline-block;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge-strong { background: rgb(var(--color-success) / 0.12); color: rgb(var(--color-success)); }
+.badge-partial { background: rgb(var(--color-pale-grey)); color: rgb(var(--color-muted-ink)); }
+.badge-friction { background: rgb(var(--color-accent) / 0.1); color: rgb(var(--color-accent)); }
+
+/* NAV BUTTONS */
+.slide-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid rgb(var(--color-pale-grey));
+}
+.slide-counter {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  color: rgb(var(--color-muted-ink));
+  flex: 1;
+  text-align: center;
+}
+.nav-btn {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink));
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 6px;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: background 150ms, box-shadow 150ms;
+}
+.nav-btn:hover:not(:disabled) {
+  background: rgb(var(--color-pale-grey) / 0.5);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* FOOTNOTE */
+.footnote {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  color: rgb(var(--color-muted-ink));
+  margin-top: 28px;
+  letter-spacing: 0.03em;
+}
+
+/* CALLOUT BOX */
+.callout {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.callout-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-muted-ink));
+  margin-bottom: 8px;
+}
+.callout p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgb(var(--color-ink));
+}
+
+/* OUTCOME BREAKDOWN BAR */
+.breakdown-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 12px 0 6px;
+}
+.bar-strong { background: rgb(var(--color-success)); }
+.bar-partial { background: rgb(var(--color-light-grey)); }
+.bar-friction { background: rgb(var(--color-accent) / 0.5); }
+.bar-legend {
+  display: flex;
+  gap: 18px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  color: rgb(var(--color-muted-ink));
+  margin-bottom: 24px;
+}
+.legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* CATEGORY BLOCKS */
+.category-block { margin-bottom: 8px; }
+
+.category-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.category-title {
+  font-family: 'Andada Pro', serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: rgb(var(--color-ink));
+}
+.category-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.cat-stat {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: rgb(var(--color-muted-ink));
+}
+.cat-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgb(var(--color-light-grey));
+  flex-shrink: 0;
+}
+
+.category-summary {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgb(var(--color-muted-ink));
+  margin-bottom: 14px;
+  padding-left: 12px;
+  border-left: 2px solid rgb(var(--color-pale-grey));
+}
+
+.entry-list { display: flex; flex-direction: column; gap: 6px; }
+
+.entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-pale-grey));
+  border-radius: 8px;
+  padding: 12px 14px;
+  border-left-width: 3px;
+}
+.entry.strong  { border-left-color: rgb(var(--color-success)); }
+.entry.partial { border-left-color: rgb(var(--color-light-grey)); }
+.entry.friction { border-left-color: rgb(var(--color-accent) / 0.45); }
+
+.entry-content { flex: 1; min-width: 0; }
+.entry-name {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink));
+  margin-bottom: 3px;
+}
+.entry-title {
+  font-weight: 400;
+  color: rgb(var(--color-muted-ink));
+}
+.entry-desc {
+  font-family: 'Sen', sans-serif;
+  font-size: 0.78rem;
+  color: rgb(var(--color-muted-ink));
+  line-height: 1.5;
+}
+
+/* fix entry layout — name+desc on left, badge pinned right */
+.entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: start;
+}
+.entry .entry-name { grid-column: 1; grid-row: 1; }
+.entry .entry-desc { grid-column: 1; grid-row: 2; }
+.entry .badge      { grid-column: 2; grid-row: 1; margin-top: 2px; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-client">Citizens · Fresh Eyes</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Root Cause Identification — Week of June 9–16, 2026</span>
+  </div>
+  <div class="nav-right">
+    <div class="slide-dot active" onclick="goTo(0)"></div>
+    <div class="slide-dot" onclick="goTo(1)"></div>
+    <div class="slide-dot" onclick="goTo(2)"></div>
+  </div>
+</nav>
+
+<!-- ===================== SLIDE 1 ===================== -->
+<div class="slide active" id="slide-0">
+  <div class="slide-inner">
+
+    <div class="slide-meta">
+      <span class="slide-num">01 OF 03</span>
+      <span class="slide-tag accent">This Week's Focus</span>
+    </div>
+
+    <h2 class="slide-headline">29 root cause activities — and the data shows FMs are getting sharper at actually fixing things.</h2>
+    <p class="slide-subhead">In the last seven days, 19 facility managers completed a combined 29 root cause identification activities. Most left the branch with a specific diagnosis and a concrete next step taken — not just a finding logged.</p>
+
+    <hr class="divider">
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-number">29</div>
+        <div class="stat-desc">root cause activities completed this week</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">19</div>
+        <div class="stat-desc">individual facility managers</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number green">7.5</div>
+        <div class="stat-desc">mean self-rating out of 10</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">66%</div>
+        <div class="stat-desc">rated their session 8 or higher</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <div style="font-family:'Geist Mono',monospace;font-size:0.7rem;color:rgb(var(--color-muted-ink));letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">How sessions broke down</div>
+      <div class="breakdown-bar">
+        <div class="bar-strong" style="width:55%"></div>
+        <div class="bar-partial" style="width:28%"></div>
+        <div class="bar-friction" style="width:17%"></div>
+      </div>
+      <div class="bar-legend">
+        <span><span class="legend-dot" style="background:rgb(var(--color-success))"></span>55% full cycle (found root cause, took action)</span>
+        <span><span class="legend-dot" style="background:rgb(var(--color-light-grey))"></span>28% partial (found or confirmed an issue)</span>
+        <span><span class="legend-dot" style="background:rgb(var(--color-accent)/0.5)"></span>17% friction (couldn't find a clear candidate)</span>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card accent-left">
+        <div class="card-label">What "full cycle" looks like</div>
+        <h4>Pre-visit review → hypothesis → on-site confirmation → action taken → logged before leaving</h4>
+        <p>The 16 full-cycle sessions all followed this pattern. Participants pulled work order history before arriving, formed a theory about why the issue persists, confirmed it on site, and documented a specific resolution step before they walked out the door.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Range of issues addressed</div>
+        <h4>Climate control, pest recurrence, structural hardware, vendor gaps, janitorial quality, landscaping</h4>
+        <p>The activity works across issue types. This week's sessions covered everything from miscalibrated HVAC sensors and door closer hardware to vendor oversight gaps and pest control recurrence — the common thread is the diagnostic approach, not the issue category.</p>
+      </div>
+    </div>
+
+    <p class="footnote">Data: 29 completed activities · Fresh Eyes Initiative · Citizens · June 9–16, 2026</p>
+
+    <div class="slide-nav">
+      <button class="nav-btn prev-btn" onclick="goTo(0)" disabled>← Previous</button>
+      <span class="slide-counter">1 of 3</span>
+      <button class="nav-btn next-btn" onclick="goTo(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 2 ===================== -->
+<div class="slide" id="slide-1">
+  <div class="slide-inner">
+
+    <div class="slide-meta">
+      <span class="slide-num">02 OF 03</span>
+      <span class="slide-tag green">Session Examples</span>
+    </div>
+
+    <h2 class="slide-headline">A closer look at three sessions that show what good root cause work looks like in the field.</h2>
+    <p class="slide-subhead">These examples illustrate the full diagnostic loop: arriving with a theory, confirming it on site, and leaving with something resolved — not just documented.</p>
+
+    <hr class="divider">
+
+    <div class="callout">
+      <div class="callout-label">Sean Conroy — Senior Facility Manager</div>
+      <p>Identified recurring temperature complaints at a branch. Before arriving, pulled work order history and noticed tickets had been closed solely based on BMS readings — without verifying actual in-branch conditions. Arrived with a hypothesis: the closure standard was the problem, not the system. On site, confirmed that sensors were miscalibrated and triggering the AC too late. Coordinated with the control center to recalibrate on the spot. Closed the ticket with the actual fix documented.</p>
+      <div class="quote-block green" style="margin-top:14px;">
+        <div class="quote-text">"Short-sighted fixes don't always lead to long-term solutions. Sometimes it will require the condition to appear more than once to establish a pattern, or to highlight that the fix did not address a root cause — it only solved for the short term."</div>
+        <div class="quote-attr">Sean Conroy, Senior Facility Manager — peer tip</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">James Wright — Facilities Manager Lead</div>
+      <p>Pulled up 360 before visiting a branch and found a front door replacement work order open over 60 days. Arrived with the hypothesis that a materials delay was holding it up — not a vendor performance issue. Confirmed on site: doors were on order, no temporary fix was in place, and the branch was using a workaround. Had a maintenance tech adjust the doors for safety in the meantime, called the contractor to get a committed delivery date (end of July), updated the branch manager, regional manager, and supervisor, and logged everything in the work order before leaving.</p>
+      <div class="quote-block accent" style="margin-top:14px;">
+        <div class="quote-text">"Get frequent updates from your contractor or vendor. Be sure to update Retail and keep them in the loop."</div>
+        <div class="quote-attr">James Wright, Facilities Manager Lead — peer tip</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Alexander Maxwell — Facility Manager</div>
+      <p>During a customer restroom walkthrough, noticed a soap dispenser that wasn't dispensing. Opened a work order, then repaired it on the spot. The more interesting finding: the root cause wasn't a broken dispenser — it was a gap in the janitorial inspection checklist. Consumables weren't being checked as part of the routine. Logged both the fix and the process gap before leaving.</p>
+      <div class="quote-block" style="margin-top:14px;">
+        <div class="quote-text">"It may not be a major issue — rather a small underlying issue that, through gaps in the process or lack of work order requests, leaves as an ongoing issue."</div>
+        <div class="quote-attr">Alexander Maxwell, Facility Manager — peer tip</div>
+      </div>
+    </div>
+
+    <p class="footnote">Data: 29 completed activities · Fresh Eyes Initiative · Citizens · June 9–16, 2026</p>
+
+    <div class="slide-nav">
+      <button class="nav-btn prev-btn" onclick="goTo(0)">← Previous</button>
+      <span class="slide-counter">2 of 3</span>
+      <button class="nav-btn next-btn" onclick="goTo(2)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 3 ===================== -->
+<div class="slide" id="slide-2">
+  <div class="slide-inner">
+
+    <div class="slide-meta">
+      <span class="slide-num">03 OF 03</span>
+      <span class="slide-tag">By Issue Type</span>
+    </div>
+
+    <h2 class="slide-headline">The 29 sessions broke into four issue categories — and the quality of diagnosis varied across them.</h2>
+    <p class="slide-subhead">Janitorial and vendor-related issues produced the sharpest diagnostic work this week. Landscape sessions showed the most friction — recurring issues, but root causes harder to pin down or act on quickly.</p>
+
+    <hr class="divider">
+
+    <!-- CATEGORY: Structural & Hardware -->
+    <div class="category-block">
+      <div class="category-header">
+        <div class="category-title">Structural &amp; Hardware</div>
+        <div class="category-meta">
+          <span class="cat-stat">14 activities</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">avg 7.9 / 10</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">7 full-cycle</span>
+        </div>
+      </div>
+      <div class="category-summary">Climate control, door hardware, exterior lighting, moisture/water intrusion, security equipment, concrete, safety hazards. The broadest category — issues ranged from miscalibrated HVAC sensors to incorrect hardware installed during a prior repair. The strongest sessions involved participants arriving with a specific hypothesis drawn from work order history rather than walking in cold.</div>
+      <div class="entry-list">
+        <div class="entry strong">
+          <div class="entry-name">Sean Conroy <span class="entry-title">· Senior FM</span></div>
+          <div class="entry-desc">Recurring climate complaints — traced root cause to BMS-only closure criteria masking uncalibrated sensors. Coordinated recalibration on-site, issue resolved and closed.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Jose Graca <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Recurring door issue — reviewed work orders before visit, repaired door closer on-site, documented before/after photos, closed work order before leaving.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">William Strobele <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Two sessions: recurring exterior lighting (resolved in field, logged) and door closer (diagnosed as wrong hardware from prior repair — GC contacted, owner assigned).</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Argeny Garcia <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Moisture traces under a door — scheduled vendor access, logged findings. Root cause identified; resolution pending vendor visit.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry partial">
+          <div class="entry-name">Timothy Donohue <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Concrete issue under investigation — funding approval delay slowed resolution. Pre-visit prep completed; action underway.</div>
+          <span class="badge badge-partial">In progress</span>
+        </div>
+        <div class="entry partial">
+          <div class="entry-name">Anna Mann, Patricia Zieverink, Joseph Dudar <span class="entry-title">· FM / Lead</span></div>
+          <div class="entry-desc">Trip hazard, long-open hardware WO, general visit — each identified an issue and logged next steps, but resolution still pending.</div>
+          <span class="badge badge-partial">In progress</span>
+        </div>
+        <div class="entry friction">
+          <div class="entry-name">Mark Marterella, Tony Petaccio, Leonard Manigbas, William Granville <span class="entry-title">· FM / Lead</span></div>
+          <div class="entry-desc">Mixed friction: some arrived without a pre-visit candidate, others found issues that didn't fit a clear pattern. All logged findings; root cause less clear.</div>
+          <span class="badge badge-friction">Friction</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 24px 0;">
+
+    <!-- CATEGORY: Janitorial & Cleanliness -->
+    <div class="category-block">
+      <div class="category-header">
+        <div class="category-title">Janitorial &amp; Cleanliness</div>
+        <div class="category-meta">
+          <span class="cat-stat">5 activities</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">avg 8.4 / 10</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">4 full-cycle</span>
+        </div>
+      </div>
+      <div class="category-summary">ATM vestibule cleaning, bathroom floor recurrence, soap dispenser failure, floor staining. Highest-rated category this week. Root causes in this group tended to point to process gaps — a cleaning schedule not updated, a consumable check missing from a routine — which made concrete actions more actionable on the spot.</div>
+      <div class="entry-list">
+        <div class="entry strong">
+          <div class="entry-name">James Wright <span class="entry-title">· Facilities Manager Lead</span></div>
+          <div class="entry-desc">Recurring ATM vestibule cleanliness — contacted the technician on-site to establish an updated cleaning schedule. Documented with photo evidence before leaving.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Jose Graca <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Recurring bathroom floor issue — pulled work order history beforehand, formed a hypothesis about cleaner performance, confirmed on-site, logged follow-up action.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Alexander Maxwell <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Two sessions: soap dispenser (repaired on-site; root cause traced to a gap in the janitorial inspection checklist) and recurring floor stain (root cause identified, stakeholders notified).</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 24px 0;">
+
+    <!-- CATEGORY: Vendor & Contractor Gaps -->
+    <div class="category-block">
+      <div class="category-header">
+        <div class="category-title">Vendor &amp; Contractor Gaps</div>
+        <div class="category-meta">
+          <span class="cat-stat">4 activities</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">avg 8.2 / 10</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">3 full-cycle</span>
+        </div>
+      </div>
+      <div class="category-summary">Pest control, front door replacement, damaged signage, security camera. The common thread: the issue persisted because a vendor or contractor hadn't moved — not because the FM hadn't noticed it. Strong sessions this week showed FMs escalating with specificity: getting committed dates, updating stakeholders, and documenting the accountability trail before leaving.</div>
+      <div class="entry-list">
+        <div class="entry strong">
+          <div class="entry-name">James Wright <span class="entry-title">· Facilities Manager Lead</span></div>
+          <div class="entry-desc">Front door replacement — materials delay confirmed on-site. Temporary safety fix arranged, committed delivery date secured from contractor, branch/regional/supervisor all updated, everything logged.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Michael Konczewski <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Recurring pest control issue — diagnosed as a vendor gap, concrete remediation step logged in tracking system.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Argeny Garcia <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Damaged directional sign — traced delay to vendor lead time, confirmed follow-up action within existing work order.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry partial">
+          <div class="entry-name">Anna Mann <span class="entry-title">· Senior Facility Manager</span></div>
+          <div class="entry-desc">Pest control work order — confirmed no active ant activity on-site, logged observation note. Issue appears resolved; monitoring.</div>
+          <span class="badge badge-partial">In progress</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 24px 0;">
+
+    <!-- CATEGORY: Landscape & Grounds -->
+    <div class="category-block">
+      <div class="category-header">
+        <div class="category-title">Landscape &amp; Grounds</div>
+        <div class="category-meta">
+          <span class="cat-stat">6 activities</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">avg 5.5 / 10</span>
+          <span class="cat-dot"></span>
+          <span class="cat-stat">2 full-cycle</span>
+        </div>
+      </div>
+      <div class="category-summary">Tree trimming, weed recurrence, landscaping work orders. The most friction of any category this week — lower self-ratings, fewer full-cycle resolutions. The common pattern: issues were identified but root causes were harder to isolate quickly, often involving landlord or vendor dependencies outside the FM's direct control. A few participants found their 360 items didn't point to a clear pattern on arrival.</div>
+      <div class="entry-list">
+        <div class="entry strong">
+          <div class="entry-name">Michael Konczewski <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Recurring weed issue — diagnosed as a landlord oversight gap, emailed landlord with photos, logged in 360 rather than relying on email tracking alone.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry strong">
+          <div class="entry-name">Sean Flatt <span class="entry-title">· Landscape Manager</span></div>
+          <div class="entry-desc">Persisting tree trimming issue — vendor quotes obtained, action step logged in 360 to move it toward resolution.</div>
+          <span class="badge badge-strong">Full cycle</span>
+        </div>
+        <div class="entry partial">
+          <div class="entry-name">James Wright, Brian Hawtin, Donald Lucariello <span class="entry-title">· FM / Lead / Landscape</span></div>
+          <div class="entry-desc">Landscaping work orders identified and inspected, next steps logged — but root causes less clearly diagnosed. Vendor timelines and landlord coordination noted as ongoing constraints.</div>
+          <span class="badge badge-partial">In progress</span>
+        </div>
+        <div class="entry friction">
+          <div class="entry-name">Richard Hunter <span class="entry-title">· Facility Manager</span></div>
+          <div class="entry-desc">Landscaping work order at Camp Hill — items didn't point clearly to a pattern; couldn't isolate a single root cause on-site. Scheduling issue hypothesized.</div>
+          <span class="badge badge-friction">Friction</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="footnote" style="margin-top:32px;">Data: 29 completed activities · Fresh Eyes Initiative · Citizens · June 9–16, 2026</p>
+
+    <div class="slide-nav">
+      <button class="nav-btn prev-btn" onclick="goTo(1)">← Previous</button>
+      <span class="slide-counter">3 of 3</span>
+      <button class="nav-btn next-btn" onclick="goTo(2)" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const dots   = document.querySelectorAll('.slide-dot');
+
+function goTo(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  updateNavButtons();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateNavButtons() {
+  document.querySelectorAll('.prev-btn').forEach(b => b.disabled = current === 0);
+  document.querySelectorAll('.next-btn').forEach(b => b.disabled = current === slides.length - 1);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(current + 1);
+  if (e.key === 'ArrowLeft')  goTo(current - 1);
+});
+</script>
+
+</body>
+</html>
