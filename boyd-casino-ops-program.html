@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Boyd Gaming · Casino Operations Leadership Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+:root{
+  --paper: 253 252 250;
+  --surface: 255 255 255;
+  --ink: 28 42 56;
+  --muted: 74 88 104;
+  --boyd: 0 85 149;
+  --boyd-deep: 0 56 97;
+  --boyd-tint: 233 240 246;
+  --boyd-line: 198 217 230;
+  --warm-line: 197 187 166;
+  --pale: 235 229 220;
+  --cool: 154 166 176;
+  --success: 72 114 76;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background-color: rgb(var(--paper));
+  color: rgb(var(--ink));
+  font-family:'Sen', sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{ font-family:'Andada Pro', serif; font-weight:400; letter-spacing:-0.01em; }
+
+::selection{ background-color: rgb(var(--boyd)); color: rgb(var(--paper)); }
+
+.eyebrow{
+  font-family:'Geist Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color: rgb(var(--boyd));
+  font-weight:500;
+}
+
+/* ---------- Header ---------- */
+header.site{
+  position:sticky; top:0; z-index:50;
+  background: rgb(var(--surface) / 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom:3px solid rgb(var(--boyd));
+}
+.header-inner{
+  max-width:1100px; margin:0 auto;
+  padding:18px 28px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.brand-boyd img{ height:34px; width:auto; display:block; }
+.brand-from{
+  display:flex; align-items:center; gap:10px;
+  font-family:'Geist Mono', monospace; font-size:0.66rem;
+  letter-spacing:0.12em; text-transform:uppercase; color: rgb(var(--muted));
+  text-align:right;
+}
+.brand-from svg{ height:20px; width:auto; display:block; }
+.brand-from .lbl{ max-width:120px; line-height:1.3; }
+
+/* ---------- Tabs ---------- */
+nav.tabs{
+  position:sticky; top:73px; z-index:40;
+  background: rgb(var(--paper) / 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid rgb(var(--pale));
+}
+.tabs-inner{
+  max-width:1100px; margin:0 auto;
+  padding:0 28px;
+  display:flex; gap:6px;
+}
+.tab-btn{
+  appearance:none; background:none; border:none; cursor:pointer;
+  font-family:'Sen', sans-serif; font-weight:700;
+  font-size:0.82rem; letter-spacing:0.04em;
+  color: rgb(var(--muted));
+  padding:16px 14px 13px;
+  border-bottom:3px solid transparent;
+  margin-bottom:-1px;
+  transition: color 150ms cubic-bezier(0.16,1,0.3,1), border-color 150ms cubic-bezier(0.16,1,0.3,1);
+}
+.tab-btn:hover{ color: rgb(var(--ink)); }
+.tab-btn.active{ color: rgb(var(--boyd-deep)); border-bottom-color: rgb(var(--boyd)); }
+
+/* ---------- Layout ---------- */
+main{ max-width:1100px; margin:0 auto; padding:0 28px 96px; }
+.panel{ display:none; animation:fade 400ms cubic-bezier(0.16,1,0.3,1); }
+.panel.active{ display:block; }
+@keyframes fade{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+.section-head{ margin:56px 0 28px; }
+.section-head h2{ font-size:2rem; line-height:1.15; margin-top:8px; }
+.section-head p.lede{ color: rgb(var(--muted)); font-size:1.05rem; max-width:62ch; margin-top:12px; }
+
+/* ---------- Hero ---------- */
+.hero{ padding:64px 0 8px; }
+.hero h1{ font-size:2.9rem; line-height:1.08; max-width:18ch; margin-top:14px; }
+.hero .sub{ color: rgb(var(--muted)); font-size:1.15rem; max-width:60ch; margin-top:18px; }
+
+/* ---------- How Flint works ---------- */
+.intro{
+  margin-top:40px;
+  background: rgb(var(--surface));
+  border:1px solid rgb(var(--pale));
+  border-left:4px solid rgb(var(--boyd));
+  border-radius:10px;
+  padding:32px 34px;
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+.intro h3{ font-size:1.45rem; margin-bottom:10px; }
+.intro p{ color: rgb(var(--ink) / 0.86); max-width:70ch; margin-bottom:14px; }
+.intro p.coach{
+  background: rgb(var(--boyd-tint));
+  border-radius:8px; padding:16px 18px; color: rgb(var(--ink));
+  border:1px solid rgb(var(--boyd-line));
+}
+.intro p strong{ color: rgb(var(--boyd-deep)); }
+
+.howrow{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px;
+}
+.howstep{
+  background: rgb(var(--paper));
+  border:1px solid rgb(var(--pale));
+  border-radius:8px; padding:18px 18px 20px;
+}
+.howstep .n{
+  font-family:'Geist Mono', monospace; font-size:0.7rem; letter-spacing:0.14em;
+  color: rgb(var(--boyd)); text-transform:uppercase;
+}
+.howstep h4{ font-size:1.1rem; margin:8px 0 6px; }
+.howstep p{ font-size:0.9rem; color: rgb(var(--muted)); }
+.ten{
+  margin-top:20px; font-size:0.92rem; color: rgb(var(--muted));
+  font-family:'Geist Mono', monospace; letter-spacing:0.02em;
+}
+.ten b{ color: rgb(var(--boyd-deep)); }
+
+/* ---------- Development area cards ---------- */
+.areas{ display:flex; flex-direction:column; gap:22px; margin-top:8px; }
+.area{
+  background: rgb(var(--surface));
+  border:1px solid rgb(var(--pale));
+  border-radius:12px;
+  padding:30px 32px;
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);
+  transition: box-shadow 300ms cubic-bezier(0.16,1,0.3,1), transform 300ms cubic-bezier(0.16,1,0.3,1);
+}
+.area:hover{ box-shadow:0 14px 28px -16px rgb(var(--ink) / 0.26); transform:translateY(-2px); }
+.area-top{ display:flex; align-items:baseline; gap:16px; margin-bottom:20px; }
+.area-num{
+  flex:none;
+  width:42px; height:42px; border-radius:50%;
+  background: rgb(var(--boyd)); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Andada Pro', serif; font-size:1.3rem;
+  align-self:center;
+}
+.area-top h3{ font-size:1.6rem; }
+.area-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px 32px; }
+.area-block .lab{
+  font-family:'Geist Mono', monospace; font-size:0.68rem; letter-spacing:0.14em;
+  text-transform:uppercase; color: rgb(var(--boyd)); margin-bottom:6px;
+}
+.area-block p{ color: rgb(var(--ink) / 0.85); font-size:0.97rem; }
+.area-block.wide{ grid-column:1 / -1; padding-top:18px; border-top:1px dotted rgb(var(--warm-line)); }
+
+/* ---------- Fit together ---------- */
+.fit{
+  margin-top:40px; background: rgb(var(--boyd-deep)); color:#fff;
+  border-radius:14px; padding:42px 40px;
+}
+.fit .eyebrow{ color: rgb(var(--boyd-line)); }
+.fit h2{ color:#fff; font-size:1.9rem; margin:10px 0 26px; max-width:24ch; }
+.fitrow{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px; }
+.fitcard{
+  background: rgb(255 255 255 / 0.07);
+  border:1px solid rgb(255 255 255 / 0.16);
+  border-radius:10px; padding:20px 20px 22px;
+}
+.fitcard .dir{
+  font-family:'Geist Mono', monospace; font-size:0.66rem; letter-spacing:0.14em;
+  text-transform:uppercase; color: rgb(var(--boyd-line)); margin-bottom:8px;
+}
+.fitcard h4{ color:#fff; font-size:1.15rem; margin-bottom:6px; }
+.fitcard p{ color: rgb(255 255 255 / 0.78); font-size:0.9rem; }
+.fit .close{ font-size:1.08rem; color: rgb(255 255 255 / 0.92); max-width:74ch; }
+.fit .close b{ color:#fff; }
+.statline{
+  margin-top:22px; padding-top:22px; border-top:1px solid rgb(255 255 255 / 0.18);
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+}
+.statline .big{ font-family:'Andada Pro', serif; font-size:2.6rem; color:#fff; line-height:1; }
+.statline .cap{ color: rgb(255 255 255 / 0.78); font-size:0.95rem; max-width:52ch; }
+
+/* ---------- Mock Up: practices + milestones ---------- */
+.practice{
+  background: rgb(var(--surface));
+  border:1px solid rgb(var(--pale));
+  border-radius:12px; padding:30px 32px; margin-bottom:24px;
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);
+}
+.practice-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:6px; }
+.practice-head .pn{
+  font-family:'Geist Mono', monospace; color: rgb(var(--boyd));
+  font-size:0.9rem; letter-spacing:0.1em;
+}
+.practice-head h3{ font-size:1.4rem; }
+.hooks{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 26px; }
+.hook{
+  font-family:'Geist Mono', monospace; font-size:0.72rem; letter-spacing:0.04em;
+  background: rgb(var(--boyd-tint)); color: rgb(var(--boyd-deep));
+  border:1px solid rgb(var(--boyd-line));
+  padding:5px 11px; border-radius:999px;
+}
+.hooks .hooks-lab{
+  font-family:'Geist Mono', monospace; font-size:0.68rem; letter-spacing:0.14em;
+  text-transform:uppercase; color: rgb(var(--muted)); align-self:center; margin-right:4px;
+}
+.tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; }
+.tier{ padding:0 20px; position:relative; }
+.tier:not(:first-child){ border-left:1px dotted rgb(var(--warm-line)); }
+.tier:first-child{ padding-left:0; }
+.tier:last-child{ padding-right:0; }
+.tier-badge{
+  display:inline-block;
+  font-family:'Geist Mono', monospace; font-size:0.64rem; letter-spacing:0.14em;
+  text-transform:uppercase; font-weight:500;
+  padding:4px 10px; border-radius:999px; margin-bottom:12px;
+}
+.tier-1 .tier-badge{ background: rgb(var(--boyd-tint)); color: rgb(var(--boyd-deep)); }
+.tier-2 .tier-badge{ background: rgb(var(--boyd) / 0.5); color:#fff; }
+.tier-3 .tier-badge{ background: rgb(var(--boyd)); color:#fff; }
+.tier h4{ font-size:1.08rem; margin-bottom:8px; line-height:1.25; }
+.tier p{ font-size:0.9rem; color: rgb(var(--muted)); }
+
+/* ---------- Sample activity ---------- */
+.sample-wrap{ margin-top:18px; }
+.sample{
+  max-width:560px; margin:0 auto;
+  background: rgb(var(--surface));
+  border:1px solid rgb(var(--pale));
+  border-radius:16px; overflow:hidden;
+  box-shadow:0 25px 50px -18px rgb(var(--ink) / 0.3);
+}
+.sample-bar{
+  background: rgb(var(--boyd-deep)); color:#fff;
+  padding:16px 22px; display:flex; align-items:center; justify-content:space-between;
+}
+.sample-bar .t{ font-family:'Geist Mono', monospace; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color: rgb(var(--boyd-line)); }
+.sample-bar .p{ font-size:0.95rem; }
+.sample-body{ padding:24px 22px 26px; }
+.prompt{
+  background: rgb(var(--boyd-tint)); border:1px solid rgb(var(--boyd-line));
+  border-radius:10px; padding:16px 18px; margin-bottom:22px;
+}
+.prompt .lab{
+  font-family:'Geist Mono', monospace; font-size:0.66rem; letter-spacing:0.14em;
+  text-transform:uppercase; color: rgb(var(--boyd)); margin-bottom:7px;
+}
+.prompt p{ color: rgb(var(--ink)); font-size:0.97rem; }
+.chat{ display:flex; flex-direction:column; gap:14px; }
+.bubble{ max-width:86%; padding:13px 16px; border-radius:14px; font-size:0.92rem; line-height:1.5; }
+.bubble .who{
+  font-family:'Geist Mono', monospace; font-size:0.6rem; letter-spacing:0.12em;
+  text-transform:uppercase; margin-bottom:5px; opacity:0.7;
+}
+.bubble.coach{
+  align-self:flex-start; background: rgb(var(--pale) / 0.55);
+  border:1px solid rgb(var(--warm-line)); border-bottom-left-radius:4px;
+  color: rgb(var(--ink));
+}
+.bubble.mgr{
+  align-self:flex-end; background: rgb(var(--boyd)); color:#fff; border-bottom-right-radius:4px;
+}
+.bubble.mgr .who{ color: rgb(var(--boyd-line)); opacity:1; }
+.sample-note{
+  text-align:center; color: rgb(var(--muted)); font-size:0.85rem; margin-top:18px; max-width:60ch; margin-left:auto; margin-right:auto;
+}
+
+/* ---------- Built for Boyd ---------- */
+.bfb-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.bfb{
+  background: rgb(var(--surface)); border:1px solid rgb(var(--pale));
+  border-radius:12px; padding:26px 28px;
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);
+}
+.bfb .cat{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.bfb .cat .ix{
+  width:34px; height:34px; border-radius:8px; flex:none;
+  background: rgb(var(--boyd-tint)); border:1px solid rgb(var(--boyd-line));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Geist Mono', monospace; color: rgb(var(--boyd-deep)); font-size:0.95rem;
+}
+.bfb h3{ font-size:1.25rem; }
+.bfb ul{ list-style:none; }
+.bfb li{
+  position:relative; padding-left:20px; margin-bottom:11px;
+  font-size:0.94rem; color: rgb(var(--ink) / 0.85); line-height:1.5;
+}
+.bfb li::before{
+  content:""; position:absolute; left:2px; top:9px;
+  width:7px; height:7px; border-radius:2px; background: rgb(var(--boyd));
+}
+.bfb li b{ color: rgb(var(--boyd-deep)); font-weight:700; }
+.bfb-close{
+  margin-top:26px; background: rgb(var(--boyd-deep)); color:#fff;
+  border-radius:12px; padding:32px 36px;
+}
+.bfb-close h3{ color:#fff; font-size:1.5rem; margin-bottom:12px; }
+.bfb-close p{ color: rgb(255 255 255 / 0.88); max-width:74ch; font-size:1.05rem; }
+.bfb-close p + p{ margin-top:12px; }
+
+/* ---------- Footer ---------- */
+footer{
+  max-width:1100px; margin:0 auto; padding:30px 28px 60px;
+  border-top:1px solid rgb(var(--pale));
+  display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  color: rgb(var(--muted)); font-size:0.82rem;
+  font-family:'Geist Mono', monospace; letter-spacing:0.04em;
+}
+footer svg{ height:18px; width:auto; }
+
+@media (max-width:820px){
+  .header-inner, .tabs-inner, main, footer{ padding-left:18px; padding-right:18px; }
+  nav.tabs{ top:71px; }
+  .tabs-inner{ overflow-x:auto; }
+  .tab-btn{ white-space:nowrap; }
+  .hero h1{ font-size:2.1rem; }
+  .howrow,.fitrow,.tiers,.area-grid,.bfb-grid{ grid-template-columns:1fr; }
+  .tier:not(:first-child){ border-left:none; border-top:1px dotted rgb(var(--warm-line)); padding:18px 0 0; margin-top:18px; }
+  .tier{ padding:0; }
+  .brand-from .lbl{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand-boyd"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABcAiUDASIAAhEBAxEB/8QAHQABAQACAgMBAAAAAAAAAAAAAAgGBwUJAgMEAf/EAFUQAAEDAgMDBgUPCAUMAwAAAAECAwQABQYHERIhMQgTQVFhcRQiMoGUFxg3QlJUVmJzkaGxs9HSFTRTcnR1grIjhJKi0xYkM0NEg5O0wcPi8CY24f/EABsBAAICAwEAAAAAAAAAAAAAAAUGAAQCAwcB/8QAOREAAQMCAgcFBgYCAwEAAAAAAQACAwQFESESMUFxobHRNFFhgZETFDLB4fAGFSIzUlMWciMkQ/H/2gAMAwEAAhEDEQA/AKEzHgZtRkuTsC363TWxv/J82I2l3uQ5uSe5QT+sa0Fe88s4bHcV268oj2+Y35TMi2hCtOsA8R1Ebj0VYlYhnDY7PesvL3+VrbGmGLb5D8dTrYKmXEtqIUk8UnUDhROjq42kMljDh34ZobWUkrgXRSFp35KXfXE5m+/rb6Cn76euJzN9/W30FP31qOlNfuFN/WPRKP5jVf2Fbc9cTmb7+tvoKfvp64nM339bfQU/fWo6sDILL7BF6yisNzu2FrVNmvtul196OFLWQ8sDU9wA81U61lHSMD3RA4nDUFdoZKyseWNlIwGK0364nM339bfQU/fT1xOZvv62+gp++qe9SrLf4E2T0VNfisqMtlDQ4Kso7owH1UM/MKD+ngEU/L6/+/mpma5R2ZSFAqds7g6lQvuUK5WBynsbNH/PbLYJKfiNutn59s/VW6btkJlfcAopw+uE4oeXFluo07klRT9FavxtyYJTDTknB9/8K2RqmJcUhKz3OpGhPYUgdtb46m1y5OZo7x0WiSmusWbX6X34r7LPyp2SsJvGDnG09K4k0LP9lSU/zVnOHeULltdVIRJnTbO4o6BM6MQNe1Te0kDtJFR7iOx3fDt2dtV8tz9vmtb1NPJ0OnQQeCgeggkGuOq4+zUkgxZluPXFUm3uriOD894/+Lsgst3tV7hCbZ7nDuMY7g7GeS4nXq1STvr7a64LJd7rY56Z9muUu3yk8HYzpbV3HTiOw7qoXKPlHP8AhDFozAS2ptWiEXZlGyUno55A3afGTppu8XiQJqrHLENKM6Q4/VF6S+RSkNkGieCpqleEd5qQw2+w6h1lxIW24hQUlaSNQQRuII6a86Bo4lKUqKJSsVzFzAwvgO3CVf5+w64CWIjQ2339Pcp6vjHRI6TUu5k8oDGGJlOw7Is4etitQEx16yVp+M77XuRppw1NX6S3T1WbRgO8qhV3GClyecT3BVPjHHuD8IoJxDf4cNzTUMbW28R1htOqiO3StP4p5UNljqU1hrDsy4Ebg9MdEdHeEjaUR2HZqWXFrddW64tS3FqKlrUdSoniSek1+sNOvvtsMNLddcUENtoSVKWonQAAbySeimCCx07BjIS7gPvzS9Pfqh5wjAbxP35LcF85R2Y08KTCXarUk8DGi7ax53CofRWH3PNXMe4a+E40vCdePMP8x9ns1srLXk23i7MNXDGU1dmjrG0ITASqSR8ZR1S2ezRR6wDW9sMZQ5dYeQnwPC8GQ6P9dNT4Ssnr1c1A/hArVLW2+mOjGwE+AHNboqK41I0pHlo8T8gooOKcXTnNg4lv8pfV4e8s/wA1ezwnGoTznhGI9k+2239PnrsIjR48VoNRmGmW08EtoCQPMK9tVjfW7Ih6/RWRYnbZT9+a67k4rxfBc2E4mv8AFWPai4PIPzbVczbM2Mybdp4NjS7L098OiR9oFVeUuLFmNFmXGZkNnih1AUD5jWDYoyby4xA2rwnDMSG8QdH4A8GWD1+Jokn9YGs23mnflLFyPRYOs1QzOKbmPmVO1j5SGYkAJTOFpuqB5Rfi7Cz52ykD5q2RhXlP4flLS1iSwTrWonQvRliQ2O0jRKgO4KrCMzeTlfbGy7ccIynL7CRqpUVaAmWgdmniu+YJPQEmtFuIW24ptxCkLQSlSVDQpI4gjoNXWUdBWN0ox6ZYeX0VF9ZcKJ2jIfXPHzXYXhHG2E8WtbeHb9Cnq02lNIXsupHWptWi0+cCsgrrWjvOx325Ed1xl5tW0hxtRSpB6wRvBrcuWvKGxXh5TULEYOIbaNAVuK2ZTY7HOC+k6L3n3QodU2F7c4Tj4HX9+iI0t/jecJhh4jUt65jw844Acm4Jvluukcb/AAKVDbRIHYle5C/Ps+etDXTPnNy1T3IFzMWFLaOjjEi2htae8HfVSYBxxhrHFq/KGHrgiQEac8wsbLzBPQtB3jv4HTcTXuxpg7DeMbcYOIrTHmpAIbcUnR1rXpQsb0nuPfVSnqo4HaFREDh4YFXaimknbp08pHniFJnriczff1t9BT99PXE5m+/rb6Cn764jOfKm85dXIunbnWJ9ekWeE8CeDboHkr7eCuI6QNdUyxUtHMwPYwEHwSxNV10Lyx7yCFtz1xOZvv62+gp++nriczff1t9BT99ajrNMncax8CYwZvEuyRLrGOiXA40lTzI1/wBIyo+SsfMRu1HEeyUNO1hLYgT3LyKvqHPAdKQO9b8y4ufKCxaW5Ux622C2K0PhE23AOrHxGdQo96tkEHcTW9LaxIjQm2Zc1ya8B47y0JQVHuSAAP8A3U18uF7/AGjE1kj3qyTW5kKQnVDiOg9KVDilQ4EHeK5Ok2pmMjsNANw2AJ0povZt+Iu8SUpSlVlYSlKVFFiGYFux68wqTgjEUGLISPzSfEStpf6rgG0k94V5qnjF+bmeGEZ/gWIo0a3uEkIU5b0ltz9RYJSrzE1W1aZ5SOZ+H8N2V/DAhQL3eZSBrEkth1mMkjct0Hp6Up49O4aalLdJpPEZiD/LP16oZcI9GMyCUsw9PTotKeuJzN9/W30FP309cTmb7+tvoKfvrUdZ/k1lfeMxrwUs7cOzR1gTJ5TqE9PNo904R5gDqegFmlpaOJhe9gAHgleGsrZnhjHkkrJbXnpm/ebi3AtLjMyW75DEa2JcWrt0AJ07eArlcYZn594RU3/lJFRb0OgbDq4DS2lE9G2nVO18XXUdVUrgrB2G8G2xMDD1rYho2QHHQnV14jpWvio9/m0rmZsWLOiOxJsZmTGdTsuNPIC0LHUUncRS8+402n+mEaPFMTLdU+z/AFTnS4KM/XE5m+/rb6Cmv31xOZvv62+gp++sQzjtsGz5o4htlsjIiw48xSWWUeSgaA6DqG/hWJUxR0dLIwPEYzGOpLktdVxvLDIcjgtueuJzN9/W30FP309cTmb7+tvoKfvrUdb55ImFsOYnlYmTiCywrmIyIpZEloL5vaLu1prw12R81a6qnpKeIyujBA8FspamsqZREJCMVwXriczff1t9BT99PXE5m+/rb6Cn76p71Kst/gTZPRU09SrLf4E2T0VNB/zCg/p4BGfy+v8A7+amH1xOZvv62+gp++v1PKKzMHGZbFd8IffVOKyoy2UNDgqy+aMBXHT8kMrZmvOYTYaPWxIea08yVgV6Lhb9sPALw0FxGqbmp9jcpTMZo6uNWF8dTkNY/lcFZBbOVLfG9PynhK3Sesx5S2f5gusyxFyZMHTEqVZbtdbS6R4oWpMhofwnRR/tVqLHPJ+x5hxDkm3ss4ghoGu3C154DtaO89ySqrUbrXUZYAHxyVWVt1p88SR4YFbesXKbwZLWhu7Wm8WxR4uBCHm095SQr5k1svCmYmCMUKQ3Y8S2+U8sapYU5zbx/wB2vRX0V1+uIW24tpxCkOIUUrSoaFJHEEdBrxIB4itktip3/ASOP36rVFf6hhwkAPBdltKg/A+b+PsIqQiDe3JsRP8Aslw1fa06hqdpI7EqFUTlnyhMK4lcbgYgQMO3FW5KnnNqM4exzdsnsUAOgEmg1VaKiAaQGkPDojVLeKec6JOifHqtz0r8SpKkhSVBSSNQQdQRWOZo3CXactsSXKA4W5Ua2SHGVp4oWGzoodx3+ahjGl7g0bUTe4NaXHYsSvWZV7vGJpeGMs7AzepcFfNz7nMdLcGIvhskje4rUHUJ6t2uh09E/EOdOF2Tc79hnDOIba340huwvPIkNIHFQS75enuUjU9nGtc4jt8eycjW2qtii05MdYlSHG1aKcccc8bUjjoAE9yQOivvwCxa2s9rLCwlbb7gxliE69cbfeXXULuKSlQTzbalLCtDvJJHkkgapNGhTxhji1owGIzGvR8ccsdmA3oP7xI57Q4kE4HI6sfDDPDbidy3rgnFFmxjhyPfrFJ5+I+CN40W2oeUhY6FD/8ARqCDStIYeusnBGbeYdnsTaTAXLiyUsaaoaW40Vr2RwGpVp3JA6KVRmoyHfo1HAjzGKvQ1YLf16xiD5HBUTXA5jex7iT90yvslVz1cDmN7HuJP3TK+yVVWL4271Zk+A7l14ClBSujLmqVc/Jp9g/DfyT327lQxVz8mn2D8N/JPfbuUCv/AGdu/wCRR/8AD377t3zC2NSlKUk3JSlKiiw/NfL+z5g4adttwaQ3NbSpUGaE+PHc03HXpSdBtJ4EdoBEF3SFJtlzlW2a3zcqI8th5GvkrQopUPnBrskJABJIAHEmuvjNS6Q71mTiK629SVxJNwdUytPBadrQKHYrTXz0y2CV5Loz8Iz3JZ/EMMYDZB8Ry3rGaUpTKlhVLyNcaSZ1vuGCp7xd8AQJUAqOpSyVaLR3JUUkfrkcAKoipP5F1huD+M7niQIUi3xYSohc03OOrUhWyOvRKNT1ap66rCki7sY2qdo/ZT1aHvfSNL/sJWpM/M4YeAoqrPaC1MxI8jVLZ3oiJPBbnaehPTxO7TXIc7sesZfYIeuadhy5SDzFvZVvCnSCdoj3KRvPmHEioUuU6ZcrhIuFwkuSpclwuvPOHVS1E6kmrFptoqD7WT4Rx+ir3a5mmHs4/iPD6r23y7XO+XV+63ic/OmyFbTrzytVK7OwDgANABuAAr4qUpuAAGAScSXHEryQlS1pQhKlrUQEpSNSSeAA6TVk8nfKKLgy1M36+xW3cSyUbWiwFCCgjyE/H08pQ7UjdqVaa5JeDW8RZgLvk1oLg2JKXwlQ1C5CiQ0P4dFL7ClPXVj0tXuucD7uw7+iZ7HQt0feHjd1SlKUtplSlKVFEpSlRRK0hyj8n2MUW9/FOG4gbxBHRtvstJ08PQBwI/SgcDxOmydfF03fSt9PUPp5A9hzWiop2VEZjeMl1pDeNRSts8qXBreFcyVzobWxb72lUtsAbkO66OpHnIV/Hp0Vqan2CZs8bZG6iuf1EDoJXRu2LksNX274bvDN3sc96DOZPiOtniOlKgdyknTekgg1ZmRebVvzDtxhy0tQsQxkbUiKk6JdTw5xrXeU9Y3lJO/UEExDX22K63Cx3iJd7VJXFmxHQ6y6g70qH1gjUEcCCQdxqrX29lWzudsP3sVu33F9I/vbtC7FrtboN3tsi23OIzLhyEFDzLqdpK09RFR3nvkvcMDPu3uyJdnYbWrUq8pyESdyXOtHQF+ZW/QqqHKXGsTH2CYl/jpS0+dWZjAOvMvp02k9x1Ch8VQrKnmm32VsvNocacSUrQtOqVA7iCDxFKtLVzUEpHqE2VVJDXxA+hXWrSt/5+5FP2UyMT4KjKftW9yVb0AqXF61Nj2zfWOKe0eToAbxqKcqapjqWacZ+iS6qlkpn6Eg+qzXKXMe95d3zwy3qMiA8QJkFatEPDrHuVjoV5jqN1WzgLGFixth9q9WGWHmVeK62rc6wvpQtPQofMRoQSCDXXjWSZeY1vuBcQIvFikbKjol+OvUtSEe5WPqPEdFUbjbG1Q02ZP571ftt1dTHQfmzkuwmlYhlZmFYcwrELhaXOalNACZCcUOdjqPX1pO/RQ3HsIIGX0nSRujcWvGBCco5GyNDmHEFKUrQfKGzuRYPCMKYPkpcu+9uZORoUxOtCOgudfQnv4bKamkqX6EYWupqY6ZhfIclyPKBzqj4Padw7hl1qTiFadHXdym4IPSRwU51J4DiroCpClyJEuU7KlvuyJDyy4666sqW4onUqUTvJJ6TXg6tbri3XVqccWoqWtR1KiTqSSeJPXW6cgskpOMVM4hxMh2Lh4HaZaBKHZ3ceKW+tXE+190HCKKntkOLjvO0pOllqLpPg0ZbBsC4jIvJ+5ZgTE3K4c7Bw40vRyQBouSQd6GtfmKuA4bzqBZlhtFtsVojWmzwmYUGMjYZZaGiUj/AKknUkneSSTqTXvgxIsCEzChR2o0ZhAbaaaSEoQkDQAAbgAK91K1dXyVb8TkNgTVQ0EdIzBuZ2lKUpVFXlBWffsyYo/bj/KmsHrOM+/ZkxR+3H+VNYPXQqX9hm4clzus7Q/eeaVSPId/PMXfJw/reqbqpHkO/nmLvk4f1vVVu/Y3+XMK1Z+2M8+RVOUpSkdPSUpSoolKUqKLX2bOUuGcwIi3ZDKbfeQnRm5MIG3qOAcG7nE9h3joIqM8fYQvmCcRO2S+xg0+kbTTiN7b6OhaD0j6Qdx0NdhtYRnRl/BzCwg7bnEtt3KOFO26SRvad08kn3CtAFDuPECjFtuj6dwZIcWckHudrZUtL2DB/NQTSvdNiyIM1+FMZWxJjuqaeaX5SFpJCkntBBFemnEHFJZBBwK2lk3nPf8AAbzVvmKdu2H9QFQ1r1WwOtlR8n9Q+Kfik61X9oueH8c4RMmBIauNouTC2l6dKVApWhQ4pOhIIO8V13VsPI3Mqbl5idDji3HbHMWlNwjDfoOHOoHu0/3hu6iA1ytbZgZYhg8cfqjdsuroSIpji08PotmX62LwVhaVllmMi8nBRmCRa8Q25oOcynb2w06Nk7PjE9GupOgI0I5vHOYeXt/xXh/EOEZF7xFim0BwQINtiLSl4LABDxcb12BqfJ3jaPeN+xX406E1KjOtvxpDYcbWk6pcQoagjrBBryYjsMa8ww01rx2EAa/NQH35pOk9pxz1HAHHI4jDbtzTCKMgYMcMMtmJGGrA47NmS1zkngW42KBdL9i/mZOJcQSfC56dy0MAbRQ0OI8XaVrpu3gDUJBKtlUqlLM6V5e7arcUTYmBjdiVwOY3se4k/dMr7JVc9XA5jex7iT90yvslV5F8bd6yk+A7l14ClBSujLmqVc/Jp9g/DfyT327lQxWycIZ2Y5wrhyJYLQ9bkwogUloOxdtWilFR1Ou/eo0MutJJVRBkevHHgUVtNZHSyl0mohXJSox9cbmX+ntPoX/lQ8ozMsgjwi0jtEL/AMqA/kVV4eqP/ntJ4+is6uPv97tFgt67he7nEt0VHF2Q6EJ16hrxPYN9RPds7s0Lk2ppzFL0dtW4iKw0yR3KSnaHz1gl0uNwussy7pPlz5JGnPSnlOr06tpRJqxF+H5Cf+R4G77Cry/iGMD/AI2k78lvjPPP0X6BIw3grnmIDwLcq4rSUOPoPFDaTvSkjiToTw0HEz7X6nZKhtEhOu8gakDurYWB4WTi1oOKr7itKhvUlEBtpo9mqFOqI7tDRyOKKij0WNPkMSUBkllr5MXuA3nABa+bQtxxDbaVLWtQSlKRqVE8AB0mtz5V8n7EuJHWp2J0vWC07iULTpLeHUlB8jvXv+Ka3jlLJyThltvAsqxtzFjZCnFlMxY6R/Tf0mnZwradBa29SjFkbS3fr9EcorJFk+R2lu1eq43DNitOGrJGstkhNw4MZOy22j6SSd5UTvJO8muSpSl0kuOJ1piADRgFFvKtxQ5f81JFtQ4TDsjYiNJ13c4dFOq79dEn5MVqSuax26t/HOIHnTqty6SlKPaXVGuFroNLGIoWsGwLnlXKZZ3vO0pSlKsKsrM5IdnRb8omrhsaOXSY9IUSN+ylXNAd39GT563DWC8n9pLWTOF0pGgMEL86iSfpNZ1XPq15fUPce8rolGwMp2NHcEpSlVlZSlKVFEpSlRRKUpUUWkeWVZ0zcsot2Skc7bLghRV0824ChQ86i2fNUgVcXKgbDmRmIgfaiMoeaS0ah2nCxOLqYg7Cfkk6/tAqQRtA+aUpSjSBrd3I+xQ5asw3cOOunwS8sKCUE7g+2CtJ7NUbYPX4vVVf11+5PSHI2a+FHWlbKjd4zZPYtxKVfQo12BUoX6INqA4bQnGwyl9OWnYUqcs/8iBMMjFOBYgTJJLky1tjQO9JWyOhXWjp6N+5VG0obS1UlM/TYfqilVSx1LNCQfRdaa0qQtSFpKVJJCkkaEEcQRX5VhZ+5JRsYJdxDhhtmJiFI2nWjohud3nglzqVwPBXQRIlwhy7fOfgzozsWUwstvMuoKVoUOIIPA06UVdHVs0m69oSRXUElI/B2rYVyGEcR3jCl+j3uxTFRZjB3Eb0rSeKFj2yT0juO4gEWrkxmnZsxbUQ3swr1HQDLgKVqQOHONn2yCeniDuPEEwnXuhypMOQJEOS9GeSFJDjLhQoBQKVDUb9CCQesEitdfbo6tueThtWy33KSjdhrb3dFTHKHzy8GMrCOCZf+cDVqdc2lf6PoU2yR7boK/a8Bv3pmE9Zr9SkkhCEkknQADj2Cqe5PmRfgio2K8cRAZA0chWt1Ooa6nHh7rpCPa8Tv3Jw/wCva4PvEn79Fs/7F1n8OAH36rheT9kUq7CNirG0ZSLedHIdtcGipA4hbo6EdSeKunxdyqnbQhttLbaUoQkAJSkaAAcABX7SlOrrJKp+k/yHcm2ko46Vmgwbz3pSlKqq0lKUqKKCs+/ZkxR+3H+VNYPWcZ9+zJij9uP8qaweuhUv7DNw5LndZ2h+880qkeQ7+eYu+Th/W9U3VSPId/PMXfJw/reqrd+xv8uYVqz9sZ58iqcpSlI6ekpSlRRKUpUUSlKVFFHPK8w0izZmN3eO2EMXqMHlacOeR4i9PNzZ71GtMVUvLdjtqsGGpZ05xuW80O5SAT/IKlqnm1SGSkYTsy9EiXeIR1bwNufqlKUoihqrrkdYsdu+CJmGpbpW/ZXU8wVHf4O5qUjt2VJWOwFIredSFyMJTjWaNwihR5p+0OFSfjJda0PzFXz1XtI93iEdU7Dbmnu0SmWkaTsy9EpSlDUSSuBzG9j3En7plfZKrnq4HMb2PcSfumV9kqtkXxt3rCT4DuXXgKUFK6MuapVc5D5Z4DvuU1iu13wzCmTpDbpdec2tpZDywNdD1ADzVI1XPyafYPw38k99u5QW+SPZA0tOGezcUcsMbXzuDhjl8wvq9R3LH4HW7+999PUdyx+B1u/vffWeUpW96n/mfUpr92h/gPQLX7+S+V7ySlWEIaR8RxxB+dKhWPXrk45bzkEQmbpal9Co0wr+cOhe75q3DSs21tQzU8+qwfRU79bB6KSsacmfFFtbck4ZukW9tJ1IYcT4O/p0AakoUe0lPdWkLpAnWu4PW+5RH4cthWy6w8goWg9oNdklYNm7lpY8w7ItiY0iPdGkHwKelPjtK6Eq90gnik9eo0OhotR3x4cGz5jv2oPWWKNzS6DI92xQWQCNCNazbA2amOcHLbTab287ER/sUwl5gjqCSdUj9QprFb1bZlnu8y03FkszIby2HkHoWk6HTrG7cekV8dMr445m4OAISwySSB2LSQQrQyjz2w7jR5m03RsWS9uEJQ045qzIV1NrOnjH3KtDv0BVW3a60qrfkrZnzMTwXsJYgkqkXWAzzsWS4dVyGAQkhR6VpJG/ioEa6kElZudpELTLDq2juTRa7uZ3CKbXsPep4zqtDljzYxLAWkpBuDj7e72jp51OnmWB5qw+qe5ZOB3ZDEPHdvZKvB0CJcQkcEanm3PMVFJPxk9AqYaPW+oE9O1w16jvCAXKnMFQ5p1HMbilKUq6qKubk0TUzsk8PLB8Zlt1hQ6ih1aR9AB89bHqduRViRD1lvOE3nBz0Z4To6Sd5bWAlYA6kqSk/wC8qiaQrjEYql7T34+ua6Db5RLTMcO7klKUqkriUpSoolKUqKJSlKii1VyrpaI2SV2ZUdFSn4zKO0h5Cz9CDUT1S/LYxE2pNiwmysKWlSrhISD5O4tt/Pq78wqaKc7JEWUoJ2kn5fJJd8lD6rAbAB8/mlKUougyz7k92dy95xYdYShRRGkia4oe1DI2wT/EEjz1d9T/AMjvA7lssUrGtwZKJFzTzEIKGhEcHUr/AI1AadiAemqApLvNQJajBupuXVO9lpzDTAu1uz6JSlKEoslSRy0mGW8xbU62y2hx61guLSkArIcWASenQbqrepM5a3sgWX91f91dFrL2sbihN77I7eFoWlKU6JIWyOTKyy/njhxDzSHUhUhYC0ggKTHdUk7+kEAg9BAq5ah7kvezph3+s/8AKu1cNKN/7Q3/AF+ZTh+H+zO/2+QSlKUDR1KUpUUSlKVFFBWffsyYo/bj/KmsHrOM+/ZkxR+3H+VNYPXQqX9hm4clzus7Q/eeaVSPId/PMXfJw/reqbqpHkO/nmLvk4f1vVVu/Y3+XMK1Z+2M8+RVOUpSkdPSUpSoolKUqKJSleuS+zGjOyZDqGmWkFbjizolCQNSSegAVFFM3Lduza5uGrGhYLjbb0t1OvAKKUIP91z5qm+suzgxcrG+YVzv6SsRFr5mElQ0KWEbkbugneojoKjWI0/UEBgp2sOvrmuf3GcT1LnjV0SlK9sONImS2YcRlb8h9xLTTSBqpa1HRKQOkkkCrepUwMcgt/8AInszjuKL9iBSFBqNDTDQojcpTiws6doDQ/tDrqqawvJbBTeA8AQrIrYVNXrInOJ3hT6gNrQ9ISAEg9SRWaUh3GoFRUOeNWzyT/bqc09O1h17fNKUpVJXUrgcxvY9xJ+6ZX2Sq56uBzG9j3En7plfZKrZF8bd6wk+A7l14ClBSujLmqVc/Jp9g/DfyT327lQxVz8mn2D8N/JPfbuUCv8A2du/5FH/AMPfvu3fMLY1KUpSTclKUqKJSvmuU+DbITk25TY8KK2NVvSHQ2hI7VE6Cp/zl5Q9vYhSLLgF1UqY4Chd0KNGmRwPNA71q6labI4jaqzTUktS7RjHRVqmripm6Uhw5rTXKJlw5udeJn4KkKaEhDRKTu5xDSEOf30qHeKwCvJalLWpa1KWtRJUpR1JJ4knpNeNPsMfs42s7gB6JAmk9rI5/eSUraXJWalOZ32ZUcL5tpqSuRsndzfMLSNezbUjz6VrW3QplxnswLfFely31hDTLKCpa1dQA3mrK5OOVa8A2d653lLasQXBAS6lJChFa11DQUOJJ0KiN2oAGuzqaF1qmQ07mnW4YAb1ftNK+aoa4DJpxJ3LalwhxbhBfgzWG5EWQ2pp5pxOqVoUNCkjpBBqJM9crLhl7fFPxkOyMPSnD4HK480Tv5lw9Ch0H2wGvHUC4q+S8W2BeLZItl0iMzIUlBQ8y6naSsdo/wDdKV6CvfSPxGYOsJqr6BlYzA5Eaiut2lb0zh5Pt4sDj93wah672rUrVDA2pMYdQH+tSOzxuGoO9VaMUClRSoEKB0II3g9VOdPUxVDdKM4pJqaWWmdoyDBZHlni2XgjGtvxFESpwR17MhkHTnmVblo7yN414EA9FX1h6726/wBkiXm0yUyYMxoOsuJ6QegjoIOoIO8EEGuuGtlZJZtXXLqcYziF3CwyF7UiHteM2elxoncFdYO5Wm/Q6EDrrbjUtD4/iHEIlaLkKYmOT4TwKuOlcBgnGWG8Z2wXDDt0ZmIAHONg7LrJ6loO9J79x6NRXP0oOY5h0XDApxa5rxpNOISlKViskpSlRRK4vFd+tmGMPTL7eJAYhRGytxXSrqSkdKidAB0kiuPx5jnDGCLd4ZiG5tRyoEsx0+M+92IQN57+A6SKjfOfNK8ZjXVPOpVCs0ZZMSClWuh4c44fbLIPckHQdJUSoLdJVOxOTe/ohtwuUdI3DW7YOqxrHmJp2MMW3DEdxGy9Md2kthWoaQBohAPUEgDXp3nprg6V5NIW66hppCnHFqCUISNVKJ3AADiadmtaxoaMgEjuc6RxccyV41tfk/5TS8eXdF0ujLjOGorn9M4dUmWof6pB6vdKHAbhv4ZTk5yebhdHGLzjtty32/ctFtBKZD3yhG9tPZ5XHyaqa3w4lvgswYEZmLFYQG2mWkBKEJHAADcBQG5XdrAY4Die/u3eKP2yzueRLOMB3d+9eyOy1Hjtx47SGmWkhDbaEgJSkDQAAcABXnSlKqa0pSlRRKkzlreyBZf3V/3V1WdSZy1vZAsv7q/7q6LWXtY3FCb32R3lzWhaUpTokhbM5L3s6Yd/rP8AyrtXDUPcl72dMO/1n/lXauGlG/8AaW/6jmU4fh/szv8AY8glKUoGjqUpSoolKUqKKCs+/ZkxR+3H+VNYPWcZ9+zJij9uP8qaweuhUv7DNw5LndZ2h+880qkeQ7+eYu+Th/W9U3VSPId/PMXfJw/reqrd+xv8uYVqz9sZ58iqcpSlI6ekpSlRRKUrCMd5rYGwalbd1vTT0xA/Momjz5PUUjcj+IpFZxxPkdosGJWEkjI26TzgFm9Szym84mbs29grCksOQdrZuU1pXivkH/QoI4o18ojyuA3a64nm1nriTGjT1qtiDZLI5qlbLS9XpCepxfQD7lOg3kEqFakpmttnMThLNr2Dqli53kSNMUGraeiUpWXZeZc4tx3KSiw2xRihWy5Of1RHb69V6byOpIJ7KPSSNjbpPOAQCOJ8rtFgxKxRlp195thhtbrrighttCSpS1E6AADeST0VWvJwyaVhYN4rxSwn8uLSfBYp0UISSNCT0c4QdN3kg6cSdMoyfyaw7gBKJ6z+Vb6U6KmvIADWo0IaT7QdupUd+/Q6Vs2la5Xf2wMUPw7T3/RNdss/sCJZs3bB3fVKUpQFHkpSlRRcVijEliwvbFXLEF1jW6KNdFvL0Kzx0SnipXYkE1OGbXKMTdbdOsGELXpElMrjvTpo8ZSFJKTzbYO7cdxUf4RW7b/lPgLEFzXcr3ZHbhLXxdkXCSsgdQ1c8Udg0Ar4PUNyr+CbXpb/AOOidJLRRYOkBcfLDmhtXFWygtjIaPPHkoYpVz+oblX8E2vS3/x09Q3Kv4Jtelv/AI6Nfn9P/E8OqB/49P8AyHHooYrZ+DM8sbYSwzDw9amrOqHDSpLRfjLUvxlFR1IWAd6j0VTHqG5V/BNr0t/8dPUNyr+CbXpb/wCOtUt4o5hoyMJHl1W2GzVkB0o5AD59FP8A65XMb9BYPQ3P8Snrlcxv0Fg9Dc/xKoD1Dcq/gm16W/8Ajp6huVfwTa9Lf/HVf362/wBXAdVZ9xuX9w49FPjnKSzIWPFFjb/Vhq/6rNcLdM9M0Z4Uk4mVFQr2saK03p3K2dr6ap9OSGViRuwlHPfJeP1rr6o+T+WbA0Rg22K+USV/zE1kLjb25th4BeG3XB2TpuJUNXm8Xa9PpkXm6zrk8nyXJchbyk9xUTpXzQ48ia+GIbDsl48G2UFaj5hvrsDh5f4EhqCouDcPtKHBSbc1r8+zrWQRY0aI0GosdphscEtoCR8wrYb+xowZHxWkfh97ji+Th9VBmH8qMxr4oCFhC5tpPt5bfgydOvV0p1HdrW08HcmC6vrQ9iy/x4bXEx7eC64R1FagEpPcFVUtKpTXypfk3BqvQ2Kmjzdi7esUwDl5hHA7BTh+0tsvrTsuS3Dzj7g6is7wOwaDsrK6UoS+R0jtJxxKLsY1g0WjAJSlKwWSVgWYuUmCscFyRcrd4JcVD8/hkNvE/G3bK/4gezSs9pWyOV8TtJhwKwkiZK3ReMQpAxtybsZWlS3sOyIuIIo3hAUGJAHalR2T5lanqrUV9sV6sMjwe92ifbXddAmVHU3td20N47RXY5XrksMSWFMSWW3mljRSHEhSSO0GjMF+mZlIA7gUEnsED84yW8Qut+2XCfa5qJ1snSYMpvyH47qm3E9ykkGtr4X5ROYdoQhme7AvbSemWxsuadQW2U/OQapO+5QZa3kqVLwjb2lqOpXECox16/6Mp189YVfeTdl8plb8WRfYWyNyGZaFJ4/HQo/TV8XCkrP0yR4ny54qibdWUeccmXnyWNW7lUNkaXHBa0n3Ue4BWvmUgfXXI+ulw9p/9Vu2vyzf31gN7yjw5BmqYan3dSR0rdb1+huvg9S+w+/bp/xG/wAFem30Jz0D6nqoK6vGWkPT6LO7lyqE6aW7BZPxpFw00/hSg/XWBYp5QuYt5QtmHKh2RlW7SEx45H66yojvTsmuVw7k/hu5TksP3C8JSelDrQP0tmtpWXk3ZdtNpelOXudtDXZflpSB/wANCT9NQx0FMNL2ePHmVNO4VJ0faYcOQUiT5ku4THJs+XIlynTq4++4XHFnrKlEk+evuw7hy/4ie5mw2W4XNWuyTGYUtKT8ZQGifORVxWHKbLiyFKoWELapad4XJQZCgesF0qI81Zmy00y0lpltDbaRolCEgADsArTLf2gYRM9fotsX4fcTjK/06lSVgbk1YquZRIxROj2KOTqWEEPyCOrxTsJ169pXdVB5d5XYNwKlLlmtgcnbOyqfKPOPq69FaaJB6QkAGs1pQapuVRUZOdl3DUjNNbaemzY3PvOtKUpVFXkpSlRRKUrjMS2G24itq7bdm5DsRflttSnWQsdSubUkqHYd1etwxz1Lw44ZLA8x88ME4PLsRqX+WrojUeCQlBQQrqW55Kd/Eb1DqqUM1sf3TMTETd3ucWLEDDPMMMsA6IRtFW8k6qOpO/d3Cq3GRuVYGgwk0P62/wDjr99Q3Kv4Jtelv/jo5R1lDS/qa1xd35dUEraKtqxolzQ3uz6KGKVc/qG5V/BNr0t/8dPUNyr+CbXpb/46Ifn9P/E8OqG/49P/ACHHoozwNiW44PxVBxJakR1zIalFtL6CpCgpCkKBAIPkqPAiqsy45QuEcRc3DxB/8cuKt2she1GWex3ds/xgDo1NZB6huVfwTa9Lf/HT1Dcq/gm16W/+OqNZX0NXm9rse/Lqr9Hb62kyY9uHdn0WxGlodbS42tK0LAUlSTqFA8CDXlXBYQwjYMJRVxMPxH4cZR15gy3nG0nrShayEk9OgGtc7QJ2jj+nUjrdLD9WtKUpWKyXrlSGIsdyTKfbYYbSVOOOLCUpA6STuArSWZHKNwzZOchYVZ/L84ajn9SiKg/rcV/w7j7qtnYxwPhnF/NpxHBentt+SyZr6GgevYSsJ17dNaxz1Dcq/gm16W/+OrtK6kZnMCfAYYc+ipVTapwwhIHicceSivFN7m4kxFOvty5rwuc8XXQ0nZQCegDU6DzmuMq5/UNyr+CbXpb/AOOnqG5V/BNr0t/8dH232maAA04eXVL7rBUuJcXjE7+ihisyyyzIxFl45cHLAiAozw2HvCmVL8ja2dNFDTyz9FVr6huVfwTa9Lf/AB09Q3Kv4Jtelv8A46xkvdLI0tewkeXVZRWOqicHseAfPop/9crmN+gsHobn+JT1yuY36Cwehuf4lUB6huVfwTa9Lf8Ax09Q3Kv4Jtelv/jqr79bf6uA6q37jcv7hx6Kf/XK5jfoLB6Gv/Er4Lhyhcz5SClq6QYWvto8FGv9/aqj/UNyr+CbXpb/AOOv1GSGViTuwkwe+S+frXXor7cP/LgOq8NBcjkZuJ6KPcQ4/wAbYgQtu8Ypu0ppY0Uz4QUNKHahOiT81YxqlI01CRV7xspMtY+mxgu0K0/SM85/NrWQ2rDGG7Tp+S8P2mCRwMeG22R/ZArcL7DGMI4+QWk2GaQ4ySY+pUCWHB+K78pAs2G7tOSvg41EWW/OvTZHnNbLwrycMe3RSF3dcCxMHyuedDzoHYhslJ86hVjUqrLfp3ZMAHH79FahsEDc3knh9+q1Dgjk9YDsBbkXNl7EMtO/am6BkHsaHikdi9qttR2GYzCI8dltlltIShttISlIHAADcBXspQiaolnOMjsUXhp4oRhG3BKUpWlbkpSlRRKUpUUX/9k=" alt="Boyd Gaming" /></div>
+    <div class="brand-from">
+      <span class="lbl">A program proposal from</span>
+      <svg role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="overview">Program Overview</button>
+    <button class="tab-btn" data-tab="mockup">Mock Up</button>
+    <button class="tab-btn" data-tab="builtfor">Built for Boyd</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ TAB 1: PROGRAM OVERVIEW ============ -->
+<section class="panel active" id="overview">
+
+  <div class="hero">
+    <span class="eyebrow">Casino Operations · Leadership Development</span>
+    <h1>Building the next generation of Casino Ops leaders</h1>
+    <p class="sub">A focused program to develop managers who run the floor with intention: coaching their teams in real time, making data-driven shift decisions, and keeping leadership informed.</p>
+  </div>
+
+  <div class="intro">
+    <h3>How Flint works</h3>
+    <p>Flint is a behavior reinforcement platform. Rather than pulling managers into a classroom, Flint delivers short <strong>activities inside the flow of a real shift</strong> &mdash; built around moments that already happen, like the floor walk, the shift-start review, and the end-of-shift report.</p>
+    <p class="coach">Working alongside each manager is a personalized <strong>coach</strong>. It responds in the moment: it reads what the manager actually did, gives specific feedback, asks the sharper follow-up question, and adapts to that individual over time. The coach is what turns a one-time activity into a habit, and it is available on every shift without adding a person to the floor.</p>
+    <p>Change is measured, not assumed. Every program opens with a <strong>baseline</strong> of real behavior and closes against a <strong>follow-up</strong>, so improvement is observable.</p>
+
+    <div class="howrow">
+      <div class="howstep">
+        <div class="n">01 · The activity</div>
+        <h4>In the flow of work</h4>
+        <p>A short, specific task tied to a moment in the shift the manager is already living.</p>
+      </div>
+      <div class="howstep">
+        <div class="n">02 · The coach</div>
+        <h4>Personalized reinforcement</h4>
+        <p>Real-time feedback that adapts to the individual and pushes them to the next level.</p>
+      </div>
+      <div class="howstep">
+        <div class="n">03 · The measure</div>
+        <h4>Baseline to follow-up</h4>
+        <p>Behavior is captured at the start and re-measured at the end. Progress is visible.</p>
+      </div>
+    </div>
+
+    <p class="ten"><b>70 / 20 / 10</b> &nbsp;·&nbsp; most real growth happens on the job. That is exactly where Flint operates.</p>
+  </div>
+
+  <div class="section-head">
+    <span class="eyebrow">The Program</span>
+    <h2>Three development areas</h2>
+    <p class="lede">Each area is grounded in what Boyd's own stakeholders identified as the highest-leverage opportunities to improve in the Casino Ops manager role.</p>
+  </div>
+
+  <div class="areas">
+
+    <div class="area">
+      <div class="area-top"><div class="area-num">1</div><h3>In-the-Moment Coaching</h3></div>
+      <div class="area-grid">
+        <div class="area-block">
+          <div class="lab">The Gap</div>
+          <p>Casino Ops leaders sometimes move past team member behaviors without addressing them. Root-cause conversations and documented follow-ups are inconsistent across shifts and properties.</p>
+        </div>
+        <div class="area-block">
+          <div class="lab">Why It Matters</div>
+          <p>Consistent coaching directly affects retention and performance. When leaders address behaviors in the moment, team members feel seen and held to a standard. When they don't, small issues compound. At 38% annual turnover, the cost of underdeveloped teams is already visible in the business.</p>
+        </div>
+        <div class="area-block wide">
+          <div class="lab">What Activities Look Like</div>
+          <p>Activities are built around the floor walk, the pit walk, and shift check-ins. A manager might be asked to notice a specific behavior, deliver a direct comment about it, and reflect on how it landed. Later activities introduce structured conversation techniques, and eventually close the loop by requiring documented follow-up in WorkDay across shifts.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="area">
+      <div class="area-top"><div class="area-num">2</div><h3>Data-Driven Floor Decisions</h3></div>
+      <div class="area-grid">
+        <div class="area-block">
+          <div class="lab">The Gap</div>
+          <p>Managers have access to rich operational data &mdash; the Boyd Recommendation Engine, THEO, hands per hour, labor status, utilization rates &mdash; but don't always translate it into real-time floor decisions. Games are sometimes left in suboptimal configurations, and labor adjustments can lag behind what the data already suggests.</p>
+        </div>
+        <div class="area-block">
+          <div class="lab">Why It Matters</div>
+          <p>Better yielding decisions and labor calls have a direct, measurable impact on revenue and expense. Small improvements in how managers respond to the data compound across 28 properties and hundreds of shifts per week.</p>
+        </div>
+        <div class="area-block wide">
+          <div class="lab">What Activities Look Like</div>
+          <p>Activities are anchored to the shift-start review, when a manager is already looking at the floor setup, the BRE, and labor status. Early activities ask a manager to identify one data signal and name one adjustment they made because of it. Later activities connect multiple signals into a single reasoned decision, and eventually ask managers to compare what they expected against what actually happened.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="area">
+      <div class="area-top"><div class="area-num">3</div><h3>Upward Communication</h3></div>
+      <div class="area-grid">
+        <div class="area-block">
+          <div class="lab">The Gap</div>
+          <p>Shift reports and executive communications are sometimes late, incomplete, or limited to recapping events rather than surfacing insight. Leaders occasionally wait to be asked rather than proactively flagging developing situations.</p>
+        </div>
+        <div class="area-block">
+          <div class="lab">Why It Matters</div>
+          <p>Executives and GMs depend on shift intelligence to make timely decisions. When that communication is delayed or thin, the window to respond narrows. Across multiple properties and markets, the quality of information flowing up the chain is a structural advantage or liability.</p>
+        </div>
+        <div class="area-block wide">
+          <div class="lab">What Activities Look Like</div>
+          <p>Activities are built around the end-of-shift report and executive handoff. Early activities treat on-time, complete reporting as the baseline standard. Later activities ask managers to add a specific observation and a recommendation &mdash; not just what happened, but what it means and what should be done. At the advanced level, managers practice proactively escalating a developing pattern before being asked, with data and a proposed course of action.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="fit">
+    <span class="eyebrow">How they fit together</span>
+    <h2>Three directions of a manager's attention</h2>
+    <div class="fitrow">
+      <div class="fitcard">
+        <div class="dir">↓ Downward</div>
+        <h4>Coaching</h4>
+        <p>Develops the relationship with the team on the floor.</p>
+      </div>
+      <div class="fitcard">
+        <div class="dir">↔ Real time</div>
+        <h4>Data-driven decisions</h4>
+        <p>Builds command of the operation as the shift unfolds.</p>
+      </div>
+      <div class="fitcard">
+        <div class="dir">↑ Upward</div>
+        <h4>Communication</h4>
+        <p>Connects the manager to the leadership above them.</p>
+      </div>
+    </div>
+    <p class="close">A manager who does all three isn't just processing a shift &mdash; they're <b>running it with intention</b>. Developing their people in the moments that matter, pulling the right levers at the right time, and keeping the executive team informed and equipped to act. That is the profile Boyd has already described as the next generation of Casino Ops leadership.</p>
+    <div class="statline">
+      <div class="big">38%</div>
+      <div class="cap">Annual turnover is in scope because it is the downstream consequence of all three gaps compounding. This program is designed to build the leadership profile that closes it &mdash; consistently and measurably across all 28 properties.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ TAB 2: MOCK UP ============ -->
+<section class="panel" id="mockup">
+
+  <div class="section-head" style="margin-top:48px;">
+    <span class="eyebrow">Mock Up · Practice &amp; Milestone Architecture</span>
+    <h2>What the program actually looks like</h2>
+    <p class="lede">Each of the three practices is built as a progression. Managers start at a basic milestone and advance as the behavior takes hold. Every practice is anchored to workflow moments that already exist in the shift &mdash; nothing is added to the floor.</p>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><span class="pn">Practice 01</span><h3>Coaching Team Members in the Moment</h3></div>
+    <div class="hooks">
+      <span class="hooks-lab">Workflow hooks</span>
+      <span class="hook">Floor walk</span><span class="hook">Pit walk</span><span class="hook">Shift check-ins</span><span class="hook">Team member interactions</span>
+    </div>
+    <div class="tiers">
+      <div class="tier tier-1">
+        <span class="tier-badge">Basic</span>
+        <h4>Notice and name a specific behavior</h4>
+        <p>Deliver a direct, brief comment &mdash; positive or corrective &mdash; tied to what you just observed. Specificity is the key: what you saw, not a general impression.</p>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-badge">Intermediate</span>
+        <h4>Open a structured coaching conversation</h4>
+        <p>Name the behavior, explain its impact on the team or guest, and confirm the team member understood. This is the moment feedback becomes coaching.</p>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-badge">Advanced</span>
+        <h4>Follow up on a prior coaching</h4>
+        <p>Check whether the behavior changed, document the loop in WorkDay, and close or escalate. This separates managers who coach from managers who just react.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><span class="pn">Practice 02</span><h3>Making Data-Driven Shift Decisions</h3></div>
+    <div class="hooks">
+      <span class="hooks-lab">Workflow hooks</span>
+      <span class="hook">Shift-start floor review</span><span class="hook">BRE recommendations</span><span class="hook">Table limit review</span><span class="hook">Labor status</span><span class="hook">EVERI compliance</span>
+    </div>
+    <div class="tiers">
+      <div class="tier tier-1">
+        <span class="tier-badge">Basic</span>
+        <h4>Pull one metric at shift start and act on it</h4>
+        <p>State what the data says and what you are adjusting as a result: table limits, labor, or game mix. The habit of translating data into a decision before the shift begins.</p>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-badge">Intermediate</span>
+        <h4>Connect two or more signals to one decision</h4>
+        <p>Link BRE, THEO, hands per hour, labor, and utilization together and explain the connection before acting. This is where pattern recognition develops.</p>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-badge">Advanced</span>
+        <h4>Review a prior decision against actual outcomes</h4>
+        <p>Compare what you expected to what happened and articulate what you would do differently or the same. Closing the loop turns experience into expertise.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-head"><span class="pn">Practice 03</span><h3>Communicating Shift Intelligence Up the Chain</h3></div>
+    <div class="hooks">
+      <span class="hooks-lab">Workflow hooks</span>
+      <span class="hook">End-of-shift report</span><span class="hook">Executive communication</span><span class="hook">Shift handoff</span><span class="hook">Impact player review</span>
+    </div>
+    <div class="tiers">
+      <div class="tier tier-1">
+        <span class="tier-badge">Basic</span>
+        <h4>Send the shift report on time, complete</h4>
+        <p>Treat on-time, complete reporting as a non-negotiable standard. This is the foundation everything else is built on.</p>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-badge">Intermediate</span>
+        <h4>Add observation, interpretation, recommendation</h4>
+        <p>Not just recapping what happened, but including a judgment call and the reasoning behind it. This turns a report into intelligence.</p>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-badge">Advanced</span>
+        <h4>Proactively escalate a developing pattern</h4>
+        <p>Frame the issue, cite the data, and propose a response rather than waiting to be asked. This is the behavior that gets noticed at the Director level.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin-top:56px;">
+    <span class="eyebrow">A sample activity</span>
+    <h2>What a manager actually experiences</h2>
+    <p class="lede">Below is an illustrative activity from Practice 01, at the basic milestone. It shows the prompt a manager receives and a short slice of the coaching exchange that follows.</p>
+  </div>
+
+  <div class="sample-wrap">
+    <div class="sample">
+      <div class="sample-bar">
+        <span class="t">Activity</span>
+        <span class="p">Coaching · Notice &amp; name</span>
+      </div>
+      <div class="sample-body">
+        <div class="prompt">
+          <div class="lab">Your activity this shift</div>
+          <p>On your next floor walk, watch for one specific team member behavior worth addressing &mdash; positive or corrective. Deliver a brief, direct comment tied to exactly what you saw. Then come back and tell me what you said.</p>
+        </div>
+        <div class="chat">
+          <div class="bubble mgr">
+            <div class="who">Manager</div>
+            A dealer kept stepping away from her game to talk to the next table. I told her: "I need you with your table during open hands &mdash; guests notice when you step away."
+          </div>
+          <div class="bubble coach">
+            <div class="who">Coach</div>
+            That was specific and you tied it to the guest, which is exactly right. One thing to sharpen: you named the behavior and the impact, but did you confirm she understood it? A quick "does that make sense?" turns a correction into a coaching moment. How did she react?
+          </div>
+          <div class="bubble mgr">
+            <div class="who">Manager</div>
+            She nodded and went back. I didn't really check.
+          </div>
+          <div class="bubble coach">
+            <div class="who">Coach</div>
+            That's the line between feedback and coaching. Naming it well is the basic move, and you nailed it. The next milestone is closing the loop so it sticks. Want to try that framing on your next walk?
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="sample-note">Illustrative only. In the live program, prompts and coaching are tuned to Boyd's own standards and language &mdash; which is what the next tab is about.</p>
+  </div>
+
+</section>
+
+<!-- ============ TAB 3: BUILT FOR BOYD ============ -->
+<section class="panel" id="builtfor">
+
+  <div class="section-head" style="margin-top:48px;">
+    <span class="eyebrow">Built for Boyd</span>
+    <h2>The program is generated from your world</h2>
+    <p class="lede">A Flint initiative is not generic content. It is built in part from Boyd's own standard operating procedures, training materials, performance standards, and the tools managers use every shift. The more the program is grounded in Boyd's real context, the sharper the coach's feedback and the more personalized each manager's activities become.</p>
+  </div>
+
+  <div class="bfb-grid">
+
+    <div class="bfb">
+      <div class="cat"><div class="ix">01</div><h3>Operating standards &amp; philosophy</h3></div>
+      <ul>
+        <li>The <b>Boyd operating philosophy</b>, in your own words &mdash; built into the program directly</li>
+        <li>The <b>shift report template</b>, plus a strong example of one done well</li>
+        <li>Prescribed <b>report submission times</b> and the escalation / distribution chain</li>
+        <li>The formal <b>start-of-shift checklist</b> or rundown</li>
+        <li>Internal <b>KPI benchmarks</b>: hands-per-hour targets, jackpot processing standards, table utilization thresholds</li>
+        <li>The <b>roadmap</b> Assistant Casino Managers are responsible for, and how it's used</li>
+      </ul>
+    </div>
+
+    <div class="bfb">
+      <div class="cat"><div class="ix">02</div><h3>The data &amp; tools managers use</h3></div>
+      <ul>
+        <li>What managers see in <b>BRE, THEO, EVERI, and labor status</b> during a shift &mdash; screens or exports are enough, no live access needed</li>
+        <li>How <b>yielding games</b> works operationally: when a table opens or closes, what signals trigger a conversion, and what a poor yielding call looks like</li>
+        <li>Anything that shows the data <b>in context</b>, the way a manager reads it mid-shift</li>
+      </ul>
+    </div>
+
+    <div class="bfb">
+      <div class="cat"><div class="ix">03</div><h3>Coaching &amp; performance language</h3></div>
+      <ul>
+        <li>Boyd's internal <b>performance-management language</b>: what the coaching tiers are called, how "corrective" and "developmental" differ in your system</li>
+        <li>Any existing <b>coaching guides or conversation frameworks</b> already in use, so the program builds on them rather than conflicting</li>
+      </ul>
+    </div>
+
+    <div class="bfb">
+      <div class="cat"><div class="ix">04</div><h3>Roles &amp; where the need is greatest</h3></div>
+      <ul>
+        <li>Internal <b>job descriptions</b> for Casino Manager, Assistant Casino Manager, and Slot Technical Manager</li>
+        <li><b>Turnover broken down by role</b>, so the program targets where the 38% hits hardest</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="bfb-close">
+    <h3>Why this matters</h3>
+    <p>Every one of these inputs becomes context the coach can draw on, and a way to tune activities to the specific reality of a Boyd floor. A manager isn't practicing coaching in the abstract &mdash; they're practicing it against Boyd's standards, Boyd's data, and Boyd's language.</p>
+    <p>None of this is a prerequisite checklist. Even a handful of these sharpens the program significantly. The goal is a program that feels like it came from inside Boyd &mdash; because it did.</p>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  <span>Boyd Gaming · Casino Operations Leadership Program</span>
+  <svg role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+</footer>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.panel');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = b.getAttribute('data-tab');
+      btns.forEach(function(x){ x.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      b.classList.add('active');
+      document.getElementById(t).classList.add('active');
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
