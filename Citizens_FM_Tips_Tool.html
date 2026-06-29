@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Eyes — FM Tips Library</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:      253 252 250;
+  --color-surface:    255 255 255;
+  --color-ink:        28 42 56;
+  --color-muted-ink:  74 88 104;
+  --color-accent:     232 77 40;
+  --color-success:    72 114 76;
+  --color-cool-grey:  154 166 176;
+  --color-light-grey: 200 205 210;
+  --color-pale-grey:  235 229 220;
+  --color-warm-line:  197 187 166;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1,h2,h3,h4 { font-family: 'Andada Pro', serif; font-weight: 400; }
+
+::selection { background: rgb(var(--color-accent)); color: rgb(var(--color-paper)); }
+
+/* ── HEADER ── */
+.header {
+  background: rgb(var(--color-ink));
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.18);
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-title { color: rgb(var(--color-paper)); }
+.header-title h1 { font-size: 22px; letter-spacing: -0.02em; color: rgb(var(--color-paper)); }
+.header-title p { font-size: 11px; color: rgb(var(--color-cool-grey)); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+.header-divider { width: 1px; height: 36px; background: rgb(var(--color-cool-grey) / 0.3); }
+.powered-by {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; color: rgb(var(--color-cool-grey));
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.powered-by svg { opacity: 0.85; }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* ── EXPORT BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 16px; border-radius: 6px; border: none;
+  font-family: 'Sen', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all 200ms cubic-bezier(0.16,1,0.3,1);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.btn-primary {
+  background: rgb(var(--color-accent)); color: rgb(var(--color-paper));
+}
+.btn-primary:hover { filter: brightness(0.9); }
+.btn-ghost {
+  background: rgb(var(--color-paper) / 0.1); color: rgb(var(--color-paper));
+  border: 1px solid rgb(var(--color-cool-grey) / 0.4);
+}
+.btn-ghost:hover { background: rgb(var(--color-paper) / 0.18); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: rgb(var(--color-surface));
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+  padding: 18px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.filter-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.filter-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgb(var(--color-muted-ink));
+  min-width: 68px;
+}
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 5px 14px; border-radius: 999px;
+  border: 1.5px solid rgb(var(--color-light-grey));
+  background: rgb(var(--color-paper));
+  font-size: 12px; font-family: 'Sen', sans-serif; font-weight: 700;
+  color: rgb(var(--color-muted-ink));
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16,1,0.3,1);
+  user-select: none;
+}
+.chip:hover { border-color: rgb(var(--color-cool-grey)); color: rgb(var(--color-ink)); }
+.chip.active {
+  background: rgb(var(--color-ink)); border-color: rgb(var(--color-ink));
+  color: rgb(var(--color-paper));
+}
+.chip.beh-walk.active    { background: #C44020; border-color: #C44020; }
+.chip.beh-pattern.active { background: #2E6B33; border-color: #2E6B33; }
+.chip.beh-close.active   { background: #2B4BA0; border-color: #2B4BA0; }
+
+/* ── STATUS BAR ── */
+.status-bar {
+  padding: 12px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgb(var(--color-pale-grey));
+}
+.status-count {
+  font-size: 12px; color: rgb(var(--color-muted-ink));
+}
+.status-count strong { color: rgb(var(--color-ink)); font-weight: 700; }
+.status-actions { display: flex; gap: 16px; align-items: center; }
+.link-btn {
+  background: none; border: none; padding: 0;
+  font-family: 'Sen', sans-serif; font-size: 12px; font-weight: 700;
+  color: rgb(var(--color-accent)); cursor: pointer; letter-spacing: 0.04em;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.link-btn:hover { opacity: 0.75; }
+
+/* ── TIP GRID ── */
+.grid-wrap { padding: 24px 32px 80px; }
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 14px;
+}
+.tip-card {
+  background: rgb(var(--color-surface));
+  border: 1.5px solid rgb(var(--color-pale-grey));
+  border-radius: 10px;
+  padding: 18px 20px 16px;
+  cursor: pointer;
+  transition: box-shadow 250ms cubic-bezier(0.16,1,0.3,1),
+              border-color 250ms cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative;
+}
+.tip-card:hover {
+  box-shadow: 0 8px 20px -8px rgb(var(--color-ink) / 0.14);
+}
+.tip-card.selected {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 3px rgb(var(--color-accent) / 0.12),
+              0 8px 20px -8px rgb(var(--color-ink) / 0.14);
+}
+.tip-card-top { display: flex; align-items: flex-start; gap: 12px; }
+.tip-checkbox {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 2px solid rgb(var(--color-light-grey));
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 150ms ease;
+  background: rgb(var(--color-surface));
+}
+.tip-card.selected .tip-checkbox {
+  background: rgb(var(--color-accent)); border-color: rgb(var(--color-accent));
+}
+.tip-checkbox svg { display: none; }
+.tip-card.selected .tip-checkbox svg { display: block; }
+.tip-text {
+  font-family: 'Andada Pro', serif;
+  font-size: 15px; line-height: 1.45;
+  color: rgb(var(--color-ink));
+  flex: 1;
+}
+.tip-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tip-author {
+  font-size: 11px; font-weight: 700; color: rgb(var(--color-success));
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.tip-divider { color: rgb(var(--color-light-grey)); font-size: 11px; }
+.tip-title { font-size: 11px; color: rgb(var(--color-cool-grey)); }
+.tip-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+.tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 999px;
+}
+.tag-walk    { background: #FFF3EF; color: #C44020; }
+.tag-pattern { background: #EFF5F0; color: #2E6B33; }
+.tag-close   { background: #EFF3FF; color: #2B4BA0; }
+.tag-role    { background: rgb(var(--color-pale-grey)); color: rgb(var(--color-muted-ink)); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 80px 32px;
+  color: rgb(var(--color-muted-ink));
+}
+.empty-state h3 { font-size: 20px; margin-bottom: 8px; color: rgb(var(--color-ink)); }
+.empty-state p { font-size: 14px; }
+
+/* ── PRINT / PDF STYLES ── */
+@media print {
+  .header, .filter-bar, .status-bar { display: none !important; }
+  .grid-wrap { padding: 0; }
+  .tips-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tip-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+  .tip-card:not(.selected):not(.print-include) { display: none; }
+  .tip-checkbox { display: none; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-title">
+      <h1>Fresh Eyes — FM Tips Library</h1>
+      <p>Citizens Real Estate Operations · 163 Tips from the Pilot</p>
+    </div>
+    <div class="header-divider"></div>
+    <div class="powered-by">
+      Powered by
+      <svg width="48" height="23" viewBox="0 0 572.59 273.23" xmlns="http://www.w3.org/2000/svg" aria-label="Flint">
+        <g>
+          <path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/>
+          <path fill="#ffffff" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/>
+          <path fill="#ffffff" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/>
+          <path fill="#ffffff" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/>
+          <path fill="#ffffff" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/>
+          <path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/>
+          <path fill="#ffffff" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" onclick="copyToClipboard()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy selected
+    </button>
+    <button class="btn btn-primary" onclick="exportPDF()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export PDF
+    </button>
+  </div>
+</header>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar">
+  <div class="filter-row">
+    <span class="filter-label">Theme</span>
+    <div class="chips" id="beh-chips">
+      <div class="chip beh-walk active" data-beh="Walk in like a customer" onclick="toggleBeh(this)">Walk in like a customer</div>
+      <div class="chip beh-pattern active" data-beh="Find the pattern before you walk in" onclick="toggleBeh(this)">Find the pattern</div>
+      <div class="chip beh-close active" data-beh="Close the loop — don't just open it" onclick="toggleBeh(this)">Close the loop</div>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Role</span>
+    <div class="chips" id="role-chips">
+      <div class="chip active" data-role="All" onclick="toggleRole(this)">All roles</div>
+      <div class="chip active" data-role="Floor Care" onclick="toggleRole(this)">Floor Care</div>
+      <div class="chip active" data-role="Landscaping" onclick="toggleRole(this)">Landscaping</div>
+      <div class="chip active" data-role="Ops" onclick="toggleRole(this)">Ops</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATUS BAR ── -->
+<div class="status-bar">
+  <div class="status-count">
+    Showing <strong id="visible-count">0</strong> tips
+    · <strong id="selected-count">0</strong> selected for export
+  </div>
+  <div class="status-actions">
+    <button class="link-btn" onclick="selectAll()">Select all visible</button>
+    <button class="link-btn" onclick="deselectAll()">Deselect all</button>
+  </div>
+</div>
+
+<!-- ── TIP GRID ── -->
+<div class="grid-wrap">
+  <div class="tips-grid" id="tips-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <h3>No tips match these filters</h3>
+    <p>Try selecting more categories or roles above.</p>
+  </div>
+</div>
+
+<!-- ── COPY TOAST ── -->
+<div id="toast" style="
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:rgb(28 42 56); color:rgb(253 252 250);
+  padding:10px 20px; border-radius:8px; font-size:13px; font-weight:700;
+  opacity:0; transition:all 300ms cubic-bezier(0.16,1,0.3,1);
+  pointer-events:none; z-index:999; white-space:nowrap;
+">Copied to clipboard!</div>
+
+<script>
+// ── DATA ──
+const TIPS = [{"id":1,"tip":"keep focused on the customer","name":"William Granville","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":2,"tip":"Check to make sure exterior lights are not on during the day. And, are weeds being cleared from stone bed areas?","name":"Mark Marterella","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Landscaping"]},{"id":3,"tip":"Check drive thru area for any debris that blows in from neighborhood properties.","name":"Mark Marterella","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":4,"tip":"To look over the entire site and give the walk thru enough time.","name":"William Strobele","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":5,"tip":"pay attention to the small details","name":"David Patterson","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":6,"tip":"always look at the facility through the eyes of a customer.  Pretend to BE the customer.  Ask yourself if you would do business with us if you encountered the issues that you found","name":"Sean Conroy","title":"Senior Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":7,"tip":"slow down","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":8,"tip":"Oversee the team and help resolve urgent (P1) issues as needed.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":9,"tip":"Check all work orders daily so nothing gets overlooked. Including vendor work orders","name":"Anna Mann","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":10,"tip":"It may not be a major issue, rather a small underlying issue that through gaps in the process, or lack of work order requests leave as an ongoing issue.","name":"Alexander Maxwell","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Ops"]},{"id":11,"tip":"Check in 360 for open work orders before traveling to the branch.","name":"Richard Hunter","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":12,"tip":"talk to the vendors","name":"Sean Flatt","title":"Landscape Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":13,"tip":"Focus on the sites appearance just as much as the function of the equipment and make a plan if items cannot be addressed right away.","name":"Anna Mann","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":15,"tip":"Look around ceilings rugs corner of the rooms","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":16,"tip":"Most likely the same thing rug is a big safety issue scarf from the wall in the Burt grass you can\u2019t miss that","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care","Landscaping"]},{"id":17,"tip":"Look at every area with fresh eyes.","name":"John Conti","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":18,"tip":"Scan all areas, even areas you don\u2019t typically look.","name":"Jami Sarokon","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":20,"tip":"Don't get side tracked.","name":"Joseph Dudar","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":21,"tip":"look beyond the surface.  Take a systematic approach.  Note conditions that might trigger the issue, especially if intermittent to try to determine a pattern which could point to a cause","name":"Sean Conroy","title":"Senior Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Floor Care"]},{"id":22,"tip":"I would advise them to challenge themselves to look beyond the obvious- to ensure all aspects were explored and investigated- short sited fixes don't always lead to long-term solutions.  Sometimes it will require the condition to appear more than once to establish a pattern, or to highlight that the fix did not address a root cause- it only solved for the short term.","name":"Sean Conroy","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":23,"tip":"Look the whole branch","name":"Kevin Ozmun","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":24,"tip":"to keep an eye on everything even items the LL is responnsible for","name":"Anna Mann","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":25,"tip":"with customer facing issues, always log work orders prior to leaving branch.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Ops"]},{"id":26,"tip":"Escalate customer facing issues to supervisor.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Ops"]},{"id":27,"tip":"Use 360 to track LL issues instead of relying on email or other methods.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Ops"]},{"id":28,"tip":"If a problem is recurring, don't continue to apply the same solution.  Look deeper for a hidden root cause.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":29,"tip":"It took a while to get funding approved. I would recommend checking the status of that sooner than i did to get this completed quicker.","name":"Timothy Donohue","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":30,"tip":"Confirm current branch standards to make you aware of any non-approved items while performing your walkthrough. This ensures consistency site to site.","name":"Eric Kaechelin","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":31,"tip":"look at ceiling tiles","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":33,"tip":"Always speak to the branch  manager and find out if anything facility related is bothering them.  Recognize changes such as busy seasons and adjust schedules.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":34,"tip":"Get frequent updates from you contractor or vendor. Be sure to update Retail and keep them in the loop.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":35,"tip":"Log onto 360 prior to visit","name":"Tony Petaccio","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":36,"tip":"Have a good relationship with the Landlord and communicate with them.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":37,"tip":"Be alert","name":"William Granville","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":38,"tip":"Do not underestimate findings.","name":"David Schofield","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":39,"tip":"Walk slower and keep your eyes moving","name":"Maria Kingsley","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":40,"tip":"To make sure you walk the entire exterior.","name":"William Strobele","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":41,"tip":"To check for proper metal screws","name":"William Strobele","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":42,"tip":"To check timer, control center or time clock first.","name":"William Strobele","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":43,"tip":"Replace carpet when budget permits.","name":"Isabel Kingsley","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":44,"tip":"Remember to see the details.","name":"Isabel Kingsley","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":46,"tip":"Be on the lookout for trash that blows in from fast food restaurant next door.","name":"Mark Marterella","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":47,"tip":"Review of inter-department needs in a loss event.","name":"Leonard Manigbas","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":48,"tip":"Reviewing vendor availability","name":"Brian Hawtin","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":50,"tip":"Slow Down","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":55,"tip":"I would tip the FM to look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot. Also be sure to engage you SMT with situation as they may have some back ground on the problem too. Two minds are better than one","name":"Taeyon Thompson","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":56,"tip":"I would instruct the FM to look into their lease through Lucernex as some responsibilities do fall under the tenant and we need to pay extra careful attention with those matters in which we can complete in a timely fashion","name":"Taeyon Thompson","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Floor Care"]},{"id":57,"tip":"Avoid focusing solely on the highly visible area, and look for less obvious issues as well","name":"Brandon Allen","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":59,"tip":"To be active and aware of the branch leasing terms to determine what scope can be completed.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":60,"tip":"Make sure you pay attention to the ground and the roof line","name":"Nicholas Velardi","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Ops"]},{"id":61,"tip":"Have the work order initiator be more specific in the description.","name":"David Schofield","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":62,"tip":"Keep monitoring the site regularly in between repairs for the issue.  Like with this one, repairs would be made and would help for a short time then the issue would return.","name":"Joshua Whitlock","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":66,"tip":"Have access to either Blue prints of your site and contact information for the Land Lord available","name":"Nicholas Velardi","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Floor Care"]},{"id":67,"tip":"Speak to the landscape manager about keeping sharp eyes for weeds. Grass is growing fast so they need to keep on top of it.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Landscaping"]},{"id":68,"tip":"Know your Maintenance Techs skill level and know when to send an electrician.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":70,"tip":"Just pay attention when doing walk through","name":"David Patterson","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":71,"tip":"Its always good to ask the BM if what you found as an issue is actually happening all the time or was this a one time issue since we FM's usually visit once a month we do not know what is happening in between our visits.","name":"Maria Kingsley","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":72,"tip":"look higher","name":"Maria Kingsley","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":74,"tip":"Focus on the entire branch.","name":"Isabel Kingsley","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":75,"tip":"Keep your eyes open.","name":"Jose Graca","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":76,"tip":"Be sure to look into 360 before you visit a site to see if there are any outstanding issues.","name":"Morgan McNary","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":77,"tip":"Address the problem and look for other issues that could potentially happen in the future if not addressed now while the contractor is onsite with a bucket truck.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":78,"tip":"Follow through with coaching to ensure consistency.","name":"Eric Kaechelin","title":"Senior Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":79,"tip":"look at all carpets under Desks","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":81,"tip":"The carpet is not stain friendly, inspect the entire carpet area. If the carpet is replaced, they should choose a darker carpet better suited for high traffic.","name":"John Conti","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["Floor Care"]},{"id":82,"tip":"Slow down","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":83,"tip":"Arrange a meeting with the building engineer and site contacts to help coordinate and address any immediate needs.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":85,"tip":"pay attention to the little things, don't be complacent","name":"Tony Petaccio","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":86,"tip":"keep eyes open","name":"Sean Flatt","title":"Landscape Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":87,"tip":"take your time","name":"Argeny Garcia","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":88,"tip":"Make sure to review 360 in advance and create a WO to record the persistent issues that is managed by the landlord","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":89,"tip":"Don't forget to review old open work orders before the visit.","name":"Richard Hunter","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":90,"tip":"As I have stated in the past, please learn to focus on the small details and not focus on the larger issues.","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":91,"tip":"Keep open eyes","name":"Donald Lucariello","title":"Landscape Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":92,"tip":"Look at pass work orders before going into the branch and speak with the branch manager and colleagues of issues that arise as they\u2019re always at the branch every day","name":"Brandon Allen","title":"Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Ops"]},{"id":93,"tip":"This Wall is easily looked over so make sure you look in high and low places","name":"Brandon Allen","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":95,"tip":"Look up","name":"William Granville","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":96,"tip":"Keep a eye on the \"details\" of the branch","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":97,"tip":"Consider further review requirements that are needed with the janitorial vendor.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["Floor Care","Ops"]},{"id":98,"tip":"If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues.","name":"Nicholas Velardi","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Landscaping"]},{"id":99,"tip":"Be open to all options that can be the cause. Do not rule anything out.","name":"John Conti","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":100,"tip":"Keep a documented path of the issues","name":"Kevin Ozmun","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":101,"tip":"Walk the branch and speak with the colleagues.  As in the purpose of this exercise, treat this as your own home.  World the condition at the branch be acceptable in your home.","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":102,"tip":"Check the all bolted in handles for safety","name":"Matthew Otten","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":103,"tip":"Follow up with the with the proper manager for resolution","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Close the loop \u2014 don't just open it","roles":["All"]},{"id":104,"tip":"Keep a good record of your finding and take pictures","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":105,"tip":"The spec flooring can only be purchased from one supplier.","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Floor Care"]},{"id":106,"tip":"Ensure they set a completion date with the vendor.","name":"Eric Kaechelin","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":107,"tip":"Talk to the branch colleagues","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":108,"tip":"Stay detailed.","name":"Joseph Dudar","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":109,"tip":"Look at the rear parking lots where most people don't do rounds in","name":"Shawn Evans","title":"Senior Facility Manager","behavior":"Close the loop \u2014 don't just open it","roles":["Landscaping"]},{"id":112,"tip":"One tip i would give to the FM is to take the time and look at the detail, as weather improves so does visibility , the better it feels the more urge there is for costumers to visit as well as executives and high end clients","name":"Taeyon Thompson","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":113,"tip":"Walk thru with an open mind.","name":"Donald Knight","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":114,"tip":"Open and close all doors.","name":"Richard Hunter","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":115,"tip":"To keep in mind any previous incidents that may have impacted the branch.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":116,"tip":"look at everything from a customers view point","name":"Lisa Oliveira","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":117,"tip":"Be sure to look over everything and don't just assume a cleaner is doing their job.","name":"Timothy Donohue","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":118,"tip":"Try not to get too involved in conversation with branch staff as they can distract from finding issues.","name":"Timothy Donohue","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":119,"tip":"take your time","name":"Argeny Garcia","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":120,"tip":"By staying alert to any issues and quickly creating work orders, FM can address problems early and keep branches in top condition for our customers.","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":121,"tip":"Keep your eyes open to everything do not get tunnel vision.","name":"David Schofield","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":122,"tip":"Slow down","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":128,"tip":"Always look for debris that blows in on our property from the streets. This is. Corner lot in town and we catch a lot of other people\u2019s trash.","name":"Mark Marterella","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Landscaping"]},{"id":129,"tip":"Be alert of findings","name":"William Granville","title":"Facilities Manager Lead","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":130,"tip":"Pay attention to detail.","name":"Shawn Evans","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["All"]},{"id":132,"tip":"Don\u2019t rush","name":"Andrew O'Dell","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":133,"tip":"always review open work orders before arriving at any branch for any reason, to catch stale work orders and to avoid duplication of items already in queue that may have been created by someone else.","name":"Sean Conroy","title":"Senior Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":134,"tip":"Vendor escorts have a lot of down time.  Take advantage of this to walk around and document items for correction.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Ops"]},{"id":135,"tip":"Try not to look at the same areas again and again.  Expand your area and spending some time focusing.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":137,"tip":"Watch for things that look like flowers but are weeds","name":"Brian Hawtin","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["Landscaping"]},{"id":138,"tip":"Pay attention to high dusting.","name":"Shawn Evans","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":139,"tip":"Take his time","name":"Argeny Garcia","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":141,"tip":"Scan areas you walk through","name":"David Patterson","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":142,"tip":"Tip - always check the exterior basement staircase for trash that can blow in off of the street from time to time.","name":"Mark Marterella","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Landscaping","Ops"]},{"id":143,"tip":"Look closely at the entire area.","name":"John Conti","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":144,"tip":"Pay attention to the small details - low dusting, sills etc.","name":"Morgan McNary","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":145,"tip":"Speak to the employees and find out if anything is bothering them related to facilities or the facilities staff.","name":"James Wright","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":146,"tip":"Keep customer view always in mind","name":"William Granville","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":147,"tip":"don't be complacent, look at the big picture","name":"Tony Petaccio","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":148,"tip":"take a photo to document","name":"Kevin Ozmun","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":149,"tip":"One tip i would give the FM is to not hold back , just because you may know what's going on all things need documentation","name":"Taeyon Thompson","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":150,"tip":"walk in with fresh eyes and also walk out of site with fresh Eyes always take a second look","name":"Vincent Parrino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":151,"tip":"Look beyond the obvious.","name":"Nicholas Velardi","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":153,"tip":"Always document, even if the information was communicated outside the work order system.","name":"Michael Konczewski","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care","Ops"]},{"id":155,"tip":"I would advise another FM to be aware of the vendor scope and tracking.","name":"Leonard Manigbas","title":"Facility Manager","behavior":"Find the pattern before you walk in","roles":["Ops"]},{"id":156,"tip":"walk the space slow and take your time","name":"Argeny Garcia","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":157,"tip":"To keep in mind the vacancies of the neighboring tenants within the in-line.","name":"Leonard Manigbas","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":158,"tip":"I would suggest looking at everything top to bottom.  Aesthetics matter- not just utility.","name":"Sean Conroy","title":"Senior Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":159,"tip":"Inspect the progress of the common area that the landlord is upgrading to ensure the area is clean and safe.","name":"Matthew DeMartino","title":"Facility Manager","behavior":"Walk in like a customer","roles":["Floor Care"]},{"id":160,"tip":"Walk the branch with a customer mindset to better identify deficiencies","name":"Juan Jorge","title":"Facilities Manager Lead","behavior":"Walk in like a customer","roles":["All"]},{"id":161,"tip":"Small details commonly over looked","name":"Nicholas Velardi","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]},{"id":163,"tip":"Take your time completing the walkthru and look for obvious issues that may have been overlooked in the past.","name":"Richard Hunter","title":"Facility Manager","behavior":"Walk in like a customer","roles":["All"]}];
+
+// ── STATE ──
+let activeBeh  = new Set(["Walk in like a customer","Find the pattern before you walk in","Close the loop — don't just open it"]);
+let activeRoles = new Set(["All","Floor Care","Landscaping","Ops"]);
+let selected   = new Set();
+
+// ── FILTER TOGGLES ──
+function toggleBeh(el) {
+  const v = el.dataset.beh;
+  if (activeBeh.has(v)) { activeBeh.delete(v); el.classList.remove('active'); }
+  else { activeBeh.add(v); el.classList.add('active'); }
+  render();
+}
+function toggleRole(el) {
+  const v = el.dataset.role;
+  if (activeRoles.has(v)) { activeRoles.delete(v); el.classList.remove('active'); }
+  else { activeRoles.add(v); el.classList.add('active'); }
+  render();
+}
+
+// ── FILTER LOGIC ──
+function tipVisible(t) {
+  if (!activeBeh.has(t.behavior)) return false;
+  // tip is visible if ANY of its roles match active roles
+  return t.roles.some(r => activeRoles.has(r));
+}
+
+// ── RENDER ──
+function getBehClass(b) {
+  if (b.includes('customer')) return 'walk';
+  if (b.includes('pattern'))  return 'pattern';
+  return 'close';
+}
+function getBehShort(b) {
+  if (b.includes('customer')) return 'Walk in like a customer';
+  if (b.includes('pattern'))  return 'Find the pattern';
+  return 'Close the loop';
+}
+
+function render() {
+  const grid  = document.getElementById('tips-grid');
+  const empty = document.getElementById('empty-state');
+  const visible = TIPS.filter(tipVisible);
+
+  // Remove tips that are no longer visible from selected
+  selected.forEach(id => { if (!visible.find(t => t.id === id)) selected.delete(id); });
+
+  if (visible.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.innerHTML = visible.map(t => {
+      const isSel   = selected.has(t.id);
+      const behCls  = getBehClass(t.behavior);
+      const roleTags = t.roles.map(r => `<span class="tag tag-role">${r}</span>`).join('');
+      return `
+        <div class="tip-card${isSel ? ' selected' : ''}" onclick="toggleTip(${t.id})" data-id="${t.id}">
+          <div class="tip-card-top">
+            <div class="tip-checkbox">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2 6 5 9 10 3"/>
+              </svg>
+            </div>
+            <p class="tip-text">${escHtml(t.tip)}</p>
+          </div>
+          <div>
+            <div class="tip-meta">
+              <span class="tip-author">${escHtml(t.name)}</span>
+              <span class="tip-divider">·</span>
+              <span class="tip-title">${escHtml(t.title)}</span>
+            </div>
+            <div class="tip-tags" style="margin-top:8px;">
+              <span class="tag tag-${behCls}">${getBehShort(t.behavior)}</span>
+              ${roleTags}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  document.getElementById('visible-count').textContent  = visible.length;
+  document.getElementById('selected-count').textContent = selected.size;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleTip(id) {
+  if (selected.has(id)) selected.delete(id);
+  else selected.add(id);
+  // update just this card for speed
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if (card) card.classList.toggle('selected', selected.has(id));
+  document.getElementById('selected-count').textContent = selected.size;
+}
+
+function selectAll() {
+  TIPS.filter(tipVisible).forEach(t => selected.add(t.id));
+  render();
+}
+function deselectAll() {
+  selected.clear();
+  render();
+}
+
+// ── EXPORT: PDF ──
+function exportPDF() {
+  const sel = selected.size > 0
+    ? TIPS.filter(t => selected.has(t.id))
+    : TIPS.filter(tipVisible);
+
+  if (sel.length === 0) { showToast('No tips selected.'); return; }
+
+  const win = window.open('', '_blank');
+  const rows = sel.map(t => {
+    const behCls = getBehClass(t.behavior);
+    const colors = { walk:'#FFF3EF', pattern:'#EFF5F0', close:'#EFF3FF' };
+    const txtCol = { walk:'#C44020', pattern:'#2E6B33', close:'#2B4BA0' };
+    const roleTags = t.roles.map(r =>
+      `<span style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#EBE5DC;color:#4A5868;margin-left:4px;">${r}</span>`
+    ).join('');
+    return `
+      <div style="background:#fff;border:1px solid #EBE5DC;border-radius:8px;padding:16px 18px;break-inside:avoid;margin-bottom:10px;">
+        <p style="font-family:'Andada Pro',Georgia,serif;font-size:14px;line-height:1.45;color:#1C2A38;margin-bottom:10px;">${escHtml(t.tip)}</p>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:10px;font-weight:700;color:#48724C;letter-spacing:.05em;text-transform:uppercase;">${escHtml(t.name)}</span>
+          <span style="color:#C8CDD2;font-size:10px;">·</span>
+          <span style="font-size:10px;color:#9AA6B0;">${escHtml(t.title)}</span>
+          <span style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:${colors[behCls]};color:${txtCol[behCls]};margin-left:4px;">${getBehShort(t.behavior)}</span>
+          ${roleTags}
+        </div>
+      </div>`;
+  }).join('');
+
+  win.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Fresh Eyes — FM Tips</title>
+    <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400&family=Sen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body{font-family:'Sen',sans-serif;background:#fff;margin:0;padding:28px 32px 48px;}
+      @page{margin:20mm 18mm;}
+      @media print{body{padding:0;}}
+    </style>
+  </head><body>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px;border-bottom:2px solid #1C2A38;padding-bottom:12px;">
+      <div>
+        <p style="font-family:'Sen',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9AA6B0;margin-bottom:4px;">Citizens Real Estate Operations · Fresh Eyes</p>
+        <h1 style="font-family:'Andada Pro',Georgia,serif;font-size:26px;font-weight:400;color:#1C2A38;letter-spacing:-.02em;">FM Best Practice Tips</h1>
+      </div>
+      <p style="font-size:9px;color:#9AA6B0;letter-spacing:.12em;text-transform:uppercase;">Powered by Flint · ${sel.length} tips</p>
+    </div>
+    <div style="margin-top:20px;columns:2;column-gap:16px;">${rows}</div>
+  </body></html>`);
+  win.document.close();
+  setTimeout(() => { win.focus(); win.print(); }, 600);
+}
+
+// ── EXPORT: COPY ──
+function copyToClipboard() {
+  const sel = selected.size > 0
+    ? TIPS.filter(t => selected.has(t.id))
+    : TIPS.filter(tipVisible);
+
+  if (sel.length === 0) { showToast('No tips to copy.'); return; }
+
+  const text = sel.map(t =>
+    `• ${t.tip}\n  — ${t.name}, ${t.title} [${getBehShort(t.behavior)} | ${t.roles.join(', ')}]`
+  ).join('\n\n');
+
+  navigator.clipboard.writeText(text).then(() => showToast(`Copied ${sel.length} tips!`));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(() => {
+    t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2400);
+}
+
+// ── INIT ──
+render();
+</script>
+</body>
+</html>
