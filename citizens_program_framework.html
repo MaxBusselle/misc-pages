@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citizens &mdash; Program Framework</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+:root{
+  --paper:253 252 250; --surface:255 255 255; --ink:28 42 56; --muted:74 88 104;
+  --accent:232 77 40; --success:72 114 76; --cool:154 166 176; --light:200 205 210;
+  --pale:235 229 220; --warm:197 187 166;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:rgb(var(--paper));color:rgb(var(--ink));
+  font-family:'Sen',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+h1,h2,h3{font-family:'Andada Pro',serif;font-weight:400;margin:0;}
+::selection{background:rgb(var(--accent));color:rgb(var(--paper));}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+header.top{padding:56px 0 28px;border-bottom:1px solid rgb(var(--warm));}
+.flint-logo{height:30px;width:auto;display:block;margin-bottom:32px;}
+header.top h1{font-size:2.6rem;letter-spacing:-0.02em;line-height:1.05;}
+header.top .sub{color:rgb(var(--muted));font-size:1.05rem;margin-top:12px;max-width:60ch;}
+.meta{margin-top:22px;display:flex;gap:28px;flex-wrap:wrap;
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:rgb(var(--muted));}
+.meta b{color:rgb(var(--ink));font-weight:800;}
+
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:28px 0 4px;
+  padding:20px 0;border-bottom:1px solid rgb(var(--pale));}
+.legend div{font-size:.9rem;color:rgb(var(--muted));}
+.legend .lab{display:block;font-family:'Andada Pro',serif;font-size:1.05rem;
+  color:rgb(var(--ink));margin-bottom:3px;}
+
+nav.jump{position:sticky;top:0;z-index:5;background:rgb(var(--paper)/.9);
+  backdrop-filter:blur(8px);border-bottom:1px solid rgb(var(--pale));
+  display:flex;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px;}
+nav.jump a{font-size:.78rem;text-decoration:none;color:rgb(var(--muted));
+  padding:5px 11px;border:1px solid rgb(var(--pale));border-radius:999px;
+  transition:all .15s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;}
+nav.jump a:hover{color:rgb(var(--paper));background:rgb(var(--ink));border-color:rgb(var(--ink));}
+
+section.program{padding:44px 0 8px;}
+.prog-head{max-width:70ch;margin-bottom:24px;}
+.prog-index{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;
+  color:rgb(var(--accent));font-weight:700;}
+.prog-head h2{font-size:1.9rem;letter-spacing:-0.02em;margin:8px 0 10px;}
+.problem{color:rgb(var(--muted));font-size:1.02rem;margin:0;}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));
+  border-radius:10px;padding:22px;display:flex;flex-direction:column;
+  transition:box-shadow .3s cubic-bezier(0.16,1,0.3,1);}
+.card:hover{box-shadow:0 10px 30px -18px rgb(96 80 50 / .5);}
+.card.placeholder{border:1px dashed rgb(var(--warm));background:rgb(var(--pale)/.25);
+  justify-content:center;min-height:150px;text-align:center;}
+.card.placeholder:hover{box-shadow:none;}
+.card.placeholder h3{color:rgb(var(--muted));font-style:italic;}
+.card .gap.ph{color:rgb(var(--muted));margin:8px 0 0;}
+.card-top{margin-bottom:12px;}
+.card h3{font-size:1.22rem;line-height:1.2;display:flex;align-items:baseline;
+  gap:10px;flex-wrap:wrap;}
+.live{font-family:'Sen',sans-serif;font-size:.62rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.12em;color:rgb(var(--paper));
+  background:rgb(var(--success));padding:3px 8px;border-radius:999px;
+  transform:translateY(-2px);}
+.auds{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;}
+.aud{font-size:.7rem;letter-spacing:.04em;color:rgb(var(--muted));
+  background:rgb(var(--pale)/.6);border:1px solid rgb(var(--warm)/.5);
+  padding:2px 9px;border-radius:999px;}
+.gap{font-size:.95rem;color:rgb(var(--ink));margin:0 0 16px;}
+.pracs{margin-top:auto;padding-top:14px;border-top:1px dotted rgb(var(--warm));}
+.eyebrow{font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;
+  color:rgb(var(--muted));font-weight:700;}
+.pracs ul{list-style:none;margin:8px 0 0;padding:0;display:flex;
+  flex-direction:column;gap:5px;}
+.pracs li{font-size:.88rem;color:rgb(var(--muted));padding-left:16px;position:relative;}
+.pracs li:before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;
+  border-radius:50%;background:rgb(var(--accent)/.6);}
+
+footer{margin:48px 0 64px;padding-top:20px;border-top:1px solid rgb(var(--warm));
+  font-size:.82rem;color:rgb(var(--muted));display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;}
+
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr;}
+  .legend{grid-template-columns:1fr;gap:12px;}
+  header.top h1{font-size:2rem;}
+}
+@media print{
+  nav.jump{display:none;} .card{break-inside:avoid;box-shadow:none;}
+  section.program{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="https://app.flintls.com/logo.svg" alt="Flint" class="flint-logo" />
+    <h1>Real Estate Operations<br>Program Framework</h1>
+  </header>
+
+  <div class="legend">
+    <div><span class="lab">Program</span>A business problem that cuts across a main part of the operation.</div>
+    <div><span class="lab">Initiative</span>Closes one performance gap. Sized for about a three-month sprint.</div>
+    <div><span class="lab">Practice</span>A specific workplace behavior inside an initiative. A few weeks each.</div>
+  </div>
+
+  <nav class="jump"><a href="#customer-focus">Customer focus</a><a href="#branch-presentation-and-upkeep">Branch presentation and upkeep</a><a href="#safety">Safety</a><a href="#frontline-leadership">Frontline leadership</a><a href="#managing-projects">Managing projects</a></nav>
+
+  
+    <section class="program" id="customer-focus">
+      <div class="prog-head">
+        <span class="prog-index">Program 01 &middot; 6 initiatives</span>
+        <h2>Customer focus</h2>
+        <p class="problem">The branch experience drives customer trust and retention. When facilities teams don&#x27;t see the branch through the customer&#x27;s eyes, work gets prioritized by habit instead of by what customers actually notice.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <h3>Fresh Eyes<span class="live">Live</span></h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">S Tech</span><span class="aud">LS Lead</span></div>
+          </div>
+          <p class="gap">Teams don&#x27;t see the branch from the customer&#x27;s perspective, so facilities work isn&#x27;t prioritized by customer impact.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>customer-perspective walkthrough</li><li>noticing what a customer sees first</li><li>turning observations into fixes</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Building Your Team&#x27;s Quality Eye</h3>
+            <div class="auds"><span class="aud">Dir</span><span class="aud">FM</span></div>
+          </div>
+          <p class="gap">Leaders don&#x27;t develop the quality eye in their people; the standard for what good looks like isn&#x27;t taught down the line.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>modeling the standard</li><li>spot-checking with the team</li><li>giving quality feedback</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Prioritizing Work</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">FT</span><span class="aud">LS</span></div>
+          </div>
+          <p class="gap">Work is done in the order it arrives, not by customer impact.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>triage by customer impact</li><li>prioritize the backlog by what customers notice</li><li>sequence around branch-open hours</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Peak-moment readiness</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">LS Lead</span></div>
+          </div>
+          <p class="gap">Branches aren&#x27;t prepped for the moments customers judge hardest (tax-season lines, icy winter entries).</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>identify peak moments</li><li>pre-stage for them</li><li>reset afterward</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>The customer&#x27;s seat</h3>
+            <div class="auds"><span class="aud">FM</span></div>
+          </div>
+          <p class="gap">Accessibility friction (door pressure, ramp condition, signage) goes unnoticed.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>experience the branch as a customer with mobility needs</li><li>check door/ramp/signage</li><li>fix the friction</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Holding vendors accountable</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">FM Leads</span></div>
+          </div>
+          <p class="gap">Contracted work falls below standard because vendors aren&#x27;t managed.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>set expectations at kickoff</li><li>follow up during the work</li><li>escalate at the right time</li><li>oversee landscape &amp; janitorial vendors to the same standard</li></ul>
+          </div>
+        </article></div>
+    </section>
+    <section class="program" id="branch-presentation-and-upkeep">
+      <div class="prog-head">
+        <span class="prog-index">Program 02 &middot; 3 initiatives</span>
+        <h2>Branch presentation and upkeep</h2>
+        <p class="problem">The physical condition of the building and grounds signals the brand. When the asset falls below standard, customers read it as decline and capital cost rises.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <h3>Staying ahead of breakdowns</h3>
+            <div class="auds"><span class="aud">FT</span><span class="aud">FM</span></div>
+          </div>
+          <p class="gap">Reactive, low-quality maintenance produces customer-visible failures.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>preventive over reactive</li><li>flag early warning signs</li><li>first-time fix</li></ul>
+          </div>
+        </article>
+        <article class="card placeholder">
+          <div class="card-top"><h3>Initiative to be defined</h3></div>
+          <p class="gap ph">A further initiative under this program &mdash; to be scoped.</p>
+        </article>
+        <article class="card placeholder">
+          <div class="card-top"><h3>Initiative to be defined</h3></div>
+          <p class="gap ph">A further initiative under this program &mdash; to be scoped.</p>
+        </article></div>
+    </section>
+    <section class="program" id="safety">
+      <div class="prog-head">
+        <span class="prog-index">Program 03 &middot; 3 initiatives</span>
+        <h2>Safety</h2>
+        <p class="problem">Branch injuries, liability, and downtime, plus the safety that customers and staff experience on site.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <h3>Walking surfaces</h3>
+            <div class="auds"><span class="aud">Janitors</span><span class="aud">FM</span><span class="aud">LS Lead</span></div>
+          </div>
+          <p class="gap">Slips, trips, and falls at entrances, the top branch liability, aren&#x27;t proactively managed.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>mat management</li><li>wet-floor protocol</li><li>ice and snow at the entry</li><li>spot-and-report surface hazards</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Seeing the hazard first</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">all</span></div>
+          </div>
+          <p class="gap">Developing hazards get walked past unreported.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>daily hazard walk</li><li>what to look for</li><li>log and flag it</li><li>near-miss reporting</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Emergency readiness</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">S Tech</span></div>
+          </div>
+          <p class="gap">Teams are unclear or unpracticed on outage, flood, or security response.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>know the response</li><li>know who to call</li><li>run a drill</li></ul>
+          </div>
+        </article></div>
+    </section>
+    <section class="program" id="frontline-leadership">
+      <div class="prog-head">
+        <span class="prog-index">Program 04 &middot; 3 initiatives</span>
+        <h2>Frontline leadership</h2>
+        <p class="problem">Frontline supervisors across every crew aren&#x27;t consistently coaching their people or setting clear expectations, which drives turnover and uneven execution.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <h3>Coaching your crew</h3>
+            <div class="auds"><span class="aud">FM Leads</span><span class="aud">SFM</span></div>
+          </div>
+          <p class="gap">Supervisors firefight instead of coaching.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>regular check-ins</li><li>giving feedback</li><li>developing a person</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Setting expectations with your team</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">FM Leads</span></div>
+          </div>
+          <p class="gap">Expectations are assumed, not set.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>set expectations up front</li><li>follow up</li><li>hold the line</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Running a useful team huddle</h3>
+            <div class="auds"><span class="aud">FM Leads</span></div>
+          </div>
+          <p class="gap">Team communication is ad hoc.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>a simple huddle cadence</li><li>surfacing blockers</li><li>sharing wins</li></ul>
+          </div>
+        </article></div>
+    </section>
+    <section class="program" id="managing-projects">
+      <div class="prog-head">
+        <span class="prog-index">Program 05 &middot; 4 initiatives</span>
+        <h2>Managing projects</h2>
+        <p class="problem">Projects in Real Estate Operations (branch refreshes, remodels, relocations, equipment replacements) are often run late, over budget, or disruptive, which raises cost, disrupts branch operations, and hurts the customer.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <h3>Keeping everyone in the loop</h3>
+            <div class="auds"><span class="aud">FM</span><span class="aud">POD</span><span class="aud">Dir</span></div>
+          </div>
+          <p class="gap">Branch managers and regional leaders aren&#x27;t kept informed, so project disruption comes as a surprise.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>map the stakeholders</li><li>set an update cadence</li><li>communicate scope and timeline up front</li><li>escalate risks early</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Managing a portfolio of projects</h3>
+            <div class="auds"><span class="aud">POD</span><span class="aud">FM Leads</span></div>
+          </div>
+          <p class="gap">With many concurrent projects, attention is spread thin and things get dropped.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>triage active projects</li><li>run a weekly status review</li><li>track timeline and budget across projects</li><li>reallocate attention to what&#x27;s at risk</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Seeing problems before they blow up</h3>
+            <div class="auds"><span class="aud">POD</span><span class="aud">S Tech</span></div>
+          </div>
+          <p class="gap">Risks and issues aren&#x27;t anticipated or caught early, so small problems become expensive ones.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>build a risk list at kickoff</li><li>surface constraints and dependencies early</li><li>run a weekly issue check</li><li>keep mitigation plans ready</li></ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top">
+            <h3>Learning across projects</h3>
+            <div class="auds"><span class="aud">POD</span><span class="aud">S Tech</span></div>
+          </div>
+          <p class="gap">The same mistakes repeat project to project because nothing is captured.</p>
+          <div class="pracs">
+            <span class="eyebrow">Practices</span>
+            <ul><li>run a real closeout (punch list, warranties, docs)</li><li>capture lessons</li><li>feed them into the next scope</li><li>build a reusable playbook</li></ul>
+          </div>
+        </article></div>
+    </section>
+
+  <footer>
+    <span>Citizens &mdash; Real Estate Operations program framework</span>
+    <span>Flint Learning Solutions</span>
+  </footer>
+</div>
+</body>
+</html>
