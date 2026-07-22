@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recurring Issues — JTEKT Build Trust &amp; Credibility</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+  :root {
+    --color-paper:      253 252 250;
+    --color-surface:    255 255 255;
+    --color-ink:        28 42 56;
+    --color-muted-ink:  74 88 104;
+    --color-accent:     232 77 40;
+    --color-success:    72 114 76;
+    --color-cool-grey:  154 166 176;
+    --color-light-grey: 200 205 210;
+    --color-pale-grey:  235 229 220;
+    --color-warm-line:  197 187 166;
+    --color-shadow-warm: 96 80 50;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: rgb(var(--color-paper));
+    color: rgb(var(--color-ink));
+    font-family: 'Sen', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  ::selection {
+    background-color: rgb(var(--color-accent));
+    color: rgb(var(--color-paper));
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--color-muted-ink));
+    font-weight: 700;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: rgb(var(--color-muted-ink));
+    margin-top: 6px;
+    margin-bottom: 40px;
+  }
+
+  h1.headline {
+    font-size: 2.1rem;
+    line-height: 1.25;
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .stat-card {
+    background: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .stat-number {
+    font-family: 'Geist Mono', monospace;
+    font-size: 2rem;
+    color: rgb(var(--color-accent));
+    font-weight: 500;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: rgb(var(--color-muted-ink));
+    margin-top: 4px;
+  }
+
+  .section-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--color-accent));
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  h2.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .section-note {
+    color: rgb(var(--color-muted-ink));
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    max-width: 640px;
+  }
+
+  .theme {
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: rgb(var(--color-surface));
+    overflow: hidden;
+  }
+
+  .theme-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    cursor: pointer;
+    gap: 16px;
+  }
+
+  .theme-header:hover { background: rgb(var(--color-pale-grey) / 0.25); }
+
+  .theme-title {
+    font-family: 'Andada Pro', serif;
+    font-size: 1.1rem;
+  }
+
+  .theme-desc {
+    font-size: 0.85rem;
+    color: rgb(var(--color-muted-ink));
+    margin-top: 2px;
+  }
+
+  .theme-count {
+    font-family: 'Geist Mono', monospace;
+    font-size: 1.3rem;
+    color: rgb(var(--color-accent));
+    white-space: nowrap;
+  }
+
+  .chevron {
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    color: rgb(var(--color-muted-ink));
+  }
+
+  .theme.open .chevron { transform: rotate(180deg); }
+
+  .theme-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-top: 1px solid rgb(var(--color-pale-grey));
+  }
+
+  .theme.open .theme-body {
+    max-height: none;
+  }
+
+  .issue-card {
+    padding: 18px 22px;
+    border-bottom: 1px dotted rgb(var(--color-warm-line));
+  }
+
+  .issue-card:last-child { border-bottom: none; }
+
+  .issue-quote {
+    font-size: 0.92rem;
+    color: rgb(var(--color-ink));
+    margin-bottom: 10px;
+  }
+
+  .issue-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.8rem;
+  }
+
+  .issue-attr {
+    color: rgb(var(--color-muted-ink));
+  }
+
+  .issue-attr strong { color: rgb(var(--color-ink)); font-weight: 700; }
+
+  .status-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .status-action { background: rgb(var(--color-success) / 0.12); color: rgb(var(--color-success)); }
+  .status-escalated { background: rgb(var(--color-accent) / 0.10); color: rgb(var(--color-accent)); }
+  .status-resolved { background: rgb(var(--color-cool-grey) / 0.20); color: rgb(var(--color-muted-ink)); }
+  .status-none { background: rgb(var(--color-pale-grey) / 0.6); color: rgb(var(--color-muted-ink)); }
+
+  .breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .breakdown-col {
+    background: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .breakdown-col h3 {
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgb(var(--color-pale-grey));
+    font-size: 0.9rem;
+  }
+
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .breakdown-row .n {
+    font-family: 'Geist Mono', monospace;
+    color: rgb(var(--color-muted-ink));
+  }
+
+  .callout {
+    background: rgb(var(--color-pale-grey) / 0.4);
+    border-left: 3px solid rgb(var(--color-accent));
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-size: 0.9rem;
+    color: rgb(var(--color-muted-ink));
+    margin-bottom: 48px;
+  }
+
+  .systemic {
+    background: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 56px;
+  }
+
+  .systemic .n {
+    font-family: 'Geist Mono', monospace;
+    color: rgb(var(--color-accent));
+  }
+
+  footer {
+    border-top: 1px solid rgb(var(--color-pale-grey));
+    padding-top: 20px;
+    font-size: 0.78rem;
+    color: rgb(var(--color-muted-ink));
+  }
+
+  @media (max-width: 640px) {
+    .stat-row { grid-template-columns: 1fr; }
+    .breakdown { grid-template-columns: 1fr; }
+    h1.headline { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">JTEKT · Build Trust &amp; Credibility · Recurring-Issue Analysis</div>
+  <div class="breadcrumb">Recurring issues · what the floor surfaced</div>
+
+  <h1 class="headline">Your leaders are naming the chronic problems — and moving two-thirds of them.</h1>
+
+  <p class="section-note" style="margin-bottom:40px;">As leaders coached through Standard Work gaps, <strong>111 conversations took on a recurring or chronic issue.</strong> They come from about 70 leaders and are, for the most part, <strong>distinct problems, not the same one logged twice.</strong></p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number">111</div>
+      <div class="stat-label">Recurring issues surfaced, across ~70 leaders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">65%</div>
+      <div class="stat-label">Already driven to a fix, owner, or plan by the leaders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">27</div>
+      <div class="stat-label">Are systemic — spanning shifts, lines, or teams</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">What keeps breaking</div>
+  <h2 class="section-title">The recurring issues, by theme</h2>
+  <p class="section-note">Grouped from the leaders' own descriptions. Equipment reliability leads by a wide margin. Select any theme to read every issue in it.</p>
+
+  <div id="themes"></div>
+
+  <div class="section-eyebrow" style="margin-top:56px;">Are they getting solved?</div>
+  <h2 class="section-title">Where each issue landed</h2>
+  <p class="section-note">Most aren't just being talked about — leaders are driving them to an action, an owner, or a fix.</p>
+
+  <div class="breakdown">
+    <div class="breakdown-col">
+      <h3 style="color: rgb(var(--color-success));">Moving — 72 of 111 (65%)</h3>
+      <div class="breakdown-row"><span>Action or plan set</span><span class="n">37</span></div>
+      <div class="breakdown-row"><span>Escalated with a named owner</span><span class="n">26</span></div>
+      <div class="breakdown-row"><span>Resolved on the floor</span><span class="n">9</span></div>
+    </div>
+    <div class="breakdown-col">
+      <h3 style="color: rgb(var(--color-accent));">Needs a push — 39 of 111 (35%)</h3>
+      <div class="breakdown-row"><span>Discussed, no clear next step</span><span class="n">35</span></div>
+      <div class="breakdown-row"><span>Escalated, still waiting</span><span class="n">4</span></div>
+    </div>
+  </div>
+
+  <div class="callout">The coaching and barrier-clearing opportunity: a nudge or an unblock turns these into fixes.</div>
+
+  <div class="systemic">
+    <h3 style="margin-bottom:10px;">The systemic set</h3>
+    <p style="margin:0; font-size:0.95rem; color: rgb(var(--color-muted-ink));"><span class="n">27 of the 111</span> span more than one shift, line, or team — the same problem in more than one place. A single floor conversation can't close these; they belong in Issue Track, and they cluster around equipment reliability and quality checks.</p>
+  </div>
+
+  <footer>
+    Recurring-issue analysis · JTEKT Build Trust &amp; Credibility on the Floor · FLiNT Learning Solutions.<br />
+    Basis: 111 of 714 completed coaching conversations (through Jul 9, 2026) that took on a recurring or chronic issue. Themes and resolution status grouped from the leaders' own descriptions.
+  </footer>
+
+</div>
+
+<script>
+const STATUS_CLASS = {
+  'Action set': 'status-action',
+  'Escalated · owner': 'status-escalated',
+  'Escalated · open': 'status-escalated',
+  'Resolved': 'status-resolved',
+  'No next step': 'status-none'
+};
+
+const THEMES = [
+  {
+    title: 'Equipment reliability & PM',
+    count: 41,
+    desc: 'Faults, worn dies, loaders, leaks, PM not kept up',
+    issues: [
+      ["Followed up with Laura, the follow up conversation did happen and we came up with action plans as well during the follow up with figured out root cause on why the operator was acting the way we did, we also came up with weekly follow ups with that operator as check in's. I ask the operator how there doing they said good, later in the day i asked how they were doing they said ok, i asked do you need anything from me they said no, i asked can i do anything for you they said no. I asked Laura to go over to them ask how they were doing they said they were struggling. I asked Laura to find out why they're struggling see what we can do to help them. I asked Laura to find out why they will tell you something differnent then me. they said If they told me the truth they will get in trouble. I asked Laura to bring the operator into the office. I explaned to both Laura and the operator that, I'm not here to get you in trouble, I need to know the truth on how your doing so if you need further training or explantion on something, we can get you the tools and resources avivable to you. I also stated that I'm here for you to succed i want you to to be sucessful and that I'm here for you in anything i can do to help you get to your KPI goal, professonal delvopment, or anything to do to reach the optimoal employee you can be, the meeting was over after 5 mins and was a very postive one as well.", "Jake Blitz", "Supervisor Production", "Escalated · owner"],
+      ["Tonight we discussed a note on the board in the soft tumble office about #12 being down from this weekend. He said there is still parts in the barrel, but it won't turn on. I took down the info and told him I would look into it and get back to him. Upon more review, we discovered the issue had been fixed since this weekend and he hadn't tried to start the barrel. He said no one had told him that it was fixed, but he hadn't taken initiative to see if it was ready to run either. To Jeff's credit, he went and turned it on as soon as I asked him to try to turn it on. I encouraged and invited Jeff to reach out to me when he gets in and has questions, and I'll come help him get it sorted out rather than waiting until Greg or I come around to him (which is 3-4 hours after his shift starts). I let Greg know all of this info as well, and he agrees that I need to encourage Jeff to be more observant at the start of his shift.", "Brandon C Brooks", "Team Leader", "Action set"],
+      ["This came up yesterday and several other times in the recent past. A part gets stuck in a die. Production thinks the die is broke. We get the part out (and sometime remove the die). We check the components and nothing is damaged. Die can resume normal production. There is an issue on the machine that requires maintenance support. Because we cannot recreate the scenario immediately, it is just written off as a die problem. We have had the same issue with the same part model on every die we put in that machine so die issue should be ruled out. Proof on several occasions that the dies are in proper working condition should also rule it out. We cannot stop providing support even though we cannot resolve the problem.", "Tabatha Helton", "Team Leader", "Escalated · open"],
+      ["They said to prevent downtime. I asked them what downtime was. They explain correctly. I asked what that matters. And they said, \u201cit costs a lot of money when you don't run parts.\u201d I asked how so. They said, \u201cwe don't make money if we don't make parts and if we ain't making money, we're spending money.\u201d I asked what they meant by that. I think they understand but have a hard time explaining it. We worked though it and the understand that we spend money on extra labor, and we spend money remaking parts if we run bad ones, and we spend money fixing dies that should have been fixed when they were in the shop.", "Tabatha Helton", "Team Leader", "Resolved"],
+      ["I told both operators that I had found the cause of the hit marks and went with the line loader to the line where the hit marks were being made. I told the line loader he was doing a good job at holding cycle time on loading the part, but I had seen an issue with the parts getting hit marks form the loading pallets. I showed the line loader weir the parts were getting the hit marks from and line loader agreed that the parts were getting hit marks form the pallets. Line loader agreed to watch out when loading the parts on the pallets.", "Michael C Armstrong", "Team Leader", "Action set"],
+      ["Eddie said that since Jonathon is new, he is going to run into issues that he won't be to figure out and he understands that. This particular time he was dealing with a very small and expensive part, and he didn't want to do more damage to them than necessary so he cut the machine off for him to look at it with Jonathon when he got it. Which I feel was the right move. Overall, Eddie feels that Jonathon is picking up on it at a good speed, but will only learn it by running into these issues and having to work through them.", "Brandon C Brooks", "Team Leader", "No next step"],
+      ["We have sit down and talked. we developed a plan on how to address this with not only the specific team member but all of team members. I built a training station for water lines and we decided to bring team members over one at a time. Ask them to hook it up according to the standard without any assistance. when they are finished, whether it is right or wrong, we then simply ask why they hooked it up the way they did. This way we know if they understand the information they trained on or it is communication on our part.", "Jeremy Rhoads", "Supervisor Die Maintenance", "Action set"],
+      ["This will require all leaders to work together to ensure uniformity and proper procedure. We have started a teach back lesson with the teams. There are doing a mock trail basically. They are given all of the tools and resources they need. Asked to perform the task. Once they are done, we ask them to explain why they did the activity the way they did. We tell them if they are correct. If they are not correct, we take the time to review the material and dive into the deeper explanation and cover the why.", "Tabatha Helton", "Team Leader", "Action set"],
+      ["I have asked multiple questions. 1) why are they not labeling boxes? answer was they forget. 2) why do they forget? answer is they are busy. 3) Have TL went over this with them? answer yes 4) do team members have everything they need to complete this task and is it easily visible and accessible? answer yes 5) have TL ask what would make it easier for team member to complete the task correctly? answer is yes and response was nothing they just forget.", "Jeremy Rhoads", "Supervisor Die Maintenance", "No next step"],
+      ["The conversation he had was not difficult but the person he was talking to was not fully understanding of the situation he was asked about. Zane explained but i am not sure if he got thru to the BT but he did state to him the situation that he was in was not good. He also explained the consequences if his performance was not improved. He asked if the BT needed anything he could provide to improve performance also.", "Christy Russell", "Supervisor Production", "Action set"],
+      ["I have sit down with John and gotten some feedback from him why this is happening, first the operator at times are not following the standard work alignment because checks are being done out of sequence, john said he sat down with the operator and walked through the route again and assure the operator had time to do it and was following the right standard work.", "Reginald A Murray", "Supervisor Production", "No next step"],
+      ["They seemed to understand after being shown and proceeded to tell me the issues they have been having on this machine. The Machine has been faulting at random points in the cycle some at the beginning and some at the end. After further investigation we found a work support was loose and was causing the machine to fault.", "Daniel Bentley", "Team Leader", "Escalated · owner"],
+      ["My tech said he's noticed we've been running our sizes lower than normal and having to make way more adjustments than usual. Hes changed tooling and adjusted gauges multiple times but its still a reoccurring issue. Suggest we move it up the ladder to engineering for further support. He doesn't know what else he can do.", "Hubert Simpson", "Team Leader G&A - RLD", "Escalated · open"],
+      ["Need to set priority towards whole line that when a problem exists with a machine and is not repaired in first 10 min to let line know to stop the process. Each person should be aware of any machine issue that requires downtime to repair so process is not skipped or a bottleneck persists.", "Gary Neikirk", "Team Leader", "No next step"],
+      ["There was no code on the production status sheet, so I will be adding this to it and Joey is going back to verify that no more codes are needed and re-train the operator on making sure that he knows anytime he has a question to ask before just writing something down.", "Joe Nichols", "Supervisor Production", "No next step"],
+      ["I encouraged him to take care of the important things initially as he did, but to make sure to circle back to doing a thorough walk through later in the shift when things calm down. He agreed and said he would work to make that a priority and habit in the future.", "Brandon C Brooks", "Team Leader", "Action set"],
+      ["QA mentioned that we have Ax Clearance kickouts due to low oil. After digging more into it. I had a part broken down and found that there was oil in the part. The real problem was that the parts are kicking out due to not super finished.", "Alexis Bowers", "Team Leader G&A - RLD", "Action set"],
+      ["I watched the operator perform the mastering of the gage. I noticed that the master block has to be put in the gage at a certain way or the gage doesnt master. Im going to get with QA and see if we can get a different mastering block.", "Luke Cooper", "Team Leader", "No next step"],
+      ["I met with the manager. he is going to remind the facilitator to do breakdowns before paperwork. If paperwork needs down before a certain time then he will get someone else to do the paperwork.", "Gregory A Robinson", "Supervisor Production", "Escalated · owner"],
+      ["We have been having issues with overflows falling off die and faulting out machines. i brought it up in my last meeting and we now have dates to go with it and its being looked at currently.", "Barry Fox", "Supervisor Production", "Escalated · owner"],
+      ["When i approach a breakdown ill attempt to connect with my computer. a lot of times ill have to find another computer that has the software or attempt to download it from our server bank.", "Victor Blevins", "Team Leader - Maintenance", "Escalated · owner"],
+      ["1. forklift driver says it's harder on him having to get what the lines needs and can't actually follow sop. 2. makes it hard for the line workers to follow sop because of the extra work.", "Bryan Greene", "Team Leader", "No next step"],
+      ["I instructed Mary to verify PM is completed and PM sheet is signed off daily. Mary is to have a conversation with the set up about completing the PM and filling out the PM sheet.", "George Wilson", "Supervisor Production", "Action set"],
+      ["Cell 7 and 8, B tech has manually move work support up and down at start of shift several times before both op20's will run in auto. This sometime can cost one hour production.", "Phil Hatfield", "Team Leader", "Action set"],
+      ["I will try different method to remove flash and try different die and Chris will install and have operator try this method to be easier for operator to try and keep up.", "Barry Fox", "Supervisor Production", "Action set"],
+      ["They are aware of the issue and changing dies to work on it problem. The core pin is damaged and pushing the area and causing this issue and plus more problems.", "Debra M Heck", "Team Leader", "Action set"],
+      ["Additional time it has been taking to pick up die cast load, puts other loads behind and staging gets behind trying to catch the loads back up.", "Carrie Idell", "Team Leader", "No next step"],
+      ["The same machine keeps having runout issues on all shifts. different setups have worked on the same machine, but the problem persist.", "Tikilla M Walker", "Team Leader Turning - RLD", "Action set"],
+      ["We cleaned the die to make sure that it was not just the lack of cleaning it and it was not. we ruled that out but we already knew.", "Luis Romero Ugalde", "Team Leader", "Escalated · owner"],
+      ["I have 8 machines plus the tow motor driver; I have at least 2 meetings a day I don't have time to take lunch most day's.", "Raymond Coffman", "Team Leader", "Escalated · owner"],
+      ["Found that the die is worn and causing operator to have to file a lot of flash in order to stay caught up.", "Raymond Coffman", "Team Leader", "Escalated · owner"],
+      ["Data shows that there 3 times they did not stop, call, wait change out the tool but had 28 scrap parts.", "John Hutto", "Team Leader Turning - RLD", "Escalated · owner"],
+      ["The material handler is pulling parts from the machining line as the parts are being machined.", "Donald Walker", "Team Leader", "No next step"],
+      ["Sometimes the other forklifts battery dies and he has to wait till his charges a little.", "Bryan Greene", "Team Leader", "Escalated · owner"],
+      ["Asked them to think of a more robust mounting system that could handle that environment.", "Brian Shope", "Team Leader - CAI", "No next step"],
+      ["He thinks should move sander to the beginning of standard work loop instead of the end.", "Barry Fox", "Supervisor Production", "Resolved"],
+      ["Talk with setter about retainer feed issue, watched the machine run for a few minutes.", "George R Weeks", "Team Leader", "No next step"],
+      ["I would have still confirmed root cause to make the decision on how to move forward.", "Brian C Reed", "Team Leader", "Action set"],
+      ["I measured parts they are in spec. got mechanic to adjust air flow.", "Lisa Phillips", "Team Leader - WAL", "Resolved"],
+      ["Still having some loader issues, production is still about 90%.", "George R Weeks", "Team Leader", "Escalated · open"]
+    ]
+  },
+  {
+    title: 'Missed quality checks & inspection',
+    count: 20,
+    desc: 'Skipped checks, discoloration, mixed work, scrap',
+    issues: [
+      ["I talked to the 1st shift operator and asked if they have caught a non crimped part go through inspection with a green light. He said that he had seen 1. I then asked the 3rd shift TL if it was possible that a very tall operator on 3rd shift may have unknowingly bumped the camera with out the operator knowing it. She said yes that was possible. So I went to the Engineer on first shif to ask if they could raise the camera a couple of inches to avoid future un noticed camera bumps.", "Robert T Davis", "Team Leader-PIE", "Escalated · owner"],
+      ["What we have concluded is we identified what causes less scrap from loading standpoint before heat treat that reduces warping also that the department that checks these parts equipment was misreading during checks which resulted in a lot of false reading that resulted into good parts being scraped for being perceived as scrap at this point issue has been resolved and Allcase is running around 30% scrap vs 60% to 90% scrap.", "Denton C Wiggins", "Team Leader-SYL", "Resolved"],
+      ["Rack insertion. She was walking slow after loading the housing on the pallet. Has to walk back to other end of loop and start the process over. Told her that she was doing a good job on doing her visual quality checks but she was still a few seconds off on her tac time. If she tries to hurry just a little more going back to other end would help her make her tac time.", "Timmy L Watson", "Team Leader MS1AL-VON", "Action set"],
+      ["Chiquita hagins as stated before bekido improved as we got into the run or shift we found less mixed cups at the beginning of the shift we found 35 in 1st tub and 14 in the next the operator did a good job collecting the data for feed back to heat treat bekido and production was good on both shifts I told the operator she was doing a good job making quality parts.", "Frank B Johnson", "Team Leader", "Action set"],
+      ["Higher. This is a management/production control topic. They know about it and we have been trying to get an answer out of them for months now but they treat information like it is on a need-to-know basis. The responses I get are that they will get back with me, but that getting back with me never happens, so we just plan day-by-day.", "Brian M McCurry", "HEAT TREAT Team Leader", "Escalated · open"],
+      ["Acton has been taken and we have changed the process. Each operator will leave their basket for the next operator to put on the rail. This lets the operator do a quality check on the parts in the basket and ensure good parts are being sent around and solves any issues we were having.", "Jonathan Purvis", "Supervisor Production", "No next step"],
+      ["When the operator has a ng part from the heat treat due to width variation, she should check all op 20 operations and make adjustments to the part and/or blow the excess chips out of the machine. When this step is not done, we accumulate more scrap than necessary.", "Tikilla M Walker", "Team Leader Turning - RLD", "No next step"],
+      ["We need to make sure charts are being filled out properly and we are receiving the correct response from operators if there is an issue or as we review the charts in real time we are responding appropriately to any issues by following the rules of the charts.", "George Wilson", "Supervisor Production", "Action set"],
+      ["Running parts close to rate per hour. Did not think of it when seeing me on my walk throughs. he did say something to crib he was told they was on order and was waiting for them to arrive. we get that answer a lot.", "Jackie L Funderburk", "Team Leader", "No next step"],
+      ["I heard that it's a lot trying to keep two machines going at one time and sometimes they forget and plain old I forgot but neither could tell me the exact sample amount they are supposed to be checking.", "Willandra M Seabrooks", "Team Leader", "No next step"],
+      ["Discussion went well but assembly's primary interest is not to have any discoloration, therefore no decision to be made. I re-assured him that we have a solution coming within a week.", "Eric Troxler", "Supervisor", "No next step"],
+      ["Potentially the lab would catch it. Potentially inspect would catch it. If not, it would make it to the customer and they would find it when it failed inside a car.", "Brian M McCurry", "HEAT TREAT Team Leader", "Escalated · owner"],
+      ["At start up meeting bring up the standard to follow the quality pitch board and if not following there could be a write up of the operators not doing it.", "Randall K Williams", "Team Leader", "Escalated · owner"],
+      ["Jason thinks the operators are not fully aware of all the trap points on the machines. So, they are not checking everywhere for mixed work.", "Bobby G Gulley", "Supervisor Production", "No next step"],
+      ["Picking parts up from the designated pick area, not only on multiple shifts but also almost every loop they make to pick up parts.", "Donald Walker", "Team Leader", "Action set"],
+      ["It is not something that can be decided if it helped within a day. We have to wait to see if the next department finds any.", "Calla Blackwell", "Team Leader - WAL", "Action set"],
+      ["The data showed several missed checks. The operator told the TL they did not have time or in some cases just forgot.", "Eric Troxler", "Supervisor", "Action set"],
+      ["When parts are staged correctly, it prevents N/G parts and skipped process's from making it to the customer.", "Patrick Armstrong", "Team Leader", "No next step"],
+      ["Initially pointed in different directions, having different ideas of what caused the issue.", "Christopher Cutter", "Team Leader", "No next step"],
+      ["She agreed to inspect a set amount of baskets and her goal was reached.", "Christopher Cutter", "Team Leader", "Action set"]
+    ]
+  },
+  {
+    title: 'Standard Work skipped or altered',
+    count: 15,
+    desc: 'Steps dropped or reordered to \u201cgo faster\u201d',
+    issues: [
+      ["I created a crib worksheet that could be used to record the components involved in issuing or restocking. A crib attendant can use it to essentially make a list of the components that he or she intended to issue out or restock. That way it could be used to check against any time a mistake was made that way he or she could see what they intended to do verses what actually happened. If everyone who uses it agrees it helps I will consider looking into how it can be integrated into standard work for crib attendants.", "Gary Clark", "Team Leader", "Action set"],
+      ["Told the operator that they were doing a good job at keeping up with the line \u201ccycle time\u201d but I had noticed that you were having issues keeping up with the first process and I was her to help with any issues that you might have and to go over standard work to ensure that we are following the standard work. Operator agreed that they were having issues keeping up and after going over the standard work the operator found that they were missing a step and now the now the process was easier and faster.", "Michael C Armstrong", "Team Leader", "Action set"],
+      ["Brian is not very respectful when speaking to me about anything. When I approached him tonight about giving him help. He snapped at me saying who is going to train the help. I didn't know his Btech was not at work. When i asked had he heard from him he said not i don't talk to him. It is very hard to get anywhere with Brian I have tried many different ways to connect with him, but it doesn't work. We have been in the office many time Tring to resolve the issues.", "Erica Bennett", "Supervisor Production", "Escalated · owner"],
+      ["14 to 19 hours a week are spent cycle counting. They have to count across the entire plant. They are missing a lot as far as making sure their teams are doing what is needed, making sure we have parts and packaging we need, extra TL work like labeling and making improvements, and just watching for Safety items.", "Casey Ricker", "Supervisor Material Handling", "Escalated · owner"],
+      ["Brian said that the production operator allows two dunnage to fill up before removing full dunnages from the cage. He said his guy is scheduled to reach that station every 1 hour and 10 minutes. Sometimes there is nothing at the pickup station to pick up.", "Ira Doucet", "Supervisor Logistics", "Escalated · owner"],
+      ["They both were thinking they were running faster by doing the loop out of order. Once I timed them and showed them the data to show they are actually losing production by doing that way. Both seemed to undertstand.", "Daniel Bentley", "Team Leader", "Action set"],
+      ["He stated it would make it easier for him also because he has to record the paperwork in the computer so it will be easier to follow since it is done correctly and in a timely manner.", "Christy Russell", "Supervisor Production", "No next step"],
+      ["It gets him behind on the back side of the line because he runs the front of the line twice then gets parts and goes through the fron again before returning to the back.", "Bryan Greene", "Team Leader", "Action set"],
+      ["It happens at least twice per week. I have asked at least 6 times, it keeps the MH from running the according to standard work.", "Ira Doucet", "Supervisor Logistics", "Escalated · owner"],
+      ["Sherry stated she had a new TM training on the route and she will cover this with all TMs in her start of shift meeting.", "Casey Ricker", "Supervisor Material Handling", "Escalated · owner"],
+      ["Aduitor on my shift finds all clear not sign off, when she does her rounds.", "Lillian A Hinkle", "Team Leader - WAL", "Escalated · owner"],
+      ["We hung up job elements, so hopefully operators will see it and follow it.", "Hobert Mills", "Team Leader", "No next step"]
+    ]
+  },
+  {
+    title: 'New-operator ramp & training',
+    count: 4,
+    desc: 'Recurring misses tied to skill or onboarding',
+    issues: [
+      ["Very good question. Oral came to us with no experience in production manufacturing but was a college football coach. We felt he would be good at bringing a teamwork environment in with him and be a good fit for developing those on his team. He has done a good job at this but while doing so he becomes close to his team members. I feel this is good in a few ways, but I have had to coach him with some guidance because that can also be not such a good thing sometimes because feelings can get in his way of dealing with the hard part. Disciplinary stuff. I think it could have played a part in this difficult decision we made today from not occurring earlier than it did. After he saw that how we handled this together this morning that it should have been addressed when he was observing it but did not go through the difficult part in some fear of dealing with it. But he told me after our meeting with our floater this morning that he knows now it can and will react much faster in the future. I think we both moved another step forward with being firm and friendly with our staff.", "Britton Dailey", "Supervisor Production", "Escalated · owner"],
+      ["I would say not telling David what William had observed. Only because I didn't want him to think I was pointing to only his shift. Giving them direction to go offer this issue with their groups was odd, as I feel they know this would automatically be what I would expect without it being mentioned. Maybe it would have, I don't know for sure.", "Britton Dailey", "Supervisor Production", "No next step"],
+      ["Actually, after mentioning it to them they stress to make sure whoever it is that they work. I stress recently that anyone brought over in the area will be expected to work jsut as we expected you to work as well and to be the example of how the line should be performing.", "Jacqueline B Greene", "Supervisor Production", "No next step"],
+      ["To make sure they follow standards and retrain them on those standards.", "John Hodson", "Team Leader", "Action set"]
+    ]
+  },
+  {
+    title: 'Cross-shift & stuck escalations',
+    count: 3,
+    desc: 'Waiting on an answer across shifts or functions',
+    issues: [
+      ["The reason why were not hitting are target goals on shift is due to the fact we can only operate 2 lines a night compare to the other shifts that are fully staffed. one solution was to only run the lines that are fast producing but might not be what the need for the customer. While the other said we need to get fully staffed to run more machines. knowing with that they both said using active listening to not disagree with one another. I just listen to them brain stroming together with out putting in inupt, this helps keeps my goals separate from there's but will share with them in a meeting that I have valdeated your concerns and I'll brain storm more ideas with you all. when making changes to a deparment there are many virubales that come into play. When in a leadership role to wanting make changes you have to look at a few different things, cost, productivity, profit and justiy the why behind it. I may have great ideas and so did the team leads at the end of day uper mangamnet will make the final decision.", "Jake Blitz", "Supervisor Production", "Escalated · owner"],
+      ["The previous shift operator said that everything was running fine and they made target. My operator said everything was fine but still missed target. So, it looks like the operator on my shift is running slower than the other shifts.", "Randall Kinkead", "Team Leader", "No next step"],
+      ["What I have come up with is the day shift operator has more experience than the night shift operator so I told the night shift operator to keep working she will get it.", "Robert P Woodby", "Team Leader Inprocess Insp-VON", "Resolved"]
+    ]
+  },
+  {
+    title: 'Staffing & coverage',
+    count: 3,
+    desc: 'Can\u2019t run to plan for lack of people',
+    issues: [
+      ["\u201cI noticed on 7/2, 7/3 and 7/5 that you were on the line on time but didn't start the line until 7:20 am. The start is at 7:15 you need to start when the bell goes off so that this shift can hit the target production. If we do not hit target and run the full minutes of the shift we will have to schedule Saturday to make up the loss of parts due to late starts.", "Robert T Davis", "Team Leader-PIE", "No next step"],
+      ["This operator's numbers have been really strong today. When looking at their production sheet i had a conversation with them about how good they were doing today. Their production was actually up from the previous day, durring the process i told them they were doing a good job today keep up the good work.", "Joey S Phifer", "Team Leader - WAL", "No next step"],
+      ["Talked to both, I also explained to the operator that we are trying to get help to please bare with us that things like this don't happen overnight and they were glad that i got back with them.", "Joey S Phifer", "Team Leader - WAL", "No next step"]
+    ]
+  },
+  {
+    title: 'Other / varied single issues',
+    count: 25,
+    desc: 'One-off recurring problems across areas',
+    issues: [
+      ["I try to always be positive around my team members and if something needs attention we address it as adults. Usually anytime i am making my rounds if any of my members are having an issue they all know they can come to me and, I will resolve any issues that needs attention if possible. I always tell my team if you have any issues at all don't hesitate to get with me because I consider my team as family. We see each other more than we do our own family and if they are having issues I need to know especially if safety is a factor.", "Joey S Phifer", "Team Leader - WAL", "No next step"],
+      ["I had him go look at his hourly build from last night and give them a goal to hit that was higher than what they were at last night at lunch time. He stated that they were at 220 at lunch, so his goal was going to be 230 I had him adjust it to 240. Told him make it achievable but a challenge. The went up to them and said your goal is 240 by break, they all give him a weird look. he said y'all have 20 mins to get 30 parts i believe in yall. the team ended up getting 245.", "Erica Bennett", "Supervisor Production", "Action set"],
+      ["On reoccurring issues, I try and talk to B Tech and operator because a lot of times I dont get to speak with previous shifts operator and have to rely solely on communication from the previous shifts Team Lead.", "Randal Z Rhea", "Team Leader", "No next step"],
+      ["I talked to an B operator about his bekidou and asked what issues he has that's keeping him to make his target. He said it's the short stops that setup/tech just comes on the line and put a bandage.", "Pia Battle", "Team Leader - RLD", "Escalated · owner"],
+      ["Touched on issue on both fronts and tried to lower the level of frustration with issue not being resolved at this time and assured them that it is on a priority basis to get fixed.", "David Clemons", "Team Leader Turning - RLD", "Action set"],
+      ["Sometimes the operator and setter have different opinions because of their skill level. she may see one things one way and the setter can see things totally different.", "Frank B Johnson", "Team Leader", "Escalated · owner"],
+      ["Still in progress but i think they are going to add a step to the existing instructions. Then it should work better next time and keep the info with the workplace in.", "Gregory A Robinson", "Supervisor Production", "No next step"],
+      ["I am having chase to look closer into whats running and i will follow up with him and make suggestions on how to make the line more efficient.", "Gregory A Robinson", "Supervisor Production", "No next step"],
+      ["He said he didn't have work for some machines and Jason looked to see if we had anything that could be off loaded to empty machines.", "Bobby G Gulley", "Supervisor Production", "No next step"],
+      ["I asked to catch up what they could by the end of the day. both operators said it would be caught up before second shift arrives.", "Jackie L Funderburk", "Team Leader", "Action set"],
+      ["Had him talk through the trouble shooting with the more experienced technician who fixed the issue to show him what he missed.", "Brian Shope", "Team Leader - CAI", "Escalated · owner"],
+      ["I explained that cleaning was part of safety and everyone's responsibility. They agreed and picked up the area.", "Neal Hester", "Team Leader - CAI", "Action set"],
+      ["I just addressed the importance of not over producing while acknowledging the input they described.", "Kaitlyn D Duncan", "Team Leader RP1 (Assembly) -VON", "Action set"],
+      ["First part was bad when we ran at the start of shift knowing that's what made use check the insert.", "John Hutto", "Team Leader Turning - RLD", "No next step"],
+      ["The target was not meet due to the paint line not working and having to keep on working on.", "Juan Pantoja-Torres", "Team Leader", "Resolved"],
+      ["The issue was air pressure, we discussed the importance of reporting even the small issues.", "Patrick Armstrong", "Team Leader", "No next step"],
+      ["Make sure the operator understands the standard and acknowledge it with a verbal response.", "Ira Doucet", "Supervisor Logistics", "Action set"],
+      ["Both. Trying to repair the issue and making sure the operator was keeping busy with 5S.", "Neal Bishop", "Team Leader", "Resolved"],
+      ["It went okay. She said she will try to do better. But I know she will do it again.", "Calla Blackwell", "Team Leader - WAL", "Action set"],
+      ["Told the operator that they are doing a great job and the numbers backed that up.", "Antoine Simmons", "Team Leader-PIE", "Action set"],
+      ["That the newer operator definitely is slower at every aspect of the job.", "Jonathan L Hardin", "Team Leader", "Escalated · owner"],
+      ["If teh is right let them correct issue if not escalate to maintenance.", "Christopher Shough", "Team Leader - RLD", "Escalated · owner"],
+      ["Material handlers' route has been changed and was short staff. The operator has does not hold accountability for not doing his job.", "Mary Johnson", "Team Leader G&A - RLD", "Action set"]
+    ]
+  }
+];
+
+const themesEl = document.getElementById('themes');
+
+THEMES.forEach((theme, i) => {
+  const div = document.createElement('div');
+  div.className = 'theme';
+  div.innerHTML = `
+    <div class="theme-header" onclick="toggleTheme(${i})">
+      <div>
+        <div class="theme-title">${theme.title}</div>
+        <div class="theme-desc">${theme.desc}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div class="theme-count">${theme.count}</div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+    <div class="theme-body" id="theme-body-${i}">
+      ${theme.issues.map(issue => `
+        <div class="issue-card">
+          <div class="issue-quote">${issue[0]}</div>
+          <div class="issue-meta">
+            <span class="issue-attr"><strong>${issue[1]}</strong> · ${issue[2]}</span>
+            <span class="status-tag ${STATUS_CLASS[issue[3]] || 'status-none'}">${issue[3]}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  themesEl.appendChild(div);
+});
+
+function toggleTheme(i) {
+  const theme = themesEl.children[i];
+  const body = document.getElementById('theme-body-' + i);
+  const isOpen = theme.classList.contains('open');
+  document.querySelectorAll('.theme').forEach(t => t.classList.remove('open'));
+  document.querySelectorAll('.theme-body').forEach(b => b.style.maxHeight = null);
+  if (!isOpen) {
+    theme.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+</script>
+</body>
+</html>
