@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fresh Eyes Pilot: Results</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+  :root {
+    --color-paper:      253 252 250;
+    --color-surface:    255 255 255;
+    --color-ink:        28 42 56;
+    --color-muted-ink:  74 88 104;
+    --color-accent:     27 94 66;
+    --color-accent-tint: 224 238 230;
+    --color-flint:      232 77 40;
+    --color-cool-grey:  154 166 176;
+    --color-light-grey: 200 205 210;
+    --color-pale-grey:  235 229 220;
+    --color-warm-line:  197 187 166;
+
+    --cat-1: 27 94 66;
+    --cat-2: 163 129 45;
+    --cat-3: 176 74 50;
+    --cat-4: 42 107 99;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0; padding: 0;
+    background-color: rgb(var(--color-paper));
+    color: rgb(var(--color-ink));
+    font-family: 'Sen', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Andada Pro', serif; font-weight: 400; margin: 0; }
+  ::selection { background-color: rgb(var(--color-accent)); color: rgb(var(--color-paper)); }
+
+  .top-strip {
+    height: 6px;
+    background: linear-gradient(90deg,
+      rgb(var(--cat-1)) 0%, rgb(var(--cat-1)) 25%,
+      rgb(var(--cat-2)) 25%, rgb(var(--cat-2)) 50%,
+      rgb(var(--cat-3)) 50%, rgb(var(--cat-3)) 75%,
+      rgb(var(--cat-4)) 75%, rgb(var(--cat-4)) 100%);
+  }
+
+  /* ---------- Nav ---------- */
+
+  .nav {
+    position: sticky; top: 0; z-index: 40;
+    background-color: rgb(var(--color-paper) / 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(var(--color-pale-grey));
+  }
+  .nav-inner {
+    max-width: 1120px; margin: 0 auto;
+    padding: 12px 48px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .flint-logo { height: 22px; width: auto; display: block; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav-links a {
+    font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 700; color: rgb(var(--color-muted-ink)); text-decoration: none;
+    transition: color 150ms cubic-bezier(0.16,1,0.3,1); white-space: nowrap;
+  }
+  .nav-links a:hover { color: rgb(var(--color-accent)); }
+  .nav-num { font-family: 'Geist Mono', monospace; color: rgb(var(--color-cool-grey)); margin-right: 5px; }
+
+  /* ---------- Layout ---------- */
+
+  .page { max-width: 1120px; margin: 0 auto; padding: 0 48px; }
+  .page--wide { max-width: 1280px; }
+
+  section { padding: 72px 0 8px; }
+
+  .chapter-head { margin-bottom: 40px; max-width: 820px; }
+  .chapter-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgb(var(--color-accent)); font-weight: 500;
+    display: block; margin-bottom: 12px;
+  }
+  .chapter-head h2 { font-size: 2.05rem; line-height: 1.18; letter-spacing: -0.01em; }
+
+  h3.sub { font-size: 1.3rem; line-height: 1.25; margin-bottom: 16px; }
+  .block { margin-bottom: 50px; }
+
+  hr.rule { border: 0; border-top: 1px solid rgb(var(--color-pale-grey)); margin: 0; }
+
+  /* ---------- Definition line ---------- */
+
+  .deffn {
+    font-size: 1.02rem; line-height: 1.6; color: rgb(var(--color-ink));
+    max-width: 760px; margin: 0 0 14px;
+  }
+  .deffn strong { font-weight: 700; }
+  .srcline {
+    font-family: 'Geist Mono', monospace; font-size: 0.74rem;
+    color: rgb(var(--color-cool-grey)); line-height: 1.5;
+  }
+
+  /* ---------- Fact bullets ---------- */
+
+  ul.facts { margin: 0; padding: 0; list-style: none; max-width: 780px; }
+  ul.facts li {
+    font-size: 0.95rem; line-height: 1.55; color: rgb(var(--color-ink));
+    padding: 9px 0 9px 20px; position: relative;
+    border-bottom: 1px dotted rgb(var(--color-light-grey));
+  }
+  ul.facts li:before {
+    content: ""; position: absolute; left: 2px; top: 17px;
+    width: 5px; height: 5px; border-radius: 50%;
+    background-color: rgb(var(--color-accent));
+  }
+  ul.facts li:last-child { border-bottom: 0; }
+  ul.facts li b { font-weight: 700; }
+
+  /* ---------- Cover ---------- */
+
+  .cover { padding-top: 96px; padding-bottom: 20px; }
+  .cover h1 {
+    font-size: 3.1rem; line-height: 1.08; letter-spacing: -0.02em;
+    max-width: 860px; margin-bottom: 30px;
+  }
+  .cover-id {
+    padding-top: 24px; border-top: 1px solid rgb(var(--color-warm-line));
+    font-family: 'Geist Mono', monospace; font-size: 0.92rem;
+    color: rgb(var(--color-ink)); line-height: 1.9;
+  }
+  .cover-id span { display: block; }
+  .cover-id span.dim { color: rgb(var(--color-muted-ink)); }
+
+  /* ---------- Contents ---------- */
+
+  .contents {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid rgb(var(--color-pale-grey));
+    border-bottom: 1px solid rgb(var(--color-pale-grey));
+    margin-top: 52px;
+  }
+  .contents a {
+    display: block; padding: 20px 22px 22px;
+    border-left: 1px solid rgb(var(--color-pale-grey));
+    text-decoration: none; color: inherit;
+    transition: background-color 300ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .contents a:first-child { border-left: 0; padding-left: 0; }
+  .contents a:hover { background-color: rgb(var(--color-accent) / 0.04); }
+  .contents .c-num { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: rgb(var(--color-accent)); display: block; margin-bottom: 8px; }
+  .contents .c-title { font-family: 'Andada Pro', serif; font-size: 1.05rem; line-height: 1.25; color: rgb(var(--color-ink)); margin-bottom: 6px; }
+  .contents .c-desc { font-size: 0.79rem; line-height: 1.45; color: rgb(var(--color-muted-ink)); }
+
+  /* ---------- Quote ---------- */
+
+  .pullquote {
+    border-left: 3px solid rgb(var(--color-accent));
+    padding: 4px 0 4px 24px; margin: 26px 0; max-width: 740px;
+  }
+  .pullquote p {
+    font-family: 'Andada Pro', serif; font-size: 1.22rem; line-height: 1.45;
+    font-style: italic; color: rgb(var(--color-ink)); margin: 0 0 11px;
+  }
+  .pullquote cite {
+    font-family: 'Sen', sans-serif; font-style: normal;
+    font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgb(var(--color-muted-ink)); font-weight: 700;
+  }
+
+  /* ---------- Stat band ---------- */
+
+  .stats {
+    display: grid; gap: 1px;
+    background-color: rgb(var(--color-pale-grey));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 12px; overflow: hidden;
+  }
+  .stats--4 { grid-template-columns: repeat(4, 1fr); }
+  .stats--5 { grid-template-columns: repeat(5, 1fr); }
+  .stat { background-color: rgb(var(--color-surface)); padding: 22px 22px 20px; }
+  .stat-num {
+    font-family: 'Geist Mono', monospace; font-weight: 500;
+    font-size: 1.85rem; line-height: 1; color: rgb(var(--color-accent));
+    letter-spacing: -0.02em; margin-bottom: 9px;
+  }
+  .stat-num .unit { font-size: 0.95rem; color: rgb(var(--color-muted-ink)); }
+  .stat-label { font-size: 0.82rem; line-height: 1.42; color: rgb(var(--color-ink)); font-weight: 700; margin-bottom: 4px; }
+  .stat-note { font-size: 0.75rem; line-height: 1.4; color: rgb(var(--color-muted-ink)); }
+
+  /* ---------- Two column ---------- */
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+  .two-col--wide-left { grid-template-columns: 1.3fr 1fr; }
+
+  /* ---------- Cards ---------- */
+
+  .cardgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 12px; padding: 20px 22px;
+  }
+  .card-eyebrow {
+    font-size: 0.64rem; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 700; color: rgb(var(--color-accent)); margin-bottom: 9px;
+  }
+  .card h4 { font-size: 1.06rem; line-height: 1.28; margin-bottom: 8px; }
+  .card p { font-size: 0.87rem; line-height: 1.55; color: rgb(var(--color-muted-ink)); margin: 0; }
+
+  /* ---------- Tier ladder ---------- */
+
+  .ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tier {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 12px; padding: 0; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .tier-top { padding: 20px 22px 18px; border-bottom: 1px dotted rgb(var(--color-cool-grey)); }
+  .tier-rank { display: flex; align-items: baseline; gap: 9px; margin-bottom: 11px; }
+  .tier-dots { display: flex; gap: 3px; }
+  .tier-dot { width: 7px; height: 7px; border-radius: 50%; background-color: rgb(var(--color-light-grey)); }
+  .tier-dot.on { background-color: rgb(var(--color-accent)); }
+  .tier-name {
+    font-family: 'Sen', sans-serif; font-size: 0.64rem; letter-spacing: 0.13em;
+    text-transform: uppercase; font-weight: 700; color: rgb(var(--color-muted-ink));
+  }
+  .tier-top h4 { font-size: 1.06rem; line-height: 1.26; margin-bottom: 8px; }
+  .tier-top p { font-size: 0.85rem; line-height: 1.5; color: rgb(var(--color-muted-ink)); margin: 0; }
+  .tier-why { padding: 16px 22px 20px; background-color: rgb(var(--color-accent) / 0.035); flex: 1; }
+  .tier-why span {
+    font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 700; color: rgb(var(--color-accent)); display: block; margin-bottom: 7px;
+  }
+  .tier-why p { font-size: 0.84rem; line-height: 1.5; color: rgb(var(--color-muted-ink)); margin: 0; }
+
+  /* ---------- Bars ---------- */
+
+  .bars { display: flex; flex-direction: column; gap: 11px; }
+  .bar-row { display: grid; grid-template-columns: 200px 1fr 46px; gap: 14px; align-items: center; }
+  .bar-label { font-size: 0.85rem; color: rgb(var(--color-ink)); line-height: 1.3; }
+  .bar-track { height: 9px; background-color: rgb(var(--color-pale-grey)); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; background-color: rgb(var(--color-accent)); }
+  .bar-val { font-family: 'Geist Mono', monospace; font-size: 0.8rem; color: rgb(var(--color-muted-ink)); text-align: right; }
+
+  /* ---------- Slope chart ---------- */
+
+  .slope-title {
+    font-size: 0.66rem; letter-spacing: 0.13em; text-transform: uppercase;
+    font-weight: 700; color: rgb(var(--color-accent)); margin-bottom: 16px;
+  }
+  .slope-head {
+    display: grid; grid-template-columns: 1fr 300px 78px; gap: 20px;
+    padding-bottom: 10px; border-bottom: 1px solid rgb(var(--color-ink) / 0.15);
+    align-items: end;
+  }
+  .slope-head .sh { font-size: 0.63rem; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700; color: rgb(var(--color-cool-grey)); }
+  .slope-scale { position: relative; height: 15px; }
+  .slope-scale span {
+    position: absolute; transform: translateX(-50%);
+    font-family: 'Geist Mono', monospace; font-size: 0.68rem; color: rgb(var(--color-cool-grey));
+  }
+  .slope-row {
+    display: grid; grid-template-columns: 1fr 300px 78px; gap: 20px;
+    align-items: center; padding: 15px 0;
+    border-bottom: 1px dotted rgb(var(--color-light-grey));
+  }
+  .slope-q { font-size: 0.89rem; line-height: 1.42; color: rgb(var(--color-ink)); }
+  .slope-q em { color: rgb(var(--color-muted-ink)); font-style: normal; font-size: 0.78rem; display: block; margin-top: 3px; font-family: 'Geist Mono', monospace; }
+  .slope-vis { position: relative; height: 26px; }
+  .slope-line { position: absolute; top: 12px; height: 3px; background-color: rgb(var(--color-accent) / 0.4); border-radius: 999px; }
+  .slope-axis { position: absolute; top: 0; bottom: 0; width: 1px; background-color: rgb(var(--color-pale-grey)); }
+  .dot-base, .dot-follow { position: absolute; top: 6px; width: 15px; height: 15px; border-radius: 50%; transform: translateX(-50%); }
+  .dot-base { background-color: rgb(var(--color-surface)); border: 2px solid rgb(var(--color-cool-grey)); }
+  .dot-follow { background-color: rgb(var(--color-accent)); }
+  .slope-delta { font-family: 'Geist Mono', monospace; font-size: 0.9rem; font-weight: 500; color: rgb(var(--color-accent)); text-align: right; }
+  .legend { display: flex; gap: 22px; margin-top: 16px; flex-wrap: wrap; }
+  .legend div { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: rgb(var(--color-muted-ink)); }
+  .legend .sw { width: 13px; height: 13px; border-radius: 50%; }
+  .legend .sw.base { background-color: rgb(var(--color-surface)); border: 2px solid rgb(var(--color-cool-grey)); }
+  .legend .sw.follow { background-color: rgb(var(--color-accent)); }
+
+  /* ---------- Record cards ---------- */
+
+  .stories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .story {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-left: 4px solid rgb(var(--tone, var(--color-accent)));
+    border-radius: 10px; padding: 19px 21px 17px;
+    display: flex; flex-direction: column;
+    transition: box-shadow 300ms cubic-bezier(0.16,1,0.3,1), transform 300ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .story:hover { box-shadow: 0 14px 28px -18px rgb(var(--color-ink) / 0.3); transform: translateY(-2px); }
+  .story-tag {
+    font-size: 0.6rem; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;
+    color: rgb(var(--tone, var(--color-accent))); margin-bottom: 9px;
+  }
+  .story h4 { font-size: 1rem; line-height: 1.3; margin-bottom: 9px; }
+  .story p { font-size: 0.85rem; line-height: 1.55; color: rgb(var(--color-muted-ink)); margin: 0 0 12px; }
+  .story blockquote {
+    margin: 0 0 12px; padding-left: 13px;
+    border-left: 2px solid rgb(var(--color-warm-line));
+    font-family: 'Andada Pro', serif; font-style: italic;
+    font-size: 0.87rem; line-height: 1.46; color: rgb(var(--color-ink));
+  }
+  .story-foot {
+    margin-top: auto; padding-top: 12px; border-top: 1px dotted rgb(var(--color-light-grey));
+    font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: rgb(var(--color-muted-ink));
+    display: flex; justify-content: space-between; gap: 10px;
+  }
+  .tone-root { --tone: 27 94 66; }
+  .tone-vendor { --tone: 163 129 45; }
+  .tone-safety { --tone: 176 74 50; }
+  .tone-scope { --tone: 42 107 99; }
+
+  /* ---------- Data table ---------- */
+
+  .roles { border-top: 1px solid rgb(var(--color-ink) / 0.15); }
+  .role-row {
+    display: grid; grid-template-columns: 190px 1fr 74px;
+    gap: 22px; padding: 14px 0; align-items: baseline;
+    border-bottom: 1px dotted rgb(var(--color-light-grey));
+  }
+  .role-who { font-size: 0.88rem; line-height: 1.5; color: rgb(var(--color-muted-ink)); }
+  .role-name { font-family: 'Andada Pro', serif; font-size: 1rem; color: rgb(var(--color-ink)); }
+  .role-count { font-family: 'Geist Mono', monospace; font-size: 0.85rem; color: rgb(var(--color-accent)); }
+  .role-why { font-size: 0.86rem; line-height: 1.5; color: rgb(var(--color-muted-ink)); }
+  .role-row.head { border-bottom: 1px solid rgb(var(--color-ink) / 0.15); padding-bottom: 9px; }
+  .role-row.head > * {
+    font-family: 'Sen', sans-serif; font-size: 0.62rem; letter-spacing: 0.13em;
+    text-transform: uppercase; font-weight: 700; color: rgb(var(--color-cool-grey));
+  }
+
+  /* ---------- Program map ---------- */
+
+  .bento { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .program {
+    position: relative;
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 16px; padding: 24px 24px 22px 26px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+    border-left: 5px solid rgb(var(--cat));
+  }
+  .program--anchor { grid-column: 1 / -1; }
+  .program--1 { --cat: var(--cat-1); }
+  .program--2 { --cat: var(--cat-2); }
+  .program--3 { --cat: var(--cat-3); }
+  .program--4 { --cat: var(--cat-4); }
+  .program-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 4px; }
+  .program-name-row { display: flex; align-items: center; gap: 10px; }
+  .program-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgb(var(--cat)); flex-shrink: 0; }
+  .program-name { font-size: 1.3rem; line-height: 1.2; color: rgb(var(--cat)); }
+  .program-count { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: rgb(var(--color-muted-ink)); white-space: nowrap; }
+  .program-problem {
+    font-size: 0.87rem; color: rgb(var(--color-muted-ink)); line-height: 1.5;
+    margin: 9px 0 16px; max-width: 640px; padding-bottom: 13px;
+    border-bottom: 1px dotted rgb(var(--color-cool-grey));
+  }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-content: start; }
+  .program--2 { grid-column: 1 / -1; }
+  .program--2 .card-grid { grid-template-columns: repeat(4, 1fr); }
+  .rcard {
+    background-color: color-mix(in srgb, rgb(var(--cat)) 5%, rgb(var(--color-paper)));
+    border: 1px solid rgb(var(--cat) / 0.18);
+    border-radius: 10px; padding: 13px 14px 12px;
+    transition: box-shadow 300ms cubic-bezier(0.16,1,0.3,1), border-color 300ms cubic-bezier(0.16,1,0.3,1), transform 300ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .rcard:hover { box-shadow: 0 14px 28px -18px rgb(var(--color-ink) / 0.28); border-color: rgb(var(--cat) / 0.45); transform: translateY(-2px); }
+  .rcard.live { border-color: rgb(var(--cat) / 0.55); box-shadow: inset 0 0 0 1px rgb(var(--cat) / 0.2); }
+  .rcard-title { font-family: 'Andada Pro', serif; font-weight: 500; font-size: 0.95rem; line-height: 1.28; color: rgb(var(--color-ink)); margin-bottom: 5px; }
+  .rcard-live { font-family: 'Sen', sans-serif; font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: rgb(var(--cat)); margin-left: 6px; vertical-align: 2px; }
+  .rcard-problem { font-size: 0.78rem; line-height: 1.4; color: rgb(var(--color-muted-ink)); margin-bottom: 9px; font-weight: 700; }
+  .rcard-audience { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-family: 'Sen', sans-serif; font-size: 0.61rem; letter-spacing: 0.04em;
+    text-transform: uppercase; font-weight: 700; color: rgb(var(--cat));
+    background-color: rgb(var(--cat) / 0.1); border-radius: 999px; padding: 3px 8px;
+  }
+
+  /* ---------- Recommendations ---------- */
+
+  .closing {
+    background-color: rgb(var(--color-ink)); color: rgb(var(--color-paper));
+    margin-top: 76px; padding: 66px 0 70px;
+  }
+  .closing h2 { color: rgb(var(--color-paper)); font-size: 2rem; line-height: 1.2; }
+  .closing .chapter-label { color: rgb(var(--color-accent-tint)); }
+  /* ---------- Participant tips ---------- */
+
+  .tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tip {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-pale-grey));
+    border-radius: 10px; padding: 19px 21px 16px;
+    display: flex; flex-direction: column;
+  }
+  .tip blockquote {
+    margin: 0 0 14px; padding: 0;
+    font-family: 'Andada Pro', serif; font-style: italic;
+    font-size: 0.92rem; line-height: 1.5; color: rgb(var(--color-ink));
+  }
+  .tip-foot {
+    margin-top: auto; padding-top: 12px; border-top: 1px dotted rgb(var(--color-light-grey));
+    font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: rgb(var(--color-muted-ink));
+    display: flex; justify-content: space-between; gap: 10px;
+  }
+
+  /* ---------- Resources ---------- */
+
+  .reslist { margin-top: 34px; border-top: 1px solid rgb(var(--color-paper) / 0.18); }
+  a.res {
+    display: grid; grid-template-columns: 108px 1fr 1.15fr; gap: 24px;
+    align-items: baseline; padding: 18px 4px;
+    border-bottom: 1px solid rgb(var(--color-paper) / 0.14);
+    text-decoration: none;
+    transition: background-color 300ms cubic-bezier(0.16,1,0.3,1), padding-left 300ms cubic-bezier(0.16,1,0.3,1);
+  }
+  a.res:hover { background-color: rgb(var(--color-paper) / 0.05); padding-left: 12px; }
+  .res-meta { font-family: 'Geist Mono', monospace; font-size: 0.74rem; color: rgb(var(--color-accent-tint) / 0.8); }
+  .res-title { font-family: 'Andada Pro', serif; font-size: 1.08rem; line-height: 1.3; color: rgb(var(--color-paper)); }
+  .res-desc { font-size: 0.85rem; line-height: 1.5; color: rgb(var(--color-paper) / 0.65); }
+
+  /* ---------- Notes ---------- */
+
+  .footnote {
+    margin-top: 30px; padding-top: 16px;
+    border-top: 1px solid rgb(var(--color-pale-grey));
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.74rem; color: rgb(var(--color-muted-ink)); line-height: 1.6; max-width: 860px;
+  }
+  .doc-foot { padding-top: 40px; padding-bottom: 60px; }
+  .doc-foot p { font-family: 'Geist Mono', monospace; font-size: 0.73rem; color: rgb(var(--color-cool-grey)); line-height: 1.7; margin: 0; max-width: 860px; }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 1080px) {
+    .stories, .cardgrid, .tips { grid-template-columns: repeat(2, 1fr); }
+    .contents { grid-template-columns: repeat(2, 1fr); }
+    .contents a:nth-child(3) { border-left: 0; padding-left: 0; }
+  }
+  @media (max-width: 900px) {
+    .page { padding: 0 24px; }
+    .nav-inner { padding: 10px 24px; }
+    .nav-links { gap: 14px; }
+    .two-col, .two-col--wide-left { grid-template-columns: 1fr; gap: 30px; }
+    .stats--4, .stats--5 { grid-template-columns: repeat(2, 1fr); }
+    .ladder, .stories, .cardgrid, .tips, .bento { grid-template-columns: 1fr; }
+    a.res { grid-template-columns: 1fr; gap: 6px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .cover h1 { font-size: 2.2rem; }
+    .chapter-head h2 { font-size: 1.7rem; }
+    .slope-head, .slope-row { grid-template-columns: 1fr; gap: 10px; }
+    .slope-vis { width: 100%; max-width: 320px; }
+    .slope-delta { text-align: left; }
+    .bar-row { grid-template-columns: 1fr; gap: 5px; }
+    .bar-val { text-align: left; }
+    .role-row { grid-template-columns: 1fr; gap: 6px; }
+    .role-who { font-size: 0.85rem; }
+    .role-row.head { display: none; }
+  }
+  @media (max-width: 620px) {
+    .contents { grid-template-columns: 1fr; }
+    .contents a { border-left: 0; padding-left: 0; }
+    .card-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  @media print {
+    @page { size: 13.33in 10in; margin: 0.45in; }
+
+    html, body { background: #fff; }
+    .nav { display: none; }
+    a { text-decoration: none; color: inherit; }
+
+    .cover { padding-top: 40px; padding-bottom: 0; break-after: page; }
+    .contents { margin-top: 40px; }
+    section { padding-top: 0; padding-bottom: 0; break-before: page; }
+    .closing { margin-top: 0; padding: 56px 0 60px; break-before: page; }
+    .doc-foot { break-before: avoid; padding-top: 28px; padding-bottom: 8px; }
+
+    .pagebreak { break-before: page; }
+
+    /* Grids that must not split across pages */
+    .cardgrid, .ladder, .roles, .bento { break-inside: avoid; }
+
+    /* Fit the participant advice page */
+    .tips { gap: 12px; }
+    .tip { padding: 15px 17px 13px; }
+    .tip blockquote { font-size: 0.87rem; line-height: 1.42; margin-bottom: 11px; }
+
+    .stat, .card, .tier, .story, .tip, .program, .rcard,
+    .slope-row, .role-row, .pullquote, .bar-row, a.res,
+    .stats, .footnote, .srcline, .deffn { break-inside: avoid; }
+    .footnote, .srcline { break-before: avoid; }
+    h3.sub, .chapter-head, .slope-head, .slope-title { break-after: avoid; }
+
+    .block { margin-bottom: 34px; }
+    .chapter-head { margin-bottom: 30px; }
+
+    /* Program map fits one page */
+    .bento { gap: 10px; }
+    .program { padding: 13px 14px 12px 16px; border-radius: 12px; }
+    .program-header { margin-bottom: 2px; }
+    .program-problem { margin: 5px 0 9px; padding-bottom: 8px; font-size: 0.78rem; line-height: 1.4; }
+    .program-name { font-size: 1.04rem; }
+    .program-dot { width: 8px; height: 8px; }
+    .program-count { font-size: 0.66rem; }
+    .card-grid { gap: 7px; }
+    .rcard { padding: 8px 9px 7px; border-radius: 8px; }
+    .rcard-title { font-size: 0.8rem; line-height: 1.24; margin-bottom: 3px; }
+    .rcard-live { font-size: 0.5rem; }
+    .rcard-problem { font-size: 0.68rem; line-height: 1.32; margin-bottom: 5px; }
+    .rcard-audience { gap: 3px; }
+    .tag { font-size: 0.52rem; padding: 2px 6px; letter-spacing: 0.02em; }
+    #ch4 .chapter-head { margin-bottom: 16px; }
+    #ch4 .chapter-head h2 { font-size: 1.8rem; }
+    #ch4 .deffn { font-size: 0.9rem; line-height: 1.5; max-width: 100%; margin-bottom: 16px !important; }
+    #ch4 .footnote { margin-top: 16px; padding-top: 12px; font-size: 0.7rem; }
+
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .story:hover, .rcard:hover, .tip:hover, a.res:hover {
+      transform: none; box-shadow: none; background-color: transparent; padding-left: 4px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="top-strip"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <svg class="flint-logo" role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+    <div class="nav-links">
+      <a href="#ch1"><span class="nav-num">01</span>Scope</a>
+      <a href="#ch2"><span class="nav-num">02</span>Pilot Results</a>
+      <a href="#ch3"><span class="nav-num">03</span>Next Wave</a>
+      <a href="#ch4"><span class="nav-num">04</span>Program Map</a>
+      <a href="#close">Resources</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ COVER ============ -->
+<div class="page cover">
+  <h1>Fresh Eyes Pilot: Results</h1>
+  <div class="cover-id">
+    <span>Real Estate Operations</span>
+    <span>August 2026</span>
+    <span class="dim">Flint Learning Solutions</span>
+  </div>
+
+  <div class="contents">
+    <a href="#ch1">
+      <span class="c-num">01</span>
+      <div class="c-title">Scope</div>
+      <div class="c-desc">Problem statement, practice selection, method.</div>
+    </a>
+    <a href="#ch2">
+      <span class="c-num">02</span>
+      <div class="c-title">Pilot Results</div>
+      <div class="c-desc">Participation, findings, survey results.</div>
+    </a>
+    <a href="#ch3">
+      <span class="c-num">03</span>
+      <div class="c-title">Next Wave</div>
+      <div class="c-desc">Audiences and counts.</div>
+    </a>
+    <a href="#ch4">
+      <span class="c-num">04</span>
+      <div class="c-title">Program Map</div>
+      <div class="c-desc">Four programs, sixteen initiatives.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 1 ============ -->
+<section id="ch1">
+  <div class="page">
+    <div class="chapter-head">
+      <span class="chapter-label">01</span>
+      <h2>Scope</h2>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Problem statement</h3>
+      <p class="deffn"><strong>Repeat blindness:</strong> a recurring issue stops registering because it has become part of the background. REO named this before the pilot began.</p>
+      <div class="pullquote">
+        <p>"They're all rushing to get their job done and overlooking things that they see every single day. It is a behavioral change and it has to start at the top."</p>
+        <cite>Learning &amp; Development Manager, Citizens REO</cite>
+      </div>
+      <div class="srcline">Source: REO pilot intake and discovery calls, March and April 2026.</div>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Practice selection</h3>
+      <ul class="facts">
+        <li>Three practices were scoped for REO. Fresh Eyes was sequenced first.</li>
+        <li>Deliberate observation is a prerequisite for the other two: coaching a team, and vendor accountability.</li>
+        <li>Branch visits are learner-initiated and recur weekly. No added time or travel.</li>
+        <li>REO directed the pilot at managers before frontline colleagues.</li>
+      </ul>
+      <div class="srcline" style="margin-top:14px">Source: Practice ranking, REO scoping documents, April 2026. Practice sequence confirmed with Citizens April 14, 2026.</div>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Method</h3>
+      <div class="cardgrid">
+        <div class="card">
+          <div class="card-eyebrow">Delivery</div>
+          <h4>One activity per week</h4>
+          <p>Each activity attaches to a branch visit already on the participant's schedule. Target under 10 minutes in the tool per week.</p>
+        </div>
+        <div class="card">
+          <div class="card-eyebrow">Coaching</div>
+          <h4>AI coach during the activity</h4>
+          <p>The coach requests specifics, the location, the customer impact, the owner and the target date, and does not close until the finding is documented.</p>
+        </div>
+        <div class="card">
+          <div class="card-eyebrow">Output</div>
+          <h4>A record in FAMIS 360</h4>
+          <p>Findings are logged in 360 against the location, with an owner and a target date. Nothing is simulated.</p>
+        </div>
+        <div class="card">
+          <div class="card-eyebrow">Measurement</div>
+          <h4>Baseline and follow-up surveys</h4>
+          <p>Participants rate themselves on five behaviors. Managers rate each direct report on three. Both scales run 0 to 10.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER 2 ============ -->
+<section id="ch2">
+  <div class="page">
+    <div class="chapter-head">
+      <span class="chapter-label">02</span>
+      <h2>Pilot results</h2>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Participation, May 5 to July 17, 2026</h3>
+      <div class="stats stats--4">
+        <div class="stat">
+          <div class="stat-num">43</div>
+          <div class="stat-label">Participants enrolled</div>
+          <div class="stat-note">28 Facility Managers, 7 Senior FMs, 5 FM Leads, 3 Landscape Managers. 42 completed at least one activity</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">290</div>
+          <div class="stat-label">Activities completed</div>
+          <div class="stat-note">Average 6.9 per active participant. Range 2 to 11</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">221</div>
+          <div class="stat-label">Distinct locations walked</div>
+          <div class="stat-note">181 appear once. 20 activities did not name a location</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">263</div>
+          <div class="stat-label">Ended with a logged finding</div>
+          <div class="stat-note">Of 290 activities, 91%. 27 recorded no finding or no log</div>
+        </div>
+      </div>
+      <div class="footnote">Source: Fresh Eyes initiative activity record, Flint platform, extracted August 4, 2026.</div>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Activity tiers</h3>
+      <div class="ladder">
+        <div class="tier">
+          <div class="tier-top">
+            <div class="tier-rank">
+              <span class="tier-dots"><span class="tier-dot on"></span><span class="tier-dot"></span><span class="tier-dot"></span></span>
+              <span class="tier-name">Basic</span>
+            </div>
+            <h4>Fresh Eyes Walkthrough</h4>
+            <p>Ten to fifteen minutes on a scheduled branch visit. Parking lot, entrance, lobby, teller line, restrooms. Document at least one finding.</p>
+          </div>
+          <div class="tier-why">
+            <span>Result</span>
+            <p>42 completions. Highest-volume activity in the library.</p>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-top">
+            <div class="tier-rank">
+              <span class="tier-dots"><span class="tier-dot on"></span><span class="tier-dot on"></span><span class="tier-dot"></span></span>
+              <span class="tier-name">Intermediate</span>
+            </div>
+            <h4>Catch the Repetitive Issue</h4>
+            <p>Review 360 before the visit. Find a work order open past 60 days or an issue logged more than once. Categorize why it persisted.</p>
+          </div>
+          <div class="tier-why">
+            <span>Result</span>
+            <p>39 completions.</p>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-top">
+            <div class="tier-rank">
+              <span class="tier-dots"><span class="tier-dot on"></span><span class="tier-dot on"></span><span class="tier-dot on"></span></span>
+              <span class="tier-name">Advanced</span>
+            </div>
+            <h4>End-to-End Quality Walk</h4>
+            <p>Twenty-five to thirty-five minutes. Full customer path. Rank findings by what a first-time customer would notice. Act on the top item.</p>
+          </div>
+          <div class="tier-why">
+            <span>Result</span>
+            <p>23 completions, plus 25 of the Complete Customer-Eye Audit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footnote">Activities are scaled by difficulty from 1 to 10. One activity tests transfer: complete the work order you came for, then document a finding unrelated to it. 43 of 48 attempts produced an unrelated documented finding.</div>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="block pagebreak">
+      <h3 class="sub">Issue categories</h3>
+      <div class="two-col two-col--wide-left">
+        <div>
+          <div class="bars">
+            <div class="bar-row"><div class="bar-label">Cleanliness and janitorial execution</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">42%</div></div>
+            <div class="bar-row"><div class="bar-label">Flooring, carpet, mats, cove base</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-val">26%</div></div>
+            <div class="bar-row"><div class="bar-label">Parking, pavement, sidewalks, drive-thru</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-val">26%</div></div>
+            <div class="bar-row"><div class="bar-label">Paint, walls, trim, patching</div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><div class="bar-val">23%</div></div>
+            <div class="bar-row"><div class="bar-label">HVAC, plumbing, equipment, ATM</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div class="bar-val">22%</div></div>
+            <div class="bar-row"><div class="bar-label">Landscaping and grounds</div><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><div class="bar-val">20%</div></div>
+            <div class="bar-row"><div class="bar-label">Doors, hardware, locks, bollards</div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><div class="bar-val">19%</div></div>
+            <div class="bar-row"><div class="bar-label">Ceiling, roof, leaks, water damage</div><div class="bar-track"><div class="bar-fill" style="width:26%"></div></div><div class="bar-val">11%</div></div>
+            <div class="bar-row"><div class="bar-label">Lighting</div><div class="bar-track"><div class="bar-fill" style="width:19%"></div></div><div class="bar-val">8%</div></div>
+            <div class="bar-row"><div class="bar-label">Restrooms and fixtures</div><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><div class="bar-val">7%</div></div>
+            <div class="bar-row"><div class="bar-label">Safety and ADA</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div class="bar-val">5%</div></div>
+            <div class="bar-row"><div class="bar-label">Signage</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div class="bar-val">5%</div></div>
+          </div>
+          <div class="footnote">Share of 290 activities in which each category appeared. Activities often surfaced more than one category, so shares total above 100%. Classified from the activity record and the participant's own text.</div>
+        </div>
+        <div>
+          <ul class="facts">
+            <li>Cleanliness and janitorial execution appeared in <b>121 of 290</b> activities, more than any physical trade.</li>
+            <li>The four largest physical categories are flooring, pavement, paint and equipment.</li>
+            <li>Signage and safety were the smallest categories at 5% each.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stats stats--4" style="margin-top:30px">
+        <div class="stat">
+          <div class="stat-num">48</div>
+          <div class="stat-label">Vendor accountability actions</div>
+          <div class="stat-note">Vendor contacted, work rejected, or vendor gap named as root cause. 8 secured a committed date on site</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">44</div>
+          <div class="stat-label">Repetitive issues with a named root cause</div>
+          <div class="stat-note">Recurrence confirmed and the reason the prior fix failed recorded</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">15</div>
+          <div class="stat-label">Landlord and lease-scope escalations</div>
+          <div class="stat-note">Ownership determined, then escalated to the landlord or property manager</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">13</div>
+          <div class="stat-label">Safety and ADA hazards</div>
+          <div class="stat-note">Trip hazards, failed bollards, a louver at risk of falling, an entrance out of ADA compliance</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block pagebreak">
+      <h3 class="sub">Twelve examples</h3>
+      <div class="stories">
+
+        <div class="story tone-root">
+          <div class="story-tag">Root cause</div>
+          <h4>Repairs applied to the wrong roof</h4>
+          <p>Multiple work orders had been raised to repair the vestibule roof. The leak recurred and damaged the drywall ceiling. Water was entering through a gap on the main roof.</p>
+          <blockquote>"There have been multiple work orders submitted to repair the small roof above the entry way but the water leak still happens... we found that the small roof was in good shape and not the cause."</blockquote>
+          <div class="story-foot"><span>Whitehouse</span><span>FM Lead · Jun 3</span></div>
+        </div>
+
+        <div class="story tone-root">
+          <div class="story-tag">Root cause</div>
+          <h4>Water pressure open over a year</h4>
+          <p>Pre-visit 360 review surfaced water pressure work orders recurring for more than twelve months. Categorized as a vendor gap. General contractor redispatched with a target date of July 31.</p>
+          <blockquote>"Issues has been happening for over a year. Redispatching my GC. With it being water pressure it could still be the City responsibility but they keep saying the pressure is fine on their end."</blockquote>
+          <div class="story-foot"><span>Dearborn</span><span>Facility Manager · Jun 4</span></div>
+        </div>
+
+        <div class="story tone-root">
+          <div class="story-tag">Root cause</div>
+          <h4>Tickets closed on one sensor reading</h4>
+          <p>Temperature control issue recurring since April. On site the participant found the control center was closing tickets on BMS readings alone. Logged an action step naming who must change the closure standard.</p>
+          <blockquote>"The control center often closes out the ticket using readings from the BMS system, which is only one metric. Not all avenues are explored or nuances investigated."</blockquote>
+          <div class="story-foot"><span>Woodmere</span><span>Senior FM · Jun 12</span></div>
+        </div>
+
+        <div class="story tone-root">
+          <div class="story-tag">Root cause</div>
+          <h4>Drive-thru closed by recurring leaks</h4>
+          <p>Multiple roofing tickets had produced multiple repairs. Leaks continued and the drive-thru was closed. Escalated the same day to the Senior Project Manager for a structural assessment.</p>
+          <blockquote>"We have submitted multiple roofing tickets in which roofers have come out and make repairs but we still expereince leaks."</blockquote>
+          <div class="story-foot"><span>Airport Plaza</span><span>Facility Manager · Jul 13</span></div>
+        </div>
+
+        <div class="story tone-vendor">
+          <div class="story-tag">Vendor</div>
+          <h4>Breaker open since May 1</h4>
+          <p>Pre-visit 360 review at a substituted location returned one item: an electrical circuit breaker replacement open since May 1. The general contractor had not seen it in their queue.</p>
+          <blockquote>"Open since 5/1/26. The GC had missed seeing this in their queue. TheY are scheduling electrician the week of 6/22."</blockquote>
+          <div class="story-foot"><span>Hermitage</span><span>Facility Manager · Jun 22</span></div>
+        </div>
+
+        <div class="story tone-vendor">
+          <div class="story-tag">Vendor</div>
+          <h4>Front doors open past 60 days</h4>
+          <p>Replacement stalled on materials, not vendor performance. Maintenance tech adjusted the doors on the visit. Contractor committed to an end-of-July delivery. Branch, regional manager and supervisor notified.</p>
+          <blockquote>"I had my maintenance tech adjust the doors so they work temporarily and are safe until the materials are delivered and the job can be completed. I called the contractor and the doors are coming in at the end of July."</blockquote>
+          <div class="story-foot"><span>Bethel</span><span>FM Lead · Jun 11</span></div>
+        </div>
+
+        <div class="story tone-vendor">
+          <div class="story-tag">Vendor</div>
+          <h4>Mulching deferred by the vendor</h4>
+          <p>Annual mulching had not been performed. The landscaping team's stated reason was the season. Site inspection contradicted it. Assessment logged with a photo, an action step and a target date.</p>
+          <blockquote>"The landscaping team says 'it is too early to mulch.' Mulch beds most definitely need freshening up."</blockquote>
+          <div class="story-foot"><span>Burgettstown</span><span>Facility Manager · Jun 30</span></div>
+        </div>
+
+        <div class="story tone-vendor">
+          <div class="story-tag">Vendor</div>
+          <h4>ATM cleaning cadence changed</h4>
+          <p>Two janitorial work orders in 90 days for the ATM face. Cause categorized as cleaning frequency against usage on a 24-hour vestibule ATM. Standing routine changed, not a new ticket.</p>
+          <blockquote>"I called my janitorial tech and asked him to wipe down the face of the ATM more often during the busy season... He agreed and will start each time he cleans the branch."</blockquote>
+          <div class="story-foot"><span>Peters Township</span><span>FM Lead · Jun 11</span></div>
+        </div>
+
+        <div class="story tone-safety">
+          <div class="story-tag">Safety</div>
+          <h4>Louver ranked above cosmetic finding</h4>
+          <p>Three findings at a recently renovated branch: a missing lamp-post globe, a loose gable-vent louver, an exposed janitor sink. Ranked the louver first and escalated to the retail FM.</p>
+          <blockquote>"The globe is a bit ugly, but the louver could fall presenting a safety issue, so I will go with the louver is the top priority."</blockquote>
+          <div class="story-foot"><span>Washington St, Middletown CT</span><span>Facility Manager · Jul 16</span></div>
+        </div>
+
+        <div class="story tone-safety">
+          <div class="story-tag">Safety</div>
+          <h4>Cable across the teller line</h4>
+          <p>The drive-thru card machine was in use at the teller line with its cable stretched across the floor. Hazard stopped during the visit. IT ticket recommended to relocate the port.</p>
+          <blockquote>"I addressed it with the staff on the spot and told them even though it may be an inconvenience they will need to walk the card over for now. I suggested they put in a IT ticket to have the port moved to the teller line."</blockquote>
+          <div class="story-foot"><span>Flourtown</span><span>Facility Manager · Jul 15</span></div>
+        </div>
+
+        <div class="story tone-scope">
+          <div class="story-tag">Outside scope</div>
+          <h4>Abandoned dumpster explained a ticket</h4>
+          <p>On site for a landscaping review with an open trash-accumulation work order flagged in advance. Found a dumpster left by the former hauler. Cause recorded against the recurring ticket.</p>
+          <blockquote>"We logged an old dumpster left onsite by the former trash hauler. This was also the reason for the trash accumulation around the dumpster reported in 360."</blockquote>
+          <div class="story-foot"><span>Limerick</span><span>Senior FM · May 20</span></div>
+        </div>
+
+        <div class="story tone-scope">
+          <div class="story-tag">Outside scope</div>
+          <h4>Shared-lot ownership determined</h4>
+          <p>A parking lot repair had stalled because ownership of an adjoining lot was undetermined. Participant established the area was the landlord's responsibility. Repair scheduled that week.</p>
+          <blockquote>"I have found out that the area within the parking lot that is need of repair is the Landlord's responsibility. I have contacted the Landlord and they are making the repair this week."</blockquote>
+          <div class="story-foot"><span>Glassboro</span><span>Facility Manager · Jun 3</span></div>
+        </div>
+
+      </div>
+      <div class="footnote">Quotations are the participant's own words from the in-activity coaching record, reproduced as written, trimmed with an ellipsis where marked. Roles shown in place of names.</div>
+    </div>
+
+    <div class="block pagebreak">
+      <h3 class="sub">Best practice advice from participants</h3>
+      <p class="deffn">263 of 290 activities included written advice for another facility manager. Nine examples.</p>
+      <div class="tips">
+
+        <div class="tip">
+          <blockquote>"I would advise them to challenge themselves to look beyond the obvious, to ensure all aspects were explored and investigated. short sited fixes don't always lead to long-term solutions. Sometimes it will require the condition to appear more than once to establish a pattern, or to highlight that the fix did not address a root cause, it only solved for the short term."</blockquote>
+          <div class="tip-foot"><span>Senior Facility Manager</span><span>Jun 12</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"always review open work orders before arriving at any branch for any reason, to catch stale work orders and to avoid duplication of items already in queue that may have been created by someone else."</blockquote>
+          <div class="tip-foot"><span>Senior Facility Manager</span><span>May 19</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"I would tip the FM to look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot. Also be sure to engage you SMT with situation as they may have some back ground on the problem too. Two minds are better than one"</blockquote>
+          <div class="tip-foot"><span>Facility Manager</span><span>Jun 8</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"Ask questions of the colleagues who work there everyday if they are aware of anything that needs repaired that may not be obvious to someone simply 'looking'. Also, scan top to bottom and try to cover every square inch of space, ensuring distractions don't derail the visual scan."</blockquote>
+          <div class="tip-foot"><span>Senior Facility Manager</span><span>May 12</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues."</blockquote>
+          <div class="tip-foot"><span>Facility Manager</span><span>May 28</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"Its always good to ask the BM if what you found as an issue is actually happening all the time or was this a one time issue since we FM's usually visit once a month we do not know what is happening in between our visits."</blockquote>
+          <div class="tip-foot"><span>Facilities Manager Lead</span><span>Jun 3</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"just making sure to check all of your boxes before reaching out to vendors making sure it's upon their responsibility and not yours so that you will receive minimal push back . also be assertive in what you are looking to get done"</blockquote>
+          <div class="tip-foot"><span>Facility Manager</span><span>Jul 13</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"I would instruct the FM to look into their lease through Lucernex as some responsibilities do fall under the tenant and we need to pay extra careful attention with those matters in which we can complete in a timely fashion"</blockquote>
+          <div class="tip-foot"><span>Facility Manager</span><span>Jun 8</span></div>
+        </div>
+
+        <div class="tip">
+          <blockquote>"Check scheduling with other Teams before initiating a capex or Loss event. Work may be scheduled that you are not aware of."</blockquote>
+          <div class="tip-foot"><span>Facility Manager</span><span>Jun 8</span></div>
+        </div>
+
+      </div>
+      <div class="footnote">Prompt: "If another FM were doing this activity tomorrow, what's one tip you would offer or trap to watch out for?" Responses reproduced as written. Roles shown in place of names.</div>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="block pagebreak" style="padding-top:48px">
+      <h3 class="sub">Survey results, manager ratings</h3>
+      <div class="slope-title">Managers rating each direct report</div>
+      <div class="slopes">
+        <div class="slope-head">
+          <div class="sh">Item</div>
+          <div class="slope-scale">
+            <span style="left:0%">4</span><span style="left:33.3%">6</span><span style="left:66.6%">8</span><span style="left:100%">10</span>
+          </div>
+          <div class="sh" style="text-align:right">Change</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">Documents quality findings with enough specificity to review in 360 without following up<em>6.21 to 8.22 · rated 8 or above: 37% to 69%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:36.8%;width:33.5%"></div>
+            <div class="dot-base" style="left:36.8%"></div>
+            <div class="dot-follow" style="left:70.3%"></div>
+          </div>
+          <div class="slope-delta">+2.01</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">Proactively brings me findings I would not have known from QC reports or work order data<em>6.53 to 8.43 · rated 8 or above: 39% to 74%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:42.2%;width:31.7%"></div>
+            <div class="dot-base" style="left:42.2%"></div>
+            <div class="dot-follow" style="left:73.8%"></div>
+          </div>
+          <div class="slope-delta">+1.91</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">Surfaces quality issues not already flagged through work orders or QC inspections<em>6.45 to 8.28 · rated 8 or above: 37% to 70%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:40.8%;width:30.5%"></div>
+            <div class="dot-base" style="left:40.8%"></div>
+            <div class="dot-follow" style="left:71.3%"></div>
+          </div>
+          <div class="slope-delta">+1.84</div>
+        </div>
+      </div>
+      <div class="legend">
+        <div><span class="sw base"></span> Baseline</div>
+        <div><span class="sw follow"></span> Follow-up</div>
+      </div>
+      <div class="footnote">38 completed manager baselines. 45 to 46 completed manager follow-ups, by item. Group means, not matched pairs.</div>
+    </div>
+
+    <div class="block pagebreak">
+      <h3 class="sub">Survey results, participant ratings</h3>
+      <div class="slope-title">41 participants, matched before and after</div>
+      <div class="slopes">
+        <div class="slope-head">
+          <div class="sh">Item</div>
+          <div class="slope-scale">
+            <span style="left:0%">4</span><span style="left:33.3%">6</span><span style="left:66.6%">8</span><span style="left:100%">10</span>
+          </div>
+          <div class="sh" style="text-align:right">Change</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">Every time I visit a branch, I walk it with the same judgment a first-time customer would<em>6.12 to 7.90 · 29 of 41 improved · rated 8 or above: 24% to 73%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:35.4%;width:29.7%"></div>
+            <div class="dot-base" style="left:35.4%"></div>
+            <div class="dot-follow" style="left:65.1%"></div>
+          </div>
+          <div class="slope-delta">+1.78</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">When I walk a location, the customer experience shapes what I look for, flag, and fix<em>6.41 to 7.85 · 26 of 41 improved · rated 8 or above: 24% to 66%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:40.2%;width:24.0%"></div>
+            <div class="dot-base" style="left:40.2%"></div>
+            <div class="dot-follow" style="left:64.2%"></div>
+          </div>
+          <div class="slope-delta">+1.44</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">My 360 activity tells the full story of what I find, not just what is reported to me<em>5.85 to 7.22 · 23 of 41 improved · rated 8 or above: 24% to 54%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:30.9%;width:22.8%"></div>
+            <div class="dot-base" style="left:30.9%"></div>
+            <div class="dot-follow" style="left:53.7%"></div>
+          </div>
+          <div class="slope-delta">+1.37</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">Quality issues at my locations are caught and addressed before customers notice<em>6.05 to 7.41 · 23 of 41 improved · rated 8 or above: 22% to 56%</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:34.1%;width:22.8%"></div>
+            <div class="dot-base" style="left:34.1%"></div>
+            <div class="dot-follow" style="left:56.9%"></div>
+          </div>
+          <div class="slope-delta">+1.37</div>
+        </div>
+
+        <div class="slope-row">
+          <div class="slope-q">When I find a persistent issue, I dig into why it keeps coming back<em>6.88 to 7.66 · 20 of 41 improved · highest baseline of the five items</em></div>
+          <div class="slope-vis">
+            <div class="slope-axis" style="left:0"></div><div class="slope-axis" style="left:33.3%"></div><div class="slope-axis" style="left:66.6%"></div><div class="slope-axis" style="left:100%"></div>
+            <div class="slope-line" style="left:48.0%;width:13.0%"></div>
+            <div class="dot-base" style="left:48.0%"></div>
+            <div class="dot-follow" style="left:61.0%"></div>
+          </div>
+          <div class="slope-delta">+0.78</div>
+        </div>
+      </div>
+      <div class="legend">
+        <div><span class="sw base"></span> Baseline</div>
+        <div><span class="sw follow"></span> Follow-up</div>
+      </div>
+      <div class="footnote">43 learner baselines and 41 completed learner follow-ups. Figures above are the 41 matched person to person.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CHAPTER 3 ============ -->
+<section id="ch3">
+  <div class="page">
+    <div class="chapter-head">
+      <span class="chapter-label">03</span>
+      <h2>Next wave</h2>
+    </div>
+
+    <div class="block">
+      <h3 class="sub">Audiences</h3>
+      <div class="roles">
+        <div class="role-row head">
+          <div>Group</div><div>Who's in it</div><div>Count</div>
+        </div>
+        <div class="role-row">
+          <div class="role-name">Rover Techs</div>
+          <div class="role-who">Senior maintenance techs, including painters, plus senior building services techs</div>
+          <div class="role-count">66</div>
+        </div>
+        <div class="role-row">
+          <div class="role-name">Landscape Leads</div>
+          <div class="role-who">Senior landscape techs</div>
+          <div class="role-count">11</div>
+        </div>
+        <div class="role-row">
+          <div class="role-name">Flooring</div>
+          <div class="role-who">One participant from each two-person team</div>
+          <div class="role-count">~20</div>
+        </div>
+        <div class="role-row">
+          <div class="role-name">Quality Control</div>
+          <div class="role-who">Regional quality control managers, including flooring</div>
+          <div class="role-count">6</div>
+        </div>
+      </div>
+      <div class="footnote">Counts are drawn from the Citizens REO org chart of July 20, 2026, and total 103. Final participant counts are to be confirmed with Citizens. No launch date is set. Facility managers continue as evaluators, rating and validating their senior technicians and leads. Janitors and maintenance technicians are scoped for a later wave, and project delivery teams are deferred to 2027.</div>
+      <div class="pullquote">
+        <p>"These are the people that are touching these buildings every day. They're in there at least once or twice a week... we need the engagement of the people who are there every day, because the facility managers, they're just not."</p>
+        <cite>Learning &amp; Development Manager, Citizens REO · July 15, 2026</cite>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CHAPTER 4 ============ -->
+<section id="ch4">
+  <div class="page page--wide">
+    <div class="chapter-head">
+      <span class="chapter-label">04</span>
+      <h2>Program map</h2>
+    </div>
+
+    <p class="deffn" style="margin-bottom:30px">Four business problems Flint and REO have discussed for Real Estate Operations, each holding several initiatives. A program is a business problem that cuts across REO. An initiative is one performance gap, run over roughly three months, with a defined audience. Fresh Eyes is one initiative inside Customer Focus. Everything else on this map is at idea stage.</p>
+
+    <div class="bento">
+
+      <div class="program program--anchor program--1">
+        <div class="program-header">
+          <div class="program-name-row">
+            <span class="program-dot"></span>
+            <h2 class="program-name">Customer Focus</h2>
+          </div>
+          <span class="program-count">6 initiatives</span>
+        </div>
+        <p class="program-problem">Help every branch role see it through a customer's eyes.</p>
+        <div class="card-grid">
+          <div class="rcard live">
+            <div class="rcard-title">Fresh Eyes<span class="rcard-live">Live</span></div>
+            <div class="rcard-problem">Work isn't prioritized by what customers notice.</div>
+            <div class="rcard-audience">
+              <span class="tag">Facility Managers</span><span class="tag">Senior Technicians</span><span class="tag">Landscape Leads</span>
+            </div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Building Your Team's Quality Eye</div>
+            <div class="rcard-problem">Leaders don't teach their teams the standard.</div>
+            <div class="rcard-audience"><span class="tag">Directors</span><span class="tag">Facility Managers</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Prioritizing Work</div>
+            <div class="rcard-problem">Work is tackled in order, not by impact.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">Facilities Techs</span><span class="tag">Landscape Leads</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Peak-Moment Readiness</div>
+            <div class="rcard-problem">Branches aren't ready for their toughest moments.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">Landscape Leads</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">The Customer's Seat</div>
+            <div class="rcard-problem">Accessibility friction goes unnoticed and unaddressed.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Holding Vendors Accountable</div>
+            <div class="rcard-problem">Vendors aren't held to the standard set.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">FM Leads</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="program program--2">
+        <div class="program-header">
+          <div class="program-name-row">
+            <span class="program-dot"></span>
+            <h2 class="program-name">Branch Presentation &amp; Upkeep</h2>
+          </div>
+          <span class="program-count">4 initiatives</span>
+        </div>
+        <p class="program-problem">Keep every branch looking and running to standard.</p>
+        <div class="card-grid">
+          <div class="rcard">
+            <div class="rcard-title">Curb Appeal from the Parking Lot</div>
+            <div class="rcard-problem">Grounds don't meet a customer-first standard.</div>
+            <div class="rcard-audience"><span class="tag">Landscape Leads</span><span class="tag">Janitors</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Staying Ahead of Breakdowns</div>
+            <div class="rcard-problem">Reactive maintenance creates visible customer failures.</div>
+            <div class="rcard-audience"><span class="tag">Facilities Techs</span><span class="tag">Facility Managers</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Interiors Customers Notice</div>
+            <div class="rcard-problem">Floors wear out faster than they should.</div>
+            <div class="rcard-audience"><span class="tag">Janitors</span><span class="tag">Facilities Techs</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Delivering Projects Without Disrupting the Branch</div>
+            <div class="rcard-problem">Projects run late, over budget, disruptive.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">POD</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="program program--3">
+        <div class="program-header">
+          <div class="program-name-row">
+            <span class="program-dot"></span>
+            <h2 class="program-name">Safety</h2>
+          </div>
+          <span class="program-count">3 initiatives</span>
+        </div>
+        <p class="program-problem">Catch everyday risk before someone gets hurt.</p>
+        <div class="card-grid">
+          <div class="rcard">
+            <div class="rcard-title">Walking Surfaces</div>
+            <div class="rcard-problem">Entrance falls are the top branch liability.</div>
+            <div class="rcard-audience"><span class="tag">Janitors</span><span class="tag">Facility Managers</span><span class="tag">Landscape Leads</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Seeing the Hazard First</div>
+            <div class="rcard-problem">Developing hazards go unflagged and unreported.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">All Roles</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Emergency Readiness</div>
+            <div class="rcard-problem">Teams are unprepared for outages and emergencies.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">Senior Technicians</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="program program--4">
+        <div class="program-header">
+          <div class="program-name-row">
+            <span class="program-dot"></span>
+            <h2 class="program-name">Frontline Leadership</h2>
+          </div>
+          <span class="program-count">3 initiatives</span>
+        </div>
+        <p class="program-problem">Help frontline leaders coach their teams.</p>
+        <div class="card-grid">
+          <div class="rcard">
+            <div class="rcard-title">Coaching Your Crew</div>
+            <div class="rcard-problem">Supervisors firefight instead of coaching people.</div>
+            <div class="rcard-audience"><span class="tag">FM Leads</span><span class="tag">Senior Facility Managers</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Setting Expectations with Your Team</div>
+            <div class="rcard-problem">Expectations are assumed, never clearly set.</div>
+            <div class="rcard-audience"><span class="tag">Facility Managers</span><span class="tag">FM Leads</span></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-title">Running a Useful Team Huddle</div>
+            <div class="rcard-problem">Team communication happens ad hoc.</div>
+            <div class="rcard-audience"><span class="tag">FM Leads</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footnote">
+      Sixteen initiatives across four programs. Fresh Eyes is live. All others are at idea stage. This map reflects shared thinking to date, not a committed plan. Source: Citizens framework working file, July 2026.
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESOURCES ============ -->
+<div class="closing" id="close">
+  <div class="page">
+    <span class="chapter-label">05</span>
+    <h2>Resources</h2>
+
+    <div class="reslist">
+      <a class="res" href="https://maxbusselle.github.io/misc-pages/Citizens_FM_Tips_Tool.html" target="_blank" rel="noopener">
+        <span class="res-meta">Jun 29, 2026</span>
+        <span class="res-title">Fresh Eyes: FM Tips Library</span>
+        <span class="res-desc">Searchable library of the peer tips submitted during activities.</span>
+      </a>
+      <a class="res" href="https://maxbusselle.github.io/misc-pages/citizens_coach_insights_2026_06_10.html" target="_blank" rel="noopener">
+        <span class="res-meta">Jun 10, 2026</span>
+        <span class="res-title">Citizens: Coach Insights</span>
+        <span class="res-desc">Examples of AI coach conversations from the pilot.</span>
+      </a>
+      <a class="res" href="https://maxbusselle.github.io/misc-pages/citizens_fresh_eyes_tips.html" target="_blank" rel="noopener">
+        <span class="res-meta">Jun 3, 2026</span>
+        <span class="res-title">Fresh Eyes: Peer Tips from the Field</span>
+        <span class="res-desc">Standout tips selected from the first weeks of activities.</span>
+      </a>
+      <a class="res" href="https://maxbusselle.github.io/misc-pages/Citizens_Fresh_Eyes_Proposal-Zoran_4-20-26.html" target="_blank" rel="noopener">
+        <span class="res-meta">Apr 20, 2026</span>
+        <span class="res-title">Citizens REO: Facilities Services Excellence Proposal</span>
+        <span class="res-desc">The original program proposal, including the practice sequence.</span>
+      </a>
+      <a class="res" href="https://maxbusselle.github.io/misc-pages/citizens_themes_issue_categories.html" target="_blank" rel="noopener">
+        <span class="res-meta">Jun 9, 2026</span>
+        <span class="res-title">Fresh Eyes: Issue Category Breakdown</span>
+        <span class="res-desc">Categories of issues surfaced, with examples in each.</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page doc-foot">
+  <p>Flint Learning Solutions. Citizens Real Estate Operations. August 2026. Pilot figures are drawn from the Fresh Eyes initiative record for May 5 to July 17, 2026, and from matched baseline and follow-up surveys of participants and their managers. Participant quotations are reproduced as written. A full end-of-pilot report is pending.</p>
+</div>
+
+</body>
+</html>
