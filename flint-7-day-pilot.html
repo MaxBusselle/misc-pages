@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flint 7-Day Pilot: Goals and Launch Prep</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+:root{
+  --paper:253 252 250; --surface:255 255 255; --ink:28 42 56; --muted:74 88 104;
+  --accent:232 77 40; --cool:154 166 176; --pale:235 229 220; --warm:197 187 166;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:rgb(var(--paper)); color:rgb(var(--ink));
+  font-family:'Sen',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+h1,h2,h3{font-family:'Andada Pro',serif; font-weight:400; margin:0}
+::selection{background:rgb(var(--accent)); color:rgb(var(--paper))}
+
+header{
+  border-bottom:1px solid rgb(var(--warm)); padding:20px 32px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  position:sticky; top:0; background:rgb(var(--paper)/0.92); backdrop-filter:blur(8px); z-index:10;
+}
+.flint-logo{height:28px; width:auto; display:block}
+nav{display:flex; gap:24px}
+nav a{
+  color:rgb(var(--muted)); text-decoration:none; font-size:.72rem;
+  text-transform:uppercase; letter-spacing:.14em;
+}
+nav a:hover{color:rgb(var(--accent))}
+
+main{max-width:980px; margin:0 auto; padding:0 32px 96px}
+section{padding:64px 0; border-bottom:1px solid rgb(var(--pale))}
+section:last-child{border-bottom:0}
+
+.eyebrow{
+  font-size:.7rem; text-transform:uppercase; letter-spacing:.18em;
+  color:rgb(var(--muted)); margin-bottom:12px;
+}
+h1{font-size:2.6rem; letter-spacing:-.02em; margin-bottom:12px}
+.lede{color:rgb(var(--muted)); max-width:56ch; margin:0 0 32px}
+
+.stats{display:flex; flex-wrap:wrap; gap:40px; margin:0 0 40px; padding:0; list-style:none}
+.stat .num{
+  font-family:'Geist Mono',monospace; font-size:2.1rem; color:rgb(var(--accent));
+  display:block; line-height:1.1;
+}
+.stat .lbl{font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; color:rgb(var(--muted))}
+
+.grid{display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{
+  background:rgb(var(--surface)); border:1px solid rgb(var(--pale)); border-radius:8px;
+  padding:24px; transition:box-shadow 300ms cubic-bezier(.16,1,.3,1);
+}
+.card:hover{box-shadow:0 6px 20px rgb(96 80 50 / .10)}
+.card .tag{
+  font-family:'Geist Mono',monospace; font-size:.72rem; letter-spacing:.10em;
+  color:rgb(var(--accent)); text-transform:uppercase; display:block; margin-bottom:10px;
+}
+.card h3{font-size:1.2rem; margin-bottom:8px}
+.card p{margin:0; font-size:.92rem; color:rgb(var(--muted))}
+
+.steps{list-style:none; margin:0; padding:0}
+.steps li{
+  display:grid; grid-template-columns:7.5rem 1fr; gap:24px;
+  padding:20px 0; border-bottom:1px solid rgb(var(--pale)); align-items:baseline;
+}
+.steps li:last-child{border-bottom:0}
+.steps .step{
+  font-family:'Geist Mono',monospace; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.10em; color:rgb(var(--muted));
+}
+.steps .kickoff{color:rgb(var(--accent))}
+.steps h3{font-size:1.1rem; margin-bottom:4px}
+.steps p{margin:0; font-size:.92rem; color:rgb(var(--muted))}
+
+@media print{header{position:static} section{page-break-after:always; border:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="flint-logo" role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+  <nav>
+    <a href="#goals">Pilot Goals</a>
+    <a href="#prep">Launch Prep</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="goals">
+  <div class="eyebrow">Flint · Pilot</div>
+  <h1>7-Day Pilot Goals</h1>
+  <p class="lede">Four questions we will answer together by going through the pilot.</p>
+
+  <ul class="stats">
+    <li class="stat"><span class="num">4</span><span class="lbl">Questions to answer</span></li>
+    <li class="stat"><span class="num">7</span><span class="lbl">Days</span></li>
+  </ul>
+
+  <div class="grid">
+    <div class="card">
+      <span class="tag">01 · Functionality</span>
+      <h3>Does it work?</h3>
+      <p>You and your users confirm it works, and that it would be worth implementing.</p>
+    </div>
+    <div class="card">
+      <span class="tag">02 · Use cases</span>
+      <h3>How will we use this tool?</h3>
+      <p>We decide together how it fits into your team's day-to-day workflow across teams and the business.</p>
+    </div>
+    <div class="card">
+      <span class="tag">03 · Pricing</span>
+      <h3>How much will it cost?</h3>
+      <p>We give you a clear cost, plus an order form with pricing.</p>
+    </div>
+    <div class="card">
+      <span class="tag">04 · Business case</span>
+      <h3>What is the business case?</h3>
+      <p>We build the case together to show the value is worth it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="prep">
+  <div class="eyebrow">Flint · Pilot</div>
+  <h1>Launch Prep Plan</h1>
+  <p class="lede">Setup steps for the 7-day pilot launch.</p>
+
+  <ul class="stats">
+    <li class="stat"><span class="num">2 wks</span><span class="lbl">Before launch</span></li>
+    <li class="stat"><span class="num">3</span><span class="lbl">Prep workstreams</span></li>
+    <li class="stat"><span class="num">3–5</span><span class="lbl">Pilot test users</span></li>
+  </ul>
+
+  <ol class="steps">
+    <li>
+      <span class="step">Step 1</span>
+      <div>
+        <h3>Create the Coach</h3>
+        <p>Complete scoping, then Flint builds.</p>
+      </div>
+    </li>
+    <li>
+      <span class="step">Step 2</span>
+      <div>
+        <h3>Launch planning</h3>
+        <p>Schedule the launch meeting with test users and their managers.</p>
+      </div>
+    </li>
+    <li>
+      <span class="step">Step 3</span>
+      <div>
+        <h3>System access</h3>
+        <p>Share the user list: 3 to 5 test users plus a manager. Confirm IT access.</p>
+      </div>
+    </li>
+    <li>
+      <span class="step step kickoff">Step 4 · Kickoff</span>
+      <div>
+        <h3>Launch meeting</h3>
+        <p>Run the launch meeting with test users and managers.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>
