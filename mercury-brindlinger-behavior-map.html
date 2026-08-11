@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercury Systems: operations priorities and the behaviors they require</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+:root{
+  --color-paper:253 252 250;--color-surface:255 255 255;--color-ink:28 42 56;
+  --color-muted-ink:74 88 104;--color-accent:232 77 40;--color-cool-grey:154 166 176;
+  --color-pale-grey:235 229 220;--color-warm-line:197 187 166;
+}
+*{box-sizing:border-box}
+body{margin:0;background:rgb(var(--color-paper));color:rgb(var(--color-ink));
+  font-family:'Sen',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{font-family:'Andada Pro',serif;font-weight:400;margin:0}
+::selection{background:rgb(var(--color-accent));color:rgb(var(--color-paper))}
+.wrap{max-width:960px;margin:0 auto;padding:48px 24px 96px}
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding-bottom:24px;border-bottom:1px solid rgb(var(--color-warm-line))}
+.flint-logo{height:30px;width:auto;display:block}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  color:rgb(var(--color-muted-ink))}
+h1{font-size:34px;letter-spacing:-.02em;margin:40px 0 8px}
+.sub{color:rgb(var(--color-muted-ink));font-size:15px;max-width:640px}
+blockquote{margin:32px 0 0;padding:24px 28px;background:rgb(var(--color-surface));
+  border:1px solid rgb(var(--color-pale-grey));border-left:3px solid rgb(var(--color-accent));
+  border-radius:0}
+blockquote p{margin:0;font-family:'Andada Pro',serif;font-size:19px;line-height:1.55}
+blockquote cite{display:block;margin-top:14px;font-family:'Sen',sans-serif;font-size:13px;
+  font-style:normal;color:rgb(var(--color-muted-ink))}
+blockquote a{color:rgb(var(--color-muted-ink))}
+h2{font-size:24px;margin:56px 0 6px}
+.colhead{display:grid;grid-template-columns:1fr 44px 1fr;gap:16px;margin:28px 0 10px}
+.colhead span{font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  color:rgb(var(--color-muted-ink))}
+.row{display:grid;grid-template-columns:1fr 44px 1fr;gap:16px;align-items:stretch;
+  margin-bottom:14px}
+.cell{background:rgb(var(--color-surface));border:1px solid rgb(var(--color-pale-grey));
+  border-radius:8px;padding:18px 20px}
+.cell.beh{border-left:3px solid rgb(var(--color-accent))}
+.cell h3{font-family:'Sen',sans-serif;font-size:16px;font-weight:700;margin:0 0 4px}
+.cell p{margin:0;font-size:14px;color:rgb(var(--color-muted-ink))}
+.arrow{display:flex;align-items:center;justify-content:center;
+  color:rgb(var(--color-cool-grey));font-size:20px}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.four div{background:rgb(var(--color-surface));border:1px solid rgb(var(--color-pale-grey));
+  border-radius:8px;padding:16px;text-align:center;font-weight:700;font-size:15px}
+.note{margin-top:14px;font-size:14px;color:rgb(var(--color-muted-ink));max-width:700px}
+ul{margin:12px 0 0;padding-left:20px}
+li{font-size:15px;margin-bottom:8px;max-width:700px}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid rgb(var(--color-warm-line));
+  font-size:12px;color:rgb(var(--color-muted-ink))}
+@media(max-width:720px){
+  .row,.colhead{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg);height:24px}
+  .four{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <img class="flint-logo" src="https://app.flintls.com/logo.svg" alt="Flint">
+  <span class="label">Prepared for Tod Brindlinger, Mercury Systems</span>
+</header>
+
+<h1>Operations priorities and the behaviors they require</h1>
+<p class="sub">Mercury has stated what its operations organization is being asked to deliver. Every one of those items depends on what a frontline supervisor does on a given shift.</p>
+
+<blockquote>
+  <p>On appointing Tod Brindlinger, Mercury's chief operating officer Roger Wells said his leadership would be instrumental in ongoing efforts to <strong>“eliminate silos in our critical functions,”</strong> improve the quality and timeliness of products delivered to customers, and drive operational performance that contributes to financial results.</p>
+  <cite>Roger Wells, Chief Operating Officer, Mercury Systems, June 18, 2024. <a href="https://ir.mrcy.com/news-releases/news-release-details/mercury-appoints-senior-vice-president-operations-completes">Company announcement</a></cite>
+</blockquote>
+
+<h2>Where the plan meets the floor</h2>
+<p class="sub">Left column: stated priorities. Right column: the supervisor behavior each one depends on.</p>
+
+<div class="colhead">
+  <span>Stated priority</span><span></span><span>What it requires of supervisors</span>
+</div>
+
+<div class="row">
+  <div class="cell"><h3>Backlog conversion</h3><p>$1.6 billion backlog to ship on time</p></div>
+  <div class="arrow">&rarr;</div>
+  <div class="cell beh"><h3>Run the daily plan</h3><p>Sequence the work, staff it, escalate when it slips</p></div>
+</div>
+
+<div class="row">
+  <div class="cell"><h3>Quality and timeliness</h3><p>Fewer escapes, less rework</p></div>
+  <div class="arrow">&rarr;</div>
+  <div class="cell beh"><h3>Stop and fix at the source</h3><p>Raise problems early instead of passing them on</p></div>
+</div>
+
+<div class="row">
+  <div class="cell"><h3>Site consolidation and the Phoenix ramp</h3><p>New processes, new automation, new people</p></div>
+  <div class="arrow">&rarr;</div>
+  <div class="cell beh"><h3>Coach standard work</h3><p>Same method on every shift, taught at the machine</p></div>
+</div>
+
+<div class="row">
+  <div class="cell"><h3>Eliminating silos</h3><p>Operations, quality and supply chain acting as one</p></div>
+  <div class="arrow">&rarr;</div>
+  <div class="cell beh"><h3>Talk across functions</h3><p>Ask, share, follow up outside your own function</p></div>
+</div>
+
+<h2>What every one of those behaviors needs</h2>
+<div class="four">
+  <div>Practice on the job</div>
+  <div>Repetition to habit</div>
+  <div>Manager support</div>
+  <div>Accountability</div>
+</div>
+<p class="note">A behavior that is trained in a classroom and never practiced on the job does not change output. A behavior practiced once and never repeated does not become a habit. A habit the manager does not support or hold to does not survive a bad week.</p>
+
+<h2>Two observations</h2>
+<ul>
+  <li>All four behaviors in the right column are supervisor behaviors. None of them are taught in a classroom.</li>
+  <li>Site consolidation and the Phoenix ramp put supervisors in front of new processes and new people at the same time. That is the row where habit and accountability break first.</li>
+</ul>
+
+<h2>The question</h2>
+<p class="sub">Of the four behaviors on the right, which one are you least confident in across your sites today?</p>
+
+<footer>
+  Flint Learning Solutions. Quotation paraphrased from Mercury Systems' announcement of June 18, 2024; full text at the linked company release. Backlog figure from Mercury's third quarter fiscal 2026 results, May 5, 2026.
+</footer>
+
+</div>
+</body>
+</html>
