@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build Trust &amp; Credibility · JTEKT · Halftime Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --paper:253 252 250;--surface:255 255 255;--ink:28 42 56;--muted:74 88 104;
+  --accent:232 77 40;--success:72 114 76;--cool:154 166 176;--light:200 205 210;
+  --pale:235 229 220;--warm-line:197 187 166;--tl:47 97 149;
+  --radius:8px;--radius-lg:16px;--ease:cubic-bezier(0.16,1,0.3,1);
+}
+body{font-family:'Sen',sans-serif;background:rgb(var(--paper));color:rgb(var(--ink));line-height:1.55;overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:'Andada Pro',serif;font-weight:400;}
+::selection{background:rgb(var(--accent));color:rgb(var(--paper));}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.anim{opacity:0;}
+.page.active .anim{animation:fadeUp .6s var(--ease) both;}
+.page.active .anim.d1{animation-delay:.05s;}.page.active .anim.d2{animation-delay:.13s;}
+.page.active .anim.d3{animation-delay:.22s;}.page.active .anim.d4{animation-delay:.32s;}
+.page.active .anim.d5{animation-delay:.42s;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:clamp(8px,1.5vw,16px);padding:clamp(10px,1.4vw,14px) clamp(16px,3vw,28px);background:rgb(var(--paper)/0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgb(var(--warm-line)/0.6);}
+.flint-logo{height:clamp(20px,2.2vw,26px);width:auto;display:block;flex-shrink:0;}
+.nav-brand{font-size:clamp(10px,1.15vw,12px);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--muted));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav-sep{width:1px;height:18px;background:rgb(var(--warm-line));flex-shrink:0;}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;align-items:center;flex:1;min-width:0;}
+.nd{height:clamp(22px,2.4vw,26px);min-width:clamp(22px,2.4vw,26px);padding:0 9px;border-radius:13px;border:1.5px solid rgb(var(--cool)/0.5);cursor:pointer;font-size:clamp(9px,1vw,11px);font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:rgb(var(--cool));display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease);flex-shrink:0;background:transparent;}
+.nd:hover{border-color:rgb(var(--ink)/0.5);color:rgb(var(--ink));}
+.nd.active{background:rgb(var(--accent));border-color:rgb(var(--accent));color:rgb(var(--paper));}
+.nav-label{font-size:clamp(9px,1.1vw,11px);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--muted));white-space:nowrap;}
+.nav-arrows{display:flex;gap:5px;}
+.na{width:clamp(26px,2.8vw,30px);height:clamp(26px,2.8vw,30px);border-radius:7px;background:rgb(var(--surface));border:1px solid rgb(var(--pale));cursor:pointer;color:rgb(var(--muted));font-size:clamp(13px,1.4vw,16px);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s var(--ease);}
+.na:hover{background:rgb(var(--pale)/0.6);color:rgb(var(--ink));}
+@media(max-width:760px){.nav-dots{flex-wrap:nowrap;}.nd{display:none;}.nd.active{display:flex;}}
+
+/* PAGE SHELL */
+.page{display:none;height:100vh;overflow-y:auto;scroll-behavior:smooth;}
+.page.active{display:flex;flex-direction:column;}
+.frame{min-height:calc(100vh - 56px);padding:clamp(96px,11vh,128px) clamp(20px,5vw,80px) clamp(28px,4vh,56px);display:flex;flex-direction:column;justify-content:center;flex-shrink:0;max-width:1320px;width:100%;margin:0 auto;}
+
+.ey{font-size:clamp(11px,1.2vw,13px);font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:clamp(10px,1.4vh,16px);display:flex;align-items:center;gap:10px;}
+.ey-dot{width:6px;height:6px;background:rgb(var(--accent));border-radius:50%;}
+.pt{font-size:clamp(28px,4.6vw,58px);line-height:1.06;letter-spacing:-0.02em;color:rgb(var(--ink));margin-bottom:clamp(12px,1.8vh,20px);}
+.pt .em{color:rgb(var(--accent));font-style:italic;}
+.ps{font-size:clamp(15px,1.6vw,19px);color:rgb(var(--muted));line-height:1.6;max-width:920px;margin-bottom:clamp(20px,3vh,30px);}
+.ps strong{color:rgb(var(--ink));font-weight:700;}
+
+/* reveal + detail */
+.abtn{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(16px,2.4vh,24px);padding:12px 24px;background:rgb(var(--surface));border:1px solid rgb(var(--warm-line));border-radius:100px;color:rgb(var(--ink));font-family:'Sen',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:700;cursor:pointer;transition:all .25s var(--ease);box-shadow:0 1px 3px 0 rgb(0 0 0/0.06);align-self:flex-start;}
+.abtn:hover{background:rgb(var(--pale)/0.5);border-color:rgb(var(--accent));color:rgb(var(--accent));transform:translateY(-1px);}
+.abtn .arw{color:rgb(var(--accent));transition:transform .25s var(--ease);}
+.abtn.is-open .arw{transform:rotate(180deg);}
+.detail{padding:clamp(24px,4vh,40px) 0 clamp(20px,3vh,40px);border-top:1px solid rgb(var(--warm-line)/0.6);margin-top:clamp(24px,3vh,32px);display:none;}
+.detail.open{display:block;animation:fadeUp .5s var(--ease) both;}
+.detail-label{font-size:clamp(11px,1.2vw,13px);font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgb(var(--muted));margin-bottom:clamp(14px,2vh,20px);}
+
+/* COVER */
+.cover-rule{width:64px;height:2px;background:rgb(var(--accent));margin-bottom:clamp(20px,3vh,28px);}
+.cover-eyebrow{font-size:clamp(11px,1.3vw,14px);font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:clamp(18px,2.6vh,26px);}
+.cover-title{font-size:clamp(34px,6vw,80px);line-height:1.03;letter-spacing:-0.025em;margin-bottom:clamp(18px,3vh,28px);}
+.cover-title .accent{color:rgb(var(--accent));font-style:italic;}
+.cover-deck{font-size:clamp(16px,1.8vw,21px);color:rgb(var(--muted));line-height:1.55;max-width:900px;margin-bottom:clamp(26px,4vh,42px);}
+.cover-deck strong{color:rgb(var(--ink));font-weight:700;}
+.cover-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgb(var(--pale));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);overflow:hidden;max-width:1160px;box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+@media(max-width:900px){.cover-stats{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.cover-stats{grid-template-columns:1fr;}}
+.cover-stats .cstat-num{font-size:clamp(26px,3.4vw,40px);}
+.cstat{padding:clamp(20px,2.6vw,30px);background:rgb(var(--surface));}
+.cstat-num{font-family:'Geist Mono',monospace;font-size:clamp(32px,4.4vw,54px);font-weight:500;line-height:1;letter-spacing:-0.02em;color:rgb(var(--accent));margin-bottom:8px;}
+.cstat-label{font-size:clamp(12px,1.2vw,14px);color:rgb(var(--muted));font-weight:700;}
+.cover-meta{margin-top:clamp(28px,4vh,44px);display:flex;justify-content:space-between;align-items:flex-end;font-size:clamp(11px,1.2vw,13px);color:rgb(var(--cool));flex-wrap:wrap;gap:12px;}
+.cover-meta strong{color:rgb(var(--muted));font-weight:700;}
+
+/* grids + cards */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,20px);}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,2vw,18px);}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.5vw,16px);}
+@media(max-width:820px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+.card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,28px);box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.card-hd{font-size:clamp(11px,1.15vw,12.5px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;}
+.aud-tl{color:rgb(var(--tl));}.aud-sup{color:rgb(var(--accent));}
+
+/* funnel stats */
+.funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.5vw,16px);margin-top:clamp(18px,2.6vh,26px);}
+@media(max-width:680px){.funnel{grid-template-columns:1fr 1fr;}}
+.funnel-step{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(18px,2.2vw,26px);position:relative;box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.funnel-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:rgb(var(--accent)/0.85);}
+.funnel-num{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(30px,4vw,48px);line-height:1;letter-spacing:-0.02em;color:rgb(var(--ink));}
+.funnel-num .unit{font-family:'Sen',sans-serif;font-size:0.4em;color:rgb(var(--muted));font-weight:700;}
+.funnel-lbl{font-family:'Andada Pro',serif;font-weight:500;font-size:clamp(14px,1.4vw,17px);color:rgb(var(--ink));margin-top:10px;}
+.funnel-sub{font-size:clamp(12px,1.2vw,13.5px);color:rgb(var(--muted));margin-top:4px;line-height:1.4;}
+
+/* distribution bar */
+.dist{margin:10px 0 4px;}
+.dist-row{display:flex;align-items:center;gap:14px;margin:12px 0;}
+.dist-nm{width:clamp(96px,12vw,140px);font-size:13px;}
+.dist-nm .n{font-family:'Geist Mono',monospace;font-size:11px;color:rgb(var(--cool));display:block;}
+.seg{display:flex;height:30px;border-radius:6px;overflow:hidden;flex:1;border:1px solid rgb(var(--pale));}
+.seg span{display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;color:#fff;}
+.s-basic{background:rgb(var(--cool));}.s-int{background:rgb(var(--tl));}.s-adv{background:rgb(var(--muted));}.s-done{background:rgb(var(--accent));}
+.legend{display:flex;gap:16px;font-size:12px;color:rgb(var(--muted));margin-top:12px;flex-wrap:wrap;align-items:center;}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+/* bar rows (baseline, first-pass, weekly) */
+.brow{margin:12px 0;}
+.brow .top{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:5px;}
+.brow .lab{color:rgb(var(--ink));}
+.brow .val{font-family:'Geist Mono',monospace;color:rgb(var(--muted));font-size:12px;white-space:nowrap;}
+.track{height:10px;background:rgb(var(--pale)/0.7);border-radius:5px;overflow:hidden;}
+.track+.track{margin-top:4px;}
+.fill{height:100%;border-radius:5px;}
+.f-self{background:rgb(var(--tl));}.f-mgr{background:rgb(var(--cool));}.f-ok{background:rgb(var(--success));}.f-acc{background:rgb(var(--accent));}.f-ink{background:rgb(var(--ink));}
+
+/* key moves */
+.km-card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,28px);position:relative;overflow:hidden;box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.km-card::before{content:'';position:absolute;top:0;left:0;width:32px;height:2px;background:rgb(var(--accent));}
+.km-tier{font-size:clamp(10px,1.05vw,12px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--cool));}
+.km-name{font-family:'Andada Pro',serif;font-size:clamp(19px,2vw,24px);color:rgb(var(--ink));margin:6px 0 10px;line-height:1.15;}
+.km-body{font-size:clamp(13.5px,1.4vw,15px);color:rgb(var(--muted));line-height:1.5;}
+.km-reps{font-family:'Geist Mono',monospace;font-size:12px;color:rgb(var(--tl));margin-top:14px;padding-top:12px;border-top:1px dotted rgb(var(--warm-line));}
+
+/* story cards (descriptive, no quote marks) */
+.story{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-left:3px solid rgb(var(--accent));border-radius:var(--radius);padding:clamp(20px,2.4vw,28px);box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.story-who{font-family:'Andada Pro',serif;font-weight:600;font-size:clamp(16px,1.6vw,19px);color:rgb(var(--ink));}
+.story-role{font-size:clamp(12px,1.25vw,14px);color:rgb(var(--muted));margin-top:2px;margin-bottom:12px;}
+.story-txt{font-size:clamp(14px,1.45vw,16px);color:rgb(var(--ink));line-height:1.55;}
+.story-out{margin-top:12px;padding-top:12px;border-top:1px dotted rgb(var(--warm-line));font-size:clamp(12.5px,1.3vw,14px);font-weight:700;color:rgb(var(--success));display:flex;gap:6px;}
+.story-out::before{content:'\2192';}
+
+/* verbatim tip cards */
+.qcard{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-left:3px solid rgb(var(--accent));border-radius:var(--radius);padding:clamp(18px,2.2vw,24px);box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.qcard-q{font-family:'Andada Pro',serif;font-style:italic;font-size:clamp(15px,1.55vw,18px);line-height:1.45;color:rgb(var(--ink));}
+.qcard-q::before{content:"\201C";color:rgb(var(--accent));font-style:normal;}
+.qcard-q::after{content:"\201D";color:rgb(var(--accent));font-style:normal;}
+.qcard-who{font-size:clamp(12px,1.25vw,14px);color:rgb(var(--muted));margin-top:10px;font-weight:700;}
+
+/* note box */
+.note-box{margin-top:clamp(18px,2.4vh,24px);font-size:clamp(13px,1.4vw,15.5px);color:rgb(var(--ink));line-height:1.6;padding:clamp(18px,2.4vw,24px);background:rgb(var(--accent)/0.05);border:1px solid rgb(var(--accent)/0.22);border-radius:var(--radius-lg);}
+.note-box .nl{display:block;font-size:clamp(11px,1.15vw,12.5px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:8px;}
+.note-box strong{font-weight:700;}
+
+/* pills */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.pill{background:rgb(var(--pale));border-radius:999px;padding:6px 13px;font-size:12.5px;color:rgb(var(--ink));}
+.pill b{font-family:'Geist Mono',monospace;color:rgb(var(--muted));font-weight:400;margin-left:6px;}
+
+/* what's next */
+.prac-card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,28px);position:relative;overflow:hidden;box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.prac-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:rgb(var(--accent));}
+.prac-num{font-family:'Geist Mono',monospace;font-size:clamp(13px,1.3vw,15px);color:rgb(var(--accent));}
+.prac-lbl{font-family:'Andada Pro',serif;font-weight:500;font-size:clamp(18px,1.8vw,21px);color:rgb(var(--ink));margin:8px 0 6px;}
+.prac-detail{font-size:clamp(13px,1.3vw,15px);color:rgb(var(--muted));line-height:1.5;}
+
+ul.lean{list-style:none;margin:6px 0 0;}
+ul.lean li{padding:9px 0;border-bottom:1px solid rgb(var(--pale));font-size:14px;}
+ul.lean li:last-child{border-bottom:none;}
+ul.lean b{color:rgb(var(--ink));}
+.sub{color:rgb(var(--muted));}
+h3.ch{font-size:clamp(18px,1.8vw,22px);margin-bottom:6px;}
+
+/* co-brand lockup */
+.lockup{display:flex;align-items:center;gap:clamp(10px,1.4vw,16px);flex-shrink:0;}
+.lk-sep{width:1px;height:20px;background:rgb(var(--warm-line));}
+.jtekt-wm{font-family:'Sen',sans-serif;font-weight:800;font-size:clamp(15px,1.7vw,20px);letter-spacing:1px;color:#e2231a;line-height:1;}
+.forge-wm{display:flex;flex-direction:column;line-height:1;}
+.forge-wm .fg{font-family:'Andada Pro',serif;font-weight:700;font-size:clamp(13px,1.5vw,17px);letter-spacing:3px;color:rgb(var(--ink));}
+.forge-wm .fg-sub{font-size:clamp(7px,0.8vw,8.5px);font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:rgb(var(--cool));margin-top:2px;}
+.cover-lockup{display:flex;align-items:center;gap:clamp(14px,2vw,22px);margin-bottom:clamp(20px,3vh,28px);}
+.cover-lockup .flint-logo{height:clamp(26px,3vw,34px);}
+.cover-lockup .jtekt-wm{font-size:clamp(22px,2.6vw,30px);}
+.cover-lockup .lk-sep{height:30px;}
+.cover-lockup .forge-wm .fg{font-size:clamp(18px,2.1vw,24px);}
+.cover-lockup .forge-wm .fg-sub{font-size:clamp(9px,1vw,11px);}
+
+/* 0-10 scale badge */
+.scale-badge{display:inline-flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,1.6vw,20px);margin:clamp(12px,1.8vh,18px) 0 clamp(4px,1vh,10px);padding:clamp(12px,1.6vw,16px) clamp(16px,2vw,22px);background:rgb(var(--surface));border:1px solid rgb(var(--warm-line));border-radius:var(--radius-lg);box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);}
+.scale-badge .sc-num{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(20px,2.4vw,30px);color:rgb(var(--accent));line-height:1;}
+.scale-badge .sc-txt{font-size:clamp(12.5px,1.3vw,14.5px);color:rgb(var(--ink));line-height:1.35;}
+.scale-badge .sc-txt b{font-weight:700;}
+.scale-badge .sc-item{display:flex;align-items:center;gap:10px;}
+
+/* named best-practice tips */
+.tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.6vw,16px);margin-top:clamp(14px,2vh,20px);}
+@media(max-width:820px){.tip-grid{grid-template-columns:1fr;}}
+.tip-card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius);padding:clamp(15px,1.8vw,20px);box-shadow:0 1px 3px 0 rgb(0 0 0/0.05);border-left:3px solid rgb(var(--accent));}
+.tip-name{font-family:'Andada Pro',serif;font-weight:600;font-size:clamp(15px,1.55vw,18px);color:rgb(var(--ink));margin-bottom:6px;}
+.tip-body{font-size:clamp(13px,1.35vw,14.5px);color:rgb(var(--muted));line-height:1.5;}
+.tip-who{font-size:clamp(11px,1.15vw,12.5px);color:rgb(var(--cool));font-weight:700;margin-top:9px;}
+
+/* practice metrics inside a move card */
+.km-stats{margin-top:14px;padding-top:12px;border-top:1px dotted rgb(var(--warm-line));}
+.km-stats .brow{margin:8px 0;}
+.km-stats .sub{font-size:12.5px;margin-top:8px;}
+
+/* per-metric inline reveal on the behavior slide */
+.mini-tw{margin-top:14px;display:inline-flex;align-items:center;gap:7px;background:none;border:none;color:rgb(var(--accent));font-family:'Sen',sans-serif;font-weight:700;font-size:13px;cursor:pointer;padding:0;}
+.mini-tw .arw{transition:transform .25s var(--ease);}
+.mini-tw.is-open .arw{transform:rotate(180deg);}
+.conv-detail{border-top:none;margin-top:12px;padding:0;}
+.conv-detail .qcard{box-shadow:none;}
+.conv-detail .qcard-q{font-size:clamp(13.5px,1.4vw,15px);}
+
+/* cover scope strip */
+.scope-strip{display:grid;grid-template-columns:repeat(3,1fr);align-items:center;margin:clamp(20px,3vh,30px) 0 0;width:100%;}
+.scope-item{display:flex;align-items:baseline;gap:9px;}
+.scope-strip .scope-item:nth-child(1){justify-content:flex-start;}
+.scope-strip .scope-item:nth-child(2){justify-content:center;}
+.scope-strip .scope-item:nth-child(3){justify-content:flex-end;}
+.scope-num{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(26px,3.4vw,42px);line-height:1;letter-spacing:-0.02em;color:rgb(var(--accent));}
+.scope-lbl{font-size:clamp(12px,1.3vw,15px);color:rgb(var(--muted));font-weight:700;}
+.scope-div{width:1px;height:clamp(26px,3vw,38px);background:rgb(var(--warm-line));}
+@media(max-width:620px){.scope-div{display:none;}.scope-strip{gap:14px 22px;}}
+
+/* cover timeline ribbon */
+.timeline{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin:clamp(32px,5vh,56px) 0 0;width:100%;}
+.timeline::before{content:'';position:absolute;top:8px;left:9px;right:9px;height:2px;background:rgb(var(--warm-line));}
+.tl-node{position:relative;padding-top:30px;}
+.tl-node:nth-child(1){text-align:left;}
+.tl-node:nth-child(2){text-align:center;}
+.tl-node:nth-child(3){text-align:right;}
+.tl-dot{position:absolute;top:0;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:rgb(var(--surface));border:3px solid rgb(var(--cool));z-index:1;}
+.tl-node:nth-child(1) .tl-dot{left:0;transform:none;}
+.tl-node:nth-child(3) .tl-dot{left:auto;right:0;transform:none;}
+.tl-node.is-now .tl-dot{border-color:rgb(var(--accent));background:rgb(var(--accent));box-shadow:0 0 0 5px rgb(var(--accent)/0.16);}
+.tl-date{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(12px,1.35vw,15px);color:rgb(var(--ink));}
+.tl-node.is-now .tl-date{color:rgb(var(--accent));}
+.tl-lbl{font-size:clamp(12px,1.3vw,15px);color:rgb(var(--muted));font-weight:700;margin-top:3px;}
+.tl-sub{font-size:clamp(10.5px,1.1vw,12px);color:rgb(var(--cool));margin-top:2px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <svg class="flint-logo" role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+  <span class="lk-sep"></span>
+  <span class="jtekt-wm">JTEKT</span>
+  <span class="lk-sep"></span>
+  <span class="forge-wm"><span class="fg">FORGE</span><span class="fg-sub">Leadership Program</span></span>
+  <span class="nav-sep"></span>
+  <div class="nav-dots" id="nD"></div>
+  <span class="nav-label" id="nL"></span>
+  <div class="nav-arrows"><button class="na" onclick="prev()">&#8249;</button><button class="na" onclick="next()">&#8250;</button></div>
+</div>
+
+<!-- PAGE 0 · COVER -->
+<div class="page active" data-tab="Overview" data-label="Overview">
+  <div class="frame">
+    <div class="cover-rule anim d1"></div>
+    <h1 class="cover-title anim d2">Building Trust &amp; Credibility <span class="accent">On The Floor.</span></h1>
+    <p class="cover-deck anim d3">Seven weeks in, Team Leads and Supervisors are opening with <strong>recognition</strong>, finding the real cause of Standard Work gaps by <strong>asking</strong>, and backing hard conversations with <strong>data</strong>.</p>
+    <div class="timeline anim d4">
+      <div class="tl-node"><span class="tl-dot"></span><div class="tl-date">May 22</div><div class="tl-lbl">Launched</div></div>
+      <div class="tl-node is-now"><span class="tl-dot"></span><div class="tl-date">Now · Week 7</div><div class="tl-lbl">Halftime</div><div class="tl-sub">this report</div></div>
+      <div class="tl-node"><span class="tl-dot"></span><div class="tl-date">Aug 18</div><div class="tl-lbl">Cost Management begins</div></div>
+    </div>
+    <div class="cover-meta anim d5" style="margin-top:clamp(26px,4vh,44px)"><span>Prepared by <strong>FLiNT Learning Solutions</strong> · July 2026</span><span>Launched May 22 · data through <strong>July 9, 2026</strong></span></div>
+  </div>
+</div>
+
+<!-- PAGE 1 · HOW THE INITIATIVE WORKS -->
+<div class="page" data-tab="01" data-label="How the initiative works">
+  <div class="frame">
+    <div class="ey anim d1"><span class="ey-dot"></span>How the initiative works</div>
+    <h2 class="pt anim d1">Three skills, <span class="em">built one at a time.</span></h2>
+    <p class="ps anim d2">Leaders work up through three moves: open with recognition, find the real cause of a Standard Work gap, then back it with data. Each one is practiced on a real moment on the floor.</p>
+
+    <div class="grid-3 anim d3">
+      <div class="km-card"><div class="km-tier">Basic · Recognition</div><div class="km-name">Lead with what's working</div><div class="km-body">Name a specific thing an operator or Team Lead is doing right, before raising any gap.</div>
+        <div class="km-stats">
+          <div class="brow"><div class="top"><span class="lab">Needed extra practice</span><span class="val">20%</span></div><div class="track"><div class="fill f-ok" style="width:20%"></div></div></div>
+          <div class="brow" style="margin-bottom:0"><div class="top"><span class="lab">Activities to move up</span><span class="val">2.5 avg</span></div></div>
+          <p class="sub">Most clear it cleanly; about one in five take a second pass.</p>
+        </div>
+      </div>
+      <div class="km-card"><div class="km-tier">Intermediate · Inquiry</div><div class="km-name">Find the real cause</div><div class="km-body">Keep asking past the first answer until the real barrier behind the gap surfaces, then get a commitment.</div>
+        <div class="km-stats">
+          <div class="brow"><div class="top"><span class="lab">Needed extra practice</span><span class="val">14%</span></div><div class="track"><div class="fill f-ok" style="width:14%"></div></div></div>
+          <div class="brow" style="margin-bottom:0"><div class="top"><span class="lab">Activities to move up</span><span class="val">2.2 avg</span></div></div>
+          <p class="sub">Finding the cause comes fastest, with the fewest extra reps.</p>
+        </div>
+      </div>
+      <div class="km-card"><div class="km-tier">Advanced · Accountability</div><div class="km-name">Back it with data</div><div class="km-body">Use Bekido and cycle-time data to drive a clear fix, or an escalation to a specific person and date.</div>
+        <div class="km-stats">
+          <div class="brow"><div class="top"><span class="lab">Needed extra practice</span><span class="val">36%</span></div><div class="track"><div class="fill f-acc" style="width:36%"></div></div></div>
+          <div class="brow" style="margin-bottom:0"><div class="top"><span class="lab">Still working it</span><span class="val">42 leaders</span></div></div>
+          <p class="sub">The hardest level: about a third take extra reps, as designed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-label anim d4" style="margin-top:clamp(22px,3vh,32px)">Where each audience is now</div>
+    <div class="dist anim d4">
+      <div class="dist-row"><div class="dist-nm aud-tl" style="font-weight:700">Team Leads<span class="n">118 active</span></div>
+        <div class="seg"><span class="s-basic" style="width:46%">46%</span><span class="s-int" style="width:25%">25%</span><span class="s-adv" style="width:7%">7</span><span class="s-done" style="width:23%">23%</span></div></div>
+      <div class="dist-row"><div class="dist-nm aud-sup" style="font-weight:700">Supervisors<span class="n">39 active</span></div>
+        <div class="seg"><span class="s-basic" style="width:49%">49%</span><span class="s-int" style="width:33%">33%</span><span class="s-adv" style="width:8%">8</span><span class="s-done" style="width:10%">10%</span></div></div>
+    </div>
+    <div class="legend anim d4"><span><span class="dot s-basic"></span>Basic · recognition</span><span><span class="dot s-int"></span>Intermediate · root cause</span><span><span class="dot s-adv"></span>Advanced · back with data</span><span><span class="dot s-done"></span>Reached the highest level</span></div>
+    <div class="note-box anim d5"><span class="nl">What "reached the highest level" means</span>These leaders have completed the top-difficulty activities: backing a hard conversation with data and driving it to a fix or an escalation with a specific person and date. It is not a finish line everyone is expected to hit. Leaders advance as the system reads their results, so staying at Basic or Intermediate is fine as long as they keep doing activities.</div>
+  </div>
+</div>
+
+<!-- PAGE 2 · BEHAVIOR -->
+<div class="page" data-tab="02" data-label="The conversations are changing">
+  <div class="frame">
+    <div class="ey anim d1"><span class="ey-dot"></span>The behavior</div>
+    <h2 class="pt anim d1">Real behavior change <span class="em">is happening.</span></h2>
+    <p class="ps anim d2">Across 710 coaching sessions, leaders are doing the moves the initiative was built to create. Open any one for an example, verbatim from the floor.</p>
+    <div class="grid-3 anim d3" style="align-items:start">
+      <div class="funnel-step"><div class="funnel-num">148</div><div class="funnel-lbl">Traced a real root cause</div><div class="funnel-sub">Past the symptom, to what was actually driving the gap</div>
+        <button class="mini-tw" onclick="openDetail(this,'C1')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC1"><div class="qcard"><div class="qcard-q">Asked operator what he was seeing and said machine was not giving a green light to crimp. Operator and myself found that part ranks had got mixed on the line. After getting ranks lined up correctly operator had no more issues</div><div class="qcard-who">Sean Dean &middot; Team Lead</div></div></div>
+      </div>
+      <div class="funnel-step"><div class="funnel-num">207</div><div class="funnel-lbl">Landed a commitment or fix</div><div class="funnel-sub">A corrective action agreed on the floor</div>
+        <button class="mini-tw" onclick="openDetail(this,'C2')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC2"><div class="qcard"><div class="qcard-q">She realized her measurements were too small, she made the adjustment and started the machine back up. The fault then cleared and line was able to continue running. I let her know, job well done.</div><div class="qcard-who">Alexis Bowers &middot; Team Lead</div></div></div>
+      </div>
+      <div class="funnel-step"><div class="funnel-num">91</div><div class="funnel-lbl">Escalated to the right owner</div><div class="funnel-sub">A barrier handed to who could clear it</div>
+        <button class="mini-tw" onclick="openDetail(this,'C3')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC3"><div class="qcard"><div class="qcard-q">We used stop call wait, checked the quality of the parts from machining and they seemed fine. So then we contacted PE to assist and they found that the transducer needed adjust</div><div class="qcard-who">Randal Rhea &middot; Team Lead</div></div></div>
+      </div>
+      <div class="funnel-step"><div class="funnel-num">109</div><div class="funnel-lbl">Took on a recurring issue</div><div class="funnel-sub">A problem that had been persisting</div>
+        <button class="mini-tw" onclick="openDetail(this,'C4')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC4"><div class="qcard"><div class="qcard-q">Cell 8 has been having ATC shutter door faults due to bad chip build up covering the sensors and mechanical parts being worn out. The operator has committed to writing down every time the machine faults and committed to cleaning out from behind the shutter door at the end of every shift.</div><div class="qcard-who">Daniel Bentley &middot; Team Lead</div></div></div>
+      </div>
+      <div class="funnel-step"><div class="funnel-num">183</div><div class="funnel-lbl">Closed the loop</div><div class="funnel-sub">Came back to a prior commitment with data</div>
+        <button class="mini-tw" onclick="openDetail(this,'C5')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC5"><div class="qcard"><div class="qcard-q">I went back out and talked to the previous operator, showed them the current data. The data showed that they are improving and actually getting their Bekido now</div><div class="qcard-who">Joey Phifer &middot; Team Lead</div></div></div>
+      </div>
+      <div class="funnel-step"><div class="funnel-num">86</div><div class="funnel-lbl">Got more than one read</div><div class="funnel-sub">Gathered independent accounts before acting</div>
+        <button class="mini-tw" onclick="openDetail(this,'C6')"><span>See an example</span><span class="arw">&#9662;</span></button>
+        <div class="detail conv-detail" id="detC6"><div class="qcard"><div class="qcard-q">The previous shift operator said that everything was running fine and they made target. My operator said everything was fine but still missed target. So, it looks like the operator on my shift is running slower than the other shifts.</div><div class="qcard-who">Randall Kinkead &middot; Team Lead</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5 · PLAYBOOK -->
+<div class="page" data-tab="03" data-label="The floor's playbook">
+  <div class="frame">
+    <div class="ey anim d1"><span class="ey-dot"></span>Captured &amp; shared</div>
+    <h2 class="pt anim d1">The best practices leaders are <span class="em">teaching each other.</span></h2>
+    <p class="ps anim d2">At the end of every activity, leaders write one tip for whoever does it next. <strong>623 so far</strong>, about four per active leader: a coaching library JTEKT owns, in its own leaders' words. Ten of them, named plainly:</p>
+    <div class="tip-grid anim d3">
+      <div class="tip-card"><div class="tip-name">Recognize first</div><div class="tip-body">Don't jump straight into fixing problems. Point out something they're doing well first, then ask questions to understand what's really causing the issue before deciding on a fix.</div><div class="tip-who">Joshua Davis &middot; Team Lead, Shipping</div></div>
+      <div class="tip-card"><div class="tip-name">Let them talk</div><div class="tip-body">Ask open ended questions when dealing with frustrated people, because the more they talk the more you know and usually the better they feel because someone is listening.</div><div class="tip-who">Brandon Brooks &middot; Team Lead</div></div>
+      <div class="tip-card"><div class="tip-name">Trust the data</div><div class="tip-body">Dig into the data. Don't take people's word for it. That is not because they are dishonest. Sometimes reality isn't what you think it is until you look at the data.</div><div class="tip-who">Jeremy Crenshaw &middot; Supervisor</div></div>
+      <div class="tip-card"><div class="tip-name">Come in open</div><div class="tip-body">Go in open minded to talk with the second person and not having an opinion based off what the first person said with a fix already in place.</div><div class="tip-who">Jonathan Purvis &middot; Supervisor, Production</div></div>
+      <div class="tip-card"><div class="tip-name">Keep the line open</div><div class="tip-body">We as leaders should always try to have an open line of communication with the operators on the floor.</div><div class="tip-who">David Yount &middot; Team Lead</div></div>
+      <div class="tip-card"><div class="tip-name">Positive gets honesty</div><div class="tip-body">Pay attention to detail before approaching the problem and give them any positive feedback before getting to the root of the issue. You will get a more genuine response.</div><div class="tip-who">Daniel Bentley &middot; Team Lead</div></div>
+      <div class="tip-card"><div class="tip-name">Make praise specific</div><div class="tip-body">Just to make sure that the TL is actually letting the technician know what they are doing right. Not just a good job being done.</div><div class="tip-who">Amanda Martin &middot; Supervisor, Production</div></div>
+      <div class="tip-card"><div class="tip-name">Don't skip the wins</div><div class="tip-body">To always encourage positive feedback. Sometimes we all get so busy we tend to forget to stop and acknowledge when things are going well.</div><div class="tip-who">Sherry Weldon &middot; Supervisor, Quality</div></div>
+      <div class="tip-card"><div class="tip-name">Keep it casual</div><div class="tip-body">Don't make it into a task or job duty. Make it into a casual conversation to ease the tension or stress of doing something new.</div><div class="tip-who">Jeremy Rhoads &middot; Supervisor, Die Maintenance</div></div>
+      <div class="tip-card"><div class="tip-name">Start with questions</div><div class="tip-body">Ask the operators if they have any questions or concerns about anything at the start up meeting and not to just go over the not so good situations going on.</div><div class="tip-who">Gregory Derby &middot; Team Lead</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 6 · WHAT YOUR FLOOR IS TELLING US -->
+<div class="page" data-tab="04" data-label="What your floor is telling us">
+  <div class="frame">
+    <div class="ey anim d1"><span class="ey-dot"></span>What we're learning</div>
+    <h2 class="pt anim d1">What your floor is <span class="em">telling us.</span></h2>
+    <p class="ps anim d2">As leaders work through Standard Work gaps, the real causes are getting caught: a downed machine, a skipped step, a parts shortage. Across 710 sessions, <strong>400 named a specific problem.</strong> Together they map what's actually breaking on the floor, built from the daily work itself, not a separate audit.</p>
+    <div class="grid-2 anim d3">
+      <div class="card"><div class="card-hd" style="color:rgb(var(--accent))">The problems leaders surfaced &middot; across 400 conversations</div>
+        <div class="brow"><div class="top"><span class="lab">Equipment / machine fault</span><span class="val">131</span></div><div class="track"><div class="fill f-acc" style="width:100%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Standard Work not followed</span><span class="val">71</span></div><div class="track"><div class="fill f-acc" style="width:54%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Pace / throughput (Bekido)</span><span class="val">57</span></div><div class="track"><div class="fill f-acc" style="width:44%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Material / parts / supply</span><span class="val">48</span></div><div class="track"><div class="fill f-acc" style="width:37%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Quality / defect</span><span class="val">35</span></div><div class="track"><div class="fill f-acc" style="width:27%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Training / skill gap</span><span class="val">28</span></div><div class="track"><div class="fill f-acc" style="width:21%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Changeover &middot; comms &middot; staffing</span><span class="val">30</span></div><div class="track"><div class="fill f-acc" style="width:23%"></div></div></div>
+      </div>
+      <div class="card"><div class="card-hd" style="color:rgb(var(--muted))">When a leader can't clear it alone &middot; who it goes to</div>
+        <p class="sub" style="font-size:13px;margin:-4px 0 14px">About 8% of conversations (60 of 710) surface a barrier bigger than the leader can fix. That's the range we'd expect: most gaps get resolved at the source, and only the ones beyond a leader's authority get handed off.</p>
+        <div class="brow"><div class="top"><span class="lab">Maintenance</span><span class="val">30</span></div><div class="track"><div class="fill f-ink" style="width:100%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Engineering / PE</span><span class="val">12</span></div><div class="track"><div class="fill f-ink" style="width:40%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Cross-functional / Issue Track</span><span class="val">9</span></div><div class="track"><div class="fill f-ink" style="width:30%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Next shift / cross-shift</span><span class="val">6</span></div><div class="track"><div class="fill f-ink" style="width:20%"></div></div></div>
+        <div class="brow"><div class="top"><span class="lab">Quality</span><span class="val">3</span></div><div class="track"><div class="fill f-ink" style="width:10%"></div></div></div>
+        <p class="sub" style="font-size:13px;margin-top:12px">Most point to <strong style="color:rgb(var(--ink))">Maintenance and Engineering</strong>: a reliability signal the org can act on.</p>
+      </div>
+    </div>
+    <div class="note-box anim d4"><span class="nl">The pattern worth watching</span>Equipment faults and throughput are nearly half of what leaders surface: a live reliability signal from the floor. And <strong>71 conversations were Standard Work simply not being followed</strong>: the exact gap this initiative was built to close, now visible and being worked.</div>
+    <button class="abtn anim d5" onclick="openDetail(this,'Floor')"><span>See it on the floor</span><span class="arw">&#9662;</span></button>
+    <div class="detail" id="detFloor">
+      <div class="detail-label">In their own words &middot; how it shows up on the floor</div>
+      <div class="grid-2">
+        <div class="qcard"><div class="qcard-q">The operator said that the machine has a lot of downtime due to the QR camera not reading the QR codes. I told them that they were doing a good job at keeping cycle time but standard work was not being followed and that was what was causing the camera faults.</div><div class="qcard-who">Michael Armstrong &middot; Team Lead &middot; Standard Work</div><div class="story-out">A downtime issue traced to a skipped Standard Work step.</div></div>
+        <div class="qcard"><div class="qcard-q">Tonight we discussed a note on the board in the soft tumble office about #12 being down from this weekend. He said there is still parts in the barrel, but it won't turn on. I took down the info and told him I would look into it and get back to him.</div><div class="qcard-who">Brandon Brooks &middot; Team Lead &middot; Equipment</div><div class="story-out">Captured a downed machine and owned the follow-up.</div></div>
+        <div class="qcard"><div class="qcard-q">I built a training station for water lines and we decided to bring team members over one at a time. Ask them to hook it up according to the standard without any assistance.</div><div class="qcard-who">Jeremy Rhoads &middot; Supervisor, Die Maintenance &middot; Training</div><div class="story-out">Turned a recurring miss into a hands-on training fix.</div></div>
+        <div class="qcard"><div class="qcard-q">In this walk around, I observe any safety concerns and any space constraints. From a review last week, we recognized that some of our H-racks were not being utilized so we were able to schedule those to be taken down and re-purposed.</div><div class="qcard-who">Deborah Aarons &middot; Production Control, Morristown &middot; Material / space</div><div class="story-out">Acted on what the floor walk surfaced.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 7 · WHATS NEXT -->
+<div class="page" data-tab="05" data-label="What's next">
+  <div class="frame">
+    <div class="ey anim d1"><span class="ey-dot"></span>What's next</div>
+    <h2 class="pt anim d1">Keep the reps going, <span class="em">then into Cost Management.</span></h2>
+    <p class="ps anim d2">Keep leaders in the activities, close the loop on trust, and open the next initiative.</p>
+    <div class="grid-3 anim d3">
+      <div class="prac-card"><div class="prac-num">01</div><div class="prac-lbl">Keep completing activities</div><div class="prac-detail">The one thing that matters most. Reps are how the behavior becomes habit.</div></div>
+      <div class="prac-card"><div class="prac-num">02</div><div class="prac-lbl">Where we're focusing</div><div class="prac-detail">The two behaviors with the most room: recognizing first when a gap is visible, and escalating with data to a person and a date.</div></div>
+      <div class="prac-card"><div class="prac-num">03</div><div class="prac-lbl">Then: Cost Management</div><div class="prac-detail">Follow-up surveys go out in about 10 days. On August 18, Cost Management launches, built on the same muscle: see it in the data, have the conversation, drive the fix.</div></div>
+    </div>
+    <div class="cover-meta anim d4" style="margin-top:clamp(32px,5vh,52px)"><span>Build Trust &amp; Credibility on the Floor &middot; JTEKT FORGE Leadership Program</span><span>Data live from Flint &middot; 222 leaders &middot; 710 activities &middot; 468 baseline responses</span></div>
+  </div>
+</div>
+
+<script>
+const P=document.querySelectorAll('.page'),DC=document.getElementById('nD'),NL=document.getElementById('nL');
+let C=0;
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='nd'+(i===0?' active':'');d.textContent=p.dataset.tab||(i+1);d.onclick=()=>go(i);DC.appendChild(d);});
+function dots(){return DC.querySelectorAll('.nd');}
+function go(i){if(i<0||i>=P.length)return;P[C].classList.remove('active');dots()[C].classList.remove('active');C=i;P[C].classList.add('active');dots()[C].classList.add('active');NL.textContent=P[C].dataset.label||'';P[C].scrollTop=0;}
+function next(){go(C+1);}function prev(){go(C-1);}
+function openDetail(btn,id){const det=document.getElementById('det'+id);if(!det)return;const open=det.classList.toggle('open');btn.classList.toggle('is-open',open);if(open){requestAnimationFrame(()=>requestAnimationFrame(()=>det.scrollIntoView({behavior:'smooth',block:'start'})));}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown')next();if(e.key==='ArrowLeft'||e.key==='PageUp')prev();});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>60){d>0?next():prev();}},{passive:true});
+NL.textContent=P[0].dataset.label||'';
+</script>
+</body>
+</html>
