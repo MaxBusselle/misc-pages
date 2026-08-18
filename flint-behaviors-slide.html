@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The behaviors Flint can change</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<style>
+  :root {
+    --paper: 253 252 250;
+    --surface: 255 255 255;
+    --ink: 28 42 56;
+    --muted-ink: 74 88 104;
+    --accent: 232 77 40;
+    --cool-grey: 154 166 176;
+    --pale-grey: 235 229 220;
+    --warm-line: 197 187 166;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: rgb(var(--ink) / 0.06);
+    font-family: 'Sen', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: rgb(var(--ink));
+  }
+  .stage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: rgb(var(--paper));
+    padding: 44px 52px 34px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    transform-origin: top center;
+  }
+  header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 26px; }
+  h1 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgb(var(--muted-ink));
+    margin: 0 0 10px;
+  }
+  .flint-logo { height: 30px; width: auto; display: block; }
+
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--pale-grey));
+    border-radius: 10px;
+    padding: 16px 18px 14px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 999px; flex: none; }
+  .card-head h2 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 600;
+    font-size: 19px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  ul { list-style: none; margin: 0 0 12px; padding: 0; }
+  li {
+    font-size: 13px;
+    line-height: 1.35;
+    color: rgb(var(--ink) / 0.88);
+    padding-left: 13px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 1px;
+    background: rgb(var(--cool-grey));
+  }
+  .logos {
+    margin-top: auto;
+    padding-top: 11px;
+    border-top: 1px dotted rgb(var(--warm-line));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgb(var(--pale-grey) / 0.5);
+    border: 1px solid rgb(var(--pale-grey));
+    border-radius: 6px;
+    padding: 5px 9px 5px 6px;
+  }
+  .chip img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    border-radius: 3px;
+    background: #fff;
+    flex: none;
+  }
+  .chip .fallback {
+    width: 20px; height: 20px; border-radius: 3px; flex: none;
+    display: none;
+    align-items: center; justify-content: center;
+    background: rgb(var(--ink) / 0.08);
+    font-size: 9px; font-weight: 700; color: rgb(var(--muted-ink));
+  }
+  .chip .name { font-size: 12px; font-weight: 700; line-height: 1.1; }
+  .chip .industry { font-size: 10px; color: rgb(var(--muted-ink)); line-height: 1.2; }
+  footer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: rgb(var(--muted-ink));
+  }
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { background: #fff; }
+    .stage { padding: 0; min-height: 0; }
+    .slide { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="slide">
+  <header>
+    <div>
+      <p class="kicker">Client examples by business challenge</p>
+      <h1>The behaviors Flint can change</h1>
+    </div>
+    <img class="flint-logo" src="https://app.flintls.com/logo.svg" alt="Flint">
+  </header>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#e84d28"></span><h2>Selling and business development</h2></div>
+      <ul>
+        <li>Prospects new accounts on purpose</li>
+        <li>Leads with discovery, not a pitch</li>
+        <li>Ties the solution to the customer's goal</li>
+        <li>Gets agreement before presenting</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="heico.com"><div><div class="name">HEICO</div><div class="industry">Aerospace</div></div></div>
+        <div class="chip" data-domain="tql.com"><div><div class="name">TQL</div><div class="industry">Logistics</div></div></div>
+        <div class="chip" data-domain="homedepot.com"><div><div class="name">Home Depot</div><div class="industry">Retail</div></div></div>
+        <div class="chip" data-domain="sci-corp.com"><div><div class="name">SCI</div><div class="industry">Services</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#316195"></span><h2>Customer service</h2></div>
+      <ul>
+        <li>Finds problems before customers do</li>
+        <li>Recovers service failures on the spot</li>
+        <li>Approaches guests proactively</li>
+        <li>Secures the next appointment</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="sandals.com"><div><div class="name">Sandals</div><div class="industry">Hospitality</div></div></div>
+        <div class="chip" data-domain="vw.com"><div><div class="name">VW / Audi</div><div class="industry">Automotive</div></div></div>
+        <div class="chip" data-domain="citizensbank.com"><div><div class="name">Citizens</div><div class="industry">Financial services</div></div></div>
+        <div class="chip" data-domain="goeasy.com"><div><div class="name">goeasy</div><div class="industry">Financial services, collections</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#48724c"></span><h2>Safety</h2></div>
+      <ul>
+        <li>Wears the right protective equipment every time</li>
+        <li>Logs sharper hazard observations</li>
+        <li>Calls out unsafe moves in the moment</li>
+        <li>Runs the pre-task check first</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="terex.com"><div><div class="name">Terex</div><div class="industry">Manufacturing</div></div></div>
+        <div class="chip" data-domain="gategroup.com"><div><div class="name">Gate Group</div><div class="industry">Aviation services</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#f99c24"></span><h2>Compliance</h2></div>
+      <ul>
+        <li>Follows the standard procedure in full</li>
+        <li>Documents as work happens</li>
+        <li>Flags deviations right away</li>
+        <li>Stays audit-ready</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="bms.com"><div><div class="name">Bristol Myers Squibb</div><div class="industry">Pharma</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#4a5868"></span><h2>Standard work</h2></div>
+      <ul>
+        <li>Runs start-up to the standard daily</li>
+        <li>Coaches drift back to standard</li>
+        <li>Confirms the team understands it</li>
+        <li>Surfaces where the standard is unclear</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="jtekt.co.jp"><div><div class="name">JTEKT</div><div class="industry">Manufacturing</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><span class="dot" style="background:#9aa6b0"></span><h2>AI adoption</h2></div>
+      <ul>
+        <li>Drafts with AI, not a blank page</li>
+        <li>Researches faster with AI</li>
+        <li>Reuses prompts for recurring work</li>
+        <li>Shares what works with the team</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="usatoday.com"><div><div class="name">USA Today</div><div class="industry">Media</div></div></div>
+        <div class="chip" data-domain="gannett.com"><div><div class="name">USA Today HR</div><div class="industry">Media</div></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Industries are illustrative. Logos are the property of their owners.</footer>
+</div>
+</div>
+
+<script>
+// Each chip loads its company logo, with a favicon fallback and initials as a last resort.
+document.querySelectorAll('.chip[data-domain]').forEach(function (chip) {
+  var domain = chip.getAttribute('data-domain');
+  var name = chip.querySelector('.name').textContent.trim();
+  var initials = name.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join('');
+
+  var fallback = document.createElement('span');
+  fallback.className = 'fallback';
+  fallback.textContent = initials;
+
+  var img = document.createElement('img');
+  img.alt = name + ' logo';
+  img.src = 'https://logo.clearbit.com/' + domain;
+  img.dataset.stage = '1';
+  img.addEventListener('error', function () {
+    if (img.dataset.stage === '1') {
+      img.dataset.stage = '2';
+      img.src = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=128';
+    } else {
+      img.remove();
+      fallback.style.display = 'flex';
+    }
+  });
+
+  chip.insertBefore(fallback, chip.firstChild);
+  chip.insertBefore(img, chip.firstChild);
+});
+</script>
+</body>
+</html>
