@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Terex · HR Copilot Fundamentals — Coaching Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #6b6860;
+    --rule: #ddd9d0;
+    --accent: #1a3a5c;
+    --accent-light: #e8eef5;
+    --highlight: #c84b2f;
+    --highlight-light: #fdf0ec;
+    --green: #2d6a4f;
+    --green-light: #eaf3ee;
+    --tag-bg: #ededea;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.5; }
+
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 40px; background: var(--white); border-bottom: 1px solid var(--rule);
+    position: sticky; top: 0; z-index: 10; flex-wrap: wrap; gap: 10px;
+  }
+  .nav-left { display: flex; align-items: center; gap: 14px; }
+  .nav-logo { font-family: 'Libre Baskerville', serif; font-weight: 700; font-size: 16px; }
+  .nav-sep { width: 1px; height: 18px; background: var(--rule); }
+  .nav-title { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .nav-right { display: flex; gap: 18px; }
+  .nav-right a { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); text-decoration: none; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 40px 100px; }
+
+  h1.doc-title { font-family: 'Libre Baskerville', serif; font-size: 30px; font-weight: 700; margin-bottom: 6px; }
+  .doc-meta { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 40px; }
+
+  section { margin-bottom: 56px; scroll-margin-top: 90px; }
+  h2.section-title { font-family: 'Libre Baskerville', serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: var(--muted); margin-bottom: 20px; max-width: 680px; }
+  hr { border: none; border-top: 1px solid var(--rule); margin-bottom: 24px; }
+
+  .stat-row { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat-box { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 20px; flex: 1; min-width: 150px; }
+  .stat-number { font-family: 'Libre Baskerville', serif; font-size: 28px; font-weight: 700; }
+  .stat-number.blue { color: var(--accent); }
+  .stat-number.green { color: var(--green); }
+  .stat-number.red { color: var(--highlight); }
+  .stat-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  ul.finding-list { list-style: none; margin-bottom: 20px; }
+  ul.finding-list li { padding-left: 18px; position: relative; margin-bottom: 10px; font-size: 14.5px; }
+  ul.finding-list li::before { content: "—"; position: absolute; left: 0; color: var(--muted); }
+
+  .case-card { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 20px 22px; margin-bottom: 16px; }
+  .case-id { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 10px; }
+  .case-row { display: grid; grid-template-columns: 110px 1fr; gap: 4px 14px; margin-bottom: 6px; font-size: 14px; }
+  .case-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; padding-top: 2px; }
+  .case-value { line-height: 1.55; }
+
+  .quote-block { background: var(--tag-bg); border-radius: 8px; padding: 14px 18px; margin: 10px 0; }
+  .quote-block.green { background: var(--green-light); }
+  .quote-block.red { background: var(--highlight-light); }
+  .quote-text { font-size: 14px; font-style: italic; line-height: 1.5; }
+  .quote-attr { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  table.case-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13.5px; }
+  table.case-table th, table.case-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.case-table th { font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--muted); }
+
+  .explainer { background: var(--accent-light); border-radius: 8px; padding: 20px 24px; margin-bottom: 40px; font-size: 14px; line-height: 1.6; max-width: 760px; }
+
+  .footnote { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-logo">Terex · HR Copilot Fundamentals</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Coaching Analysis</span>
+  </div>
+  <div class="nav-right">
+    <a href="#focus">Coach Focus</a>
+    <a href="#cases">Participant Arcs</a>
+    <a href="#teaching">What the Coach Is Learning</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <h1 class="doc-title">Coaching Analysis: HR Copilot Fundamentals</h1>
+  <div class="doc-meta">Terex · 12 completed activities · August 18–19, 2026 · Flint Learning Solutions</div>
+
+  <div class="explainer">
+    <strong>How the activity works.</strong> Every session opens with the coach asking the participant how they currently handle a long document when someone needs an answer fast. That answer, quoted below as "Started," is the participant's own description of their process before using Copilot at all: usually reading or skimming the whole thing by hand.
+    <br><br>
+    The coach then helps the participant write a Copilot prompt with one required piece: an instruction telling Copilot to say exactly where in the source document it found each part of its answer (for example, "and tell me which page or section each point came from"). This report calls that the <strong>source-citation instruction</strong>. Without it, there is no way to check Copilot's answer against the original document before sending it. Almost every participant left this out on their first attempt.
+    <br><br>
+    The session ends with the participant picking 2–3 specific claims from Copilot's answer and checking those against the original document by hand, which is what "Ended" describes below.
+  </div>
+
+  <section id="focus">
+    <h2 class="section-title">Coach Focus Areas</h2>
+    <div class="section-sub">All 12 completions: Answer Something Someone Is Waiting On, run on real HR work.</div>
+    <hr>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-number blue">12 of 12</div>
+        <div class="stat-desc">started from manual reading or skimming</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number red">9 of 12</div>
+        <div class="stat-desc">first prompts left out the source-citation instruction</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number green">12 of 12</div>
+        <div class="stat-desc">manually checked 2–3 claims against the source before sending</div>
+      </div>
+    </div>
+
+    <ul class="finding-list">
+      <li>Coach sequence, all 12 sessions: ask current method, attach a real document, build a seven-part prompt (who Copilot should act as, what a good answer looks like, the actual request, the format, an example, the background, the tone), then check 2–3 load-bearing claims against the source.</li>
+      <li>9 of 12 first prompt drafts left out the source-citation instruction. The coach added it each time. Two participants (SV Corporate, US-WY Home; AWP USA, US-WA Moses Lake) included it unprompted.</li>
+      <li>Routing: Word or Outlook sidebar when the source is a document already open there (6 of 12), separate Copilot chat window for PDFs, exported files, or pasted text (6 of 12).</li>
+      <li>One session (SV AEV, US-NC Jefferson V02): before any prompt, the coach flagged real employee names in investigation notes and told the participant to swap them for role labels.</li>
+    </ul>
+
+    <div class="footnote">Data: 12 completed activities, coach transcripts · HR Copilot Fundamentals · Terex · August 2026</div>
+  </section>
+
+  <section id="cases">
+    <h2 class="section-title">Participant Arcs: Where They Started, What the Coach Corrected</h2>
+    <div class="section-sub">Identified by business unit and location, not by name. "Started" is the participant's own words describing their process before Copilot.</div>
+    <hr>
+
+    <div class="case-card">
+      <div class="case-id">HR · MP Dungannon (UK-Dungannon)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">Contract of employment checked against a term sheet.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Asked how they currently handle this, the participant said: "Read it." Their first prompt draft did not include a source-citation instruction for the term sheet.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">Pointed out the missing source-citation instruction. Participant added it.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Checked salary, start date, notice against the term sheet. All matched. Contract sent.</div></div>
+      <div class="quote-block red">
+        <div class="quote-text">"Wrong locstion"</div>
+        <div class="quote-attr">Participant, describing what the check caught</div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-id">HR · AWP USA (US-WA Bothell)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">Email on a team member's third-year GLDP rotation, checked against the job description.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Said: "Read it through and then answer." Their first prompt draft just repeated the seven prompt-part names back without filling any of them in.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">Modeled a filled-in example. Participant's own example claim, a VP pitch process, was not in the source; Copilot flagged it as unconfirmed.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Checked only the claims the job description supported (full-time, manager-level placement) and sent that version.</div></div>
+      <div class="footnote" style="margin-top:12px;">Outcome survey for this session says "circumstances made it hard." The transcript shows a completed, sent check. The two records disagree.</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-id">HR · MP Durand (Simplicity) (US-MI Durand)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">Whether a second failed breathalyzer test means termination under the CBA.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Said: "I read it." Source document was a PDF. First prompt draft had no CBA year and no source-citation instruction.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">Added context (the CBA year), then a source-citation instruction. Redirected to a separate chat window, since a PDF has no sidebar.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Copilot cited Article 40, Section 2(b), page 42. Participant checked it and found a missing 24-month window.</div></div>
+      <div class="quote-block red">
+        <div class="quote-text">"yes except it left out the 24 month period"</div>
+        <div class="quote-attr">Participant, after checking Article 40</div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-id">HR · SV Corporate (US-WY Home)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">Payroll SOP from a training transcript, for a stock vesting.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Said: "Try to just read it through." Unlike every other participant, their first prompt draft already included a source-citation instruction, unprompted.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">One addition: a persona.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Checked Medicare wages, taxation state, and multi-line entries. All confirmed. SOP saved.</div></div>
+      <div class="footnote" style="margin-top:12px;">No outcome survey on file for this completed, verified session.</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-id">HR · SV Spartan Chassis (Charlotte) (US-MI Charlotte L02)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">Accommodation letter checked against job description physical requirements.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Said: "I read through the document." First prompt draft had no persona, no format, no tone, and no source-citation instruction.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">Six rounds. Five were needed before the source-citation instruction was written as an actual instruction to Copilot, not restated background.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Letter cited standing (10 hours) and lifting (50 lbs) requirements. Both confirmed against the source.</div></div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-id">HR · SV AEV (US-NC Jefferson V02)</div>
+      <div class="case-row"><div class="case-label">Task</div><div class="case-value">HR briefing summarizing five employees' investigation statements, with a recommendation.</div></div>
+      <div class="case-row"><div class="case-label">Started</div><div class="case-value">Said: "I normal read the email." Before writing any prompt, the participant pasted every employee's real name from the investigation notes into the chat.</div></div>
+      <div class="case-row"><div class="case-label">Coach correction</div><div class="case-value">Flagged the real names first. Then three rounds of prompt-building, plus a switch to a separate chat window after a sidebar failure.</div></div>
+      <div class="case-row"><div class="case-label">Ended</div><div class="case-value">Summary cited which statement backed each point. Participant checked the two load-bearing points before sending.</div></div>
+    </div>
+
+    <table class="case-table">
+      <tr><th>Business unit / location</th><th>Task</th><th>Access mode</th><th>Outcome</th></tr>
+      <tr><td>MP Dungannon (UK-Dungannon)</td><td>Contract vs. term sheet</td><td>Word/Outlook sidebar</td><td>Fixed something the check caught</td></tr>
+      <tr><td>AWP USA (US-WA Bothell)</td><td>GLDP rotation email</td><td>Separate chat window</td><td>Circumstances made check hard (survey); check completed (transcript)</td></tr>
+      <tr><td>SV Corporate (US-WY Home)</td><td>Payroll SOP</td><td>Separate chat window</td><td>No survey response; check completed (transcript)</td></tr>
+      <tr><td>MP Durand (Simplicity) (US-MI Durand)</td><td>CBA breathalyzer policy</td><td>Separate chat window (PDF)</td><td>Fixed something the check caught</td></tr>
+      <tr><td>AWP USA (US-WA Bothell)</td><td>Mobility pay policy email</td><td>Word/Outlook sidebar</td><td>Held up when checked</td></tr>
+      <tr><td>MP Newton (US-NH Newton)</td><td>Flexible work policy notice</td><td>Separate chat window</td><td>Held up when checked</td></tr>
+      <tr><td>Corporate Human Resources (US-WA Bothell)</td><td>Compensation benchmarking summary</td><td>Separate chat window</td><td>Held up when checked</td></tr>
+      <tr><td>SV Spartan Chassis (Charlotte) (US-MI Charlotte L02)</td><td>Accommodation letter</td><td>Word/Outlook sidebar</td><td>Held up when checked</td></tr>
+      <tr><td>SV Ferrara (US-LA Holden)</td><td>Payroll hours by labor account</td><td>Word/Outlook sidebar</td><td>Held up when checked</td></tr>
+      <tr><td>AWP USA (US-WA Moses Lake)</td><td>Lactation break policy answer</td><td>Separate chat window</td><td>Held up when checked</td></tr>
+      <tr><td>SV HEV (US-OH Grove City V01)</td><td>Manager briefing from email chain</td><td>Separate chat window</td><td>Held up when checked</td></tr>
+      <tr><td>SV AEV (US-NC Jefferson V02)</td><td>Investigation-statement briefing</td><td>Word/Outlook sidebar (switched to separate window after access failure)</td><td>Held up when checked</td></tr>
+    </table>
+
+    <div class="footnote">Data: 12 completed activities, coach transcripts, outcome surveys · HR Copilot Fundamentals · Terex · August 2026</div>
+  </section>
+
+  <section id="teaching">
+    <h2 class="section-title">What the Coach Is Teaching Us</h2>
+    <hr>
+
+    <ul class="finding-list">
+      <li>No participant described an existing verification habit before this activity. All 12 started from manual reading or skimming.</li>
+      <li>The recurring gap is one specific piece: the source-citation instruction. Missing in 9 of 12 first drafts.</li>
+      <li>One participant (AWP USA, US-WA Bothell, mobility pay) first named a subjective point to check; the coach redirected to the factual claim.</li>
+      <li>Two sessions show a records gap: one survey response contradicts its transcript, one completed session has no survey response.</li>
+      <li>One participant pasted unredacted employee names from an investigation file. The coach addressed that before any prompt-engineering guidance.</li>
+    </ul>
+
+    <div class="footnote">Data: 12 completed activities, coach transcripts, outcome surveys · HR Copilot Fundamentals · Terex · August 2026</div>
+  </section>
+
+</div>
+
+</body>
+</html>
