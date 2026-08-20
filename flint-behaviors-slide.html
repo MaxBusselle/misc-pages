@@ -180,7 +180,7 @@
         <li>Gets agreement before presenting</li>
       </ul>
       <div class="logos">
-        <div class="chip" data-domain="heico.com"><div><div class="name">HEICO</div><div class="industry">Aerospace</div></div></div>
+        <div class="chip" data-domain="heicocompanies.com" data-logo="https://cdn11.bigcommerce.com/s-ltue6cfwi8/images/stencil/original/image-manager/the-heico-companies-logo-large.png"><div><div class="name">Heico</div><div class="industry">Diversified manufacturing</div></div></div>
         <div class="chip" data-domain="tql.com"><div><div class="name">TQL</div><div class="industry">Logistics</div></div></div>
         <div class="chip" data-domain="homedepot.com"><div><div class="name">Home Depot</div><div class="industry">Retail</div></div></div>
         <div class="chip" data-domain="sci-corp.com"><div><div class="name">SCI</div><div class="industry">Services</div></div></div>
@@ -276,10 +276,14 @@ document.querySelectorAll('.chip[data-domain]').forEach(function (chip) {
 
   var img = document.createElement('img');
   img.alt = name + ' logo';
-  img.src = 'https://logo.clearbit.com/' + domain;
-  img.dataset.stage = '1';
+  var custom = chip.getAttribute('data-logo');
+  img.src = custom || ('https://logo.clearbit.com/' + domain);
+  img.dataset.stage = custom ? '0' : '1';
   img.addEventListener('error', function () {
-    if (img.dataset.stage === '1') {
+    if (img.dataset.stage === '0') {
+      img.dataset.stage = '1';
+      img.src = 'https://logo.clearbit.com/' + domain;
+    } else if (img.dataset.stage === '1') {
       img.dataset.stage = '2';
       img.src = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=128';
     } else {
