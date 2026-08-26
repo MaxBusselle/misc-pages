@@ -256,7 +256,7 @@ header {
 }
 .chart {
   position: relative;
-  min-width: 1480px;
+  min-width: 2100px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -322,7 +322,7 @@ header {
 }
 .lane {
   position: relative;
-  height: 84px;
+  height: 128px;
   border-top: 1px solid var(--border-light);
   display: flex;
   align-items: center;
@@ -363,14 +363,14 @@ header {
 .tile {
   position: absolute;
   top: 16px;
-  height: 52px;
+  height: 96px;
   border-radius: 8px;
-  padding: 8px 10px;
+  padding: 11px 12px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
   border: 1px solid transparent;
   user-select: none;
@@ -383,64 +383,32 @@ header {
 .tile-name {
   font-size: 12.5px;
   font-weight: 600;
-  line-height: 1.25;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.3;
+  flex-shrink: 0;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 .tile-status {
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-top: 3px;
-  opacity: 0.7;
+  margin-top: auto;
+  padding-top: 6px;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
 
 /* tile states by lane color */
-.lane[data-program="safety"] .tile.complete { background: var(--safety-soft); color: var(--safety); }
-.lane[data-program="safety"] .tile.active { background: var(--safety); color: #fff; box-shadow: 0 8px 24px rgba(200,16,46,0.25); animation: pulse-safety 3s ease-in-out infinite; }
-.lane[data-program="safety"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(200,16,46,0.45); color: var(--safety); }
 
-.lane[data-program="mfg"] .tile.complete { background: var(--mfg-soft); color: var(--mfg); }
-.lane[data-program="mfg"] .tile.active { background: var(--mfg); color: #fff; box-shadow: 0 8px 24px rgba(26,138,122,0.25); animation: pulse-mfg 3s ease-in-out infinite; }
-.lane[data-program="mfg"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(26,138,122,0.45); color: var(--mfg); }
 
-.lane[data-program="accountability"] .tile.complete { background: var(--accountability-soft); color: var(--accountability); }
-.lane[data-program="accountability"] .tile.active { background: var(--accountability); color: #fff; box-shadow: 0 8px 24px rgba(91,77,142,0.25); animation: pulse-acc 3s ease-in-out infinite; }
-.lane[data-program="accountability"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(91,77,142,0.45); color: var(--accountability); }
 
-.lane[data-program="copilot"] .tile.complete { background: var(--copilot-soft); color: var(--copilot); }
-.lane[data-program="copilot"] .tile.active { background: var(--copilot); color: #fff; box-shadow: 0 8px 24px rgba(46,92,158,0.25); animation: pulse-cop 3s ease-in-out infinite; }
-.lane[data-program="copilot"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(46,92,158,0.45); color: var(--copilot); }
 
-.lane[data-program="sales"] .tile.complete { background: var(--sales-soft); color: var(--sales); }
-.lane[data-program="sales"] .tile.active { background: var(--sales); color: #fff; box-shadow: 0 8px 24px rgba(184,112,46,0.25); animation: pulse-sales 3s ease-in-out infinite; }
-.lane[data-program="sales"] .tile.upcoming { background: transparent; border: 1.5px dashed rgba(184,112,46,0.45); color: var(--sales); }
 
-.lane[data-program="leadership"] .tile.complete { background: var(--leadership-soft); color: var(--leadership); }
-.lane[data-program="leadership"] .tile.active { background: var(--leadership); color: #fff; }
-.lane[data-program="leadership"] .tile.upcoming,
-.lane[data-program="leadership"] .tile.placeholder { background: transparent; border: 1.5px dashed rgba(184,112,46,0.45); color: var(--leadership); }
-
-.lane[data-program="mfg"] .tile.upcoming,
-.lane[data-program="mfg"] .tile.placeholder { background: transparent; border: 1.5px dashed rgba(154,160,174,0.7); color: var(--mfg); }
-.lane[data-program="mfg"] .lane-label-name { color: var(--text-muted); }
-
-.lane[data-program^="open"] .tile.placeholder { background: transparent; border: 1.5px dashed rgba(138,144,160,0.55); color: var(--open); }
-.lane[data-program^="open"] .lane-label-name { color: var(--text-muted); }
-
-.tile.placeholder .tile-name { font-weight: 500; letter-spacing: 0.04em; }
-.tile.placeholder:hover { border-style: solid; }
+.tile { color: #fff; }
+.tile:hover { box-shadow: 0 8px 22px rgba(0,0,0,0.14); }
 
 .tile.selected { outline: 2px solid var(--text); outline-offset: 2px; }
-
-@keyframes pulse-safety { 0%,100% { box-shadow: 0 8px 24px rgba(200,16,46,0.25); } 50% { box-shadow: 0 8px 32px rgba(200,16,46,0.45); } }
-@keyframes pulse-mfg { 0%,100% { box-shadow: 0 8px 24px rgba(26,138,122,0.25); } 50% { box-shadow: 0 8px 32px rgba(26,138,122,0.45); } }
-@keyframes pulse-acc { 0%,100% { box-shadow: 0 8px 24px rgba(91,77,142,0.25); } 50% { box-shadow: 0 8px 32px rgba(91,77,142,0.45); } }
-@keyframes pulse-cop { 0%,100% { box-shadow: 0 8px 24px rgba(46,92,158,0.25); } 50% { box-shadow: 0 8px 32px rgba(46,92,158,0.45); } }
-@keyframes pulse-sales { 0%,100% { box-shadow: 0 8px 24px rgba(184,112,46,0.25); } 50% { box-shadow: 0 8px 32px rgba(184,112,46,0.45); } }
 
 /* horizon fade */
 .horizon-fade {
@@ -871,20 +839,24 @@ footer {
 // ─── DATA MODEL ────────────────────────────────────
 // Axis: Jan 2026 → Jun 2028. Month index 0 = Jan 2026. Today = Aug 2026 = month 7.
 
-const MONTHS_TOTAL = 30;
+const MONTHS_TOTAL = 42;
 const TODAY_MONTH = 7;
 
 const QUARTERS = [
-  { month: 0,  label: 'Q1 2026' },
-  { month: 3,  label: 'Q2 2026' },
-  { month: 6,  label: 'Q3 2026' },
-  { month: 9,  label: 'Q4 2026' },
+  { month: 0, label: 'Q1 2026' },
+  { month: 3, label: 'Q2 2026' },
+  { month: 6, label: 'Q3 2026' },
+  { month: 9, label: 'Q4 2026' },
   { month: 12, label: 'Q1 2027' },
   { month: 15, label: 'Q2 2027' },
   { month: 18, label: 'Q3 2027' },
   { month: 21, label: 'Q4 2027' },
   { month: 24, label: 'Q1 2028' },
-  { month: 27, label: 'Q2 2028' }
+  { month: 27, label: 'Q2 2028' },
+  { month: 30, label: 'Q3 2028' },
+  { month: 33, label: 'Q4 2028' },
+  { month: 36, label: 'Q1 2029' },
+  { month: 39, label: 'Q2 2029' }
 ];
 
 const OPEN = (id, start) => ({ id: id, name: 'Open', start: start, dates: 'Open slot', placeholder: true });
@@ -909,7 +881,7 @@ const PROGRAMS = [
         goal: 'Rerun of Driving Accountability to a second audience. Already in the Flint library, so no new build.' },
       { id: 'acc-3', name: 'Accountability for Executive Leadership', start: 12, dates: 'Q1 2027', illustrative: true },
       { id: 'acc-4', name: 'Accountability for New Hires', start: 18, dates: 'Q3 2027', illustrative: true },
-      OPEN('acc-o1', 24), OPEN('acc-o2', 27)
+      OPEN('acc-o1', 24), OPEN('acc-o2', 30)
     ]
   },
   {
@@ -947,15 +919,13 @@ const PROGRAMS = [
       },
       { id: 'saf-3', name: 'Life Saving Behaviors', start: 9, dates: 'Q4 2026', illustrative: true,
         goal: 'The nine Life Saving Behaviors are mandatory for all team members. This initiative develops the supervisor behaviors that make them consistent, observable practice.' },
-      { id: 'saf-4', name: 'Injury Prevention Behaviors', start: 12, dates: 'Q1 2027', illustrative: true,
+      { id: 'saf-4', name: 'Injury Prevention Behaviors', start: 15, dates: 'Q2 2027', illustrative: true,
         goal: 'Injury Prevention Behaviors address the risks that show up every day. This initiative builds the manager habit of recognizing and reinforcing them.' },
-      { id: 'saf-5', name: 'Control of Hazardous Energy', start: 15, dates: 'Q2 2027', illustrative: true,
+      { id: 'saf-5', name: 'Control of Hazardous Energy', start: 21, dates: 'Q4 2027', illustrative: true,
         goal: 'One of the 11 Serious Injury and Fatality Prevention Roadmaps. Scoped to the supervisor behaviors that determine whether the roadmap is lived or only documented.' },
-      { id: 'saf-6', name: 'Powered Industrial Trucks', start: 18, dates: 'Q3 2027', illustrative: true,
+      { id: 'saf-6', name: 'Powered Industrial Trucks', start: 27, dates: 'Q2 2028', illustrative: true,
         goal: 'One of the 11 Serious Injury and Fatality Prevention Roadmaps. Scoped to the supervisor behaviors that determine whether the roadmap is lived or only documented.' },
-      { id: 'saf-7', name: 'Work at Height', start: 21, dates: 'Q4 2027', illustrative: true,
-        goal: 'One of the 11 Serious Injury and Fatality Prevention Roadmaps. Scoped to the supervisor behaviors that determine whether the roadmap is lived or only documented.' },
-      OPEN('saf-o1', 24), OPEN('saf-o2', 27)
+      OPEN('saf-o1', 33), OPEN('saf-o2', 39)
     ]
   },
   {
@@ -972,49 +942,46 @@ const PROGRAMS = [
           { t: 'Where it failed', d: 'Participant reports a task Copilot handled badly and what they did instead.' }
         ]
       },
-      { id: 'cop-2', name: 'HR Copilot Advanced', start: 10, dates: 'Q4 2026', illustrative: true,
+      { id: 'cop-2', name: 'HR Copilot Advanced', start: 13, dates: 'Q1 2027', illustrative: true,
         goal: 'Follows HR Copilot Fundamentals for the same audience. Moves from single prompts to multi-step work.' },
-      { id: 'cop-3', name: 'Copilot for Sales and Marketing', start: 13, dates: 'Q1 2027', illustrative: true },
-      { id: 'cop-4', name: 'New Hire Copilot Fundamentals', start: 16, dates: 'Q2 2027', illustrative: true },
-      OPEN('cop-o1', 19), OPEN('cop-o2', 22)
+      { id: 'cop-3', name: 'Copilot for Sales and Marketing', start: 19, dates: 'Q3 2027', illustrative: true },
+      { id: 'cop-4', name: 'New Hire Copilot Fundamentals', start: 25, dates: 'Q1 2028', illustrative: true },
+      OPEN('cop-o1', 31), OPEN('cop-o2', 37)
     ]
   },
   {
     id: 'leadership',
     name: 'Leadership Development',
-    started: 'Not yet scheduled',
-    color: '#B8702E',
+        color: '#B8702E',
     note: 'Each initiative attaches on-the-job activities to a leadership course the Global Talent Management and Culture team already runs.',
     initiatives: [
       { id: 'lead-1', name: 'Supervisor Fundamentals 1.0', start: 8, dates: 'Placeholder', placeholder: true,
         goal: 'On-the-job activities following the Supervisor Fundamentals 1.0 course for frontline supervisors. Activity set not yet authored.' },
-      { id: 'lead-2', name: 'Supervisor Fundamentals 2.0', start: 11, dates: 'Placeholder', placeholder: true,
+      { id: 'lead-2', name: 'Supervisor Fundamentals 2.0', start: 14, dates: 'Placeholder', placeholder: true,
         goal: 'On-the-job activities following the Supervisor Fundamentals 2.0 course. Activity set not yet authored.' },
-      { id: 'lead-3', name: 'Leadership Communication', start: 14, dates: 'Placeholder', placeholder: true,
+      { id: 'lead-3', name: 'Leadership Communication', start: 20, dates: 'Placeholder', placeholder: true,
         goal: 'Addresses the frontline leader communication gap raised for the Charlotte, Michigan site. Activity set not yet authored.' },
-      OPEN('lead-o1', 17), OPEN('lead-o2', 20)
+      OPEN('lead-o1', 26), OPEN('lead-o2', 32)
     ]
   },
   {
     id: 'mfg',
     name: 'Manufacturing Excellence',
-    started: 'Not yet scheduled',
-    color: '#9AA0AE',
+        color: '#9AA0AE',
     initiatives: [
       { id: 'mfg-1', name: 'Building Trust and Credibility on the Floor', start: 9, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-2', name: 'Upholding Standard Work', start: 12, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-3', name: 'Running Effective Production Meetings', start: 15, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-4', name: 'Frontline Supervisor Best Practices', start: 18, dates: 'Placeholder', placeholder: true },
-      OPEN('mfg-o1', 21), OPEN('mfg-o2', 24)
+      { id: 'mfg-2', name: 'Upholding Standard Work', start: 15, dates: 'Placeholder', placeholder: true },
+      { id: 'mfg-3', name: 'Running Effective Production Meetings', start: 21, dates: 'Placeholder', placeholder: true },
+      { id: 'mfg-4', name: 'Frontline Supervisor Best Practices', start: 27, dates: 'Placeholder', placeholder: true },
+      OPEN('mfg-o1', 33), OPEN('mfg-o2', 39)
     ]
   },
   {
     id: 'open-1',
     name: 'Open Program',
-    started: 'Not yet defined',
-    color: '#8A90A0',
+        color: '#8A90A0',
     note: 'Open program slot. No program named.',
-    initiatives: [ OPEN('op1-a', 12), OPEN('op1-b', 15), OPEN('op1-c', 18), OPEN('op1-d', 21) ]
+    initiatives: [ OPEN('op1-a', 12), OPEN('op1-b', 18), OPEN('op1-c', 24), OPEN('op1-d', 30) ]
   }
 ];
 
@@ -1055,7 +1022,7 @@ function renderLanes() {
     labelCell.className = 'lane-label';
     labelCell.innerHTML = `
       <div class="lane-label-name">${prog.name}</div>
-      <div class="lane-label-meta">${prog.started}</div>
+      ${prog.started ? `<div class="lane-label-meta">${prog.started}</div>` : ''}
     `;
     lane.appendChild(labelCell);
 
@@ -1069,6 +1036,7 @@ function renderLanes() {
       tile.dataset.id = init.id;
       tile.style.left = `${(init.start / MONTHS_TOTAL) * 100}%`;
       tile.style.width = `calc(${(3 / MONTHS_TOTAL) * 100}% - 6px)`;
+      tile.style.background = prog.color;
       tile.innerHTML = `
         <div class="tile-name">${init.name}</div>
         <div class="tile-status">${STATE_LABEL[state]}</div>
