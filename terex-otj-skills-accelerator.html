@@ -256,7 +256,7 @@ header {
 }
 .chart {
   position: relative;
-  min-width: 2100px;
+  min-width: 1460px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -322,7 +322,7 @@ header {
 }
 .lane {
   position: relative;
-  height: 128px;
+  height: 148px;
   border-top: 1px solid var(--border-light);
   display: flex;
   align-items: center;
@@ -363,7 +363,7 @@ header {
 .tile {
   position: absolute;
   top: 16px;
-  height: 96px;
+  height: 116px;
   border-radius: 8px;
   padding: 11px 12px;
   cursor: pointer;
@@ -381,9 +381,9 @@ header {
   z-index: 4;
 }
 .tile-name {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.28;
   flex-shrink: 0;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -824,7 +824,7 @@ footer {
 // ─── DATA MODEL ────────────────────────────────────
 // Axis: Jan 2026 → Jun 2028. Month index 0 = Jan 2026. Today = Aug 2026 = month 7.
 
-const MONTHS_TOTAL = 42;
+const MONTHS_TOTAL = 27;
 const TODAY_MONTH = 7;
 
 const QUARTERS = [
@@ -836,12 +836,7 @@ const QUARTERS = [
   { month: 15, label: 'Q2 2027' },
   { month: 18, label: 'Q3 2027' },
   { month: 21, label: 'Q4 2027' },
-  { month: 24, label: 'Q1 2028' },
-  { month: 27, label: 'Q2 2028' },
-  { month: 30, label: 'Q3 2028' },
-  { month: 33, label: 'Q4 2028' },
-  { month: 36, label: 'Q1 2029' },
-  { month: 39, label: 'Q2 2029' }
+  { month: 24, label: 'Q1 2028' }
 ];
 
 const OPEN = (id, start) => ({ id: id, name: 'Open', start: start, dates: 'Open slot', placeholder: true });
@@ -862,11 +857,11 @@ const PROGRAMS = [
           { t: 'Follow-through check', d: 'Participant reviews an open commitment and records its current status.' }
         ]
       },
-      { id: 'acc-2', name: 'Driving Accountability Wave 2', fullName: 'Driving Accountability, Wave 2', start: 6, dates: 'Q3 2026',
+      { id: 'acc-2', name: 'Driving Accountability Wave 2', fullName: 'Driving Accountability, Wave 2', start: 3, dates: 'Q2 2026',
         goal: 'Rerun of Driving Accountability to a second audience. Already in the Flint library, so no new build.' },
-      { id: 'acc-3', name: 'Accountability for Executive Leadership', start: 12, dates: 'Q1 2027', illustrative: true },
-      { id: 'acc-4', name: 'Accountability for New Hires', start: 18, dates: 'Q3 2027', illustrative: true },
-      OPEN('acc-o1', 24), OPEN('acc-o2', 30)
+      { id: 'acc-3', name: 'Accountability for Executive Leadership', start: 6, dates: 'Q3 2026', illustrative: true },
+      { id: 'acc-4', name: 'Accountability for New Hires', start: 9, dates: 'Q4 2026', illustrative: true },
+      OPEN('acc-o1', 12), OPEN('acc-o2', 15)
     ]
   },
   {
@@ -902,15 +897,15 @@ const PROGRAMS = [
           { t: 'Field coaching prompt', d: 'Same activity set as Wave 1, run to a new cohort.' }
         ]
       },
-      { id: 'saf-3', name: 'Life Saving Behaviors', start: 9, dates: 'Q4 2026', illustrative: true,
+      { id: 'saf-3', name: 'Life Saving Behaviors', start: 7, dates: 'Aug – Oct 2026', illustrative: true,
         goal: 'The nine Life Saving Behaviors are mandatory for all team members. This initiative develops the supervisor behaviors that make them consistent, observable practice.' },
-      { id: 'saf-4', name: 'Injury Prevention Behaviors', start: 15, dates: 'Q2 2027', illustrative: true,
+      { id: 'saf-4', name: 'Injury Prevention Behaviors', start: 10, dates: 'Nov 2026 – Jan 2027', illustrative: true,
         goal: 'Injury Prevention Behaviors address the risks that show up every day. This initiative builds the manager habit of recognizing and reinforcing them.' },
-      { id: 'saf-5', name: 'Control of Hazardous Energy', start: 21, dates: 'Q4 2027', illustrative: true,
+      { id: 'saf-5', name: 'Control of Hazardous Energy', start: 13, dates: 'Feb – Apr 2027', illustrative: true,
         goal: 'One of the 11 Serious Injury and Fatality Prevention Roadmaps. Scoped to the supervisor behaviors that determine whether the roadmap is lived or only documented.' },
-      { id: 'saf-6', name: 'Powered Industrial Trucks', start: 27, dates: 'Q2 2028', illustrative: true,
+      { id: 'saf-6', name: 'Powered Industrial Trucks', start: 16, dates: 'May – Jul 2027', illustrative: true,
         goal: 'One of the 11 Serious Injury and Fatality Prevention Roadmaps. Scoped to the supervisor behaviors that determine whether the roadmap is lived or only documented.' },
-      OPEN('saf-o1', 33), OPEN('saf-o2', 39)
+      OPEN('saf-o1', 19), OPEN('saf-o2', 22)
     ]
   },
   {
@@ -927,11 +922,11 @@ const PROGRAMS = [
           { t: 'Where it failed', d: 'Participant reports a task Copilot handled badly and what they did instead.' }
         ]
       },
-      { id: 'cop-2', name: 'HR Copilot Advanced', start: 13, dates: 'Q1 2027', illustrative: true,
+      { id: 'cop-2', name: 'HR Copilot Advanced', start: 10, dates: 'Nov 2026 – Jan 2027', illustrative: true,
         goal: 'Follows HR Copilot Fundamentals for the same audience. Moves from single prompts to multi-step work.' },
-      { id: 'cop-3', name: 'Copilot for Sales and Marketing', start: 19, dates: 'Q3 2027', illustrative: true },
-      { id: 'cop-4', name: 'New Hire Copilot Fundamentals', start: 25, dates: 'Q1 2028', illustrative: true },
-      OPEN('cop-o1', 31), OPEN('cop-o2', 37)
+      { id: 'cop-3', name: 'Copilot for Sales and Marketing', start: 13, dates: 'Feb – Apr 2027', illustrative: true },
+      { id: 'cop-4', name: 'New Hire Copilot Fundamentals', start: 16, dates: 'May – Jul 2027', illustrative: true },
+      OPEN('cop-o1', 19), OPEN('cop-o2', 22)
     ]
   },
   {
@@ -942,11 +937,11 @@ const PROGRAMS = [
     initiatives: [
       { id: 'lead-1', name: 'Supervisor Fundamentals 1.0', start: 8, dates: 'Placeholder', placeholder: true,
         goal: 'On-the-job activities following the Supervisor Fundamentals 1.0 course for frontline supervisors. Activity set not yet authored.' },
-      { id: 'lead-2', name: 'Supervisor Fundamentals 2.0', start: 14, dates: 'Placeholder', placeholder: true,
+      { id: 'lead-2', name: 'Supervisor Fundamentals 2.0', start: 11, dates: 'Placeholder', placeholder: true,
         goal: 'On-the-job activities following the Supervisor Fundamentals 2.0 course. Activity set not yet authored.' },
-      { id: 'lead-3', name: 'Leadership Communication', start: 20, dates: 'Placeholder', placeholder: true,
+      { id: 'lead-3', name: 'Leadership Communication', start: 14, dates: 'Placeholder', placeholder: true,
         goal: 'Addresses the frontline leader communication gap raised for the Charlotte, Michigan site. Activity set not yet authored.' },
-      OPEN('lead-o1', 26), OPEN('lead-o2', 32)
+      OPEN('lead-o1', 17), OPEN('lead-o2', 20)
     ]
   },
   {
@@ -955,10 +950,10 @@ const PROGRAMS = [
         color: '#9AA0AE',
     initiatives: [
       { id: 'mfg-1', name: 'Building Trust and Credibility on the Floor', start: 9, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-2', name: 'Upholding Standard Work', start: 15, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-3', name: 'Running Effective Production Meetings', start: 21, dates: 'Placeholder', placeholder: true },
-      { id: 'mfg-4', name: 'Frontline Supervisor Best Practices', start: 27, dates: 'Placeholder', placeholder: true },
-      OPEN('mfg-o1', 33), OPEN('mfg-o2', 39)
+      { id: 'mfg-2', name: 'Upholding Standard Work', start: 12, dates: 'Placeholder', placeholder: true },
+      { id: 'mfg-3', name: 'Running Effective Production Meetings', start: 15, dates: 'Placeholder', placeholder: true },
+      { id: 'mfg-4', name: 'Frontline Supervisor Best Practices', start: 18, dates: 'Placeholder', placeholder: true },
+      OPEN('mfg-o1', 21), OPEN('mfg-o2', 24)
     ]
   },
   {
@@ -966,7 +961,7 @@ const PROGRAMS = [
     name: 'Open Program',
         color: '#8A90A0',
     note: 'Open program slot. No program named.',
-    initiatives: [ OPEN('op1-a', 12), OPEN('op1-b', 18), OPEN('op1-c', 24), OPEN('op1-d', 30) ]
+    initiatives: [ OPEN('op1-a', 12), OPEN('op1-b', 15), OPEN('op1-c', 18), OPEN('op1-d', 21) ]
   }
 ];
 
