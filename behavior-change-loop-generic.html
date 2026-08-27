@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Behavior change in the flow of work</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap");
+
+:root {
+  --color-paper:      253 252 250;
+  --color-surface:    255 255 255;
+  --color-ink:        28 42 56;
+  --color-muted-ink:  74 88 104;
+  --color-accent:     232 77 40;
+  --color-cool-grey:  154 166 176;
+  --color-pale-grey:  235 229 220;
+  --color-warm-line:  197 187 166;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Sen', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* 16:9 slide, scales with viewport width */
+.slide {
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  container-type: size;
+  position: relative;
+  background-color: rgb(var(--color-paper));
+  padding: 4.2% 4.2% 3%;
+}
+
+.slide-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 1.35cqh;
+}
+
+h1 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 400;
+  font-size: 4.6cqh;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0;
+  max-width: 62%;
+}
+h1 .accent { color: rgb(var(--color-accent)); }
+
+/* diagram canvas */
+.diagram {
+  position: absolute;
+  top: 22%;
+  left: 0;
+  right: 0;
+  bottom: 15%;
+}
+
+.arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.arrows path { fill: none; stroke: rgb(var(--color-cool-grey)); stroke-width: 2.2; }
+.arrows polygon { fill: rgb(var(--color-cool-grey)); }
+
+.card {
+  position: absolute;
+  background-color: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-warm-line));
+  border-radius: 8px;
+  padding: 2.6cqh 2.2cqh 2.2cqh;
+  box-shadow: 0 1px 3px rgb(96 80 50 / 0.07);
+  text-align: center;
+}
+.card h2 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 500;
+  font-size: 2.5cqh;
+  line-height: 1.2;
+  margin: 0 0 1.2cqh;
+}
+.card p {
+  margin: 0;
+  font-size: 1.85cqh;
+  line-height: 1.5;
+  color: rgb(var(--color-muted-ink));
+}
+
+.num {
+  position: absolute;
+  top: -1.8cqh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.6cqh;
+  height: 3.6cqh;
+  border-radius: 999px;
+  background-color: rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
+  font-weight: 700;
+  font-size: 1.8cqh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step1 { left: 26%; top: 0;    width: 19%; }
+.step2 { left: 36%; top: 55%;  width: 18%; }
+.step3 { left: 12%; top: 55%;  width: 18%; }
+
+.outcome {
+  position: absolute;
+  left: 62%;
+  top: 22%;
+  width: 26%;
+  background-color: rgb(var(--color-pale-grey) / 0.55);
+  border: 1px solid rgb(var(--color-warm-line));
+  border-radius: 16px;
+  padding: 3cqh 2.6cqh;
+}
+.outcome h2 {
+  font-family: 'Andada Pro', serif;
+  font-weight: 500;
+  font-size: 2.9cqh;
+  margin: 0 0 1.6cqh;
+}
+.outcome p {
+  margin: 0;
+  font-size: 2cqh;
+  line-height: 1.5;
+  color: rgb(var(--color-muted-ink));
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgb(var(--color-warm-line));
+  background-color: rgb(var(--color-pale-grey) / 0.35);
+  border-radius: 8px;
+  padding: 2.4cqh 2cqh;
+  text-align: center;
+  font-size: 2.1cqh;
+  line-height: 1.4;
+}
+.footer strong { font-weight: 700; color: rgb(var(--color-accent)); }
+</style>
+</head>
+<body>
+<div class="slide">
+ <div class="slide-inner">
+
+  <h1>Behavior change in the flow of work, AI-enabled, and <span class="accent">coached until it sticks.</span></h1>
+
+  <div class="diagram">
+
+    <svg class="arrows" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+      <!-- 1 -> 2 : down-right -->
+      <path d="M 462 150 L 520 258" />
+      <polygon points="520,275 508,250 532,248" />
+      <!-- 2 -> 3 : right to left -->
+      <path d="M 352 380 L 320 380" />
+      <polygon points="303,380 325,368 325,392" />
+      <!-- 3 -> 1 : up-right -->
+      <path d="M 248 300 L 300 175" />
+      <polygon points="306,158 312,183 289,174" />
+      <!-- loop -> outcome -->
+      <path d="M 570 235 L 606 235" />
+      <polygon points="623,235 601,223 601,247" />
+    </svg>
+
+    <div class="card step1">
+      <span class="num">1</span>
+      <h2>Activity</h2>
+      <p>A short task targeting one behavior tied to a specific role.</p>
+    </div>
+
+    <div class="card step2">
+      <span class="num">2</span>
+      <h2>Action in daily work</h2>
+      <p>The participant integrates the activity into their daily work.</p>
+    </div>
+
+    <div class="card step3">
+      <span class="num">3</span>
+      <h2>Debrief, manager confirms</h2>
+      <p>The participant debriefs with the coach and reports what happened, and the manager confirms it.</p>
+    </div>
+
+    <div class="outcome">
+      <h2>The habit takes hold</h2>
+      <p>The behavior becomes how the work gets done, and what participants see reaches the company to act on.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Every loop does two things at once: <strong>a stronger habit for the participant</strong>, and <strong>more actionable insights for leadership</strong>.
+  </div>
+
+ </div>
+</div>
+</body>
+</html>
