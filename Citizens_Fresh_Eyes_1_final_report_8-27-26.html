@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Eyes — Citizens Facilities Services Excellence · Pilot Final Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --paper:253 252 250;--surface:255 255 255;--ink:28 42 56;--muted:74 88 104;
+  --accent:232 77 40;--success:72 114 76;--cool:154 166 176;--light:200 205 210;
+  --pale:235 229 220;--warm-line:197 187 166;--radius:8px;--radius-lg:16px;--ease:cubic-bezier(0.16,1,0.3,1);
+}
+body{font-family:'Sen',sans-serif;background:rgb(var(--paper));color:rgb(var(--ink));line-height:1.55;overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4,h5,h6{font-family:'Andada Pro',serif;font-weight:400;}
+::selection{background:rgb(var(--accent));color:rgb(var(--paper));}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.anim{opacity:0;}
+.page.active .anim{animation:fadeUp .6s var(--ease) both;}
+.page.active .anim.d1{animation-delay:.05s;}.page.active .anim.d2{animation-delay:.13s;}
+.page.active .anim.d3{animation-delay:.22s;}.page.active .anim.d4{animation-delay:.32s;}
+.page.active .anim.d5{animation-delay:.42s;}.page.active .anim.d6{animation-delay:.52s;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:clamp(8px,1.5vw,16px);padding:clamp(10px,1.4vw,14px) clamp(16px,3vw,28px);background:rgb(var(--paper));border-bottom:1px solid rgb(var(--warm-line) / 0.6);}
+.flint-logo{height:clamp(20px,2.2vw,26px);width:auto;display:block;flex-shrink:0;}
+.nav-brand{font-family:'Sen',sans-serif;font-size:clamp(10px,1.15vw,12px);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--muted));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav-sep{width:1px;height:18px;background:rgb(var(--warm-line));flex-shrink:0;}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;align-items:center;flex:1;min-width:0;}
+.nd{height:clamp(22px,2.4vw,26px);min-width:clamp(22px,2.4vw,26px);padding:0 11px;border-radius:13px;border:1.5px solid rgb(var(--cool) / 0.5);cursor:pointer;font-family:'Sen',sans-serif;font-size:clamp(9px,1vw,11px);font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:rgb(var(--cool));display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease);flex-shrink:0;background:transparent;white-space:nowrap;}
+.nd:hover{border-color:rgb(var(--ink) / 0.5);color:rgb(var(--ink));}
+.nd.active{background:rgb(var(--accent));border-color:rgb(var(--accent));color:rgb(var(--paper));}
+.nav-label{font-size:clamp(9px,1.1vw,11px);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--muted));white-space:nowrap;}
+.nav-arrows{display:flex;gap:5px;}
+.na{width:clamp(26px,2.8vw,30px);height:clamp(26px,2.8vw,30px);border-radius:7px;background:rgb(var(--surface));border:1px solid rgb(var(--pale));cursor:pointer;color:rgb(var(--muted));font-size:clamp(13px,1.4vw,16px);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s var(--ease);}
+.na:hover{background:rgb(var(--pale) / 0.6);color:rgb(var(--ink));}
+.page{display:none;height:100vh;overflow-y:auto;scroll-behavior:smooth;}
+.page.active{display:flex;flex-direction:column;}
+.frame{min-height:calc(100vh - 56px);padding:clamp(64px,8vh,92px) clamp(20px,5vw,80px) clamp(28px,4vh,56px);display:flex;flex-direction:column;justify-content:center;flex-shrink:0;max-width:1440px;width:100%;margin:0 auto;}
+.ey{font-family:'Sen',sans-serif;font-size:clamp(11px,1.2vw,13px);font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:clamp(10px,1.4vh,16px);display:flex;align-items:center;gap:10px;}
+.ey-dot{width:6px;height:6px;background:rgb(var(--accent));border-radius:50%;}
+.pt{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(28px,4.6vw,56px);line-height:1.07;letter-spacing:-0.02em;color:rgb(var(--ink));margin-bottom:clamp(12px,1.8vh,20px);}
+.pt .em{color:rgb(var(--accent));font-style:italic;}
+.ps{font-family:'Sen',sans-serif;font-size:clamp(15px,1.55vw,19px);color:rgb(var(--muted));line-height:1.6;max-width:960px;margin-bottom:clamp(20px,3vh,32px);}
+.ps strong{color:rgb(var(--ink));font-weight:700;}
+.abtn{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(16px,2.6vh,26px);padding:13px 26px;background:rgb(var(--surface));border:1px solid rgb(var(--warm-line));border-radius:100px;color:rgb(var(--ink));font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,16px);font-weight:700;cursor:pointer;transition:all .25s var(--ease);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.06);}
+.abtn:hover{background:rgb(var(--pale) / 0.5);border-color:rgb(var(--accent));color:rgb(var(--accent));transform:translateY(-1px);}
+.abtn .abtn-arrow{font-size:1.05em;line-height:1;display:inline-block;transition:transform .25s var(--ease);color:rgb(var(--accent));}
+.abtn.is-open .abtn-arrow{transform:rotate(180deg);}
+.detail{padding:clamp(28px,4vh,44px) clamp(20px,5vw,80px) clamp(40px,6vh,64px);border-top:1px solid rgb(var(--warm-line) / 0.6);background:rgb(var(--paper));display:none;max-width:1440px;width:100%;margin:0 auto;}
+.detail.open{display:block;animation:fadeUp .5s var(--ease) both;}
+.detail-label{font-family:'Sen',sans-serif;font-size:clamp(12px,1.3vw,14px);font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgb(var(--muted));margin-bottom:clamp(18px,2.6vh,24px);}
+.detail-label .em{color:rgb(var(--accent));}
+.det-section-divider{margin-top:clamp(44px,6vh,72px);padding-top:clamp(30px,4vh,48px);margin-bottom:clamp(22px,3vh,32px);border-top:1px solid rgb(var(--warm-line) / 0.6);position:relative;}
+.det-section-divider::before{content:'';position:absolute;top:-2px;left:0;width:64px;height:2px;background:rgb(var(--accent));}
+.det-section-hed{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(24px,3.1vw,38px);line-height:1.13;letter-spacing:-0.02em;color:rgb(var(--ink));margin-bottom:8px;}
+.det-section-sub{font-family:'Sen',sans-serif;font-size:clamp(12px,1.3vw,14px);font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:6px;}
+.det-lead{font-family:'Sen',sans-serif;font-size:clamp(14px,1.45vw,17px);color:rgb(var(--muted));line-height:1.6;max-width:900px;margin-bottom:clamp(18px,2.6vh,24px);}
+.det-lead strong{color:rgb(var(--ink));font-weight:700;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,2vw,20px);}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.5vw,16px);}
+@media(max-width:900px){.grid-3,.grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.grid-3,.grid-4{grid-template-columns:1fr;}}
+.eng-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:clamp(12px,2vw,20px);}
+.eng-grid .eng-headline-card{grid-column:auto;}
+@media(max-width:760px){.eng-grid{grid-template-columns:1fr;}.eng-grid .eng-headline-card{grid-column:auto;}}
+.stat-cell{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(18px,2.2vw,26px);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.stat-num{font-family:'Geist Mono',monospace;font-size:clamp(32px,4.2vw,50px);font-weight:500;line-height:1;letter-spacing:-0.02em;color:rgb(var(--ink));}
+.stat-num .of{color:rgb(var(--cool));font-size:0.5em;}
+.stat-num.accent{color:rgb(var(--accent));}
+.stat-num.green{color:rgb(var(--success));}
+.stat-num.cool{color:rgb(var(--cool));}
+.stat-label{font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,17px);font-weight:700;color:rgb(var(--ink));margin-top:10px;}
+.stat-sub{font-family:'Sen',sans-serif;font-size:clamp(13px,1.35vw,15.5px);color:rgb(var(--muted));margin-top:4px;line-height:1.45;}
+/* COVER */
+.cover-frame{min-height:calc(100vh - 56px);padding:clamp(56px,7vh,88px) clamp(20px,5vw,80px) clamp(52px,6vh,72px);display:flex;flex-direction:column;justify-content:center;position:relative;max-width:1440px;width:100%;margin:0 auto;}
+.cover-rule{width:64px;height:2px;background:rgb(var(--accent));margin-bottom:clamp(18px,2.6vh,26px);}
+.cover-eyebrow{font-family:'Sen',sans-serif;font-size:clamp(11px,1.3vw,14px);font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:clamp(16px,2.4vh,24px);}
+.cover-title{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(32px,5.6vw,76px);line-height:1.03;letter-spacing:-0.025em;margin-bottom:clamp(18px,2.6vh,28px);color:rgb(var(--ink));}
+.cover-title .accent{color:rgb(var(--accent));font-style:italic;}
+.cover-deck{font-family:'Sen',sans-serif;font-size:clamp(15px,1.7vw,21px);color:rgb(var(--muted));line-height:1.55;max-width:960px;margin-bottom:clamp(24px,3.4vh,40px);}
+.cover-deck strong{color:rgb(var(--ink));font-weight:700;}
+.cover-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgb(var(--pale));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);overflow:hidden;max-width:1000px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+@media(max-width:680px){.cover-stats{grid-template-columns:1fr 1fr;}}
+@media(max-width:420px){.cover-stats{grid-template-columns:1fr;}}
+.cstat{padding:clamp(16px,2.2vw,26px);background:rgb(var(--surface));}
+.cstat-num{font-family:'Geist Mono',monospace;font-size:clamp(28px,3.8vw,48px);font-weight:500;line-height:1;letter-spacing:-0.02em;color:rgb(var(--accent));margin-bottom:8px;}
+.cstat-label{font-family:'Sen',sans-serif;font-size:clamp(12.5px,1.35vw,15.5px);color:rgb(var(--muted));font-weight:700;line-height:1.4;}
+.cover-meta{margin-top:clamp(22px,3.2vh,34px);display:flex;justify-content:space-between;align-items:flex-end;font-family:'Sen',sans-serif;font-size:clamp(11px,1.2vw,13px);color:rgb(var(--cool));flex-wrap:wrap;gap:12px;max-width:1000px;}
+.cover-meta strong{color:rgb(var(--muted));font-weight:700;}
+/* dark headline card */
+.eng-headline-card{background:rgb(var(--ink));border-radius:var(--radius-lg);padding:clamp(16px,2vw,24px);grid-column:span 2;box-shadow:0 14px 28px -14px rgb(var(--ink) / 0.28);}
+@media(max-width:580px){.eng-headline-card{grid-column:span 1;}}
+.eng-headline-num{font-family:'Geist Mono',monospace;font-size:clamp(40px,5.4vw,64px);font-weight:500;line-height:1;letter-spacing:-0.03em;color:rgb(var(--paper));}
+.eng-headline-num .of{color:rgb(var(--cool));font-size:0.45em;}
+.eng-headline-lbl{font-family:'Sen',sans-serif;font-size:clamp(16px,1.85vw,21px);font-weight:800;color:rgb(var(--paper));margin-top:10px;}
+.eng-headline-sub{font-family:'Sen',sans-serif;font-size:clamp(14px,1.55vw,17.5px);color:rgb(var(--paper) / 0.7);margin-top:6px;line-height:1.45;}
+/* method flow */
+.method{background:rgb(var(--ink));border-radius:var(--radius-lg);padding:clamp(24px,3.2vw,40px);display:grid;grid-template-columns:1.1fr auto 1.4fr;gap:clamp(18px,3vw,40px);align-items:center;box-shadow:0 14px 28px -14px rgb(var(--ink) / 0.28);}
+@media(max-width:820px){.method{grid-template-columns:1fr;gap:22px;}}
+.method-l .mnum{font-family:'Geist Mono',monospace;font-size:clamp(40px,5.4vw,64px);font-weight:500;color:rgb(var(--paper));line-height:1;letter-spacing:-0.02em;}
+.method-l .mlbl{font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,17px);color:rgb(var(--paper) / 0.72);margin-top:10px;line-height:1.5;}
+.method-arrow{color:rgb(var(--accent));font-size:30px;text-align:center;}
+@media(max-width:820px){.method-arrow{transform:rotate(90deg);}}
+.method-r{display:flex;flex-direction:column;gap:clamp(11px,1.6vh,16px);}
+.mrow{display:grid;grid-template-columns:16px 1fr auto;align-items:center;gap:14px;padding-right:clamp(4px,1vw,14px);}
+.mrow .mdot{width:11px;height:11px;border-radius:3px;}
+.mrow .mname{display:flex;flex-direction:column;gap:2px;font-family:'Sen',sans-serif;}
+.mrow .mname strong{font-size:clamp(15px,1.75vw,19px);color:rgb(var(--paper));font-weight:800;line-height:1.2;}
+.mrow .mname .mdesc{font-size:clamp(11.5px,1.2vw,13.5px);color:rgb(var(--paper) / 0.6);font-weight:400;line-height:1.3;}
+.mrow .mval{font-family:'Geist Mono',monospace;font-size:clamp(15px,1.65vw,19px);color:rgb(var(--paper));text-align:right;font-weight:500;}
+/* km cards */
+.km-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.8vw,18px);margin-top:clamp(18px,2.6vh,26px);}
+@media(max-width:760px){.km-grid{grid-template-columns:1fr;}}
+.km-card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(18px,2.4vw,28px);position:relative;overflow:hidden;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.km-card::before{content:'';position:absolute;top:0;left:0;width:32px;height:2px;background:rgb(var(--accent));}
+.km-tier{font-family:'Sen',sans-serif;font-size:clamp(10px,1.05vw,12px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--cool));}
+.km-num{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(32px,4.2vw,48px);color:rgb(var(--accent));line-height:1;letter-spacing:-0.02em;margin:8px 0 12px;}
+.km-name{font-family:'Sen',sans-serif;font-size:clamp(14px,1.45vw,16px);line-height:1.45;color:rgb(var(--muted));}
+.km-name strong{color:rgb(var(--ink));font-weight:700;}
+/* tables */
+.dtab{width:100%;border-collapse:collapse;background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.dtab th{text-align:left;font-family:'Sen',sans-serif;font-size:clamp(10px,1.05vw,12px);font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:rgb(var(--cool));padding:14px 16px;border-bottom:1px solid rgb(var(--warm-line));}
+.dtab th.r,.dtab td.r{text-align:right;}
+.dtab td{padding:12px 16px;border-bottom:1px solid rgb(var(--pale));font-family:'Sen',sans-serif;font-size:clamp(13px,1.35vw,15px);color:rgb(var(--muted));vertical-align:middle;}
+.dtab tr:last-child td{border-bottom:none;}
+.dtab td.hd{font-family:'Andada Pro',serif;font-size:clamp(15px,1.55vw,17px);color:rgb(var(--ink));white-space:nowrap;}
+.dtab td.num,.dtab td.r{font-family:'Geist Mono',monospace;color:rgb(var(--ink));white-space:nowrap;}
+.tblwrap{overflow-x:auto;}
+/* issue bars */
+.issue-card{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,30px);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.issue-row{display:grid;grid-template-columns:clamp(150px,22vw,220px) 1fr 44px;align-items:center;gap:14px;padding:7px 0;}
+.issue-lbl{font-family:'Sen',sans-serif;font-size:clamp(13px,1.35vw,15px);color:rgb(var(--ink));font-weight:700;}
+.issue-bar{height:15px;background:rgb(var(--pale) / 0.7);border-radius:3px;overflow:hidden;}
+.issue-fill{height:100%;background:rgb(var(--accent));border-radius:3px;}
+.issue-fill.cool{background:rgb(var(--cool));}
+.issue-val{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(14px,1.5vw,18px);color:rgb(var(--ink));text-align:right;}
+.issue-small{font-family:'Sen',sans-serif;font-size:clamp(12px,1.25vw,14px);color:rgb(var(--muted));margin-top:14px;line-height:1.5;}
+.eng-bars{padding:clamp(14px,1.8vw,20px);}
+.eng-bars .issue-row{padding:4px 0;}
+.eng-bars .issue-small{margin-top:10px;}
+.split-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,20px);margin-top:clamp(18px,2.6vh,26px);}
+@media(max-width:760px){.split-2{grid-template-columns:1fr;}}
+.note-box{margin-top:clamp(18px,2.4vh,24px);font-family:'Sen',sans-serif;font-size:clamp(13px,1.4vw,15.5px);color:rgb(var(--ink));line-height:1.6;padding:clamp(18px,2.4vw,26px);background:rgb(var(--accent) / 0.05);border:1px solid rgb(var(--accent) / 0.22);border-radius:var(--radius-lg);}
+.note-box .nl{display:block;font-family:'Sen',sans-serif;font-size:clamp(11px,1.15vw,12.5px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:8px;}
+.note-box strong{font-weight:700;}
+.note-box.cool{background:rgb(var(--cool) / 0.1);border-color:rgb(var(--cool) / 0.4);}
+.note-box.cool .nl{color:rgb(var(--muted));}
+/* multi-year story box */
+.mybox{background:rgb(var(--ink));border-radius:var(--radius-lg);padding:clamp(24px,3.2vw,40px);margin-top:clamp(20px,3vh,28px);box-shadow:0 14px 28px -14px rgb(var(--ink) / 0.3);position:relative;overflow:hidden;}
+.mybox-tag{font-family:'Sen',sans-serif;font-size:clamp(10px,1.1vw,12px);font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:14px;}
+.mybox-q{font-family:'Andada Pro',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.4;color:rgb(var(--paper));}
+.mybox-q::before{content:"\201C";color:rgb(var(--accent));}.mybox-q::after{content:"\201D";color:rgb(var(--accent));}
+.mybox-meta{font-family:'Sen',sans-serif;font-size:clamp(12px,1.3vw,14px);color:rgb(var(--paper) / 0.6);margin-top:16px;font-weight:700;letter-spacing:0.04em;}
+.mybox-out{font-family:'Sen',sans-serif;font-size:clamp(13px,1.4vw,15.5px);color:rgb(var(--paper) / 0.85);margin-top:14px;line-height:1.55;padding-top:14px;border-top:1px solid rgb(var(--paper) / 0.15);}
+.mybox-out strong{color:rgb(var(--paper));font-weight:700;}
+/* RESULTS before/after */
+.sv-panel{display:block;}
+.sv-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(14px,2vh,20px);}
+.sv-jump{display:inline-flex;align-items:center;gap:8px;font-family:'Sen',sans-serif;font-size:clamp(12.5px,1.3vw,14.5px);font-weight:700;text-decoration:none;color:rgb(var(--success));background:rgb(var(--success) / 0.08);border:1px solid rgb(var(--success) / 0.38);border-radius:100px;padding:9px 18px;cursor:pointer;transition:all .25s var(--ease);}
+.sv-jump:hover{background:rgb(var(--success) / 0.16);border-color:rgb(var(--success) / 0.65);}
+.sv-jump .sv-arrow{font-size:0.95em;line-height:1;}
+.sv-panel + .sv-panel{margin-top:clamp(28px,4.2vh,44px);padding-top:clamp(22px,3.2vh,32px);border-top:1px solid rgb(var(--pale));}
+.svrow{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(16px,2.2vw,22px) clamp(18px,2.5vw,26px);margin-bottom:12px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.svrow h4{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(15px,1.65vw,20px);color:rgb(var(--ink));margin-bottom:14px;line-height:1.35;}
+.dline{display:grid;grid-template-columns:1fr clamp(150px,22vw,250px);gap:clamp(16px,2.5vw,32px);align-items:center;}
+@media(max-width:640px){.dline{grid-template-columns:1fr;gap:10px;}}
+.dtrack{position:relative;height:22px;border-radius:7px;background:rgb(var(--pale) / 0.7);overflow:hidden;}
+.dtrack .bf-base{position:absolute;top:0;bottom:0;left:0;width:0;background:rgb(var(--cool) / 0.5);border-radius:7px 0 0 7px;transition:width .7s var(--ease);}
+.dtrack .bf-ext{position:absolute;top:0;bottom:0;width:0;background:rgb(var(--accent));border-radius:0 7px 7px 0;transition:width .8s var(--ease) .7s;}
+.dline.mgr .dtrack .bf-ext{background:rgb(var(--success));}
+.dv{font-family:'Geist Mono',monospace;font-size:clamp(13px,1.4vw,16px);color:rgb(var(--muted));text-align:right;white-space:nowrap;}
+.dv b{color:rgb(var(--ink));font-weight:500;}
+.dv .delta{color:rgb(var(--success));margin-left:9px;font-weight:500;}
+.usd{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);color:rgb(var(--cool));margin-top:9px;letter-spacing:0.02em;}
+.legend-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px;font-family:'Sen',sans-serif;font-size:clamp(12px,1.25vw,14px);color:rgb(var(--muted));}
+.legend-row .lg{display:flex;align-items:center;gap:8px;}
+.legend-row .sw{width:26px;height:10px;border-radius:3px;}
+/* category matrix */
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.8vw,18px);}
+@media(max-width:900px){.catgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.catgrid{grid-template-columns:1fr;}}
+.catg{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(18px,2.3vw,26px);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);position:relative;overflow:hidden;}
+.catg::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.catg.c-dem::before{background:rgb(var(--success));}.catg.c-sig::before{background:rgb(var(--cool));}
+.catg.c-mis::before{background:rgb(var(--accent));}.catg.c-bar::before{background:rgb(var(--warm-line));}
+.catg .cic{font-size:22px;line-height:1;}
+.catg .cv{font-family:'Geist Mono',monospace;font-size:clamp(26px,3.4vw,40px);font-weight:500;letter-spacing:-0.02em;line-height:1;color:rgb(var(--ink));margin-top:10px;}
+.catg h4{font-family:'Sen',sans-serif;font-weight:800;font-size:clamp(14px,1.55vw,17px);color:rgb(var(--ink));margin:10px 0 7px;}
+.catg p{font-family:'Sen',sans-serif;font-size:clamp(12.5px,1.3vw,14px);color:rgb(var(--muted));line-height:1.5;}
+.catg .cvsub{font-family:'Sen',sans-serif;font-size:clamp(11px,1.15vw,12.5px);color:rgb(var(--cool));font-weight:700;margin-top:3px;}
+/* quote / story cards */
+.qlist{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,18px);margin-top:clamp(10px,1.6vh,16px);}
+@media(max-width:760px){.qlist{grid-template-columns:1fr;}}
+.qcard{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-left:3px solid rgb(var(--accent));border-radius:var(--radius);padding:clamp(18px,2.2vw,24px);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.qcard.good{border-left-color:rgb(var(--success));}
+.qcard-quote{font-family:'Andada Pro',serif;font-style:italic;font-size:clamp(15px,1.55vw,18px);line-height:1.45;color:rgb(var(--ink));}
+.qcard-meta{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);color:rgb(var(--cool));margin-top:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
+.qcard-who{font-family:'Sen',sans-serif;font-size:clamp(12px,1.25vw,14px);color:rgb(var(--muted));margin-top:4px;font-weight:700;}
+.qcard-who span{font-weight:400;color:rgb(var(--cool));}
+.qcard-out{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);font-weight:700;color:rgb(var(--success));margin-top:10px;display:flex;align-items:flex-start;gap:6px;}
+.qcard-out::before{content:'\2192';color:rgb(var(--success));font-weight:700;}
+/* pattern rows */
+.prow{border:1px solid rgb(var(--pale));background:rgb(var(--surface));border-radius:var(--radius-lg);margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.phead{display:grid;grid-template-columns:1fr auto 28px;gap:16px;align-items:center;padding:15px 22px;cursor:pointer;transition:background .2s var(--ease);}
+.phead:hover{background:rgb(var(--pale) / 0.4);}
+.pnm{font-family:'Sen',sans-serif;font-size:clamp(14px,1.45vw,16px);color:rgb(var(--ink));font-weight:700;line-height:1.35;}
+.pct{font-family:'Geist Mono',monospace;font-size:clamp(12px,1.3vw,14px);color:rgb(var(--muted));text-align:right;white-space:nowrap;}
+.parr{color:rgb(var(--cool));font-size:14px;text-align:center;transition:transform .3s var(--ease);}
+.prow.open .parr{transform:rotate(180deg);}
+.pbody{display:none;padding:2px 22px 20px;border-top:1px dotted rgb(var(--warm-line));}
+.prow.open .pbody{display:block;animation:fadeIn .35s ease both;}
+.pq{font-family:'Andada Pro',serif;font-style:italic;font-size:clamp(14px,1.5vw,16.5px);color:rgb(var(--muted));border-left:2px solid rgb(var(--pale));padding-left:15px;margin:12px 0 6px;line-height:1.5;}
+.pvet{font-family:'Sen',sans-serif;font-size:clamp(12.5px,1.3vw,14.5px);color:rgb(var(--accent));margin-top:12px;line-height:1.5;}
+.pvet::before{content:"Question for Citizens \2014 ";font-weight:800;}
+/* synthesis / next */
+.syn-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,20px);}
+@media(max-width:900px){.syn-cards{grid-template-columns:1fr;}}
+.syn-tile{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.syn-num{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(22px,2.8vw,34px);line-height:1;color:rgb(var(--accent));letter-spacing:-0.02em;margin-bottom:14px;}
+.syn-tag{font-family:'Sen',sans-serif;font-size:clamp(11px,1.2vw,13px);font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgb(var(--muted));margin-bottom:12px;}
+.syn-title{font-family:'Andada Pro',serif;font-weight:500;font-size:clamp(18px,2.1vw,25px);line-height:1.2;letter-spacing:-0.015em;margin-bottom:14px;color:rgb(var(--ink));}
+.syn-body{font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,16.5px);color:rgb(var(--muted));line-height:1.55;flex:1;}
+.syn-body strong{color:rgb(var(--ink));font-weight:700;}
+.close-banner{background:rgb(var(--accent) / 0.05);border:1px solid rgb(var(--accent) / 0.22);border-radius:var(--radius-lg);padding:clamp(24px,3.4vw,38px) clamp(26px,3.6vw,44px);margin-top:clamp(22px,3vh,30px);}
+.close-banner-hed{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(19px,2.3vw,29px);line-height:1.25;letter-spacing:-0.015em;color:rgb(var(--ink));}
+.close-banner-hed .em{color:rgb(var(--accent));font-style:italic;}
+.close-banner-sub{font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,17px);color:rgb(var(--muted));line-height:1.6;margin-top:14px;}
+.close-banner-sub strong{color:rgb(var(--ink));font-weight:700;}
+.exsum{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-left:3px solid rgb(var(--accent));border-radius:var(--radius-lg);padding:clamp(20px,2.6vw,30px);max-width:1000px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.exsum p{font-family:'Sen',sans-serif;font-size:clamp(14px,1.5vw,17px);color:rgb(var(--muted));line-height:1.65;margin-bottom:12px;}
+.exsum p:last-child{margin-bottom:0;}
+.exsum strong{color:rgb(var(--ink));font-weight:700;}
+.stat-cell.big{padding:clamp(24px,3vw,36px);}
+.stat-cell.big .stat-num{font-size:clamp(46px,6.4vw,76px);}
+.stat-cell.big .stat-label{font-size:clamp(15px,1.75vw,21px);margin-top:14px;line-height:1.3;}
+.chg-big .stat-num{font-size:clamp(40px,5.4vw,64px);}
+.chg-big .stat-label{font-size:clamp(15px,1.7vw,20px);margin-top:12px;line-height:1.3;}
+.chg-big .stat-sub{font-size:clamp(13px,1.3vw,15px);margin-top:8px;}
+.mbwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,16px);margin-top:clamp(14px,2vh,20px);}
+@media(max-width:820px){.mbwrap{grid-template-columns:1fr;}}
+.mbcard{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);padding:clamp(18px,2.3vw,24px);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.05);}
+.mbcard.mis{border-left:3px solid rgb(var(--accent));}
+.mbcard.bar{border-left:3px solid rgb(var(--cool));}
+.mbcard .mbhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.mbcard .mbn{font-family:'Sen',sans-serif;font-weight:700;font-size:clamp(14px,1.45vw,16px);color:rgb(var(--ink));line-height:1.35;}
+.mbcard .mbc{font-family:'Geist Mono',monospace;font-weight:500;font-size:clamp(15px,1.6vw,19px);white-space:nowrap;}
+.mbcard.mis .mbc{color:rgb(var(--accent));}
+.mbcard.bar .mbc{color:rgb(var(--muted));}
+.mbcard .mbq{font-family:'Andada Pro',serif;font-style:italic;font-size:clamp(13.5px,1.4vw,15.5px);color:rgb(var(--muted));line-height:1.45;}
+.mbcard .mbunit{font-size:0.6em;color:rgb(var(--cool));}
+.hitlist{list-style:none;margin:0;padding:0;}
+.hitlist li{position:relative;padding:9px 0 9px 28px;border-bottom:1px solid rgb(var(--pale));font-family:'Sen',sans-serif;font-size:clamp(13.5px,1.4vw,15.5px);color:rgb(var(--muted));line-height:1.5;}
+.hitlist li:last-child{border-bottom:none;}
+.hitlist li::before{content:'';position:absolute;left:0;top:16px;width:14px;height:2px;border-radius:1px;background:rgb(var(--accent));}
+.hitlist.keep li::before{background:rgb(var(--success));}
+.hitlist li strong{color:rgb(var(--ink));font-weight:700;}
+::-webkit-scrollbar{width:9px;height:9px;}::-webkit-scrollbar-track{background:rgb(var(--paper));}
+::-webkit-scrollbar-thumb{background:rgb(var(--warm-line));border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:rgb(var(--cool));}
+
+/* --- Change tab: grouped claims --- */
+.claims{display:grid;grid-template-columns:2fr 1fr;gap:clamp(16px,2.4vw,28px);align-items:start;}
+.claim-h{font-family:'Sen',sans-serif;font-size:clamp(11px,1.15vw,12.5px);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgb(var(--muted));padding-bottom:9px;margin-bottom:clamp(12px,1.6vh,16px);border-bottom:1px solid rgb(var(--warm-line));}
+.claim-h.m{color:rgb(var(--success));border-bottom-color:rgb(var(--success) / 0.4);}
+.claim-cells{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);}
+.claim-cells.one{grid-template-columns:1fr;}
+.stat-tag{display:inline-block;margin-top:12px;font-family:'Geist Mono',monospace;font-size:clamp(10.5px,1.1vw,12px);letter-spacing:.2px;color:rgb(var(--muted));background:rgb(var(--cool) / 0.13);border:1px solid rgb(var(--cool) / 0.35);border-radius:6px;padding:6px 11px;}
+@media(max-width:900px){.claims{grid-template-columns:1fr;}.claim-cells{grid-template-columns:1fr 1fr;}}
+
+/* --- Challenge chevrons --- */
+.km-grid.flow{grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;}
+.km-chev{display:flex;align-items:center;justify-content:center;color:rgb(var(--warm-line));font-size:clamp(20px,2.4vw,28px);line-height:1;padding:0 clamp(2px,0.6vw,8px);}
+@media(max-width:900px){.km-grid.flow{grid-template-columns:1fr;}.km-chev{transform:rotate(90deg);padding:2px 0;}}
+
+/* --- per-FM table --- */
+.pband{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(20px,3vw,40px);margin:clamp(18px,2.6vh,26px) 0 clamp(16px,2.2vh,22px);}
+.pbh{font-family:'Andada Pro',serif;font-weight:400;font-size:clamp(19px,2.2vw,26px);line-height:1.16;letter-spacing:-0.015em;margin-bottom:4px;}
+.pbh.self{color:rgb(var(--accent));}
+.pbh.mgr{color:rgb(var(--success));}
+.pbs{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);color:rgb(var(--cool));margin-bottom:13px;}
+.pchips{display:flex;flex-wrap:wrap;gap:7px;}
+.ppill{display:inline-block;font-family:'Sen',sans-serif;font-size:clamp(10.5px,1.1vw,11.5px);font-weight:700;letter-spacing:.2px;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+.ppill.self{color:rgb(var(--accent));background:rgb(var(--accent) / 0.07);border:1px solid rgb(var(--accent) / 0.32);}
+.ppill.mgr{color:rgb(var(--success));background:rgb(var(--success) / 0.08);border:1px solid rgb(var(--success) / 0.36);}
+.pchips .ppill[data-q]{position:relative;cursor:help;}
+.pchips .ppill[data-q]:hover{border-color:rgb(var(--ink) / 0.45);}
+.pchips .ppill[data-q]:hover::after{content:attr(data-q);position:absolute;top:calc(100% + 9px);left:0;width:min(380px,68vw);white-space:normal;font-family:'Sen',sans-serif;font-size:12.5px;font-weight:400;line-height:1.5;letter-spacing:0;color:rgb(var(--paper));background:rgb(var(--ink));padding:11px 14px;border-radius:var(--radius);box-shadow:0 8px 24px rgb(0 0 0 / 0.18);z-index:70;}
+.pchips .ppill[data-q]:hover::before{content:'';position:absolute;top:calc(100% + 3px);left:18px;border:6px solid transparent;border-bottom-color:rgb(var(--ink));z-index:71;}
+.plegend{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:12px;font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);color:rgb(var(--muted));}
+.plg{display:flex;align-items:center;gap:6px;}
+.psw{width:22px;height:13px;border-radius:4px;border:1px solid rgb(var(--pale));}
+.phint{margin-left:auto;font-size:12px;color:rgb(var(--cool));font-style:italic;}
+.ptbox{background:rgb(var(--surface));border:1px solid rgb(var(--pale));border-radius:var(--radius-lg);overflow:auto;max-height:70vh;}
+#pertab{border-collapse:separate;border-spacing:0;width:100%;}
+#pertab thead th{position:sticky;top:0;z-index:3;background:rgb(var(--surface));font-family:'Sen',sans-serif;font-size:clamp(10.5px,1.1vw,11.5px);font-weight:700;color:rgb(var(--muted));padding:14px 12px 13px;text-align:left;vertical-align:bottom;border-bottom:1px solid rgb(var(--warm-line));line-height:1.3;}
+#pertab thead th.psort{cursor:pointer;user-select:none;transition:color .18s;}
+#pertab thead th.psort:hover{color:rgb(var(--ink));}
+#pertab thead th .par{opacity:.28;margin-left:5px;font-size:9px;}
+#pertab thead th.psort.on{color:rgb(var(--ink));}
+#pertab thead th.psort.on .par{opacity:1;color:rgb(var(--accent));}
+#pertab thead th .pu{display:block;font-weight:400;color:rgb(var(--cool));font-size:10px;}
+#pertab th.pavg{text-align:center;width:118px;}
+#pertab th.parea{min-width:240px;}
+#pertab th.pstub{min-width:196px;left:0;z-index:4;}
+#pertab th.pstub2{min-width:150px;}
+#pertab th.pnself{background:rgb(var(--accent) / 0.05);}
+#pertab th.pnmgr{background:rgb(var(--success) / 0.05);}
+#pertab tbody th.pwho{position:sticky;left:0;z-index:2;background:rgb(var(--surface));text-align:left;padding:12px 16px 12px 20px;border-bottom:1px solid rgb(var(--pale));border-right:1px solid rgb(var(--pale));font-family:'Andada Pro',serif;font-size:clamp(14.5px,1.5vw,16.5px);font-weight:600;color:rgb(var(--ink));white-space:nowrap;}
+#pertab td{border-bottom:1px solid rgb(var(--pale));padding:12px;}
+#pertab td.pmgr{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,12.5px);color:rgb(var(--muted));white-space:nowrap;padding-left:16px;border-right:1px solid rgb(var(--pale));}
+#pertab td.pn{text-align:center;font-family:'Geist Mono',monospace;font-size:clamp(13px,1.35vw,14.5px);font-weight:500;color:rgb(var(--ink));}
+#pertab td.pn .pcs{font-size:.72em;opacity:.6;}
+#pertab td.pn.self.t1{background:rgb(var(--accent) / 0.07);}#pertab td.pn.self.t2{background:rgb(var(--accent) / 0.15);}
+#pertab td.pn.self.t3{background:rgb(var(--accent) / 0.26);}#pertab td.pn.self.t4{background:rgb(var(--accent) / 0.38);}
+#pertab td.pn.mgr.t1{background:rgb(var(--success) / 0.08);}#pertab td.pn.mgr.t2{background:rgb(var(--success) / 0.17);}
+#pertab td.pn.mgr.t3{background:rgb(var(--success) / 0.28);}#pertab td.pn.mgr.t4{background:rgb(var(--success) / 0.42);}
+#pertab td.pn.flat,#pertab td.pn.down{color:rgb(var(--cool));}
+#pertab td.pn.down{font-size:16px;}
+#pertab td.pn.pna{background:rgb(var(--cool) / 0.09);}
+#pertab td.pt-c.none{background:rgb(var(--cool) / 0.09);}
+#pertab td.pt-c .pnote{display:block;font-family:'Sen',sans-serif;font-size:clamp(10.5px,1.1vw,11.5px);color:rgb(var(--cool));font-style:italic;margin-top:4px;}
+#pertab td.pt-c.none .pnote{margin-top:0;color:rgb(var(--muted));}
+#pertab td.pgap,#pertab th.pgap{width:15px;padding:0;background:rgb(var(--paper));}
+#pertab th.pgap{border-bottom:1px solid rgb(var(--warm-line));}
+#pertab tbody tr:hover th.pwho,#pertab tbody tr:hover td{background-image:linear-gradient(rgb(var(--ink) / 0.03),rgb(var(--ink) / 0.03));}
+.pfoot{margin-top:16px;font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);color:rgb(var(--muted));line-height:1.6;max-width:100ch;}
+.pfoot strong{color:rgb(var(--ink));font-weight:700;}
+
+/* --- round 4 --- */
+.km-head{font-family:'Andada Pro',serif;font-weight:600;font-size:clamp(19px,2.25vw,27px);line-height:1.15;letter-spacing:-0.015em;color:rgb(var(--ink));margin:10px 0 8px;}
+.claim-h{font-size:clamp(14px,1.6vw,18px);letter-spacing:1.1px;color:rgb(var(--ink));padding-bottom:11px;margin-bottom:clamp(14px,1.9vh,18px);}
+.claim-h.m{color:rgb(var(--success));}
+.stat-tag{background:none;border:none;border-radius:0;padding:0;margin-top:10px;color:rgb(var(--cool));font-size:clamp(11px,1.15vw,12.5px);}
+.prac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.8vw,18px);margin-top:clamp(10px,1.6vh,16px);}
+@media(max-width:900px){.prac-grid{grid-template-columns:1fr;}}
+.prac-grid .qcard-tier{font-family:'Sen',sans-serif;font-size:clamp(10px,1.05vw,11.5px);font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgb(var(--accent));margin-bottom:12px;}
+
+/* --- round 5 --- */
+.frame.open-below{min-height:auto;justify-content:flex-start;padding-bottom:clamp(18px,2.4vh,30px);}
+.qcard-act{font-family:'Sen',sans-serif;font-size:clamp(11.5px,1.2vw,13px);font-weight:700;color:rgb(var(--ink));margin-bottom:12px;padding-bottom:11px;border-bottom:1px solid rgb(var(--pale));line-height:1.45;}
+.qcard-act span{display:block;font-weight:400;color:rgb(var(--cool));margin-top:3px;}
+.mybox-next{margin-top:clamp(20px,2.8vh,28px);padding-top:clamp(18px,2.4vh,24px);border-top:1px solid rgb(var(--paper) / 0.15);}
+.mybox-next-lbl{font-family:'Sen',sans-serif;font-size:clamp(10px,1.1vw,12px);font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgb(var(--success));margin-bottom:12px;}
+.mybox-q2{font-family:'Andada Pro',serif;font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,34px);line-height:1.35;color:rgb(var(--paper));}
+.mybox-q2::before{content:"\201C";color:rgb(var(--success));}.mybox-q2::after{content:"\201D";color:rgb(var(--success));}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <svg class="flint-logo" role="img" aria-label="Flint" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572.59 273.23"><g><path fill="#f99c24" d="M309.75,83.46c10.23-10.99,57.07-55.33,118.25-74.43,66.69-20.84,150.35-7.71,144.27,61.42-.24,2.77-.52,3.44-.69-.13-1.26-23.91-21.56-72.76-130.21-52.61-37.43,6.94-69.25,21.61-131.33,66.32-.78,.58-1.64,.89-.29-.57"/><path fill="#316195" d="M564.28,106.42c0-2.98-2.43-5.41-5.4-5.41h-132.48c-2.52,.07-4.6,1.85-5.14,4.2v.02s-3.94,18.4-3.94,18.4c-.12,.45-.21,.92-.21,1.42,0,2.98,2.41,5.4,5.4,5.4,.09,0,.18-.02,.27-.02l49.29,.02-29.45,136.07h0c-.1,.42-.17,.86-.17,1.31,0,2.98,2.42,5.4,5.4,5.4h20.66c2.71,0,4.94-2.01,5.31-4.63h.03s29.9-138.15,29.9-138.15h51.21c2.88,0,5.19-2.23,5.38-5.05l3.73-17.59c.12-.45,.2-.89,.2-1.38"/><path fill="#316195" d="M440.55,160.22c0-3-2.42-5.41-5.39-5.41h-20.44c-2.56,0-4.7,1.79-5.25,4.21l-12.29,57.24-46.05-111.81c-.12-.28-.25-.55-.42-.8l-.06-.14c-.97-1.49-2.63-2.49-4.55-2.49h-20.68c-2.42,0-4.46,1.62-5.14,3.83-.02,0-35.08,161.68-35.08,161.68v.02c-.1,.41-.17,.84-.17,1.29,0,2.98,2.42,5.4,5.41,5.4h20.64c2.65,0,4.85-1.93,5.29-4.44,.02-.07,23.62-108.1,23.62-108.1,0,0,46.19,108.56,46.46,108.99,.9,1.99,2.74,3.55,5.05,3.55h20.65c2.72,0,4.93-2.01,5.33-4.63l22.83-106.89c.13-.48,.23-.97,.23-1.48"/><path fill="#316195" d="M207.79,248.85c0-3.03-2.45-5.47-5.46-5.47h-51.65s29.92-135.84,29.92-135.87c.07-.37,.13-.77,.13-1.2,0-2.86-2.22-5.2-5.06-5.41-.01,0-.03-.04-.03-.04h-21.1c-2.57,.06-4.64,1.87-5.2,4.25h-.02s-35.4,161.23-35.4,161.23h.01c-.09,.44-.18,.88-.18,1.32,0,3.02,2.46,5.45,5.48,5.45h79.15c2.77,0,5.05-2.07,5.37-4.76,.03,0,3.96-18.72,3.96-18.72,.04-.27,.09-.53,.09-.79"/><path fill="#316195" d="M278.57,154.57h-20.42c-2.57,0-4.72,1.79-5.27,4.2l-23.96,107.64,.02,.02c-.12,.4-.18,.84-.18,1.29,0,2.99,2.42,5.4,5.4,5.4h20.65c2.72,0,4.94-2.01,5.32-4.62,0,0,23.84-108,23.84-108.52,0-3-2.43-5.41-5.4-5.41"/><path fill="#f99c24" d="M295.36,106.42c0-2.85-2.21-5.15-5-5.36-.01,0-.04-.04-.04-.04h-20.91c-2.5,.07-4.58,1.85-5.14,4.2v.02l-3.92,18.4c-.12,.45-.22,.92-.22,1.42,0,2.98,2.42,5.4,5.41,5.4,.1,0,.18-.02,.28-.02h0s20.18,.02,20.18,.02c2.64,0,4.83-1.88,5.3-4.39,0,0,3.91-18.44,3.91-18.47,.09-.37,.14-.77,.14-1.18"/><path fill="#316195" d="M118.69,100.92h.4c2.98,0,5.4,2.42,5.4,5.4,0,.46-.05,.86-.17,1.29l-3.88,17.95c-.32,2.68-2.57,4.77-5.35,4.77H61.62l-5.62,24.24,34.18,.03s.26-.03,.4-.03c2.97,0,5.39,2.42,5.39,5.41,0,.24,.31-.38,.28-.13l-.35,.87v.11c-.05,.18-3.71,17.62-3.71,17.62l-.02,.03c-.4,2.57-2.62,4.55-5.31,4.55l-36.83,.09-18.66,85.48c-.44,2.54-2.65,4.48-5.31,4.48H5.16c-2.87-.15-5.16-2.51-5.16-5.4,0-.24,.05-.45,.07-.68L34.96,105.59l.02-.02c.38-2.63,2.61-4.65,5.33-4.65H118.69Z"/></g></svg>
+  <div class="nav-brand">Citizens &middot; Fresh Eyes &middot; Pilot Final Report</div>
+  <div class="nav-sep"></div>
+  <div class="nav-dots" id="nD"></div>
+  <div class="nav-label" id="nL">Overview</div>
+  <div class="nav-arrows"><div class="na" onclick="prev()">&#8592;</div><div class="na" onclick="next()">&#8594;</div></div>
+</div>
+
+<!-- P1 OVERVIEW -->
+<div class="page active" data-label="Overview" data-tab="Overview">
+<div class="cover-frame">
+  <div class="cover-rule anim d1"></div>
+  <div class="cover-eyebrow anim d1">Facilities Services Excellence &middot; Fresh Eyes &middot; Pilot Final Report</div>
+  <h1 class="cover-title anim d2">Helping FMs see their branches <span class="accent">like a customer.</span></h1>
+  <p class="cover-deck anim d3">The pilot gave FMs on-the-job activities to help them avoid repeat blindness and see their branches the way a customer would. The goal was to watch the behavior start to shift. For the FMs doing it, <strong>it's starting to work.</strong></p>
+  <div class="ey anim d4" style="margin-top:clamp(10px,1.8vh,22px);margin-bottom:clamp(6px,0.9vh,10px);color:rgb(var(--muted))"><span class="ey-dot"></span>Over ten weeks, here's what they did</div>
+  <div class="cover-stats anim d4">
+    <div class="cstat"><div class="cstat-num">43</div><div class="cstat-label">FMs active in the field</div></div>
+    <div class="cstat"><div class="cstat-num">286</div><div class="cstat-label">branch visits, every one read</div></div>
+    <div class="cstat"><div class="cstat-num">231</div><div class="cstat-label">findings logged in 360</div></div>
+    <div class="cstat"><div class="cstat-num">+27<span style="font-size:0.5em">%</span></div><div class="cstat-label">Largest area of behavior change<br><span style="font-weight:400;color:rgb(var(--cool))">walking a branch with a customer's judgment</span></div></div>
+  </div>
+  <div class="exsum anim d5" style="margin-top:clamp(14px,2.2vh,26px)">
+    <p>43 FMs walked their branches as first-time customers and logged what they found &mdash; <strong>231 findings and work orders</strong> in 360, and <strong>81 recurring issues</strong> moved forward. Both they and their managers report the habit is forming.</p>
+  </div>
+  <div class="cover-meta anim d6">
+    <div><strong>Prepared by FLiNT Learning Solutions</strong> &middot; August 2026</div>
+    <div>Pilot period &middot; May 5 &ndash; July 17, 2026</div>
+  </div>
+</div>
+</div>
+
+<!-- P2 CHALLENGE -->
+<div class="page" data-label="The challenge" data-tab="Challenge">
+<div class="frame">
+  <div class="ey anim d1"><span class="ey-dot"></span>The challenge</div>
+  <h2 class="pt anim d2">Familiarity leads to <span class="em">repeat blindness.</span></h2>
+  <p class="ps anim d3">Covering 40&ndash;60 branches each, FMs stop noticing what a first-time customer sees. Quality issues go undocumented, recur, and get patched rather than fixed &mdash; while leadership sees only what QC and work orders surface.</p>
+  <p class="ps anim d4" style="font-size:clamp(14px,1.5vw,17px);margin-bottom:clamp(14px,2vh,20px)">Fresh Eyes gave FMs on-the-job activities to help them see every branch through a customer's eyes again. <strong>Three practices</strong>, each one a specific behavior an FM practices on a real visit:</p>
+  <div class="km-grid flow anim d5">
+    <div class="km-card"><div class="km-tier">Practice 1 &middot; Basic</div><div class="km-head">Walk with fresh eyes</div><div class="km-name">Approach a branch like a first-time customer and document what you find in 360.</div></div>
+    <div class="km-chev">&#8594;</div>
+    <div class="km-card"><div class="km-tier">Practice 2 &middot; Intermediate</div><div class="km-head">Catch the recurring issue</div><div class="km-name">Find a chronic problem, name why it persists, and log an action step with an owner.</div></div>
+    <div class="km-chev">&#8594;</div>
+    <div class="km-card"><div class="km-tier">Practice 3 &middot; Advanced</div><div class="km-head">Audit from the customer's view</div><div class="km-name">Walk the full customer path, rank by impact, and take the top item forward.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- P3 ENGAGEMENT -->
+<div class="page" data-label="Engagement" data-tab="Engagement">
+<div class="frame">
+  <div class="ey anim d1"><span class="ey-dot"></span>Engagement</div>
+  <h2 class="pt anim d2">43 FMs stayed with it <span class="em">across ten weeks.</span></h2>
+  <p class="ps anim d3">Consistent engagement is what we watch, and it held &mdash; a steady six to seven branch visits per FM.</p>
+  <div class="eng-grid anim d4">
+    <div class="eng-headline-card"><div class="eng-headline-num">286</div><div class="eng-headline-lbl">Branch visits completed</div><div class="eng-headline-sub">Each a real visit, by 43 active FMs over ten weeks.</div></div>
+    <div class="stat-cell"><div class="stat-num accent">6.7</div><div class="stat-label">Branch visits per FM</div><div class="stat-sub">Steady across the pilot, all four roles engaged.</div></div>
+    <div class="stat-cell"><div class="stat-num">43</div><div class="stat-label">FMs active in the field</div><div class="stat-sub">Nearly the whole group took part.</div></div>
+  </div>
+  <div class="split-2 anim d5" style="margin-top:clamp(16px,2.4vh,24px)">
+    <div>
+      <div class="detail-label" style="margin-bottom:6px">Participation by role</div>
+      <div class="issue-small" style="margin-top:0;margin-bottom:12px">Branch visits per person, across the four field roles &mdash; a similar pace everywhere, Leads the most.</div>
+      <div class="tblwrap"><table class="dtab">
+        <tr><th>Role</th><th class="r">People</th><th class="r">Visits</th><th class="r">Per person</th></tr>
+        <tr><td class="hd">Facility Manager</td><td class="r">28</td><td class="r">179</td><td class="r">6.4</td></tr>
+        <tr><td class="hd">Senior Facility Manager</td><td class="r">7</td><td class="r">47</td><td class="r">6.7</td></tr>
+        <tr><td class="hd">Facilities Manager Lead</td><td class="r">5</td><td class="r">44</td><td class="r">8.8</td></tr>
+        <tr><td class="hd">Landscape Manager</td><td class="r">3</td><td class="r">20</td><td class="r">6.7</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <div class="detail-label" style="margin-bottom:6px">Visits over time</div>
+      <div class="issue-small" style="margin-top:0;margin-bottom:12px">Branch visits completed per week.</div>
+      <div class="issue-card eng-bars">
+        <div class="issue-row"><div class="issue-lbl">Wk of May 5</div><div class="issue-bar"><div class="issue-fill cool" style="width:41%"></div></div><div class="issue-val">20</div></div>
+        <div class="issue-row"><div class="issue-lbl">May 12</div><div class="issue-bar"><div class="issue-fill cool" style="width:53%"></div></div><div class="issue-val">26</div></div>
+        <div class="issue-row"><div class="issue-lbl">May 19</div><div class="issue-bar"><div class="issue-fill" style="width:82%"></div></div><div class="issue-val">40</div></div>
+        <div class="issue-row"><div class="issue-lbl">May 26</div><div class="issue-bar"><div class="issue-fill cool" style="width:53%"></div></div><div class="issue-val">26</div></div>
+        <div class="issue-row"><div class="issue-lbl">Jun 2</div><div class="issue-bar"><div class="issue-fill" style="width:78%"></div></div><div class="issue-val">38</div></div>
+        <div class="issue-row"><div class="issue-lbl">Jun 9</div><div class="issue-bar"><div class="issue-fill" style="width:90%"></div></div><div class="issue-val">44</div></div>
+        <div class="issue-row"><div class="issue-lbl">Jun 16</div><div class="issue-bar"><div class="issue-fill cool" style="width:47%"></div></div><div class="issue-val">23</div></div>
+        <div class="issue-row"><div class="issue-lbl">Jun 23</div><div class="issue-bar"><div class="issue-fill cool" style="width:49%"></div></div><div class="issue-val">24</div></div>
+        <div class="issue-row"><div class="issue-lbl">Jun 30 &ndash; Jul 17</div><div class="issue-bar"><div class="issue-fill" style="width:100%"></div></div><div class="issue-val">49</div></div>
+        <p class="issue-small">The final bar spans the two-and-a-half-week tail as FMs finished up.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- P4 FINDINGS -->
+<div class="page" data-label="What your FMs are finding" data-tab="Findings">
+<div class="frame open-below">
+  <div class="ey anim d1"><span class="ey-dot"></span>What your FMs are finding</div>
+  <h2 class="pt anim d2">A live read on your branches, <span class="em">visit by visit.</span></h2>
+  <p class="ps anim d3">Across 286 visits, FMs surfaced what's actually happening in the field &mdash; and <strong>logged 231 of it in 360</strong>.</p>
+  <div class="grid-3 anim d4">
+    <div class="stat-cell big"><div class="stat-num accent">231</div><div class="stat-label">Findings and work orders logged in 360</div></div>
+    <div class="stat-cell big"><div class="stat-num accent">81</div><div class="stat-label">Recurring issues moved forward</div></div>
+    <div class="stat-cell big"><div class="stat-num cool">62</div><div class="stat-label">Fixes stalled on vendors or landlords</div></div>
+  </div>
+</div>
+<div class="detail open" id="det4">
+  <div class="det-section-sub">The pattern</div>
+  <div class="det-section-hed" style="margin-bottom:10px">What they're finding, and what stops the fix.</div>
+  <p class="det-lead">The primary issue named on each visit, and the reason a finding can't be closed.</p>
+  <div class="split-2" style="margin-top:0">
+    <div class="issue-card">
+      <div class="detail-label" style="margin-bottom:6px">What FMs find, by category</div>
+      <div class="issue-small" style="margin-top:0;margin-bottom:14px">Primary issue named across the 286 visits.</div>
+      <div class="issue-row"><div class="issue-lbl">Cleaning &amp; janitorial</div><div class="issue-bar"><div class="issue-fill" style="width:100%"></div></div><div class="issue-val">66</div></div>
+      <div class="issue-row"><div class="issue-lbl">Landscaping &amp; grounds</div><div class="issue-bar"><div class="issue-fill" style="width:58%"></div></div><div class="issue-val">38</div></div>
+      <div class="issue-row"><div class="issue-lbl">Paint, walls &amp; cosmetic</div><div class="issue-bar"><div class="issue-fill" style="width:50%"></div></div><div class="issue-val">33</div></div>
+      <div class="issue-row"><div class="issue-lbl">Parking lot &amp; hardscape</div><div class="issue-bar"><div class="issue-fill" style="width:45%"></div></div><div class="issue-val">30</div></div>
+      <div class="issue-row"><div class="issue-lbl">Doors &amp; hardware</div><div class="issue-bar"><div class="issue-fill" style="width:38%"></div></div><div class="issue-val">25</div></div>
+      <div class="issue-row"><div class="issue-lbl">Ceiling, roof &amp; leaks</div><div class="issue-bar"><div class="issue-fill" style="width:30%"></div></div><div class="issue-val">20</div></div>
+      <p class="issue-small">Smaller buckets: furniture &amp; fixtures 13 &middot; lighting 10 &middot; HVAC 9 &middot; electrical/safety 9 &middot; signage 7 &middot; pest 6 &middot; plumbing 4.</p>
+    </div>
+    <div class="issue-card">
+      <div class="detail-label" style="margin-bottom:6px">What most often stalls a fix</div>
+      <div class="issue-small" style="margin-top:0;margin-bottom:14px">The reason a finding can't be closed &mdash; it cuts across every category.</div>
+      <div class="issue-row"><div class="issue-lbl">Vendor / contractor gap</div><div class="issue-bar"><div class="issue-fill cool" style="width:100%"></div></div><div class="issue-val">48</div></div>
+      <div class="issue-row"><div class="issue-lbl">Standards / process gap</div><div class="issue-bar"><div class="issue-fill cool" style="width:38%"></div></div><div class="issue-val">18</div></div>
+      <div class="issue-row"><div class="issue-lbl">Scheduling</div><div class="issue-bar"><div class="issue-fill cool" style="width:35%"></div></div><div class="issue-val">17</div></div>
+      <div class="issue-row"><div class="issue-lbl">Landlord-owned issue</div><div class="issue-bar"><div class="issue-fill cool" style="width:29%"></div></div><div class="issue-val">14</div></div>
+      <div class="issue-row"><div class="issue-lbl">Deferred maintenance</div><div class="issue-bar"><div class="issue-fill cool" style="width:27%"></div></div><div class="issue-val">13</div></div>
+      <p class="issue-small">Vendor and landlord together account for <strong>62</strong> stalled fixes &mdash; the dependency the program can help you hold accountable next.</p>
+    </div>
+  </div>
+
+  <div class="det-section-divider"><div class="det-section-sub">The estate, by team</div><div class="det-section-hed">The issue mix shifts across the 12 SFM teams.</div></div>
+  <p class="det-lead">The work is spread across all twelve Senior FM teams. Most see cleaning and cosmetics first; a couple &mdash; where the branches skew that way &mdash; find landscaping and grounds leading. A read no single inspection gives you.</p>
+  <div class="tblwrap"><table class="dtab" style="max-width:1100px">
+    <tr><th>Senior FM team</th><th class="r">Visits</th><th class="r">Logged in 360</th><th>Top issue types found</th></tr>
+    <tr><td class="hd">Shawn Evans</td><td class="r">45</td><td class="r">38</td><td>Cleaning &middot; Paint &amp; cosmetic</td></tr>
+    <tr><td class="hd">Sean Conroy</td><td class="r">44</td><td class="r">35</td><td>Cleaning &middot; Ceiling, roof &amp; leaks</td></tr>
+    <tr><td class="hd">Eric Kaechelin</td><td class="r">35</td><td class="r">29</td><td>Paint &amp; cosmetic &middot; Cleaning</td></tr>
+    <tr><td class="hd">John Scaglia</td><td class="r">32</td><td class="r">28</td><td>Cleaning &middot; Doors &amp; hardware</td></tr>
+    <tr><td class="hd">Timothy Butvilas</td><td class="r">26</td><td class="r">21</td><td>Cleaning &middot; Parking &amp; hardscape</td></tr>
+    <tr><td class="hd">Brian Hawtin</td><td class="r">20</td><td class="r">6</td><td>Landscaping &amp; grounds &middot; Parking</td></tr>
+    <tr><td class="hd">John Conti</td><td class="r">18</td><td class="r">13</td><td>Cleaning &middot; Furniture &amp; fixtures</td></tr>
+    <tr><td class="hd">Juan Jorge</td><td class="r">17</td><td class="r">17</td><td>Cleaning &middot; Doors &amp; hardware</td></tr>
+    <tr><td class="hd">Jessica Ann Kamer</td><td class="r">15</td><td class="r">13</td><td>Landscaping &amp; grounds &middot; Cleaning</td></tr>
+    <tr><td class="hd">Maria Kingsley</td><td class="r">14</td><td class="r">13</td><td>Parking &amp; hardscape &middot; Signage</td></tr>
+    <tr><td class="hd">Anna Mann</td><td class="r">11</td><td class="r">10</td><td>Cleaning &middot; Furniture &amp; fixtures</td></tr>
+    <tr><td class="hd">Jillian K Caillouette</td><td class="r">6</td><td class="r">5</td><td>Cleaning &middot; Pest</td></tr>
+  </table></div>
+
+
+  <div class="det-section-divider"><div class="det-section-sub">The practices in the field</div><div class="det-section-hed">One example of each practice, in the FM's own words.</div></div>
+  <p class="det-lead">Three practices, three FMs, three real visits &mdash; taken from the coaching conversations as they happened.</p>
+  <div class="prac-grid">
+    <div class="qcard">
+      <div class="qcard-tier">Practice 1 &middot; Walk with fresh eyes</div>
+      <div class="qcard-act">The activity: Focus on One Zone<span>Pick a single zone and walk it the way a first-time customer would.</span></div>
+      <div class="qcard-quote">I did not catch it on the way in, but on the way out I noticed the cover was off of the electric heater. I replaced the cover onto the heater and entered a work order to reflect the work done.</div>
+      <div class="qcard-meta">Newly refurbished branch &middot; June 3</div>
+      <div class="qcard-who">Alexander Maxwell <span>&middot; Facility Manager</span></div>
+      <div class="qcard-out">The second look caught what the first walk missed &mdash; an exposed heater, fixed and logged before he left</div>
+    </div>
+    <div class="qcard">
+      <div class="qcard-tier">Practice 2 &middot; Catch the recurring issue</div>
+      <div class="qcard-act">The activity: Catch the Repetitive Issue<span>Find an issue that keeps coming back, name why it persists, and log an action step with an owner.</span></div>
+      <div class="qcard-quote">I realized the photocell has a metal piece that slid down and covered the eye. I was able to use a pole to push metal up and lights went off.</div>
+      <div class="qcard-meta">Exterior lights running in daylight &middot; June 11</div>
+      <div class="qcard-who">William Strobele <span>&middot; Facility Manager</span></div>
+      <div class="qcard-out">Traced a repeat problem to its cause and cleared it on site &mdash; no vendor, no work order queue</div>
+    </div>
+    <div class="qcard">
+      <div class="qcard-tier">Practice 3 &middot; Audit from the customer's view</div>
+      <div class="qcard-act">The activity: Complete Customer-Eye Audit<span>Walk the full customer path, rank findings by customer impact, and act on the top one before leaving.</span></div>
+      <div class="qcard-quote">I opened a work order and contacted my janitorial tech, however he was on PTO. I then called his back up tech who was in the area and they are on they way now to do a deep cleaning.</div>
+      <div class="qcard-meta">Customer-visible finding &middot; June 24</div>
+      <div class="qcard-who">James Wright <span>&middot; Facilities Manager Lead</span></div>
+      <div class="qcard-out">Did not log it and leave &mdash; got someone physically on the way before walking out</div>
+    </div>
+  </div>
+  <div class="det-section-divider"><div class="det-section-sub">A standout story</div><div class="det-section-hed">A chronic problem, moving to solution.</div></div>
+  <p class="det-lead">Grove City had a roof leak over its ATM that had been coming back for years. Here is how that visit went, in the FM's own words.</p>
+  <div class="mybox">
+    <div class="mybox-tag">Grove City, PA &middot; June 18 &middot; ATM canopy roof leak</div>
+    <div class="mybox-q">The only thing that is reoccurring is a roof leak in the canopy above our ATM&hellip; It has reoccurred because the building is very old and nothing has been done with this roof [in] probably over 10 or 15 years.</div>
+    <div class="mybox-meta">Mark Marterella &middot; Facility Manager &middot; activity: Spot the Pattern Before You Walk In</div>
+    <div class="mybox-next">
+      <div class="mybox-next-lbl">What he did about it</div>
+      <div class="mybox-q2">I have already reached out to and issued a work order to our general contractor to have this roof evaluated and repaired to stop the roof leak.</div>
+    </div>
+    <div class="mybox-out"><strong>The result:</strong> on site he confirmed the hypothesis &mdash; a drying, shrinking rubber membrane and compromised seams. The general contractor is now writing the evaluation and repair proposal. A leak above a customer-facing ATM, routed to its cause after 10 to 15 years of patching.</div>
+  </div>
+</div>
+</div>
+
+<!-- P5 THE CHANGE -->
+<div class="page" data-label="The change" data-tab="The change">
+<div class="frame open-below">
+  <div class="ey anim d1"><span class="ey-dot"></span>The change</div>
+  <h2 class="pt anim d2">FMs and their managers both report <span class="em">the behavior moved.</span></h2>
+  <p class="ps anim d3">Baseline surveys in May, the same questions again in July. The biggest FM improvement is the core habit &mdash; walking a branch with a customer's judgment, <strong>up 27%</strong> &mdash; and managers report larger gains still on what they can see.</p>
+  <div class="claims anim d4">
+    <div>
+      <div class="claim-h">FMs &mdash; self-attested<br>behavior change</div>
+      <div class="claim-cells">
+        <div class="stat-cell chg-big"><div class="stat-num accent">+27<span class="of">%</span></div><div class="stat-label">Walking a branch with a customer's judgment</div><span class="stat-tag">team average 6.2 &rarr; 7.9 out of 10</span></div>
+        <div class="stat-cell chg-big"><div class="stat-num accent">+22<span class="of">%</span></div><div class="stat-label">A 360 record that tells the full story</div><span class="stat-tag">team average 5.9 &rarr; 7.2 out of 10</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="claim-h m">Managers &mdash; witnessed<br>behavior change</div>
+      <div class="claim-cells one">
+        <div class="stat-cell chg-big"><div class="stat-num green">+32<span class="of">%</span></div><div class="stat-label">My team member documents findings clearly enough to act on</div><span class="stat-tag">team average 6.2 &rarr; 8.2 out of 10</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="detail open" id="det5">
+  <div class="detail-label">Before and after &middot; <span class="em">baseline vs. follow-up survey</span></div>
+  <div class="legend-row">
+    <div class="lg"><span class="sw" style="background:rgb(var(--cool) / 0.5)"></span>Baseline</div>
+    <div class="lg"><span class="sw" style="background:rgb(var(--accent))"></span>Follow-up &middot; FM self-report</div>
+    <div class="lg"><span class="sw" style="background:rgb(var(--success))"></span>Follow-up &middot; manager-witnessed</div>
+  </div>
+  <div class="sv-panel" id="sv-fm">
+    <div class="sv-head">
+      <div class="det-section-sub" style="margin-bottom:0">FMs &mdash; self-reported</div>
+      <a class="sv-jump" href="#sv-mgr" onclick="jumpTo(event,'sv-mgr')">Jump to what managers saw <span class="sv-arrow">&#8595;</span></a>
+    </div>
+    <div class="svrow"><h4>Every time I visit a branch, I intentionally walk it with the same judgment a first-time customer would</h4>
+      <div class="dline"><div class="dtrack" data-b="6.23" data-a="7.90"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.23 &rarr; <b>7.90</b><span class="delta">+27%</span></div></div>
+      <div class="usd">29 up &middot; 8 same &middot; 4 down &nbsp;(n = 43 &rarr; 41)</div></div>
+    <div class="svrow"><h4>My 360 activity tells the full story of what I find on visits, not just what's reported to me</h4>
+      <div class="dline"><div class="dtrack" data-b="5.93" data-a="7.22"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">5.93 &rarr; <b>7.22</b><span class="delta">+22%</span></div></div>
+      <div class="usd">23 up &middot; 12 same &middot; 6 down &nbsp;(n = 43 &rarr; 41)</div></div>
+    <div class="svrow"><h4>When I walk a location, the customer experience shapes what I look for, what I flag, and what I fix</h4>
+      <div class="dline"><div class="dtrack" data-b="6.53" data-a="7.85"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.53 &rarr; <b>7.85</b><span class="delta">+20%</span></div></div>
+      <div class="usd">26 up &middot; 11 same &middot; 4 down &nbsp;(n = 43 &rarr; 41)</div></div>
+    <div class="svrow"><h4>Quality issues at my locations are being caught and addressed before customers notice or complaints come in</h4>
+      <div class="dline"><div class="dtrack" data-b="6.16" data-a="7.41"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.16 &rarr; <b>7.41</b><span class="delta">+20%</span></div></div>
+      <div class="usd">23 up &middot; 15 same &middot; 3 down &nbsp;(n = 43 &rarr; 41)</div></div>
+    <div class="svrow"><h4>Whenever I find a persistent issue, I dig into why it keeps coming back and document clear steps to resolve it</h4>
+      <div class="dline"><div class="dtrack" data-b="7.00" data-a="7.66"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">7.00 &rarr; <b>7.66</b><span class="delta">+9%</span></div></div>
+      <div class="usd">20 up &middot; 11 same &middot; 10 down &nbsp;(n = 43 &rarr; 41)</div></div>
+    <div class="note-box"><span class="nl">The growth edge</span>Root-causing a recurring issue started highest and moved least &mdash; it's the hardest of the three skills, and it's exactly where the coaching should focus next.</div>
+  </div>
+  <div class="sv-panel" id="sv-mgr">
+    <div class="sv-head">
+      <div class="det-section-sub" style="margin-bottom:0;color:rgb(var(--success))">Managers &mdash; witnessed</div>
+    </div>
+    <div class="svrow mgr"><h4>My team member documents quality findings with enough specificity &mdash; photos, descriptions, and action steps &mdash; that I can review them in 360 without needing to follow up</h4>
+      <div class="dline mgr"><div class="dtrack" data-b="6.21" data-a="8.22"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.21 &rarr; <b>8.22</b><span class="delta">+32%</span></div></div>
+      <div class="usd">20 up &middot; 7 same &middot; 2 down &nbsp;(matched n = 29)</div></div>
+    <div class="svrow mgr"><h4>My team member proactively brings me quality findings from their locations that I wouldn't have known about from QC reports or work-order data alone</h4>
+      <div class="dline mgr"><div class="dtrack" data-b="6.53" data-a="8.43"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.53 &rarr; <b>8.43</b><span class="delta">+29%</span></div></div>
+      <div class="usd">20 up &middot; 8 same &middot; 1 down &nbsp;(matched n = 29)</div></div>
+    <div class="svrow mgr"><h4>My team member proactively surfaces quality issues at their locations that weren't already flagged through work orders or QC inspections</h4>
+      <div class="dline mgr"><div class="dtrack" data-b="6.45" data-a="8.28"><div class="bf-base"></div><div class="bf-ext"></div></div><div class="dv">6.45 &rarr; <b>8.28</b><span class="delta">+28%</span></div></div>
+      <div class="usd">20 up &middot; 8 same &middot; 1 down &nbsp;(matched n = 29)</div></div>
+    <div class="note-box cool"><span class="nl">Managers see more than the FMs claim</span>On every witnessed measure, managers rated the improvement <strong>higher</strong> than the FMs rated themselves &mdash; the visibility gain they describe is the outcome the program was built to produce.</div>
+  </div>
+
+  <div class="det-section-divider"><div class="det-section-sub">Every FM</div><div class="det-section-hed">Where each FM moved, and what their manager saw move.</div></div>
+  <p class="det-lead">Average increase from the May baseline to the July follow-up, and the single behavior that moved furthest. Click any column heading to sort.</p>
+
+  <div class="pband">
+    <div>
+      <div class="pbh self">FMs rated themselves on five behaviors.</div>
+      <div class="pbs">0&ndash;10, in May and again in July. Hover a behavior for the survey question it came from.</div>
+      <div class="pchips"><span class="ppill self" data-q="Every time I visit a branch, I intentionally walk it with the same judgment a first-time customer would.">Walking with a customer's judgment</span><span class="ppill self" data-q="My 360 activity tells the full story of what I find on visits, not just what's reported to me.">A 360 that tells the full story</span><span class="ppill self" data-q="When I walk a location, the customer experience shapes what I look for, what I flag, and what I fix.">Customer lens on what to fix</span><span class="ppill self" data-q="Quality issues at my locations are being caught and addressed before customers notice or complaints come in.">Catching issues before customers do</span><span class="ppill self" data-q="Whenever I find a persistent issue, I dig into why it keeps coming back and document clear steps to resolve it.">Root-causing what recurs</span></div>
+    </div>
+    <div>
+      <div class="pbh mgr">Managers rated three.</div>
+      <div class="pbs">The same two points in time, answered about their team member.</div>
+      <div class="pchips"><span class="ppill mgr" data-q="My team member proactively brings me quality findings from their locations that I wouldn't have known about from QC reports or work-order data alone.">Findings I'd have missed</span><span class="ppill mgr" data-q="My team member documents quality findings with enough specificity — photos, descriptions and action steps — that I can review them in 360 without needing to follow up.">Documentation I can act on</span><span class="ppill mgr" data-q="My team member proactively surfaces quality issues at their locations that weren't already flagged through work orders or QC inspections.">Issues not already flagged</span></div>
+    </div>
+  </div>
+
+  <div class="plegend">
+    <div class="plg"><span class="psw" style="background:rgb(var(--accent) / 0.07)"></span><span class="psw" style="background:rgb(var(--accent) / 0.15)"></span><span class="psw" style="background:rgb(var(--accent) / 0.26)"></span><span class="psw" style="background:rgb(var(--accent) / 0.38)"></span>FM, size of increase</div>
+    <div class="plg"><span class="psw" style="background:rgb(var(--success) / 0.08)"></span><span class="psw" style="background:rgb(var(--success) / 0.17)"></span><span class="psw" style="background:rgb(var(--success) / 0.28)"></span><span class="psw" style="background:rgb(var(--success) / 0.42)"></span>Manager</div>
+    <div class="plg"><span style="font-family:'Geist Mono',monospace;color:rgb(var(--cool))">&mdash;</span> no net change</div>
+    <div class="plg"><span style="color:rgb(var(--cool));font-size:15px">&#9662;</span> rated lower than in May</div>
+    <div class="phint">click a heading to sort</div>
+  </div>
+
+  <div class="ptbox"><table id="pertab">
+  <thead><tr>
+    <th class="pstub psort on" data-k="fm" data-t="txt">Facility Manager<span class="par">&#9650;</span></th>
+    <th class="pstub2 psort" data-k="mgr" data-t="txt">Manager<span class="par">&#9650;</span></th>
+    <th class="pavg pnself psort" data-k="2" data-t="num">Average increase<span class="pu">across 5</span><span class="par">&#9650;</span></th>
+    <th class="parea pnself">Biggest shift</th>
+    <th class="pgap"></th>
+    <th class="pavg pnmgr psort" data-k="5" data-t="num">Average increase<span class="pu">across 3</span><span class="par">&#9650;</span></th>
+    <th class="parea pnmgr">Biggest shift</th>
+  </tr></thead>
+  <tbody>
+<tr data-fm="allen brandon allen" data-mgr="shawn evans"><th class="pwho">Brandon Allen</th><td class="pmgr">Shawn Evans</td><td class="pn self t2" data-v="24">+24<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Catching issues before customers do</span></td><td class="pgap"></td><td class="pn down" data-v="-8" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 1 of 3, lower in 2</span></td></tr>
+<tr data-fm="conroy sean conroy" data-mgr="timothy butvilas"><th class="pwho">Sean Conroy</th><td class="pmgr">Timothy Butvilas</td><td class="pn self t3" data-v="39">+39<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="conti john conti" data-mgr="jessica ann kamer"><th class="pwho">John Conti</th><td class="pmgr">Jessica Ann Kamer</td><td class="pn self t3" data-v="32">+32<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span></td><td class="pgap"></td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">rated 10 of 10 in May, unchanged</span></td></tr>
+<tr data-fm="demartino matthew demartino" data-mgr="anna mann"><th class="pwho">Matthew DeMartino</th><td class="pmgr">Anna Mann</td><td class="pn down" data-v="-17" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 1 of 5, lower in 4</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="61">+61<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="donohue timothy donohue" data-mgr="eric kaechelin"><th class="pwho">Timothy Donohue</th><td class="pmgr">Eric Kaechelin</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">rated 10 of 10 in May, unchanged</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="dudar joseph dudar" data-mgr="john scaglia"><th class="pwho">Joseph Dudar</th><td class="pmgr">John Scaglia</td><td class="pn down" data-v="-13" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 3 of 5, lower in 2</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="206">+206<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="evans shawn evans" data-mgr="timothy butvilas"><th class="pwho">Shawn Evans</th><td class="pmgr">Timothy Butvilas</td><td class="pn self t1" data-v="6">+6<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="ferschke matthew ferschke" data-mgr="shawn evans"><th class="pwho">Matthew Ferschke</th><td class="pmgr">Shawn Evans</td><td class="pn self t2" data-v="21">+21<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="flatt sean flatt" data-mgr="brian hawtin"><th class="pwho">Sean Flatt</th><td class="pmgr">Brian Hawtin</td><td class="pn self t4" data-v="122">+122<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t2" data-v="29">+29<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+<tr data-fm="garcia argeny garcia" data-mgr="juan jorge"><th class="pwho">Argeny Garcia</th><td class="pmgr">Juan Jorge</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">held steady in all 5</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="43">+43<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="graca jose graca" data-mgr="shawn evans"><th class="pwho">Jose Graca</th><td class="pmgr">Shawn Evans</td><td class="pn self t2" data-v="10">+10<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn down" data-v="-8" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 1 of 3, lower in 2</span></td></tr>
+<tr data-fm="granville william granville" data-mgr="sean conroy"><th class="pwho">William Granville</th><td class="pmgr">Sean Conroy</td><td class="pn self t2" data-v="21">+21<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Customer lens on what to fix</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="40">+40<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="hawtin brian hawtin" data-mgr="jessica ann kamer"><th class="pwho">Brian Hawtin</th><td class="pmgr">Jessica Ann Kamer</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span><span class="pnote">the one area that rose</span></td><td class="pgap"></td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">rated 10 of 10 in May, unchanged</span></td></tr>
+<tr data-fm="hay john hay" data-mgr="brian hawtin"><th class="pwho">John Hay</th><td class="pmgr">Brian Hawtin</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">held steady in all 5</span></td><td class="pgap"></td><td class="pn mgr t2" data-v="15">+15<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="hunter richard hunter" data-mgr="eric kaechelin"><th class="pwho">Richard Hunter</th><td class="pmgr">Eric Kaechelin</td><td class="pn self t4" data-v="126">+126<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Catching issues before customers do</span></td><td class="pgap"></td><td class="pn mgr t1" data-v="5">+5<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+<tr data-fm="jorge juan jorge" data-mgr="john scaglia"><th class="pwho">Juan Jorge</th><td class="pmgr">John Scaglia</td><td class="pn self t2" data-v="15">+15<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Catching issues before customers do</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="217">+217<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+<tr data-fm="kaechelin eric kaechelin" data-mgr="timothy butvilas"><th class="pwho">Eric Kaechelin</th><td class="pmgr">Timothy Butvilas</td><td class="pn self t1" data-v="6">+6<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Root-causing what recurs</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="kingsley isabel kingsley" data-mgr="john conti"><th class="pwho">Isabel Kingsley</th><td class="pmgr">John Conti</td><td class="pn self t4" data-v="71">+71<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="85">+85<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="kingsley maria kingsley" data-mgr="eric kaechelin"><th class="pwho">Maria Kingsley</th><td class="pmgr">Eric Kaechelin</td><td class="pn self t2" data-v="22">+22<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t1" data-v="5">+5<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+<tr data-fm="konczewski michael konczewski" data-mgr="eric kaechelin"><th class="pwho">Michael Konczewski</th><td class="pmgr">Eric Kaechelin</td><td class="pn self t3" data-v="41">+41<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="lucariello donald lucariello" data-mgr="brian hawtin"><th class="pwho">Donald Lucariello</th><td class="pmgr">Brian Hawtin</td><td class="pn down" data-v="-10" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 3 of 5, lower in 2</span></td><td class="pgap"></td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">held steady in all 3</span></td></tr>
+<tr data-fm="manigbas leonard manigbas" data-mgr="juan jorge"><th class="pwho">Leonard Manigbas</th><td class="pmgr">Juan Jorge</td><td class="pn self t1" data-v="4">+4<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="47">+47<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="mann anna mann" data-mgr="jillian k caillouette"><th class="pwho">Anna Mann</th><td class="pmgr">Jillian K Caillouette</td><td class="pn self t1" data-v="9">+9<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="marterella mark marterella" data-mgr="sean conroy"><th class="pwho">Mark Marterella</th><td class="pmgr">Sean Conroy</td><td class="pn self t3" data-v="38">+38<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="75">+75<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="maxwell alexander maxwell" data-mgr="john conti"><th class="pwho">Alexander Maxwell</th><td class="pmgr">John Conti</td><td class="pn self t1" data-v="3">+3<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Customer lens on what to fix</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="50">+50<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="mcnary morgan mcnary" data-mgr="anna mann"><th class="pwho">Morgan McNary</th><td class="pmgr">Anna Mann</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span><span class="pnote">the one area that rose</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="68">+68<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="o'dell andrew o'dell" data-mgr="sean conroy"><th class="pwho">Andrew O'Dell</th><td class="pmgr">Sean Conroy</td><td class="pn self t3" data-v="43">+43<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="44">+44<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Issues not already flagged</span></td></tr>
+<tr data-fm="oliveira lisa oliveira" data-mgr="maria kingsley"><th class="pwho">Lisa Oliveira</th><td class="pmgr">Maria Kingsley</td><td class="pn self t3" data-v="31">+31<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Root-causing what recurs</span></td><td class="pgap"></td><td class="pn mgr t1" data-v="7">+7<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="otten matthew otten" data-mgr="shawn evans"><th class="pwho">Matthew Otten</th><td class="pmgr">Shawn Evans</td><td class="pn down" data-v="-9" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 2 of 5, lower in 3</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="ozmun kevin ozmun" data-mgr="john conti"><th class="pwho">Kevin Ozmun</th><td class="pmgr">John Conti</td><td class="pn self t4" data-v="62">+62<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Customer lens on what to fix</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="96">+96<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="parrino vincent parrino" data-mgr="shawn evans"><th class="pwho">Vincent Parrino</th><td class="pmgr">Shawn Evans</td><td class="pn self t4" data-v="75">+75<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="patterson david patterson" data-mgr="shawn evans"><th class="pwho">David Patterson</th><td class="pmgr">Shawn Evans</td><td class="pn self t3" data-v="40">+40<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="petaccio tony petaccio" data-mgr="eric kaechelin"><th class="pwho">Tony Petaccio</th><td class="pmgr">Eric Kaechelin</td><td class="pn self t3" data-v="39">+39<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="sarokon jami sarokon" data-mgr="sean conroy"><th class="pwho">Jami Sarokon</th><td class="pmgr">Sean Conroy</td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">held steady in all 5</span></td><td class="pgap"></td><td class="pn mgr t3" data-v="36">+36<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+<tr data-fm="scaglia john scaglia" data-mgr="timothy butvilas"><th class="pwho">John Scaglia</th><td class="pmgr">Timothy Butvilas</td><td class="pn self t4" data-v="109">+109<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn pna" data-v="-999">&nbsp;</td><td class="pt-c none"><span class="pnote">no manager follow-up</span></td></tr>
+<tr data-fm="schofield david schofield" data-mgr="john scaglia"><th class="pwho">David Schofield</th><td class="pmgr">John Scaglia</td><td class="pn down" data-v="-19" title="rated lower in July than in May">&#9662;</td><td class="pt-c"><span class="pnote">held steady in 1 of 5, lower in 4</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="194">+194<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="strobele william strobele" data-mgr="john scaglia"><th class="pwho">William Strobele</th><td class="pmgr">John Scaglia</td><td class="pn self t4" data-v="76">+76<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="217">+217<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Findings I'd have missed</span></td></tr>
+<tr data-fm="thompson taeyon thompson" data-mgr="maria kingsley"><th class="pwho">Taeyon Thompson</th><td class="pmgr">Maria Kingsley</td><td class="pn self t2" data-v="11">+11<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">rated 9 of 10 in May, unchanged</span></td></tr>
+<tr data-fm="velardi nicholas velardi" data-mgr="maria kingsley"><th class="pwho">Nicholas Velardi</th><td class="pmgr">Maria Kingsley</td><td class="pn self t3" data-v="38">+38<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">A 360 that tells the full story</span></td><td class="pgap"></td><td class="pn flat" data-v="0">&mdash;</td><td class="pt-c"><span class="pnote">rated 9 of 10 in May, unchanged</span></td></tr>
+<tr data-fm="whitlock joshua whitlock" data-mgr="sean conroy"><th class="pwho">Joshua Whitlock</th><td class="pmgr">Sean Conroy</td><td class="pn self t1" data-v="2">+2<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="67">+67<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Issues not already flagged</span></td></tr>
+<tr data-fm="wright james wright" data-mgr="sean conroy"><th class="pwho">James Wright</th><td class="pmgr">Sean Conroy</td><td class="pn self t3" data-v="30">+30<span class="pcs">%</span></td><td class="pt-c"><span class="ppill self">Walking with a customer's judgment</span></td><td class="pgap"></td><td class="pn mgr t4" data-v="63">+63<span class="pcs">%</span></td><td class="pt-c"><span class="ppill mgr">Documentation I can act on</span></td></tr>
+  </tbody></table></div>
+  <p class="pfoot">The average increase is that person's rating averaged across the behaviors on their side, May to July. Where the average did not rise, the cell says what did &mdash; the one area that still moved, or how many held steady. <strong>12 of the 41 FMs</strong> have no manager follow-up survey; their manager columns are left blank.</p>
+</div>
+</div>
+
+<script>
+const P=document.querySelectorAll('.page'),DC=document.getElementById('nD'),NL=document.getElementById('nL');
+let C=0;
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='nd'+(i===0?' active':'');d.textContent=p.dataset.tab||(i+1);d.onclick=()=>go(i);DC.appendChild(d);});
+function getDots(){return DC.querySelectorAll('.nd');}
+function go(i){if(i<0||i>=P.length)return;P[C].classList.remove('active');getDots()[C].classList.remove('active');C=i;P[C].classList.add('active');getDots()[C].classList.add('active');NL.textContent=P[C].dataset.label||'';P[C].scrollTop=0;setTimeout(animBars,120);}
+function next(){go(C+1);}function prev(){go(C-1);}
+setTimeout(animBars,400);
+function openDetail(btn,pgIdx){const det=document.getElementById('det'+pgIdx);if(!det)return;const isOpen=det.classList.toggle('open');btn.classList.toggle('is-open',isOpen);if(isOpen){requestAnimationFrame(()=>requestAnimationFrame(()=>{det.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(animBars,300);}));}}
+function tog(el){el.parentElement.classList.toggle('open');}
+function initSort(){const tb=document.querySelector('#pertab tbody');if(!tb)return;let cur='fm',dir=1;
+function val(tr,k,t){if(t==='txt')return (k==='fm'?tr.dataset.fm:tr.dataset.mgr);const td=tr.children[+k];const v=parseFloat(td.dataset.v);return isNaN(v)?-999:v;}
+document.querySelectorAll('#pertab th.psort').forEach(th=>{th.onclick=()=>{const k=th.dataset.k,t=th.dataset.t;if(cur===k){dir=-dir;}else{cur=k;dir=(t==='txt')?1:-1;}
+document.querySelectorAll('#pertab th.psort').forEach(x=>x.classList.remove('on'));th.classList.add('on');th.querySelector('.par').innerHTML=dir>0?'&#9650;':'&#9660;';
+const rs=[...tb.rows];rs.sort((a,b)=>{const x=val(a,k,t),y=val(b,k,t);return x<y?-dir:x>y?dir:0;});rs.forEach(r=>tb.appendChild(r));};});}
+initSort();
+function jumpTo(e,id){if(e&&e.preventDefault)e.preventDefault();const t=document.getElementById(id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}
+function animBars(){document.querySelectorAll('.detail.open .dtrack[data-b]').forEach((dl)=>{const b=parseFloat(dl.dataset.b)*10,a=parseFloat(dl.dataset.a)*10;const base=dl.querySelector('.bf-base'),ext=dl.querySelector('.bf-ext');if(!base||!ext)return;base.style.width=b+'%';ext.style.left=b+'%';ext.style.width=(a-b)+'%';});}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown')next();if(e.key==='ArrowLeft'||e.key==='PageUp')prev();});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>60){d>0?next():prev();}},{passive:true});
+NL.textContent=P[0].dataset.label||'';
+</script>
+</body>
+</html>
