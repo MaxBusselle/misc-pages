@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The behaviors Flint can change on the manufacturing floor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<style>
+  :root {
+    --paper: 253 252 250;
+    --surface: 255 255 255;
+    --ink: 28 42 56;
+    --muted-ink: 74 88 104;
+    --accent: 232 77 40;
+    --cool-grey: 154 166 176;
+    --pale-grey: 235 229 220;
+    --warm-line: 197 187 166;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: rgb(var(--ink) / 0.06);
+    font-family: 'Sen', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: rgb(var(--ink));
+  }
+  .stage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: rgb(var(--paper));
+    padding: 44px 52px 34px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    transform-origin: top center;
+  }
+  header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
+  h1 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgb(var(--muted-ink));
+    margin: 0 0 10px;
+  }
+  .subhead {
+    font-size: 14px;
+    color: rgb(var(--muted-ink));
+    margin: 8px 0 0;
+    max-width: 820px;
+    line-height: 1.35;
+  }
+  .flint-logo { height: 30px; width: auto; display: block; }
+
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .card {
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--pale-grey));
+    border-radius: 10px;
+    padding: 18px 20px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .dot { width: 10px; height: 10px; border-radius: 999px; flex: none; }
+  .card-head h2 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 600;
+    font-size: 21px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  ul { list-style: none; margin: 0 0 12px; padding: 0; }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.3;
+    color: rgb(var(--ink) / 0.9);
+    padding: 7px 9px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background: rgb(var(--pillar) / 0.05);
+    border: 1px solid rgb(var(--pillar) / 0.16);
+  }
+  li .ico {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: rgb(var(--pillar) / 0.13);
+    color: rgb(var(--pillar));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  li svg { width: 15px; height: 15px; }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .logos {
+    margin-top: auto;
+    padding-top: 11px;
+    border-top: 1px dotted rgb(var(--warm-line));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgb(var(--pale-grey) / 0.5);
+    border: 1px solid rgb(var(--pale-grey));
+    border-radius: 6px;
+    padding: 5px 9px 5px 6px;
+  }
+  .chip img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    border-radius: 3px;
+    background: #fff;
+    flex: none;
+  }
+  .chip .fallback {
+    width: 22px; height: 22px; border-radius: 3px; flex: none;
+    display: none;
+    align-items: center; justify-content: center;
+    background: rgb(var(--ink) / 0.08);
+    font-size: 9px; font-weight: 700; color: rgb(var(--muted-ink));
+  }
+  .chip .name { font-size: 12px; font-weight: 700; line-height: 1.1; }
+  .chip .industry { font-size: 10px; color: rgb(var(--muted-ink)); line-height: 1.2; }
+
+  .cost {
+    margin-top: 14px;
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--pale-grey));
+    border-radius: 10px;
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .cost-label { display: flex; align-items: center; gap: 8px; flex: none; }
+  .cost-label h2 {
+    font-family: 'Andada Pro', serif;
+    font-weight: 600;
+    font-size: 19px;
+    margin: 0;
+  }
+  .cost-text { font-size: 13px; color: rgb(var(--ink) / 0.88); line-height: 1.35; }
+
+  footer {
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgb(var(--muted-ink));
+  }
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { background: #fff; }
+    .stage { padding: 0; min-height: 0; }
+    .slide { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="g" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></g>
+  </defs>
+  <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 17a9 9 0 1 1 17 0"/><path d="M12 17l4.5-5"/><circle cx="12" cy="17" r="1.4"/>
+  </symbol>
+  <symbol id="i-huddle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="8.5" r="2.6"/><circle cx="16" cy="8.5" r="2.6"/><path d="M3.5 18.5c.6-2.6 2.4-4 4.5-4s3.9 1.4 4.5 4"/><path d="M14 15c.7-.3 1.4-.5 2-.5 2.1 0 3.9 1.4 4.5 4"/>
+  </symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v4"/><path d="M12 10v4"/><path d="M12 17v4"/><path d="M12 7l4 3"/><path d="M12 14l-4 3"/>
+  </symbol>
+  <symbol id="i-barrier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="7" width="18" height="6" rx="1.2"/><path d="M7 7l-2 6M13 7l-2 6M19 7l-2 6"/><path d="M5 13v7M19 13v7"/>
+  </symbol>
+  <symbol id="i-board" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M7 12v-3M11 12V7M15 12v-4"/><path d="M9 20l3-4 3 4"/>
+  </symbol>
+  <symbol id="i-boots" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="5.5" r="2.5"/><path d="M12 8.5v6"/><path d="M9 20l3-5.5 3 5.5"/><path d="M7 11.5h10"/>
+  </symbol>
+  <symbol id="i-scrap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 13h10l1-13"/><path d="M10.5 11v6M13.5 11v6"/>
+  </symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v4.5h-4.5"/>
+  </symbol>
+  <symbol id="i-helmet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 15a8 8 0 0 1 16 0"/><path d="M2.5 15h19"/><path d="M9.5 7.6V4.8h5v2.8"/>
+  </symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.6"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 9h13.5a2.5 2.5 0 0 1 0 5H16"/><path d="M7 6L4 9l3 3"/><path d="M20 15H6.5a2.5 2.5 0 0 0 0 5H8"/><path d="M17 18l3-3-3-3"/>
+  </symbol>
+  <symbol id="i-sign" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3.5" y="4" width="17" height="10" rx="1.5"/><path d="M12 14v6"/><path d="M8.5 20h7"/><path d="M8 9h8"/>
+  </symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 7h11v9h-11z"/><path d="M13.5 10.5H18l3 3V16h-7.5z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>
+  </symbol>
+</svg>
+<div class="stage">
+<div class="slide">
+  <header>
+    <div>
+      <p class="kicker">Initiatives and client examples by pillar</p>
+      <h1>The behaviors Flint can change on the manufacturing floor</h1>
+      <p class="subhead">Delivery, quality, and safety are what a frontline leader manages every day. Flint coaches the supervisor behaviors behind each one.</p>
+    </div>
+    <img class="flint-logo" src="https://app.flintls.com/logo.svg" alt="Flint">
+  </header>
+
+  <div class="grid">
+
+    <div class="card" style="--pillar: 232 77 40">
+      <div class="card-head"><span class="dot" style="background:#e84d28"></span><h2>Delivery</h2></div>
+      <ul>
+        <li><span class="ico"><svg><use href="#i-gauge"></use></svg></span>Hitting the hourly production number</li>
+        <li><span class="ico"><svg><use href="#i-huddle"></use></svg></span>Running the daily production huddle</li>
+        <li><span class="ico"><svg><use href="#i-branch"></use></svg></span>Getting to root cause with the five whys</li>
+        <li><span class="ico"><svg><use href="#i-barrier"></use></svg></span>Clearing blockers before the end of shift</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="terex.com"><div><div class="name">Terex</div><div class="industry">Manufacturing</div></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="--pillar: 49 97 149">
+      <div class="card-head"><span class="dot" style="background:#316195"></span><h2>Quality</h2></div>
+      <ul>
+        <li><span class="ico"><svg><use href="#i-board"></use></svg></span>Making losses and issues visible on the production board</li>
+        <li><span class="ico"><svg><use href="#i-boots"></use></svg></span>Leading from the floor instead of expediting</li>
+        <li><span class="ico"><svg><use href="#i-scrap"></use></svg></span>Cutting scrap and rework</li>
+        <li><span class="ico"><svg><use href="#i-loop"></use></svg></span>Running continuous improvement to completion</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="jtekt.co.jp"><div><div class="name">JTEKT</div><div class="industry">Manufacturing</div></div></div>
+        <div class="chip" data-domain="cnhindustrial.com"><div><div class="name">CNH</div><div class="industry">Agricultural equipment</div></div></div>
+        <div class="chip" data-domain="bms.com"><div><div class="name">Bristol Myers Squibb</div><div class="industry">Pharma</div></div></div>
+        <div class="chip" data-domain="primeflight.com"><div><div class="name">PrimeFlight</div><div class="industry">Aviation services</div></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="--pillar: 72 114 76">
+      <div class="card-head"><span class="dot" style="background:#48724c"></span><h2>Safety</h2></div>
+      <ul>
+        <li><span class="ico"><svg><use href="#i-helmet"></use></svg></span>Wearing the right protective equipment every time</li>
+        <li><span class="ico"><svg><use href="#i-target"></use></svg></span>Making targeted safety observations</li>
+        <li><span class="ico"><svg><use href="#i-repeat"></use></svg></span>Following through on repeat offenders</li>
+        <li><span class="ico"><svg><use href="#i-sign"></use></svg></span>Keeping safety standards visible</li>
+        <li><span class="ico"><svg><use href="#i-truck"></use></svg></span>Housekeeping and vehicle safety on site</li>
+      </ul>
+      <div class="logos">
+        <div class="chip" data-domain="gategroup.com"><div><div class="name">Gate Group</div><div class="industry">Aviation services</div></div></div>
+        <div class="chip" data-domain="fcx.com"><div><div class="name">Freeport-McMoRan</div><div class="industry">Mining</div></div></div>
+        <div class="chip" data-domain="saint-gobain.com"><div><div class="name">Saint-Gobain</div><div class="industry">Building materials</div></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cost">
+    <div class="cost-label"><span class="dot" style="background:#f99c24"></span><h2>Cost</h2></div>
+    <div class="cost-text">Cost sits under all three. Injuries, scrap, and missed production are what drive it, and the same supervisor behaviors move it.</div>
+  </div>
+
+  <footer>Industries are illustrative. Logos are the property of their owners.</footer>
+</div>
+</div>
+
+<script>
+// Each chip loads the company's own logo. Order: an explicit URL if set, then Wikimedia,
+// then the company's own site icon, then initials.
+document.querySelectorAll('.chip[data-domain]').forEach(function (chip) {
+  var domain = chip.getAttribute('data-domain');
+  var name = chip.querySelector('.name').textContent.trim();
+  var initials = name.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join('');
+
+  var sources = [];
+  if (chip.getAttribute('data-logo')) sources.push(chip.getAttribute('data-logo'));
+  if (chip.getAttribute('data-wiki')) {
+    sources.push('https://commons.wikimedia.org/wiki/Special:FilePath/' + chip.getAttribute('data-wiki') + '?width=256');
+  }
+  sources.push('https://icons.duckduckgo.com/ip3/' + domain + '.ico');
+  sources.push('https://www.google.com/s2/favicons?domain=' + domain + '&sz=128');
+
+  var fallback = document.createElement('span');
+  fallback.className = 'fallback';
+  fallback.textContent = initials;
+
+  var i = 0;
+  var img = document.createElement('img');
+  img.alt = name + ' logo';
+  img.src = sources[0];
+  img.addEventListener('error', function () {
+    i += 1;
+    if (i < sources.length) {
+      img.src = sources[i];
+    } else {
+      img.remove();
+      fallback.style.display = 'flex';
+    }
+  });
+
+  chip.insertBefore(fallback, chip.firstChild);
+  chip.insertBefore(img, chip.firstChild);
+});
+</script>
+</body>
+</html>
