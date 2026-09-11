@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wentzville Pilot Update — September 11, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-paper: 253 252 250;
+  --color-surface: 255 255 255;
+  --color-ink: 28 42 56;
+  --color-muted-ink: 74 88 104;
+  --color-accent: 232 77 40;
+  --color-success: 72 114 76;
+  --color-cool-grey: 154 166 176;
+  --color-light-grey: 200 205 210;
+  --color-pale-grey: 235 229 220;
+  --color-warm-line: 197 187 166;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  background-color:rgb(var(--color-paper));
+  color:rgb(var(--color-ink));
+  font-family:'Sen',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Andada Pro',serif;font-weight:400;margin:0;}
+::selection{background-color:rgb(var(--color-accent));color:rgb(var(--color-paper));}
+
+.deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+.slide{
+  min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 8vw 96px;position:relative;
+}
+.slide + .slide{border-top:1px solid rgb(var(--color-pale-grey));}
+.inner{width:100%;max-width:1000px;margin:0 auto;}
+
+.eyebrow{
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;
+  color:rgb(var(--color-muted-ink));font-weight:700;margin-bottom:20px;
+}
+.rule{height:2px;background:rgb(var(--color-accent));width:56px;margin:20px 0 28px;}
+
+h1{font-size:clamp(2.4rem,4.6vw,3.6rem);line-height:1.1;letter-spacing:-.02em;}
+h2{font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.15;letter-spacing:-.02em;}
+h3{font-size:1.25rem;}
+.date{
+  font-family:'Geist Mono',monospace;font-size:.9rem;
+  color:rgb(var(--color-muted-ink));margin-top:14px;letter-spacing:.02em;
+}
+.objective{
+  font-family:'Andada Pro',serif;font-style:italic;font-size:1.35rem;line-height:1.5;
+  color:rgb(var(--color-ink));max-width:820px;margin:0 0 36px;
+}
+p{line-height:1.6;color:rgb(var(--color-ink));}
+.lead{font-size:1.1rem;max-width:760px;color:rgb(var(--color-muted-ink));}
+
+.numbered{list-style:none;margin:0;padding:0;counter-reset:c;}
+.numbered li{
+  counter-increment:c;position:relative;padding:14px 0 14px 52px;
+  border-bottom:1px solid rgb(var(--color-pale-grey));font-size:1.05rem;
+}
+.numbered li:first-child{border-top:1px solid rgb(var(--color-pale-grey));}
+.numbered li::before{
+  content:counter(c);position:absolute;left:0;top:14px;
+  font-family:'Geist Mono',monospace;font-size:.85rem;
+  color:rgb(var(--color-accent));
+}
+
+.callout{
+  margin-top:32px;padding:20px 24px;border-left:2px solid rgb(var(--color-accent));
+  background:rgb(var(--color-pale-grey) / .45);border-radius:0 8px 8px 0;
+  font-size:1rem;color:rgb(var(--color-ink));max-width:820px;
+}
+
+.behavior-label{
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;
+  color:rgb(var(--color-muted-ink));margin:36px 0 12px;
+}
+.behaviors{
+  list-style:none;margin:0;padding:0;background:rgb(var(--color-surface));
+  border:1px solid rgb(var(--color-pale-grey));border-radius:8px;overflow:hidden;
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / .06);max-width:860px;
+}
+.behaviors li{
+  padding:18px 24px;font-size:1.05rem;
+  border-bottom:1px solid rgb(var(--color-pale-grey));
+}
+.behaviors li:last-child{border-bottom:none;}
+.behaviors li.example{
+  font-size:.95rem;color:rgb(var(--color-muted-ink));
+  padding-left:40px;background:rgb(var(--color-paper));
+}
+.behaviors b{font-weight:700;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:8px;}
+.col h3{
+  font-size:1.05rem;font-family:'Sen',sans-serif;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;
+  color:rgb(var(--color-muted-ink));padding-bottom:12px;
+  border-bottom:2px solid rgb(var(--color-ink));
+}
+.col ul{list-style:none;margin:0;padding:0;}
+.col li{
+  padding:16px 0;border-bottom:1px solid rgb(var(--color-pale-grey));
+  font-size:1.02rem;line-height:1.45;
+}
+
+table{border-collapse:collapse;width:100%;max-width:760px;margin-top:8px;}
+th{
+  text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;
+  color:rgb(var(--color-muted-ink));font-weight:700;
+  padding:0 0 12px;border-bottom:2px solid rgb(var(--color-ink));
+}
+td{
+  padding:16px 24px 16px 0;border-bottom:1px solid rgb(var(--color-pale-grey));
+  font-size:1.02rem;
+}
+td.dates{font-family:'Geist Mono',monospace;font-size:.92rem;white-space:nowrap;}
+
+.milestones{list-style:none;margin:36px 0 0;padding:0;max-width:760px;}
+.milestones li{
+  display:flex;justify-content:space-between;gap:24px;
+  padding:14px 0;border-bottom:1px solid rgb(var(--color-pale-grey));font-size:1.02rem;
+}
+.milestones span{font-family:'Geist Mono',monospace;font-size:.92rem;color:rgb(var(--color-accent));white-space:nowrap;}
+
+.checklist{list-style:none;margin:0;padding:0;max-width:860px;}
+.checklist li{
+  position:relative;padding:18px 0 18px 36px;
+  border-bottom:1px solid rgb(var(--color-pale-grey));font-size:1.05rem;
+}
+.checklist li:first-child{border-top:1px solid rgb(var(--color-pale-grey));}
+.checklist li::before{
+  content:"";position:absolute;left:0;top:23px;width:12px;height:12px;
+  border:1.5px solid rgb(var(--color-cool-grey));border-radius:3px;
+}
+.tag{
+  display:inline-block;margin-left:10px;padding:2px 8px;border-radius:999px;
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+  background:rgb(var(--color-accent) / .12);color:rgb(var(--color-accent));
+  vertical-align:middle;
+}
+.tag.done{background:rgb(var(--color-success) / .12);color:rgb(var(--color-success));}
+.checklist li.done::before{
+  background:rgb(var(--color-success));border-color:rgb(var(--color-success));
+}
+
+.slide-foot{
+  position:absolute;left:8vw;right:8vw;bottom:32px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgb(var(--color-pale-grey));padding-top:14px;
+}
+.foot-label{
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;
+  color:rgb(var(--color-muted-ink));
+}
+.foot-num{font-family:'Geist Mono',monospace;font-size:.8rem;color:rgb(var(--color-cool-grey));}
+.flint-logo{height:22px;width:auto;display:block;}
+
+.nav{
+  position:fixed;right:24px;bottom:24px;display:flex;gap:8px;z-index:20;
+}
+.nav button{
+  width:38px;height:38px;border-radius:999px;cursor:pointer;
+  border:1px solid rgb(var(--color-pale-grey));background:rgb(var(--color-surface));
+  color:rgb(var(--color-ink));font-size:1rem;line-height:1;
+  transition:all 150ms cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 1px 3px 0 rgb(0 0 0 / .1);
+}
+.nav button:hover{background:rgb(var(--color-accent));color:rgb(var(--color-paper));border-color:rgb(var(--color-accent));}
+
+@media (max-width:760px){
+  .slide{padding:56px 6vw 88px;}
+  .two-col{grid-template-columns:1fr;gap:28px;}
+  .slide-foot{left:6vw;right:6vw;}
+}
+@media print{
+  .deck{height:auto;overflow:visible;}
+  .slide{min-height:0;page-break-after:always;padding:40px;}
+  .nav{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Wentzville pilot update &middot; September 11, 2026</div>
+      <h1>Agenda</h1>
+      <div class="rule"></div>
+      <ol class="numbered">
+        <li>Business challenges and desired behaviors</li>
+        <li>Success criteria</li>
+        <li>Timeline</li>
+        <li>Required from the GM before launch</li>
+      </ol>
+    </div>
+    <div class="slide-foot">
+      <img src="https://app.flintls.com/logo.svg" alt="Flint" class="flint-logo" />
+      <span class="foot-num">1 / 9</span>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Pilot update</div>
+      <h1>Wentzville Pilot Update</h1>
+      <div class="date">September 11, 2026</div>
+      <div class="rule"></div>
+      <p class="objective">Improve how team leaders perform the frontline role at Wentzville. Each participant gets short personalized activities in the flow of work, targeted at behaviors that significantly affect the business.</p>
+      <div class="behavior-label" style="margin-top:0">Four business challenges related to the team leader role at Wentzville</div>
+      <ol class="numbered">
+        <li>Line stops that started as an earlier signal</li>
+        <li>Defects created while an operator is behind or new</li>
+        <li>Jobs run differently than the job instruction sheet</li>
+        <li>Team leader effectiveness varying with the group leader</li>
+      </ol>
+      <div class="callout">The pilot coaches four team leaders in Dave Elliott's area (Trim, IP/Glass) on behaviors that address them.</div>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Overview</span>
+      <span class="foot-num">2 / 9</span>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Business challenges and desired behaviors — 1 of 4</div>
+      <h2>Line stops that started as an earlier signal</h2>
+      <div class="rule"></div>
+      <p class="lead">Team leader can be <b>more proactive</b> at early signs of problems.</p>
+      <div class="behavior-label">Desired behavior</div>
+      <ul class="behaviors">
+        <li>Work the line, not the desk.</li>
+        <li>Act on the andon tone and the blinking board.</li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Business challenges</span>
+      <span class="foot-num">3 / 9</span>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Business challenges and desired behaviors — 2 of 4</div>
+      <h2>Defects created while an operator is behind or new</h2>
+      <div class="rule"></div>
+      <p class="lead">An operator getting behind, or new to the station or build mix, increases the risk of jobs going down the line incomplete. What is not caught at the station becomes repair work later.</p>
+      <div class="behavior-label">Desired behavior</div>
+      <ul class="behaviors">
+        <li><b>Proactively work with the operator</b> and get the job back on pace.</li>
+        <li>Stay with a <b>new operator</b> until the job holds.</li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Business challenges</span>
+      <span class="foot-num">4 / 9</span>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Business challenges and desired behaviors — 3 of 4</div>
+      <h2>Jobs run differently than the job instruction sheet</h2>
+      <div class="rule"></div>
+      <div class="behavior-label" style="margin-top:8px">Desired behavior</div>
+      <ul class="behaviors">
+        <li>Make sure operators run the job to the sheet.</li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Business challenges</span>
+      <span class="foot-num">5 / 9</span>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Business challenges and desired behaviors — 4 of 4</div>
+      <h2>Team leader effectiveness varies with the group leader</h2>
+      <div class="rule"></div>
+      <p class="lead">Different group leaders set different expectations. Team leaders change areas and are held to different standards.</p>
+      <div class="behavior-label">Desired behavior</div>
+      <ul class="behaviors">
+        <li>Run the team leader role to the highest priority written standards.</li>
+        <li class="example">(example) Facilitate the start of shift and team meetings.</li>
+        <li class="example">(example) Ready the team member's workstation and tools before production starts.</li>
+        <li class="example">(example) Give team members quality feedback, and carry information across shifts.</li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Business challenges</span>
+      <span class="foot-num">6 / 9</span>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Pilot</div>
+      <h2>Success criteria</h2>
+      <div class="rule"></div>
+      <div class="two-col">
+        <div class="col">
+          <h3>From leadership perspective</h3>
+          <ul>
+            <li>Activities produce the intended outcome.</li>
+            <li>Participants execute the workplace practice.</li>
+            <li>Failed execution produces usable data.</li>
+            <li>Data surfaces new best practices and barriers.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>From participant perspective</h3>
+          <ul>
+            <li>The right activities for the outcomes.</li>
+            <li>Workable in the flow of work.</li>
+            <li>A good use of their time.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Success criteria</span>
+      <span class="foot-num">7 / 9</span>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Preliminary</div>
+      <h2>Timeline</h2>
+      <div class="rule"></div>
+      <p class="lead">Executive sponsors approve the pilot proposal plan by September 18.</p>
+      <table>
+        <thead><tr><th>Phase</th><th>Dates</th></tr></thead>
+        <tbody>
+          <tr><td>Setup</td><td class="dates">September 21 to October 15</td></tr>
+          <tr><td>Activities</td><td class="dates">October 15 to November 5</td></tr>
+          <tr><td>Post-pilot surveys and final reporting</td><td class="dates">November 5 to November 19</td></tr>
+        </tbody>
+      </table>
+      <div class="behavior-label">Milestones</div>
+      <ul class="milestones">
+        <li>Pilot proposal approved <span>September 18</span></li>
+        <li>Launch <span>October 15</span></li>
+        <li>Final report delivered <span>November 19</span></li>
+        <li>Approval to final report: 9 weeks <span>September 17 to November 19</span></li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <span class="foot-label">Timeline</span>
+      <span class="foot-num">8 / 9</span>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Before launch</div>
+      <h2>Required from the GM</h2>
+      <div class="rule"></div>
+      <ul class="checklist">
+        <li>Confirm four team leaders in Dave Elliott's area, with work email addresses.</li>
+        <li>Give participants access to email and a web browser. <span class="tag">In progress</span></li>
+        <li class="done">Send the job description, standard work, training material and job instruction sheets. <span class="tag done">Complete</span></li>
+        <li>Approve the pilot proposal plan. <span class="tag">In progress</span></li>
+        <li>Make participants available for setup interviews and the launch meeting. <span class="tag">In progress</span></li>
+        <li>Record executive sponsor video.</li>
+      </ul>
+    </div>
+    <div class="slide-foot">
+      <img src="https://app.flintls.com/logo.svg" alt="Flint" class="flint-logo" />
+      <span class="foot-num">9 / 9</span>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous slide">&#8593;</button>
+  <button id="next" aria-label="Next slide">&#8595;</button>
+</div>
+
+<script>
+(function(){
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  function current(){
+    var top = deck.scrollTop;
+    var idx = 0, best = Infinity;
+    slides.forEach(function(s,i){
+      var d = Math.abs(s.offsetTop - top);
+      if(d < best){best = d; idx = i;}
+    });
+    return idx;
+  }
+  function go(n){
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    deck.scrollTo({top: slides[n].offsetTop, behavior:'smooth'});
+  }
+  document.getElementById('next').addEventListener('click', function(){ go(current()+1); });
+  document.getElementById('prev').addEventListener('click', function(){ go(current()-1); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){ e.preventDefault(); go(current()+1); }
+    if(e.key === 'ArrowUp' || e.key === 'PageUp'){ e.preventDefault(); go(current()-1); }
+    if(e.key === 'Home'){ e.preventDefault(); go(0); }
+    if(e.key === 'End'){ e.preventDefault(); go(slides.length-1); }
+  });
+})();
+</script>
+</body>
+</html>
