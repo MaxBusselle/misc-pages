@@ -502,6 +502,15 @@ const BASE = 'https://maxbusselle.github.io/misc-pages/';
 
 const ASSETS = [
   {
+    file: 'jabil-mini-pilot3.pptx',
+    url: 'https://docs.google.com/presentation/d/1QGcqTsegpd5Cr06KFLZzESc1qWlysw6B/preview',
+    date: '2026-09-15',
+    title: 'Jabil Mini Pilot Proposal — Downtime Causes',
+    client: 'Jabil',
+    desc: 'Seven-day mini pilot proposal for shift supervisors on naming downtime causes, with the activity example, the pilot schedule, and what Jabil needs to provide. Opens in Google Slides.',
+    tags: ['Manufacturing', 'Pilot Proposal', 'Sales']
+  },
+  {
     file: 'Citizens_Fresh_Eyes_1_final_report_8-27-26.html',
     date: '2026-08-27',
     title: 'Fresh Eyes Pilot — Final Report',
@@ -1466,11 +1475,13 @@ function render() {
     const [yr, mo, dy] = asset.date.split('-');
     const dateStr = `${mo}/${dy}/${yr.slice(2)}`;
 
+    const href = asset.url ? asset.url : `${BASE}${encodeURIComponent(asset.file)}`;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="td-date">${dateStr}</td>
       <td class="td-title">
-        <a href="${BASE}${encodeURIComponent(asset.file)}" target="_blank" rel="noopener">${asset.title}</a>
+        <a href="${href}" target="_blank" rel="noopener">${asset.title}</a>
         <div class="td-desc">${asset.desc}</div>
       </td>
       <td class="td-client">${asset.client}</td>
@@ -1478,7 +1489,7 @@ function render() {
         ${asset.tags.map(t => `<span class="tag${activeTag===t?' active':''}" data-tag="${t}">${t}</span>`).join('')}
       </td>
       <td class="td-link">
-        <a href="${BASE}${encodeURIComponent(asset.file)}" target="_blank" rel="noopener" title="Open">
+        <a href="${href}" target="_blank" rel="noopener" title="Open">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
             <polyline points="15 3 21 3 21 9"/>
