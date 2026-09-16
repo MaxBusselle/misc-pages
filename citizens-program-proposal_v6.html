@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Focus — the plan going forward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sen:wght@400;500;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:20 18 17; --surface:30 27 25; --surface-2:41 37 34;
+    --ink:244 241 235; --muted-ink:170 161 150; --line:60 54 48; --line-strong:96 87 76;
+    --accent:#00965E; --accent-tint:#3CB98A;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font-head:'Andada Pro', Georgia, 'Times New Roman', serif;
+    --font-body:'Sen', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-mono:'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:rgb(var(--paper)); color:rgb(var(--ink)); font-family:var(--font-body); overflow:hidden; -webkit-font-smoothing:antialiased;}
+  .deck{position:fixed; inset:0; overflow:hidden;}
+
+  .topbar{
+    position:fixed; top:0; left:0; right:0; height:60px; z-index:50;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:0 40px; border-bottom:1px solid rgba(var(--line)/.7);
+    background:linear-gradient(rgb(var(--paper)), rgba(var(--paper)/.82));
+  }
+  .cz-word{font-family:var(--font-head); font-weight:700; font-size:21px; letter-spacing:.2px; color:var(--accent-tint); cursor:pointer; white-space:nowrap;}
+  .cz-word span{color:rgba(var(--muted-ink)/.9); font-weight:600;}
+  .navbtns{display:flex; gap:6px; flex-wrap:nowrap;}
+  .navbtn{
+    appearance:none; background:none; border:none; cursor:pointer;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.6px; text-transform:uppercase;
+    color:rgba(var(--muted-ink)/.85); padding:7px 11px; border-radius:7px; white-space:nowrap;
+    transition:color .25s var(--ease), background .25s var(--ease);
+  }
+  .navbtn:hover{color:rgb(var(--ink)); background:rgba(var(--surface-2)/.7);}
+  .navbtn.on{color:var(--accent-tint); background:rgba(0,150,94,.12);}
+  .flint{display:flex; align-items:center; gap:8px; white-space:nowrap;}
+  .flint .tag{font-family:var(--font-mono); font-size:12px; color:rgba(var(--muted-ink)/.8); letter-spacing:.3px;}
+  .flint .plate{background:#f4f1eb; border-radius:6px; padding:5px 7px; display:flex; align-items:center; height:30px;}
+  .flint .plate img{height:20px; display:block;}
+  .flint .fallback{font-family:var(--font-head); font-weight:700; color:#0f0e0d; font-size:15px; display:none;}
+
+  .slide{
+    position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center;
+    padding:94px 72px 68px; opacity:0; visibility:hidden; overflow:hidden;
+    transition:opacity .5s var(--ease);
+  }
+  .slide.on{opacity:1; visibility:visible;}
+  .wrap{width:100%; max-width:1200px; margin:0 auto;}
+  .wrap.narrow{max-width:1000px;}
+
+  [data-a], [data-step]{opacity:0; transform:translateY(22px); transition:opacity .6s var(--ease), transform .6s var(--ease);}
+  [data-a].v, [data-step].v{opacity:1; transform:none;}
+
+  .eyebrow{display:block; font-family:var(--font-mono); font-weight:500; font-size:15px; letter-spacing:2.2px; text-transform:uppercase; color:var(--accent-tint); margin-bottom:18px;}
+  h1.head{font-family:var(--font-head); font-weight:700; font-size:clamp(46px,5.2vw,72px); line-height:1.04; letter-spacing:-.5px;}
+  h2.head{font-family:var(--font-head); font-weight:600; font-size:clamp(40px,4vw,56px); line-height:1.08; letter-spacing:-.3px;}
+  .subhead{font-family:var(--font-head); font-style:italic; font-weight:400; font-size:clamp(22px,2.3vw,30px); margin-top:14px;}
+  .body{font-size:clamp(20px,2vw,24px); line-height:1.5; color:rgb(var(--muted-ink)); max-width:940px; margin-top:16px;}
+  .body strong{color:rgb(var(--ink)); font-weight:700;}
+  .rule{height:3px; width:64px; background:var(--accent); border-radius:2px; margin-top:24px;}
+  .quiet{font-size:17px; line-height:1.5; color:rgba(var(--muted-ink)/.8); margin-top:26px; max-width:780px;}
+  .src{font-family:var(--font-mono); font-size:13px; letter-spacing:.3px; color:rgba(var(--muted-ink)/.6); margin-top:20px;}
+
+  .title-slide h1.head{font-size:clamp(60px,8vw,116px); letter-spacing:-1.5px;}
+
+  .stats{display:flex; margin-top:26px; border:1px solid rgb(var(--line)); border-radius:14px; overflow:hidden;}
+  .stat{flex:1; padding:22px 24px; border-left:1px solid rgb(var(--line)); background:rgb(var(--surface));}
+  .stat:first-child{border-left:0;}
+  .stat .n{font-family:var(--font-head); font-weight:700; font-size:clamp(32px,3.5vw,44px); line-height:1; color:var(--accent-tint);}
+  .stat .l{font-size:15.5px; color:rgb(var(--ink)); margin-top:9px; font-weight:700; line-height:1.3;}
+  .stat .s{font-size:13.5px; color:rgb(var(--muted-ink)); margin-top:5px; line-height:1.35;}
+
+  .hero-line{font-size:clamp(20px,2.1vw,26px); line-height:1.45; color:rgb(var(--ink)); margin-top:24px; max-width:1010px;}
+  .hero-line b{color:var(--accent-tint); font-weight:700;}
+
+  .tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px;}
+  .tile{background:rgb(var(--surface)); border:1px solid rgb(var(--line)); border-radius:14px; padding:20px 20px 18px;}
+  .tile .n{font-family:var(--font-head); font-weight:700; font-size:clamp(28px,3vw,40px); line-height:1; color:var(--accent-tint);}
+  .tile .l{font-size:15px; color:rgb(var(--muted-ink)); margin-top:10px; line-height:1.35;}
+  .tile .l b{color:rgb(var(--ink)); font-weight:700;}
+
+  .callout{margin-top:22px; padding:20px 24px; border-left:3px solid var(--accent); background:rgba(var(--surface)/.6); border-radius:0 12px 12px 0; font-size:19px; line-height:1.5; color:rgb(var(--ink)); max-width:1010px;}
+  .callout b{color:var(--accent-tint);}
+
+  .layout2{display:grid; grid-template-columns:1.35fr 1fr; gap:44px; margin-top:24px; align-items:start;}
+  .bars{display:flex; flex-direction:column; gap:14px;}
+  .bar-row{display:grid; grid-template-columns:1fr 46px; gap:14px; align-items:center;}
+  .bar-label{font-size:17px; color:rgb(var(--ink)); line-height:1.25; grid-column:1 / -1; margin-bottom:-6px;}
+  .bar-track{height:12px; background:rgb(var(--surface-2)); border-radius:999px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:999px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .8s var(--ease);}
+  [data-a].v .bar-fill{transform:scaleX(1);}
+  .bar-val{font-family:var(--font-mono); font-size:16px; color:var(--accent-tint); text-align:right;}
+  .miniStats{display:flex; flex-direction:column; gap:13px;}
+  .mini{border:1px solid rgb(var(--line)); border-radius:12px; padding:14px 18px; background:rgb(var(--surface));}
+  .mini .n{font-family:var(--font-head); font-weight:700; font-size:27px; color:var(--accent-tint); line-height:1;}
+  .mini .l{font-size:14.5px; color:rgb(var(--muted-ink)); margin-top:6px; line-height:1.35;}
+
+  .quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px;}
+  .qcard{background:rgb(var(--surface)); border:1px solid rgb(var(--line)); border-left:3px solid var(--accent); border-radius:0 14px 14px 0; padding:22px 24px; display:flex; flex-direction:column;}
+  .qcard blockquote{font-family:var(--font-head); font-style:italic; font-size:17.5px; line-height:1.45; color:rgb(var(--ink)); margin:0;}
+  .qcard cite{font-family:var(--font-mono); font-style:normal; font-size:12.5px; letter-spacing:.4px; color:rgb(var(--muted-ink)); margin-top:13px; display:block;}
+  .qcard .chg{margin-top:13px; padding-top:13px; border-top:1px dotted rgb(var(--line-strong)); font-size:15px; line-height:1.4; color:rgba(var(--ink)/.92);}
+  .qcard .chg b{color:var(--accent-tint); font-weight:700; display:block; font-family:var(--font-mono); font-size:12px; letter-spacing:.6px; text-transform:uppercase; margin-bottom:5px;}
+  .footn{font-family:var(--font-mono); font-size:12.5px; color:rgba(var(--muted-ink)/.7); margin-top:18px; line-height:1.5;}
+
+  /* slide 6 — roles prominent (top), practices swim lane (below) */
+  .roles-big{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:22px;}
+  .rbc{background:rgb(var(--surface)); border:1px solid rgb(var(--line-strong)); border-top:3px solid var(--accent); border-radius:16px; padding:24px 22px 26px;}
+  .rbc .r{font-family:var(--font-head); font-weight:700; font-size:25px; color:rgb(var(--ink)); line-height:1.1;}
+  .rbc .n{font-family:var(--font-mono); font-size:15px; color:var(--accent-tint); margin-top:7px; display:block;}
+  .rbc .w{font-size:17px; color:rgb(var(--muted-ink)); margin-top:15px; line-height:1.4;}
+  .planewrap{margin-top:24px;}
+  .planelabel{font-family:var(--font-mono); font-size:12.5px; letter-spacing:1px; text-transform:uppercase; color:rgba(var(--muted-ink)/.85); margin-bottom:10px;}
+  .plane{display:flex; align-items:stretch; background:rgba(var(--surface-2)/.55); border:1px dashed rgb(var(--line-strong)); border-radius:12px; padding:8px;}
+  .pseg{flex:1; padding:12px 16px; display:flex; flex-direction:column; justify-content:center;}
+  .pseg .k{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--accent-tint);}
+  .pseg .t{font-family:var(--font-head); font-weight:600; font-size:17px; color:rgb(var(--ink)); margin-top:5px; line-height:1.15;}
+  .pseg .d{font-size:14.5px; color:rgba(var(--muted-ink)/.95); margin-top:4px; line-height:1.25;}
+  .pconn{display:flex; align-items:center; color:rgba(var(--muted-ink)/.5); font-size:20px;}
+
+  /* lessons */
+  .lcols{display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:22px;}
+  .lcol .h{font-family:var(--font-mono); font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--accent-tint); margin-bottom:14px;}
+  .litem{padding:12px 0; border-top:1px solid rgb(var(--line)); display:flex; gap:14px;}
+  .litem:first-of-type{border-top:none;}
+  .litem .lt{font-family:var(--font-head); font-weight:600; font-size:17.5px; color:rgb(var(--ink)); flex:0 0 200px; line-height:1.25;}
+  .litem .ld{font-size:15.5px; color:rgb(var(--muted-ink)); line-height:1.4; flex:1;}
+  .litem .lr{font-family:var(--font-head); font-weight:600; font-size:17px; color:var(--accent-tint); flex:0 0 130px;}
+
+  .beats{display:flex; flex-direction:column; gap:15px; margin-top:24px;}
+  .beat{display:flex; gap:22px; background:rgb(var(--surface)); border:1px solid rgb(var(--line)); border-radius:14px; padding:22px 26px; align-items:flex-start;}
+  .beat .mk{font-family:var(--font-head); font-weight:700; font-size:26px; color:var(--accent-tint); flex:0 0 34px; line-height:1.1;}
+  .beat .bt{font-size:19px; line-height:1.45; color:rgb(var(--ink));}
+  .beat .bt em{color:rgb(var(--muted-ink)); font-style:normal;}
+  .beat .bt strong{color:rgb(var(--ink)); font-weight:700;}
+
+  /* fm improvements (with source tags) */
+  .imp{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:20px;}
+  .impc{background:rgb(var(--surface)); border:1px solid rgb(var(--line)); border-radius:14px; padding:18px 24px 20px;}
+  .impc .st{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--accent-tint); display:block; margin-bottom:9px;}
+  .impc .t{font-family:var(--font-head); font-weight:600; font-size:20px; color:rgb(var(--ink)); line-height:1.2;}
+  .impc .p{font-size:15.5px; color:rgb(var(--muted-ink)); margin-top:8px; line-height:1.4;}
+  .impc .p b{color:rgb(var(--ink)); font-weight:700;}
+
+  /* catalog + other-program buckets */
+  .cat{display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin-top:20px;}
+  .ci{background:rgb(var(--surface)); border:1px solid rgb(var(--line)); border-radius:12px; padding:15px 18px;}
+  .ci.near{border-color:rgba(0,150,94,.5); box-shadow:inset 0 0 0 1px rgba(0,150,94,.22);}
+  .ci .t{font-family:var(--font-head); font-weight:600; font-size:18px; color:rgb(var(--ink)); line-height:1.2;}
+  .ci .badge{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--accent-tint); margin-left:6px;}
+  .ci .p{font-size:14px; color:rgb(var(--muted-ink)); margin-top:7px; line-height:1.35;}
+  .buckets{margin-top:22px; padding-top:18px; border-top:1px solid rgb(var(--line-strong));}
+  .buckets .h{font-family:var(--font-mono); font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--accent-tint); margin-bottom:12px;}
+  .brow{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .bk{background:rgba(var(--surface)/.7); border:1px solid rgb(var(--line)); border-radius:12px; padding:15px 20px;}
+  .bk .t{font-family:var(--font-head); font-weight:600; font-size:19px; color:rgb(var(--ink)); line-height:1.15;}
+  .bk .d{font-size:15px; color:rgb(var(--muted-ink)); margin-top:6px; line-height:1.35;}
+
+  /* next */
+  .twocol{display:flex; gap:56px; margin-top:22px;}
+  .twocol .col{flex:1;}
+  .collabel{font-family:var(--font-mono); font-size:14px; letter-spacing:1px; text-transform:uppercase; color:var(--accent-tint); display:block; margin-bottom:14px;}
+  .needs{display:flex; flex-direction:column; gap:12px;}
+  .need{font-size:18.5px; line-height:1.4; color:rgb(var(--ink));}
+  .need em{color:rgb(var(--muted-ink)); font-style:normal; font-family:var(--font-mono); font-size:14px; display:block; margin-top:3px;}
+  .closingline{font-size:20px; line-height:1.5; color:rgb(var(--ink)); margin-top:24px; max-width:1020px;}
+  .closingline b{color:var(--accent-tint); font-weight:700;}
+
+  .prog{position:fixed; bottom:0; left:0; width:100%; height:3px; background:rgba(var(--line)/.5); z-index:50;}
+  .prog-f{height:100%; background:var(--accent); width:0; transition:width .6s var(--ease);}
+  .counter{position:fixed; bottom:14px; right:40px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.6px; color:rgba(var(--muted-ink)/.7); z-index:50;}
+  .stephint{position:fixed; bottom:14px; left:40px; font-family:var(--font-mono); font-size:12px; letter-spacing:.5px; color:rgba(var(--accent-tint)/.85); z-index:50; opacity:0; transition:opacity .3s;}
+  .stephint.show{opacity:1;}
+
+  @media (max-height:900px){
+    .slide{padding:84px 60px 58px;}
+    .stat{padding:18px 20px;} .tile{padding:16px 18px;} .qcard{padding:18px 20px;}
+    .rbc{padding:20px 20px 22px;} .rbc .r{font-size:23px;}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <div class="topbar">
+    <div class="cz-word" onclick="go(0)">Citizens <span>| Real Estate Operations</span></div>
+    <div class="navbtns" id="navbtns"></div>
+    <div class="flint">
+      <span class="tag">Flint</span>
+      <span class="plate"><img src="https://app.flintls.com/logo.svg" alt="Flint" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"><span class="fallback">Flint</span></span>
+    </div>
+  </div>
+
+  <!-- 1 · COVER -->
+  <section class="slide title-slide on" data-sec="cover">
+    <div class="wrap">
+      <span class="eyebrow" data-a>Program Proposal · Real Estate Operations</span>
+      <h1 class="head" data-a data-d="1">Customer&nbsp;Focus</h1>
+      <div class="subhead" data-a data-d="2">The plan going forward.</div>
+      <p class="body" data-a data-d="3">From the Fresh Eyes pilot to a customer-first standard across the estate — the everyday work behind Reimagine the Bank.</p>
+      <p class="quiet" data-a data-d="4">Our proposal for Citizens, built on the pilot. Nothing here has been confirmed with your teams yet.</p>
+    </div>
+  </section>
+
+  <!-- 2 · PILOT RESULTS -->
+  <section class="slide" data-sec="pilot">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The pilot · May–July 2026</span>
+      <h2 class="head" data-a data-d="1">The pilot worked.</h2>
+      <p class="body" data-a data-d="2">Fresh Eyes ran for ten weeks with <strong>43 facility managers</strong> across Real Estate Operations. Each week they took one short activity onto a branch visit already on their schedule and finished with a finding logged in FAMIS 360.</p>
+      <div class="stats" data-a data-d="3">
+        <div class="stat"><div class="n">290</div><div class="l">Activities completed</div><div class="s">Average 6.9 each, range 2–11</div></div>
+        <div class="stat"><div class="n">221</div><div class="l">Branches walked</div><div class="s">The working estate, not showcase sites</div></div>
+        <div class="stat"><div class="n">91%</div><div class="l">Ended with a logged finding</div><div class="s">263 of 290, from the first week on</div></div>
+        <div class="stat"><div class="n">≈2 pts</div><div class="l">Higher manager ratings</div><div class="s">Of their people, after the pilot, 0–10</div></div>
+      </div>
+      <p class="hero-line" data-a data-d="4">Managers rated their people <b>about two points higher</b> on documenting findings and surfacing issues that work orders and inspections had missed — the harder of the two measures to move.</p>
+      <p class="src" data-a data-d="5">Source: Fresh Eyes initiative record and matched baseline and follow-up surveys, May 5 – July 17, 2026.</p>
+    </div>
+  </section>
+
+  <!-- 3 · ENGAGEMENT -->
+  <section class="slide" data-sec="pilot">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The pilot · Engagement</span>
+      <h2 class="head" data-a data-d="1">They showed up, and kept at it.</h2>
+      <p class="body" data-a data-d="2">Engagement held across the full ten weeks rather than tailing off after the first two weeks — on real work, on their own schedules. That is what gives us confidence it holds as we extend it.</p>
+      <div class="tiles" data-a data-d="3">
+        <div class="tile"><div class="n">42 of 43</div><div class="l"><b>completed at least one</b> activity — near-total take-up</div></div>
+        <div class="tile"><div class="n">10 weeks</div><div class="l"><b>no drop-off</b> — the logging rate held from week one</div></div>
+        <div class="tile"><div class="n">181</div><div class="l">of 221 branches walked <b>once</b> — real coverage, not repeats</div></div>
+        <div class="tile"><div class="n">43 of 48</div><div class="l"><b>transfer test:</b> asked to find one thing unrelated to why they came, they did</div></div>
+      </div>
+      <p class="callout" data-a data-d="4">The transfer test is the cleanest proof in the pilot: <b>the eye stays open after the task is done</b>. People came for one job and still logged something that had nothing to do with it.</p>
+    </div>
+  </section>
+
+  <!-- 4 · ISSUE CATEGORIES -->
+  <section class="slide" data-sec="pilot">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The pilot · What surfaced</span>
+      <h2 class="head" data-a data-d="1">What the eye caught.</h2>
+      <p class="body" data-a data-d="2">The top categories of customer-visible issues, across 290 activities. Most activities surfaced more than one, so shares total above 100%.</p>
+      <div class="layout2">
+        <div class="bars" data-a data-d="3">
+          <div class="bar-row"><div class="bar-label">Cleanliness and janitorial execution</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">42%</div></div>
+          <div class="bar-row"><div class="bar-label">Flooring, carpet, mats, cove base</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-val">26%</div></div>
+          <div class="bar-row"><div class="bar-label">Parking, pavement, sidewalks, drive-thru</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-val">26%</div></div>
+          <div class="bar-row"><div class="bar-label">Paint, walls, trim, patching</div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><div class="bar-val">23%</div></div>
+          <div class="bar-row"><div class="bar-label">HVAC, plumbing, equipment, ATM</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div class="bar-val">22%</div></div>
+        </div>
+        <div class="miniStats" data-a data-d="4">
+          <div class="mini"><div class="n">48</div><div class="l">vendor accountability actions — 8 secured a committed date on site</div></div>
+          <div class="mini"><div class="n">44</div><div class="l">repeat issues logged with a named root cause, not logged again</div></div>
+          <div class="mini"><div class="n">15</div><div class="l">landlord and lease-scope escalations resolved to an owner</div></div>
+          <div class="mini"><div class="n">13</div><div class="l">safety and ADA hazards — none of them the reason for the visit</div></div>
+        </div>
+      </div>
+      <p class="src" data-a data-d="5">Cleanliness led at 42% — a vendor-execution and standards problem, and the cheaper of the two to fix. Source: pilot activity record, classified from each participant's own description.</p>
+    </div>
+  </section>
+
+  <!-- 5 · PARTICIPANT ADVICE -->
+  <section class="slide" data-sec="pilot">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The pilot · In their words</span>
+      <h2 class="head" data-a data-d="1">The people doing it told us how.</h2>
+      <p class="body" data-a data-d="2">Every activity ends by asking what you would tell the next person. 263 of 290 produced an answer — and several are now built into the program.</p>
+      <div class="quotes">
+        <div class="qcard" data-a data-d="3">
+          <blockquote>"Ask questions of the colleagues who work there everyday if they are aware of anything that needs repaired that may not be obvious to someone simply 'looking'."</blockquote>
+          <cite>Senior Facility Manager · May 12</cite>
+          <div class="chg"><b>Built in</b>The next wave puts Fresh Eyes with exactly those people — the frontline in the buildings every day.</div>
+        </div>
+        <div class="qcard" data-a data-d="4">
+          <blockquote>"…look back into the 360 log for their specific site to understand the history of what you are about to troubleshoot."</blockquote>
+          <cite>Facility Manager · Jun 8</cite>
+          <div class="chg"><b>Built in</b>Reviewing the site's 360 history before the visit is part of the practice that finds why an issue keeps coming back.</div>
+        </div>
+        <div class="qcard" data-a data-d="5">
+          <blockquote>"If you have issues with your parking lots or sidewalks make sure you visit them when it is raining. You may find much more details to your issues. Especially recurring issues."</blockquote>
+          <cite>Facility Manager · May 28</cite>
+          <div class="chg"><b>Built in</b>The pilot produced a library of peer tips like this — the next group starts from it, not from scratch.</div>
+        </div>
+      </div>
+      <p class="footn" data-a data-d="6">Participants' own words from the pilot's coaching record, reproduced as written; an ellipsis marks a trim. Roles shown in place of names.</p>
+    </div>
+  </section>
+
+  <!-- 6 · FOUR ROLES (prominent) + PRACTICES SWIM LANE -->
+  <section class="slide" data-sec="roles">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The program · Fresh Eyes</span>
+      <h2 class="head" data-a data-d="1">One initiative, four frontline roles.</h2>
+      <p class="body" data-a data-d="2">The coaching adapts to how the work reaches each role. Everyone runs the same three practices underneath.</p>
+      <div class="roles-big" data-a data-d="3">
+        <div class="rbc"><div class="r">Senior techs</div><span class="n">66 people</span><div class="w">On the next dispatch — findings unrelated to the job they came for.</div></div>
+        <div class="rbc"><div class="r">Landscape leads</div><span class="n">11 people</span><div class="w">Their rounds and the weekly huddle — the arrival path from the road.</div></div>
+        <div class="rbc"><div class="r">Flooring</div><span class="n">~20 people</span><div class="w">The empty building at night — what they see that isn't the floor.</div></div>
+        <div class="rbc"><div class="r">Quality control</div><span class="n">6 people</span><div class="w">Re-inspecting their own score — the customer path over the form.</div></div>
+      </div>
+      <div class="planewrap" data-a data-d="4">
+        <div class="planelabel">The shared track · three practices, in order</div>
+        <div class="plane">
+          <div class="pseg"><div class="k">Practice one</div><div class="t">Fresh Eyes Walkthrough</div><div class="d">See what you've stopped seeing</div></div>
+          <div class="pconn">→</div>
+          <div class="pseg"><div class="k">Practice two</div><div class="t">Catch the Repetitive Issue</div><div class="d">Find out why it keeps coming back</div></div>
+          <div class="pconn">→</div>
+          <div class="pseg"><div class="k">Practice three</div><div class="t">Customer-Eye Audit</div><div class="d">Fix what a customer notices first</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · WHAT CHANGED, AND WHY -->
+  <section class="slide" data-sec="roles">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The program · What changed, and why</span>
+      <h2 class="head" data-a data-d="1">Rebuilt with the pilot's lessons.</h2>
+      <p class="body" data-a data-d="2">The pilot was built for facility managers who own a branch. The rebuild changes real things so it fits people who work across the estate.</p>
+      <div class="lcols">
+        <div class="lcol" data-a data-d="3">
+          <div class="h">Across the board</div>
+          <div class="litem"><div class="lt">Coaching, not audit</div><div class="ld">The tone asks what you noticed, not whether you found enough.</div></div>
+          <div class="litem"><div class="lt">Safety in every activity</div><div class="ld">Walking surfaces, mats and trip hazards — named for every role, even with no work order.</div></div>
+          <div class="litem"><div class="lt">Scope, not a clock</div><div class="ld">One zone or the full customer path — a published time never becomes a reason to skip a site.</div></div>
+          <div class="litem"><div class="lt">A number or a photo</div><div class="ld">A work-order number where there is one; a photo where there isn't. The pilot couldn't verify photos alone.</div></div>
+          <div class="litem"><div class="lt">Past your own trade</div><div class="ld">Log what a customer sees, not only your scope — where the pilot's cross-trade findings came from.</div></div>
+        </div>
+        <div class="lcol" data-a data-d="4">
+          <div class="h">By role</div>
+          <div class="litem"><div class="lr">Senior techs</div><div class="ld">Keys off the next dispatch; findings must be unrelated to the job; a P1 first, then a reset; an escalation path above their authority.</div></div>
+          <div class="litem"><div class="lr">Landscape leads</div><div class="ld">The walk starts at the road; repeats counted in seasons, not days; findings land at the weekly huddle; still works in winter.</div></div>
+          <div class="litem"><div class="lr">Flooring</div><div class="ld">The empty night building is the advantage; one zone, not the whole site; the point is what they see that isn't the floor.</div></div>
+          <div class="litem"><div class="lr">Quality control</div><div class="ld">Re-walk a branch they've already scored; the customer path over the form; close the gap between a score and a work order.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · FACILITY MANAGERS (stepped) -->
+  <section class="slide" data-sec="fm" data-stepped>
+    <div class="wrap">
+      <span class="eyebrow" data-a>The program · Facility managers</span>
+      <h2 class="head" data-a data-d="1">From doing the walks to coaching the team.</h2>
+      <p class="body" data-a data-d="2">Facility managers ran the pilot. In the next wave they shift from doing the walks to validating and coaching.</p>
+      <div class="beats">
+        <div class="beat" data-a data-d="3">
+          <div class="mk">1</div>
+          <div class="bt">They validate the frontline. When a tech reports a success, the manager gets a quick question to confirm it. <em>A check, not a gate — it keeps managers close to the work and makes them the route the standard travels to the team.</em></div>
+        </div>
+        <div class="beat" data-step>
+          <div class="mk">2</div>
+          <div class="bt">They move to their own next initiative — <strong>Building Your Team's Quality Eye</strong>, coaching their team to the standard. <em>Our recommendation for the second initiative, open to refinement with you.</em></div>
+        </div>
+        <div class="beat" data-step>
+          <div class="mk">3</div>
+          <div class="bt">New and existing managers go through the refreshed Fresh Eyes themselves. <em>So they've done the frontline work before they coach it — and the three new managers get it as they join.</em></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · OTHER INITIATIVES + OTHER PROGRAM BUCKETS -->
+  <section class="slide" data-sec="program">
+    <div class="wrap">
+      <span class="eyebrow" data-a>The program · Where it can go</span>
+      <h2 class="head" data-a data-d="1">Customer Focus is a catalog we grow together.</h2>
+      <p class="body" data-a data-d="2">Fresh Eyes is first and the facility-manager initiative is next. The rest under this program is direction, not committed.</p>
+      <div class="cat" data-a data-d="3">
+        <div class="ci near"><div class="t">Fresh Eyes<span class="badge">building now</span></div><div class="p">See a branch through a customer's eyes.</div></div>
+        <div class="ci near"><div class="t">Building Your Team's Quality Eye<span class="badge">next</span></div><div class="p">Leaders coach their team to the standard.</div></div>
+        <div class="ci"><div class="t">Holding Vendors Accountable</div><div class="p">Check vendor work before sign-off — 48 vendor actions in the pilot.</div></div>
+        <div class="ci"><div class="t">Prioritizing Work</div><div class="p">Rank by customer impact, not by ease of fix.</div></div>
+        <div class="ci"><div class="t">Peak-Moment Readiness</div><div class="p">Branches ready for their busiest days.</div></div>
+        <div class="ci"><div class="t">The Customer's Seat</div><div class="p">Accessibility friction on the customer path.</div></div>
+      </div>
+      <div class="buckets" data-a data-d="4">
+        <div class="h">Other programs we've mapped for Real Estate Operations — idea stage</div>
+        <div class="brow">
+          <div class="bk"><div class="t">Branch Presentation &amp; Upkeep</div><div class="d">Keep every branch looking and running to standard.</div></div>
+          <div class="bk"><div class="t">Safety</div><div class="d">Catch everyday risk before someone gets hurt.</div></div>
+          <div class="bk"><div class="t">Frontline Leadership</div><div class="d">Help frontline leaders coach their teams.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · WHAT HAPPENS NEXT -->
+  <section class="slide" data-sec="next">
+    <div class="wrap">
+      <span class="eyebrow" data-a>To move this forward</span>
+      <h2 class="head" data-a data-d="1">What happens next.</h2>
+      <p class="body" data-a data-d="2">We build the two initiatives first — the rebuilt Fresh Eyes and Building Your Team's Quality Eye — ready by late September, once the contract clears legal.</p>
+      <div class="twocol">
+        <div class="col" data-a data-d="3">
+          <span class="collabel">What we'd need from you</span>
+          <div class="needs">
+            <div class="need">The flooring roster and iPad readiness <em>Debbie and Hannah</em></div>
+            <div class="need">Confirmed headcounts by role <em>from the org chart</em></div>
+            <div class="need">The launch date <em>picked with the learners and their managers, not imposed</em></div>
+          </div>
+        </div>
+        <div class="col" data-a data-d="4">
+          <span class="collabel">Still to work through with Debbie</span>
+          <div class="needs">
+            <div class="need">Whether facility managers run one walk-through this wave or next.</div>
+            <div class="need">Whether quality control managers receive work orders or only create them.</div>
+            <div class="need">The cadence for onboarding new managers.</div>
+          </div>
+        </div>
+      </div>
+      <p class="closingline" data-a data-d="5">We'll show the behavior changing. Your QC pass rates, customer complaints and executive escalations are yours to read — <b>worth watching alongside this.</b></p>
+    </div>
+  </section>
+
+  <div class="prog"><div class="prog-f" id="progf"></div></div>
+  <div class="counter" id="counter"></div>
+  <div class="stephint" id="stephint">▸ more on this slide</div>
+
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var sections = [
+    {key:'pilot', label:'Pilot'}, {key:'roles', label:'Fresh Eyes'},
+    {key:'fm', label:'Facility Managers'}, {key:'program', label:'The Program'},
+    {key:'next', label:"What's Next"}
+  ];
+  var cur = 0, step = 0;
+
+  var navc = document.getElementById('navbtns');
+  sections.forEach(function(s){
+    var b=document.createElement('button'); b.className='navbtn'; b.textContent=s.label; b.dataset.key=s.key;
+    b.addEventListener('click', function(){ jump(s.key); });
+    navc.appendChild(b);
+  });
+
+  function isStepped(sl){ return sl.hasAttribute('data-stepped'); }
+  function stepsOf(sl){ return sl.querySelectorAll('[data-step]'); }
+  function showSteps(sl, upTo){ stepsOf(sl).forEach(function(e,k){ e.classList.toggle('v', k<upTo); }); }
+
+  function ain(sl){
+    sl.querySelectorAll('[data-a]').forEach(function(el){
+      el.classList.remove('v');
+      var d=parseFloat(el.dataset.d||0);
+      setTimeout(function(){ el.classList.add('v'); }, 60 + d*110);
+    });
+  }
+  function aout(sl){ sl.querySelectorAll('[data-a],[data-step]').forEach(function(e){ e.classList.remove('v'); }); }
+
+  function render(){
+    slides.forEach(function(s,i){ s.classList.toggle('on', i===cur); });
+    var sec=slides[cur].dataset.sec;
+    Array.prototype.forEach.call(navc.children, function(b){ b.classList.toggle('on', b.dataset.key===sec); });
+    document.getElementById('progf').style.width=(cur/(slides.length-1))*100+'%';
+    document.getElementById('counter').textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    var sl=slides[cur];
+    document.getElementById('stephint').classList.toggle('show', isStepped(sl) && step < stepsOf(sl).length);
+  }
+  function go(i, dir){
+    i=Math.max(0, Math.min(slides.length-1, i));
+    if(i===cur){ return; }
+    aout(slides[cur]); slides[cur].classList.remove('on');
+    cur=i; var sl=slides[cur]; sl.classList.add('on'); ain(sl);
+    if(isStepped(sl)){ step = (dir==='back') ? stepsOf(sl).length : 0; showSteps(sl, step); }
+    else { step=0; }
+    render();
+  }
+  function next(){
+    var sl=slides[cur];
+    if(isStepped(sl) && step < stepsOf(sl).length){ step++; showSteps(sl, step); render(); return; }
+    if(cur < slides.length-1) go(cur+1, 'fwd');
+  }
+  function prev(){
+    var sl=slides[cur];
+    if(isStepped(sl) && step > 0){ step--; showSteps(sl, step); render(); return; }
+    if(cur > 0) go(cur-1, 'back');
+  }
+  function jump(key){
+    for(var i=0;i<slides.length;i++){ if(slides[i].dataset.sec===key){ go(i, 'jump'); return; } }
+  }
+  window.go=go;
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); next(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); prev(); }
+    else if(/^[1-9]$/.test(e.key)){ var n=parseInt(e.key)-1; if(n<slides.length) go(n,'jump'); }
+  });
+  document.getElementById('deck').addEventListener('click', function(e){
+    if(e.target.closest('.topbar')) return;
+    var x=e.clientX/window.innerWidth;
+    if(x>0.75) next(); else if(x<0.25) prev();
+  });
+  var tx=0;
+  document.addEventListener('touchstart', function(e){ tx=e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e){ var d=tx-e.changedTouches[0].clientX; if(Math.abs(d)>50){ d>0?next():prev(); } });
+
+  render();
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ ain(slides[0]); }); });
+</script>
+</body>
+</html>
