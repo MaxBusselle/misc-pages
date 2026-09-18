@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wentzville Candidate Initiatives</title>
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400;600&family=Sen:wght@400;700&family=Geist+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+  :root{
+    --paper:#141211; --surface:#1e1b19; --surface-2:#292522;
+    --ink:#f4f1eb; --muted:#aaa196; --line:#3c3630; --line-strong:#60574c;
+    --blue:#3fa8d4; --blue-dim:#2a7ea0; --orange:#f99c24; --cream:#ebe5dc;
+    --serif:"Andada Pro",Georgia,"Times New Roman",serif;
+    --sans:"Sen","Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"Geist Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --ease:cubic-bezier(.16,1,.3,1);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:36px 64px}
+  a{color:var(--blue)}
+  button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+  button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
+  .mono{font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+  .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block}
+
+  /* header */
+  header h1{font:400 clamp(30px,4.6vw,44px)/1.1 var(--serif);margin:10px 0 14px;text-wrap:balance;letter-spacing:-.005em}
+  .built{color:var(--muted);margin:0 0 26px;max-width:62ch}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 28px;margin:0 0 32px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .how p{margin:0;max-width:34ch}
+  .how p b{display:block;font:600 17px/1.3 var(--serif);margin-bottom:4px}
+  @media (max-width:720px){.how{grid-template-columns:1fr}}
+
+  /* overview grid */
+  .overview{display:grid;grid-template-columns:minmax(150px,1.3fr) repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 14px}
+  .overview>div{background:var(--paper);padding:12px 14px;min-height:52px}
+  .overview .hd{background:var(--surface);color:var(--muted);font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:flex-end}
+  .overview .rowlab{background:var(--surface);font:600 17px/1.25 var(--serif);display:flex;flex-direction:column;justify-content:center;gap:2px}
+  .overview .rowlab small{font:400 13px var(--mono);color:var(--muted);letter-spacing:.05em}
+  .overview button.cell{display:flex;width:100%;height:100%;align-items:baseline;justify-content:space-between;gap:8px;text-align:left;padding:2px 0;transition:color .3s var(--ease)}
+  .overview button.cell:hover{color:var(--blue)}
+  .overview button.cell .n{font:500 22px/1 var(--mono);color:var(--ink)}
+  .overview button.cell:hover .n{color:var(--blue)}
+  .overview button.cell .open{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.04em}
+  .overview button.cell.dim .n{color:var(--muted)}
+  @media (max-width:720px){
+    .overview{grid-template-columns:1fr}
+    .overview .hd{display:none}
+    .overview button.cell::before{content:attr(data-aud);font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-right:auto}
+    .overview button.cell{justify-content:flex-start;gap:14px}
+  }
+  .legend{display:flex;flex-wrap:wrap;gap:8px 26px;color:var(--muted);font-size:14px;margin:0 0 44px}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;flex:none}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--cream);border:1px solid var(--cream);border-radius:2px;padding:1px 6px;white-space:nowrap}
+  .tag.sample{opacity:.85}
+
+  /* tabs */
+  .tabs{display:flex;gap:0 28px;border-bottom:1px solid var(--line-strong);margin:0 0 22px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{font:400 22px/1.2 var(--serif);color:var(--muted);padding:10px 2px 12px;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;display:flex;align-items:baseline;gap:10px;transition:color .3s var(--ease),border-color .3s var(--ease)}
+  .tab small{font:400 13px var(--mono);letter-spacing:.06em;color:var(--muted)}
+  .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
+  .tab:hover{color:var(--ink)}
+  .program-line{font:400 19px/1.45 var(--serif);margin:0 0 26px;max-width:60ch;color:var(--ink)}
+
+  /* audience slides */
+  .slidebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 6px}
+  .seg{display:inline-flex;flex-wrap:wrap;max-width:100%;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden}
+  .seg button{padding:7px 14px;color:var(--muted);border-right:1px solid var(--line-strong);transition:background .3s var(--ease),color .3s var(--ease)}
+  @media (max-width:720px){.seg{display:flex;width:100%}.seg button{flex:1 1 0;padding:8px 6px;font-size:14px;text-align:center;white-space:normal}.slidebar>*{max-width:100%}}
+  .seg button:last-child{border-right:0}
+  .seg button[aria-selected="true"]{background:var(--surface-2);color:var(--ink)}
+  .arrows{display:inline-flex;gap:6px}
+  .arrows button{width:34px;height:34px;border:1px solid var(--line-strong);border-radius:3px;color:var(--muted);display:grid;place-items:center;font-family:var(--mono)}
+  .arrows button:hover{color:var(--ink);border-color:var(--ink)}
+  .who{color:var(--muted);margin:0 0 6px;font-size:14px}
+
+  .items{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .item{border-bottom:1px solid var(--line)}
+  .item-head{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;padding:15px 2px}
+  .item-head .num{font:500 13px/1.7 var(--mono);color:var(--muted);min-width:22px;letter-spacing:.04em}
+  .item-head .name{font:400 19px/1.3 var(--serif);flex:1 1 auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+  .item-head .chev{color:var(--muted);font-family:var(--mono);transition:transform .3s var(--ease);margin-top:4px}
+  .item[data-open="true"] .item-head .chev{transform:rotate(90deg)}
+  .item-head:hover .name{color:var(--blue)}
+  .detail{display:none;padding:0 2px 18px 36px}
+  .item[data-open="true"] .detail{display:block}
+  .dgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:14px 28px}
+  .dgrid>div{max-width:52ch}
+  .dgrid .lab,.gmq .lab{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .gmq{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-strong);max-width:62ch}
+  .gmq .lab{color:var(--orange)}
+  .gmq p{margin:0;font:400 17px/1.45 var(--serif)}
+  .fold{margin-top:10px;color:var(--muted);font-size:14px}
+  @media (max-width:720px){.dgrid{grid-template-columns:1fr}.detail{padding-left:2px}}
+
+  /* the plan */
+  .cal{margin:0 0 52px}
+  .cal h2{font:400 24px/1.25 var(--serif);margin:6px 0 8px;max-width:34ch}
+  .cal .note{color:var(--muted);margin:0 0 20px;max-width:68ch}
+  .calgrid{display:grid;grid-template-columns:max-content 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .calgrid>*{background:var(--paper);padding:12px 14px}
+  .calgrid .hd{background:var(--surface);color:var(--muted);font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+  .calgrid .q{background:var(--surface);font:500 13px var(--mono);letter-spacing:.04em;color:var(--ink);display:flex;align-items:center;white-space:nowrap}
+  .calcell{display:flex;flex-direction:column;gap:5px}
+  .calcell.run{box-shadow:inset 2px 0 0 var(--blue-dim)}
+  .calcell .pname{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+  .calcell button.init{font:400 17px/1.35 var(--serif);text-align:left;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;transition:color .3s var(--ease)}
+  .calcell button.init:hover{color:var(--blue)}
+  .calcell .empty{margin:0;color:var(--muted);font-size:14px}
+  .letter{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line-strong);border-radius:2px;padding:0 5px;flex:none}
+  .progs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px 28px;margin:24px 0 0}
+  .prog{box-shadow:inset 2px 0 0 var(--line-strong);padding-left:12px}
+  .prog b{display:block;font:600 16px/1.3 var(--serif)}
+  .prog .meta{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--muted);margin:3px 0 5px}
+  .prog p{margin:0;color:var(--muted);font-size:14px}
+  .calfoot{color:var(--muted);font-size:14px;margin:20px 0 0;max-width:74ch}
+  @media (max-width:720px){
+    .calgrid{grid-template-columns:1fr}
+    .calgrid .hd{display:none}
+    .calcell::before{content:attr(data-role);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  }
+
+  /* band */
+  .band{margin:56px 0 0;padding:26px 0 0;border-top:1px solid var(--line-strong)}
+  .band h2{font:400 24px/1.2 var(--serif);margin:6px 0 6px}
+  .band .note{color:var(--muted);margin:0 0 18px;max-width:62ch}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chips details{border:1px solid var(--line-strong);border-radius:3px;background:var(--surface)}
+  .chips summary{list-style:none;cursor:pointer;padding:8px 14px;font:400 16px var(--sans);color:var(--ink)}
+  .chips summary::-webkit-details-marker{display:none}
+  .chips details[open]{flex-basis:100%}
+  .chips details[open] summary{border-bottom:1px solid var(--line);color:var(--blue)}
+  .chips .body{padding:12px 14px 14px;max-width:70ch}
+  .chips .body p{margin:0}
+  .chips .body .gm{margin-top:8px;color:var(--cream);font:400 16px/1.45 var(--serif)}
+
+  /* left off */
+  .leftoff{margin:36px 0 0}
+  .leftoff summary{cursor:pointer;font:400 18px var(--serif);color:var(--muted);list-style:none;display:inline-flex;gap:10px;align-items:baseline}
+  .leftoff summary::-webkit-details-marker{display:none}
+  .leftoff summary::before{content:"+";font-family:var(--mono);color:var(--blue)}
+  .leftoff[open] summary::before{content:"–"}
+  .leftoff[open] summary{color:var(--ink)}
+  .leftoff dl{margin:16px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:10px 22px;max-width:76ch}
+  .leftoff dt{font:600 16px var(--serif)}
+  .leftoff dd{margin:0;color:var(--muted)}
+  @media (max-width:720px){.leftoff dl{grid-template-columns:1fr;gap:4px}.leftoff dd{margin-bottom:8px}}
+
+  .group-hd{list-style:none;padding:26px 2px 8px;font:400 17px/1.3 var(--serif);color:var(--blue)}
+  .group-hd:first-child{padding-top:14px}
+  .ex{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-strong)}
+  .ex .lab{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .ex .pn{font:400 17px/1.4 var(--serif);margin:0 0 4px}
+  .ex .ev{color:var(--muted);font-size:14px;margin:4px 0 0}
+  .ex button.where{color:var(--blue);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-align:left}
+  .ex button.where:hover{color:var(--ink)}
+  /* the band's cross-reference */
+  .appears{margin-top:10px;color:var(--muted);font-size:14px}
+  .appears ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+  .appears button{text-align:left;color:var(--ink);font-size:15px;line-height:1.4}
+  .appears button:hover{color:var(--blue)}
+  .appears button small{color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.04em;margin-left:8px}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow" id="eyebrow"></span>
+    <h1 id="h1"></h1>
+    <p class="built" id="built"></p>
+    <div class="how" id="how"></div>
+    <div class="overview" id="overview" aria-label="All programs and roles"></div>
+    <div class="legend" id="legend"></div>
+  </header>
+
+  <section class="cal" id="cal" aria-label="The plan"></section>
+
+  <nav class="tabs" role="tablist" id="tabs" aria-label="Programs"></nav>
+  <section class="program" aria-live="polite">
+    <p class="program-line" id="pline"></p>
+    <div class="slidebar">
+      <div class="seg" role="tablist" id="seg" aria-label="Roles"></div>
+    </div>
+    <div class="slide" id="slide">
+      <p class="who" id="who"></p>
+      <ul class="items" id="items"></ul>
+    </div>
+  </section>
+
+  <section class="band" id="band"></section>
+  <details class="leftoff" id="leftoff"></details>
+
+  <footer>
+    <span>Flint · 18 September 2026</span>
+    <span>GM's own words throughout. No figure on this page is ours.</span>
+  </footer>
+</div>
+
+<script>
+const DATA = {"title": "GM Wentzville", "subtitle": "Candidate initiatives, in the order we propose to build them", "built": "Built from GM's roles and responsibilities deck, the J1 and IP Glass standard task sheets, and the calls of 10 and 16 September. GM's columns, in GM's order.", "how": ["Work the role already owns, on a schedule GM already wrote down. Each line could become a ten-week initiative.", "The order we propose to build them in. A tag says which quarter. GM sorted the Quality list on 16 September.", "Tell us where the order is wrong. Confirm the first initiative starts the week of 5 October."], "legend": {"gap": "GM named this going wrong."}, "audiences": [{"id": "tl", "name": "Team leader", "who": "Hourly, UAW (the union), runs a team of five to nine operators."}, {"id": "gl", "name": "Group leader", "who": "Salaried. Four teams in the IP Glass case."}, {"id": "tm", "name": "Team members, later", "who": "Operators on the line. Named here as a possibility, not a list."}], "programs": [{"id": "safety", "name": "Safety", "letter": "S", "line": "GM’s Safety column. The team leader sheet reads: \"Be proactive - not reactive.\" GM has not sorted this list, and has named no safety problem yet, so this order is ours.", "cells": {"tl": [{"name": "Take 2 before non-standard work", "does": "The pause with the operator before a repair or any other non-cyclical task.", "often": "Several times a shift.", "source": "Roles deck: \"Take 2 before engaging in any non-standard task.\"", "plan": "2028 Q4"}, {"name": "The PPE check", "does": "Confirming operators wear personal protective equipment (PPE) and use tools and ergo assists properly.", "often": "Daily.", "source": "STS task 1; roles deck: \"confirm that the TM’s use properly.\""}, {"name": "Unsafe conditions and near misses", "does": "Spotting, reporting and escalating them, and leading the near miss report.", "often": "When they happen. No fixed hook.", "source": "Roles deck."}, {"name": "The safety observation tour", "does": "The weekly tour of the team, on the topic Safety sends out.", "often": "Weekly.", "source": "STS task 2."}, {"name": "The workplace organization walk", "does": "The 5S walk of the team at start and end of shift.", "often": "Daily.", "source": "STS task 20; roles deck."}], "gl": [{"name": "The safety talk and the Take 2 message", "does": "Delivering the weekly safety topic and the Take 2 message before non-cyclic work.", "often": "Weekly.", "source": "Roles deck; STS task 1 note.", "role": "own"}, {"name": "The safety observation tour with a team leader", "does": "Doing the tour alongside a team leader and coaching theirs.", "often": "Weekly.", "source": "Roles deck; STS task 1.", "role": "part", "partOf": "The safety observation tour"}, {"name": "The incident, near miss and medical visit investigation", "does": "Investigating to cause, entering it in Cority, closing the countermeasure.", "often": "Weekly time budgeted.", "source": "Roles deck; STS task 2.", "role": "own"}, {"name": "Employee safety concerns", "does": "Reacting to a concern through the employee safety concern (ESC) process.", "often": "When raised. No fixed hook.", "source": "Roles deck.", "role": "own"}, {"name": "The layered audit on safety-critical elements", "does": "Auditing the safety-critical job elements with the team leader.", "often": "Weekly.", "source": "Roles deck.", "role": "own"}, {"name": "Hazard assessments and PPE instructions", "does": "Doing the hazard assessment and keeping PPE instructions present and followed.", "often": "Monthly.", "source": "Roles deck; STS task 44.", "role": "own", "fold": "Weak hook. Folds into the safety observation tour."}], "tm": [{"name": "The 5S tasks", "does": "\"Perform 5S tasks and maintain workplace organization.\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "The near miss report", "does": "\"Submit near miss reports.\"", "often": "", "source": "Roles deck, team member slide."}]}}, {"id": "people", "name": "People", "letter": "P", "line": "GM’s People column. Mariam Ellinger-Baker asked for it after the first version left it out. Training and the flex chart belong here, where she put them.", "cells": {"tl": [{"name": "Training an operator on a job", "does": "Training with job instruction training (JIT) and staying with them on the new build.", "often": "Every new or moved operator. Certification checked daily.", "source": "TIS-00-0023; STS tasks 8 and 17; 10 Sep call.", "gm": "\"He clearly doesn’t know the vans. So I need you to stick with him.\" Dave Elliott.", "gap": true, "plan": "2028 Q1"}, {"name": "Certification and the flex chart", "does": "Recording who is certified on which job and keeping the flex chart current.", "often": "Weekly.", "source": "Roles deck: \"Full Harvey Ball to the jobs within the team\", \"Updates versatility/flexibility/rotation charts.\"", "plan": "2028 Q2"}, {"name": "The weekly team meeting", "does": "Running the team meeting on the SPQRCE agenda and keeping the minutes.", "often": "40 minutes weekly. 20 of them contractual.", "source": "TIS-00-0019; roles deck: \"Facilitates the start of shift and team meetings.\""}, {"name": "The daily huddle at the board", "does": "The huddle with the group leader at the level 5 board, updating the day's numbers and taking one countermeasure.", "often": "15 minutes daily.", "source": "TIS-00-0024; roles deck: \"Conducts BPD review (updates the level 5 board).\""}, {"name": "Team problem solving", "does": "Running problem solving with the team on a problem the team owns.", "often": "Daily.", "source": "STS task 5; roles deck: \"Understands and regularly leads team problem solving activities.\""}, {"name": "The rotation schedule", "does": "Building rotation with operator input and rotating people as scheduled.", "often": "Weekly.", "source": "Roles deck: \"Develops rotation schedules according to the guidelines with TM input.\""}], "gl": [{"name": "Validating job instruction training", "does": "Watching the team leader train an operator and coaching the training itself.", "often": "Three times a week.", "source": "Roles deck: \"Train Team Leaders and Team Members in the appropriate quality standards … using the Job Instruction Training Method.\"", "role": "part", "partOf": "Training an operator on a job", "plan": "2028 Q2"}, {"name": "Coordinating training and the flex chart", "does": "Building the training plan for the group and keeping certification and flex charts in place.", "often": "Weekly.", "source": "Roles deck: \"Coaches and embraces JIT process and ensures Flex Charts and certification processes in place.\"", "role": "part", "partOf": "Certification and the flex chart", "plan": "2028 Q3"}, {"name": "The daily BPD review with each team leader", "does": "Reading the business plan deployment (BPD) levels 4 and 5 with the team leader, and coaching.", "often": "Daily.", "source": "STS tasks 10 and 25; roles deck.", "role": "part", "partOf": "The daily huddle at the board", "plan": "2027 Q3"}, {"name": "The conversation when a team leader is not doing the job", "does": "Stating the expectation, hearing the pushback, naming one thing you saw, and asking for their help with it.", "often": "When it happens. No fixed hook.", "source": "Roles deck: \"Empowers teams/TL’s to make decisions, problem solve, and run day-day business, while establishing guidelines and boundaries.\" 16 Sep call.", "gm": "\"Buddy, hear what you’re saying … So let me be clear. This is how I need your help with this.\" Dave Elliott, on the team leader who waited for the line to stop. Two days later: \"He’s there before I am.\"", "role": "own", "fold": "The manager material for the 2026 Q4 pilot, not an initiative of its own.", "gap": true}, {"name": "Resolving a people issue before a grievance", "does": "Working the issue with the committeeman before it becomes a grievance.", "often": "When it happens. No fixed hook.", "source": "Roles deck: \"Make time and work with committeemen to resolve people issues before it is resulted in to a grievance.\"", "role": "own"}, {"name": "Facilitating team problem solving", "does": "Making sure the team leader's problem solving happens and reaches a countermeasure.", "often": "Daily.", "source": "Roles deck: \"Facilitates and ensures team problem solving.\"", "role": "part", "partOf": "Team problem solving"}], "tm": [{"name": "Team and group meetings", "does": "\"Participate in team/group meetings.\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "Scheduled training", "does": "\"Participate in scheduled training.\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "Problem solving activities", "does": "\"Participate in the problem solving activities as required.\"", "often": "", "source": "Roles deck, team member slide."}]}}, {"id": "quality", "name": "Quality", "letter": "Q", "line": "GM’s Quality column. The group leader slide reads: \"Do not Accept, Build, or Ship Defects.\" GM sorted this list on 16 September, and that sort sets the order.", "cells": {"tl": [{"name": "The andon call", "does": "Getting up on the team's tone, before the line stops.", "often": "Eight calls a day budgeted on the J1 sheet.", "source": "STS task 11; roles deck; 10 and 16 Sep calls.", "gm": "\"They wait till the line completely stops instead of getting up off their desk.\" Mariam Ellinger-Baker.", "gap": true, "plan": "2026 Q4 · pilot"}, {"name": "Repairs in the area", "does": "Owning the repair, tracing it to its station and feeding back to the operator.", "often": "Three to six a shift at minimum.", "source": "10 Sep call; roles deck.", "gm": "\"Oh, that’s not my repair.\" Dave Elliott, on the repair that escapes the area and gets covered up.", "gap": true, "plan": "2027 Q1"}, {"name": "Standardized work that no longer matches the job", "does": "Noticing the mismatch and raising the change. The engineering turnaround is GM's side.", "often": "Daily upkeep budgeted.", "source": "STS task 9; 10 and 16 Sep calls.", "gm": "\"They look at the JES. They do it their own way, but they never go back and say, ‘Guys, this is how.’\" Gaurav Raina.", "gap": true, "plan": "2027 Q4"}, {"name": "The layered audit", "does": "Auditing the team to its standardized work and recording findings on the level 5 board.", "often": "Weekly.", "source": "STS task 16; roles deck.", "fold": "Last in the plan, at 2028 Q3. GM is releasing its own mobile audit tool, piloting at Orient. If that lands first, the initiative coaches the conversation with the operator, never the paperwork.", "plan": "2028 Q3"}, {"name": "Error proofing and process control checks", "does": "Running the 5X5 and error proofing checks and acting on a miss.", "often": "Weekly.", "source": "STS task 14; roles deck.", "fold": "Out of the plan with the daily check. Dave Elliott calls them the same work."}, {"name": "The daily quality focus check (QFC)", "does": "Checking the build against the standard and acting on what it returns.", "often": "Daily.", "source": "STS task 13; 10 and 16 Sep calls.", "gm": "\"They’re very simple to do.\" Dave Elliott, asked whether team leaders struggle with it.", "fold": "Out of the plan. GM says it needs no fixing, and we build initiatives to close gaps."}], "gl": [{"name": "Quality alarms and the repeat andon", "does": "Reacting to the alarm and the repeat call, and driving it to resolution.", "often": "Daily.", "source": "Roles deck: \"ensures Team Leaders respond to Quality Andon Calls in a timely manner\", \"Reacts to trends or drives resolution to repeat issues.\"", "role": "part", "partOf": "The andon call", "plan": "2027 Q1"}, {"name": "Active problem solving", "does": "Starting practical problem solving (PPS) on a repeat defect and supporting the team leader through it.", "often": "Weekly.", "source": "Roles deck; STS task 26.", "role": "own", "plan": "2027 Q2"}, {"name": "Engineering and production changes", "does": "Taking an engineering or production change onto the floor and into the standardized work.", "often": "When they land.", "source": "Roles deck: \"Ensures all documentation pertaining to standardized work (SOS, JES, STS, TIS, MTS, etc.) maintained.\"", "role": "part", "partOf": "Standardized work that no longer matches the job", "plan": "2028 Q1"}, {"name": "Following one team leader's layered audit", "does": "Asking what the audit found before saying what you saw, and coaching from there.", "often": "Weekly.", "source": "Roles deck: \"ensures Team Leader conducts effective layered audits, coach as needed.\"", "role": "part", "partOf": "The layered audit", "plan": "2028 Q4"}, {"name": "The team leader's daily checks", "does": "Auditing that the team leader's checks were done, and what they returned.", "often": "Daily.", "source": "Roles deck: \"Audit that Team Leader Checks are being performed.\"", "role": "own"}, {"name": "The weekly quality review with the shift leader", "does": "Taking the area's quality numbers and open issues to the shift leader.", "often": "Weekly.", "source": "Roles deck; STS task 27.", "role": "own"}], "tm": [{"name": "The andon pull", "does": "\"Signal out-of-standards conditions (use Andon).\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "Standardized work in the station", "does": "\"Follow standardized work in the station.\"", "often": "", "source": "Roles deck, team member slide."}]}}, {"id": "resp", "name": "Responsiveness", "letter": "R", "line": "GM’s Responsiveness column. The reaction to a stop, taken before the line reaches its fixed stop. GM has not sorted this list, so this order is ours.", "cells": {"tl": [{"name": "Who is in the hole", "does": "Roaming the team, reading the board and the footprints, getting to the operator who is behind.", "often": "Ten checks a day budgeted.", "source": "STS task 22; 10 Sep call.", "gm": "\"They’re up. They’re roaming around. They’re paying attention to see who’s in the hole.\" Dave Elliott, on a good team leader.", "gap": true, "plan": "2027 Q2"}, {"name": "The first response to a maintenance or parts issue", "does": "Taking the radio call, making the repair or getting maintenance, using the reorder system.", "often": "Four calls a day budgeted.", "source": "STS task 12; roles deck."}, {"name": "The repeat stoppage", "does": "Spotting the station that keeps going down and running problem solving on it with the team.", "often": "Daily.", "source": "STS task 5; 10 Sep call.", "gm": "\"What’s going on with John at 1:47? I keep going down at 1:47.\" Dave Elliott, on the question he asks a team leader.", "gap": true, "plan": "2027 Q3"}, {"name": "Start and end of shift", "does": "Checking material, verifying people on jobs, walking the team.", "often": "Daily.", "source": "STS task 20; roles deck."}, {"name": "Downtime and the throughput improvement process (TIP)", "does": "Using a down job for improvement work and bringing the team's bottleneck to the weekly TIP.", "often": "Weekly.", "source": "STS task 24; roles deck."}, {"name": "Confirming the operators' PMP checks", "does": "Checking the operators' maintenance checks (PMP) were done and escalating when not.", "often": "Daily.", "source": "STS task 21.", "fold": "Small. Folds into start and end of shift."}], "gl": [{"name": "Manpower at the start of the shift", "does": "Placing absentee replacements and following the absence policy the same way every time. The policy is GM's side.", "often": "Daily.", "source": "Roles deck; roster; STS task 42.", "role": "own"}, {"name": "Downtime and the TIP report", "does": "Updating the report daily, reading andon data with the team, bringing the bottleneck to the weekly TIP.", "often": "Daily and weekly.", "source": "STS tasks 35 and 36; roles deck.", "role": "part", "partOf": "Downtime and the throughput improvement process (TIP)", "plan": "2027 Q4"}, {"name": "Material delivery issues", "does": "Responding to late deliveries, dolly exchanges and excess stock, and fixing the recurring ones.", "often": "Four a day budgeted.", "source": "STS task 32; roles deck.", "role": "own"}, {"name": "The shift handover", "does": "The start of shift, first break and end of shift meetings, and the handover to the next shift's group leaders.", "often": "Daily.", "source": "STS tasks 12, 29 and 30.", "role": "own"}, {"name": "The PMP audit", "does": "Auditing the operators' maintenance checks (PMP) at the stations and the weekly sheets.", "often": "Weekly.", "source": "Roles deck; STS tasks 39 and 40.", "role": "part", "partOf": "Confirming the operators' PMP checks"}], "tm": [{"name": "The PMP tasks", "does": "\"Perform TPM/PMP tasks in adherence to the National Agreement.\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "Workstation readiness", "does": "\"Check workstation readiness for production.\"", "often": "", "source": "Roles deck, team member slide."}, {"name": "The material pull system", "does": "\"Apply material pull system.\"", "often": "", "source": "Roles deck, team member slide."}]}}, {"id": "cost", "name": "Cost", "letter": "C", "line": "GM’s Cost column. Scrap and waste. Its candidates run as initiatives inside the other programs, tagged C for GM’s reporting.", "cells": {"tl": [{"name": "The day's scrap", "does": "Processing scrap in eScrap daily and tracing it to its cause.", "often": "Daily.", "source": "STS task 29; roles deck: \"Facilitate the processing of non-conforming material and scrapped parts daily.\""}, {"name": "Waste elimination with the team", "does": "Running a waste elimination activity with the team against an SPQRCE goal.", "often": "No schedule written down.", "source": "Roles deck: \"Leads team waste elimination and CIP problem solving activities to attain SPQRCE goals.\"", "fold": "Weak hook. GM has written no schedule for it."}], "gl": [{"name": "Scrap and the daily NTR goal", "does": "Running the scrap process with the team leaders and managing to the daily cost target (NTR).", "often": "Daily.", "source": "STS task 41; roles deck.", "role": "part", "partOf": "The day's scrap"}, {"name": "The BPD level 2 review and STAR points", "does": "Reading business plan deployment (BPD) level 2 with the team leaders and coaching to the STAR point process.", "often": "Weekly.", "source": "Roles deck: \"Utilizes Business Plan Deployment Level 2 and Level 4/5 as a tool to drive performance on the floor. Coach the Team Leaders and Team Members.\"", "role": "own"}, {"name": "Giving the team the cost data", "does": "Putting the cost numbers in front of the team so they can track and reduce them.", "often": "No schedule written down.", "source": "Roles deck: \"Provide teams financial tools and data to drive tracking and cost reduction.\"", "role": "own", "fold": "Weak hook. GM has written no schedule for it."}], "tm": [{"name": "Waste elimination activities", "does": "\"Participate in waste elimination and CIP activities as required.\"", "often": "", "source": "Roles deck, team member slide."}]}}], "groups": {"safety": {"tl": [{"name": "The pause before non-standard work", "items": ["Take 2 before non-standard work", "The PPE check", "Unsafe conditions and near misses"]}, {"name": "The weekly tour and the daily walk", "items": ["The safety observation tour", "The workplace organization walk"]}], "gl": [{"name": "The safety talk and the weekly tour", "items": ["The safety talk and the Take 2 message", "The safety observation tour with a team leader"]}, {"name": "Incidents and concerns", "items": ["The incident, near miss and medical visit investigation", "Employee safety concerns"]}, {"name": "Audits and assessments", "items": ["The layered audit on safety-critical elements", "Hazard assessments and PPE instructions"]}]}, "people": {"tl": [{"name": "Training and the flex chart", "items": ["Training an operator on a job", "Certification and the flex chart"]}, {"name": "The meetings the team leader runs", "items": ["The weekly team meeting", "The daily huddle at the board"]}, {"name": "Problem solving and rotation", "items": ["Team problem solving", "The rotation schedule"]}], "gl": [{"name": "The daily review", "items": ["The daily BPD review with each team leader"]}, {"name": "Training", "items": ["Validating job instruction training", "Coordinating training and the flex chart"]}, {"name": "The conversations only the group leader has", "items": ["The conversation when a team leader is not doing the job", "Resolving a people issue before a grievance"]}, {"name": "Problem solving", "items": ["Facilitating team problem solving"]}]}, "quality": {"tl": [{"name": "Defects leaving the area", "items": ["The andon call", "Repairs in the area"]}, {"name": "Standardized work", "items": ["Standardized work that no longer matches the job", "The layered audit"]}, {"name": "The written checks", "items": ["Error proofing and process control checks", "The daily quality focus check (QFC)"]}], "gl": [{"name": "The team leader's response", "items": ["Quality alarms and the repeat andon", "Active problem solving"]}, {"name": "Standardized work", "items": ["Engineering and production changes", "Following one team leader's layered audit"]}, {"name": "The checks and the review", "items": ["The team leader's daily checks", "The weekly quality review with the shift leader"]}]}, "resp": {"tl": [{"name": "Getting there before the line stops", "items": ["Who is in the hole", "The repeat stoppage", "The first response to a maintenance or parts issue"]}, {"name": "Start of shift and downtime", "items": ["Start and end of shift", "Downtime and the throughput improvement process (TIP)", "Confirming the operators' PMP checks"]}], "gl": [{"name": "The daily response", "items": ["Downtime and the TIP report", "Manpower at the start of the shift", "Material delivery issues"]}, {"name": "Handover and audits", "items": ["The shift handover", "The PMP audit"]}]}}, "band": {"title": "Cuts across every cell. Tracked, not built.", "note": "These show up inside every initiative above. They are how the work gets done, not work of their own.", "appears": "One example, a competency applied to one piece of the work:", "items": [{"id": "example", "name": "Setting the example", "line": "Knowing and following the rules, wearing PPE, \"making Safety an Overriding Priority\".", "example": {"practice": "Doing the Take 2 with the operator at the observed station", "p": "safety", "a": "tl", "item": "The safety observation tour", "ev": "\"Sets the example by using PPE, tools, equipment and ergo assists.\" Roles deck."}}, {"id": "values", "name": "Values", "line": "The purposes, values and mission statements. Integrity, trust and respect.", "example": {"practice": "Claiming the repair before it leaves the footprint", "p": "quality", "a": "tl", "item": "Repairs in the area", "ev": "\"Oh, that’s not my repair.\" Dave Elliott."}}, {"id": "comms", "name": "Communication", "line": "Two-way and three-way communication. Keeping people informed. Open communication.", "example": {"practice": "Setting the day's expectation without narrowing the job", "p": "people", "a": "tl", "item": "Training an operator on a job", "ev": "\"You said I have to do this.\" Dave Elliott, on the union mindset."}}, {"id": "coaching", "name": "Coaching and leading people", "line": "Coaching, setting expectations, empowering, recognition. Being with the teams rather than at the desk.", "gm": "\"Every group leader has different expectations.\" Mariam Ellinger-Baker.", "example": {"practice": "Naming one thing you saw, then asking for help with it", "p": "people", "a": "gl", "item": "The conversation when a team leader is not doing the job", "ev": "\"When I came over, I was there before you were, and you’re over there at your desk literally just playing on your phone.\" Dave Elliott, 16 September."}}, {"id": "decision", "name": "Decision making and escalation", "line": "Choosing in the moment, and knowing what to settle at your own level and what to escalate.", "example": {"practice": "Deciding at the station: release it, or hold and call for help", "p": "quality", "a": "tl", "item": "The andon call", "ev": "\"Did they key release it, or did they hold and wait?\" Gaurav Raina."}}, {"id": "teamwork", "name": "Teamwork", "line": "Supporting adjacent teams, shifts and departments.", "example": {"practice": "Calling the adjacent team leader before the line stops", "p": "resp", "a": "tl", "item": "The first response to a maintenance or parts issue", "ev": "\"Get support from adjacent team leaders as needed.\" J1 task sheet."}}]}, "leftOff": {"title": "Left off the page, and why", "items": [{"name": "Knowing things", "line": "\"Knows all quality standards\", \"understands and can locate\", \"understand energy cost\". Knowledge, not doing."}, {"name": "Administration", "line": "Timekeeping, 71 charts, overtime coding, medical passes, suggestions, evaluations, committee calls, labels, email."}, {"name": "Environment", "line": "GM’s sixth column is evacuation plans, environmental policy, chemical labels, waste segregation and recycling drives. Compliance one-offs, with no weekly hook."}, {"name": "COMMWIP waste elimination", "line": "A lens, not a work object. It lives inside downtime and TIP."}]}, "calendar": {"eyebrow": "The plan", "title": "One pilot, then one initiative for each role every quarter", "note": "Ten weeks of work, three weeks between. Nine initiatives for team leaders, eight for group leaders. A program of ours is one business challenge and about a year. It draws its initiatives from more than one of GM’s columns, and each one keeps the letter GM gave it.", "foot": "Click any initiative to open it in the lists below. GM’s own sheet tags the andon call People, as J1 task 11, and they discussed it under Quality. The letters are GM’s reporting tags, not a taxonomy of the work.", "heads": {"q": "Quarter", "tl": "Team leader", "gl": "Group leader"}, "programs": [{"id": "p1", "name": "Get to the problem before the line stops", "aud": "tl", "challenge": "The team leader reaches the station before the line reaches its fixed stop."}, {"id": "p2", "name": "Build it the way it is written", "aud": "tl", "challenge": "The standardized work matches the job, and the team is trained to it."}, {"id": "p3", "name": "Be proactive, not reactive", "aud": "tl", "challenge": "GM’s own line on the team leader sheet. Safety It opens in 2028 Q4 and runs on past this calendar."}, {"id": "p4", "name": "Drive the repeat problem to cause", "aud": "gl", "challenge": "The same stop and the same defect stop coming back."}, {"id": "p5", "name": "Keep the standard current", "aud": "gl", "challenge": "Changes reach the sheet, the training and the audit."}], "quarters": [{"q": "2026 Q4", "tl": {"item": "The andon call", "p": "quality", "prog": "p1", "tag": "pilot"}, "glNote": "In the pilot the group leader validates. No initiative of their own yet."}, {"q": "2027 Q1", "tl": {"item": "Repairs in the area", "p": "quality", "prog": "p1"}, "gl": {"item": "Quality alarms and the repeat andon", "p": "quality", "prog": "p4"}}, {"q": "2027 Q2", "tl": {"item": "Who is in the hole", "p": "resp", "prog": "p1"}, "gl": {"item": "Active problem solving", "p": "quality", "prog": "p4"}}, {"q": "2027 Q3", "tl": {"item": "The repeat stoppage", "p": "resp", "prog": "p1"}, "gl": {"item": "The daily BPD review with each team leader", "p": "people", "prog": "p4"}}, {"q": "2027 Q4", "tl": {"item": "Standardized work that no longer matches the job", "p": "quality", "prog": "p2"}, "gl": {"item": "Downtime and the TIP report", "p": "resp", "prog": "p4"}}, {"q": "2028 Q1", "tl": {"item": "Training an operator on a job", "p": "people", "prog": "p2"}, "gl": {"item": "Engineering and production changes", "p": "quality", "prog": "p5"}}, {"q": "2028 Q2", "tl": {"item": "Certification and the flex chart", "p": "people", "prog": "p2"}, "gl": {"item": "Validating job instruction training", "p": "people", "prog": "p5"}}, {"q": "2028 Q3", "tl": {"item": "The layered audit", "p": "quality", "prog": "p2"}, "gl": {"item": "Coordinating training and the flex chart", "p": "people", "prog": "p5"}}, {"q": "2028 Q4", "tl": {"item": "Take 2 before non-standard work", "p": "safety", "prog": "p3"}, "gl": {"item": "Following one team leader's layered audit", "p": "quality", "prog": "p5"}}]}};
+const $ = (s, r=document) => r.querySelector(s);
+const el = (t, cls, txt) => { const e=document.createElement(t); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; };
+
+const state = { tab: 0, slide: 0, open: new Set() };
+const KEY = (p,a) => `${p}-${a}`;
+const audIds = DATA.audiences.map(a=>a.id);
+function groupsFor(pid,aid){ return ((DATA.groups||{})[pid]||{})[aid]||null; }
+/* ---------- header ---------- */
+$('#eyebrow').textContent = DATA.title;
+$('#h1').textContent = DATA.subtitle;
+$('#built').textContent = DATA.built;
+const howLabels = ['What a list is','What the numbers mean','What we need from you'];
+DATA.how.forEach((line,i)=>{ const p=el('p'); p.append(el('b',null,howLabels[i]), document.createTextNode(line)); $('#how').append(p); });
+
+(function overview(){
+  const g=$('#overview');
+  g.append(el('div','hd',''));
+  DATA.audiences.forEach(a=>g.append(el('div','hd',a.name)));
+  DATA.programs.forEach((p,pi)=>{
+    const lab=el('div','rowlab'); lab.append(el('span',null,p.name)); g.append(lab);
+    DATA.audiences.forEach((a,ai)=>{
+      const wrap=el('div'); const b=el('button','cell'+(a.id==='tm'?' dim':'')); b.type='button'; b.dataset.aud=a.name;
+      const n=(p.cells[a.id]||[]).length;
+      b.append(el('span','n',String(n)), el('span','open', a.id==='tm' ? 'named, not listed' : 'open'));
+      b.setAttribute('aria-label',`${p.name}, ${a.name}: ${n} items`);
+      b.addEventListener('click',()=>{ go(pi,ai); $('#tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
+      wrap.append(b); g.append(wrap);
+    });
+  });
+  const L=$('#legend');
+  const s1=el('span'); s1.append(el('i','dot'), document.createTextNode(DATA.legend.gap));
+  L.append(s1);
+})();
+
+/* ---------- tabs ---------- */
+const tabsEl=$('#tabs');
+DATA.programs.forEach((p,i)=>{
+  const b=el('button','tab'); b.type='button'; b.setAttribute('role','tab'); b.id='tab-'+p.id;
+  b.append(document.createTextNode(p.name));
+  b.addEventListener('click',()=>go(i,state.slide));
+  tabsEl.append(b);
+});
+const segEl=$('#seg');
+DATA.audiences.forEach((a,i)=>{
+  const b=el('button',null,a.name); b.type='button'; b.setAttribute('role','tab'); b.addEventListener('click',()=>go(state.tab,i)); segEl.append(b);
+});
+
+function go(t,s){ state.tab=t; state.slide=s; renderSlide(); snapshot(); }
+
+/* ---------- the slide ---------- */
+function currentItems(){
+  const p=DATA.programs[state.tab], a=audIds[state.slide];
+  return (p.cells[a]||[]).slice();
+}
+function renderSlide(){
+  const p=DATA.programs[state.tab], a=DATA.audiences[state.slide], aid=a.id;
+  [...tabsEl.children].forEach((b,i)=>b.setAttribute('aria-selected',String(i===state.tab)));
+  [...segEl.children].forEach((b,i)=>b.setAttribute('aria-selected',String(i===state.slide)));
+  $('#pline').textContent=p.line;
+  $('#who').textContent=a.who;
+  const numbered = aid!=='tm';
+  const key=KEY(p.id,aid);
+  const ul=$('#items'); ul.innerHTML='';
+  const flat=currentItems();
+  const groups=groupsFor(p.id,aid);
+  const blocks = groups ? groups.map(g=>({name:g.name, items:flat.filter(i=>g.items.includes(i.name))})).filter(b=>b.items.length) : [{name:null, items:flat}];
+  const grouped=flat.filter(i=>!blocks.some(b=>b.items.includes(i))); if(grouped.length) blocks.push({name:null, items:grouped});
+  let n=0;
+  blocks.forEach(block=>{
+  if(block.name) ul.append(el('li','group-hd',block.name));
+  const items=block.items;
+  items.forEach((it,idx)=>{
+    n++;
+    const li=el('li','item'); li.dataset.open=String(state.open.has(key+'|'+it.name));
+    const head=el('button','item-head'); head.type='button'; head.setAttribute('aria-expanded',li.dataset.open);
+    head.append(el('span','num', numbered ? String(n).padStart(2,'0') : '·'));
+    const name=el('span','name'); name.append(document.createTextNode(it.name));
+    if(it.gap){ const d=el('i','dot'); d.title=DATA.legend.gap; name.append(d); }
+    if(it.plan){ name.append(el('span','tag',it.plan)); }
+    head.append(name, el('span','chev','›'));
+    head.addEventListener('click',()=>{ const k=key+'|'+it.name; state.open.has(k)?state.open.delete(k):state.open.add(k); renderSlide(); });
+    li.append(head);
+
+    const det=el('div','detail');
+    const grid=el('div','dgrid');
+    const d1=el('div'); d1.append(el('span','lab', aid==='tm' ? 'GM’s words' : 'What they do'), document.createTextNode(it.does)); grid.append(d1);
+    if(it.often){ const d2=el('div'); d2.append(el('span','lab','How often'), document.createTextNode(it.often)); grid.append(d2); }
+    const d3=el('div'); d3.append(el('span','lab','Where GM wrote it'), document.createTextNode(it.source)); grid.append(d3);
+    det.append(grid);
+    if(it.gm){ const q=el('div','gmq'); q.append(el('span','lab','GM’s words'), el('p',null,it.gm)); det.append(q); }
+    if(it.fold){ det.append(el('p','fold',it.fold)); }
+    li.append(det);
+    ul.append(li);
+  });
+  });
+}
+
+function snapshot(){ try{ window.claude?.hot?.snapshot?.(()=>({tab:state.tab,slide:state.slide})); }catch(e){} }
+
+/* ---------- the plan ---------- */
+(function calendar(){
+  const C=DATA.calendar; if(!C) return;
+  const root=$('#cal');
+  root.append(el('span','eyebrow',C.eyebrow), el('h2',null,C.title), el('p','note',C.note));
+  const letterOf = pid => (DATA.programs.find(p=>p.id===pid)||{}).letter || '';
+  const progName = id => (C.programs.find(p=>p.id===id)||{}).name || '';
+  const g=el('div','calgrid');
+  g.append(el('div','hd',C.heads.q), el('div','hd',C.heads.tl), el('div','hd',C.heads.gl));
+  const prev={tl:null,gl:null};
+  C.quarters.forEach(row=>{
+    g.append(el('div','q',row.q));
+    ['tl','gl'].forEach(aud=>{
+      const c=el('div','calcell'); c.dataset.role = aud==='tl' ? C.heads.tl : C.heads.gl;
+      const cell=row[aud];
+      if(cell){
+        c.classList.add('run');
+        if(cell.prog!==prev[aud]) c.append(el('span','pname',progName(cell.prog)));
+        prev[aud]=cell.prog;
+        const b=el('button','init'); b.type='button';
+        b.append(document.createTextNode(cell.item), el('span','letter',letterOf(cell.p)));
+        if(cell.tag) b.append(el('span','tag',cell.tag));
+        b.addEventListener('click',()=>{
+          const pi=DATA.programs.findIndex(q=>q.id===cell.p), ai=audIds.indexOf(aud);
+          state.open.add(KEY(cell.p,aud)+'|'+cell.item); go(pi,ai);
+          $('#tabs').scrollIntoView({behavior:'smooth',block:'start'});
+        });
+        c.append(b);
+      } else {
+        prev[aud]=null;
+        c.append(el('p','empty', row[aud+'Note']||''));
+      }
+      g.append(c);
+    });
+  });
+  root.append(g);
+  const ps=el('div','progs');
+  C.programs.forEach(p=>{
+    const mine=C.quarters.filter(r=>r[p.aud] && r[p.aud].prog===p.id);
+    const aud=DATA.audiences.find(a=>a.id===p.aud);
+    const span=mine.length>1 ? `${mine[0].q} to ${mine[mine.length-1].q}` : mine[0].q;
+    const letters=mine.map(r=>letterOf(r[p.aud].p)).join(' · ');
+    const d=el('div','prog');
+    d.append(el('b',null,p.name), el('div','meta',`${aud.name} · ${span} · ${letters}`), el('p',null,p.challenge));
+    ps.append(d);
+  });
+  root.append(ps, el('p','calfoot',C.foot));
+})();
+
+/* ---------- band and left-off ---------- */
+(function band(){
+  const b=$('#band'); b.append(el('span','eyebrow','Horizontal'), el('h2',null,DATA.band.title), el('p','note',DATA.band.note));
+  const chips=el('div','chips');
+  DATA.band.items.forEach(it=>{
+    const d=el('details'); d.dataset.comp=it.id; d.append(el('summary',null,it.name));
+    const body=el('div','body'); body.append(el('p',null,it.line)); if(it.gm) body.append(el('p','gm',it.gm));
+    const x=it.example; if(x){
+      const pi=DATA.programs.findIndex(q=>q.id===x.p), ai=audIds.indexOf(x.a); const prog=DATA.programs[pi], aud=DATA.audiences[ai];
+      const ex=el('div','ex'); ex.append(el('span','lab',DATA.band.appears), el('p','pn',x.practice));
+      const w=el('button','where',`${prog.name} · ${aud.name} · ${x.item} ›`); w.type='button';
+      w.addEventListener('click',()=>{ state.open.add(KEY(x.p,x.a)+'|'+x.item); go(pi,ai); $('#tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
+      ex.append(w, el('p','ev',x.ev)); body.append(ex);
+    }
+    d.append(body); chips.append(d);
+  });
+  b.append(chips);
+  const lo=$('#leftoff'); lo.append(el('summary',null,DATA.leftOff.title));
+  const dl=el('dl'); DATA.leftOff.items.forEach(it=>{ dl.append(el('dt',null,it.name), el('dd',null,it.line)); }); lo.append(dl);
+})();
+
+/* ---------- boot ---------- */
+function start(hot){
+  if(hot && typeof hot.tab==='number'){ state.tab=hot.tab; state.slide=hot.slide||0; }
+  renderSlide(); snapshot();
+}
+try{ (window.claude?.hot?.ready) ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {}); }catch(e){ start({}); }
+</script>
+
+</body>
+</html>
