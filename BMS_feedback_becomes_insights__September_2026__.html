@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feedback becomes insight — BMS Cleaning of Materials</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Sen:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
+
+:root{
+  --bg:#16111C;
+  --paper:245 242 247;
+  --ink:22 17 28;
+  --line:rgba(255,255,255,.10);
+  --card:rgba(255,255,255,.035);
+  --card2:rgba(255,255,255,.062);
+  --muted:159 150 172;
+  --accent:139 41 138;          /* BMS purple */
+  --accent-lt:169 77 168;
+  --gold:212 129 47;
+  --good1:99 178 130;           /* execution, good */
+  --good2:104 183 178;          /* outcome, good */
+  --bad1:214 96 84;             /* execution, bad */
+  --bad2:212 152 66;            /* circumstances */
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:rgb(var(--paper) / .93);font-family:'Sen',sans-serif;-webkit-font-smoothing:antialiased;font-size:17.5px;line-height:1.55;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(640px 560px at 88% -8%, rgb(var(--accent) / .16), transparent 62%),
+             radial-gradient(560px 520px at -6% 104%, rgb(var(--good2) / .07), transparent 62%)}
+.wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:56px 48px 96px}
+
+.kick{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.kick .kn{font-family:'Geist Mono',monospace;font-size:13.5px;color:rgb(var(--accent-lt));border:1px solid rgb(var(--accent-lt) / .5);border-radius:9px;padding:6px 12px;letter-spacing:.08em}
+.kick .kt{font-family:'Geist Mono',monospace;font-size:15px;letter-spacing:.28em;text-transform:uppercase;color:rgb(var(--paper) / .95);font-weight:500}
+.kick::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgb(var(--accent-lt) / .55),transparent)}
+
+h1.pagetitle{font-family:'Sen',sans-serif;font-weight:800;font-size:clamp(34px,4.2vw,54px);line-height:1.08;color:#fff;margin-bottom:16px;letter-spacing:-.01em}
+h1.pagetitle em{font-family:'Andada Pro',serif;font-style:italic;font-weight:600;color:rgb(var(--accent-lt))}
+.pagesub{font-size:19px;color:rgb(var(--muted));margin-bottom:40px;max-width:1040px;line-height:1.6}
+.pagesub b{color:rgb(var(--paper) / .93);font-weight:700}
+
+.segs{display:flex;gap:8px;margin-bottom:46px;flex-wrap:wrap}
+.segs button{border:1px solid var(--line);background:var(--card);color:rgb(var(--paper) / .72);border-radius:999px;padding:12px 26px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .3s var(--ease)}
+.segs button:hover{color:#fff}
+.segs button.on{background:rgb(var(--paper));color:rgb(var(--ink));border-color:transparent}
+.ipane{display:none}
+.ipane.on{display:block}
+
+/* ---- pane 1: the eight boxes ---- */
+.catrowlab{display:flex;align-items:baseline;gap:18px;margin:0 0 22px;flex-wrap:wrap}
+.catrowlab h3{font-family:'Andada Pro',serif;font-weight:600;font-size:28px;color:#fff}
+.catrowlab .s{font-size:15.5px;color:rgb(var(--muted))}
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:54px}
+.catg{border-radius:18px;padding:26px 24px;background:var(--card);border:1px solid var(--line);transition:background .3s var(--ease)}
+.catg:hover{background:var(--card2)}
+.catg.un{border-style:dashed;background:rgba(255,255,255,.015)}
+.catg .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:16px}
+.catg h4{font-weight:800;font-size:18px;color:#fff;line-height:1.25;margin-bottom:9px;min-height:44px}
+.catg p{font-size:14.5px;color:rgb(var(--paper) / .74);line-height:1.55}
+.catg .axis{font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--muted));margin-top:12px}
+.catg.c-dem .ic{background:rgb(var(--good1) / .16);color:rgb(var(--good1))}
+.catg.c-sig .ic{background:rgb(var(--good2) / .16);color:rgb(var(--good2))}
+.catg.c-mis .ic{background:rgb(var(--bad1) / .14);color:rgb(var(--bad1))}
+.catg.c-bar .ic{background:rgb(var(--bad2) / .14);color:rgb(var(--bad2))}
+.tworule{border-left:3px solid rgb(var(--accent-lt));background:var(--card);border-radius:0 14px 14px 0;padding:18px 24px;font-size:15.5px;color:rgb(var(--paper) / .82);line-height:1.55;margin-bottom:26px}
+.tworule b{color:#fff}
+
+/* ---- pane 2: one response parsed ---- */
+.parsewrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:start}
+.sampletoggle{display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap}
+.sampletoggle button,.replay{border:1px solid var(--line);background:var(--card);color:rgb(var(--paper) / .75);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .3s var(--ease)}
+.sampletoggle button.on{background:rgb(var(--paper));color:rgb(var(--ink));border-color:transparent}
+.sampletoggle button:hover:not(.on),.replay:hover{border-color:rgb(var(--paper) / .4);color:#fff}
+.samplecard{padding:28px;background:var(--card);border:1px solid var(--line);border-radius:18px}
+.samplecard .who{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.samplecard .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,rgb(var(--accent-lt) / .9),rgb(var(--ink)));display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:14px;color:#fff}
+.samplecard .who .nm{font-weight:700;font-size:15.5px;color:#fff}
+.samplecard .who .rl{font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:rgb(var(--muted))}
+.sampletext{font-family:'Andada Pro',serif;font-size:19.5px;line-height:1.8;color:rgb(var(--paper) / .92);min-height:300px}
+.sampletext .caret{display:inline-block;width:2px;height:1.1em;background:rgb(var(--accent-lt));vertical-align:-.18em;animation:blink .9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.sampletext mark{background:none;color:inherit;border-radius:6px;padding:1px 4px;margin:-1px -1px;transition:all .5s var(--ease)}
+.sampletext mark.lit-dem{background:rgb(var(--good1) / .22);box-shadow:inset 0 0 0 1px rgb(var(--good1) / .55)}
+.sampletext mark.lit-sig{background:rgb(var(--good2) / .22);box-shadow:inset 0 0 0 1px rgb(var(--good2) / .55)}
+.sampletext mark.lit-mis,.sampletext mark.lit-smf{background:rgb(var(--bad1) / .2);box-shadow:inset 0 0 0 1px rgb(var(--bad1) / .55)}
+.sampletext mark.lit-bar,.sampletext mark.lit-pbr{background:rgb(var(--bad2) / .2);box-shadow:inset 0 0 0 1px rgb(var(--bad2) / .55)}
+.sampletext mark.lit-cbp{background:rgb(var(--good1) / .16);box-shadow:inset 0 0 0 1px rgb(var(--good1) / .45);outline:1px dashed rgb(var(--good1) / .6);outline-offset:2px}
+.parsestatus{margin-top:18px;font-family:'Geist Mono',monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--muted));display:flex;align-items:center;gap:11px;min-height:20px}
+.parsestatus .spin{width:11px;height:11px;border-radius:50%;border:2px solid rgb(var(--accent-lt) / .3);border-top-color:rgb(var(--accent-lt));animation:rot 1s linear infinite;flex:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+.srcnote{margin-top:14px;font-size:13px;color:rgb(var(--muted));line-height:1.5}
+
+.fbgridwrap{display:flex;flex-direction:column;gap:13px}
+.fbheadrow{display:grid;grid-template-columns:150px 1fr 1fr 1fr 1fr;gap:10px;align-items:center}
+.fbband{grid-column:span 2;border-radius:11px;padding:9px 16px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.fbband.good{background:rgb(var(--good1) / .12);color:rgb(var(--good1));border:1px solid rgb(var(--good1) / .3)}
+.fbband.bad{background:rgb(var(--bad1) / .1);color:rgb(var(--bad1));border:1px solid rgb(var(--bad1) / .3)}
+.fbcolhead{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--muted));text-align:center;padding:7px 4px;background:var(--card);border-radius:9px}
+.fbrow{display:grid;grid-template-columns:150px 1fr 1fr 1fr 1fr;gap:10px;align-items:stretch}
+.fbrowlab{display:flex;flex-direction:column;justify-content:center;gap:6px;padding-right:8px}
+.fbrowlab .t{font-family:'Andada Pro',serif;font-size:20px;color:#fff}
+.fbrowlab .s{font-size:12.5px;color:rgb(var(--muted));line-height:1.45}
+.fbcell{border-radius:15px;padding:18px 12px;background:var(--card);border:1px solid var(--line);position:relative;min-height:100px;display:flex;flex-direction:column;gap:9px;justify-content:center;align-items:center;text-align:center;transition:all .4s var(--ease)}
+.fbcell.un{border-style:dashed;background:rgba(255,255,255,.015)}
+.fbcell .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.fbcell .nm{font-weight:700;font-size:14px;color:#fff;line-height:1.25}
+.fbcell .ct{position:absolute;top:9px;right:11px;font-family:'Geist Mono',monospace;font-size:16px;color:rgb(var(--paper) / .9);opacity:0;transform:scale(.6);transition:all .45s var(--ease)}
+.fbcell .ct.show{opacity:1;transform:none}
+.fbcell.flash{transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(0,0,0,.7)}
+.fbcell.c-dem .ic{background:rgb(var(--good1) / .16);color:rgb(var(--good1))}
+.fbcell.c-dem.flash{border-color:rgb(var(--good1))}
+.fbcell.c-sig .ic{background:rgb(var(--good2) / .16);color:rgb(var(--good2))}
+.fbcell.c-sig.flash{border-color:rgb(var(--good2))}
+.fbcell.c-mis .ic{background:rgb(var(--bad1) / .14);color:rgb(var(--bad1))}
+.fbcell.c-mis.flash{border-color:rgb(var(--bad1))}
+.fbcell.c-bar .ic{background:rgb(var(--bad2) / .14);color:rgb(var(--bad2))}
+.fbcell.c-bar.flash{border-color:rgb(var(--bad2))}
+.chipfly{position:fixed;z-index:90;pointer-events:none;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;background:rgb(var(--paper));color:rgb(var(--ink));box-shadow:0 10px 26px -8px rgba(0,0,0,.7);transition:all .8s cubic-bezier(.5,.1,.3,1);white-space:nowrap}
+
+/* ---- pane 3: at scale ---- */
+.flowwrap{display:grid;grid-template-columns:250px 190px 1fr;gap:0;align-items:stretch;min-height:540px}
+.streamcol{position:relative;overflow:hidden;border-radius:18px;background:var(--card);border:1px solid var(--line);padding:20px;min-height:540px}
+.streamcol .lab{position:relative;z-index:3;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgb(var(--muted));margin:-20px -20px 8px;padding:20px 20px 16px;background:linear-gradient(180deg,#1b1522 0,#1b1522 80%,rgba(27,21,34,0))}
+.scard{position:absolute;top:0;left:20px;right:20px;height:78px;overflow:hidden;border-radius:11px;background:var(--card2);border:1px solid var(--line);padding:10px 13px;font-size:12px;color:rgb(var(--paper) / .75);line-height:1.4;animation:streamup 12s linear infinite;opacity:0}
+.scard .m{font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgb(var(--muted));display:block;margin-bottom:3px}
+@keyframes streamup{0%{transform:translateY(520px);opacity:0}6%{opacity:1}92%{opacity:1}100%{transform:translateY(-100px);opacity:0}}
+.gatecol{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.gatecol::before,.gatecol::after{content:"";position:absolute;top:50%;height:2px;width:36px;background:linear-gradient(90deg,transparent,rgb(var(--accent-lt) / .8))}
+.gatecol::before{left:-6px}
+.gatecol::after{right:-6px;background:linear-gradient(90deg,rgb(var(--accent-lt) / .8),transparent)}
+.gate{width:130px;height:130px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgb(var(--accent-lt) / .18),rgba(0,0,0,0) 70%)}
+.gate .ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgb(var(--accent-lt) / .55);animation:ringpulse 2.6s var(--ease) infinite}
+.gate .ring.r2{animation-delay:1.3s}
+@keyframes ringpulse{0%{transform:scale(.82);opacity:.9}100%{transform:scale(1.28);opacity:0}}
+.gate .core{width:78px;height:78px;border-radius:50%;background:rgb(var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-size:27px;box-shadow:0 0 44px rgb(var(--accent) / .55)}
+.gatechip{position:absolute;z-index:6;pointer-events:none;white-space:nowrap;font-size:11px;font-weight:700;
+  padding:5px 11px;border-radius:999px;background:#241b2e;border:1px solid var(--line);color:#fff;
+  box-shadow:0 8px 20px -10px rgba(0,0,0,.8);animation:gatepop 1.6s var(--ease) forwards}
+@keyframes gatepop{
+  0%{opacity:0;transform:translate(-50%,6px) scale(.72)}
+  16%{opacity:1;transform:translate(-50%,-12px) scale(1)}
+  66%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-64px) scale(.97)}}
+.gatechip.gc-dem,.gatechip.gc-cbp{border-color:rgb(var(--good1) / .7)}
+.gatechip.gc-sig,.gatechip.gc-byp{border-color:rgb(var(--good2) / .7)}
+.gatechip.gc-mis,.gatechip.gc-smf{border-color:rgb(var(--bad1) / .7)}
+.gatechip.gc-bar,.gatechip.gc-pbr{border-color:rgb(var(--bad2) / .7)}
+.gatechip.gc-cbp,.gatechip.gc-byp,.gatechip.gc-smf,.gatechip.gc-pbr{border-style:dashed}
+.gatecap{margin-top:18px;text-align:center;font-size:14px;color:rgb(var(--paper) / .8);max-width:170px;line-height:1.45}
+.chancol{display:flex;flex-direction:column;justify-content:center;gap:10px;padding-left:28px}
+.chan{display:grid;grid-template-columns:210px 1fr 58px;align-items:center;gap:16px}
+.chan .cn{display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:700;color:rgb(var(--paper) / .9)}
+.chan .cn i{width:10px;height:10px;border-radius:3px;flex:none;font-style:normal}
+.chan .cn.un{font-weight:400;color:rgb(var(--paper) / .72)}
+.chan .cn.un i{border-radius:50%;outline:1px dashed rgb(var(--muted));outline-offset:2px}
+.chan .track{height:13px;border-radius:8px;background:rgba(255,255,255,.05);overflow:hidden;position:relative}
+.chan .fill{position:absolute;inset:0;width:0;border-radius:8px;transition:width 1.6s var(--ease)}
+.chan .cv{font-family:'Geist Mono',monospace;font-size:14.5px;color:rgb(var(--paper) / .88);text-align:right}
+.flowfoot{margin-top:34px}
+.flowmath{font-family:'Andada Pro',serif;font-style:italic;font-size:22px;color:rgb(var(--paper) / .92)}
+.flowmath b{color:rgb(var(--accent-lt));font-weight:600;font-style:normal}
+
+
+@media (max-width:1040px){
+  .wrap{padding:40px 22px 72px}
+  .catgrid{grid-template-columns:repeat(2,1fr)}
+  .parsewrap{grid-template-columns:1fr;gap:30px}
+  .flowwrap{grid-template-columns:1fr;gap:26px;min-height:0}
+  .streamcol{min-height:430px}
+  .gatecol{padding:18px 0}
+  .gatecol::before,.gatecol::after{display:none}
+  .chancol{padding-left:0}
+  .chan{grid-template-columns:1fr 70px;gap:10px}
+  .chan .track{grid-column:1 / -1}
+  .fbheadrow,.fbrow{grid-template-columns:1fr 1fr}
+  .fbrowlab{grid-column:1 / -1}
+  .fbband{grid-column:1 / -1}
+  .fbcolhead{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .scard,.gate .ring,.spin{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kick"><span class="kn">Appendix</span><span class="kt">How the tool reads what associates write</span></div>
+  <h1 class="pagetitle">Feedback becomes <em>insight</em></h1>
+  <p class="pagesub">After every activity, associates describe what they did and what happened — in their own words. Flint reads that text and sorts it into <b>eight categories</b>. The boxes first, then one real conversation from this pilot, then all 300 of them.</p>
+
+  <div class="segs" id="segs">
+    <button class="on" data-ipane="cats">Insights 8-Box</button>
+    <button data-ipane="one">Examples</button>
+    <button data-ipane="scale">At scale</button>
+  </div>
+
+  <!-- ============ PANE 1 ============ -->
+  <div class="ipane on" data-ipane="cats">
+    <div class="tworule">Every record gets <b>two readings</b>: how the work was executed, and what came of it. One conversation can therefore land in more than one box — and often does.</div>
+
+    <div class="catrowlab"><h3>Anticipated</h3><span class="s">Defined with BMS before the pilot ran, from the SOPs and the practice map</span></div>
+    <div class="catgrid">
+      <div class="catg c-dem"><div class="ic">✓</div><h4>Demonstration</h4><p>The associate carried out the practice successfully.</p><div class="axis">Execution · good</div></div>
+      <div class="catg c-sig"><div class="ic">✦</div><h4>Signal</h4><p>A positive outcome the practice is designed to produce.</p><div class="axis">Outcome · good</div></div>
+      <div class="catg c-mis"><div class="ic">!</div><h4>Misfire</h4><p>A known way of failing to carry out the practice.</p><div class="axis">Execution · bad</div></div>
+      <div class="catg c-bar"><div class="ic">⚡</div><h4>Barrier</h4><p>A circumstance we expected might block the attempt.</p><div class="axis">Circumstances · bad</div></div>
+    </div>
+
+    <div class="catrowlab"><h3>Unanticipated</h3><span class="s">Nobody defined these in advance — the tool found them in the conversations</span></div>
+    <div class="catgrid" style="margin-bottom:0">
+      <div class="catg c-dem un"><div class="ic">◎</div><h4>Candidate Best Practice</h4><p>A new way of carrying out the practice successfully.</p><div class="axis">Execution · good</div></div>
+      <div class="catg c-sig un"><div class="ic">✧</div><h4>Possible Byproduct</h4><p>A positive outcome nobody predicted.</p><div class="axis">Outcome · good</div></div>
+      <div class="catg c-mis un"><div class="ic">?</div><h4>Suspected Misfire</h4><p>A new way of failing to carry it out.</p><div class="axis">Execution · bad</div></div>
+      <div class="catg c-bar un"><div class="ic">≋</div><h4>Potential Barrier</h4><p>A circumstance not seen before that may be blocking the work.</p><div class="axis">Circumstances · bad</div></div>
+    </div>
+
+  </div>
+
+  <!-- ============ PANE 2 ============ -->
+  <div class="ipane" data-ipane="one">
+    <div class="parsewrap">
+      <div>
+        <div class="sampletoggle">
+          <button class="on" data-sample="0">Bernie Chavez</button>
+          <button class="replay" id="replayBtn" title="Replay">↺ Replay</button>
+        </div>
+        <div class="samplecard">
+          <div class="who">
+            <div class="avatar" id="avatarEl">BC</div>
+            <div><div class="nm" id="whoName">An associate, after one activity</div><div class="rl" id="whoRole">Their own words · unedited</div></div>
+          </div>
+          <div class="sampletext" id="sampleText"></div>
+          <div class="parsestatus" id="parseStatus"><span class="spin"></span><span id="parseLabel">Associate writing…</span></div>
+        </div>
+        <div class="srcnote" id="srcNote"></div>
+      </div>
+
+      <div class="fbgridwrap">
+        <div class="fbheadrow">
+          <div></div>
+          <div class="fbband good">✓ Good</div>
+          <div class="fbband bad">! Bad</div>
+        </div>
+        <div class="fbheadrow">
+          <div></div>
+          <div class="fbcolhead">Execution</div>
+          <div class="fbcolhead">Outcome</div>
+          <div class="fbcolhead">Execution</div>
+          <div class="fbcolhead">Circumstances</div>
+        </div>
+        <div class="fbrow">
+          <div class="fbrowlab"><div class="t">Anticipated</div><div class="s">Defined with BMS in advance</div></div>
+          <div class="fbcell c-dem" id="cell-dem"><div class="ic">✓</div><div class="nm">Demonstration</div><div class="ct">×0</div></div>
+          <div class="fbcell c-sig" id="cell-sig"><div class="ic">✦</div><div class="nm">Signal</div><div class="ct">×0</div></div>
+          <div class="fbcell c-mis" id="cell-mis"><div class="ic">!</div><div class="nm">Misfire</div><div class="ct">×0</div></div>
+          <div class="fbcell c-bar" id="cell-bar"><div class="ic">⚡</div><div class="nm">Barrier</div><div class="ct">×0</div></div>
+        </div>
+        <div class="fbrow">
+          <div class="fbrowlab"><div class="t">Unanticipated</div><div class="s">Found in the conversations</div></div>
+          <div class="fbcell c-dem un" id="cell-cbp"><div class="ic">◎</div><div class="nm">Candidate Best Practice</div><div class="ct">×0</div></div>
+          <div class="fbcell c-sig un" id="cell-byp"><div class="ic">✧</div><div class="nm">Possible Byproduct</div><div class="ct">×0</div></div>
+          <div class="fbcell c-mis un" id="cell-smf"><div class="ic">?</div><div class="nm">Suspected Misfire</div><div class="ct">×0</div></div>
+          <div class="fbcell c-bar un" id="cell-pbr"><div class="ic">≋</div><div class="nm">Potential Barrier</div><div class="ct">×0</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANE 3 ============ -->
+  <div class="ipane" data-ipane="scale">
+    <div class="flowwrap">
+      <div class="streamcol">
+        <div class="lab">Activity feedback, all associates</div>
+        <div class="scard" style="animation-delay:0s"><span class="m">Closed Ops · Clean to Grade</span>Single stroke technique using every unused side of the wipe, and more than one wipe for the larger totes…</div>
+        <div class="scard" style="animation-delay:-2s"><span class="m">Open Ops · Hold the Line</span>I put the clean materials to my left in a tote while the dirty materials were to my right…</div>
+        <div class="scard" style="animation-delay:-4s"><span class="m">Closed Ops · Hold the Line</span>The lack of cart space on both sides of the MAL divider inhibited me from wiping each bag…</div>
+        <div class="scard" style="animation-delay:-6s"><span class="m">Open Ops · Clean to Grade</span>We currently do not have any non-sterile IPA wipes, that's why I recommended sterile IPA spray with a non-sterile texwipe…</div>
+        <div class="scard" style="animation-delay:-8s"><span class="m">Closed Ops · One Direction</span>Cleaned bag stays on the shelf until 10 bags get cleaned, then the 10 go in a clean tote from the kanban rack…</div>
+        <div class="scard" style="animation-delay:-10s"><span class="m">Open Ops · Hold the Line</span>A dirty material was placed onto the clean cart with other materials that were already cleaned…</div>
+      </div>
+
+      <div class="gatecol">
+        <div class="gate"><span class="ring"></span><span class="ring r2"></span><div class="core">⟡</div></div>
+        <div class="gatecap"><b>Flint reads every conversation</b> and sorts what it finds.</div>
+      </div>
+
+      <div class="chancol" id="chancol">
+        <div class="chan"><div class="cn"><i style="background:rgb(var(--good1))"></i>Demonstrations</div><div class="track"><div class="fill" style="background:rgb(var(--good1) / .85)" data-w="100"></div></div><div class="cv" data-count="195">0</div></div>
+        <div class="chan"><div class="cn"><i style="background:rgb(var(--good2))"></i>Signals</div><div class="track"><div class="fill" style="background:rgb(var(--good2) / .85)" data-w="91"></div></div><div class="cv" data-count="177">0</div></div>
+        <div class="chan"><div class="cn"><i style="background:rgb(var(--bad1))"></i>Misfires</div><div class="track"><div class="fill" style="background:rgb(var(--bad1) / .8)" data-w="7"></div></div><div class="cv" data-count="13">0</div></div>
+        <div class="chan"><div class="cn"><i style="background:rgb(var(--bad2))"></i>Barriers</div><div class="track"><div class="fill" style="background:rgb(var(--bad2) / .8)" data-w="29"></div></div><div class="cv" data-count="56">0</div></div>
+        <div class="chan"><div class="cn un"><i style="background:rgb(var(--good1))"></i>Candidate Best Practices</div><div class="track"><div class="fill" style="background:rgb(var(--good1) / .5)" data-w="48"></div></div><div class="cv" data-count="93">0</div></div>
+        <div class="chan"><div class="cn un"><i style="background:rgb(var(--good2))"></i>Possible Byproducts</div><div class="track"><div class="fill" style="background:rgb(var(--good2) / .5)" data-w="1"></div></div><div class="cv" data-count="1">0</div></div>
+        <div class="chan"><div class="cn un"><i style="background:rgb(var(--bad1))"></i>Suspected Misfires</div><div class="track"><div class="fill" style="background:rgb(var(--bad1) / .45)" data-w="12"></div></div><div class="cv" data-count="23">0</div></div>
+        <div class="chan"><div class="cn un"><i style="background:rgb(var(--bad2))"></i>Potential Barriers</div><div class="track"><div class="fill" style="background:rgb(var(--bad2) / .45)" data-w="51"></div></div><div class="cv" data-count="99">0</div></div>
+      </div>
+    </div>
+
+
+    <div class="flowfoot">
+      <div class="flowmath">Seven weeks at Summit West: <b>300 conversations</b> produced <b>657 insights</b>.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $ = function(s,r){ return (r||document).querySelector(s); };
+var $$ = function(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+var fmt = function(n){ return n.toLocaleString("en-US"); };
+
+var CAT_META = {
+  dem:{cell:"cell-dem",label:"Demonstration"},
+  sig:{cell:"cell-sig",label:"Signal"},
+  mis:{cell:"cell-mis",label:"Misfire"},
+  bar:{cell:"cell-bar",label:"Barrier"},
+  cbp:{cell:"cell-cbp",label:"Candidate Best Practice"},
+  byp:{cell:"cell-byp",label:"Possible Byproduct"},
+  smf:{cell:"cell-smf",label:"Suspected Misfire"},
+  pbr:{cell:"cell-pbr",label:"Potential Barrier"}
+};
+
+var SAMPLES = [
+  {
+    who:"Bernie Chavez — Associate, Summit West", av:"BC",
+    role:"Clean each material to its grade · unedited",
+    note:"One conversation, four insights. Nobody wrote the tip about folding the wipe into eighths — he worked it out and offered it unprompted. That is what the right-hand column is for.",
+    segs:[
+      {t:"Cleaning 10ml sterile serological pipettes and 250ml TCGM bags. "},
+      {t:"We currently do not have any non-sterile IPA wipes, that's why I recommended using sterile IPA spray with a non-sterile tex wipe.", c:["bar"]},
+      {t:" "},
+      {t:"On the first pass I gave each material the right wipe, on every surface,", c:["dem"]},
+      {t:" then let it air dry. I ensured to "},
+      {t:"let the material air dry on my sterile field after I was done,", c:["sig"]},
+      {t:" and rechecked the seals after. One tip: "},
+      {t:"folding the wipe into eighths makes it easier to hold and allows for more faces to be used.", c:["cbp"]}
+    ]
+  }
+];
+
+var curSample = 0, runToken = 0, curIpane = "cats";
+
+function setIpane(name){
+  curIpane = name;
+  runToken++;   // halt any parse still running in the Examples pane
+  flowToken++;  // halt the At-scale counters and chips
+  $$("#segs button").forEach(function(t){ t.classList.toggle("on", t.dataset.ipane===name); });
+  $$(".ipane").forEach(function(p){ p.classList.toggle("on", p.dataset.ipane===name); });
+  if (name==="one") runSample(curSample);
+  else if (name==="scale") initFlow();
+}
+$$("#segs button").forEach(function(t){ t.addEventListener("click", function(){ setIpane(t.dataset.ipane); }); });
+
+function resetCells(){
+  Object.keys(CAT_META).forEach(function(k){
+    var cell = $("#"+CAT_META[k].cell); if(!cell) return;
+    var ct = $(".ct",cell);
+    ct.textContent = "×0"; ct.classList.remove("show"); cell.classList.remove("flash");
+    cell.dataset.n = "0";
+  });
+}
+
+function flyChip(fromRect, toCell, label, done){
+  if (RM || (!fromRect.width && !fromRect.height)){ done(); return; }
+  var chip = document.createElement("div");
+  chip.className = "chipfly"; chip.textContent = label;
+  chip.style.left = fromRect.left+"px"; chip.style.top = fromRect.top+"px";
+  document.body.appendChild(chip);
+  var tr = toCell.getBoundingClientRect();
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    chip.style.left = (tr.left + tr.width/2 - chip.offsetWidth/2)+"px";
+    chip.style.top = (tr.top + tr.height/2 - chip.offsetHeight/2)+"px";
+    chip.style.opacity = ".15"; chip.style.transform = "scale(.7)";
+  });});
+  setTimeout(function(){ chip.remove(); done(); }, 820);
+}
+
+function runSample(i){
+  var token = ++runToken;
+  curSample = i;
+  $$(".sampletoggle button[data-sample]").forEach(function(b){ b.classList.toggle("on", +b.dataset.sample===i); });
+  var S = SAMPLES[i];
+  $("#whoName").textContent = S.who;
+  $("#whoRole").textContent = S.role;
+  $("#avatarEl").textContent = S.av;
+  $("#srcNote").textContent = "";
+  var box = $("#sampleText"); box.innerHTML = "";
+  resetCells();
+  var status = $("#parseStatus"), label = $("#parseLabel");
+  $(".spin",status).style.display = "";
+  label.textContent = "Associate writing…";
+  var caret = document.createElement("span"); caret.className = "caret";
+  box.appendChild(caret);
+  var nodes = S.segs.map(function(seg){
+    var node = seg.c ? document.createElement("mark") : document.createElement("span");
+    if (seg.c){ node.dataset.c = seg.c.join(" "); if (seg.cls) node.dataset.cls = seg.cls; }
+    box.insertBefore(node, caret);
+    return node;
+  });
+  var si = 0, ci = 0;
+  var CHAR = RM ? 0 : 9;
+  function type(){
+    if (token!==runToken) return;
+    if (si >= S.segs.length){ caret.remove(); parsePhase(); return; }
+    var seg = S.segs[si];
+    if (RM){ nodes[si].textContent = seg.t; si++; ci=0; type(); return; }
+    if (ci < seg.t.length){ nodes[si].textContent += seg.t[ci++]; setTimeout(type, CHAR); }
+    else { si++; ci=0; setTimeout(type, 50); }
+  }
+  function parsePhase(){
+    if (token!==runToken) return;
+    label.textContent = "Flint reading…";
+    var jobs = [];
+    nodes.forEach(function(n){
+      if (n.tagName!=="MARK") return;
+      n.dataset.c.split(" ").forEach(function(c){ jobs.push({node:n, c:c}); });
+    });
+    var k = 0, found = 0;
+    function next(){
+      if (token!==runToken) return;
+      if (k >= jobs.length){
+        label.textContent = "Sorted: "+found+" insights from one conversation.";
+        $(".spin",status).style.display = "none";
+        $("#srcNote").textContent = S.note;
+        return;
+      }
+      var job = jobs[k++], meta = CAT_META[job.c];
+      job.node.classList.add(job.node.dataset.cls || ("lit-"+job.c));
+      var cell = $("#"+meta.cell);
+      flyChip(job.node.getBoundingClientRect(), cell, meta.label, function(){
+        if (token!==runToken) return;
+        var n = (+cell.dataset.n||0)+1; cell.dataset.n = n;
+        var ct = $(".ct",cell); ct.textContent = "×"+n; ct.classList.add("show");
+        cell.classList.add("flash");
+        setTimeout(function(){ cell.classList.remove("flash"); }, 700);
+        found++;
+        setTimeout(next, 460);
+      });
+    }
+    setTimeout(next, RM?0:600);
+  }
+  type();
+}
+$$(".sampletoggle button[data-sample]").forEach(function(b){
+  b.addEventListener("click", function(){ runSample(+b.dataset.sample); });
+});
+$("#replayBtn").addEventListener("click", function(){ runSample(curSample); });
+
+var flowToken = 0;
+
+function growChannel(ch, idx, token){
+  var fill = ch.querySelector(".fill"), cv = ch.querySelector(".cv");
+  var target = +cv.dataset.count, wMax = +fill.dataset.w;
+  fill.style.transition = "none";
+  fill.style.width = "0";
+  cv.textContent = "0";
+  if (RM){ fill.style.width = wMax+"%"; cv.textContent = fmt(target); return; }
+  // each bar ticks up in irregular increments, and they do not finish together
+  var pace = 150 + idx*22 + Math.random()*90;   // ms base between ticks, per bar
+  var done = 0;
+  requestAnimationFrame(function(){ fill.style.transition = "width .3s linear"; });
+  function tick(){
+    if (token !== flowToken) return;
+    var inc = 0.022 + Math.random()*0.078;      // 2%–10% of the total per tick
+    done = Math.min(1, done + inc);
+    fill.style.width = (wMax*done).toFixed(2)+"%";
+    cv.textContent = fmt(Math.round(target*done));
+    if (done < 1) setTimeout(tick, pace + Math.random()*260);
+    else cv.textContent = fmt(target);
+  }
+  setTimeout(tick, 200 + Math.random()*700);
+}
+
+var CHIP_KEYS  = ["dem","sig","mis","bar","cbp","byp","smf","pbr"];
+var CHIP_LABEL = ["Demonstration","Signal","Misfire","Barrier",
+                  "Candidate Best Practice","Possible Byproduct","Suspected Misfire","Potential Barrier"];
+
+function emitChips(token){
+  var col = document.querySelector(".gatecol");
+  if (!col || RM) return;
+  var w = $$("#chancol .chan").map(function(ch){ return +ch.querySelector(".cv").dataset.count || 0; });
+  var total = w.reduce(function(a,b){ return a+b; }, 0);
+  if (!total) return;
+  function pick(){
+    var r = Math.random()*total, i = 0;
+    while (i < w.length-1 && r > w[i]){ r -= w[i]; i++; }
+    return i;
+  }
+  function spawn(){
+    if (token !== flowToken || !col.isConnected) return;
+    var i = pick();
+    var el = document.createElement("div");
+    el.className = "gatechip gc-" + CHIP_KEYS[i];
+    el.textContent = CHIP_LABEL[i];
+    el.style.left = (50 + (Math.random()*26 - 13)) + "%";
+    el.style.top  = (31 + Math.random()*12) + "%";
+    col.appendChild(el);
+    setTimeout(function(){ el.remove(); }, 1700);
+    setTimeout(spawn, 620 + Math.random()*760);
+  }
+  setTimeout(spawn, 500);
+}
+
+function initFlow(){
+  var token = ++flowToken;
+  $$(".gatechip").forEach(function(c){ c.remove(); });
+  $$("#chancol .chan").forEach(function(ch,idx){ growChannel(ch, idx, token); });
+  emitChips(token);
+}
+</script>
+</body>
+</html>
