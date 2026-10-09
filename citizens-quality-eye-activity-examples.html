@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens · Activity Cards</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZDVEEHR98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5ZDVEEHR98');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400;0,500;1,400&family=Sen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:     rgb(253,252,250);
+  --surface:   rgb(255,255,255);
+  --ink:       rgb(28,42,56);
+  --muted:     rgb(74,88,104);
+  --accent:    rgb(232,77,40);
+  --pale:      rgb(235,229,220);
+  --warm-line: rgb(197,187,166);
+  --cool:      rgb(154,166,176);
+  --success:   rgb(72,114,76);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Sen', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Andada Pro', serif; font-weight: 400; }
+
+/* Page: one card per practice, so a single column */
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+@media (max-width: 620px) { .page { padding: 32px 16px 56px; } }
+
+/* Page header */
+.page-header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--pale);
+}
+.page-header .eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cool);
+  margin-bottom: 6px;
+}
+.page-header h1 { font-size: 26px; color: var(--ink); }
+.page-header .page-meta { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+/* Section group */
+.section-group { margin-bottom: 48px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-header h2 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--pale);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--pale);
+  border-radius: 8px;
+  padding: 18px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+}
+
+/* Card title */
+.card-title { border-left: 3px solid var(--accent); padding-left: 10px; }
+.card-title h3 {
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.card-title .descriptor {
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--pale); }
+
+/* Section label */
+.slabel {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+.slabel.standard { background: rgba(28,42,56,.07); color: rgb(28,42,56); }
+.slabel.coaching { background: rgba(232,77,40,.10); color: rgb(180,55,25); }
+.slabel.example { background: rgba(72,114,76,.10); color: rgb(52,90,56); }
+
+/* Bullets */
+.bullets { display: flex; flex-direction: column; gap: 3px; }
+.bullet {
+  display: flex;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.bullet::before {
+  content: '–';
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.bullet strong { font-weight: 700; }
+
+/* Example */
+.example-box {
+  background: var(--paper);
+  border-left: 2px solid var(--pale);
+  padding: 7px 10px;
+  border-radius: 0 4px 4px 0;
+  font-family: 'Andada Pro', serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.example-box strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid var(--pale);
+  color: var(--muted);
+  background: var(--paper);
+}
+
+/* Footer */
+.page-footer {
+  border-top: 1px solid var(--pale);
+  padding-top: 16px;
+  font-size: 11px;
+  color: var(--cool);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">Citizens &nbsp;·&nbsp; Building Your Team’s Quality Eye</div>
+    <h1>Activity Cards</h1>
+    <div class="page-meta">3 facility manager behaviors, one per workplace practice: what the program asks, why it matters, and how the AI coach builds the skill &nbsp;·&nbsp; October 2026</div>
+  </div>
+
+  <!-- Practice 1 -->
+  <div class="section-group">
+    <div class="section-header"><h2>Practice 1 &nbsp;·&nbsp; Showing what good looks like</h2></div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <h3>Show Them Their Whole Area</h3>
+          <div class="descriptor">On a visit that’s already happening, the facility manager walks the team member’s whole area of the site with them: the interior for a janitor, the grounds for a landscape tech, the building inside and out for a senior tech. They let them look first, then point out what they hadn’t spotted, starting with what matters most. They say what good looks like and why a customer would notice, and agree what the team member will do next time.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>Let them look first.</strong> Ask what they see before saying anything, and start with what they caught.</span></div>
+            <div class="bullet"><span><strong>Point out what they hadn’t spotted, specifically.</strong> What it is and where it is, most important first. Anything that could hurt someone comes first. Never just “Fix this.”</span></div>
+            <div class="bullet"><span><strong>Close with the standard and a next step.</strong> Say what good looks like and why a customer would notice. Agree what they’ll look for next time and what they’ll do when they find it: fix it, or log it with a work-order number or a note to the facility manager.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>Specificity in the customer’s terms.</strong> “Dust on the vents over the teller line, where customers look while they wait” teaches more than “the lobby needs dusting.”</span></div>
+            <div class="bullet"><span><strong>Showing without blaming.</strong> “Here’s another one to look for,” never “You walked past this,” so the team member keeps telling the facility manager what they see.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Example</div>
+          <div class="example-box"><strong>Lisa K.</strong> walked the branch interior with her janitor during the morning clean and asked her to point out what she saw first. The janitor named the smudged entrance glass and the full lobby trash can. Lisa added the dust on the supply vents over the teller line and the cobwebs in the vestibule ceiling corners: vents get vacuumed monthly, cobwebs every visit, and customers look up while they wait in line. They agreed she would check the vents and ceiling corners at each clean. Before the walk ended, the janitor spotted a water-stained ceiling tile by the ATM and texted Lisa, who opened a work order.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Site Visit</span>
+          <span class="tag">Let Them Look First</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Practice 2 -->
+  <div class="section-group">
+    <div class="section-header"><h2>Practice 2 &nbsp;·&nbsp; Setting a weekly quality focus</h2></div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <h3>Set the Team’s Focus for the Week</h3>
+          <div class="descriptor">At the next team check-in, or in one message or call where there is no check-in, the facility manager names one area for the team to watch this week: the area that matters most. They say what good looks like, why a customer would notice and what to do when the team finds something. Before the team’s week ends, they follow up and ask what the team saw.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>Pick one area, for a reason.</strong> Something seen on a recent visit, a low score at the site’s last quality control inspection, work orders that keep coming back, or the season. One area only, framed as what to watch, never what the team has been missing.</span></div>
+            <div class="bullet"><span><strong>Say where to look, what good looks like and what to do.</strong> Fix it if it’s theirs to fix; otherwise open a work order or send the facility manager a note. A hazard gets reported at once, never saved for the follow-up.</span></div>
+            <div class="bullet"><span><strong>Follow up before the week ends.</strong> Ask what they saw, not whether they looked. Thank them for what they reported, even if it was already on a work order, and tell them what happens to it.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>A focus specific enough to act on.</strong> “This week, watch the restroom tile grout, in the corners and along the wall” gives the team something to do. “Keep an eye on quality this week” doesn’t.</span></div>
+            <div class="bullet"><span><strong>Closing the loop.</strong> The follow-up is what makes the focus real. A team that reports and never hears what happened stops reporting.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Example</div>
+          <div class="example-box"><strong>Marcus T.</strong>, a landscape manager, used his Monday morning meeting to set the week’s focus: shrubs and plantings at branch entrances, trimmed clear of signs and windows, one of Citizens’ lowest-scored landscaping items last year. He told the crew to look at each branch sign from the road and from the parking lot, trim what they could on the visit, and text him anything that needed more than a trim. On Thursday he called the landscape lead and asked what they’d found. The crew had trimmed back two hedges covering branch signs and texted him a dead shrub blocking a drive-up window, which he put on a work order. He thanked the crew on the call and told them when the shrub would be replaced.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Team Check-In</span>
+          <span class="tag">Weekly Focus</span>
+          <span class="tag">Follow-Up</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Practice 3 -->
+  <div class="section-group">
+    <div class="section-header"><h2>Practice 3 &nbsp;·&nbsp; Coaching a finding with questions</h2></div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">
+          <h3>Ask Before You Answer</h3>
+          <div class="descriptor">When someone on the team reports a finding, or the facility manager picks one the team reported this week, the facility manager talks it through with them by phone or in person on a visit. Before giving their own answer, they ask why it’s there, whether it keeps coming back and what the team member would do. Then they agree the step, log it and thank them.</div>
+        </div>
+        <hr class="divider">
+        <div>
+          <div class="slabel standard">The standard</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>Ask before you answer.</strong> “Why do you think it’s there?” “Has it come back before, or is this the first time?” “What would you do?” Ask about the site, not the person: never “Why didn’t you fix it?” If it could hurt someone now, act first and ask later.</span></div>
+            <div class="bullet"><span><strong>Let them reach the step, then sharpen it.</strong> Confirm what’s right. Add what’s missing, with the reason. If the answer is wrong, walk them back to what they saw and ask again rather than taking over.</span></div>
+            <div class="bullet"><span><strong>Agree the step, log it and thank them.</strong> Fix it, open or update the work order, or pass it to whoever can act, with a date. Tell them what happens next. A call or in person, not a text.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel coaching">What the coach is building</div>
+          <div class="bullets">
+            <div class="bullet"><span><strong>Holding your answer.</strong> The facility manager usually knows the answer and gives it after the team member has answered. Telling them resolves the finding once; asking first builds a team that can handle the next one without you.</span></div>
+            <div class="bullet"><span><strong>Open questions, not a menu.</strong> “Why do you think it’s there?” rather than “Is it the vendor?” The facility manager listens for the usual causes without offering them.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="slabel example">Example</div>
+          <div class="example-box"><strong>Dana R.</strong>, a floor care facility manager, got an email from one of her techs about a dark, tacky patch on the carpet just inside a branch entrance. Instead of opening the work order herself, she called him at the start of his shift. She asked why he thought it was there; he said the entrance mat was curled at the edge, so people stepped around it. She asked whether it had come back before; he said he’d cleaned that spot more than once. She asked what he would do; he said clean it that night and get the mat replaced. Dana agreed and asked him to check the mat at the branch’s side door too. He logged the cleaning on the work order, and she opened one for new mats with his description. She thanked him and told him when the mats would arrive.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">Team Finding</span>
+          <span class="tag">Phone Call</span>
+          <span class="tag">Ask Before You Answer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Citizens &nbsp;·&nbsp; Building Your Team’s Quality Eye</span>
+    <span>Flint Learning Solutions &nbsp;·&nbsp; October 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
