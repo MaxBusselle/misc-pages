@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weekend Hotel Options, December 2026 to May 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16232E; --muted:#56656F; --line:#D9DEE0; --paper:#FFFFFF; --wash:#F2F5F4;
+  --coast:#1C6670; --desert:#A9741F; --good:#1F6B47; --goodbg:#E3F1E8; --warn:#8A3B2A;
+  --serif:"Young Serif", Georgia, "Times New Roman", serif;
+  --sans:"Figtree", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#E8EDEF; --muted:#A3B0B7; --line:#33414A; --paper:#111A20; --wash:#18242B;
+    --coast:#6FB8C0; --desert:#D9A956; --good:#7CC79E; --goodbg:#183326; --warn:#E59A86; color-scheme:dark; }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--coast)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--coast);outline-offset:3px}
+img{max-width:100%;display:block}
+
+/* Hero */
+.hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,28,0) 35%,rgba(10,20,28,.78) 100%)}
+.hero-text{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px 56px;width:100%}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.04;margin:0 0 18px;max-width:14ch}
+.hero p{max-width:58ch;font-size:1.1rem;margin:0;color:#EEF3F4}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:64px 0 8px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,3.6vw,2.6rem);line-height:1.15;margin:0 0 12px}
+h3{font-family:var(--serif);font-weight:400;font-size:1.75rem;line-height:1.2;margin:0}
+.lede{color:var(--muted);max-width:68ch;margin:0 0 24px}
+.note{background:var(--wash);border-left:4px solid var(--coast);padding:14px 18px;border-radius:2px;max-width:76ch;color:var(--ink)}
+
+/* Price table */
+.table-scroll{overflow-x:auto;margin-top:24px;border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.95rem}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{font-weight:600;background:var(--wash)}
+tbody tr:last-child td{border-bottom:0}
+td.p{font-variant-numeric:tabular-nums}
+td.under{color:var(--good);font-weight:600;background:var(--goodbg)}
+td.na{color:var(--muted)}
+th[scope=row] a{color:var(--ink);text-decoration-color:var(--line);font-weight:600}
+.legend{font-size:.9rem;color:var(--muted);margin-top:10px}
+.legend span{display:inline-block;width:12px;height:12px;background:var(--goodbg);border:1px solid var(--good);vertical-align:-1px;margin-right:6px}
+
+/* Region banner: the one bold element */
+.region{margin-top:72px}
+.banner{position:relative;height:clamp(240px,42vw,420px);overflow:hidden;border-radius:6px}
+.banner img{width:100%;height:100%;object-fit:cover}
+.banner .label{position:absolute;left:0;bottom:0;padding:22px 26px;color:#fff;background:linear-gradient(90deg,rgba(10,20,28,.78),rgba(10,20,28,0));width:100%}
+.banner .label h2{color:#fff;margin:0}
+.banner .label p{margin:4px 0 0;color:#E6EEF0}
+.region-intro{max-width:72ch;margin:22px 0 8px}
+
+/* Hotel entries */
+.hotel{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;padding:44px 0;border-bottom:1px solid var(--line)}
+.hotel:last-child{border-bottom:0}
+.hotel .summary{font-size:1.12rem;color:var(--ink);margin:10px 0 16px;max-width:60ch}
+.status{display:inline-block;font-size:.9rem;font-weight:600;padding:5px 10px;border-radius:3px;background:var(--wash);color:var(--ink);margin:12px 0 4px}
+.status.new{background:var(--goodbg);color:var(--good)}
+.status.old{color:var(--warn)}
+.hotel p{margin:0 0 14px;max-width:66ch}
+.hotel p strong{font-weight:600}
+.photo{margin:6px 0 18px;border-radius:6px;overflow:hidden}
+.photo img{width:100%;height:280px;object-fit:cover}
+.photo figcaption{font-size:.82rem;color:var(--muted);padding-top:6px}
+aside.facts{align-self:start;position:sticky;top:20px;background:var(--wash);border-radius:6px;padding:20px}
+.facts dl{margin:0 0 16px}
+.facts dt{font-size:.85rem;color:var(--muted)}
+.facts dd{margin:0 0 10px}
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.prices div{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:8px 10px}
+.prices div small{display:block;font-size:.78rem;color:var(--muted)}
+.prices div b{font-weight:600;font-variant-numeric:tabular-nums}
+.prices div.under{border-color:var(--good)}
+.prices div.under b{color:var(--good)}
+.btn{display:block;text-align:center;text-decoration:none;font-weight:600;padding:12px 14px;border-radius:4px;margin-top:8px}
+.btn.primary{background:var(--coast);color:#fff}
+.btn.secondary{border:1px solid var(--coast);color:var(--coast)}
+.desert .btn.primary{background:var(--desert)}
+.desert .btn.secondary{border-color:var(--desert);color:var(--desert)}
+@media (prefers-color-scheme: dark){ .btn.primary{color:#0D161B} }
+.know{margin-top:6px;border-top:1px dashed var(--line);padding-top:14px}
+.know summary{cursor:pointer;font-weight:600}
+.know p{margin-top:10px}
+
+footer{margin:80px 0 40px;color:var(--muted);font-size:.9rem}
+footer ul{padding-left:18px}
+
+@media (max-width:860px){
+  .hotel{grid-template-columns:1fr;gap:20px}
+  aside.facts{position:static}
+}
+@media (prefers-reduced-motion:no-preference){
+  .hero img{animation:settle 1.6s ease-out both}
+  @keyframes settle{from{transform:scale(1.06)}to{transform:scale(1)}}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="https://images.unsplash.com/photo-1446630073557-fca43d580fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000" alt="A road winding along the California coastline above the ocean">
+  <div class="hero-text">
+    <h1>Weekend hotel options, December to May</h1>
+    <p>Eleven overnights within about two and a half hours of Westwood, in Santa Barbara, Laguna Beach, Coronado, Palm Springs, and the Palm Desert area. Each one opened or was renovated recently, or is a strong fit in a great location.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="prices">
+  <h2>Prices for the four nights</h2>
+  <p class="lede">Saturday December 12, Friday January 1, Saturday January 2, and Saturday May 1. The target is 400 dollars a night; the ceiling is 700.</p>
+  <p class="note">These are the lowest room rates listed on Google Hotels, checked November 8, 2026, before taxes. Resort fees and parking are extra and shown in the last column. Rates change daily, so confirm on the hotel’s website before booking.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Hotel</th><th scope="col">Area</th><th scope="col">Sat Dec 12</th><th scope="col">Fri Jan 1</th><th scope="col">Sat Jan 2</th><th scope="col">Sat May 1</th><th scope="col">Extra fees per night</th></tr></thead>
+      <tbody>
+        <tr><th scope="row"><a href="#harbor-view">Harbor View Inn</a></th><td>Santa Barbara</td><td class="p under">$299</td><td class="p under">$304</td><td class="p under">$293</td><td class="p under">$360</td><td>Parking $32</td></tr>
+        <tr><th scope="row"><a href="#milo">The Milo</a></th><td>Santa Barbara</td><td class="p under">$356</td><td class="p under">$345</td><td class="p under">$261</td><td class="p">$426</td><td class="na">Not found</td></tr>
+        <tr><th scope="row"><a href="#hotel-santa-barbara">Hotel Santa Barbara</a></th><td>Santa Barbara</td><td class="p under">$339</td><td class="p under">$303</td><td class="p under">$341</td><td class="p">$438</td><td class="na">Valet, cost not found</td></tr>
+        <tr><th scope="row"><a href="#drift">Drift Santa Barbara</a></th><td>Santa Barbara</td><td class="p under">$376</td><td class="p under">$307</td><td class="p under">$325</td><td class="p">$602</td><td>Parking $3 an hour</td></tr>
+        <tr><th scope="row"><a href="#casa-loma">Casa Loma Beach Hotel</a></th><td>Laguna Beach</td><td class="p">$467</td><td class="p">$426</td><td class="p">$494</td><td class="p">$628</td><td>Resort fee $45.60, parking $70</td></tr>
+        <tr><th scope="row"><a href="#bower">The Bower</a></th><td>Coronado</td><td class="p under">$320</td><td class="p under">$398</td><td class="p under">$319</td><td class="p under">$340</td><td>Valet $65</td></tr>
+        <tr><th scope="row"><a href="#del">Hotel del Coronado</a></th><td>Coronado</td><td class="p">$535</td><td class="p">$551</td><td class="p">$560</td><td class="p">$522</td><td class="na">Not found</td></tr>
+        <tr><th scope="row"><a href="#casa-palma">Casa Palma</a></th><td>Palm Springs</td><td class="p under">$229</td><td class="p under">$360</td><td class="p under">$339</td><td class="p under">$318</td><td>Free parking</td></tr>
+        <tr><th scope="row"><a href="#thompson">Thompson Palm Springs</a></th><td>Palm Springs</td><td class="p">$504</td><td class="p">$507</td><td class="p">$424</td><td class="p">$474</td><td>Resort fee $49</td></tr>
+        <tr><th scope="row"><a href="#esmeralda">Renaissance Esmeralda</a></th><td>Indian Wells</td><td class="p under">$278</td><td class="p under">$352</td><td class="p under">$285</td><td class="p under">$386</td><td>Resort fee $45, parking $25</td></tr>
+        <tr><th scope="row"><a href="#la-quinta">La Quinta Resort</a></th><td>La Quinta</td><td class="p na">No rate</td><td class="p under">$398</td><td class="p under">$384</td><td class="p under">$378</td><td>Resort fee $45.60, parking $15</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legend"><span></span>Under the 400 dollar target. “No rate” means Google showed no price, usually because the hotel was sold out or not yet booking that night.</p>
+</section>
+
+<!-- SANTA BARBARA -->
+<div class="region" id="santa-barbara">
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1566355629429-2df8a89bd037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1800" alt="A white building on a wooden pier over the water in Santa Barbara" loading="lazy">
+    <div class="label"><h2>Santa Barbara</h2><p>About 1 hour 45 minutes from Westwood</p></div>
+  </div>
+  <p class="region-intro">Four hotels within a few blocks of each other. Two sit on the waterfront along West Cabrillo Boulevard, facing West Beach and Stearns Wharf. Two are downtown on State Street, the main street of restaurants, bars, and shops. From any of them you can walk to the beach, the harbor, the Funk Zone tasting rooms, and dinner.</p>
+
+  <article class="hotel" id="harbor-view">
+    <div>
+      <h3>Harbor View Inn</h3>
+      <span class="status old">Not new: built in the 1980s, last full renovation listed as 2012</span>
+      <p class="summary">The established beachfront choice, and the starting point for this list. Across the street from West Beach and Stearns Wharf, with a pool deck that looks out at the ocean.</p>
+      <p>The Harbor View Inn is a Spanish Mediterranean style hotel spread across several buildings on West Cabrillo Boulevard, Santa Barbara’s beachfront road. It is a classic, comfortable Santa Barbara stay rather than a design hotel.</p>
+      <p><strong>What’s good about it.</strong> The location is hard to beat. You step out the front door onto the beach path, with Stearns Wharf and the bottom of State Street a few minutes’ walk away. Every room and suite has a private patio or balcony, and many face the water. There is a heated pool overlooking the wharf, a hot tub, a sauna, and a fitness center. It is also the most consistent price on the list: under 400 dollars on every night checked.</p>
+      <p><strong>What’s nearby.</strong> West Beach and the beachfront path, Stearns Wharf, the harbor, the Funk Zone’s wine-tasting rooms and restaurants, and lower State Street, all on foot.</p>
+      <details class="know"><summary>Things to know</summary><p>It is the least new hotel on this page, and some reviewers describe a mix of updated and dated rooms. The North Wing faces the city and requires crossing a street to reach the front desk. Sources disagree on the room count, from 96 to 149.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$299</b></div><div class="under"><small>Fri Jan 1</small><b>$304</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$293</b></div><div class="under"><small>Sat May 1</small><b>$360</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>28 W Cabrillo Blvd, Santa Barbara</dd>
+        <dt>Brand</dt><dd>Independent</dd>
+        <dt>Extra fees</dt><dd>Parking $32 a night</dd>
+      </dl>
+      <a class="btn primary" href="https://www.harborviewinnsb.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Harbor%20View%20Inn%20Santa%20Barbara" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="milo">
+    <div>
+      <h3>The Milo</h3>
+      <span class="status new">Renovated: every room redone, renamed June 2025</span>
+      <p class="summary">The Harbor View Inn’s location with rooms redone last year, plus more to do on the property. On the same beachfront strip, a short walk west toward the harbor.</p>
+      <p>The Milo stands on the site of the Potter Hotel, a 400-room waterfront hotel that opened in 1903 and burned down in 1921. The 2025 renovation, designed by DESIGN360 of Santa Monica, gave every room new furniture, flooring, fabrics, and custom wallpaper, including a heron pattern that nods to the zoo that once stood on the grounds. The look is a relaxed European seaside villa with Spanish Colonial bones.</p>
+      <p><strong>What’s good about it.</strong> It feels more like a small resort than the other Santa Barbara hotels. There are two pools, a hot tub, a bocce court, fire pits, and a small library. Beach umbrellas, chairs, towels, and volleyballs are free to borrow, and cruiser bikes are available to rent. Guests can even borrow professional-grade Sony cameras for free.</p>
+      <p><strong>What’s nearby.</strong> West Beach across the street, the Santa Barbara harbor and Maritime Museum, the beachfront bike path, Stearns Wharf, and the Funk Zone.</p>
+      <details class="know"><summary>Things to know</summary><p>It is about a mile from the center of State Street, so downtown dinners are a longer walk or a short bike ride. May 1 is the one night above the 400 dollar target. Resort fee and parking cost were not found.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$356</b></div><div class="under"><small>Fri Jan 1</small><b>$345</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$261</b></div><div><small>Sat May 1</small><b>$426</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>202 W Cabrillo Blvd, Santa Barbara</dd>
+        <dt>Brand</dt><dd>Independent</dd>
+        <dt>Extra fees</dt><dd>Valet parking; cost not found</dd>
+      </dl>
+      <a class="btn primary" href="https://themilo.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=The%20Milo%20Santa%20Barbara" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="hotel-santa-barbara">
+    <div>
+      <h3>Hotel Santa Barbara</h3>
+      <span class="status new">Renovated: all 75 rooms and the lobby, finished August 2025</span>
+      <p class="summary">A 100-year-old downtown landmark, freshly renovated, with a new all-day lobby bar. The pick if you want to walk out the door to dinner and bars.</p>
+      <figure class="photo">
+        <img src="https://images.unsplash.com/photo-1710749092647-b85482eba6cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="A white Spanish-style building with a clock tower in downtown Santa Barbara" loading="lazy">
+        <figcaption>Downtown Santa Barbara’s Spanish Colonial architecture. Area photo, not the hotel.</figcaption>
+      </figure>
+      <p>The hotel has stood at the corner of State and Cota Streets since 1926, the year it reopened after the 1925 earthquake, and it is celebrating its centennial in 2026. The renovation took just over a year and gave every room new furniture, carpet, paint, and updated bathrooms. Reviewers describe the new rooms as moody and comfortable, with deep paint colors and wrought-iron chandeliers, and the lobby as bright, with white arches and columns.</p>
+      <p><strong>What’s good about it.</strong> The new lobby bar, called 1926, is styled after the 1920s and open 7 am to 10 pm, with pastries and fresh juice in the morning and shared plates and cocktails at night. Guests get free bikes, and every floor has filtered and sparkling water stations. Condé Nast Traveler readers included it in their 2026 Readers’ Choice Awards.</p>
+      <p><strong>What’s nearby.</strong> State Street restaurants, bars, and shops within five minutes on foot. The beach and Stearns Wharf are less than a mile away, and the Funk Zone and Amtrak station are a short walk.</p>
+      <details class="know"><summary>Things to know</summary><p>It is a city hotel, not a resort. The hotel lists a fitness center and meeting space but no pool. Some reviewers mention street noise in the corner rooms. May 1 is above the 400 dollar target.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$339</b></div><div class="under"><small>Fri Jan 1</small><b>$303</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$341</b></div><div><small>Sat May 1</small><b>$438</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>533 State St, Santa Barbara</dd>
+        <dt>Rooms</dt><dd>75</dd>
+        <dt>Brand</dt><dd>Independent, run by Geronimo Hospitality Group</dd>
+        <dt>Extra fees</dt><dd>Valet parking; cost not found</dd>
+      </dl>
+      <a class="btn primary" href="https://www.hotelsantabarbara.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Hotel%20Santa%20Barbara%20533%20State%20Street" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="drift">
+    <div>
+      <h3>Drift Santa Barbara</h3>
+      <span class="status new">Opened late 2022 after a full restoration</span>
+      <p class="summary">A design hotel in a restored early-1900s building on State Street, across from Hotel Santa Barbara. Minimal and modern inside, with a coffee shop and bar opening onto the street. Books through Marriott.</p>
+      <p>The building ran as a hotel from 1901 into the 1980s and was one of the few downtown buildings to survive the 1925 earthquake. The Church of Scientology then kept it closed to the public for decades. Local firm Anacapa Architecture restored the Mediterranean exterior, with white stucco, arched windows, and terracotta tile, and built a quiet, minimal interior using wood reclaimed from the original structure.</p>
+      <p><strong>What’s good about it.</strong> It is the most design-focused hotel on this list and the only Santa Barbara option that earns Marriott Bonvoy points. The ground floor has two spots open to the public: Dawn, a coffee shop, and Dusk, a bar serving oysters, ceviche, and cocktails. Garage-style doors open onto the State Street promenade, so it feels lively and local. Local art and ceramics are throughout, and rooms have custom-scented bath products.</p>
+      <p><strong>What’s nearby.</strong> State Street restaurants, bars, galleries, and shops in every direction. The Funk Zone, the beach, and Stearns Wharf are less than a mile away.</p>
+      <details class="know"><summary>Things to know</summary><p>Rooms are small, about 145 to 185 square feet, with clever storage under the beds. Check-in is keyless, pets are not allowed, and no pool is listed. May 1 jumps to 602 dollars, well above the winter nights.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$376</b></div><div class="under"><small>Fri Jan 1</small><b>$307</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$325</b></div><div><small>Sat May 1</small><b>$602</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>524 State St, Santa Barbara</dd>
+        <dt>Rooms</dt><dd>45, plus a penthouse suite</dd>
+        <dt>Brand</dt><dd>Design Hotels, part of Marriott Bonvoy</dd>
+        <dt>Extra fees</dt><dd>Self parking $3 an hour</dd>
+      </dl>
+      <a class="btn primary" href="https://www.marriott.com/en-us/hotels/sbadh-drift-santa-barbara-a-member-of-design-hotels/overview/" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Drift%20Santa%20Barbara" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+</div>
+
+<!-- LAGUNA -->
+<div class="region" id="laguna">
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1607659581697-bd5c3a72d062?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1800" alt="Blue ocean and green trees along the Laguna Beach coastline" loading="lazy">
+    <div class="label"><h2>Laguna Beach</h2><p>About 1 hour 15 minutes from Westwood, the closest area on the list</p></div>
+  </div>
+  <p class="region-intro">An artists’ and surfers’ town with coves, clifftop parks, and a walkable village of galleries and restaurants around Main Beach.</p>
+
+  <article class="hotel" id="casa-loma">
+    <div>
+      <h3>Casa Loma Beach Hotel</h3>
+      <span class="status new">Renovated: 15 million dollar renovation unveiled October 2024</span>
+      <p class="summary">The best beach location on the list. A clifftop hotel directly above Laguna’s Main Beach, rebuilt in a relaxed Mallorca style with art everywhere.</p>
+      <p>Marc and Rose Hospitality, which also runs La Playa Hotel in Carmel, rebuilt the old Inn at Laguna Beach with Electric Bowery, a design firm in Venice, and LAND, an art and branding studio. The design draws on Laguna’s history as a town of artists and surfers. The lobby has a sculpted mural, some rooms have hand-painted tapestries, and a vintage reel-to-reel sound system plays the hotel’s own radio station of coastal music.</p>
+      <p><strong>What’s good about it.</strong> You step out to Main Beach and the village. The Pacific Terrace and pool deck look straight down the coast. Food and drink run like a beach club, open only to hotel guests and Laguna residents: small plates by the pool, spritzes, wine, and agave cocktails. 38 of the 70 rooms have a private balcony or patio, many facing the ocean, and suites come with a record player and a stack of records.</p>
+      <p><strong>What’s nearby.</strong> Main Beach and the boardwalk below the hotel, Heisler Park’s clifftop paths to the north, and the village galleries, shops, and restaurants across the street. Crystal Cove State Park is a five-minute drive.</p>
+      <details class="know"><summary>Things to know</summary><p>Fees are steep: a 45.60 dollar nightly resort fee plus 70 dollar parking adds about 115 dollars a night. With fees, May 1 comes to about 744 dollars, over the 700 dollar ceiling. Every night is above the 400 dollar target, and breakfast is not included.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div><small>Sat Dec 12</small><b>$467</b></div><div><small>Fri Jan 1</small><b>$426</b></div>
+        <div><small>Sat Jan 2</small><b>$494</b></div><div><small>Sat May 1</small><b>$628</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>211 N Coast Hwy, Laguna Beach</dd>
+        <dt>Rooms</dt><dd>70</dd>
+        <dt>Brand</dt><dd>Independent</dd>
+        <dt>Extra fees</dt><dd>Resort fee $45.60, parking $70</dd>
+      </dl>
+      <a class="btn primary" href="https://casalomalagunabeach.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Casa%20Loma%20Beach%20Hotel%20Laguna%20Beach" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+</div>
+
+<!-- CORONADO -->
+<div class="region" id="coronado">
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1745210202189-af9b6497a722?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1800" alt="A lifeguard stand on a wide sandy beach in Coronado" loading="lazy">
+    <div class="label"><h2>Coronado, San Diego</h2><p>About 2 hours 15 minutes from Westwood</p></div>
+  </div>
+  <p class="region-intro">Both hotels are on Orange Avenue, a five-minute walk from each other and from Coronado Beach, one of the widest stretches of sand in Southern California. Downtown San Diego is across the bridge or a short ferry ride.</p>
+
+  <article class="hotel" id="bower">
+    <div>
+      <h3>The Bower Coronado</h3>
+      <span class="status new">Opened March 2025, the first new hotel built on Coronado in more than 30 years</span>
+      <p class="summary">Small, quiet, and new, with the only rooftop bar in Coronado. Directly across from the Hotel del Coronado, and under the 400 dollar target on all four nights.</p>
+      <p>The Bower stands on the site of the Villa Capri, a 15-room hotel that opened in 1956 on the grounds of the old Japanese tea garden of the John D. Spreckels mansion. The new hotel is designed around wabi-sabi, the Japanese idea of natural, understated beauty, using limestone, patinated metal, and raw textures. The original neon Villa Capri sign now hangs behind the rooftop bar.</p>
+      <p><strong>What’s good about it.</strong> Dive, the rooftop bar and restaurant, looks out from Point Loma to Mexico and serves seafood, shared plates, and upgraded dive-bar favorites in a mid-century California setting. Rooms have Stearns and Foster mattresses, Frette robes, Le Labo bath products, and Dyson hair dryers. Each floor has a lounge with house-made pastries and fruit, and bikes and beach chairs are free. It is the first Coronado member of Small Luxury Hotels of the World.</p>
+      <p><strong>What’s nearby.</strong> Coronado Beach and the Hotel del Coronado a five-minute walk away, Orange Avenue’s shops and restaurants, and the ferry to downtown San Diego.</p>
+      <details class="know"><summary>Things to know</summary><p>With 39 rooms it is a small hotel, and no pool is listed. Valet parking is 65 dollars a night. Even so, it is one of the best values on this page.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$320</b></div><div class="under"><small>Fri Jan 1</small><b>$398</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$319</b></div><div class="under"><small>Sat May 1</small><b>$340</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>1417 Orange Ave, Coronado</dd>
+        <dt>Rooms</dt><dd>39</dd>
+        <dt>Brand</dt><dd>Independent; Small Luxury Hotels of the World</dd>
+        <dt>Extra fees</dt><dd>Valet $65 a night</dd>
+      </dl>
+      <a class="btn primary" href="https://www.bowercoronado.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=The%20Bower%20Coronado" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="del">
+    <div>
+      <h3>Hotel del Coronado</h3>
+      <span class="status new">Renovated: six-year, 550 million dollar restoration completed June 2025</span>
+      <p class="summary">The landmark. An 1888 Victorian beach resort right on the sand, freshly restored top to bottom. The splurge option on this list.</p>
+      <figure class="photo">
+        <img src="https://images.unsplash.com/photo-1551727913-1942d9ab6408?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="The Hotel del Coronado’s Victorian building with its red roof" loading="lazy">
+        <figcaption>The Hotel del Coronado.</figcaption>
+      </figure>
+      <p>The Del is a National Historic Landmark, and it celebrated only the second grand opening in its history on June 18, 2025. The resort has five distinct sections. The original Victorian building has a restored front porch and lobby, 24 stained-glass windows on the front, and rooms redone in a lighter Victorian style with floral fabrics, wicker, and marble bathrooms. Shore House is a new, modern beach-house section with ocean views. Beach Village is a gated group of beachfront cottages and villas. The Cabanas and The Views have refreshed rooms near the pools and activities.</p>
+      <p><strong>What’s good about it.</strong> You are on Coronado Beach, not across the street from it. The restoration added new restaurants, including Serea Coastal Cuisine and a Nobu, plus an Ocean Club, and restored the Victorian garden courtyard and ballrooms. For a once-a-year celebration, this is the most memorable setting on the page.</p>
+      <p><strong>What’s nearby.</strong> Coronado Beach out the back, The Bower and Orange Avenue out the front, and downtown San Diego across the bridge or by ferry.</p>
+      <details class="know"><summary>Things to know</summary><p>It is the most expensive hotel here: 522 to 560 dollars a night before fees on every date checked. Resort fee and parking cost were not found. It is a large, busy resort, very different from the small hotels on this list, and prices vary a lot by section, so check which building a rate is for.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div><small>Sat Dec 12</small><b>$535</b></div><div><small>Fri Jan 1</small><b>$551</b></div>
+        <div><small>Sat Jan 2</small><b>$560</b></div><div><small>Sat May 1</small><b>$522</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>1500 Orange Ave, Coronado</dd>
+        <dt>Phone</dt><dd>619-435-6611</dd>
+        <dt>Brand</dt><dd>Hilton, Curio Collection</dd>
+        <dt>Extra fees</dt><dd>Not found</dd>
+      </dl>
+      <a class="btn primary" href="https://www.hoteldel.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Hotel%20del%20Coronado" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+</div>
+
+<!-- PALM SPRINGS -->
+<div class="region desert" id="palm-springs">
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1574876999742-a8be3a43f151?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1800" alt="A mid-century structure beside palm trees in Palm Springs" loading="lazy">
+    <div class="label"><h2>Palm Springs</h2><p>About 2 hours from Westwood</p></div>
+  </div>
+  <p class="region-intro">December through April is the best season in the desert: warm, dry days and cool nights. Both hotels are close to downtown and the Palm Canyon Drive restaurants, shops, and mid-century architecture.</p>
+
+  <article class="hotel" id="casa-palma">
+    <div>
+      <h3>Casa Palma Hotel &amp; Bungalows</h3>
+      <span class="status new">Opened August 2025, the newest hotel on this page</span>
+      <p class="summary">The best value on the list. A 33-room Mediterranean resort on the site of Errol Flynn’s old hotel, with two pools, a tennis court, and free parking.</p>
+      <p>San Clemente designers Ryan and Rochelle Jaleh rebuilt the property, which Errol Flynn developed in the 1940s as a members-only playground. They took their inspiration from Capri: a bright white exterior draped in bougainvillea, turquoise and gold accents, and Greek-style tiled stairs. They kept the original mid-century facade and the lion head fountains. The grounds are citrus and olive groves and lawns with views of the San Jacinto Mountains.</p>
+      <p><strong>What’s good about it.</strong> It is built for playing and lounging. Two pools are set up for water volleyball and basketball, and there is a full-size tennis court with pickleball lines, fire pits, a barbecue, a fitness center, an on-site market, and free bikes for riding into town. Chiquita, the restaurant, serves Mediterranean food at breakfast, lunch, and dinner, with outdoor seating facing the mountains. Rooms have walk-in tiled showers and Malin and Goetz bath products. Guests rate it 4.8 out of 5 on Google.</p>
+      <p><strong>What’s nearby.</strong> Downtown Palm Springs and Palm Canyon Drive a mile away, the Uptown Design District’s shops and restaurants, and the Palm Springs Art Museum.</p>
+      <details class="know"><summary>Things to know</summary><p>It is about a mile from downtown, so dinner is a bike ride or short drive. It is under the 400 dollar target on all four nights, and December 12 is the lowest price on the page at 229 dollars. No resort fee was found.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$229</b></div><div class="under"><small>Fri Jan 1</small><b>$360</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$339</b></div><div class="under"><small>Sat May 1</small><b>$318</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>1533 N Chaparral Rd, Palm Springs</dd>
+        <dt>Rooms</dt><dd>22 rooms and 11 suites</dd>
+        <dt>Brand</dt><dd>Independent</dd>
+        <dt>Extra fees</dt><dd>Free parking</dd>
+      </dl>
+      <a class="btn primary" href="https://casapalmapalmsprings.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Casa%20Palma%20Hotel%20Bungalows%20Palm%20Springs" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="thompson">
+    <div>
+      <h3>Thompson Palm Springs</h3>
+      <span class="status new">Opened October 2024</span>
+      <p class="summary">The big, lively downtown option. A new Hyatt hotel spread over two and a half blocks of Palm Canyon Drive, with a rooftop pool and a mountain-view balcony for every room.</p>
+      <figure class="photo">
+        <img src="https://images.unsplash.com/photo-1586934767466-9dd1d3c348fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="Brown desert mountains under a blue sky near Palm Springs" loading="lazy">
+        <figcaption>The mountains above Palm Springs. Area photo, not the hotel.</figcaption>
+      </figure>
+      <p>Thompson is Hyatt’s upscale lifestyle brand, and this hotel is the first project between Hyatt and HALL Group, the Napa winery company. With 168 rooms, it is the largest recent hotel opening in Palm Springs. Every room has a balcony facing the San Jacinto Mountains, and the beds have Frette sheets.</p>
+      <p><strong>What’s good about it.</strong> You can walk to everything downtown. The rooftop pool and swim club is the social center. Lola Rose Grand Mezze, a Mediterranean restaurant, is on site, along with a HALL Napa Valley wine-tasting room. Dogs up to 50 pounds stay with no pet fee, and stays earn World of Hyatt points.</p>
+      <p><strong>What’s nearby.</strong> Palm Canyon Drive’s restaurants, bars, and shops right outside, the Thursday night VillageFest street fair, the Palm Springs Art Museum, and the Aerial Tramway a short drive away.</p>
+      <details class="know"><summary>Things to know</summary><p>It is above the 400 dollar target on all four nights, at 424 to 507 dollars, plus a 49 dollar nightly resort fee. It is busier and more of a scene than the smaller hotels on this page.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div><small>Sat Dec 12</small><b>$504</b></div><div><small>Fri Jan 1</small><b>$507</b></div>
+        <div><small>Sat Jan 2</small><b>$424</b></div><div><small>Sat May 1</small><b>$474</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>414 N Palm Canyon Dr, Palm Springs</dd>
+        <dt>Rooms</dt><dd>168</dd>
+        <dt>Brand</dt><dd>Hyatt, Thompson Hotels</dd>
+        <dt>Extra fees</dt><dd>Resort fee $49</dd>
+      </dl>
+      <a class="btn primary" href="https://www.hyatt.com/thompson-hotels/en-US/pspaz-thompson-palm-springs" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Thompson%20Palm%20Springs" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+</div>
+
+<!-- PALM DESERT AREA -->
+<div class="region desert" id="palm-desert">
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1671904942522-8e2a0dbb709f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1800" alt="A desert golf course with a lake and mountains behind it" loading="lazy">
+    <div class="label"><h2>Indian Wells and La Quinta</h2><p>About 2 hours 20 minutes from Westwood</p></div>
+  </div>
+  <p class="region-intro">Twenty to thirty minutes past Palm Springs. These are large, recently refreshed golf and spa resorts rather than small boutique hotels. The area is quieter than Palm Springs, with El Paseo shopping in Palm Desert and the Indian Wells Tennis Garden nearby.</p>
+
+  <article class="hotel" id="esmeralda">
+    <div>
+      <h3>Renaissance Esmeralda Resort &amp; Spa</h3>
+      <span class="status new">Refreshed 2025 and 2026: new lobby, gastropub, pickleball courts</span>
+      <p class="summary">A full-service resort with golf, tennis, a spa, and freshly redone public spaces. The Marriott option in the desert, and under the 400 dollar target on every night before fees.</p>
+      <p>The Esmeralda sits at the foot of the Santa Rosa Mountains next to the Indian Wells Golf Resort, with 560 rooms that open onto balconies. The recent updates added a redesigned lobby and reception, Seven Olive, a modern gastropub, new pickleball courts, Topgolf Swing Suites, and the Renew Recovery Lounge, which offers muscle recovery and sleep therapies.</p>
+      <p><strong>What’s good about it.</strong> It has more to do than any other hotel on this page: two championship golf courses next door, tennis and pickleball, Spa Esmeralda, a large pool with cabanas, and four restaurants on site. Stays earn Marriott Bonvoy points, and as a Gold Elite member you may get a room upgrade and late checkout. Pets are welcome for a fee.</p>
+      <p><strong>What’s nearby.</strong> The Indian Wells Golf Resort next door, the Indian Wells Tennis Garden about 10 minutes away, Nobu Indian Wells a 6-minute drive, and El Paseo’s shops and restaurants in Palm Desert.</p>
+      <details class="know"><summary>Things to know</summary><p>It is a big resort, popular for conferences and families. With the 45 dollar resort fee and parking, the all-in price lands close to 400 dollars rather than under it. You need a car for restaurants off the property.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div class="under"><small>Sat Dec 12</small><b>$278</b></div><div class="under"><small>Fri Jan 1</small><b>$352</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$285</b></div><div class="under"><small>Sat May 1</small><b>$386</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>44400 Indian Wells Ln, Indian Wells</dd>
+        <dt>Rooms</dt><dd>560</dd>
+        <dt>Brand</dt><dd>Marriott, Renaissance</dd>
+        <dt>Extra fees</dt><dd>Resort fee $45, self parking $25 to $35</dd>
+      </dl>
+      <a class="btn primary" href="https://www.marriott.com/en-us/hotels/pspsr-renaissance-esmeralda-resort-and-spa-indian-wells/overview/" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=Renaissance%20Esmeralda%20Indian%20Wells" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+
+  <article class="hotel" id="la-quinta">
+    <div>
+      <h3>La Quinta Resort &amp; Club</h3>
+      <span class="status new">Renovated for its centennial: rooms and main pool December 2024, lobby and casitas early 2025</span>
+      <p class="summary">The classic old-Hollywood desert resort, nearly 100 years old, with Spanish-style casitas spread across gardens at the foot of the Santa Rosa Mountains.</p>
+      <p>La Quinta Resort opened in 1926 and became a Hollywood hideaway in its early decades. Most rooms are in low Spanish Colonial casitas set among gardens across about 45 acres, rather than in a tower. The centennial work brightened the rooms, modernized the bathrooms, rebuilt the main pool area, refreshed the lobby, casitas, and villas, and added PLUNGE, an adults-only area at the Renker Pool.</p>
+      <p><strong>What’s good about it.</strong> It feels like a historic estate rather than a big hotel. Spa La Quinta covers 23,000 square feet, and the resort has several restaurants, five bars and lounges, golf, and tennis. It earns Hilton points, not Marriott.</p>
+      <p><strong>What’s nearby.</strong> Old Town La Quinta, a small walkable district of restaurants and shops, less than a mile away. PGA West golf, El Paseo in Palm Desert, and the Indian Wells Tennis Garden are short drives.</p>
+      <details class="know"><summary>Things to know</summary><p>No rooms showed for December 12 when checked. The other three nights are 378 to 398 dollars, so with the 45.60 dollar resort fee and 15 dollar parking the all-in price is about 440 to 460 dollars. You need a car for most dining off the property.</p></details>
+    </div>
+    <aside class="facts">
+      <div class="prices">
+        <div><small>Sat Dec 12</small><b>No rate</b></div><div class="under"><small>Fri Jan 1</small><b>$398</b></div>
+        <div class="under"><small>Sat Jan 2</small><b>$384</b></div><div class="under"><small>Sat May 1</small><b>$378</b></div>
+      </div>
+      <dl>
+        <dt>Address</dt><dd>49499 Eisenhower Dr, La Quinta</dd>
+        <dt>Brand</dt><dd>Hilton, Curio Collection</dd>
+        <dt>Extra fees</dt><dd>Resort fee $45.60, self parking $15</dd>
+      </dl>
+      <a class="btn primary" href="https://www.laquintaresort.com" target="_blank" rel="noopener">Visit hotel website</a>
+      <a class="btn secondary" href="https://www.google.com/travel/search?q=La%20Quinta%20Resort%20and%20Club" target="_blank" rel="noopener">Check rates on Google</a>
+    </aside>
+  </article>
+</div>
+
+<footer>
+  <h2 style="font-size:1.5rem">Notes</h2>
+  <p><strong>Not confirmed:</strong> resort fees and parking for The Milo, Hotel Santa Barbara, and Hotel del Coronado; room counts for the Harbor View Inn and La Quinta Resort; which restaurant currently operates at the Harbor View Inn. Drive times assume no traffic; Friday afternoons can add an hour or more.</p>
+  <p><strong>Considered and cut:</strong> Hotel Ynez in Solvang (no rooms on three of the four nights), Grand Hyatt Indian Wells (492 dollars or more, and only villas over New Year’s), Moxy Santa Barbara (too close to the freeway), Hotel Solea in Carlsbad, Baby Grand and The Margot in San Diego, three Palm Springs hotels with fewer than 20 rooms, and the Four Seasons Biltmore and Ritz-Carlton Bacara (too expensive).</p>
+  <p><strong>Photos</strong> are from Unsplash and show each area. Only the Hotel del Coronado photo shows the hotel itself; use each hotel’s website for its own photos.</p>
+  <ul>
+    <li>Coastline: Iris Papillon</li>
+    <li>Santa Barbara pier: Zoi Palla</li>
+    <li>Santa Barbara clock tower: Dmitry Kropachev</li>
+    <li>Laguna Beach: Marty O’Neill</li>
+    <li>Coronado Beach: Grant Hedges</li>
+    <li>Hotel del Coronado: Donhu Rickerby</li>
+    <li>Palm Springs: Cody Board</li>
+    <li>Palm Springs mountains: Jordan Steranka</li>
+    <li>Desert golf course: Robert Ruggiero</li>
+  </ul>
+  <p>All photos via <a href="https://unsplash.com" target="_blank" rel="noopener">unsplash.com</a>. Prices checked November 8, 2026.</p>
+</footer>
+
+</main>
+</body>
+</html>
